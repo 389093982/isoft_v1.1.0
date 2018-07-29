@@ -5,8 +5,8 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/isoft_storage/apiServer/apiServer.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_storage/apiServer/apiServer.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/isoft_storage/apiServer/heartbeat/heartbeat.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_storage/apiServer/heartbeat/heartbeat.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_storage/dataServer/dataServer.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_storage/dataServer/dataServer.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_storage/dataServer/heartbeat/heartbeat.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_storage/dataServer/heartbeat/heartbeat.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_storage/apiServer/locate/handler.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_storage/apiServer/locate/handler.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_storage/apiServer/locate/locate.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_storage/apiServer/locate/locate.go" afterDir="false" />
     </list>
     <ignored path="isoft_deploy_web/static/uploadfile/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -38,10 +38,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="dataServer.go" pinned="false" current-in-tab="true">
+      <file leaf-file-name="dataServer.go" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/isoft_storage/dataServer/dataServer.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="363">
+            <state relative-caret-position="273">
               <caret line="31" column="20" lean-forward="true" selection-start-line="31" selection-start-column="20" selection-end-line="31" selection-end-column="20" />
               <folding>
                 <element signature="e#14#141#0" expanded="true" />
@@ -74,10 +74,58 @@
       <file leaf-file-name="apiServer.go" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/isoft_storage/apiServer/apiServer.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="334">
-              <caret line="31" column="33" selection-start-line="31" selection-start-column="33" selection-end-line="31" selection-end-column="33" />
+            <state relative-caret-position="351">
+              <caret line="32" column="43" lean-forward="true" selection-start-line="32" selection-start-column="43" selection-end-line="32" selection-end-column="43" />
               <folding>
                 <element signature="e#14#155#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="handler.go" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/isoft_storage/apiServer/locate/handler.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="272">
+              <caret line="16" column="34" lean-forward="true" selection-start-line="16" selection-start-column="7" selection-end-line="16" selection-end-column="34" />
+              <folding>
+                <element signature="e#16#66#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="locate.go" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/isoft_storage/apiServer/locate/locate.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-75">
+              <caret line="2" column="7" lean-forward="true" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
+              <folding>
+                <element signature="e#16#177#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="heartbeat.go" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/isoft_storage/apiServer/heartbeat/heartbeat.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="544">
+              <caret line="32" column="20" selection-start-line="32" selection-start-column="20" selection-end-line="32" selection-end-column="20" />
+              <folding>
+                <element signature="e#19#119#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="choose.go" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/isoft_storage/apiServer/heartbeat/choose.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="34">
+              <caret line="2" column="7" lean-forward="true" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
+              <folding>
+                <element signature="e#19#42#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -178,7 +226,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/isoft_storage/apiServer/locate" />
         <option value="$PROJECT_DIR$/isoft_storage/apiServer/objects/del.go" />
         <option value="$PROJECT_DIR$/isoft_storage/apiServer/objects/get.go" />
         <option value="$PROJECT_DIR$/isoft_storage/apiServer/objects/get_stream.go" />
@@ -208,7 +255,6 @@
         <option value="$PROJECT_DIR$/isoft_deploy_web/shell/elasticsearch/elasticsearch_run.sh" />
         <option value="$PROJECT_DIR$/isoft_storage/apiServer/config.go" />
         <option value="$PROJECT_DIR$/isoft_storage/config.go" />
-        <option value="$PROJECT_DIR$/isoft_storage/apiServer/locate/locate.go" />
         <option value="$PROJECT_DIR$/isoft_storage/dataServer/locate/locate.go" />
         <option value="$PROJECT_DIR$/isoft_storage/lib/es/es.go" />
         <option value="$PROJECT_DIR$/isoft_storage/dataServer/objects/get_object.go" />
@@ -225,10 +271,12 @@
         <option value="$PROJECT_DIR$/isoft_storage/dataServer/temp/handler.go" />
         <option value="$PROJECT_DIR$/isoft_storage/dataServer/temp/put.go" />
         <option value="$PROJECT_DIR$/isoft_storage/cfg/config.ini" />
-        <option value="$PROJECT_DIR$/isoft_storage/apiServer/heartbeat/heartbeat.go" />
         <option value="$PROJECT_DIR$/isoft_storage/dataServer/heartbeat/heartbeat.go" />
         <option value="$PROJECT_DIR$/isoft_storage/dataServer/dataServer.go" />
+        <option value="$PROJECT_DIR$/isoft_storage/apiServer/heartbeat/heartbeat.go" />
         <option value="$PROJECT_DIR$/isoft_storage/apiServer/apiServer.go" />
+        <option value="$PROJECT_DIR$/isoft_storage/apiServer/locate/handler.go" />
+        <option value="$PROJECT_DIR$/isoft_storage/apiServer/locate/locate.go" />
       </list>
     </option>
   </component>
@@ -289,6 +337,20 @@
               <item name="isoft" type="462c0819:PsiDirectoryNode" />
               <item name="isoft_storage" type="462c0819:PsiDirectoryNode" />
               <item name="apiServer" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="isoft" type="b2602c69:ProjectViewProjectNode" />
+              <item name="isoft" type="462c0819:PsiDirectoryNode" />
+              <item name="isoft_storage" type="462c0819:PsiDirectoryNode" />
+              <item name="apiServer" type="462c0819:PsiDirectoryNode" />
+              <item name="heartbeat" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="isoft" type="b2602c69:ProjectViewProjectNode" />
+              <item name="isoft" type="462c0819:PsiDirectoryNode" />
+              <item name="isoft_storage" type="462c0819:PsiDirectoryNode" />
+              <item name="apiServer" type="462c0819:PsiDirectoryNode" />
+              <item name="locate" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="isoft" type="b2602c69:ProjectViewProjectNode" />
@@ -939,13 +1001,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_storage/apiServer/heartbeat/heartbeat.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="163">
-          <caret line="16" column="19" lean-forward="true" selection-start-line="16" selection-start-column="19" selection-end-line="16" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/isoft_storage/apiServer/objects/handler.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
@@ -970,22 +1025,69 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/../../../../../soft/install/go/go1.10.1/src/builtin/builtin.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="178">
+          <caret line="145" column="5" selection-start-line="145" selection-start-column="5" selection-end-line="145" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_storage/dataServer/dataServer.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="273">
+          <caret line="31" column="20" lean-forward="true" selection-start-line="31" selection-start-column="20" selection-end-line="31" selection-end-column="20" />
+          <folding>
+            <element signature="e#14#141#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_storage/apiServer/heartbeat/heartbeat.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="544">
+          <caret line="32" column="20" selection-start-line="32" selection-start-column="20" selection-end-line="32" selection-end-column="20" />
+          <folding>
+            <element signature="e#19#119#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_storage/apiServer/heartbeat/choose.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="7" lean-forward="true" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
+          <folding>
+            <element signature="e#19#42#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_storage/apiServer/locate/handler.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="16" column="34" lean-forward="true" selection-start-line="16" selection-start-column="7" selection-end-line="16" selection-end-column="34" />
+          <folding>
+            <element signature="e#16#66#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/isoft_storage/apiServer/apiServer.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="334">
-          <caret line="31" column="33" selection-start-line="31" selection-start-column="33" selection-end-line="31" selection-end-column="33" />
+        <state relative-caret-position="351">
+          <caret line="32" column="43" lean-forward="true" selection-start-line="32" selection-start-column="43" selection-end-line="32" selection-end-column="43" />
           <folding>
             <element signature="e#14#155#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_storage/dataServer/dataServer.go">
+    <entry file="file://$PROJECT_DIR$/isoft_storage/apiServer/locate/locate.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="363">
-          <caret line="31" column="20" lean-forward="true" selection-start-line="31" selection-start-column="20" selection-end-line="31" selection-end-column="20" />
+        <state relative-caret-position="-75">
+          <caret line="2" column="7" lean-forward="true" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
           <folding>
-            <element signature="e#14#141#0" expanded="true" />
+            <element signature="e#16#177#0" expanded="true" />
           </folding>
         </state>
       </provider>

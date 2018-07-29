@@ -9,6 +9,7 @@ import (
 	"time"
 )
 
+// 并向数据服务节点群发对象名字的定位消息,并接收反馈消息
 func Locate(name string) (locateInfo map[int]string) {
 	q := rabbitmq.New(cfg.GetConfigValue(cfg.RABBITMQ_SERVER))
 	q.Publish("dataServers", name)

@@ -29,7 +29,7 @@ func main() {
 	http.HandleFunc("/objects/", objects.Handler)
 	http.HandleFunc("/temp/", temp.Handler)
 
-	// 接口服务对外提供定位功能,发送定位消息并处理反馈消息
+	// 接口服务对外提供定位功能,向数据服务节点群发定位消息并接收反馈消息
 	http.HandleFunc("/locate/", locate.Handler)
 	http.HandleFunc("/versions/", versions.Handler)
 
