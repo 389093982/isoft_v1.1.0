@@ -13,6 +13,7 @@ type TempPutStream struct {
 }
 
 func NewTempPutStream(server, object string, size int64) (*TempPutStream, error) {
+	// 先调用数据服务 temp 接口的 post 方法生产临时文件,接收返回的 uuid 信息
 	request, e := http.NewRequest("POST", "http://"+server+"/temp/"+object, nil)
 	if e != nil {
 		return nil, e
@@ -23,6 +24,7 @@ func NewTempPutStream(server, object string, size int64) (*TempPutStream, error)
 	if e != nil {
 		return nil, e
 	}
+	// 接收返回的 uuid 信息
 	uuid, e := ioutil.ReadAll(response.Body)
 	if e != nil {
 		return nil, e
@@ -51,6 +53,7 @@ func (w *TempPutStream) Commit(good bool) {
 	if good {
 		method = "PUT"
 	}
+	// delete 情况下删除临时文件, put 情况下将临时文件转正
 	request, _ := http.NewRequest(method, "http://"+w.Server+"/temp/"+w.Uuid, nil)
 	client := http.Client{}
 	client.Do(request)

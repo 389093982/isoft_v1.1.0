@@ -13,6 +13,7 @@ import (
 
 func patch(w http.ResponseWriter, r *http.Request) {
 	uuid := strings.Split(r.URL.EscapedPath(), "/")[2]
+	// 读取 STORAGE_ROOT/temp/uuid 文件获取临时对象信息
 	tempinfo, e := readFromFile(uuid)
 	if e != nil {
 		log.Println(e)
@@ -28,19 +29,21 @@ func patch(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
-
+	// 将上传文件内容写入 STORAGE_ROOT/temp/uuid.dat 文件中去
 	_, e = io.Copy(f, r.Body)
 	if e != nil {
 		log.Println(e)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
+	// 判断 STORAGE_ROOT/temp/uuid.dat 文件是否存在
 	info, e := f.Stat()
 	if e != nil {
 		log.Println(e)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
+	// 判断 STORAGE_ROOT/temp/uuid.dat 文件大小是否正确
 	actual := info.Size()
 	if actual > tempinfo.Size {
 		os.Remove(datFile)
@@ -51,6 +54,7 @@ func patch(w http.ResponseWriter, r *http.Request) {
 }
 
 func readFromFile(uuid string) (*tempInfo, error) {
+	// 读取 STORAGE_ROOT/temp/uuid 文件获取临时对象信息
 	f, e := os.Open(cfg.GetConfigValue(cfg.STORAGE_ROOT) + "/temp/" + uuid)
 	if e != nil {
 		return nil, e

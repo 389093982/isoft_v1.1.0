@@ -28,6 +28,7 @@ func commitTempObject(datFile string, tempinfo *tempInfo) {
 	defer f.Close()
 	d := url.PathEscape(utils.CalculateHash(f))
 	f.Seek(0, io.SeekStart)
+	// 正式文件名称
 	w, _ := os.Create(cfg.GetConfigValue(cfg.STORAGE_ROOT) + "/objects/" + tempinfo.Name + "." + d)
 	w2 := gzip.NewWriter(w)
 	io.Copy(w2, f)

@@ -31,6 +31,7 @@ func main() {
 
 	// 数据服务提供数据的存储功能
 	http.HandleFunc("/objects/", objects.Handler)
+
 	http.HandleFunc("/temp/", temp.Handler)
 
 	fmt.Println(fmt.Sprintf("Start ListenAndServe address %s", cfg.GetConfigValue(cfg.LISTEN_ADDRESS)))
