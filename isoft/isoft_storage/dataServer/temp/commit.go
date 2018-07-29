@@ -34,5 +34,7 @@ func commitTempObject(datFile string, tempinfo *tempInfo) {
 	io.Copy(w2, f)
 	w2.Close()
 	os.Remove(datFile)
+
+	// 将正式文件信息添加到缓存的定位信息中去
 	locate.Add(tempinfo.hash(), tempinfo.id())
 }

@@ -22,6 +22,7 @@ func getFile(name string) string {
 	sendFile(h, file)
 	d := url.PathEscape(base64.StdEncoding.EncodeToString(h.Sum(nil)))
 	hash := strings.Split(file, ".")[2]
+	// 验证 hash 值
 	if d != hash {
 		log.Println("object hash mismatch, remove", file)
 		locate.Del(hash)
