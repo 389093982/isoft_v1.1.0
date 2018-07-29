@@ -27,21 +27,22 @@ func NewRSPutStream(dataServers []string, hash string, size int64) (*RSPutStream
 	for i := range writers {
 		// NewTempPutStream 底层主要是调用数据服务 temp 接口的 post 方法生产临时文件
 		writers[i], e = objectstream.NewTempPutStream(dataServers[i],
-			fmt.Sprintf("%s.%d", hash, i), perShard)
+			fmt.Sprintf("%s.%d", hash, i), perShard) // 每个分片的大小是计算出来的, size/4 再向上取整
 		if e != nil {
 			return nil, e
 		}
 	}
 	enc := NewEncoder(writers)
 
+	// RSPutStream 本身并没有实现 Write 方法,所以实现时函数会直接调用其内嵌结构体 encoder 的 Write 方法
 	return &RSPutStream{enc}, nil
 }
 
 func (s *RSPutStream) Commit(success bool) {
-	// Flush 方法将数据写入缓存
+	// Flush 方法将数据写入数据服务接口,生成临时文件
 	s.Flush()
 	for i := range s.writers {
-		// Commit 方法将临时文件转正
+		// Commit 方法将临时文件转正或者删除
 		s.writers[i].(*objectstream.TempPutStream).Commit(success)
 	}
 }
