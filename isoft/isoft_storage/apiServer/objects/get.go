@@ -14,8 +14,11 @@ import (
 )
 
 func get(w http.ResponseWriter, r *http.Request) {
+	// 从请求路径中截取对象名称
 	name := strings.Split(r.URL.EscapedPath(), "/")[2]
+	// 从请求参数中获取对象版本
 	versionId := r.URL.Query()["version"]
+	// 默认版本
 	version := 0
 	var e error
 	if len(versionId) != 0 {
@@ -26,6 +29,7 @@ func get(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
+	// 获取对象元数据信息
 	meta, e := es.GetMetadata(name, version)
 	if e != nil {
 		log.Println(e)
@@ -37,12 +41,15 @@ func get(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	hash := url.PathEscape(meta.Hash)
+
+	// 根据对象 hash 值获取对象的 getStream
 	stream, e := GetStream(hash, meta.Size)
 	if e != nil {
 		log.Println(e)
 		w.WriteHeader(http.StatusNotFound)
 		return
 	}
+
 	offset := utils.GetOffsetFromHeader(r.Header)
 	if offset != 0 {
 		stream.Seek(offset, io.SeekCurrent)

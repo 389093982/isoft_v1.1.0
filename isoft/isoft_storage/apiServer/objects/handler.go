@@ -2,6 +2,7 @@ package objects
 
 import "net/http"
 
+// 不直接访问本地磁盘上的对象,而是将 http 请求转发给数据服务节点
 func Handler(w http.ResponseWriter, r *http.Request) {
 	m := r.Method
 	if m == http.MethodPost {
