@@ -11,6 +11,7 @@ import (
 var dataServers = make(map[string]time.Time)
 var mutex sync.Mutex
 
+// 主要用于接收数据服务节点发送过来的心跳消息
 func ListenHeartbeat() {
 	q := rabbitmq.New(cfg.GetConfigValue(cfg.RABBITMQ_SERVER))
 	defer q.Close()
