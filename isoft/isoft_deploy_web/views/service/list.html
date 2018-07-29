@@ -1,0 +1,206 @@
+<link rel="stylesheet" type="text/css" href="{{ .ServerName }}/static/common/paginator/css/paging.css">
+<script type="text/javascript" src="{{ .ServerName }}/static/common/paginator/js/query.js"></script>
+<script type="text/javascript" src="{{ .ServerName }}/static/common/paginator/js/paging.js"></script>
+<script type="text/javascript" src="{{ .ServerName }}/static/common/vue.min.js"></script>
+
+<script src="{{ .ServerName }}/static/common/alert_info/alert_info-1.0.2/js/classie.js"></script>
+<script src="{{ .ServerName }}/static/common/alert_info/alert_info-1.0.2/js/modalEffects.js"></script>
+<link href="{{ .ServerName }}/static/common/alert_info/alert_info-1.0.2/css/component.css" rel="stylesheet">
+
+<link href="{{ .ServerName }}/static/common/loading/loading-1.0.0/loading.css" rel="stylesheet"/>
+
+<link href="{{ .ServerName }}/static/common/bootstrap-select/dist/css/bootstrap-select.css" rel="stylesheet"/>
+<script src="{{ .ServerName }}/static/common/bootstrap-select/dist/js/bootstrap-select.js"></script>
+<script src="{{ .ServerName }}/static/common/bootstrap-select/dist/js/i18n/defaults-zh_CN.js"></script>
+
+<link rel="stylesheet" href="{{ .ServerName }}/static/common/fileupload/zyUpload_1.0.1/control/css/zyUpload.css"
+      type="text/css">
+<script type="text/javascript" src="{{ .ServerName }}/static/common/fileupload/zyUpload_1.0.1/core/zyFile.js"></script>
+<script type="text/javascript"
+        src="{{ .ServerName }}/static/common/fileupload/zyUpload_1.0.1/control/js/zyUpload.js"></script>
+<script type="text/javascript" src="{{ .ServerName }}/static/js/service/fileupload.js"></script>
+
+<link href="{{ .ServerName }}/static/css/service/service_list.css" rel="stylesheet"/>
+<script src="{{ .ServerName }}/static/js/service/service_list.js"></script>
+
+<input type="hidden" name="_service_type" value="{{ .ServiceType }}"/>
+
+<div style="border:1px solid #D1D1D1;min-height: 500px;">
+
+    <div class="row">
+        <div class="col-lg-6" style="margin-top: 5px; margin-right: 5px; float: right;">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="检索">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="button">Go!</button>
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <div id="service_list" class="table-responsive" style="margin: 10px;margin-top: 20px;">
+        <div style="margin-bottom: 10px;">
+
+            <button type="button" class="btn btn-success btn-sm md-trigger" data-modal="editService">新增</button>
+            <button type="button" class="btn btn-success btn-sm md-trigger" data-modal="fileUpload">上传/更新部署包</button>
+            <!-- bootstrap模态框弹出效果 -->
+            <div class="md-modal md-effect-1" id="editService">
+                <div class="md-content" style="height: 400px;">
+                    <a href="#" class="md-close" style="float: right;margin: 10px;">X</a>
+                    <h3>新增/编辑部署服务</h3>
+                    <div>
+
+                        <form class="form-horizontal">
+                            <div class="form-group">
+                                <label for="env_id" class="col-sm-3 control-label">环境名称</label>
+                                <div class="col-sm-9">
+                                    <select class="selectpicker form-control" id="env_id" data-live-search="true" multiple data-max-options="10">
+                                        {{range .EnvInfos}}
+                                            <option value="{{.Id}}">{{.EnvName}}-{{.EnvIp}}</option>
+                                        {{end}}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="service_name" class="col-sm-3 control-label">服务名称</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="service_name" placeholder="请输入应用名称">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="service_type" class="col-sm-3 control-label">服务类型</label>
+                                <div class="col-sm-9">
+                                    <select class="selectpicker form-control" id="service_type" data-live-search="true">
+                                        <option value="beego">beego</option>
+                                        <option value="nginx">nginx</option>
+                                        <option value="mysql">mysql</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="service_port" class="col-sm-3 control-label">端口号</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="service_port" placeholder="请输入端口号">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-3 col-sm-9" id="_editServerInfo_error"
+                                     style="color: red;font-family:'Microsoft YaHei',arial, sans-serif;
+                                        font-size: 12px;margin-bottom: 5px;"></div>
+                                <div class="col-sm-offset-3 col-sm-9">
+                                    <button type="button" class="btn btn-success" onclick="editServiceInfo()" style="width: 100px;">提交</button>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- bootstrap模态框弹出效果 -->
+            <div class="md-modal md-effect-1" id="fileUpload">
+                <!-- overflow:auto 溢出显示滚动条 -->
+                <div class="md-content" style="width:600px;height: 500px;overflow:auto;">
+                    <a href="#" class="md-close" style="float: right;margin: 10px;">X</a>
+                    <h3>上传/更新部署包</h3>
+                    <div>
+                        <div id="fileupload"></div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="md-overlay"></div>
+        </div>
+
+        <table class="table text-nowrap">
+            <thead>
+            <tr>
+                <th>环境ID</th>
+                <th>环境名称</th>
+                <th>服务名称</th>
+                <th>服务类型</th>
+                <th>端口号</th>
+                <th>部署包名</th>
+                <th>运行模式</th>
+                <th>部署状态</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-cloak v-for="serviceInfo in serviceInfos">
+                <td>[[ serviceInfo.env_info.id ]]</td>
+                <td>[[ serviceInfo.env_info.env_name ]]</td>
+                <td>[[ serviceInfo.service_name ]]</td>
+                <td>[[ serviceInfo.service_type ]]</td>
+                <td>[[ serviceInfo.service_port ]]</td>
+                <td>[[ serviceInfo.package_name ]]</td>
+                <td>[[ serviceInfo.run_mode ]]</td>
+                <td class="deploy_status"></td>
+                <td :env_id="serviceInfo.env_info.id" :env_name="serviceInfo.env_info.env_name" :service_id="serviceInfo.id"
+                    :service_name="serviceInfo.service_name" :service_type="serviceInfo.service_type">
+                    <!-- 共用菜单项 -->
+                    <button type="button" class="btn btn-primary btn-xs" aria-label="Left Align"
+                            onclick="forwardEditPage(this)">编辑
+                    </button>
+                    <!-- beego 类型功能菜单 -->
+                    <span v-if="serviceInfo.service_type==='beego'">
+                        <button type="button" class="btn btn-success btn-xs" aria-label="Left Align"
+                                onclick="runDeployTask(this, 'deploy')">部署
+                        </button>
+                        <button type="button" class="btn btn-info btn-xs" aria-label="Left Align"
+                                onclick="runDeployTask(this, 'startup')">启用
+                        </button>
+                        <button type="button" class="btn btn-danger btn-xs" aria-label="Left Align"
+                                onclick="runDeployTask(this, 'shutdown')">停用
+                        </button>
+                        <button type="button" class="btn btn-warning btn-xs" aria-label="Left Align"
+                                onclick="runDeployTask(this, 'restart')">重启
+                        </button>
+                    </span>
+                    <!-- docker 类型功能菜单 -->
+                    <span v-else-if="serviceInfo.service_type==='docker'">
+                        <button type="button" class="btn btn-success btn-xs" aria-label="Left Align"
+                                onclick="DockerInfoCheck(this)">docker环境监测
+                        </button>
+                    </span>
+                    <!-- nginx 类型功能菜单 -->
+                    <span v-else-if="serviceInfo.service_type==='nginx'">
+                        <button type="button" class="btn btn-success btn-xs" aria-label="Left Align"
+                                onclick="runDeployTask(this, 'check')">检测
+                        </button>
+                        <button type="button" class="btn btn-info btn-xs" aria-label="Left Align"
+                                onclick="runDeployTask(this, 'install')">安装
+                        </button>
+                        <button type="button" class="btn btn-danger btn-xs" aria-label="Left Align"
+                                onclick="runDeployTask(this, 'restart')">重启
+                        </button>
+                        <button type="button" class="btn btn-warning btn-xs" aria-label="Left Align"
+                                onclick="">选择代理应用
+                        </button>
+                    </span>
+                    <!-- mysql 类型功能菜单 -->
+                    <span v-else-if="serviceInfo.service_type==='mysql'">
+                        <button type="button" class="btn btn-success btn-xs" aria-label="Left Align"
+                                onclick="runDeployTask(this, 'check')">检测
+                        </button>
+                        <button type="button" class="btn btn-info btn-xs" aria-label="Left Align"
+                                onclick="runDeployTask(this, 'install')">安装
+                        </button>
+                        <button type="button" class="btn btn-danger btn-xs" aria-label="Left Align"
+                                onclick="runDeployTask(this, 'restart')">重启
+                        </button>
+                    </span>
+                    <!-- 共用菜单项 -->
+                    <button type="button" class="btn btn-default btn-xs" aria-label="Left Align"
+                            onclick="showServiceTrackingLogDetail(this)">
+                        <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>详情
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div id="pageTool"></div>
+    </div>
+</div>

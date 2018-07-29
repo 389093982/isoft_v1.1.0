@@ -1,0 +1,119 @@
+<link rel="stylesheet" type="text/css" href="{{ .ServerName }}/static/common/paginator/css/paging.css">
+<script type="text/javascript" src="{{ .ServerName }}/static/common/paginator/js/query.js"></script>
+<script type="text/javascript" src="{{ .ServerName }}/static/common/paginator/js/paging.js"></script>
+<script type="text/javascript" src="{{ .ServerName }}/static/common/vue.min.js"></script>
+
+<script src="{{ .ServerName }}/static/common/alert_info/alert_info-1.0.2/js/classie.js"></script>
+<script src="{{ .ServerName }}/static/common/alert_info/alert_info-1.0.2/js/modalEffects.js"></script>
+<link href="{{ .ServerName }}/static/common/alert_info/alert_info-1.0.2/css/component.css" rel="stylesheet"/>
+
+<link href="{{ .ServerName }}/static/common/loading/loading-1.0.0/loading.css" rel="stylesheet"/>
+
+<script src="{{ .ServerName }}/static/js/env/env_list.js"></script>
+
+<div style="border:1px solid #D1D1D1;min-height: 500px;">
+
+    <div class="row">
+        <div class="col-lg-6" style="margin-top: 5px; margin-right: 5px; float: right;">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="检索">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="button">Go!</button>
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <div id="envInfo_list" class="table-responsive" style="margin: 10px;margin-top: 20px;">
+        <div style="margin-bottom: 10px;">
+            <button type="button" class="btn btn-success btn-sm md-trigger" data-modal="editEnvInfo">新增</button>
+
+            <!-- bootstrap模态框弹出效果 -->
+            <div class="md-modal md-effect-1" id="editEnvInfo">
+                <div class="md-content" style="height: 400px;">
+                    <a href="#" class="md-close" style="float: right;margin: 10px;">X</a>
+                    <h3>新增/编辑环境信息</h3>
+                    <div>
+
+                        <form class="form-horizontal">
+                            <div class="form-group">
+                                <label for="env_name" class="col-sm-3 control-label">环境名称</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="env_name" placeholder="请输入环境名称">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="env_ip" class="col-sm-3 control-label">ip地址</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="env_ip" placeholder="请输入ip地址">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="env_account" class="col-sm-3 control-label">登录账号</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="env_account" placeholder="请输入登录账号">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="env_passwd" class="col-sm-3 control-label">登录密码</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="env_passwd" placeholder="请输入登录密码">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="deploy_home" class="col-sm-3 control-label">部署空间目录</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="deploy_home" placeholder="请输入部署空间目录">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-3 col-sm-9" id="_editEnvInfo_error"
+                                     style="color: red;font-family:'Microsoft YaHei',arial, sans-serif;
+                                        font-size: 12px;margin-bottom: 5px;"></div>
+                                <div class="col-sm-offset-3 col-sm-9">
+                                    <button type="button" class="btn btn-success" onclick="editEnvInfo()" style="width: 100px;">提交</button>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="md-overlay"></div>
+        </div>
+
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>环境名称</th>
+                <th>ip地址</th>
+                <th>登录账号</th>
+                <th>密码</th>
+                <th>部署空间目录</th>
+                <th>ssh连接</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-cloak v-for="envInfo in envInfos">
+                <td>[[ envInfo.env_name ]]</td>
+                <td>[[ envInfo.env_ip ]]</td>
+                <td>[[ envInfo.env_account ]]</td>
+                <td>[[ envInfo.env_passwd ]]</td>
+                <td>[[ envInfo.deploy_home ]]</td>
+                <td><div class="connect"></div></td>
+                <td>
+                    <button type="button" class="btn btn-success btn-xs" aria-label="Left Align"
+                            :onclick="'connect_test(this,'+ envInfo.id + ');'">连接测试
+                    </button>
+                    <button type="button" class="btn btn-danger btn-xs" aria-label="Left Align"
+                            :onclick="'sync_deploy_home(this,'+ envInfo.id + ');'">同步deploy_home
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div id="pageTool"></div>
+    </div>
+</div>

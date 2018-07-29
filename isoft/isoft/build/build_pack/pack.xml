@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<packapps>
+    <packapp>
+        <appName>isoft_deploy_web</appName>
+        <apppath>src\isoft\isoft_deploy_web</apppath>
+    </packapp>
+    <packapp>
+        <appName>isoft_sso_web</appName>
+        <apppath>src\isoft\isoft_sso_web</apppath>
+    </packapp>
+    <packapp>
+        <appName>isoft_blog_web</appName>
+        <apppath>src\isoft\isoft_blog_web</apppath>
+    </packapp>
+    <packapp>
+        <appName>isoft_learning_web</appName>
+        <apppath>src\isoft\isoft_learning_web</apppath>
+    </packapp>
+</packapps>
