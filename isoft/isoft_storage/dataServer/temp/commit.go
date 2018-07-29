@@ -12,11 +12,13 @@ import (
 	"strings"
 )
 
+// 获取分片 hash 值
 func (t *tempInfo) hash() string {
 	s := strings.Split(t.Name, ".")
 	return s[0]
 }
 
+// 获取分片 id
 func (t *tempInfo) id() int {
 	s := strings.Split(t.Name, ".")
 	id, _ := strconv.Atoi(s[1])

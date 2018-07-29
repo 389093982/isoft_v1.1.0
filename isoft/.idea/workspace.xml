@@ -5,9 +5,10 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/isoft_storage/apiServer/heartbeat/choose.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_storage/apiServer/heartbeat/choose.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/isoft_storage/apiServer/locate/locate.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_storage/apiServer/locate/locate.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_storage/lib/rs/common.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_storage/lib/rs/common.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_storage/lib/rs/encoder.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_storage/lib/rs/encoder.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_storage/lib/rs/put.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_storage/lib/rs/put.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_storage/apiServer/objects/get_stream.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_storage/apiServer/objects/get_stream.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_storage/dataServer/temp/commit.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_storage/dataServer/temp/commit.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_storage/lib/rs/decoder.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_storage/lib/rs/decoder.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_storage/lib/rs/get.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_storage/lib/rs/get.go" afterDir="false" />
     </list>
     <ignored path="isoft_deploy_web/static/uploadfile/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -39,44 +40,14 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="put.go" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/isoft_storage/lib/rs/put.go">
+      <file leaf-file-name="commit.go" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/isoft_storage/dataServer/temp/commit.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="341">
-              <caret line="44" column="31" selection-start-line="44" selection-start-column="31" selection-end-line="44" selection-end-column="31" />
+            <state relative-caret-position="106">
+              <caret line="23" column="31" lean-forward="true" selection-start-line="23" selection-start-column="31" selection-end-line="23" selection-end-column="31" />
               <folding>
-                <element signature="e#12#75#0" expanded="true" />
+                <element signature="e#14#159#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="encoder.go" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/isoft_storage/lib/rs/encoder.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="110">
-              <caret line="31" column="9" lean-forward="true" selection-start-line="31" selection-start-column="9" selection-end-line="31" selection-end-column="9" />
-              <folding>
-                <element signature="e#12#64#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="reedsolomon.go" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../github.com/klauspost/reedsolomon/reedsolomon.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="178">
-              <caret line="93" column="4" selection-start-line="93" selection-start-column="4" selection-end-line="93" selection-end-column="4" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="common.go" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/isoft_storage/lib/rs/common.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="7" column="80" selection-start-line="7" selection-start-column="80" selection-end-line="7" selection-end-column="80" />
             </state>
           </provider>
         </entry>
@@ -176,9 +147,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/isoft_storage_test/apiServer/locate/handler.go" />
-        <option value="$PROJECT_DIR$/isoft_deploy_web/shell/rabbitmq/rabbitmq_run.sh" />
-        <option value="$PROJECT_DIR$/isoft_storage_test/apiServer/heartbeat/heartbeat.go" />
         <option value="$PROJECT_DIR$/isoft_storage_test/apiServer/locate/locate.go" />
         <option value="$PROJECT_DIR$/isoft_storage_test/dataServer/objects/put.go" />
         <option value="$PROJECT_DIR$/isoft_storage_test/dataServer/objects/get.go" />
@@ -216,7 +184,6 @@
         <option value="$PROJECT_DIR$/isoft_storage/apiServer/objects/put.go" />
         <option value="$PROJECT_DIR$/isoft_storage/dataServer/dataServer.go" />
         <option value="$PROJECT_DIR$/isoft_storage/dataServer/temp/handler.go" />
-        <option value="$PROJECT_DIR$/isoft_storage/dataServer/temp/commit.go" />
         <option value="$PROJECT_DIR$/isoft_storage/dataServer/objects/handler.go" />
         <option value="$PROJECT_DIR$/isoft_storage/dataServer/objects/get.go" />
         <option value="$PROJECT_DIR$/isoft_storage/dataServer/objects/get_object.go" />
@@ -227,6 +194,10 @@
         <option value="$PROJECT_DIR$/isoft_storage/lib/rs/common.go" />
         <option value="$PROJECT_DIR$/isoft_storage/lib/rs/encoder.go" />
         <option value="$PROJECT_DIR$/isoft_storage/lib/rs/put.go" />
+        <option value="$PROJECT_DIR$/isoft_storage/apiServer/objects/get_stream.go" />
+        <option value="$PROJECT_DIR$/isoft_storage/lib/rs/decoder.go" />
+        <option value="$PROJECT_DIR$/isoft_storage/lib/rs/get.go" />
+        <option value="$PROJECT_DIR$/isoft_storage/dataServer/temp/commit.go" />
       </list>
     </option>
   </component>
@@ -605,7 +576,7 @@
     <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="1" sideWeight="0.28853047" weight="0.26839128" />
+      <window_info active="true" content_ui="combo" id="Project" order="1" sideWeight="0.28853047" visible="true" weight="0.26839128" />
       <window_info anchor="bottom" id="TODO" order="11" weight="0.3297491" />
       <window_info anchor="bottom" id="Event Log" order="3" sideWeight="0.5004042" side_tool="true" weight="0.4929078" />
       <window_info anchor="right" id="Database" order="0" side_tool="true" weight="0.32983023" />
@@ -732,20 +703,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/isoft/common/stringutil.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="5" selection-start-line="4" selection-start-column="5" selection-end-line="4" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../../../soft/install/go/go1.10.1/src/os/types.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="107">
-          <caret line="22" column="4" selection-start-line="22" selection-start-column="4" selection-end-line="22" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../../../../../soft/install/go/go1.10.1/src/os/stat_windows.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="107">
@@ -962,13 +919,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_storage/dataServer/temp/commit.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="23" column="1" lean-forward="true" selection-start-line="23" selection-start-column="1" selection-end-line="23" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/isoft_storage/dataServer/temp/handler.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="256">
@@ -1006,20 +956,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_storage/apiServer/objects/get_stream.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="25" selection-start-line="6" selection-start-column="25" selection-end-line="6" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_storage/apiServer/objects/get.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="6" column="32" lean-forward="true" selection-start-line="6" selection-start-column="32" selection-end-line="6" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/isoft_storage/lib/types/types.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
@@ -1044,13 +980,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_storage/apiServer/objects/handler.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="12" column="9" selection-start-line="12" selection-start-column="9" selection-end-line="12" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/isoft_storage/apiServer/objects/put.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="408">
@@ -1065,16 +994,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
           <caret line="13" column="17" selection-start-line="13" selection-start-column="17" selection-end-line="13" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_storage/apiServer/locate/locate.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="28">
-          <caret line="14" column="33" selection-start-line="14" selection-start-column="33" selection-end-line="14" selection-end-column="33" />
-          <folding>
-            <element signature="e#16#177#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1098,27 +1017,54 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_storage/lib/rs/common.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="76" selection-start-line="7" selection-start-column="76" selection-end-line="7" selection-end-column="76" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_storage/lib/rs/put.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="341">
+          <caret line="44" column="31" selection-start-line="44" selection-start-column="31" selection-end-line="44" selection-end-column="31" />
+          <folding>
+            <element signature="e#12#75#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/isoft_storage/apiServer/apiServer.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="233">
-          <caret line="28" column="43" selection-start-line="28" selection-start-column="43" selection-end-line="28" selection-end-column="43" />
+          <caret line="28" column="44" selection-start-line="28" selection-start-column="44" selection-end-line="28" selection-end-column="44" />
           <folding>
             <element signature="e#14#155#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_storage/lib/rs/common.go">
+    <entry file="file://$PROJECT_DIR$/isoft_storage/apiServer/objects/handler.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="80" selection-start-line="7" selection-start-column="80" selection-end-line="7" selection-end-column="80" />
+        <state relative-caret-position="272">
+          <caret line="16" column="10" selection-start-line="16" selection-start-column="10" selection-end-line="16" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_storage/apiServer/objects/get.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="192">
+          <caret line="46" column="23" selection-start-line="46" selection-start-column="23" selection-end-line="46" selection-end-column="23" />
+          <folding>
+            <element signature="e#17#172#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../github.com/klauspost/reedsolomon/reedsolomon.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="178">
-          <caret line="93" column="4" selection-start-line="93" selection-start-column="4" selection-end-line="93" selection-end-column="4" />
+        <state relative-caret-position="170">
+          <caret line="213" column="5" selection-start-line="213" selection-start-column="5" selection-end-line="213" selection-end-column="5" />
         </state>
       </provider>
     </entry>
@@ -1132,12 +1078,46 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_storage/lib/rs/put.go">
+    <entry file="file://$PROJECT_DIR$/isoft_storage/apiServer/locate/locate.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="341">
-          <caret line="44" column="31" selection-start-line="44" selection-start-column="31" selection-end-line="44" selection-end-column="31" />
+        <state relative-caret-position="28">
+          <caret line="12" column="5" selection-start-line="12" selection-start-column="5" selection-end-line="12" selection-end-column="5" />
           <folding>
-            <element signature="e#12#75#0" expanded="true" />
+            <element signature="e#16#177#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_storage/lib/rs/decoder.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-849">
+          <caret line="3" column="38" lean-forward="true" selection-start-line="3" selection-start-column="38" selection-end-line="3" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_storage/apiServer/objects/get_stream.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="22" column="25" selection-start-line="22" selection-start-column="25" selection-end-line="22" selection-end-column="25" />
+          <folding>
+            <element signature="e#17#93#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_storage/lib/rs/get.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="194">
+          <caret line="54" column="53" selection-start-line="54" selection-start-column="53" selection-end-line="54" selection-end-column="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_storage/dataServer/temp/commit.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="106">
+          <caret line="23" column="31" lean-forward="true" selection-start-line="23" selection-start-column="31" selection-end-line="23" selection-end-column="31" />
+          <folding>
+            <element signature="e#14#159#0" expanded="true" />
           </folding>
         </state>
       </provider>

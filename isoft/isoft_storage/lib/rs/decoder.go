@@ -12,7 +12,7 @@ type decoder struct {
 	size      int64
 	cache     []byte
 	cacheSize int
-	total     int64
+	total     int64 // 表示当前已经读取了多少字节
 }
 
 func NewDecoder(readers []io.Reader, writers []io.Writer, size int64) *decoder {
@@ -21,7 +21,7 @@ func NewDecoder(readers []io.Reader, writers []io.Writer, size int64) *decoder {
 }
 
 func (d *decoder) Read(p []byte) (n int, err error) {
-	if d.cacheSize == 0 {
+	if d.cacheSize == 0 { // cache 中没有更多数据时会调用 getData 方法获取数据
 		e := d.getData()
 		if e != nil {
 			return 0, e
