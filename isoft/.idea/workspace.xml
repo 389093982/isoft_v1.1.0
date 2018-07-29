@@ -3,10 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="61c01151-84f0-4bfd-a227-5c1f0b5a424d" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_storage/apiServer/objects/get.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_storage/apiServer/objects/get.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_storage/apiServer/objects/handler.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_storage/apiServer/objects/handler.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_storage/apiServer/objects/put.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_storage/apiServer/objects/put.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_storage/apiServer/objects/store.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_storage/apiServer/objects/store.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_storage/lib/rabbitmq/rabbitmq.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_storage/lib/rabbitmq/rabbitmq.go" afterDir="false" />
     </list>
     <ignored path="isoft_deploy_web/static/uploadfile/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -59,7 +56,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="get.go" pinned="false" current-in-tab="true">
+      <file leaf-file-name="get.go" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/isoft_storage/apiServer/objects/get.go">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-96">
@@ -69,6 +66,23 @@
               </folding>
             </state>
           </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="rabbitmq.go" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/isoft_storage/lib/rabbitmq/rabbitmq.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="239">
+              <caret line="104" column="5" lean-forward="true" selection-start-line="104" selection-start-column="5" selection-end-line="104" selection-end-column="5" />
+              <folding>
+                <element signature="e#18#74#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="rabbitmq_test.go" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/isoft_storage/lib/rabbitmq/rabbitmq_test.go">
+          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
       <file leaf-file-name="put.go" pinned="false" current-in-tab="false">
@@ -119,30 +133,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="handler.go" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/isoft_storage/apiServer/locate/handler.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="9" column="5" selection-start-line="9" selection-start-column="5" selection-end-line="9" selection-end-column="5" />
-              <folding>
-                <element signature="e#16#66#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="locate.go" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/isoft_storage/apiServer/locate/locate.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="12" column="5" selection-start-line="12" selection-start-column="5" selection-end-line="12" selection-end-column="5" />
-              <folding>
-                <element signature="e#16#177#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
     </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
@@ -157,7 +147,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>showServiceTrackingLogDetail</find>
       <find>deploy_detail.html</find>
       <find>Edit</find>
       <find>BeegoCommandArgs</find>
@@ -187,6 +176,7 @@
       <find>actual size mismatch</find>
       <find>.dat</find>
       <find>&quot;.dat&quot;</find>
+      <find>Bind</find>
     </findStrings>
     <replaceStrings>
       <replace>github.com/isoft/isoft_timer_web</replace>
@@ -238,7 +228,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/isoft_storage/apiServer/objects/get_stream.go" />
         <option value="$PROJECT_DIR$/isoft_storage/apiServer/objects/post.go" />
         <option value="$PROJECT_DIR$/isoft_storage/apiServer/objects/put_stream.go" />
         <option value="$PROJECT_DIR$/isoft_storage/apiServer/temp/head.go" />
@@ -289,6 +278,7 @@
         <option value="$PROJECT_DIR$/isoft_storage/apiServer/objects/put.go" />
         <option value="$PROJECT_DIR$/isoft_storage/apiServer/objects/store.go" />
         <option value="$PROJECT_DIR$/isoft_storage/apiServer/objects/get.go" />
+        <option value="$PROJECT_DIR$/isoft_storage/lib/rabbitmq/rabbitmq.go" />
       </list>
     </option>
   </component>
@@ -348,27 +338,14 @@
               <item name="isoft" type="b2602c69:ProjectViewProjectNode" />
               <item name="isoft" type="462c0819:PsiDirectoryNode" />
               <item name="isoft_storage" type="462c0819:PsiDirectoryNode" />
-              <item name="apiServer" type="462c0819:PsiDirectoryNode" />
+              <item name="lib" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="isoft" type="b2602c69:ProjectViewProjectNode" />
               <item name="isoft" type="462c0819:PsiDirectoryNode" />
               <item name="isoft_storage" type="462c0819:PsiDirectoryNode" />
-              <item name="apiServer" type="462c0819:PsiDirectoryNode" />
-              <item name="heartbeat" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="isoft" type="b2602c69:ProjectViewProjectNode" />
-              <item name="isoft" type="462c0819:PsiDirectoryNode" />
-              <item name="isoft_storage" type="462c0819:PsiDirectoryNode" />
-              <item name="apiServer" type="462c0819:PsiDirectoryNode" />
-              <item name="locate" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="isoft" type="b2602c69:ProjectViewProjectNode" />
-              <item name="isoft" type="462c0819:PsiDirectoryNode" />
-              <item name="isoft_storage" type="462c0819:PsiDirectoryNode" />
-              <item name="dataServer" type="462c0819:PsiDirectoryNode" />
+              <item name="lib" type="462c0819:PsiDirectoryNode" />
+              <item name="rabbitmq" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -831,13 +808,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_storage/lib/rabbitmq/rabbitmq.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="77">
-          <caret line="87" selection-start-line="87" selection-end-line="87" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/isoft/common/stringutil.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
@@ -1045,13 +1015,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_storage/apiServer/objects/put.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="23" column="18" selection-start-line="23" selection-start-column="18" selection-end-line="23" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/isoft_storage/lib/utils/utils.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="348">
@@ -1106,6 +1069,26 @@
           <caret line="43" lean-forward="true" selection-start-line="43" selection-end-line="43" />
           <folding>
             <element signature="e#17#172#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_storage/apiServer/objects/put.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="23" column="18" selection-start-line="23" selection-start-column="18" selection-end-line="23" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_storage/lib/rabbitmq/rabbitmq_test.go">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_storage/lib/rabbitmq/rabbitmq.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="239">
+          <caret line="104" column="5" lean-forward="true" selection-start-line="104" selection-start-column="5" selection-end-line="104" selection-end-column="5" />
+          <folding>
+            <element signature="e#18#74#0" expanded="true" />
           </folding>
         </state>
       </provider>
