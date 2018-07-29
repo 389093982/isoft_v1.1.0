@@ -16,7 +16,7 @@ func del(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
-	// 在元数据中给对象添加一个表示删除的特殊版本,而在数据节点上保留其数据 (hash置空)
+	// 在元数据中给对象添加一个表示删除的特殊版本,而在数据节点上保留其数据 (size为0,hash为空字符串,表示这是一个删除标记)
 	e = es.PutMetadata(name, version.Version+1, 0, "")
 	if e != nil {
 		log.Println(e)

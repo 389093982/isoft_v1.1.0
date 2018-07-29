@@ -10,6 +10,7 @@ import (
 	"strings"
 )
 
+// 元数据信息
 type Metadata struct {
 	Name    string
 	Version int
@@ -71,6 +72,7 @@ func GetMetadata(name string, version int) (Metadata, error) {
 	return getMetadata(name, version)
 }
 
+// 四个参数分别表示元数据名称、版本、大小、hash值
 func PutMetadata(name string, version int, size int64, hash string) error {
 	doc := fmt.Sprintf(`{"name":"%s","version":%d,"size":%d,"hash":"%s"}`,
 		name, version, size, hash)

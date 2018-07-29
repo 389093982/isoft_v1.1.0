@@ -36,6 +36,7 @@ func get(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
+	// hash 值为空字符串说明该对象该版本是一个删除标记
 	if meta.Hash == "" {
 		w.WriteHeader(http.StatusNotFound)
 		return
