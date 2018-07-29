@@ -66,9 +66,9 @@ func CollectObjects() {
 		if len(file) != 3 {
 			panic(files[i])
 		}
-		// 第一个元素是 hash 值
+		// 第一个元素是存储对象的 hash 值
 		hash := file[0]
-		// 第二个参数是分片 id,第三个参数是 uuid
+		// 第二个参数是分片 id,第三个参数是分片对应的 hash 值
 		id, e := strconv.Atoi(file[1])
 		if e != nil {
 			panic(e)
