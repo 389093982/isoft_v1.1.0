@@ -13,13 +13,13 @@ import (
 	"strings"
 )
 
+// 默认使用最新的版本,可以不传 ?version=xx,版本号从 1 开始递增
 func get(w http.ResponseWriter, r *http.Request) {
 	// 从请求路径中截取对象名称
 	name := strings.Split(r.URL.EscapedPath(), "/")[2]
 	// 从请求参数中获取对象版本
 	versionId := r.URL.Query()["version"]
-	// 默认版本
-	version := 0
+	version := 0 // 0 代表最新版本
 	var e error
 	if len(versionId) != 0 {
 		version, e = strconv.Atoi(versionId[0])

@@ -3,7 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="61c01151-84f0-4bfd-a227-5c1f0b5a424d" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_storage/lib/rabbitmq/rabbitmq.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_storage/lib/rabbitmq/rabbitmq.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_storage/apiServer/apiServer.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_storage/apiServer/apiServer.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_storage/apiServer/objects/del.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_storage/apiServer/objects/del.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_storage/apiServer/objects/get.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_storage/apiServer/objects/get.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_storage/apiServer/versions/handler.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_storage/apiServer/versions/handler.go" afterDir="false" />
     </list>
     <ignored path="isoft_deploy_web/static/uploadfile/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -38,8 +41,8 @@
       <file leaf-file-name="apiServer.go" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/isoft_storage/apiServer/apiServer.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="283">
-              <caret line="28" column="45" selection-start-line="28" selection-start-column="45" selection-end-line="28" selection-end-column="45" />
+            <state relative-caret-position="378">
+              <caret line="35" column="45" lean-forward="true" selection-start-line="35" selection-start-column="45" selection-end-line="35" selection-end-column="45" />
               <folding>
                 <element signature="e#14#155#0" expanded="true" />
               </folding>
@@ -47,11 +50,44 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="handler.go" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/isoft_storage/apiServer/versions/handler.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="558">
+              <caret line="35" column="54" selection-start-line="35" selection-start-column="54" selection-end-line="35" selection-end-column="54" />
+              <folding>
+                <element signature="e#18#105#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="es.go" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/isoft_storage/lib/es/es.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="57">
+              <caret line="102" column="5" selection-start-line="102" selection-start-column="5" selection-end-line="102" selection-end-column="5" />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="handler.go" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/isoft_storage/apiServer/objects/handler.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="16" column="10" lean-forward="true" selection-start-line="16" selection-start-column="10" selection-end-line="16" selection-end-column="10" />
+            <state relative-caret-position="340">
+              <caret line="20" column="9" lean-forward="true" selection-start-line="20" selection-start-column="9" selection-end-line="20" selection-end-column="9" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="del.go" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/isoft_storage/apiServer/objects/del.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="323">
+              <caret line="19" column="17" selection-start-line="19" selection-start-column="17" selection-end-line="19" selection-end-column="17" />
+              <folding>
+                <element signature="e#17#87#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -59,75 +95,10 @@
       <file leaf-file-name="get.go" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/isoft_storage/apiServer/objects/get.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-96">
-              <caret line="43" lean-forward="true" selection-start-line="43" selection-end-line="43" />
+            <state relative-caret-position="191">
+              <caret line="21" column="31" selection-start-line="21" selection-start-column="31" selection-end-line="21" selection-end-column="31" />
               <folding>
                 <element signature="e#17#172#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="rabbitmq.go" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/isoft_storage/lib/rabbitmq/rabbitmq.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="239">
-              <caret line="104" column="5" lean-forward="true" selection-start-line="104" selection-start-column="5" selection-end-line="104" selection-end-column="5" />
-              <folding>
-                <element signature="e#18#74#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="rabbitmq_test.go" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/isoft_storage/lib/rabbitmq/rabbitmq_test.go">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file leaf-file-name="put.go" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/isoft_storage/apiServer/objects/put.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="23" column="18" selection-start-line="23" selection-start-column="18" selection-end-line="23" selection-end-column="18" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="store.go" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/isoft_storage/apiServer/objects/store.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="18" column="24" selection-start-line="18" selection-start-column="24" selection-end-line="18" selection-end-column="24" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="utils.go" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/isoft_storage/lib/utils/utils.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="348">
-              <caret line="40" column="5" selection-start-line="40" selection-start-column="5" selection-end-line="40" selection-end-column="5" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="put_stream.go" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/isoft_storage/apiServer/objects/put_stream.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="8" column="50" selection-start-line="8" selection-start-column="50" selection-end-line="8" selection-end-column="50" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="put.go" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/isoft_storage/lib/rs/put.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
-              <caret line="2" column="7" lean-forward="true" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
-              <folding>
-                <element signature="e#12#75#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -228,11 +199,9 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/isoft_storage/apiServer/objects/post.go" />
         <option value="$PROJECT_DIR$/isoft_storage/apiServer/objects/put_stream.go" />
         <option value="$PROJECT_DIR$/isoft_storage/apiServer/temp/head.go" />
         <option value="$PROJECT_DIR$/isoft_storage/apiServer/temp/put.go" />
-        <option value="$PROJECT_DIR$/isoft_storage/apiServer/versions/handler.go" />
         <option value="$PROJECT_DIR$/isoft_storage/lib/rs/resumable_get.go" />
         <option value="$PROJECT_DIR$/isoft_storage/lib/rs/put.go" />
         <option value="$PROJECT_DIR$/isoft_storage/lib/rs/get.go" />
@@ -271,14 +240,16 @@
         <option value="$PROJECT_DIR$/isoft_storage/dataServer/heartbeat/heartbeat.go" />
         <option value="$PROJECT_DIR$/isoft_storage/dataServer/dataServer.go" />
         <option value="$PROJECT_DIR$/isoft_storage/apiServer/heartbeat/heartbeat.go" />
-        <option value="$PROJECT_DIR$/isoft_storage/apiServer/apiServer.go" />
         <option value="$PROJECT_DIR$/isoft_storage/apiServer/locate/handler.go" />
         <option value="$PROJECT_DIR$/isoft_storage/apiServer/locate/locate.go" />
         <option value="$PROJECT_DIR$/isoft_storage/apiServer/objects/handler.go" />
         <option value="$PROJECT_DIR$/isoft_storage/apiServer/objects/put.go" />
         <option value="$PROJECT_DIR$/isoft_storage/apiServer/objects/store.go" />
-        <option value="$PROJECT_DIR$/isoft_storage/apiServer/objects/get.go" />
         <option value="$PROJECT_DIR$/isoft_storage/lib/rabbitmq/rabbitmq.go" />
+        <option value="$PROJECT_DIR$/isoft_storage/apiServer/objects/get.go" />
+        <option value="$PROJECT_DIR$/isoft_storage/apiServer/objects/del.go" />
+        <option value="$PROJECT_DIR$/isoft_storage/apiServer/apiServer.go" />
+        <option value="$PROJECT_DIR$/isoft_storage/apiServer/versions/handler.go" />
       </list>
     </option>
   </component>
@@ -745,13 +716,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_storage/lib/es/es.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="7" lean-forward="true" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/isoft_quartz_web/tests/default_test.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="33">
@@ -1046,33 +1010,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_storage/apiServer/apiServer.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="283">
-          <caret line="28" column="45" selection-start-line="28" selection-start-column="45" selection-end-line="28" selection-end-column="45" />
-          <folding>
-            <element signature="e#14#155#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_storage/apiServer/objects/handler.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="16" column="10" lean-forward="true" selection-start-line="16" selection-start-column="10" selection-end-line="16" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_storage/apiServer/objects/get.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-96">
-          <caret line="43" lean-forward="true" selection-start-line="43" selection-end-line="43" />
-          <folding>
-            <element signature="e#17#172#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/isoft_storage/apiServer/objects/put.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="289">
@@ -1080,15 +1017,69 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_storage/lib/rabbitmq/rabbitmq_test.go">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/isoft_storage/lib/rabbitmq/rabbitmq.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="239">
+        <state relative-caret-position="1768">
           <caret line="104" column="5" lean-forward="true" selection-start-line="104" selection-start-column="5" selection-end-line="104" selection-end-column="5" />
           <folding>
             <element signature="e#18#74#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_storage/lib/rabbitmq/rabbitmq_test.go">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_storage/apiServer/objects/handler.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="20" column="9" lean-forward="true" selection-start-line="20" selection-start-column="9" selection-end-line="20" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_storage/apiServer/objects/del.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="19" column="17" selection-start-line="19" selection-start-column="17" selection-end-line="19" selection-end-column="17" />
+          <folding>
+            <element signature="e#17#87#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_storage/apiServer/objects/get.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="191">
+          <caret line="21" column="31" selection-start-line="21" selection-start-column="31" selection-end-line="21" selection-end-column="31" />
+          <folding>
+            <element signature="e#17#172#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_storage/apiServer/apiServer.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="378">
+          <caret line="35" column="45" lean-forward="true" selection-start-line="35" selection-start-column="45" selection-end-line="35" selection-end-column="45" />
+          <folding>
+            <element signature="e#14#155#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_storage/lib/es/es.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="57">
+          <caret line="102" column="5" selection-start-line="102" selection-start-column="5" selection-end-line="102" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_storage/apiServer/versions/handler.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="558">
+          <caret line="35" column="54" selection-start-line="35" selection-start-column="54" selection-end-line="35" selection-end-column="54" />
+          <folding>
+            <element signature="e#18#105#0" expanded="true" />
           </folding>
         </state>
       </provider>

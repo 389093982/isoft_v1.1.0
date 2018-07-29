@@ -31,6 +31,8 @@ func main() {
 
 	// 接口服务对外提供定位功能,向数据服务节点群发定位消息并接收反馈消息
 	http.HandleFunc("/locate/", locate.Handler)
+
+	// 提供对象的列表功能,用于查询所有对象或指定对象的所有版本
 	http.HandleFunc("/versions/", versions.Handler)
 
 	fmt.Println(fmt.Sprintf("Start ListenAndServe address %s", cfg.GetConfigValue(cfg.LISTEN_ADDRESS)))
