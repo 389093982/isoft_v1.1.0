@@ -31,7 +31,17 @@
     <favorites_list name="isoft" />
   </component>
   <component name="FileEditorManager">
-    <leaf />
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="config.ini" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/isoft_storage/cfg/config.ini">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret column="9" selection-start-column="9" selection-end-column="9" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -121,7 +131,7 @@
   </component>
   <component name="GOROOT" path="$PROJECT_DIR$/../../../../../soft/install/go/go1.10.1" />
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -167,7 +177,6 @@
         <option value="$PROJECT_DIR$/isoft_storage/dataServer/temp/del.go" />
         <option value="$PROJECT_DIR$/isoft_storage/dataServer/temp/patch.go" />
         <option value="$PROJECT_DIR$/isoft_storage/config/config.go" />
-        <option value="$PROJECT_DIR$/isoft_storage/cfg/config.ini" />
         <option value="$PROJECT_DIR$/isoft_storage/cfg/config.go" />
         <option value="$PROJECT_DIR$/isoft_storage/apiServer/apiServer.go" />
         <option value="$PROJECT_DIR$/isoft_storage/deleteOrphanObject/deleteOrphanObject.go" />
@@ -177,6 +186,7 @@
         <option value="$PROJECT_DIR$/isoft_storage/dataServer/temp/post.go" />
         <option value="$PROJECT_DIR$/isoft_storage/dataServer/temp/handler.go" />
         <option value="$PROJECT_DIR$/isoft_storage/dataServer/temp/put.go" />
+        <option value="$PROJECT_DIR$/isoft_storage/cfg/config.ini" />
       </list>
     </option>
   </component>
@@ -227,30 +237,6 @@
               <item name="isoft" type="b2602c69:ProjectViewProjectNode" />
               <item name="isoft" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="isoft" type="b2602c69:ProjectViewProjectNode" />
-              <item name="isoft" type="462c0819:PsiDirectoryNode" />
-              <item name="isoft_storage" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="isoft" type="b2602c69:ProjectViewProjectNode" />
-              <item name="isoft" type="462c0819:PsiDirectoryNode" />
-              <item name="isoft_storage" type="462c0819:PsiDirectoryNode" />
-              <item name="dataServer" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="isoft" type="b2602c69:ProjectViewProjectNode" />
-              <item name="isoft" type="462c0819:PsiDirectoryNode" />
-              <item name="isoft_storage" type="462c0819:PsiDirectoryNode" />
-              <item name="dataServer" type="462c0819:PsiDirectoryNode" />
-              <item name="temp" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="isoft" type="b2602c69:ProjectViewProjectNode" />
-              <item name="isoft" type="462c0819:PsiDirectoryNode" />
-              <item name="isoft_storage" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
@@ -269,10 +255,10 @@
     <property name="go.gopath.indexing.explicitly.defined" value="true" />
     <property name="go.sdk.automatically.set" value="true" />
     <property name="go.vendoring.notification.had.been.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/.." />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
-    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
+    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -514,13 +500,12 @@
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="1" sideWeight="0.28853047" visible="true" weight="0.2603072" />
+      <window_info active="true" content_ui="combo" id="Project" order="1" sideWeight="0.28853047" visible="true" weight="0.26839128" />
       <window_info anchor="bottom" id="TODO" order="11" weight="0.3297491" />
       <window_info anchor="bottom" id="Event Log" order="3" sideWeight="0.5004042" side_tool="true" weight="0.4929078" />
       <window_info anchor="right" id="Database" order="0" side_tool="true" weight="0.32983023" />
-      <window_info anchor="bottom" id="Find" order="6" weight="0.47517732" />
       <window_info anchor="bottom" id="Database Changes" order="1" show_stripe_button="false" />
-      <window_info active="true" anchor="bottom" id="Version Control" order="4" visible="true" weight="0.64893615" />
+      <window_info anchor="bottom" id="Version Control" order="4" show_stripe_button="false" weight="0.34690267" />
       <window_info anchor="bottom" id="Run" order="7" sideWeight="0.4995958" weight="0.37411347" />
       <window_info id="Structure" order="2" sideWeight="0.71146953" side_tool="true" weight="0.33225545" />
       <window_info anchor="bottom" id="Terminal" order="2" sideWeight="0.4987874" weight="0.32446808" />
@@ -534,6 +519,7 @@
       <window_info anchor="bottom" id="Messages" order="0" weight="0.55376345" />
       <window_info anchor="bottom" id="Message" order="5" />
       <window_info anchor="bottom" id="Cvs" order="9" weight="0.25" />
+      <window_info anchor="bottom" id="Find" order="6" weight="0.47517732" />
       <window_info anchor="right" id="Coverage" order="4" side_tool="true" weight="0.32983023" />
     </layout>
   </component>
@@ -560,6 +546,9 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
+    <ignored-roots>
+      <path value="$PROJECT_DIR$" />
+    </ignored-roots>
     <MESSAGE value="初次提交" />
     <option name="LAST_COMMIT_MESSAGE" value="初次提交" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
@@ -615,6 +604,13 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/isoft_storage/cfg/config.ini">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="9" lean-forward="true" selection-start-column="9" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/isoft_storage/lib/es/es.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
@@ -647,13 +643,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
           <caret line="10" column="46" lean-forward="true" selection-start-line="10" selection-start-column="46" selection-end-line="10" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_storage/cfg/config.ini">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="8" selection-start-column="1" selection-end-column="8" />
         </state>
       </provider>
     </entry>
@@ -773,9 +762,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
           <caret line="9" column="9" lean-forward="true" selection-start-line="9" selection-start-column="9" selection-end-line="9" selection-end-column="9" />
-          <folding>
-            <element signature="e#17#39#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -797,9 +783,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
           <caret line="18" column="18" selection-start-line="18" selection-start-column="18" selection-end-line="18" selection-end-column="18" />
-          <folding>
-            <element signature="e#12#87#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -828,9 +811,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="156">
           <caret line="19" column="17" lean-forward="true" selection-start-line="19" selection-start-column="17" selection-end-line="19" selection-end-column="17" />
-          <folding>
-            <element signature="e#17#120#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -838,9 +818,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="176">
           <caret line="16" column="22" selection-start-line="16" selection-start-column="22" selection-end-line="16" selection-end-column="22" />
-          <folding>
-            <element signature="e#17#109#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -848,9 +825,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="238">
           <caret line="14" column="24" selection-start-line="14" selection-start-column="24" selection-end-line="14" selection-end-column="24" />
-          <folding>
-            <element signature="e#17#80#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -872,9 +846,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1">
           <caret line="11" column="9" selection-start-line="11" selection-start-column="9" selection-end-line="11" selection-end-column="9" />
-          <folding>
-            <element signature="e#14#43#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -903,9 +874,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="464">
           <caret line="42" column="12" selection-start-line="42" selection-start-column="12" selection-end-line="42" selection-end-column="12" />
-          <folding>
-            <element signature="e#14#87#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -916,23 +884,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/isoft/doc/port_allocation.txt">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft/doc/golang_keymap.txt">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft/doc/go_test.txt">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft/doc/go_dep.txt">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft/doc/git_doc.txt">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft/doc/beego_cmd.txt">
-      <provider selected="true" editor-type-id="text-editor" />
+    <entry file="file://$PROJECT_DIR$/isoft_storage/cfg/config.ini">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="9" selection-start-column="9" selection-end-column="9" />
+        </state>
+      </provider>
     </entry>
   </component>
   <component name="masterDetails">
