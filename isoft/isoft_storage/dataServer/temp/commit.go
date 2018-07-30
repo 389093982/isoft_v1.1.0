@@ -25,9 +25,11 @@ func (t *tempInfo) id() int {
 	return id
 }
 
+// 将临时对象转正
 func commitTempObject(datFile string, tempinfo *tempInfo) {
 	f, _ := os.Open(datFile)
 	defer f.Close()
+	// d 表示当前分片计算出来的 hash 值
 	d := url.PathEscape(utils.CalculateHash(f))
 	f.Seek(0, io.SeekStart)
 	// 正式文件名称
