@@ -5,11 +5,8 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/isoft_storage/apiServer/objects/get.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_storage/apiServer/objects/get.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/isoft_storage/apiServer/objects/post.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_storage/apiServer/objects/post.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_storage/apiServer/temp/head.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_storage/apiServer/temp/head.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_storage/apiServer/temp/put.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_storage/apiServer/temp/put.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/isoft_storage/dataServer/temp/commit.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_storage/dataServer/temp/commit.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/isoft_storage/lib/rs/get.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_storage/lib/rs/get.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_storage/lib/rs/resumable_put.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_storage/lib/rs/resumable_put.go" afterDir="false" />
     </list>
     <ignored path="isoft_deploy_web/static/uploadfile/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
