@@ -50,9 +50,10 @@ func get(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusNotFound)
 		return
 	}
-
+	// 从 HTTP 请求的 Range 头部获得客户端要求的偏移量
 	offset := utils.GetOffsetFromHeader(r.Header)
 	if offset != 0 {
+		// 跳到 offset 位置进行下载,两个参数分别表示需要跳过的字节数和起跳点
 		stream.Seek(offset, io.SeekCurrent)
 		w.Header().Set("content-range", fmt.Sprintf("bytes %d-%d/%d", offset, meta.Size-1, meta.Size))
 		w.WriteHeader(http.StatusPartialContent)

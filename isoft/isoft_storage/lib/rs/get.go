@@ -58,6 +58,7 @@ func (s *RSGetStream) Close() {
 	}
 }
 
+// 两个参数分别表示需要跳过的字节数和起跳点
 func (s *RSGetStream) Seek(offset int64, whence int) (int64, error) {
 	if whence != io.SeekCurrent {
 		panic("only support SeekCurrent")
