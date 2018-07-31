@@ -213,6 +213,9 @@ func (this *ServiceController) preparePackageName(serviceName, serviceType strin
 	if strings.EqualFold(serviceType, constant.SERVICE_TYPE_BEEGO) {
 		return strings.Join([]string{serviceName, ".tar.gz"}, "") // .tar.gz 格式包
 	}
+	if strings.EqualFold(serviceType, constant.SERVICE_TYPE_API) {
+		return serviceName
+	}
 	return ""
 }
 
