@@ -1,7 +1,7 @@
 package main
 
 import (
-	"../apiServer/objects"
+	"../../apiServer/objects"
 	"flag"
 	"fmt"
 	"isoft/isoft_storage/cfg"
