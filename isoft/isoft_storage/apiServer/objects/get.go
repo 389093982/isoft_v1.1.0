@@ -67,6 +67,7 @@ func get(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 	if acceptGzip {
+		// 下载可支持 gzip 格式下载
 		w.Header().Set("content-encoding", "gzip")
 		w2 := gzip.NewWriter(w)
 		io.Copy(w2, stream)

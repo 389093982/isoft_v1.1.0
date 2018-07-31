@@ -14,6 +14,7 @@ func sendFile(w io.Writer, file string) {
 		return
 	}
 	defer f.Close()
+	// gzip 解压,再读取数据
 	gzipStream, e := gzip.NewReader(f)
 	if e != nil {
 		log.Println(e)

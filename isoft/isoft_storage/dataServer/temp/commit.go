@@ -34,6 +34,7 @@ func commitTempObject(datFile string, tempinfo *tempInfo) {
 	f.Seek(0, io.SeekStart)
 	// 正式文件名称
 	w, _ := os.Create(cfg.GetConfigValue(cfg.STORAGE_ROOT) + "/objects/" + tempinfo.Name + "." + d)
+	// 转正默认使用 gzip 进行压缩
 	w2 := gzip.NewWriter(w)
 	io.Copy(w2, f)
 	w2.Close()

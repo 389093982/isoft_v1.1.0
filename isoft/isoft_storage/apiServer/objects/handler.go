@@ -6,6 +6,8 @@ import "net/http"
 func Handler(w http.ResponseWriter, r *http.Request) {
 	m := r.Method
 	if m == http.MethodPost {
+		// post 方法主要用于创建 token, token 可以还原出 stream
+		// stream, e := rs.NewRSResumablePutStreamFromToken(token)
 		post(w, r)
 		return
 	}
