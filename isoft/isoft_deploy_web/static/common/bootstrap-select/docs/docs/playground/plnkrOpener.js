@@ -49,7 +49,7 @@ $(document).ready(function() {
           url: 'https://raw.githubusercontent.com/silviomoreto/bootstrap-select/master/dist/css/bootstrap-select.css',
           content: ''
         }
-      ]
+      ];
 
       function getData(file) {
         return $.ajax({
@@ -72,9 +72,8 @@ $(document).ready(function() {
         postData.description = ctrl.example.name;
 
         formPostData('https://plnkr.co/edit/?p=preview', postData);
-      };
-
-      $.when.apply(this, files).done(function() {
+      }
+        $.when.apply(this, files).done(function() {
         sendData();
       });
     };

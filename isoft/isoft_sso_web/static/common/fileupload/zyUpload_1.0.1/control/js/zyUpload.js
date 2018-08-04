@@ -253,7 +253,7 @@
 						var funDealtPreviewHtml = function() {
 							file = selectFiles[i];
 							if (file) {
-								var reader = new FileReader()
+								var reader = new FileReader();
 								reader.onload = function(e) {
 									// 处理下配置参数和格式的html
 									html += self.funDisposePreviewHtml(file, e);
@@ -261,7 +261,7 @@
 									i++;
 									// 再接着调用此方法递归组成可以预览的html
 									funDealtPreviewHtml();
-								}
+								};
 								reader.readAsDataURL(file);
 							} else {
 								// 走到这里说明文件html已经组织完毕，要把html添加到预览区
