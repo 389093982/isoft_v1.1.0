@@ -8,7 +8,6 @@
 <script src="{{ .ServerName }}/static/common/jquery-1.11.3.min.js" type="text/javascript"></script>
 <script src="{{ .ServerName }}/static/common/bootstrap-3.3.7-dist/js/bootstrap.js" type="text/javascript"></script>
 <!-- jQuery左侧手风琴菜单栏 -->
-<link rel="stylesheet" type="text/css" href="{{ .ServerName }}/static/common/leftnav/css/font-awesome.min.css">
 <link rel="stylesheet" href="{{ .ServerName }}/static/common/leftnav/css/leftnav.css" media="screen" type="text/css">
 <script type="text/javascript" src='{{ .ServerName }}/static/common/leftnav/js/leftnav.js'></script>
 <body>
@@ -26,7 +25,7 @@
                         <i class="fa fa-leaf"></i>部署环境管理<i class="fa fa-chevron-down"></i>
                     </div>
                     <ul class="submenu">
-                        <li id="env"><a href="{{ .ServerName }}/env/list">环境清单</a></li>
+                        <li><a href="{{ .ServerName }}/env/list">环境清单</a></li>
                     </ul>
                 </li>
                 <li>
@@ -34,10 +33,10 @@
                         <i class="fa fa-leaf"></i>基础软件管理<i class="fa fa-chevron-down"></i>
                     </div>
                     <ul class="submenu">
-                        <li id="errlogin"><a href="#">java运行环境管理</a></li>
-                        <li id="errlogin"><a href="#">python运行环境管理</a></li>
-                        <li id="errlogin"><a href="#">golang运行环境管理</a></li>
-                        <li id="errlogin"><a href="#">mysql数据库管理</a></li>
+                        <li><a href="#">java运行环境管理</a></li>
+                        <li><a href="#">python运行环境管理</a></li>
+                        <li><a href="#">golang运行环境管理</a></li>
+                        <li><a href="#">mysql数据库管理</a></li>
                     </ul>
                 </li>
                 <li>
@@ -45,11 +44,11 @@
                         <i class="fa fa-leaf"></i>应用服务管理<i class="fa fa-chevron-down"></i>
                     </div>
                     <ul class="submenu">
-                        <li id="service"><a href="{{ .ServerName }}/service/list?service_type=mysql">mysql管理</a></li>
-                        <li id="service"><a href="{{ .ServerName }}/service/list?service_type=nginx">nginx管理</a></li>
-                        <li id="service"><a href="{{ .ServerName }}/service/list?service_type=beego">beego应用部署</a></li>
-                        <li id="service"><a href="{{ .ServerName }}/service/list?service_type=api">api应用部署</a></li>
-                        <li id="service"><a href="{{ .ServerName }}/service/monitor">服务监控</a></li>
+                        <li><a href="{{ .ServerName }}/service/list?service_type=mysql">mysql管理</a></li>
+                        <li><a href="{{ .ServerName }}/service/list?service_type=nginx">nginx管理</a></li>
+                        <li><a href="{{ .ServerName }}/service/list?service_type=beego">beego应用部署</a></li>
+                        <li><a href="{{ .ServerName }}/service/list?service_type=api">api应用部署</a></li>
+                        <li><a href="{{ .ServerName }}/service/monitor">服务监控</a></li>
                     </ul>
                 </li>
                 <li>
@@ -57,7 +56,7 @@
                         <i class="fa fa-leaf"></i>部署教程<i class="fa fa-chevron-down"></i>
                     </div>
                     <ul class="submenu">
-                        <li id="teacher"><a href="javascript:">教程</a></li>
+                        <li><a href="javascript:">教程</a></li>
                     </ul>
                 </li>
             </ul>
