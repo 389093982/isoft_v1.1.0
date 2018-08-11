@@ -2,44 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="61c01151-84f0-4bfd-a227-5c1f0b5a424d" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/isoft/doc/vue_project.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/Footer/Footer.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/Header/Header.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/Menu/LeftMenu.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/pages/Login/Login.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/static/leftnav/css/font-awesome.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/static/leftnav/css/leftnav.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/static/leftnav/fonts/fontawesome-webfont.eot" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/static/leftnav/fonts/fontawesome-webfont.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/static/leftnav/fonts/fontawesome-webfont.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/static/leftnav/fonts/fontawesome-webfont.woff2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/static/leftnav/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/static/leftnav/js/jquery.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/static/leftnav/js/leftnav.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/Header/header.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/Header/header.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/views/layout/layout.html" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_deploy_web/views/layout/layout.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_publisher_web/conf/app.conf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_publisher_web/controllers/default.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_publisher_web/main.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_publisher_web/routers/router.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_publisher_web/static/js/reload.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_publisher_web/tests/default_test.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_publisher_web/views/index.tpl" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_quartz_web/conf/app.conf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_quartz_web/controllers/default.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_quartz_web/main.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_quartz_web/routers/router.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_quartz_web/static/js/reload.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_quartz_web/tests/default_test.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_quartz_web/views/index.tpl" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_timer_web/conf/app.conf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_timer_web/controllers/default.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_timer_web/main.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_timer_web/routers/router.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_timer_web/static/js/reload.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_timer_web/tests/default_test.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_timer_web/views/index.tpl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/App.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/Footer/Footer.vue" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/Footer/Footer.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/Header/Header.vue" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/Header/Header.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/HelloWorld.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/Menu/LeftMenu.vue" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/Menu/LeftMenu.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/router/index.js" afterDir="false" />
     </list>
     <ignored path="isoft_deploy_web/static/uploadfile/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -74,25 +45,33 @@
       <file leaf-file-name="App.vue" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/App.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="5" column="11" selection-start-line="5" selection-start-column="11" selection-end-line="5" selection-end-column="11" />
+            <state relative-caret-position="477">
+              <caret line="33" column="14" selection-start-line="33" selection-start-column="14" selection-end-line="33" selection-end-column="14" />
               <folding>
                 <element signature="n#style#0;n#router-link#0;n#div#1;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#router-link#1;n#div#1;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-                <element signature="e#458#509#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="LeftMenu.vue" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/Menu/LeftMenu.vue">
+      <file leaf-file-name="main.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/main.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="1" column="48" selection-start-line="1" selection-start-column="48" selection-end-line="1" selection-end-column="48" />
+            <state relative-caret-position="153">
+              <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
               <folding>
-                <element signature="n#style#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="e#140#161#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/router/index.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="34">
+              <caret line="2" selection-start-line="2" selection-end-line="2" />
             </state>
           </provider>
         </entry>
@@ -199,7 +178,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/isoft_storage/lib/es/es.go" />
         <option value="$PROJECT_DIR$/isoft_storage/deleteOldMetadata/deleteOldMetadata.go" />
         <option value="$PROJECT_DIR$/isoft_storage/deleteOrphanObject/deleteOrphanObject.go" />
         <option value="$PROJECT_DIR$/isoft_storage/dataServer/objects/del.go" />
@@ -239,17 +217,18 @@
         <option value="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/config/index.js" />
         <option value="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/FooterGuide/FooterGuide.vue" />
         <option value="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/header/header.vue" />
-        <option value="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/router/index.js" />
         <option value="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/.eslintignore" />
         <option value="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/build/webpack.base.conf.js" />
         <option value="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/main.js" />
         <option value="$PROJECT_DIR$/isoft/doc/vue_project.txt" />
-        <option value="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/Footer/Footer.vue" />
         <option value="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/pages/Login/Login.vue" />
-        <option value="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/Header/Header.vue" />
         <option value="$PROJECT_DIR$/isoft_deploy_web/views/layout/layout.html" />
-        <option value="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/App.vue" />
         <option value="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/Menu/LeftMenu.vue" />
+        <option value="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/Header/Header.vue" />
+        <option value="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/App.vue" />
+        <option value="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/Header/header.css" />
+        <option value="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/Footer/Footer.vue" />
+        <option value="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/router/index.js" />
       </list>
     </option>
   </component>
@@ -313,6 +292,30 @@
             <path>
               <item name="isoft" type="b2602c69:ProjectViewProjectNode" />
               <item name="isoft" type="462c0819:PsiDirectoryNode" />
+              <item name="isoft_deploy_web" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="isoft" type="b2602c69:ProjectViewProjectNode" />
+              <item name="isoft" type="462c0819:PsiDirectoryNode" />
+              <item name="isoft_deploy_web" type="462c0819:PsiDirectoryNode" />
+              <item name="static" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="isoft" type="b2602c69:ProjectViewProjectNode" />
+              <item name="isoft" type="462c0819:PsiDirectoryNode" />
+              <item name="isoft_deploy_web" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="isoft" type="b2602c69:ProjectViewProjectNode" />
+              <item name="isoft" type="462c0819:PsiDirectoryNode" />
+              <item name="isoft_deploy_web" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+              <item name="common" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="isoft" type="b2602c69:ProjectViewProjectNode" />
+              <item name="isoft" type="462c0819:PsiDirectoryNode" />
               <item name="isoft_vue_web" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -335,6 +338,24 @@
               <item name="isoft_deploy_web" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="components" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="isoft" type="b2602c69:ProjectViewProjectNode" />
+              <item name="isoft" type="462c0819:PsiDirectoryNode" />
+              <item name="isoft_vue_web" type="462c0819:PsiDirectoryNode" />
+              <item name="isoft_deploy_web" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+              <item name="Footer" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="isoft" type="b2602c69:ProjectViewProjectNode" />
+              <item name="isoft" type="462c0819:PsiDirectoryNode" />
+              <item name="isoft_vue_web" type="462c0819:PsiDirectoryNode" />
+              <item name="isoft_deploy_web" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+              <item name="Header" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="isoft" type="b2602c69:ProjectViewProjectNode" />
@@ -344,6 +365,14 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="components" type="462c0819:PsiDirectoryNode" />
               <item name="Menu" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="isoft" type="b2602c69:ProjectViewProjectNode" />
+              <item name="isoft" type="462c0819:PsiDirectoryNode" />
+              <item name="isoft_vue_web" type="462c0819:PsiDirectoryNode" />
+              <item name="isoft_deploy_web" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="router" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -384,11 +413,11 @@
       <recent name="D:\zhourui\program\go\goland_workspace\src\isoft\isoft_storage\manage" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\zhourui\program\go\goland_workspace\src\isoft\isoft_vue_web\isoft_deploy_web\src\components\Header" />
       <recent name="D:\zhourui\program\go\goland_workspace\src\isoft\isoft_vue_web\isoft_deploy_web\static" />
       <recent name="D:\zhourui\program\go\goland_workspace\src\isoft\isoft_vue_web\isoft_deploy_web\src\components" />
       <recent name="D:\zhourui\program\go\goland_workspace\src\isoft\isoft\doc" />
       <recent name="D:\zhourui\program\go\goland_workspace\src\isoft\isoft_vue_web\src" />
-      <recent name="D:\zhourui\program\go\goland_workspace\src\isoft\isoft\build\build_syncfile\static_common\alert_info" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -628,7 +657,7 @@
       <window_info anchor="bottom" id="Version Control" order="4" weight="0.34690267" />
       <window_info anchor="bottom" id="Run" order="7" sideWeight="0.4995958" weight="0.39716312" />
       <window_info id="Structure" order="2" sideWeight="0.71146953" side_tool="true" weight="0.33225545" />
-      <window_info anchor="bottom" id="Terminal" order="2" sideWeight="0.49636218" weight="0.32624114" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="2" sideWeight="0.49636218" visible="true" weight="0.32624114" />
       <window_info id="Favorites" order="0" sideWeight="0.71146953" side_tool="true" weight="0.33225545" />
       <window_info anchor="bottom" id="Debug" order="8" sideWeight="0.4995958" weight="0.40602836" />
       <window_info anchor="bottom" id="Thumbnails" order="12" weight="0.3297491" />
@@ -643,7 +672,7 @@
     </layout>
     <layout-to-restore>
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="3" weight="0.25" />
-      <window_info content_ui="combo" id="Project" order="1" sideWeight="0.28853047" visible="true" weight="0.3063864" />
+      <window_info active="true" content_ui="combo" id="Project" order="1" sideWeight="0.28853047" visible="true" weight="0.3063864" />
       <window_info anchor="bottom" id="Run" order="7" sideWeight="0.4995958" weight="0.39716312" />
       <window_info anchor="right" id="Ant Build" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Cvs" order="9" weight="0.25" />
@@ -747,24 +776,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/isoft_deploy_web/static/common/fileupload/zyUpload_1.0.1/control/js/zyUpload.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="69">
-          <caret line="397" column="45" lean-forward="true" selection-start-line="397" selection-start-column="45" selection-end-line="397" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_deploy_web/static/common/fileupload/zyUpload_1.0.1/core/zyFile.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3327" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft/build/build_syncfile/static_common/fileupload/jqueryupload/index.html" />
-    <entry file="file://$PROJECT_DIR$/isoft/build/build_syncfile/static_common/fileupload/zyUpload_1.0.1/demo.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-27" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/isoft/build/build_syncfile/static_common/fileupload/vueFileUpload/说明.htm" />
     <entry file="file://$PROJECT_DIR$/isoft/build/build_syncfile/static_common/fileupload/vueFileUpload/index.html" />
     <entry file="file://$PROJECT_DIR$/isoft_deploy_web/static/common/fileupload/vueFileUpload/index.html" />
@@ -849,13 +860,6 @@
         <state relative-caret-position="-3821" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/main.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="6" selection-start-line="6" selection-end-line="7" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/isoft/doc/vue_project.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="110">
@@ -863,37 +867,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/Footer/Footer.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="16" selection-start-line="16" selection-end-line="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/router/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="4" selection-start-line="4" selection-end-line="4" />
-          <folding>
-            <element signature="e#0#21#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/HelloWorld.vue">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/pages/Login/Login.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="272">
           <caret line="16" selection-start-line="16" selection-end-line="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/Header/Header.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="16" column="21" selection-start-line="16" selection-start-column="21" selection-end-line="16" selection-end-column="21" />
         </state>
       </provider>
     </entry>
@@ -947,25 +924,85 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/App.vue">
+    <entry file="file://$PROJECT_DIR$/isoft_deploy_web/views/common/header.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="11" selection-start-line="5" selection-start-column="11" selection-end-line="5" selection-end-column="11" />
-          <folding>
-            <element signature="n#style#0;n#router-link#0;n#div#1;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#router-link#1;n#div#1;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="e#458#509#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="289">
+          <caret line="17" column="6" lean-forward="true" selection-end-line="17" selection-end-column="6" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/Menu/LeftMenu.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="48" selection-start-line="1" selection-start-column="48" selection-end-line="1" selection-end-column="48" />
+        <state relative-caret-position="260">
+          <caret line="19" column="2" selection-start-line="19" selection-start-column="2" selection-end-line="19" selection-end-column="61" />
           <folding>
             <element signature="n#style#0;n#div#0;n#template#0;n#!!top" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/Header/header.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/Header/Header.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="69">
+          <caret line="15" selection-start-line="15" selection-end-line="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/Header/header.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" column="30" selection-start-line="1" selection-start-column="30" selection-end-line="1" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_deploy_web/views/common/footer.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret selection-end-line="23" selection-end-column="6" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/Footer/Footer.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="18" column="14" lean-forward="true" selection-start-line="18" selection-start-column="14" selection-end-line="18" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/HelloWorld.vue">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/App.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="477">
+          <caret line="33" column="14" selection-start-line="33" selection-start-column="14" selection-end-line="33" selection-end-column="14" />
+          <folding>
+            <element signature="n#style#0;n#router-link#0;n#div#1;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#router-link#1;n#div#1;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
+          <folding>
+            <element signature="e#140#161#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/router/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" selection-start-line="2" selection-end-line="2" />
         </state>
       </provider>
     </entry>

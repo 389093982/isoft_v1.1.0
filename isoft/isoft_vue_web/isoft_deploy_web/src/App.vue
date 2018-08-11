@@ -31,6 +31,8 @@ export default {
     width 100%
     height 100%
     #content
+      width 95%
+      margin 0 auto
       // css3 盒子模型
       display -webkit-box
       min-height 700px

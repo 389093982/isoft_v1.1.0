@@ -1,10 +1,24 @@
 <template>
-  <div class="header">
-    header
+  <div id="header">
+    <ul class="left">
+      <li><a href="#">Isoft首页 |</a></li>
+      <li><a href="/course/homemanage">我的领地 |</a></li>
+      <li><a href="#">我的收藏 |</a></li>
+      <li><a href="#">帮助系统</a></li>
+    </ul>
+    <ul class="right">
+      <li><a class="red login" href="#">暂未登录 |</a></li>
+      <li><a href="#">快速注册 |</a></li>
+      <li><a href="#">客户服务 |</a></li>
+      <li><a href="#">网站导航 |</a></li>
+      <li><a href="#">手机Isoft</a></li>
+    </ul>
   </div>
 </template>
 
 <script>
+  import header from './header.js'
+
   export default {
     methods: {
 
@@ -12,8 +26,10 @@
   }
 </script>
 
-<style lang="stylus" rel="stylesheet/stylus">
-  .header
+<style scoped type="text/stylus" rel="stylesheet/stylus">
+  @import './header.css';
+
+  #header
     background:green;
     height:80px;
 </style>

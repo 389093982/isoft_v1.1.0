@@ -1,44 +1,15 @@
 <template>
   <div class="account-l fl" style="margin: 10px;">
-    <a class="list-title" href="/user/manage">统一部署管理系统</a>
+    <a class="list-title">{{ title }}</a>
     <ul id="accordion" class="accordion">
-      <li>
+      <li v-for="link in links">
         <div class="link">
-          <i class="fa fa-leaf"></i>部署环境管理<i class="fa fa-chevron-down"></i>
+          <i class="fa fa-leaf"></i>{{ link.title }}<i class="fa fa-chevron-down"></i>
         </div>
         <ul class="submenu">
-          <li><a href="/env/list">环境清单</a></li>
-        </ul>
-      </li>
-      <li>
-        <div class="link">
-          <i class="fa fa-leaf"></i>基础软件管理<i class="fa fa-chevron-down"></i>
-        </div>
-        <ul class="submenu">
-          <li><a href="#">java运行环境管理</a></li>
-          <li><a href="#">python运行环境管理</a></li>
-          <li><a href="#">golang运行环境管理</a></li>
-          <li><a href="#">mysql数据库管理</a></li>
-        </ul>
-      </li>
-      <li>
-        <div class="link">
-          <i class="fa fa-leaf"></i>应用服务管理<i class="fa fa-chevron-down"></i>
-        </div>
-        <ul class="submenu">
-          <li><a href="/service/list?service_type=mysql">mysql管理</a></li>
-          <li><a href="/service/list?service_type=nginx">nginx管理</a></li>
-          <li><a href="/service/list?service_type=beego">beego应用部署</a></li>
-          <li><a href="/service/list?service_type=api">api应用部署</a></li>
-          <li><a href="/service/monitor">服务监控</a></li>
-        </ul>
-      </li>
-      <li>
-        <div class="link">
-          <i class="fa fa-leaf"></i>部署教程<i class="fa fa-chevron-down"></i>
-        </div>
-        <ul class="submenu">
-          <li><a href="javascript:">教程</a></li>
+          <li v-for="hrefinfo in link.hrefinfos">
+            <a :href="hrefinfo.hrefaddr">{{ hrefinfo.hrefdesc }}</a>
+          </li>
         </ul>
       </li>
     </ul>
@@ -48,7 +19,39 @@
 <script>
   import leftnav from '../../../static/leftnav/js/leftnav.js'
   export default {
-      name: "LeftMenu"
+    name: "LeftMenu",
+    data(){
+      return {
+        title:'统一部署管理系统',
+        links:[
+          {
+            title:'部署环境管理',
+            hrefinfos:[
+              {hrefaddr:'/env/list',hrefdesc:'环境清单'}
+            ]
+          },
+          {
+            title:'基础软件管理',
+            hrefinfos:[
+              {hrefaddr:'/env/list',hrefdesc:'java运行环境管理'},
+              {hrefaddr:'/env/list',hrefdesc:'python运行环境管理'},
+              {hrefaddr:'/env/list',hrefdesc:'golang运行环境管理'},
+              {hrefaddr:'/env/list',hrefdesc:'mysql数据库管理'}
+            ]
+          },
+          {
+            title:'应用服务管理',
+            hrefinfos:[
+              {hrefaddr:'/service/list?service_type=mysql',hrefdesc:'mysql管理'},
+              {hrefaddr:'/service/list?service_type=nginx',hrefdesc:'nginx管理'},
+              {hrefaddr:'/service/list?service_type=beego',hrefdesc:'beego应用部署'},
+              {hrefaddr:'/service/list?service_type=api',hrefdesc:'api应用部署'},
+              {hrefaddr:'/service/monitor',hrefdesc:'服务监控'}
+            ]
+          }
+        ]
+      }
+    }
   }
 </script>
 
