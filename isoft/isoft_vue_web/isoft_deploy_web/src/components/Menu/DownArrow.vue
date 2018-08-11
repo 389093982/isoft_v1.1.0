@@ -1,11 +1,16 @@
 <template>
-  <div><a href="javascript:;" class="down-arrow"></a></div>
+  <div><a href="javascript:;" class="down-arrow" :class="{ 'down-arrow-up': open}"></a></div>
 </template>
 
 <script>
-    export default {
-        name: "DownArrow"
+  export default {
+    name: "DownArrow",
+    props: ['open'],
+    data(){
+      return {
+      }
     }
+  }
 </script>
 
 <style scoped>
@@ -32,6 +37,7 @@
     transition:all .5s ease-in .1s;
     width:8px;
   }
+  /* 箭头向上 180 度旋转 */
   .down-arrow-up{
     -moz-transform:rotate(-105deg);
     -moz-transition:all .5s ease-in .1s;

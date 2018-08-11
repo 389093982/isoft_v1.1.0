@@ -2,17 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="61c01151-84f0-4bfd-a227-5c1f0b5a424d" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/Menu/DownArrow.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/Menu/DownArrow.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/App.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/Menu/DownArrow.vue" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/Menu/DownArrow.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/Menu/LeftMenu.vue" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/Menu/LeftMenu.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/static/leftnav/css/font-awesome.min.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/static/leftnav/css/leftnav.css" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/static/leftnav/css/leftnav.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/static/leftnav/fonts/fontawesome-webfont.eot" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/static/leftnav/fonts/fontawesome-webfont.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/static/leftnav/fonts/fontawesome-webfont.woff" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/static/leftnav/fonts/fontawesome-webfont.woff2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/static/leftnav/css/leftnav.css" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/Menu/leftmenu.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/static/leftnav/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/static/leftnav/js/jquery.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/static/leftnav/js/leftnav.js" beforeDir="false" />
     </list>
     <ignored path="isoft_deploy_web/static/uploadfile/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -44,82 +40,15 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="App.vue" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/App.vue">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-118">
-              <caret line="10" column="10" lean-forward="true" selection-start-line="10" selection-start-column="10" selection-end-line="10" selection-end-column="10" />
-              <folding>
-                <element signature="e#247#298#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="LeftMenu.vue" pinned="false" current-in-tab="false">
+      <file leaf-file-name="LeftMenu.vue" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/Menu/LeftMenu.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="5" column="25" selection-start-line="5" selection-start-column="25" selection-end-line="5" selection-end-column="25" />
+            <state relative-caret-position="157">
+              <caret line="62" column="35" lean-forward="true" selection-start-line="62" selection-start-column="35" selection-end-line="62" selection-end-column="35" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#template#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#router-link#0;n#li#0;n#ul#0;n#li#0;n#ul#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-                <element signature="e#533#572#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DownArrow.vue" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/Menu/DownArrow.vue">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="1" column="59" selection-start-line="1" selection-start-column="59" selection-end-line="1" selection-end-column="59" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DownArrow.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/Menu/DownArrow.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="4" column="1" lean-forward="true" selection-start-line="4" selection-start-column="1" selection-end-line="4" selection-end-column="11" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="leftnav.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/static/leftnav/css/leftnav.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="117">
-              <caret line="87" column="22" selection-start-line="87" selection-start-column="4" selection-end-line="87" selection-end-column="22" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="leftnav.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/isoft/build/build_syncfile/static_common/leftnav/css/leftnav.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-364">
-              <caret line="97" lean-forward="true" selection-start-line="97" selection-end-line="97" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/isoft/build/build_syncfile/static_common/leftnav/index.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="16" column="31" lean-forward="true" selection-start-line="16" selection-start-column="31" selection-end-line="16" selection-end-column="32" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="leftnav.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/static/leftnav/js/leftnav.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="239">
-              <caret line="18" lean-forward="true" selection-start-line="18" selection-end-line="18" />
             </state>
           </provider>
         </entry>
@@ -140,7 +69,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>RABBITMQ_SERVER</find>
       <find>&quot;../config&quot;</find>
       <find>../config</find>
       <find>127.0.0.1:8888</find>
@@ -165,11 +93,12 @@
       <find>id=&quot;service&quot;</find>
       <find>{{ .ServerName }}</find>
       <find>fontawesome-webfont.svg</find>
-      <find>link</find>
       <find>svg</find>
       <find>fa</find>
       <find>i</find>
       <find>submenu</find>
+      <find>link</find>
+      <find>open</find>
     </findStrings>
     <replaceStrings>
       <replace>github.com/isoft/isoft_sso_web</replace>
@@ -272,11 +201,11 @@
         <option value="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/Footer/Footer.vue" />
         <option value="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/router/index.js" />
         <option value="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/static/leftnav/css/font-awesome.min.css" />
-        <option value="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/static/leftnav/css/leftnav.css" />
-        <option value="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/Menu/LeftMenu.vue" />
         <option value="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/Menu/DownArrow.css" />
         <option value="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/App.vue" />
+        <option value="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/static/leftnav/css/leftnav.css" />
         <option value="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/Menu/DownArrow.vue" />
+        <option value="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/Menu/LeftMenu.vue" />
       </list>
     </option>
   </component>
@@ -498,32 +427,6 @@
               <item name="isoft_deploy_web" type="462c0819:PsiDirectoryNode" />
               <item name="static" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="isoft" type="b2602c69:ProjectViewProjectNode" />
-              <item name="isoft" type="462c0819:PsiDirectoryNode" />
-              <item name="isoft_vue_web" type="462c0819:PsiDirectoryNode" />
-              <item name="isoft_deploy_web" type="462c0819:PsiDirectoryNode" />
-              <item name="static" type="462c0819:PsiDirectoryNode" />
-              <item name="leftnav" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="isoft" type="b2602c69:ProjectViewProjectNode" />
-              <item name="isoft" type="462c0819:PsiDirectoryNode" />
-              <item name="isoft_vue_web" type="462c0819:PsiDirectoryNode" />
-              <item name="isoft_deploy_web" type="462c0819:PsiDirectoryNode" />
-              <item name="static" type="462c0819:PsiDirectoryNode" />
-              <item name="leftnav" type="462c0819:PsiDirectoryNode" />
-              <item name="css" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="isoft" type="b2602c69:ProjectViewProjectNode" />
-              <item name="isoft" type="462c0819:PsiDirectoryNode" />
-              <item name="isoft_vue_web" type="462c0819:PsiDirectoryNode" />
-              <item name="isoft_deploy_web" type="462c0819:PsiDirectoryNode" />
-              <item name="static" type="462c0819:PsiDirectoryNode" />
-              <item name="leftnav" type="462c0819:PsiDirectoryNode" />
-              <item name="js" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
@@ -563,11 +466,11 @@
       <recent name="D:\zhourui\program\go\goland_workspace\src\isoft\isoft_storage\manage" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\zhourui\program\go\goland_workspace\src\isoft\isoft_vue_web\isoft_deploy_web\src\components\Menu" />
       <recent name="D:\zhourui\program\go\goland_workspace\src\isoft\isoft_vue_web\isoft_deploy_web\static\leftnav" />
       <recent name="D:\zhourui\program\go\goland_workspace\src\isoft\isoft_vue_web\isoft_deploy_web\src\components\Header" />
       <recent name="D:\zhourui\program\go\goland_workspace\src\isoft\isoft_vue_web\isoft_deploy_web\static" />
       <recent name="D:\zhourui\program\go\goland_workspace\src\isoft\isoft_vue_web\isoft_deploy_web\src\components" />
-      <recent name="D:\zhourui\program\go\goland_workspace\src\isoft\isoft\doc" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -798,7 +701,7 @@
     <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="1" sideWeight="0.28853047" weight="0.3063864" />
+      <window_info active="true" content_ui="combo" id="Project" order="1" sideWeight="0.28853047" visible="true" weight="0.24333064" />
       <window_info anchor="bottom" id="TODO" order="11" weight="0.3297491" />
       <window_info anchor="bottom" id="Event Log" order="3" sideWeight="0.50363785" side_tool="true" weight="0.32624114" />
       <window_info anchor="right" id="Database" order="0" side_tool="true" weight="0.32983023" />
@@ -820,29 +723,6 @@
       <window_info anchor="bottom" id="Cvs" order="9" weight="0.25" />
       <window_info anchor="right" id="Coverage" order="4" side_tool="true" weight="0.32983023" />
     </layout>
-    <layout-to-restore>
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="3" weight="0.25" />
-      <window_info active="true" content_ui="combo" id="Project" order="1" sideWeight="0.28853047" visible="true" weight="0.3063864" />
-      <window_info anchor="bottom" id="Run" order="7" sideWeight="0.4995958" weight="0.39716312" />
-      <window_info anchor="right" id="Ant Build" order="2" weight="0.25" />
-      <window_info anchor="bottom" id="Cvs" order="9" weight="0.25" />
-      <window_info anchor="bottom" id="Thumbnails" order="12" weight="0.3297491" />
-      <window_info id="Structure" order="2" sideWeight="0.71146953" side_tool="true" weight="0.33225545" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="1" type="SLIDING" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="11" weight="0.3297491" />
-      <window_info anchor="bottom" id="Database Changes" order="1" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Find" order="6" weight="0.47517732" />
-      <window_info anchor="right" id="Database" order="0" side_tool="true" weight="0.32983023" />
-      <window_info anchor="bottom" id="Terminal" order="2" sideWeight="0.49636218" weight="0.32624114" />
-      <window_info anchor="bottom" id="Event Log" order="3" sideWeight="0.50363785" side_tool="true" weight="0.32624114" />
-      <window_info anchor="bottom" id="Inspection" order="10" weight="0.4" />
-      <window_info anchor="bottom" id="Version Control" order="4" weight="0.34690267" />
-      <window_info anchor="bottom" id="Debug" order="8" sideWeight="0.4995958" weight="0.40602836" />
-      <window_info anchor="bottom" id="Message" order="5" />
-      <window_info anchor="bottom" id="Messages" order="0" weight="0.55376345" />
-      <window_info anchor="right" id="Coverage" order="4" side_tool="true" weight="0.32983023" />
-      <window_info id="Favorites" order="0" sideWeight="0.71146953" side_tool="true" weight="0.33225545" />
-    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -926,13 +806,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/isoft_deploy_web/views/service/list.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2228">
-          <caret line="29" column="21" selection-start-line="29" selection-start-column="21" selection-end-line="29" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/isoft/build/build_syncfile/static_common/alert_info/alert_info-1.0.3/js/classie.js" />
     <entry file="file://$PROJECT_DIR$/isoft/build/build_pack/main.go">
       <provider selected="true" editor-type-id="text-editor">
@@ -1117,13 +990,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/static/leftnav/js/leftnav.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="239">
-          <caret line="18" lean-forward="true" selection-start-line="18" selection-end-line="18" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/isoft/build/build_syncfile/static_common/leftnav/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="272">
@@ -1138,35 +1004,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/App.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-118">
-          <caret line="10" column="10" lean-forward="true" selection-start-line="10" selection-start-column="10" selection-end-line="10" selection-end-column="10" />
-          <folding>
-            <element signature="e#247#298#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/static/leftnav/css/leftnav.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="117">
-          <caret line="87" column="22" selection-start-line="87" selection-start-column="4" selection-end-line="87" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/Menu/LeftMenu.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="25" selection-start-line="5" selection-start-column="25" selection-end-line="5" selection-end-column="25" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#router-link#0;n#li#0;n#ul#0;n#li#0;n#ul#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="e#533#572#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/Menu/DownArrow.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
@@ -1176,8 +1013,47 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/Menu/DownArrow.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="59" selection-start-line="1" selection-start-column="59" selection-end-line="1" selection-end-column="59" />
+        <state relative-caret-position="153">
+          <caret line="9" column="14" lean-forward="true" selection-start-line="9" selection-start-column="14" selection-end-line="9" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/App.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" column="10" lean-forward="true" selection-start-line="10" selection-start-column="10" selection-end-line="10" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/static/leftnav/css/leftnav.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="160">
+          <caret line="61" column="16" selection-start-line="61" selection-start-column="12" selection-end-line="61" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/static/leftnav/js/leftnav.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="25" lean-forward="true" selection-start-line="5" selection-start-column="25" selection-end-line="5" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/Menu/leftmenu.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="160">
+          <caret line="98" column="18" selection-start-line="98" selection-start-column="14" selection-end-line="98" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/Menu/LeftMenu.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="157">
+          <caret line="62" column="35" lean-forward="true" selection-start-line="62" selection-start-column="35" selection-end-line="62" selection-end-column="35" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#router-link#0;n#li#0;n#ul#0;n#li#0;n#ul#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

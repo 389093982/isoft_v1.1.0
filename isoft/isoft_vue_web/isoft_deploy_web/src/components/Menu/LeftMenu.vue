@@ -2,12 +2,12 @@
   <div class="account-l fl" style="margin: 10px;">
     <a class="list-title">{{ title }}</a>
     <ul id="accordion" class="accordion">
-      <li v-for="link in links">
-        <div class="link">
-          {{ link.title }}<DownArrow :style="{'float':'right','margin-right':'5%'}"/>
+      <li v-for="(link,index) in links">
+        <div class="link" @click="dropdown($event,index)">
+          {{ link.title }}<DownArrow :style="{'float':'right','margin-right':'5%'}" :open="current==index"/>
         </div>
         <ul class="submenu">
-          <li v-for="hrefinfo in link.hrefinfos">
+          <li v-for="hrefinfo in link.hrefinfos" @click="chooseCurrent($event)">
             <router-link :to="hrefinfo.hrefaddr" style="padding: 8px;">{{ hrefinfo.hrefdesc }}</router-link>
           </li>
         </ul>
@@ -18,13 +18,13 @@
 
 <script>
   import DownArrow from './DownArrow.vue'
-  import leftnav from '../../../static/leftnav/js/leftnav.js'
 
   export default {
     name: "LeftMenu",
     components: {DownArrow},
     data(){
       return {
+        current:-1,    // 当前选中的 index
         title:'统一部署管理系统',
         links:[
           {
@@ -54,10 +54,25 @@
           }
         ]
       }
+    },
+    methods:{
+      // 点击菜单显示下拉
+      dropdown(event,index){
+        this.current=index;   // 当前菜单的索引
+        var el = event.currentTarget;
+        $(el).next().slideToggle();
+        $(el).parent().toggleClass('open');
+        $(el).parent().siblings().find('.submenu').slideUp().parent().removeClass('open');
+      },
+      // 选中当前设置样式
+      chooseCurrent(event){
+        var el = event.currentTarget;
+        $(el).addClass('current').siblings('li').removeClass('current');
+      }
     }
   }
 </script>
 
 <style scoped type="text/stylus" rel="stylesheet/stylus">
-  @import '../../../static/leftnav/css/leftnav.css'
+  @import '../../components/Menu/leftmenu.css'
 </style>
