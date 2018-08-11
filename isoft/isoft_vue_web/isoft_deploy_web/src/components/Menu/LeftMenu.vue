@@ -4,11 +4,11 @@
     <ul id="accordion" class="accordion">
       <li v-for="link in links">
         <div class="link">
-          <i class="fa fa-leaf"></i>{{ link.title }}<i class="fa fa-chevron-down"></i>
+          {{ link.title }}<DownArrow :style="{'float':'right','margin-right':'5%'}"/>
         </div>
         <ul class="submenu">
           <li v-for="hrefinfo in link.hrefinfos">
-            <a :href="hrefinfo.hrefaddr">{{ hrefinfo.hrefdesc }}</a>
+            <router-link :to="hrefinfo.hrefaddr" style="padding: 8px;">{{ hrefinfo.hrefdesc }}</router-link>
           </li>
         </ul>
       </li>
@@ -17,9 +17,12 @@
 </template>
 
 <script>
+  import DownArrow from './DownArrow.vue'
   import leftnav from '../../../static/leftnav/js/leftnav.js'
+
   export default {
     name: "LeftMenu",
+    components: {DownArrow},
     data(){
       return {
         title:'统一部署管理系统',
@@ -55,6 +58,6 @@
   }
 </script>
 
-<style scoped  type="text/stylus" rel="stylesheet/stylus">
-  @import '../../../static/leftnav/css/leftnav.css';
+<style scoped type="text/stylus" rel="stylesheet/stylus">
+  @import '../../../static/leftnav/css/leftnav.css'
 </style>

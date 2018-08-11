@@ -6,8 +6,6 @@
         <LeftMenu/>
       </div>
       <div id="right">
-        <router-link to="/" class="list-group-item menu-item" style="padding: 8px;">home主页</router-link>
-        <router-link to="/login" class="list-group-item menu-item" style="padding: 8px;">我的工作</router-link>
         <router-view/>
       </div>
     </div>
