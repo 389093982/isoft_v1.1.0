@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="61c01151-84f0-4bfd-a227-5c1f0b5a424d" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/Env/EnvAdd.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/api/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/api/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/Env/EnvList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/Env/EnvList.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/Env/EnvTable.vue" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/Env/EnvTable.vue" afterDir="false" />
     </list>
@@ -41,8 +39,8 @@
       <file leaf-file-name="EnvTable.vue" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/Env/EnvTable.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="275">
-              <caret line="107" column="52" selection-start-line="107" selection-start-column="52" selection-end-line="107" selection-end-column="52" />
+            <state relative-caret-position="111">
+              <caret line="139" column="31" lean-forward="true" selection-start-line="139" selection-start-column="31" selection-end-line="139" selection-end-column="31" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#template#0;n#!!top" expanded="true" />
                 <element signature="e#350#383#0" expanded="true" />
@@ -54,11 +52,35 @@
       <file leaf-file-name="EnvList.vue" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/Env/EnvList.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="13" column="24" selection-start-line="13" selection-start-column="24" selection-end-line="13" selection-end-column="24" />
+            <state relative-caret-position="289">
+              <caret line="17" column="7" lean-forward="true" selection-start-line="17" selection-start-column="7" selection-end-line="17" selection-end-column="7" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#template#0;n#!!top" expanded="true" />
                 <element signature="e#103#137#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ServiceList.vue" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/Service/ServiceList.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="289">
+              <caret line="17" lean-forward="true" selection-start-line="17" selection-end-line="17" />
+              <folding>
+                <element signature="n#style#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ServiceTable.vue" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/Service/ServiceTable.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="199">
+              <caret line="60" column="44" lean-forward="true" selection-start-line="60" selection-start-column="44" selection-end-line="60" selection-end-column="44" />
+              <folding>
+                <element signature="n#style#0;n#div#0;n#template#0;n#!!top" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -92,7 +114,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>imgList</find>
       <find>“</find>
       <find>，</find>
       <find>HtmlWebpackPlugin</find>
@@ -122,6 +143,7 @@
       <find>connect</find>
       <find>current</find>
       <find>alert</find>
+      <find>data</find>
     </findStrings>
     <replaceStrings>
       <replace>github.com/isoft/isoft_learning_web</replace>
@@ -226,8 +248,8 @@
         <option value="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/Common/Loading.vue" />
         <option value="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/Service/ServiceTable.vue" />
         <option value="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/api/index.js" />
-        <option value="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/Env/EnvTable.vue" />
         <option value="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/Env/EnvAdd.vue" />
+        <option value="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/Env/EnvTable.vue" />
         <option value="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/Env/EnvList.vue" />
       </list>
     </option>
@@ -1136,26 +1158,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/Service/ServiceList.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="17" lean-forward="true" selection-start-line="17" selection-end-line="17" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/Service/ServiceTable.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="386">
-          <caret line="71" column="7" selection-start-line="57" selection-start-column="6" selection-end-line="71" selection-end-column="7" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/api/ajax.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
@@ -1184,17 +1186,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/Env/EnvTable.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="275">
-          <caret line="107" column="52" selection-start-line="107" selection-start-column="52" selection-end-line="107" selection-end-column="52" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="e#350#383#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/Env/EnvAdd.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="510">
@@ -1205,10 +1196,41 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/Service/ServiceList.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="17" lean-forward="true" selection-start-line="17" selection-end-line="17" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/Service/ServiceTable.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="199">
+          <caret line="60" column="44" lean-forward="true" selection-start-line="60" selection-start-column="44" selection-end-line="60" selection-end-column="44" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/Env/EnvTable.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="111">
+          <caret line="139" column="31" lean-forward="true" selection-start-line="139" selection-start-column="31" selection-end-line="139" selection-end-column="31" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="e#350#383#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/Env/EnvList.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="13" column="24" selection-start-line="13" selection-start-column="24" selection-end-line="13" selection-end-column="24" />
+        <state relative-caret-position="289">
+          <caret line="17" column="7" lean-forward="true" selection-start-line="17" selection-start-column="7" selection-end-line="17" selection-end-column="7" />
           <folding>
             <element signature="n#style#0;n#div#0;n#template#0;n#!!top" expanded="true" />
             <element signature="e#103#137#0" expanded="true" />

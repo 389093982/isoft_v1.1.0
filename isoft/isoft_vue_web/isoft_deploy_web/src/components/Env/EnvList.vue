@@ -13,7 +13,9 @@
   export default {
     components: {EnvAdd,EnvTable},
     data () {
+      return {
 
+      }
     }
   }
 </script>

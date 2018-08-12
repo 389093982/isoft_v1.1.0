@@ -110,14 +110,18 @@
       },
       pageSizeChage (value){
         // 设置每页数量
-        this.pageSize= value;
-        this.refreshEnvList();
+        if(value != 10){
+          this.pageSize= value;
+          this.refreshEnvList();
+        }
       },
       pageOnChage (value){
-        // 设置当前页数
-        this.pageNum = value;
-        // 重新加载表格数据
-        this.refreshEnvList();
+        if(value != 1){
+          // 设置当前页数
+          this.pageNum = value;
+          // 重新加载表格数据
+          this.refreshEnvList();
+        }
       },
       connection_test (index){
         // 当前行对应的环境 id
