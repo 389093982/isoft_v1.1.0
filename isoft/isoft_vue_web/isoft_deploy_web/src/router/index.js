@@ -1,18 +1,23 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Login from '../pages/Login/Login.vue'
+import EnvList from '../components/Env/EnvList.vue'
+import ServiceList from '../components/Service/ServiceList.vue'
 
 Vue.use(Router)
 
 export default new Router({
   routes: [
     {
-      path: '/login',
-      component: Login
+      path: '/env/list',
+      component: EnvList
+    },
+    {
+      path: '/service/list/:service_type',
+      component: ServiceList
     },
     {
       path: '/',
-      redirect: '/login'
+      redirect: '/env/list'
     }
   ]
 })

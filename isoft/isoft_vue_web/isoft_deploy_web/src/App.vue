@@ -5,7 +5,7 @@
       <div id="left">
         <LeftMenu/>
       </div>
-      <div id="right">
+      <div id="right" style="border:1px solid #D1D1D1;min-height: 500px;margin: 10px;">
         <router-view/>
       </div>
     </div>
@@ -20,7 +20,11 @@ import LeftMenu from './components/Menu/LeftMenu.vue'
 
 export default {
   name: 'App',
-  components: {LeftMenu, Header,Footer}
+  components: {
+    LeftMenu,
+    Header,
+    Footer
+  }
 }
 </script>
 
@@ -35,7 +39,7 @@ export default {
       display -webkit-box
       min-height 700px
       #left
-        width 20%
+        width 15%
       #right
-        width 80%
+        width 85%
 </style>

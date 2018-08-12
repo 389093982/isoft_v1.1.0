@@ -1,5 +1,5 @@
 <template>
-  <div class="account-l fl" style="margin: 10px;">
+  <div class="account-l fl" style="margin-top: 10px;">
     <a class="list-title">{{ title }}</a>
     <ul id="accordion" class="accordion">
       <li v-for="(link,index) in links">
@@ -7,7 +7,7 @@
           {{ link.title }}<DownArrow :style="{'float':'right','margin-right':'5%'}" :open="current==index"/>
         </div>
         <ul class="submenu">
-          <li v-for="hrefinfo in link.hrefinfos" @click="chooseCurrent($event)">
+          <li v-for="hrefinfo in link.hrefinfos" @click="chooseCurrent($event)" style="text-indent: 34px;">
             <router-link :to="hrefinfo.hrefaddr" style="padding: 8px;">{{ hrefinfo.hrefdesc }}</router-link>
           </li>
         </ul>
@@ -45,10 +45,10 @@
           {
             title:'应用服务管理',
             hrefinfos:[
-              {hrefaddr:'/service/list?service_type=mysql',hrefdesc:'mysql管理'},
-              {hrefaddr:'/service/list?service_type=nginx',hrefdesc:'nginx管理'},
-              {hrefaddr:'/service/list?service_type=beego',hrefdesc:'beego应用部署'},
-              {hrefaddr:'/service/list?service_type=api',hrefdesc:'api应用部署'},
+              {hrefaddr:{path: '/service/list/mysql',query: {service_type: 'mysql'}},hrefdesc:'mysql管理'},
+              {hrefaddr:{path: '/service/list/nginx',query: {service_type: 'nginx'}},hrefdesc:'nginx管理'},
+              {hrefaddr:{path: '/service/list/beego',query: {service_type: 'beego'}},hrefdesc:'beego应用部署'},
+              {hrefaddr:{path: '/service/list/api',query: {service_type: 'api'}},hrefdesc:'api应用部署'},
               {hrefaddr:'/service/monitor',hrefdesc:'服务监控'}
             ]
           }
