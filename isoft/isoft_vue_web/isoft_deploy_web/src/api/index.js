@@ -18,4 +18,12 @@ export const EnvList = (current_page,page_size) =>
 export const ServiceList = (service_type,current_page,page_size) =>
   ajax(BASE_URL+'/service/list/',{service_type,current_page,page_size},'POST')
 
+// 连接测试
+export const ConnectTest = (env_id) =>
+  ajax(BASE_URL+'/env/connect_test/',{env_id},'POST')
+
+// 同步测试
+export const SyncDeployHome = (env_id) =>
+  ajax(BASE_URL+'/env/sync_deploy_home/',{env_id},'POST')
+
 
