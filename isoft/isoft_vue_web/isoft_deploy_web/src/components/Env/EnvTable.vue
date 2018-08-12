@@ -1,7 +1,8 @@
 <template>
 <div style="margin-top: 10px;">
   <Table :columns="columns1" :data="envInfos" stripe border size="small"></Table>
-  <Page :total="total" show-sizer :styles="{'text-align': 'center','margin-top': '10px'}"/>
+  <Page :total="total" :current="pageNum" :page-size="pageSize" show-total show-sizer :styles="{'text-align': 'center','margin-top': '10px'}"
+        @on-change="pageOnChage" @on-page-size-change="pageSizeChage"/>
 </div>
 </template>
 
@@ -90,11 +91,34 @@
           }
         ],
         envInfos: [],
-        total:0
+        total:10,     // 总数
+        pageNum:1,    // 当前页
+        pageSize:10   // 每页数量
       }
     },
     components:{Loading},
     methods:{
+      refreshEnvList(){
+        const _this = this;
+        EnvList(_this.pageNum,_this.pageSize).then(function (response) {
+          var result = JSON.parse(response);
+          _this.envInfos = result.envInfos;
+          _this.pageNum = result.paginator.currpage;
+          _this.pageSize = result.paginator.pagesize;
+          _this.total = result.paginator.totalcount;
+        })
+      },
+      pageSizeChage (value){
+        // 设置每页数量
+        this.pageSize= value;
+        this.refreshEnvList();
+      },
+      pageOnChage (value){
+        // 设置当前页数
+        this.pageNum = value;
+        // 重新加载表格数据
+        this.refreshEnvList();
+      },
       connection_test (index){
         // 当前行对应的环境 id
         var env_id = this.envInfos[index].id;
@@ -125,12 +149,7 @@
       }
     },
     mounted:function(){
-      const _this = this;
-      EnvList(1,10).then(function (response) {
-        var result = JSON.parse(response);
-        _this.envInfos = result.envInfos;
-        _this.total = result.totalcount;
-      })
+      this.refreshEnvList();
     }
   }
 </script>
