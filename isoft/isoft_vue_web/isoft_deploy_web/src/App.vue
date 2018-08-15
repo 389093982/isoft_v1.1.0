@@ -1,15 +1,22 @@
 <template>
   <div id="app">
-    <Header/>
-    <div id="content">
-      <div id="left">
-        <LeftMenu/>
-      </div>
-      <div id="right" style="border:1px solid #D1D1D1;min-height: 500px;margin: 10px;">
-        <router-view/>
-      </div>
-    </div>
-    <Footer/>
+    <Layout>
+      <Header>
+        <Header/>
+      </Header>
+      <Layout>
+        <Sider hide-trigger :style="{background: '#fff'}">
+          <LeftMenu/>
+        </Sider>
+        <Content>
+          <router-view/>
+        </Content>
+      </Layout>
+      <Footer>
+        <Footer/>
+      </Footer>
+    </Layout>
+
   </div>
 </template>
 
@@ -29,17 +36,5 @@ export default {
 </script>
 
 <style lang="stylus" type="text/stylus" rel="stylesheet/stylus">
-  #app
-    width 100%
-    height 100%
-    #content
-      width 95%
-      margin 0 auto
-      // css3 盒子模型
-      display -webkit-box
-      min-height 700px
-      #left
-        width 15%
-      #right
-        width 85%
+
 </style>

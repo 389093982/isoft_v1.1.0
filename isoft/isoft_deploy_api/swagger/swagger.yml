@@ -1,0 +1,117 @@
+swagger: "2.0"
+info:
+  title: beego Test API
+  description: beego has a very cool tools to autogenerate documents for your API
+  version: 1.0.0
+  termsOfService: http://beego.me/
+  contact:
+    email: astaxie@gmail.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+basePath: /v1
+paths:
+  /env/connect_test:
+    post:
+      tags:
+      - env
+      description: Get EnvInfo list by some info
+      operationId: EnvController.Get EnvInfo list
+      parameters:
+      - in: query
+        name: env_id
+        description: env_id
+        type: integer
+        format: int64
+  /env/list:
+    post:
+      tags:
+      - env
+      description: Get EnvInfo list by some info
+      operationId: EnvController.Get EnvInfo list
+      parameters:
+      - in: query
+        name: offset
+        description: offset
+        type: integer
+        format: int64
+      - in: query
+        name: current_page
+        description: current_page
+        type: integer
+        format: int64
+      - in: query
+        name: search_text
+        description: search_text
+        type: string
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/models.EnvInfo'
+  /env/sync_deploy_home:
+    post:
+      tags:
+      - env
+definitions:
+  models.EnvInfo:
+    title: EnvInfo
+    type: object
+    properties:
+      created_by:
+        type: string
+      created_time:
+        type: string
+        format: string
+      deploy_home:
+        type: string
+      env_account:
+        type: string
+      env_ip:
+        type: string
+      env_name:
+        type: string
+      env_passwd:
+        type: string
+      id:
+        type: integer
+        format: int64
+      last_updated_by:
+        type: string
+      last_updated_time:
+        type: string
+        format: string
+      service_infos:
+        type: array
+        items:
+          $ref: '#/definitions/models.ServiceInfo'
+  models.ServiceInfo:
+    title: ServiceInfo
+    type: object
+    properties:
+      created_by:
+        type: string
+      created_time:
+        type: string
+        format: string
+      env_info:
+        $ref: '#/definitions/models.EnvInfo'
+      id:
+        type: integer
+        format: int64
+      last_updated_by:
+        type: string
+      last_updated_time:
+        type: string
+        format: string
+      package_name:
+        type: string
+      run_mode:
+        type: string
+      service_name:
+        type: string
+      service_port:
+        type: integer
+        format: int64
+      service_type:
+        type: string

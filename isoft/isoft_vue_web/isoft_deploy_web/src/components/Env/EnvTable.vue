@@ -9,6 +9,7 @@
 <script>
   import {EnvList} from '../../api'
   import {ConnectTest} from '../../api'
+  import {SyncDeployHome} from '../../api'
   import Loading from '../../components/Common/Loading.vue'
 
   export default {
