@@ -9,6 +9,14 @@ func init() {
 
 	beego.GlobalControllerRouter["isoft/isoft_deploy_api/controllers:EnvController"] = append(beego.GlobalControllerRouter["isoft/isoft_deploy_api/controllers:EnvController"],
 		beego.ControllerComments{
+			Method:           "All",
+			Router:           `/all`,
+			AllowHTTPMethods: []string{"post"},
+			MethodParams:     param.Make(),
+			Params:           nil})
+
+	beego.GlobalControllerRouter["isoft/isoft_deploy_api/controllers:EnvController"] = append(beego.GlobalControllerRouter["isoft/isoft_deploy_api/controllers:EnvController"],
+		beego.ControllerComments{
 			Method:           "ConnectonTest",
 			Router:           `/connect_test`,
 			AllowHTTPMethods: []string{"post"},

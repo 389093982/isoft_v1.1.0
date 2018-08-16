@@ -99,7 +99,7 @@
         this.$refs[name].validate((valid) => {
           if (valid) {
             // 返回的是个 Promise 对象,需要调用 then 方法
-            ServiceEdit(this.formValidate.env_ids,this.formValidate.service_name,this.formValidate.service_type,
+            ServiceEdit(this.formValidate.env_ids.join(','),this.formValidate.service_name,this.formValidate.service_type,
               this.formValidate.service_port)
               .then(function (response) {
                 if(response.status == "SUCCESS"){

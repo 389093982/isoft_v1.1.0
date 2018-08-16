@@ -158,7 +158,7 @@ func (this *ServiceController) PostModify() {
 
 // @router /edit [post]
 func (this *ServiceController) Edit() {
-	env_ids := this.GetStrings("env_ids[]")
+	env_ids := strings.Split(this.GetString("env_ids"), ",")
 	service_name := this.GetString("service_name")
 	service_type := this.GetString("service_type")
 	service_port, err := this.GetInt64("service_port")
