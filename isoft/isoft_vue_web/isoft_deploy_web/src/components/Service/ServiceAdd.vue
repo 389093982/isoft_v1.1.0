@@ -11,7 +11,7 @@
       <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80">
         <FormItem label="环境名称" prop="env_name">
           <Select v-model="formValidate.env_name" filterable>
-            <Option v-for="item in env_names" :value="item.value" :key="item.value">{{ item.label }}</Option>
+            <Option v-for="envInfo in envInfos" :value="envInfo.id" :key="envInfo.value">{{ envInfo.env_name }} - [ {{ envInfo.env_ip }} ]</Option>
           </Select>
         </FormItem>
         <FormItem label="服务名称" prop="service_name">
@@ -37,7 +37,6 @@
 
 <script>
   import {EnvEdit} from '../../api'
-  import {EnvAll} from '../../api'
   import {ServiceEdit} from '../../api'
 
   export default {
@@ -64,16 +63,6 @@
             { required: true, message: '端口号不能为空', trigger: 'blur' }
           ]
         },
-        env_names:[
-          {
-            value: 'env_1',
-            label: 'env_1'
-          },
-          {
-            value: 'env_2',
-            label: 'env_2'
-          }
-        ],
         service_types: [
           {
             value: 'beego',
@@ -128,14 +117,10 @@
         this.$refs[name].resetFields();
       }
     },
-    mounted:function () {
-      EnvAll().then(function (response) {
-        alert(response);
-        if(response.status == "SUCCESS"){
-          alert(response);
-        }else{
-        }
-      });
+    computed:{
+      envInfos(){
+        return this.$store.state.envInfos;
+      }
     }
   }
 </script>

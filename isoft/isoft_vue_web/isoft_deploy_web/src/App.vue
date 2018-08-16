@@ -25,12 +25,22 @@ import Header from './components/Header/Header.vue'
 import Footer from './components/Footer/Footer.vue'
 import LeftMenu from './components/Menu/LeftMenu.vue'
 
+import {mapActions} from 'vuex'
+
 export default {
   name: 'App',
   components: {
     LeftMenu,
     Header,
     Footer
+  },
+  methods:{
+    ...mapActions(['getEnvAll'])
+  },
+  mounted:function () {
+    // 提交 action
+    //this.$store.dispatch("getEnvAll");
+    this.getEnvAll()
   }
 }
 </script>

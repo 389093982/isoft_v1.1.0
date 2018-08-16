@@ -6,6 +6,7 @@ import router from './router'
 import $ from 'jquery'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.min'
+import store from './store'
 
 import iView from 'iview'
 import 'iview/dist/styles/iview.css'
@@ -19,5 +20,6 @@ new Vue({
   el: '#app',
   router,
   components: { App },
-  template: '<App/>'
+  template: '<App/>',
+  store, // 使用上vuex
 })
