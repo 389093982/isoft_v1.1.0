@@ -15,6 +15,13 @@
     },
     "basePath": "/v1",
     "paths": {
+        "/env/all": {
+            "post": {
+                "tags": [
+                    "env"
+                ]
+            }
+        },
         "/env/connect_test": {
             "post": {
                 "tags": [
@@ -76,6 +83,20 @@
             "post": {
                 "tags": [
                     "env"
+                ]
+            }
+        },
+        "/service/edit": {
+            "post": {
+                "tags": [
+                    "service"
+                ]
+            }
+        },
+        "/service/list": {
+            "post": {
+                "tags": [
+                    "service"
                 ]
             }
         }

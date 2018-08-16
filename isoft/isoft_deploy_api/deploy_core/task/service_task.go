@@ -2,7 +2,7 @@ package task
 
 import (
 	"github.com/astaxie/beego/logs"
-	"isoft/isoft_deploy_web/models"
+	"isoft/isoft_deploy_api/models"
 	"net/http"
 	"time"
 )

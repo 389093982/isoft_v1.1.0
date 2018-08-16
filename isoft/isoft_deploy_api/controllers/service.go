@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"github.com/astaxie/beego/utils/pagination"
 	"isoft/isoft/common"
-	"isoft/isoft_deploy_web/deploy_core/constant"
-	"isoft/isoft_deploy_web/deploy_core/executors"
-	"isoft/isoft_deploy_web/models"
+	"isoft/isoft_deploy_api/deploy_core/constant"
+	"isoft/isoft_deploy_api/deploy_core/executors"
+	"isoft/isoft_deploy_api/models"
 	"path"
 	"strconv"
 	"strings"
@@ -16,6 +16,11 @@ import (
 
 type ServiceController struct {
 	BaseController
+}
+
+func (c *ServiceController) URLMapping() {
+	c.Mapping("Edit", c.Edit)
+	c.Mapping("List", c.List)
 }
 
 func (this *ServiceController) ShowServiceTrackingLogDetail() {
@@ -85,31 +90,8 @@ func (this *ServiceController) Monitor() {
 	this.TplName = "service/monitor.html"
 }
 
-func (this *ServiceController) Edit() {
-	service_id, err := this.GetInt64("service_id")
-	if err == nil {
-		ServiceInfo, err := models.FilterServiceInfo(map[string]interface{}{"service_id": service_id})
-		if err == nil {
-			this.Data["ServiceInfo"] = &ServiceInfo
-		}
-	}
-	this.Layout = "layout/layout.html"
-	this.TplName = "service/edit.html"
-}
-
+// @router /list [post]
 func (this *ServiceController) List() {
-	service_type := this.GetString("service_type")
-	this.Data["ServiceType"] = service_type
-
-	envInfos, _, err := models.QueryAllEnvInfo()
-	if err == nil {
-		this.Data["EnvInfos"] = &envInfos
-	}
-	this.Layout = "layout/layout.html"
-	this.TplName = "service/list.html"
-}
-
-func (this *ServiceController) PostList() {
 	offset, _ := this.GetInt("offset", 10)            // 每页记录数
 	current_page, _ := this.GetInt("current_page", 1) // 当前页
 
@@ -174,7 +156,8 @@ func (this *ServiceController) PostModify() {
 	this.ServeJSON()
 }
 
-func (this *ServiceController) PostEdit() {
+// @router /edit [post]
+func (this *ServiceController) Edit() {
 	env_ids := this.GetStrings("env_ids[]")
 	service_name := this.GetString("service_name")
 	service_type := this.GetString("service_type")

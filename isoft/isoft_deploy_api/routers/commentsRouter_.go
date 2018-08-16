@@ -23,4 +23,28 @@ func init() {
 			MethodParams:     param.Make(),
 			Params:           nil})
 
+	beego.GlobalControllerRouter["isoft/isoft_deploy_api/controllers:EnvController"] = append(beego.GlobalControllerRouter["isoft/isoft_deploy_api/controllers:EnvController"],
+		beego.ControllerComments{
+			Method:           "SyncDeployHome",
+			Router:           `/sync_deploy_home`,
+			AllowHTTPMethods: []string{"post"},
+			MethodParams:     param.Make(),
+			Params:           nil})
+
+	beego.GlobalControllerRouter["isoft/isoft_deploy_api/controllers:ServiceController"] = append(beego.GlobalControllerRouter["isoft/isoft_deploy_api/controllers:ServiceController"],
+		beego.ControllerComments{
+			Method:           "Edit",
+			Router:           `/edit`,
+			AllowHTTPMethods: []string{"post"},
+			MethodParams:     param.Make(),
+			Params:           nil})
+
+	beego.GlobalControllerRouter["isoft/isoft_deploy_api/controllers:ServiceController"] = append(beego.GlobalControllerRouter["isoft/isoft_deploy_api/controllers:ServiceController"],
+		beego.ControllerComments{
+			Method:           "List",
+			Router:           `/list`,
+			AllowHTTPMethods: []string{"post"},
+			MethodParams:     param.Make(),
+			Params:           nil})
+
 }

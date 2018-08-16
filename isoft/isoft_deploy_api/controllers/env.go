@@ -16,6 +16,24 @@ type EnvController struct {
 func (c *EnvController) URLMapping() {
 	c.Mapping("list", c.List)
 	c.Mapping("connect_test", c.ConnectonTest)
+	c.Mapping("all", c.All)
+}
+
+// @router /all [post]
+func (this *EnvController) All() {
+	envInfos, _, err := models.QueryAllEnvInfo()
+	data := make(map[string]interface{}, 1)
+	if err == nil {
+		data["envInfos"] = envInfos
+	}
+	//序列化
+	json_obj, err := json.Marshal(data)
+	if err == nil {
+		this.Data["json"] = string(json_obj)
+	} else {
+		fmt.Print(err.Error())
+	}
+	this.ServeJSON()
 }
 
 // @Title Get EnvInfo list

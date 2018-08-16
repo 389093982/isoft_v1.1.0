@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Layout>
+    <Layout :style="{minHeight: '100vh'}">
       <Header>
         <Header/>
       </Header>
@@ -8,7 +8,7 @@
         <Sider hide-trigger :style="{background: '#fff'}">
           <LeftMenu/>
         </Sider>
-        <Content>
+        <Content :style="{padding: '24px', minHeight: '550px', background: '#fff'}">
           <router-view/>
         </Content>
       </Layout>

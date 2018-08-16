@@ -14,6 +14,9 @@ export const EnvEdit = (env_name,env_ip,env_account,env_passwd,deploy_home) =>
 export const EnvList = (current_page,offset) =>
   ajax(BASE_URL+'/v1/env/list/',{current_page,offset},'POST')
 
+// 查询所有的环境信息
+export const EnvAll = () => ajax(BASE_URL+'/v1/env/all/',{},'POST')
+
 // 分页显示服务信息
 export const ServiceList = (service_type,current_page,page_size) =>
   ajax(BASE_URL+'/v1/service/list/',{service_type,current_page,page_size},'POST')
@@ -25,5 +28,9 @@ export const ConnectTest = (env_id) =>
 // 同步测试
 export const SyncDeployHome = (env_id) =>
   ajax(BASE_URL+'/v1/env/sync_deploy_home/',{env_id},'POST')
+
+// 编辑服务接口
+export const ServiceEdit = (env_name,service_name,service_type,service_port) =>
+  ajax(BASE_URL+'/v1/service/edit/',{env_name,service_name,service_type,service_port},'POST')
 
 

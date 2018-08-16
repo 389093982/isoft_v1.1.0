@@ -2,8 +2,8 @@ package executors
 
 import (
 	"isoft/isoft/common"
-	"isoft/isoft_deploy_web/deploy_core/deploy"
-	"isoft/isoft_deploy_web/models"
+	"isoft/isoft_deploy_api/deploy_core/deploy"
+	"isoft/isoft_deploy_api/models"
 )
 
 func RunRemoteShellCommand(serviceInfo *models.ServiceInfo, envInfo *models.EnvInfo, operate_type string) (tracking_id string) {

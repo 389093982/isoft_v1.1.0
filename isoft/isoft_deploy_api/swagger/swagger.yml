@@ -11,6 +11,10 @@ info:
     url: http://www.apache.org/licenses/LICENSE-2.0.html
 basePath: /v1
 paths:
+  /env/all:
+    post:
+      tags:
+      - env
   /env/connect_test:
     post:
       tags:
@@ -53,6 +57,14 @@ paths:
     post:
       tags:
       - env
+  /service/edit:
+    post:
+      tags:
+      - service
+  /service/list:
+    post:
+      tags:
+      - service
 definitions:
   models.EnvInfo:
     title: EnvInfo

@@ -2,8 +2,8 @@ package controllers
 
 import (
 	"fmt"
-	"isoft/isoft_deploy_web/deploy_core/executors"
-	"isoft/isoft_deploy_web/models"
+	"isoft/isoft_deploy_api/deploy_core/executors"
+	"isoft/isoft_deploy_api/models"
 	"strconv"
 )
 
