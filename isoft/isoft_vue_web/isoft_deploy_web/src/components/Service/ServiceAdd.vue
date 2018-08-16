@@ -9,9 +9,11 @@
     <div>
       <!-- 表单正文 -->
       <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80">
-        <FormItem label="环境名称" prop="env_name">
-          <Select v-model="formValidate.env_name" filterable>
-            <Option v-for="envInfo in envInfos" :value="envInfo.id" :key="envInfo.value">{{ envInfo.env_name }} - [ {{ envInfo.env_ip }} ]</Option>
+        <FormItem label="环境名称" prop="env_ids">
+          <Select v-model="formValidate.env_ids" filterable multiple>
+            <Option v-for="envInfo in envInfos" :value="envInfo.id" :key="envInfo.id">
+              {{ envInfo.env_name }} - [ {{ envInfo.env_ip }} ]
+            </Option>
           </Select>
         </FormItem>
         <FormItem label="服务名称" prop="service_name">
@@ -44,14 +46,14 @@
       return {
         modal1: false,    // 遮罩层
         formValidate: {
-          env_name: '',
+          env_ids: '',
           service_name: '',
           service_type: '',
           service_port: ''
         },
         ruleValidate: {
-          env_name: [
-            { required: true, message: '环境名称不能为空', trigger: 'blur' }
+          env_ids: [
+            { required: true, type: 'array', message: '环境名称不能为空', trigger: 'blur' }
           ],
           service_name: [
             { required: true, message: '服务名称不能为空', trigger: 'blur' }
@@ -97,7 +99,7 @@
         this.$refs[name].validate((valid) => {
           if (valid) {
             // 返回的是个 Promise 对象,需要调用 then 方法
-            ServiceEdit(this.formValidate.env_name,this.formValidate.service_name,this.formValidate.service_type,
+            ServiceEdit(this.formValidate.env_ids,this.formValidate.service_name,this.formValidate.service_type,
               this.formValidate.service_port)
               .then(function (response) {
                 if(response.status == "SUCCESS"){
