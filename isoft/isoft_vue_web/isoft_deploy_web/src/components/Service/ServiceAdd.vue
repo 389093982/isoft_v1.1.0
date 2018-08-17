@@ -39,6 +39,7 @@
 
 <script>
   import {EnvEdit} from '../../api'
+  import {mapState} from 'vuex'
   import {ServiceEdit} from '../../api'
 
   export default {
@@ -120,9 +121,7 @@
       }
     },
     computed:{
-      envInfos(){
-        return this.$store.state.envInfos;
-      }
+      ...mapState(['envInfos']),
     }
   }
 </script>

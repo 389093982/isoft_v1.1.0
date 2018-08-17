@@ -15,39 +15,178 @@
         columns1: [
           {
             title: '环境ID',
-            key: 'env_id'
+            key: 'env_id',
+            width:100
           },
           {
             title: '环境名称',
-            key: 'env_name'
+            key: 'env_name',
+            width:100
           },
           {
             title: '服务名称',
-            key: 'service_name'
+            key: 'service_name',
+            width:100
           },
           {
             title: '服务类型',
-            key: 'service_type'
+            key: 'service_type',
+            width:100
           },
           {
             title: '端口号',
-            key: 'service_port'
+            key: 'service_port',
+            width:100
           },
           {
             title: '部署包名',
-            key: 'package_name'
+            key: 'package_name',
+            width:100
           },
           {
             title: '运行模式',
-            key: 'run_mode'
+            key: 'run_mode',
+            width:100
           },
           {
             title: '部署状态',
-            key: 'deploy_status'
+            key: 'deploy_status',
+            width:100
           },
           {
             title: '操作',
-            key: 'operate'
+            key: 'operate',
+            width:550,
+            render: (h, params) => {
+              return h('div', [
+                h('Button', {
+                  props: {
+                    type: 'primary',
+                    size: 'small'
+                  },
+                  style: {
+                    marginRight: '5px'
+                  },
+                  on: {
+                    click: () => {
+                      this.$router.push({name: '/service/edit',params:{ service_id:params.row.id}});
+                    }
+                  }
+                }, '编辑'),
+                h('Button', {
+                  props: {
+                    type: 'info',
+                    size: 'small'
+                  },
+                  style: {
+                    marginRight: '5px'
+                  },
+                  on: {
+                    click: () => {
+                      this.sync_deploy_home(params.index)
+                    }
+                  }
+                }, '检测'),
+                h('Button', {
+                  props: {
+                    type: 'warning',
+                    size: 'small'
+                  },
+                  style: {
+                    marginRight: '5px'
+                  },
+                  on: {
+                    click: () => {
+                      this.connection_test(params.index)
+                    }
+                  }
+                }, '安装'),
+                h('Button', {
+                  props: {
+                    type: 'error',
+                    size: 'small'
+                  },
+                  style: {
+                    marginRight: '5px'
+                  },
+                  on: {
+                    click: () => {
+                      this.sync_deploy_home(params.index)
+                    }
+                  }
+                }, '重启'),
+                h('Button', {
+                  props: {
+                    type: 'primary',
+                    size: 'small'
+                  },
+                  style: {
+                    marginRight: '5px'
+                  },
+                  on: {
+                    click: () => {
+                      this.connection_test(params.index)
+                    }
+                  }
+                }, '详情'),
+                h('Button', {
+                  props: {
+                    type: 'info',
+                    size: 'small'
+                  },
+                  style: {
+                    marginRight: '5px'
+                  },
+                  on: {
+                    click: () => {
+                      this.connection_test(params.index)
+                    }
+                  }
+                }, '部署'),
+                h('Button', {
+                  props: {
+                    type: 'success',
+                    size: 'small'
+                  },
+                  style: {
+                    marginRight: '5px'
+                  },
+                  on: {
+                    click: () => {
+                      this.connection_test(params.index)
+                    }
+                  }
+                }, '启用'),
+                h('Button', {
+                  props: {
+                    type: 'warning',
+                    size: 'small'
+                  },
+                  style: {
+                    marginRight: '5px'
+                  },
+                  on: {
+                    click: () => {
+                      this.connection_test(params.index)
+                    }
+                  }
+                }, '停用'),
+                h('Button', {
+                  props: {
+                    type: 'error',
+                    size: 'small'
+                  },
+                  style: {
+                    marginRight: '5px'
+                  },
+                  on: {
+                    click: () => {
+                      this.connection_test(params.index)
+                    }
+                  }
+                }, '服务代理'),
+              ]);
+            }
           }
         ],
         serviceInfos: [],
