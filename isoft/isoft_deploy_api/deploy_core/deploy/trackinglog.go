@@ -14,9 +14,10 @@ type TrackingLogResolver struct {
 }
 
 // 开启一个新的任务,并标记状态为 BEGIN
-func (this *TrackingLogResolver) StartRecordNewTask(tracking_id string) {
+func (this *TrackingLogResolver) StartRecordNewTask(tracking_id string, task_name string) {
 	this.Task = &models.TrackingTask{
 		TrackingId:      tracking_id,
+		TaskName:        task_name,
 		TaskStatus:      models.TASK_STATUS_BEGIN,
 		EnvId:           this.ServiceInfo.EnvInfo.Id,
 		ServiceId:       this.ServiceInfo.Id,
@@ -46,6 +47,7 @@ func (this *TrackingLogResolver) EndRecordTask() {
 func (this *TrackingLogResolver) WriteSuccessLog(message string) {
 	trackingLog := &models.TrackingLog{
 		TrackingId:      this.Task.TrackingId,
+		TaskName:        this.Task.TaskName,
 		TrackingDetail:  orm.TextField(message),
 		EnvId:           this.ServiceInfo.EnvInfo.Id,
 		ServiceId:       this.ServiceInfo.Id,

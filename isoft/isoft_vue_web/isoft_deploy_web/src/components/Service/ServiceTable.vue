@@ -5,7 +5,9 @@
 
     <Modal
       v-model="showServiceTrackingLogDetailFlag"
-      title="最近一次日志详情">
+      width="800"
+      title="最近一次日志详情"
+      :mask-closable="false">
       <p v-for="trackingLog in trackingLogs">
         {{trackingLog.tracking_detail}}
       </p>
@@ -57,7 +59,7 @@
           {
             title: '部署包名',
             key: 'package_name',
-            width:100
+            width:200
           },
           {
             title: '运行模式',
@@ -232,7 +234,7 @@
         this.$set(this.serviceInfos[index], 'deploy_status', 'loading');
         // 异步调用接口
         const data = await QueryLastDeployStatus(service_id);
-        if(data.status == 'SUCCESS'){
+        if(data.status == 'SUCCESS' && data.finish == true){
           this.$set(this.serviceInfos[index], 'deploy_status', data.trackingStatus);
           clearInterval(interval);
         }

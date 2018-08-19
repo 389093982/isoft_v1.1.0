@@ -1,6 +1,7 @@
 package deploy
 
 import (
+	"fmt"
 	"github.com/astaxie/beego/logs"
 	"isoft/isoft/common"
 	"isoft/isoft_deploy_api/models"
@@ -32,6 +33,7 @@ func (this *SSHTimerScriptExecutor) transfer() {
 			FileTransferHistoryMap[transfer.localFilePath] = 1
 			// 开始传输
 			transfer.Transfer(this.EnvInfo)
+			this.TrackingLogResolver.WriteSuccessLog(fmt.Sprintf("copy file %s to %s", transfer.localFilePath, transfer.remoteDir))
 			// 从传输历史中删除
 			delete(FileTransferHistoryMap, transfer.localFilePath)
 		}
@@ -103,9 +105,12 @@ func (this *SSHTimerScriptExecutor) RunRemoteScriptTask(operate_type string, tra
 	this.TrackingLogResolver = &TrackingLogResolver{
 		ServiceInfo: this.ServiceInfo,
 	}
-	this.TrackingLogResolver.StartRecordNewTask(tracking_id)
+	this.TrackingLogResolver.StartRecordNewTask(tracking_id, this.ServiceInfo.ServiceName+"#"+operate_type)
+
+	this.TrackingLogResolver.WriteSuccessLog("start file transfer...")
 	// 传输文件到目标机器
 	this.transfer()
+	this.TrackingLogResolver.WriteSuccessLog("end file transfer...")
 	// 执行部署任务
 	this.RunExecuteRemoteScriptTask(operate_type)
 }

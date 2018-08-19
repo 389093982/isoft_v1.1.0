@@ -18,7 +18,7 @@ func init() {
 	ScriptPathMappingMap["beego_restart"] = "shell/beego/beego_restart.sh"
 	ScriptPathMappingMap["beego_shutdown"] = "shell/beego/beego_shutdown.sh"
 	ScriptPathMappingMap["beego_startup"] = "shell/beego/beego_startup.sh"
-	ScriptPathMappingMap["beego_status"] = "shell/beego/beego_status.sh"
+	ScriptPathMappingMap["beego_check"] = "shell/beego/beego_check.sh"
 	ScriptPathMappingMap["docker_check"] = "shell/docker/docker_check.sh"
 	ScriptPathMappingMap["nginx_check"] = "shell/nginx/nginx_check.sh"
 	ScriptPathMappingMap["nginx_install"] = "shell/nginx/nginx_install.sh"

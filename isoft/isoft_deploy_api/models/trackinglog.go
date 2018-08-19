@@ -11,6 +11,7 @@ const TASK_STATUS_END = "END"
 type TrackingTask struct {
 	Id              int64     `json:"id"`
 	TrackingId      string    `json:"tracking_id"`
+	TaskName        string    `json:"task_name"`
 	TaskStatus      string    `json:"task_status"` // BEGIN/END
 	EnvId           int64     `json:"env_id"`
 	ServiceId       int64     `json:"service_id"`
@@ -23,6 +24,7 @@ type TrackingTask struct {
 type TrackingLog struct {
 	Id              int64         `json:"id"`
 	TrackingId      string        `json:"tracking_id"`
+	TaskName        string        `json:"task_name"`
 	TrackingDetail  orm.TextField `json:"tracking_detail"`
 	EnvId           int64         `json:"env_id"`
 	TrackingKey     string        `json:"tracking_key"`
