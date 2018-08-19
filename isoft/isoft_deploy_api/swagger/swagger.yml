@@ -61,6 +61,14 @@ paths:
     post:
       tags:
       - service
+  /service/fileUpload:
+    post:
+      tags:
+      - service
+  /service/getServiceTrackingLogDetail:
+    post:
+      tags:
+      - service
   /service/list:
     post:
       tags:

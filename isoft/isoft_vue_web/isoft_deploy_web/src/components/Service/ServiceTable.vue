@@ -1,7 +1,15 @@
 <template>
   <div style="margin-top: 10px;">
-    <Table :columns="columns1" :data="serviceInfos" size="small"></Table>
+    <Table :columns="columns1" :data="serviceInfos" size="small" height="400"></Table>
     <Page :total="total" show-sizer :styles="{'text-align': 'center','margin-top': '10px'}"/>
+
+    <Modal
+      v-model="showServiceTrackingLogDetailFlag"
+      title="最近一次日志详情">
+      <p v-for="trackingLog in trackingLogs">
+        {{trackingLog.tracking_detail}}
+      </p>
+    </Modal>
   </div>
 </template>
 
@@ -9,12 +17,17 @@
   import {ServiceList} from '../../api'
   import {RunDeployTask} from '../../api'
   import {QueryLastDeployStatus} from '../../api'
+  import {GetServiceTrackingLogDetail} from '../../api'
   import Loading from '../../components/Common/Loading.vue'
 
   export default {
     name: "ServiceTable",
     data () {
       return {
+        // 日志详情标志
+        showServiceTrackingLogDetailFlag: false,
+        // 日志详情内容
+        trackingLogs:[],
         columns1: [
           {
             title: '环境ID',
@@ -29,7 +42,7 @@
           {
             title: '服务名称',
             key: 'service_name',
-            width:100
+            width:200
           },
           {
             title: '服务类型',
@@ -68,7 +81,7 @@
           {
             title: '操作',
             key: 'operate',
-            width:550,
+            width:350,
             render: (h, params) => {
               return h('div', [
                 h('Button', {
@@ -77,7 +90,9 @@
                     size: 'small'
                   },
                   style: {
-                    marginRight: '5px'
+                    marginRight: '5px',
+                    // 控制按钮是否显示
+                    display: $.inArray(this.$route.query.service_type, ["mysql","nginx","beego","api"])>=0  ? undefined : 'none'
                   },
                   on: {
                     click: () => {
@@ -91,67 +106,61 @@
                     size: 'small'
                   },
                   style: {
-                    marginRight: '5px'
+                    marginRight: '5px',
+                    // 控制按钮是否显示
+                    display: $.inArray(this.$route.query.service_type, ["mysql","nginx"])>=0  ? undefined : 'none'
                   },
                   on: {
                     click: () => {
-                      this.connection_test(params.index)
+                      this.runDeployTask(params.index,"install")
                     }
                   }
                 }, '安装'),
-                h('Button', {
-                  props: {
-                    type: 'error',
-                    size: 'small'
-                  },
-                  style: {
-                    marginRight: '5px'
-                  },
-                  on: {
-                    click: () => {
-                      this.sync_deploy_home(params.index)
-                    }
-                  }
-                }, '重启'),
-                h('Button', {
-                  props: {
-                    type: 'primary',
-                    size: 'small'
-                  },
-                  style: {
-                    marginRight: '5px'
-                  },
-                  on: {
-                    click: () => {
-                      this.connection_test(params.index)
-                    }
-                  }
-                }, '详情'),
                 h('Button', {
                   props: {
                     type: 'info',
                     size: 'small'
                   },
                   style: {
-                    marginRight: '5px'
+                    marginRight: '5px',
+                    // 控制按钮是否显示
+                    display: $.inArray(this.$route.query.service_type, ["beego","api"])>=0  ? undefined : 'none'
                   },
                   on: {
                     click: () => {
-                      this.connection_test(params.index)
+                      this.runDeployTask(params.index,"deploy")
                     }
                   }
                 }, '部署'),
+                h('Button', {
+                  props: {
+                    type: 'error',
+                    size: 'small'
+                  },
+                  style: {
+                    marginRight: '5px',
+                    // 控制按钮是否显示
+                    display: $.inArray(this.$route.query.service_type, ["mysql","nginx","beego","api"])>=0  ? undefined : 'none'
+                  },
+                  on: {
+                    click: () => {
+                      this.runDeployTask(params.index,"restart")
+                    }
+                  }
+                }, '重启'),
                 h('Button', {
                   props: {
                     type: 'success',
                     size: 'small'
                   },
                   style: {
-                    marginRight: '5px'
+                    marginRight: '5px',
+                    // 控制按钮是否显示
+                    display: $.inArray(this.$route.query.service_type, ["beego","api"])>=0  ? undefined : 'none'
                   },
                   on: {
                     click: () => {
-                      this.connection_test(params.index)
+                      this.runDeployTask(params.index,"startup")
                     }
                   }
                 }, '启用'),
@@ -161,11 +170,13 @@
                     size: 'small'
                   },
                   style: {
-                    marginRight: '5px'
+                    marginRight: '5px',
+                    // 控制按钮是否显示
+                    display: $.inArray(this.$route.query.service_type, ["beego","api"])>=0  ? undefined : 'none'
                   },
                   on: {
                     click: () => {
-                      this.connection_test(params.index)
+                      this.runDeployTask(params.index,"shutdown")
                     }
                   }
                 }, '停用'),
@@ -175,14 +186,31 @@
                     size: 'small'
                   },
                   style: {
-                    marginRight: '5px'
+                    marginRight: '5px',
+                    // 控制按钮是否显示
+                    display: $.inArray(this.$route.query.service_type, ["nginx"])>=0  ? undefined : 'none'
                   },
                   on: {
                     click: () => {
-                      this.connection_test(params.index)
                     }
                   }
                 }, '服务代理'),
+                h('Button', {
+                  props: {
+                    type: 'default',
+                    size: 'small'
+                  },
+                  style: {
+                    marginRight: '5px',
+                    // 控制按钮是否显示
+                    display: $.inArray(this.$route.query.service_type, ["mysql","nginx","beego","api"])>=0  ? undefined : 'none'
+                  },
+                  on: {
+                    click: () => {
+                      this.getServiceTrackingLogDetail(params.index);
+                    }
+                  }
+                }, '详情'),
               ]);
             }
           }
@@ -192,6 +220,13 @@
       }
     },
     methods:{
+      async getServiceTrackingLogDetail(index){
+        const data = await GetServiceTrackingLogDetail(this.serviceInfos[index]['id']);
+        if(data.status=="SUCCESS"){
+          this.trackingLogs = data.trackingLogs;
+          this.showServiceTrackingLogDetailFlag = true;
+        }
+      },
       async renderLastDeployStatus(index,service_id,interval){
         // 设置转圈效果
         this.$set(this.serviceInfos[index], 'deploy_status', 'loading');

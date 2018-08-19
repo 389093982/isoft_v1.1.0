@@ -40,3 +40,7 @@ export const RunDeployTask = (env_id,service_id,operate_type) =>
 // 运行部署任务
 export const QueryLastDeployStatus = (service_id) =>
   ajax(BASE_URL+'/v1/service/queryLastDeployStatus/',{service_id},'POST')
+
+// 获取服务运行日志详细信息
+export const GetServiceTrackingLogDetail = (service_id) =>
+  ajax(BASE_URL+'/v1/service/getServiceTrackingLogDetail/',{service_id},'POST')

@@ -49,8 +49,40 @@ func init() {
 
 	beego.GlobalControllerRouter["isoft/isoft_deploy_api/controllers:ServiceController"] = append(beego.GlobalControllerRouter["isoft/isoft_deploy_api/controllers:ServiceController"],
 		beego.ControllerComments{
+			Method:           "FileUpload",
+			Router:           `/fileUpload`,
+			AllowHTTPMethods: []string{"post"},
+			MethodParams:     param.Make(),
+			Params:           nil})
+
+	beego.GlobalControllerRouter["isoft/isoft_deploy_api/controllers:ServiceController"] = append(beego.GlobalControllerRouter["isoft/isoft_deploy_api/controllers:ServiceController"],
+		beego.ControllerComments{
+			Method:           "GetServiceTrackingLogDetail",
+			Router:           `/getServiceTrackingLogDetail`,
+			AllowHTTPMethods: []string{"post"},
+			MethodParams:     param.Make(),
+			Params:           nil})
+
+	beego.GlobalControllerRouter["isoft/isoft_deploy_api/controllers:ServiceController"] = append(beego.GlobalControllerRouter["isoft/isoft_deploy_api/controllers:ServiceController"],
+		beego.ControllerComments{
 			Method:           "List",
 			Router:           `/list`,
+			AllowHTTPMethods: []string{"post"},
+			MethodParams:     param.Make(),
+			Params:           nil})
+
+	beego.GlobalControllerRouter["isoft/isoft_deploy_api/controllers:ServiceController"] = append(beego.GlobalControllerRouter["isoft/isoft_deploy_api/controllers:ServiceController"],
+		beego.ControllerComments{
+			Method:           "QueryLastDeployStatus",
+			Router:           `/queryLastDeployStatus`,
+			AllowHTTPMethods: []string{"post"},
+			MethodParams:     param.Make(),
+			Params:           nil})
+
+	beego.GlobalControllerRouter["isoft/isoft_deploy_api/controllers:ServiceController"] = append(beego.GlobalControllerRouter["isoft/isoft_deploy_api/controllers:ServiceController"],
+		beego.ControllerComments{
+			Method:           "RunDeployTask",
+			Router:           `/runDeployTask`,
 			AllowHTTPMethods: []string{"post"},
 			MethodParams:     param.Make(),
 			Params:           nil})

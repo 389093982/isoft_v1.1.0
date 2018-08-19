@@ -23,17 +23,16 @@ func (c *ServiceController) URLMapping() {
 	c.Mapping("List", c.List)
 }
 
-func (this *ServiceController) ShowServiceTrackingLogDetail() {
+// @router /getServiceTrackingLogDetail [post]
+func (this *ServiceController) GetServiceTrackingLogDetail() {
 	service_id, err := this.GetInt64("service_id")
 	if err == nil {
 		trackingLogs, err := models.QueryLastDeployTrackings(service_id)
 		if err == nil {
-			this.Data["LastUpdatedTime"] = trackingLogs[0].LastUpdatedTime
-			this.Data["TrackingLogs"] = &trackingLogs
+			this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "trackingLogs": &trackingLogs}
 		}
 	}
-	this.Layout = "layout/layout.html"
-	this.TplName = "service/tracking_detail.html"
+	this.ServeJSON()
 }
 
 func (this *ServiceController) EditorMonitor() {
@@ -175,12 +174,13 @@ func (this *ServiceController) preparePackageName(serviceName, serviceType strin
 	return ""
 }
 
+// @router /fileUpload [post]
 func (this *ServiceController) FileUpload() {
-	_, h, err := this.GetFile("fileList")
+	_, h, err := this.GetFile("file")
 	if err != nil {
 		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": "保存失败！"}
 	} else {
-		err := this.SaveToFile("fileList", path.Join("static/uploadfile", h.Filename))
+		err := this.SaveToFile("file", path.Join("static/uploadfile", h.Filename))
 		if err != nil {
 			this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": "保存失败！"}
 		} else {
