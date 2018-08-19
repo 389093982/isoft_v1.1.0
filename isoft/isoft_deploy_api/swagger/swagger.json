@@ -93,6 +93,13 @@
                 ]
             }
         },
+        "/service/fileDownload": {
+            "get": {
+                "tags": [
+                    "service"
+                ]
+            }
+        },
         "/service/fileUpload": {
             "post": {
                 "tags": [

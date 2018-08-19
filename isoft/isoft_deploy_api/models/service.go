@@ -86,6 +86,13 @@ func QueryServiceInfo(condArr map[string]interface{}, page int, offset int) (ser
 	return
 }
 
+func QueryServiceInfoById(service_id int64) (serviceInfo ServiceInfo, err error) {
+	o := orm.NewOrm()
+	qs := o.QueryTable("service_info")
+	err = qs.Filter("id", service_id).One(&serviceInfo)
+	return
+}
+
 func CheckServiceInfoExists(condArr map[string]interface{}) (exists bool, err error) {
 	o := orm.NewOrm()
 	qs := o.QueryTable("service_info")

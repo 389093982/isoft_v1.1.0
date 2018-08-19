@@ -12,6 +12,21 @@
         {{trackingLog.tracking_detail}}
       </p>
     </Modal>
+
+    <Modal
+      v-model="packageUploadModal"
+      width="500"
+      title="新增/编辑服务信息"
+      :mask-closable="false">
+      <div>
+          <Upload
+            :on-success="uploadComplete"
+            :data="{'service_id':packageUploadServiceId}"
+            action="/api/v1/service/fileUpload/">
+            <Button icon="ios-cloud-upload-outline">软件上传</Button>
+          </Upload>
+      </div>
+    </Modal>
   </div>
 </template>
 
@@ -20,6 +35,7 @@
   import {RunDeployTask} from '../../api'
   import {QueryLastDeployStatus} from '../../api'
   import {GetServiceTrackingLogDetail} from '../../api'
+  import {FileDownload} from '../../api'
   import Loading from '../../components/Common/Loading.vue'
 
   export default {
@@ -30,6 +46,10 @@
         showServiceTrackingLogDetailFlag: false,
         // 日志详情内容
         trackingLogs:[],
+        // 软件包上传 modal
+        packageUploadModal: false,
+        // 上传时附带的额外参数
+        packageUploadServiceId:'',
         columns1: [
           {
             title: '环境ID',
@@ -83,9 +103,42 @@
           {
             title: '操作',
             key: 'operate',
-            width:350,
+            width:550,
             render: (h, params) => {
               return h('div', [
+                h('Button', {
+                  props: {
+                    type: 'success',
+                    size: 'small'
+                  },
+                  style: {
+                    marginRight: '5px',
+                    // 控制按钮是否显示
+                    display: $.inArray(this.$route.query.service_type, ["beego","api"])>=0  ? undefined : 'none'
+                  },
+                  on: {
+                    click: () => {
+                      this.packageUploadModal = true;
+                      this.packageUploadServiceId = this.serviceInfos[params.index]['id']
+                    }
+                  }
+                }, '软件包上传'),
+                h('Button', {
+                  props: {
+                    type: 'error',
+                    size: 'small'
+                  },
+                  style: {
+                    marginRight: '5px',
+                    // 控制按钮是否显示
+                    display: $.inArray(this.$route.query.service_type, ["beego","api"])>=0  ? undefined : 'none'
+                  },
+                  on: {
+                    click: () => {
+                      this.fileDownload(params.index);
+                    }
+                  }
+                }, '软件包下载'),
                 h('Button', {
                   props: {
                     type: 'info',
@@ -222,6 +275,23 @@
       }
     },
     methods:{
+      fileDownload(index){
+        const service_id = this.serviceInfos[index]['id'];
+        window.location='/api/v1/service/fileDownload/?service_id=' + service_id;
+      },
+      uploadComplete(res, file) {
+        if(res.status=="SUCCESS"){
+          this.$Notice.success({
+            title: '文件上传成功',
+            desc: '文件 ' + file.name + ' 上传成功。'
+          });
+        }else{
+          this.$Notice.error({
+            title: '文件上传失败',
+            desc: '文件 ' + file.name + ' 上传失败。'
+          });
+        }
+      },
       async getServiceTrackingLogDetail(index){
         const data = await GetServiceTrackingLogDetail(this.serviceInfos[index]['id']);
         if(data.status=="SUCCESS"){

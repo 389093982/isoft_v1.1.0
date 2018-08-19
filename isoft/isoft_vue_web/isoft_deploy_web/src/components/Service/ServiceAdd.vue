@@ -1,7 +1,6 @@
 <template>
 <div>
   <Button type="success" @click="showFormModal = true">新增</Button>
-  <Button type="warning" @click="packageUploadModal = true">软件包上传</Button>
 
   <Modal
     v-model="showFormModal"
@@ -70,21 +69,7 @@
     </div>
   </Modal>
 
-  <Modal
-    v-model="packageUploadModal"
-    width="500"
-    title="新增/编辑服务信息"
-    :footer-hide="true"
-    :mask-closable="false">
-    <div>
-      <Upload
-        :on-success="uploadComplete"
-        multiple
-        action="/api/v1/service/fileUpload/">
-        <Button icon="ios-cloud-upload-outline">Upload files</Button>
-      </Upload>
-    </div>
-  </Modal>
+
 
   <Modal
     v-model="showFieldDetailModal"
@@ -109,8 +94,6 @@
       return {
         showFieldDetailModal: false,
         showFormModal: false,
-        // 软件包上传 modal
-        packageUploadModal: false,
         formValidate: {
           env_ids: '',
           service_name: '',
@@ -158,20 +141,7 @@
       }
     },
     methods: {
-      uploadComplete(res, file) {
-        if(res.status=="SUCCESS"){
-          this.$Notice.success({
-            title: '文件上传成功',
-            desc: '文件 ' + file.name + ' 上传成功。'
-          });
-        }else{
-          this.$Notice.error({
-            title: '文件上传失败',
-            desc: '文件 ' + file.name + ' 上传失败。'
-          });
-        }
-      },
-        // 关闭模态对话框
+      // 关闭模态对话框
       closeModalDialog (){
         this.showFormModal = false;
       },

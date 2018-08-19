@@ -8,6 +8,7 @@ import (
 	"isoft/isoft_deploy_api/deploy_core/constant"
 	"isoft/isoft_deploy_api/deploy_core/executors"
 	"isoft/isoft_deploy_api/models"
+	"os"
 	"path"
 	"strconv"
 	"strings"
@@ -174,13 +175,26 @@ func (this *ServiceController) preparePackageName(serviceName, serviceType strin
 	return ""
 }
 
+// @router /fileDownload [get]
+func (this *ServiceController) FileDownload() {
+	service_id, _ := this.GetInt64("service_id")
+	serviceInfo, _ := models.QueryServiceInfoById(service_id)
+	// 文件下载,第二个参数为下载时自定义的文件名
+	this.Ctx.Output.Download(fmt.Sprintf("static/uploadfile/%s/%s",
+		strconv.FormatInt(service_id, 10), serviceInfo.PackageName), serviceInfo.PackageName)
+}
+
 // @router /fileUpload [post]
 func (this *ServiceController) FileUpload() {
+	service_id := this.GetString("service_id")
 	_, h, err := this.GetFile("file")
 	if err != nil {
 		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": "保存失败！"}
 	} else {
-		err := this.SaveToFile("file", path.Join("static/uploadfile", h.Filename))
+		// 根据 service_id 创建分级文件夹
+		os.MkdirAll("static/uploadfile/"+service_id, os.ModePerm)
+		// 保存文件
+		err := this.SaveToFile("file", path.Join("static/uploadfile/"+service_id, h.Filename))
 		if err != nil {
 			this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": "保存失败！"}
 		} else {

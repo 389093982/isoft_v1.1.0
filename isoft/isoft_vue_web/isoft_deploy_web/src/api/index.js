@@ -44,3 +44,4 @@ export const QueryLastDeployStatus = (service_id) =>
 // 获取服务运行日志详细信息
 export const GetServiceTrackingLogDetail = (service_id) =>
   ajax(BASE_URL+'/v1/service/getServiceTrackingLogDetail/',{service_id},'POST')
+
