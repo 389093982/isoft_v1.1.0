@@ -33,16 +33,16 @@
         应用服务管理
       </template>
       <MenuItem name="3-1">
-        <router-link to="/service/list/mysql?service_type=mysql">mysql管理</router-link>
+        <router-link to="/service/list?service_type=mysql">mysql管理</router-link>
       </MenuItem>
       <MenuItem name="3-2">
-        <router-link to="/service/list/nginx?service_type=nginx">nginx管理</router-link>
+        <router-link to="/service/list?service_type=nginx">nginx管理</router-link>
       </MenuItem>
       <MenuItem name="3-3">
-        <router-link to="/service/list/beego?service_type=beego">beego应用部署</router-link>
+        <router-link to="/service/list?service_type=beego">beego应用部署</router-link>
       </MenuItem>
       <MenuItem name="3-4">
-        <router-link to="/service/list/api?service_type=api">api应用部署</router-link>
+        <router-link to="/service/list?service_type=api">api应用部署</router-link>
       </MenuItem>
       <MenuItem name="3-5">
         <router-link to="/service/monitor?service_type=monitor">服务监控</router-link>

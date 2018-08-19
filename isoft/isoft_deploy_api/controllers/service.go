@@ -122,49 +122,21 @@ func (this *ServiceController) List() {
 	this.ServeJSON()
 }
 
-func (this *ServiceController) PostModify() {
-	this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": "保存失败！"}
-	service_id, err := this.GetInt64("service_id")
-	if err != nil {
-		this.RenderJsonErrorWithInvalidParamDetail("service_id 不能为空")
-	}
-	service_port, err := this.GetInt64("service_port")
-	if err != nil {
-		this.RenderJsonErrorWithInvalidParamDetail("service_port 不能为空")
-	}
-	package_name := this.GetString("package_name")
-	run_mode := this.GetString("run_mode")
-
-	serviceInfo, err := models.FilterServiceInfo(map[string]interface{}{"service_id": service_id})
-	// 判断新输入的端口号是否被占用
-	if service_port != serviceInfo.ServicePort {
-		if exists, err := models.CheckServicePortExists(serviceInfo.EnvInfo.Id, service_port); err != nil || exists {
-			this.RenderJsonErrorWithInvalidParamDetail("service_port 被占用")
-			return
-		}
-	}
-	if err == nil {
-		serviceInfo.ServicePort = service_port
-		serviceInfo.PackageName = package_name
-		serviceInfo.RunMode = run_mode
-
-		_, err := models.InsertOrUpdateServiceInfo(&serviceInfo)
-		if err == nil {
-			this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
-		}
-	}
-	this.ServeJSON()
-}
-
 // @router /edit [post]
 func (this *ServiceController) Edit() {
 	env_ids := strings.Split(this.GetString("env_ids"), ",")
 	service_name := this.GetString("service_name")
 	service_type := this.GetString("service_type")
+	package_name := this.GetString("package_name")
+	run_mode := this.GetString("run_mode")
 	service_port, err := this.GetInt64("service_port")
 
 	if strings.TrimSpace(service_name) == "" || strings.TrimSpace(service_type) == "" || err != nil {
 		this.RenderJsonErrorWithInvalidParamDetail("不合法的参数")
+	}
+
+	if strings.TrimSpace(package_name) == "" {
+		package_name = this.preparePackageName(service_name, service_type)
 	}
 
 	for _, env_id := range env_ids {
@@ -178,7 +150,8 @@ func (this *ServiceController) Edit() {
 			ServiceName:     service_name,
 			ServiceType:     service_type,
 			ServicePort:     service_port,
-			PackageName:     this.preparePackageName(service_name, service_type),
+			PackageName:     package_name,
+			RunMode:         run_mode,
 			CreatedBy:       "AutoInsert",
 			CreatedTime:     time.Now(),
 			LastUpdatedBy:   "AutoInsert",

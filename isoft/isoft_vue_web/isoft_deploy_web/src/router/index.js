@@ -12,7 +12,7 @@ export default new Router({
       component: EnvList
     },
     {
-      path: '/service/list/:service_type',
+      path: '/service/list',
       component: ServiceList
     },
     {

@@ -7,6 +7,7 @@
 
 <script>
   import {ServiceList} from '../../api'
+  import {RunDeployTask} from '../../api'
 
   export default {
     name: "ServiceTable",
@@ -61,20 +62,6 @@
               return h('div', [
                 h('Button', {
                   props: {
-                    type: 'primary',
-                    size: 'small'
-                  },
-                  style: {
-                    marginRight: '5px'
-                  },
-                  on: {
-                    click: () => {
-                      this.$router.push({name: '/service/edit',params:{ service_id:params.row.id}});
-                    }
-                  }
-                }, '编辑'),
-                h('Button', {
-                  props: {
                     type: 'info',
                     size: 'small'
                   },
@@ -83,7 +70,7 @@
                   },
                   on: {
                     click: () => {
-                      this.sync_deploy_home(params.index)
+                      this.runDeployTask(params.index,"check")
                     }
                   }
                 }, '检测'),
@@ -207,6 +194,13 @@
           }
           _this.serviceInfos = _serviceInfos;
           _this.total = result.totalcount;
+        })
+      },
+      runDeployTask(index,operate_type){
+        const _this = this;
+        const serviceInfo = this.serviceInfos[index];
+        RunDeployTask(serviceInfo.env_id, serviceInfo.service_id, operate_type).then(function (response) {
+          alert(response);
         })
       }
     },
