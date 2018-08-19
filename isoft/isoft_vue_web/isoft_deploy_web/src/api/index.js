@@ -35,5 +35,8 @@ export const ServiceEdit = (env_ids,service_name,service_type,package_name,run_m
 
 // 运行部署任务
 export const RunDeployTask = (env_id,service_id,operate_type) =>
-  ajax(BASE_URL+'/v1/service/edit/',{env_id,service_id,operate_type},'POST')
+  ajax(BASE_URL+'/v1/service/runDeployTask/',{env_id,service_id,operate_type},'POST')
 
+// 运行部署任务
+export const QueryLastDeployStatus = (service_id) =>
+  ajax(BASE_URL+'/v1/service/queryLastDeployStatus/',{service_id},'POST')

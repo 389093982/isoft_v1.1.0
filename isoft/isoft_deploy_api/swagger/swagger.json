@@ -99,6 +99,20 @@
                     "service"
                 ]
             }
+        },
+        "/service/queryLastDeployStatus": {
+            "post": {
+                "tags": [
+                    "service"
+                ]
+            }
+        },
+        "/service/runDeployTask": {
+            "post": {
+                "tags": [
+                    "service"
+                ]
+            }
         }
     },
     "definitions": {

@@ -8,6 +8,8 @@
 <script>
   import {ServiceList} from '../../api'
   import {RunDeployTask} from '../../api'
+  import {QueryLastDeployStatus} from '../../api'
+  import Loading from '../../components/Common/Loading.vue'
 
   export default {
     name: "ServiceTable",
@@ -52,7 +54,16 @@
           {
             title: '部署状态',
             key: 'deploy_status',
-            width:100
+            width:100,
+            render: (h, params) => {
+              // 动态渲染子组件
+              var _deploy_status = params['row']['deploy_status'];
+              if(_deploy_status=='loading'){
+                return h(Loading);
+              }else{
+                return h('div',_deploy_status);
+              }
+            }
           },
           {
             title: '操作',
@@ -181,27 +192,45 @@
       }
     },
     methods:{
-      refreshServiceList(){
-        const _this = this;
-        ServiceList(this.$route.query.service_type,1,10).then(function (response) {
-          var result = JSON.parse(response);
-          var _serviceInfos=[];
-          for(var i=0; i<result.serviceInfos.length; i++){
-            var _serviceInfo = result.serviceInfos[i];
-            _serviceInfo.env_id = _serviceInfo.env_info.id;
-            _serviceInfo.env_name = _serviceInfo.env_info.env_name;
-            _serviceInfos.push(_serviceInfo);
-          }
-          _this.serviceInfos = _serviceInfos;
-          _this.total = result.totalcount;
-        })
+      async renderLastDeployStatus(index,service_id,interval){
+        // 设置转圈效果
+        this.$set(this.serviceInfos[index], 'deploy_status', 'loading');
+        // 异步调用接口
+        const data = await QueryLastDeployStatus(service_id);
+        if(data.status == 'SUCCESS'){
+          this.$set(this.serviceInfos[index], 'deploy_status', data.trackingStatus);
+          clearInterval(interval);
+        }
       },
-      runDeployTask(index,operate_type){
+      async refreshServiceList(){
         const _this = this;
+        const data = await ServiceList(this.$route.query.service_type,1,10);
+        var result = JSON.parse(data);
+        var _serviceInfos=[];
+        for(var i=0; i<result.serviceInfos.length; i++){
+          var _serviceInfo = result.serviceInfos[i];
+          _serviceInfo.env_id = _serviceInfo.env_info.id;
+          _serviceInfo.env_name = _serviceInfo.env_info.env_name;
+          // 动态添加属性
+          _serviceInfo['deploy_status'] = '';
+          _serviceInfos.push(_serviceInfo);
+        }
+        _this.serviceInfos = _serviceInfos;
+        _this.total = result.totalcount;
+      },
+      async runDeployTask(index,operate_type){
         const serviceInfo = this.serviceInfos[index];
-        RunDeployTask(serviceInfo.env_id, serviceInfo.service_id, operate_type).then(function (response) {
-          alert(response);
-        })
+        const data = await RunDeployTask(serviceInfo.env_id, serviceInfo.id, operate_type);
+        if(data.status=="SUCCESS"){
+          // 设置转圈效果
+          this.$set(this.serviceInfos[index], 'deploy_status', 'loading');
+          // 获取 vue 实例
+          const _this = this;
+          var interval = setInterval(function () {
+            // 渲染最后一次部署状态
+            _this.renderLastDeployStatus(index,serviceInfo.id,interval);
+          }, 2000);
+        }
       }
     },
     mounted:function(){

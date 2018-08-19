@@ -55,4 +55,20 @@ func init() {
 			MethodParams:     param.Make(),
 			Params:           nil})
 
+	beego.GlobalControllerRouter["isoft/isoft_deploy_api/controllers:ServiceController"] = append(beego.GlobalControllerRouter["isoft/isoft_deploy_api/controllers:ServiceController"],
+		beego.ControllerComments{
+			Method:           "QueryLastDeployStatus",
+			Router:           `/queryLastDeployStatus`,
+			AllowHTTPMethods: []string{"post"},
+			MethodParams:     param.Make(),
+			Params:           nil})
+
+	beego.GlobalControllerRouter["isoft/isoft_deploy_api/controllers:ServiceController"] = append(beego.GlobalControllerRouter["isoft/isoft_deploy_api/controllers:ServiceController"],
+		beego.ControllerComments{
+			Method:           "RunDeployTask",
+			Router:           `/runDeployTask`,
+			AllowHTTPMethods: []string{"post"},
+			MethodParams:     param.Make(),
+			Params:           nil})
+
 }

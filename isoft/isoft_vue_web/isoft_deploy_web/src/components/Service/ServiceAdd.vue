@@ -109,12 +109,6 @@
           service_type: [
             { required: true, message: '服务类型不能为空', trigger: 'blur' }
           ],
-          package_name: [
-            { required: true, message: '部署包名不能为空', trigger: 'blur' }
-          ],
-          run_mode: [
-            { required: true, message: '运行模式不能为空', trigger: 'blur' }
-          ],
           service_port: [
             { required: true, message: '端口号不能为空', trigger: 'blur' }
           ]

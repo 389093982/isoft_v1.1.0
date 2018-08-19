@@ -190,6 +190,7 @@ func (this *ServiceController) FileUpload() {
 	this.ServeJSON()
 }
 
+// @router /runDeployTask [post]
 func (this *ServiceController) RunDeployTask() {
 	env_id, _ := this.GetInt64("env_id")
 	service_id, _ := this.GetInt64("service_id")
@@ -215,6 +216,7 @@ func (this *ServiceController) RunDeployTask() {
 	this.ServeJSON()
 }
 
+// @router /queryLastDeployStatus [post]
 func (this *ServiceController) QueryLastDeployStatus() {
 	this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "finish": false}
 	service_id, err := this.GetInt64("service_id")

@@ -65,6 +65,14 @@ paths:
     post:
       tags:
       - service
+  /service/queryLastDeployStatus:
+    post:
+      tags:
+      - service
+  /service/runDeployTask:
+    post:
+      tags:
+      - service
 definitions:
   models.EnvInfo:
     title: EnvInfo
