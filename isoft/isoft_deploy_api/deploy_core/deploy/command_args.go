@@ -3,6 +3,7 @@ package deploy
 import (
 	"errors"
 	"isoft/isoft_deploy_api/models"
+	"strings"
 )
 
 type ICommandArgsResolver interface {
@@ -53,12 +54,16 @@ func (this *CommandArgs) NginxInstallCommandArgs() (*[]string, error) {
 func (this *CommandArgs) BeegoDeployCommandArgs() (*[]string, error) {
 	var slice []string
 	if this.serviceInfo.ServiceName == "" {
+		return &slice, errors.New("empty param : ServiceName")
+	}
+	if this.serviceInfo.PackageName == "" {
 		return &slice, errors.New("empty param : PackageName")
 	}
 	if this.serviceInfo.RunMode == "" {
 		return &slice, errors.New("empty param : RunMode")
 	}
 	slice = append(slice, this.serviceInfo.ServiceName)
+	slice = append(slice, strings.Replace(this.serviceInfo.PackageName, ".tar.gz", "", -1))
 	slice = append(slice, this.serviceInfo.RunMode)
 	return &slice, nil
 }
@@ -78,9 +83,13 @@ func (this *CommandArgs) BeegoShutdownCommandArgs() (*[]string, error) {
 func (this *CommandArgs) BeegoStatusCommandArgs() (*[]string, error) {
 	var slice []string
 	if this.serviceInfo.ServiceName == "" {
+		return &slice, errors.New("empty param : ServiceName")
+	}
+	if this.serviceInfo.PackageName == "" {
 		return &slice, errors.New("empty param : PackageName")
 	}
 	slice = append(slice, this.serviceInfo.ServiceName)
+	slice = append(slice, strings.Replace(this.serviceInfo.PackageName, ".tar.gz", "", -1))
 	return &slice, nil
 }
 
