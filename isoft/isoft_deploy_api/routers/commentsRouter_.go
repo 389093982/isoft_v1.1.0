@@ -49,6 +49,14 @@ func init() {
 
 	beego.GlobalControllerRouter["isoft/isoft_deploy_api/controllers:ServiceController"] = append(beego.GlobalControllerRouter["isoft/isoft_deploy_api/controllers:ServiceController"],
 		beego.ControllerComments{
+			Method:           "FileDownload",
+			Router:           `/fileDownload`,
+			AllowHTTPMethods: []string{"get"},
+			MethodParams:     param.Make(),
+			Params:           nil})
+
+	beego.GlobalControllerRouter["isoft/isoft_deploy_api/controllers:ServiceController"] = append(beego.GlobalControllerRouter["isoft/isoft_deploy_api/controllers:ServiceController"],
+		beego.ControllerComments{
 			Method:           "FileUpload",
 			Router:           `/fileUpload`,
 			AllowHTTPMethods: []string{"post"},

@@ -19,7 +19,7 @@ if [ ! -d ${deploy_home}/project/goproject/${service_name}/${package_name} ];the
 fi
 
 # 进入应用所在目录并解压 tar.gz 包,并设置可执行权限
-cd ${deploy_home}/project/goproject/${package_name} && tar -xzf ../../../beego/packages/${service_name}/${package_name}.tar.gz && chmod +x ./${package_name}
+cd ${deploy_home}/project/goproject/${service_name}/${package_name} && tar -xzf ../../../beego/packages/${service_name}/${package_name}.tar.gz && chmod +x ./${package_name}
 
 # 修改配置文件
 old_runmode=`cat ./conf/app.conf | grep runmode | grep -v grep`
