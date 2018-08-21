@@ -3,6 +3,7 @@ package deploy
 import (
 	"errors"
 	"isoft/isoft_deploy_api/models"
+	"strconv"
 	"strings"
 )
 
@@ -20,7 +21,12 @@ func (this *CommandArgs) MysqlInstallCommandArgs() (*[]string, error) {
 	var slice []string
 	slice = append(slice, remoteDeployHomePath)
 	slice = append(slice, this.serviceInfo.ServiceName)
-	slice = append(slice, "_")             // 端口号
+	if this.serviceInfo.ServicePort > 0 {
+		slice = append(slice, strconv.FormatInt(this.serviceInfo.ServicePort, 10)) // 端口号
+
+	} else {
+		slice = append(slice, "_")
+	}
 	slice = append(slice, "Isoft@123456!") // rootPwd
 	return &slice, nil
 }
