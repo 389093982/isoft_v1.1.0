@@ -8,6 +8,10 @@ serviceName=$2
 servicePort=$3
 # mysql root 密码
 rootPwd=$4
+echo $1
+echo $2
+echo $3
+echo $4
 
 if [ -z ${remoteDeployHomePath} ] || [ -z ${serviceName} ] || [ -z ${servicePort} ] || [ -z ${rootPwd} ];then
     echo "invalid params"
@@ -38,8 +42,15 @@ if [ -d ${mysql_install_home} ];then
 fi
 mkdir -p ${mysql_install_home}/logs && mkdir -p ${mysql_install_home}/conf && mkdir -p ${mysql_install_home}/data
 
+# 拷贝配置文件 my.conf 到对应位置
+if [ ! -f "${mysql_install_home}/conf/my.cnf" ];then
+    cp -r ./my.cnf ${mysql_install_home}/conf
+fi
 ###################################################################################################
 
+# docker run -p 3306:3306 --name mysql \
+      -v /mydata/deploy_home/soft/install/mysql/conf:/etc/mysql/conf.d -v /mydata/deploy_home/soft/install/mysql/logs:/logs \
+      -v /mydata/deploy_home/soft/install/mysql/data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=123456 -d mysql
 # 运行 docker mysql 容器
 result=`docker run -p ${servicePort}:3306 --name ${serviceName} \
     -v ${mysql_install_home}/conf:/etc/mysql/conf.d -v ${mysql_install_home}/logs:/logs \

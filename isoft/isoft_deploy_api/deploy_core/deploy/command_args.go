@@ -20,8 +20,8 @@ func (this *CommandArgs) MysqlInstallCommandArgs() (*[]string, error) {
 	var slice []string
 	slice = append(slice, remoteDeployHomePath)
 	slice = append(slice, this.serviceInfo.ServiceName)
-	slice = append(slice, "_")      // 端口号
-	slice = append(slice, "123456") // rootPwd
+	slice = append(slice, "_")             // 端口号
+	slice = append(slice, "Isoft@123456!") // rootPwd
 	return &slice, nil
 }
 

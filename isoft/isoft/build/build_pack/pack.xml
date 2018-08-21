@@ -21,6 +21,11 @@
         <apppath>src\isoft\isoft_learning_web</apppath>
     </packapp>
     <packapp>
+        <packType>beego</packType>
+        <appName>isoft_deploy_api</appName>
+        <apppath>src\isoft\isoft_deploy_api</apppath>
+    </packapp>
+    <packapp>
         <packType>common</packType>
         <appName>apiServer</appName>
         <apppath>src\isoft\isoft_storage\apiServer</apppath>

@@ -32,5 +32,6 @@ else
     echo "mysql_check__N/A"
 fi
 
+docker logs $(docker ps -aq --filter name=${serviceName})
 
 

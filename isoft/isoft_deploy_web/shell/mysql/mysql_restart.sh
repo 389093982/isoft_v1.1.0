@@ -38,6 +38,10 @@ if [ -d ${mysql_install_home} ];then
 fi
 mkdir -p ${mysql_install_home}/logs && mkdir -p ${mysql_install_home}/conf && mkdir -p ${mysql_install_home}/data
 
+# 拷贝配置文件 my.conf 到对应位置
+if [ ! -f "${mysql_install_home}/conf/my.cnf" ];then
+    cp -r ./my.cnf ${mysql_install_home}/conf
+fi
 ###################################################################################################
 
 # 运行 docker mysql 容器
