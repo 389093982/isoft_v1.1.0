@@ -1,5 +1,7 @@
 #!/bin/bash
 
+###################################################################################################################
+################################### egg ./mysql_restart.sh /mydata/deploy_home/soft/install/mysql mysql 3306 123456
 # 目标机器 deploy_home 路径
 remoteDeployHomePath=$1
 # 服务名称
@@ -8,10 +10,7 @@ serviceName=$2
 servicePort=$3
 # mysql root 密码
 rootPwd=$4
-echo $1
-echo $2
-echo $3
-echo $4
+###################################################################################################################
 
 if [ -z ${remoteDeployHomePath} ] || [ -z ${serviceName} ] || [ -z ${servicePort} ] || [ -z ${rootPwd} ];then
     echo "invalid params"
@@ -25,11 +24,15 @@ fi
 
 sh ./mysql_check.sh ${remoteDeployHomePath} ${serviceName} ${servicePort}
 
+# 先停止再删除运行的容器
+docker stop --time=20 ${serviceName}
+# 强制移除此容器
+docker rm -f $(docker ps -aq --filter name=${serviceName})
+# 清理此容器的网络占用
+docker network disconnect --force bridge ${serviceName}
+
 # 杀掉占用的端口
 sh ../common/port_kill.sh ${servicePort}
-
-# 先停止再删除运行的容器
-docker stop --time=20 ${serviceName} && docker rm -f $(docker ps -aq --filter name=${serviceName})
 
 sh ./mysql_check.sh ${remoteDeployHomePath} ${serviceName} ${servicePort}
 
@@ -48,9 +51,8 @@ if [ ! -f "${mysql_install_home}/conf/my.cnf" ];then
 fi
 ###################################################################################################
 
-# docker run -p 3306:3306 --name mysql \
-      -v /mydata/deploy_home/soft/install/mysql/conf:/etc/mysql/conf.d -v /mydata/deploy_home/soft/install/mysql/logs:/logs \
-      -v /mydata/deploy_home/soft/install/mysql/data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=123456 -d mysql
+echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ restart mysql ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+
 # 运行 docker mysql 容器
 result=`docker run -p ${servicePort}:3306 --name ${serviceName} \
     -v ${mysql_install_home}/conf:/etc/mysql/conf.d -v ${mysql_install_home}/logs:/logs \

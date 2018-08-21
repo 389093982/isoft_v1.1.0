@@ -8,9 +8,11 @@
       width="800"
       title="最近一次日志详情"
       :mask-closable="false">
-      <p v-for="trackingLog in trackingLogs">
-        {{trackingLog.tracking_detail}}
-      </p>
+        <Scroll :on-reach-bottom="handleReachBottom">
+          <p v-for="trackingLog in trackingLogs">
+            {{trackingLog.tracking_detail}}
+          </p>
+        </Scroll>
     </Modal>
 
     <Modal

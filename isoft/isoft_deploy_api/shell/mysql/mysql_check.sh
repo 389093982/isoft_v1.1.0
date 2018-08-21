@@ -32,6 +32,14 @@ else
     echo "mysql_check__N/A"
 fi
 
-docker logs $(docker ps -aq --filter name=${serviceName})
+# docker logs $(docker ps -aq --filter name=${serviceName})
 
+###################################################################################################################
+# MySQL测试环境遇到 mmap(xxx bytes) failed; errno 12解决方法
+# 明显的swap问题,适当增加swap
+# sudo dd if=/dev/zero of=/swapfile bs=1M count=1024 #增加1G的SWAP进去
+# sudo mkswap /swapfile
+# sudo swapon /swapfile
+# free
+###################################################################################################################
 
