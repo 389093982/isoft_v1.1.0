@@ -27,7 +27,7 @@ func (this *CommandArgs) MysqlInstallCommandArgs() (*[]string, error) {
 	} else {
 		slice = append(slice, "_")
 	}
-	slice = append(slice, "Isoft@123456!") // rootPwd
+	slice = append(slice, this.serviceInfo.MysqlRootPwd) // rootPwd
 	return &slice, nil
 }
 

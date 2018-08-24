@@ -12,6 +12,7 @@ type ServiceInfo struct {
 	ServiceType     string    `json:"service_type"`
 	ServicePort     int64     `json:"service_port"`
 	PackageName     string    `json:"package_name"`
+	MysqlRootPwd    string    `json:"mysql_root_pwd"`
 	RunMode         string    `json:"run_mode"`
 	CreatedBy       string    `json:"created_by"`
 	CreatedTime     time.Time `json:"created_time"`

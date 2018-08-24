@@ -127,6 +127,7 @@ func (this *ServiceController) Edit() {
 	env_ids := strings.Split(this.GetString("env_ids"), ",")
 	service_name := this.GetString("service_name")
 	service_type := this.GetString("service_type")
+	mysql_root_pwd := this.GetString("mysql_root_pwd")
 	package_name := this.GetString("package_name")
 	run_mode := this.GetString("run_mode")
 	service_port, err := this.GetInt64("service_port")
@@ -150,6 +151,7 @@ func (this *ServiceController) Edit() {
 			ServiceName:     service_name,
 			ServiceType:     service_type,
 			ServicePort:     service_port,
+			MysqlRootPwd:    mysql_root_pwd,
 			PackageName:     package_name,
 			RunMode:         run_mode,
 			CreatedBy:       "AutoInsert",

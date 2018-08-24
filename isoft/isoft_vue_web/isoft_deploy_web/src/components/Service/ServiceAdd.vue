@@ -58,6 +58,14 @@
 
         <Row>
           <Col span="12">
+            <FormItem label="root密码" prop="mysql_root_pwd">
+              <Input v-model="formValidate.mysql_root_pwd" placeholder="请输入 mysql 数据库 root 密码"></Input>
+            </FormItem>
+          </Col>
+        </Row>
+
+        <Row>
+          <Col span="12">
             <FormItem>
               <Button type="success" @click="handleSubmit('formValidate')" style="margin-right: 8px">Submit</Button>
               <Button type="warning" @click="handleReset('formValidate')" style="margin-right: 8px">Reset</Button>
@@ -98,6 +106,7 @@
           env_ids: '',
           service_name: '',
           service_type: '',
+          mysql_root_pwd: '',
           package_name: '',
           run_mode: '',
           service_port: ''
@@ -141,32 +150,25 @@
       }
     },
     methods: {
-      // 关闭模态对话框
-      closeModalDialog (){
-        this.showFormModal = false;
-      },
       handleSubmit (name) {
         var _this = this;
-        this.$refs[name].validate((valid) => {
+        this.$refs[name].validate(async (valid) => {
           if (valid) {
             // 返回的是个 Promise 对象,需要调用 then 方法
-            ServiceEdit(this.formValidate.env_ids.join(','),
-              this.formValidate.service_name,
-              this.formValidate.service_type,
-              this.formValidate.package_name,
-              this.formValidate.run_mode,
-              this.formValidate.service_port)
-              .then(function (response) {
-                if(response.status == "SUCCESS"){
-                  _this.$Message.success('提交成功!');
-                  _this.closeModalDialog();
-                  _this.$router.go(0);     // 页面刷新,等价于 location.reload()
-                }else{
-                  _this.$Message.error('提交失败!');
-                }
-              });
+            const result = await ServiceEdit(this.formValidate.env_ids.join(','),
+              this.formValidate.service_name, this.formValidate.service_type,
+              this.formValidate.package_name, this.formValidate.run_mode,
+              this.formValidate.service_port, this.formValidate.mysql_root_pwd);
+            if(result.status == "SUCCESS"){
+              _this.$Message.success('提交成功!');
+              // 关闭模态对话框
+              _this.showFormModal = false;
+              _this.$router.go(0);     // 页面刷新,等价于 location.reload()
+            }else{
+              _this.$Message.error('提交失败!');
+            }
           } else {
-
+            _this.$Message.error('验证失败!');
           }
         })
       },

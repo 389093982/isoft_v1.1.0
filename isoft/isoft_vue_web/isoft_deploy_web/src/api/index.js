@@ -30,8 +30,8 @@ export const SyncDeployHome = (env_id) =>
   ajax(BASE_URL+'/v1/env/sync_deploy_home/',{env_id},'POST')
 
 // 编辑服务接口
-export const ServiceEdit = (env_ids,service_name,service_type,package_name,run_mode,service_port) =>
-  ajax(BASE_URL+'/v1/service/edit/',{env_ids,service_name,service_type,package_name,run_mode,service_port},'POST')
+export const ServiceEdit = (env_ids,service_name,service_type,package_name,run_mode,service_port,mysql_root_pwd) =>
+  ajax(BASE_URL+'/v1/service/edit/',{env_ids,service_name,service_type,package_name,run_mode,service_port,mysql_root_pwd},'POST')
 
 // 运行部署任务
 export const RunDeployTask = (env_id,service_id,operate_type) =>
