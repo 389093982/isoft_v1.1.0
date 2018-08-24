@@ -227,7 +227,7 @@ func (this *ServiceController) RunDeployTask() {
 	}
 
 	// 开启协程执行任务
-	tracking_id := executors.RunRemoteShellCommand(&serviceInfo, &envInfo, operate_type)
+	tracking_id := executors.RunCommandTask(&serviceInfo, &envInfo, operate_type)
 
 	this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "tracking_id": tracking_id}
 	this.ServeJSON()

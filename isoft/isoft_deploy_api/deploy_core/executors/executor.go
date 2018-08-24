@@ -6,7 +6,7 @@ import (
 	"isoft/isoft_deploy_api/models"
 )
 
-func RunRemoteShellCommand(serviceInfo *models.ServiceInfo, envInfo *models.EnvInfo, operate_type string) (tracking_id string) {
+func RunCommandTask(serviceInfo *models.ServiceInfo, envInfo *models.EnvInfo, operate_type string) (tracking_id string) {
 	tracking_id = common.RandomUUID()
 	// 开启协程执行任务
 	go func() {
@@ -18,13 +18,13 @@ func RunRemoteShellCommand(serviceInfo *models.ServiceInfo, envInfo *models.EnvI
 		}
 
 		// 任务执行器
-		SSHTimerScriptExecutor := deploy.SSHTimerScriptExecutor{
+		ExecutorRouter := ExecutorRouter{
 			EnvInfo:       envInfo,
 			FileTransfers: FileTransferCreator.PrepareFileTransfer(),
 			ServiceInfo:   serviceInfo,
 		}
 		// 执行任务
-		SSHTimerScriptExecutor.RunRemoteScriptTask(operate_type, tracking_id)
+		ExecutorRouter.RunCommandTask(operate_type, tracking_id)
 	}()
 
 	return

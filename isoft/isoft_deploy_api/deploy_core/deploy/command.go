@@ -2,12 +2,11 @@ package deploy
 
 import (
 	"isoft/isoft/common/fileutil"
+	"isoft/isoft_deploy_api/deploy_core/constant"
 	"isoft/isoft_deploy_api/models"
 	"path/filepath"
 	"strings"
 )
-
-const COMMAND_OVER = "COMMAND_OVER"
 
 var (
 	ScriptPathMappingMap = make(map[string]string, 0)
@@ -28,17 +27,9 @@ func init() {
 	ScriptPathMappingMap["mysql_restart"] = "shell/mysql/mysql_restart.sh"
 }
 
-// 获取真实的命令脚本执行类型
-func getRealCommandType(serviceType, operate_type string) string {
-	if _, ok := ScriptPathMappingMap[serviceType+"_"+operate_type]; ok {
-		return serviceType + "_" + operate_type
-	}
-	return operate_type
-}
-
 // 根据操作类型获取对应脚本路径
 func getScriptFilePathByCommandType(serviceType, operate_type string) string {
-	return ScriptPathMappingMap[getRealCommandType(serviceType, operate_type)]
+	return ScriptPathMappingMap[GetRealCommandType(serviceType, operate_type)]
 }
 
 // 准备远程执行的 shell 命令
@@ -52,13 +43,13 @@ func PrepareCommand(serviceInfo *models.ServiceInfo, operate_type string) (strin
 		return "", err
 	}
 	return "cd " + fileutil.ChangeToLinuxSeparator(filepath.Dir(scriptPath)) +
-		" && ./" + filepath.Base(scriptPath) + " " + args + " && echo " + COMMAND_OVER, nil
+		" && ./" + filepath.Base(scriptPath) + " " + args + " && echo " + constant.COMMAND_OVER, nil
 }
 
 // 准备 shell 命令相关参数
 func PrepareArgs(serviceInfo *models.ServiceInfo, operate_type string) (string, error) {
 	resolver := &CommandArgs{}
-	argslices, err := resolver.GetCommandArgs(serviceInfo, getRealCommandType(serviceInfo.ServiceType, operate_type))
+	argslices, err := resolver.GetCommandArgs(serviceInfo, GetRealCommandType(serviceInfo.ServiceType, operate_type))
 
 	if err != nil {
 		return "", err

@@ -37,19 +37,6 @@
             </FormItem>
           </Col>
           <Col span="12">
-            <FormItem label="部署包名" prop="package_name">
-              <Input v-model="formValidate.package_name" placeholder="请输入部署包名"></Input>
-            </FormItem>
-          </Col>
-        </Row>
-
-        <Row>
-          <Col span="12">
-            <FormItem label="运行模式" prop="run_mode">
-              <Input v-model="formValidate.run_mode" placeholder="请输入运行模式"></Input>
-            </FormItem>
-          </Col>
-          <Col span="12">
             <FormItem label="端口号" prop="service_port">
               <Input v-model="formValidate.service_port" placeholder="请输入端口号"></Input>
             </FormItem>
@@ -57,7 +44,20 @@
         </Row>
 
         <Row>
-          <Col span="12">
+          <Col span="12" v-if="formValidate.service_type=='beego'">
+            <FormItem label="运行模式" prop="run_mode">
+              <Input v-model="formValidate.run_mode" placeholder="请输入运行模式"></Input>
+            </FormItem>
+          </Col>
+          <Col span="12" v-if="formValidate.service_type=='beego'">
+            <FormItem label="部署包名" prop="package_name">
+              <Input v-model="formValidate.package_name" placeholder="请输入部署包名"></Input>
+            </FormItem>
+          </Col>
+        </Row>
+
+        <Row>
+          <Col span="12" v-if="formValidate.service_type=='mysql'">
             <FormItem label="root密码" prop="mysql_root_pwd">
               <Input v-model="formValidate.mysql_root_pwd" placeholder="请输入 mysql 数据库 root 密码"></Input>
             </FormItem>

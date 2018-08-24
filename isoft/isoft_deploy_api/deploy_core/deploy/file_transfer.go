@@ -20,9 +20,9 @@ func init() {
 // 文件传输器类
 type FileTransfer struct {
 	// 本地文件路径
-	localFilePath string
+	LocalFilePath string
 	// 远程虚拟机文件路径
-	remoteDir string
+	RemoteDir string
 }
 
 func (this *FileTransfer) Transfer(EnvInfo *models.EnvInfo) error {
@@ -32,10 +32,10 @@ func (this *FileTransfer) Transfer(EnvInfo *models.EnvInfo) error {
 	}
 	defer sftpClient.Close()
 
-	if fileutil.IsDir(this.localFilePath) {
-		common.SFTPClientCopyDirectoryInto(sftpClient, this.localFilePath, this.remoteDir)
+	if fileutil.IsDir(this.LocalFilePath) {
+		common.SFTPClientCopyDirectoryInto(sftpClient, this.LocalFilePath, this.RemoteDir)
 	} else {
-		common.SFTPClientFileCopy(sftpClient, this.localFilePath, this.remoteDir)
+		common.SFTPClientFileCopy(sftpClient, this.LocalFilePath, this.RemoteDir)
 	}
 	return nil
 }
@@ -77,9 +77,9 @@ func (this *BeegoFileTransferCreator) BeegoDeployFileTransfer() []*FileTransfer 
 	FileTransfers := make([]*FileTransfer, 0)
 	// .tar.gz 安装包拷贝
 	FileTransfer := &FileTransfer{
-		localFilePath: filepath.Join(SFTP_SRC_DIR, "static", "uploadfile", this.ServiceInfo.ServiceName, this.ServiceInfo.PackageName),
+		LocalFilePath: filepath.Join(SFTP_SRC_DIR, "static", "uploadfile", this.ServiceInfo.ServiceName, this.ServiceInfo.PackageName),
 		// 目标机器是 Linux 系统,需要转换为 Linux 路径分隔符
-		remoteDir: fileutil.ChangeToLinuxSeparator(filepath.Join(GetRemoteDeployHomePath(this.ServiceInfo.EnvInfo), "beego", "packages", this.ServiceInfo.ServiceName)),
+		RemoteDir: fileutil.ChangeToLinuxSeparator(filepath.Join(GetRemoteDeployHomePath(this.ServiceInfo.EnvInfo), "beego", "packages", this.ServiceInfo.ServiceName)),
 	}
 	FileTransfers = append(FileTransfers, FileTransfer)
 

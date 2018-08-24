@@ -254,6 +254,22 @@
                 }, '服务代理'),
                 h('Button', {
                   props: {
+                    type: 'info',
+                    size: 'small'
+                  },
+                  style: {
+                    marginRight: '5px',
+                    // 控制按钮是否显示
+                    display: $.inArray(this.$route.query.service_type, ["mysql"])>=0  ? undefined : 'none'
+                  },
+                  on: {
+                    click: () => {
+                      this.runDeployTask(params.index,"connection_test")
+                    }
+                  }
+                }, '连接测试'),
+                h('Button', {
+                  props: {
                     type: 'default',
                     size: 'small'
                   },
