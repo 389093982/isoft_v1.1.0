@@ -29,6 +29,17 @@
           </Upload>
       </div>
     </Modal>
+
+    <Modal
+      v-model="mysqlInitModal"
+      width="500"
+      title="新建账号和数据库"
+      :footer-hide="true"
+      :mask-closable="false">
+      <div>
+        <MysqlInit @handleSubmit="mysqlInit_handleSubmit" :index="mysqlInit_index"/>
+      </div>
+    </Modal>
   </div>
 </template>
 
@@ -39,9 +50,11 @@
   import {GetServiceTrackingLogDetail} from '../../api'
   import {FileDownload} from '../../api'
   import Loading from '../../components/Common/Loading.vue'
+  import MysqlInit from "./MysqlInit";
 
   export default {
     name: "ServiceTable",
+    components: {MysqlInit},
     data () {
       return {
         // 日志详情标志
@@ -52,6 +65,10 @@
         packageUploadModal: false,
         // 上传时附带的额外参数
         packageUploadServiceId:'',
+        // 新建账号和数据库 modal
+        mysqlInitModal: false,
+        // 新建账号和数据库 modal 时所选择的 index
+        mysqlInit_index: -1,
         columns1: [
           {
             title: '环境ID',
@@ -89,16 +106,16 @@
             width:100
           },
           {
-            title: '部署状态',
+            title: '操作结果',
             key: 'deploy_status',
             width:100,
             render: (h, params) => {
               // 动态渲染子组件
-              var _deploy_status = params['row']['deploy_status'];
-              if(_deploy_status=='loading'){
+              var operate_result = params['row']['deploy_status'];
+              if(operate_result=='loading'){
                 return h(Loading);
               }else{
-                return h('div',_deploy_status);
+                return h('div',operate_result);
               }
             }
           },
@@ -153,7 +170,7 @@
                   },
                   on: {
                     click: () => {
-                      this.runDeployTask(params.index,"check")
+                      this.runDeployTask(params.index,"check", null)
                     }
                   }
                 }, '检测'),
@@ -169,7 +186,7 @@
                   },
                   on: {
                     click: () => {
-                      this.runDeployTask(params.index,"install")
+                      this.runDeployTask(params.index,"install", null)
                     }
                   }
                 }, '安装'),
@@ -185,7 +202,7 @@
                   },
                   on: {
                     click: () => {
-                      this.runDeployTask(params.index,"deploy")
+                      this.runDeployTask(params.index,"deploy", null)
                     }
                   }
                 }, '部署'),
@@ -201,7 +218,7 @@
                   },
                   on: {
                     click: () => {
-                      this.runDeployTask(params.index,"restart")
+                      this.runDeployTask(params.index,"restart", null)
                     }
                   }
                 }, '重启'),
@@ -217,7 +234,7 @@
                   },
                   on: {
                     click: () => {
-                      this.runDeployTask(params.index,"startup")
+                      this.runDeployTask(params.index,"startup", null)
                     }
                   }
                 }, '启用'),
@@ -233,7 +250,7 @@
                   },
                   on: {
                     click: () => {
-                      this.runDeployTask(params.index,"shutdown")
+                      this.runDeployTask(params.index,"shutdown", null)
                     }
                   }
                 }, '停用'),
@@ -264,10 +281,27 @@
                   },
                   on: {
                     click: () => {
-                      this.runDeployTask(params.index,"connection_test")
+                      this.runDeployTask(params.index,"connection_test", null)
                     }
                   }
                 }, '连接测试'),
+                h('Button', {
+                  props: {
+                    type: 'success',
+                    size: 'small'
+                  },
+                  style: {
+                    marginRight: '5px',
+                    // 控制按钮是否显示
+                    display: $.inArray(this.$route.query.service_type, ["mysql"])>=0  ? undefined : 'none'
+                  },
+                  on: {
+                    click: () => {
+                      this.mysqlInit_index = params.index;
+                      this.mysqlInitModal = true;
+                    }
+                  }
+                }, '新建账号和DB'),
                 h('Button', {
                   props: {
                     type: 'default',
@@ -293,6 +327,11 @@
       }
     },
     methods:{
+      mysqlInit_handleSubmit(data){
+        // 关闭模态对话框
+        this.mysqlInitModal = false;
+        this.runDeployTask(this.mysqlInit_index, "mysql_init", JSON.stringify(data));
+      },
       fileDownload(index){
         const service_id = this.serviceInfos[index]['id'];
         window.location='/api/v1/service/fileDownload/?service_id=' + service_id;
@@ -301,12 +340,12 @@
         if(res.status=="SUCCESS"){
           this.$Notice.success({
             title: '文件上传成功',
-            desc: '文件 ' + file.name + ' 上传成功。'
+            desc: '文件 ' + file.name + ' 上传成功!'
           });
         }else{
           this.$Notice.error({
             title: '文件上传失败',
-            desc: '文件 ' + file.name + ' 上传失败。'
+            desc: '文件 ' + file.name + ' 上传失败!'
           });
         }
       },
@@ -343,9 +382,9 @@
         _this.serviceInfos = _serviceInfos;
         _this.total = result.totalcount;
       },
-      async runDeployTask(index,operate_type){
+      async runDeployTask(index,operate_type, extra_params){
         const serviceInfo = this.serviceInfos[index];
-        const data = await RunDeployTask(serviceInfo.env_id, serviceInfo.id, operate_type);
+        const data = await RunDeployTask(serviceInfo.env_id, serviceInfo.id, operate_type, extra_params);
         if(data.status=="SUCCESS"){
           // 设置转圈效果
           this.$set(this.serviceInfos[index], 'deploy_status', 'loading');

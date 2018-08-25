@@ -235,11 +235,15 @@ func (this *ServiceController) RunDeployTask() {
 
 // @router /queryLastDeployStatus [post]
 func (this *ServiceController) QueryLastDeployStatus() {
-	this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "finish": false}
+	// 参数校验
 	service_id, err := this.GetInt64("service_id")
 	if err != nil {
-		this.RenderJsonErrorWithInvalidParamDetail("请求参数不合法!")
+		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": "请求参数不合法!"}
+		this.ServeJSON()
+		return
 	}
+
+	this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "finish": false}
 	tracking_id, _ := models.QueryLastDeployTrackingId(service_id)
 	finish := models.IsFinishTask(tracking_id)
 	var trackingStatus string

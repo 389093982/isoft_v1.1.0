@@ -87,13 +87,14 @@ func QueryLastDeployTrackings(service_id int64) (trackingLogs []TrackingLog, err
 	return trackingLogs, nil
 }
 
+// 查询最近一次 tracking_id
 func QueryLastDeployTrackingId(service_id int64) (tracking_id string, err error) {
-	var trackingLog TrackingLog
+	var trackingTask TrackingTask
 	o := orm.NewOrm()
-	qs := o.QueryTable("tracking_log")
-	err = qs.Filter("service_id", service_id).OrderBy("-last_updated_time").One(&trackingLog)
+	qs := o.QueryTable("tracking_task")
+	err = qs.Filter("service_id", service_id).OrderBy("-last_updated_time").One(&trackingTask)
 	if err != nil {
 		return "", err
 	}
-	return trackingLog.TrackingId, nil
+	return trackingTask.TrackingId, nil
 }
