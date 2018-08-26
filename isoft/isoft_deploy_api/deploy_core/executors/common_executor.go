@@ -69,8 +69,13 @@ func (this *ExecutorRouter) MysqlConnectionTest(operate_type string) (err error)
 	db, err := db.GetConnection("root", this.ServiceInfo.MysqlRootPwd,
 		this.ServiceInfo.EnvInfo.EnvIp, this.ServiceInfo.ServicePort, "mysql")
 	defer db.Close()
-	if err == nil {
-		this.TrackingLogResolver.WriteSuccessLog("连接成功！")
+	if err != nil {
+		return
 	}
+	_, err = db.Exec("select * from user")
+	if err != nil {
+		return
+	}
+	this.TrackingLogResolver.WriteSuccessLog("连接成功！")
 	return
 }
