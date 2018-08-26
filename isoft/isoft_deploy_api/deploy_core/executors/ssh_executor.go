@@ -1,6 +1,7 @@
 package executors
 
 import (
+	"fmt"
 	"github.com/astaxie/beego/logs"
 	"isoft/isoft/common"
 	"isoft/isoft_deploy_api/deploy_core/constant"
@@ -62,6 +63,7 @@ func (this *ExecutorRouter) RunExecuteRemoteScriptTask(operate_type, extra_param
 		logs.Error("prepare command error : %s", err.Error())
 	} else {
 		logs.Info("current command is %s", command)
+		this.TrackingLogResolver.WriteSuccessLog(fmt.Sprintf("current command is %s", command))
 		err := sshClient.Run(command)
 		if err != nil {
 			logs.Error("run command error : %s", err.Error())

@@ -2,28 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="61c01151-84f0-4bfd-a227-5c1f0b5a424d" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/isoft_deploy_api/shell/mysql/mysql_uninstall.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft/db/connection_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft/db/connection_test.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_deploy_api/controllers/docker.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_deploy_api/controllers/docker.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_deploy_api/controllers/service.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_deploy_api/controllers/service.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_deploy_api/deploy_core/deploy/command.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_deploy_api/deploy_core/deploy/command.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_deploy_api/deploy_core/deploy/command_args.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_deploy_api/deploy_core/deploy/command_args.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_deploy_api/deploy_core/executors/common_executor.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_deploy_api/deploy_core/executors/common_executor.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_deploy_api/deploy_core/executors/executor.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_deploy_api/deploy_core/executors/executor.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_deploy_api/deploy_core/executors/executor_router.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_deploy_api/deploy_core/executors/executor_router.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/isoft_deploy_api/deploy_core/executors/ssh_executor.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_deploy_api/deploy_core/executors/ssh_executor.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_deploy_api/lastupdate.tmp" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_deploy_api/lastupdate.tmp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_deploy_api/routers/commentsRouter_.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_deploy_api/routers/commentsRouter_.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_deploy_api/shell/docker/docker_exec_it.sh" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_deploy_api/shell/docker/docker_exec_it.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_deploy_api/shell/mysql/mysql_check.sh" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_deploy_api/shell/mysql/mysql_check.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/isoft_deploy_api/shell/mysql/mysql_restart.sh" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_deploy_api/shell/mysql/mysql_restart.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_deploy_api/shell/nginx/nginx_restart.sh" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_deploy_api/shell/nginx/nginx_restart.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/shell/docker/docker_exec_it.sh" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_deploy_web/shell/docker/docker_exec_it.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/shell/mysql/mysql_restart.sh" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_deploy_web/shell/mysql/mysql_restart.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/shell/nginx/nginx_restart.sh" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_deploy_web/shell/nginx/nginx_restart.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/Service/MysqlInit.vue" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/Service/MysqlInit.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/Service/ServiceTable.vue" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/Service/ServiceTable.vue" afterDir="false" />
     </list>
     <ignored path="isoft_deploy_web/static/uploadfile/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -64,11 +45,20 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="mysql_uninstall.sh" pinned="false" current-in-tab="true">
+      <file leaf-file-name="mysql_uninstall.sh" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/isoft_deploy_api/shell/mysql/mysql_uninstall.sh">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="26">
-              <caret line="22" lean-forward="true" selection-start-line="22" selection-end-line="22" />
+            <state relative-caret-position="163">
+              <caret line="25" selection-start-line="25" selection-end-line="36" selection-end-column="2" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ssh_executor.go" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/isoft_deploy_api/deploy_core/executors/ssh_executor.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="290">
+              <caret line="65" selection-start-line="65" selection-end-line="65" />
             </state>
           </provider>
         </entry>
@@ -91,6 +81,31 @@
             <state relative-caret-position="21">
               <caret line="49" lean-forward="true" selection-start-line="49" selection-end-line="49" />
             </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="mysql_install.sh" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/isoft_deploy_api/shell/mysql/mysql_install.sh">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="204">
+              <caret line="12" column="25" selection-start-line="12" selection-start-column="25" selection-end-line="12" selection-end-column="25" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="mysql_restart.sh" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/isoft_deploy_api/shell/mysql/mysql_restart.sh">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="25">
+              <caret line="56" column="2" lean-forward="true" selection-start-line="56" selection-start-column="2" selection-end-line="56" selection-end-column="2" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="my.cnf" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/isoft_deploy_api/shell/mysql/my.cnf">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-111" />
           </provider>
         </entry>
       </file>
@@ -234,19 +249,19 @@
         <option value="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/api/index.js" />
         <option value="$PROJECT_DIR$/isoft_deploy_api/controllers/service.go" />
         <option value="$PROJECT_DIR$/isoft_deploy_api/deploy_core/executors/executor.go" />
-        <option value="$PROJECT_DIR$/isoft_deploy_api/deploy_core/executors/ssh_executor.go" />
         <option value="$PROJECT_DIR$/isoft_deploy_api/shell/mysql/mysql_init.sh" />
         <option value="$PROJECT_DIR$/isoft_deploy_api/controllers/docker.go" />
         <option value="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/Service/MysqlInit.vue" />
         <option value="$PROJECT_DIR$/isoft_deploy_api/deploy_core/executors/common_executor.go" />
         <option value="$PROJECT_DIR$/isoft/db/connection_test.go" />
-        <option value="$PROJECT_DIR$/isoft_deploy_api/shell/mysql/mysql_restart.sh" />
         <option value="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/Service/ServiceTable.vue" />
         <option value="$PROJECT_DIR$/isoft_deploy_api/deploy_core/deploy/command.go" />
         <option value="$PROJECT_DIR$/isoft_deploy_api/deploy_core/deploy/command_args.go" />
         <option value="$PROJECT_DIR$/isoft_deploy_api/deploy_core/executors/executor_router.go" />
         <option value="$PROJECT_DIR$/isoft_deploy_api/shell/mysql/mysql_check.sh" />
         <option value="$PROJECT_DIR$/isoft_deploy_api/shell/mysql/mysql_uninstall.sh" />
+        <option value="$PROJECT_DIR$/isoft_deploy_api/deploy_core/executors/ssh_executor.go" />
+        <option value="$PROJECT_DIR$/isoft_deploy_api/shell/mysql/mysql_restart.sh" />
       </list>
     </option>
   </component>
@@ -679,6 +694,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="1" sideWeight="0.28853047" visible="true" weight="0.283751" />
       <window_info anchor="bottom" id="TODO" order="12" weight="0.3297491" />
@@ -716,12 +732,12 @@
       <window_info anchor="bottom" id="Database Changes" order="2" show_stripe_button="false" />
       <window_info anchor="bottom" id="TypeScript" order="0" weight="0.32978722" />
       <window_info anchor="bottom" id="Find" order="7" weight="0.47517732" />
-      <window_info anchor="bottom" id="Debug" order="9" sideWeight="0.49717057" weight="0.5177305" />
       <window_info anchor="right" id="Database" order="0" side_tool="true" weight="0.32983023" />
       <window_info anchor="bottom" id="Terminal" order="3" sideWeight="0.49636218" weight="0.677305" />
       <window_info anchor="bottom" id="Event Log" order="4" sideWeight="0.5012126" side_tool="true" weight="0.41843972" />
       <window_info anchor="bottom" id="Inspection" order="11" weight="0.4" />
       <window_info anchor="bottom" id="Version Control" order="5" weight="0.34574467" />
+      <window_info anchor="bottom" id="Debug" order="9" sideWeight="0.49717057" weight="0.5177305" />
       <window_info anchor="bottom" id="Message" order="6" />
       <window_info anchor="bottom" id="Messages" order="1" weight="0.55376345" />
       <window_info anchor="right" id="Coverage" order="4" side_tool="true" weight="0.32983023" />
@@ -810,13 +826,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/isoft_deploy_web/shell/mysql/mysql_restart.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="629">
-          <caret line="37" column="2" selection-start-line="37" selection-start-column="2" selection-end-line="37" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/Service/ServiceList.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="272">
@@ -1033,20 +1042,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_deploy_api/shell/mysql/mysql_install.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="12" column="25" selection-start-line="12" selection-start-column="25" selection-end-line="12" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_deploy_api/shell/mysql/mysql_restart.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="24" column="73" selection-start-line="24" selection-start-column="73" selection-end-line="24" selection-end-column="73" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/store/state.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
@@ -1144,13 +1139,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_deploy_api/deploy_core/executors/ssh_executor.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="318">
-          <caret line="42" column="28" selection-start-line="42" selection-start-column="28" selection-end-line="42" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/isoft_deploy_api/deploy_core/executors/executor_router.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="21">
@@ -1165,11 +1153,37 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_deploy_api/deploy_core/executors/ssh_executor.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="290">
+          <caret line="65" selection-start-line="65" selection-end-line="65" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_deploy_api/shell/mysql/mysql_install.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="12" column="25" selection-start-line="12" selection-start-column="25" selection-end-line="12" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/isoft_deploy_api/shell/mysql/mysql_uninstall.sh">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="26">
-          <caret line="22" lean-forward="true" selection-start-line="22" selection-end-line="22" />
+        <state relative-caret-position="163">
+          <caret line="25" selection-start-line="25" selection-end-line="36" selection-end-column="2" />
         </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_deploy_api/shell/mysql/mysql_restart.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="25">
+          <caret line="56" column="2" lean-forward="true" selection-start-line="56" selection-start-column="2" selection-end-line="56" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_deploy_api/shell/mysql/my.cnf">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-111" />
       </provider>
     </entry>
   </component>

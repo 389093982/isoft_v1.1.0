@@ -24,12 +24,18 @@ fi
 
 sh ./mysql_check.sh ${remoteDeployHomePath} ${serviceName} ${servicePort}
 
-# 先停止再删除运行的容器
-docker stop --time=20 ${serviceName}
-# 强制移除此容器
-docker rm -f $(docker ps -aq --filter name="${serviceName}\$")
-# 清理此容器的网络占用
-docker network disconnect --force bridge ${serviceName}
+result=`docker ps -aq --filter name="${serviceName}\$"`
+
+if [ "${result}" != "" ];then
+    # 先停止再删除运行的容器
+    docker stop --time=20 ${serviceName}
+
+    # 强制移除此容器
+    docker rm -f $(docker ps -aq --filter name="${serviceName}\$")
+
+    # 清理此容器的网络占用
+    docker network disconnect --force bridge ${serviceName}
+fi
 
 # 杀掉占用的端口
 sh ../common/port_kill.sh ${servicePort}
@@ -61,6 +67,10 @@ echo "${execute_command}"
 result=`${execute_command}`
 
 echo ${result}
+
+sleep 5
+
+docker restart ${serviceName}
 
 sh ./mysql_check.sh ${remoteDeployHomePath} ${serviceName} ${servicePort}
 
