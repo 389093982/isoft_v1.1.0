@@ -50,7 +50,6 @@
     methods: {
       handleSubmit (name) {
         let data = {
-          index:this.index,
           create_account:this.formValidate.create_account,
           create_passwd:this.formValidate.create_passwd,
           create_database:this.formValidate.create_database

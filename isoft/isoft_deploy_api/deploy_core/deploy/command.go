@@ -24,6 +24,7 @@ func init() {
 	ScriptPathMappingMap["nginx_restart"] = "shell/nginx/nginx_restart.sh"
 	ScriptPathMappingMap["mysql_check"] = "shell/mysql/mysql_check.sh"
 	ScriptPathMappingMap["mysql_install"] = "shell/mysql/mysql_install.sh"
+	ScriptPathMappingMap["mysql_uninstall"] = "shell/mysql/mysql_uninstall.sh"
 	ScriptPathMappingMap["mysql_restart"] = "shell/mysql/mysql_restart.sh"
 }
 
@@ -33,12 +34,12 @@ func getScriptFilePathByCommandType(serviceType, operate_type string) string {
 }
 
 // 准备远程执行的 shell 命令
-func PrepareCommand(serviceInfo *models.ServiceInfo, operate_type string) (string, error) {
+func PrepareCommand(serviceInfo *models.ServiceInfo, operate_type, extra_params string) (string, error) {
 	remoteDeployHome := GetRemoteDeployHomePath(serviceInfo.EnvInfo)
 	// 目标机器脚本路径
 	scriptPath := remoteDeployHome + "/" + getScriptFilePathByCommandType(serviceInfo.ServiceType, operate_type)
 	// 准备 shell 命令相关参数
-	args, err := PrepareArgs(serviceInfo, operate_type)
+	args, err := PrepareArgs(serviceInfo, operate_type, extra_params)
 	if err != nil {
 		return "", err
 	}
@@ -47,9 +48,9 @@ func PrepareCommand(serviceInfo *models.ServiceInfo, operate_type string) (strin
 }
 
 // 准备 shell 命令相关参数
-func PrepareArgs(serviceInfo *models.ServiceInfo, operate_type string) (string, error) {
+func PrepareArgs(serviceInfo *models.ServiceInfo, operate_type, extra_params string) (string, error) {
 	resolver := &CommandArgs{}
-	argslices, err := resolver.GetCommandArgs(serviceInfo, GetRealCommandType(serviceInfo.ServiceType, operate_type))
+	argslices, err := resolver.GetCommandArgs(serviceInfo, GetRealCommandType(serviceInfo.ServiceType, operate_type), extra_params)
 
 	if err != nil {
 		return "", err
@@ -57,5 +58,5 @@ func PrepareArgs(serviceInfo *models.ServiceInfo, operate_type string) (string, 
 	if argslices == nil {
 		return "", nil
 	}
-	return strings.Join(*argslices, " "), nil
+	return strings.Join(argslices, " "), nil
 }

@@ -9,4 +9,4 @@ if [ -z ${serviceName} ];then
     exit;
 fi
 
-docker exec -it $(docker ps -aq --filter name=${serviceName}) /bin/bash
+docker exec -it $(docker ps -aq --filter name="${serviceName}\$") /bin/bash

@@ -37,7 +37,7 @@
       :footer-hide="true"
       :mask-closable="false">
       <div>
-        <MysqlInit @handleSubmit="mysqlInit_handleSubmit" :index="mysqlInit_index"/>
+        <MysqlInit @handleSubmit="mysqlInit_handleSubmit"/>
       </div>
     </Modal>
   </div>
@@ -190,6 +190,22 @@
                     }
                   }
                 }, '安装'),
+                h('Button', {
+                  props: {
+                    type: 'success',
+                    size: 'small'
+                  },
+                  style: {
+                    marginRight: '5px',
+                    // 控制按钮是否显示
+                    display: $.inArray(this.$route.query.service_type, ["mysql"])>=0  ? undefined : 'none'
+                  },
+                  on: {
+                    click: () => {
+                      this.runDeployTask(params.index,"uninstall", null)
+                    }
+                  }
+                }, '卸载'),
                 h('Button', {
                   props: {
                     type: 'info',

@@ -26,6 +26,6 @@ func (this *DockerController) DockerInfoCheck() {
 	}
 
 	// 开启协程执行任务
-	tracking_id := executors.RunCommandTask(&serviceInfo, &envInfo, "docker_check")
+	tracking_id := executors.RunCommandTask(&serviceInfo, &envInfo, "docker_check", "")
 	this.RenderJsonSuccessWithResultMap(map[string]interface{}{"tracking_id": tracking_id})
 }

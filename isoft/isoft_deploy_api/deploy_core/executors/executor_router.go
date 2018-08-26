@@ -5,6 +5,8 @@ import (
 	"github.com/astaxie/beego/logs"
 	"isoft/isoft_deploy_api/deploy_core/deploy"
 	"isoft/isoft_deploy_api/models"
+	"strings"
+	"time"
 )
 
 var (
@@ -39,7 +41,7 @@ func (this *ExecutorRouter) transfer() {
 	}
 }
 
-func (this *ExecutorRouter) RunCommandTask(operate_type string, tracking_id string) {
+func (this *ExecutorRouter) RunCommandTask(operate_type string, tracking_id, extra_params string) {
 	// 开启记录任务
 	this.TrackingLogResolver = &deploy.TrackingLogResolver{
 		ServiceInfo: this.ServiceInfo,
@@ -55,17 +57,23 @@ func (this *ExecutorRouter) RunCommandTask(operate_type string, tracking_id stri
 
 	// 全称的操作类型
 	_operate_type := deploy.GetRealCommandType(this.ServiceInfo.ServiceType, operate_type)
+
+	this.TrackingLogResolver.WriteSuccessLog(fmt.Sprintf("start task at :%v", time.Now()))
 	if IsCommonTask(_operate_type) {
-		this.RunExecuteCommonTask(_operate_type)
+		this.RunExecuteCommonTask(_operate_type, extra_params)
 	} else {
 		// 执行部署任务
-		this.RunExecuteRemoteScriptTask(_operate_type)
+		this.RunExecuteRemoteScriptTask(_operate_type, extra_params)
 	}
+	this.TrackingLogResolver.WriteSuccessLog(fmt.Sprintf("end task at :%v", time.Now()))
 }
 
 func IsCommonTask(operate_type string) bool {
-	if operate_type == "mysql_connection_test" {
-		return true
+	array := [...]string{"mysql_connection_test", "mysql_init"}
+	for _, value := range array {
+		if strings.EqualFold(value, operate_type) {
+			return true
+		}
 	}
 	return false
 }

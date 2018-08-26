@@ -24,7 +24,18 @@ if [ -d ${mysql_install_home} ];then
     # 根据端口号查询对应的pid
     pid=$(netstat -nlp | grep :${servicePort} | awk '{print $7}' | awk -F"/" '{ print $1 }');
     if [  -n  "$pid"  ];  then
-        echo "mysql_check__RUN"
+
+        echo "servicePort ${servicePort} is running..."
+
+        result=`docker ps -aq --filter name="${serviceName}\$"`
+        echo "docker ps -aq --filter name=${serviceName}\$ result is ${result}"
+
+        if [ "${result}" != "" ];then
+            echo "mysql_check__RUN"
+        else
+            echo "mysql_check__STOP"
+        fi
+
     else
         echo "mysql_check__STOP"
     fi
@@ -32,7 +43,7 @@ else
     echo "mysql_check__N/A"
 fi
 
-# docker logs $(docker ps -aq --filter name=${serviceName})
+# docker logs $(docker ps -aq --filter name="${serviceName}\$")
 
 ###################################################################################################################
 # MySQL测试环境遇到 mmap(xxx bytes) failed; errno 12解决方法

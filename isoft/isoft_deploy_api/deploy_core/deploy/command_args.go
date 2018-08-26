@@ -15,7 +15,7 @@ type CommandArgs struct {
 	serviceInfo *models.ServiceInfo
 }
 
-func (this *CommandArgs) MysqlInstallCommandArgs() (*[]string, error) {
+func (this *CommandArgs) MysqlInstallCommandArgs() ([]string, error) {
 	// 目标机器 deploy_home 路径
 	remoteDeployHomePath := GetRemoteDeployHomePath(this.serviceInfo.EnvInfo)
 	var slice []string
@@ -28,78 +28,82 @@ func (this *CommandArgs) MysqlInstallCommandArgs() (*[]string, error) {
 		slice = append(slice, "_")
 	}
 	slice = append(slice, this.serviceInfo.MysqlRootPwd) // rootPwd
-	return &slice, nil
+	return slice, nil
 }
 
-func (this *CommandArgs) MysqlCheckCommandArgs() (*[]string, error) {
+func (this *CommandArgs) MysqlUnInstallCommandArgs() ([]string, error) {
 	return this.MysqlInstallCommandArgs()
 }
 
-func (this *CommandArgs) MysqlRestartCommandArgs() (*[]string, error) {
+func (this *CommandArgs) MysqlCheckCommandArgs() ([]string, error) {
 	return this.MysqlInstallCommandArgs()
 }
 
-func (this *CommandArgs) NginxRestartCommandArgs() (*[]string, error) {
+func (this *CommandArgs) MysqlRestartCommandArgs() ([]string, error) {
+	return this.MysqlInstallCommandArgs()
+}
+
+func (this *CommandArgs) NginxRestartCommandArgs() ([]string, error) {
 	return this.NginxInstallCommandArgs()
 }
 
-func (this *CommandArgs) NginxCheckCommandArgs() (*[]string, error) {
+func (this *CommandArgs) NginxCheckCommandArgs() ([]string, error) {
 	return this.NginxInstallCommandArgs()
 }
 
-func (this *CommandArgs) NginxInstallCommandArgs() (*[]string, error) {
+func (this *CommandArgs) NginxInstallCommandArgs() ([]string, error) {
 	// 目标机器 deploy_home 路径
 	remoteDeployHomePath := GetRemoteDeployHomePath(this.serviceInfo.EnvInfo)
 	var slice []string
 	slice = append(slice, remoteDeployHomePath)
 	slice = append(slice, this.serviceInfo.ServiceName)
 	slice = append(slice, "_") // 端口号
-	return &slice, nil
+	return slice, nil
 }
 
-func (this *CommandArgs) BeegoDeployCommandArgs() (*[]string, error) {
+func (this *CommandArgs) BeegoDeployCommandArgs() ([]string, error) {
 	var slice []string
 	if this.serviceInfo.ServiceName == "" {
-		return &slice, errors.New("empty param : ServiceName")
+		return slice, errors.New("empty param : ServiceName")
 	}
 	if this.serviceInfo.PackageName == "" {
-		return &slice, errors.New("empty param : PackageName")
+		return slice, errors.New("empty param : PackageName")
 	}
 	if this.serviceInfo.RunMode == "" {
-		return &slice, errors.New("empty param : RunMode")
+		return slice, errors.New("empty param : RunMode")
 	}
 	slice = append(slice, this.serviceInfo.ServiceName)
 	slice = append(slice, strings.Replace(this.serviceInfo.PackageName, ".tar.gz", "", -1))
 	slice = append(slice, this.serviceInfo.RunMode)
-	return &slice, nil
+	return slice, nil
 }
 
-func (this *CommandArgs) BeegoStartupCommandArgs() (*[]string, error) {
+func (this *CommandArgs) BeegoStartupCommandArgs() ([]string, error) {
 	return this.BeegoStatusCommandArgs()
 }
 
-func (this *CommandArgs) BeegoRestartCommandArgs() (*[]string, error) {
+func (this *CommandArgs) BeegoRestartCommandArgs() ([]string, error) {
 	return this.BeegoStatusCommandArgs()
 }
 
-func (this *CommandArgs) BeegoShutdownCommandArgs() (*[]string, error) {
+func (this *CommandArgs) BeegoShutdownCommandArgs() ([]string, error) {
 	return this.BeegoStatusCommandArgs()
 }
 
-func (this *CommandArgs) BeegoStatusCommandArgs() (*[]string, error) {
+func (this *CommandArgs) BeegoStatusCommandArgs() ([]string, error) {
 	var slice []string
 	if this.serviceInfo.ServiceName == "" {
-		return &slice, errors.New("empty param : ServiceName")
+		return slice, errors.New("empty param : ServiceName")
 	}
 	if this.serviceInfo.PackageName == "" {
-		return &slice, errors.New("empty param : PackageName")
+		return slice, errors.New("empty param : PackageName")
 	}
 	slice = append(slice, this.serviceInfo.ServiceName)
 	slice = append(slice, strings.Replace(this.serviceInfo.PackageName, ".tar.gz", "", -1))
-	return &slice, nil
+	return slice, nil
 }
 
-func (this *CommandArgs) GetCommandArgs(serviceInfo *models.ServiceInfo, operateType string) (*[]string, error) {
+func (this *CommandArgs) GetCommandArgs(serviceInfo *models.ServiceInfo, operateType, extra_params string) ([]string, error) {
 	this.serviceInfo = serviceInfo
 	switch operateType {
 	case "beego_deploy":
@@ -120,6 +124,8 @@ func (this *CommandArgs) GetCommandArgs(serviceInfo *models.ServiceInfo, operate
 		return this.NginxRestartCommandArgs()
 	case "mysql_install":
 		return this.MysqlInstallCommandArgs()
+	case "mysql_uninstall":
+		return this.MysqlUnInstallCommandArgs()
 	case "mysql_check":
 		return this.MysqlCheckCommandArgs()
 	case "mysql_restart":

@@ -212,6 +212,7 @@ func (this *ServiceController) RunDeployTask() {
 	env_id, _ := this.GetInt64("env_id")
 	service_id, _ := this.GetInt64("service_id")
 	operate_type := this.GetString("operate_type")
+	extra_params := this.GetString("extra_params")
 
 	// 获取环境信息
 	envInfo, err := models.FilterEnvInfo(map[string]interface{}{"env_id": env_id})
@@ -227,7 +228,7 @@ func (this *ServiceController) RunDeployTask() {
 	}
 
 	// 开启协程执行任务
-	tracking_id := executors.RunCommandTask(&serviceInfo, &envInfo, operate_type)
+	tracking_id := executors.RunCommandTask(&serviceInfo, &envInfo, operate_type, extra_params)
 
 	this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "tracking_id": tracking_id}
 	this.ServeJSON()

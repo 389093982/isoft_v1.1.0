@@ -27,7 +27,7 @@ sh ./mysql_check.sh ${remoteDeployHomePath} ${serviceName} ${servicePort}
 # 先停止再删除运行的容器
 docker stop --time=20 ${serviceName}
 # 强制移除此容器
-docker rm -f $(docker ps -aq --filter name=${serviceName})
+docker rm -f $(docker ps -aq --filter name="${serviceName}\$")
 # 清理此容器的网络占用
 docker network disconnect --force bridge ${serviceName}
 
@@ -52,11 +52,13 @@ fi
 ###################################################################################################
 
 echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ restart mysql ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-
 # 运行 docker mysql 容器
-result=`docker run -p ${servicePort}:3306 --name ${serviceName} \
-    -v ${mysql_install_home}/conf:/etc/mysql/conf.d -v ${mysql_install_home}/logs:/logs \
-    -v ${mysql_install_home}/data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=${rootPwd} -d mysql`
+execute_command="docker run -p ${servicePort}:3306 --name ${serviceName} \
+          -v ${mysql_install_home}/conf:/etc/mysql/conf.d -v ${mysql_install_home}/logs:/logs \
+          -v ${mysql_install_home}/data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=${rootPwd} -d mysql"
+
+echo "${execute_command}"
+result=`${execute_command}`
 
 echo ${result}
 
@@ -64,5 +66,5 @@ sh ./mysql_check.sh ${remoteDeployHomePath} ${serviceName} ${servicePort}
 
 echo "#########################################################################"
 echo "Please use the following command to enter MySQL"
-echo "docker exec -it \$(docker ps -aq --filter name=${serviceName}) /bin/bash"
+echo "docker exec -it \$(docker ps -aq --filter name="${serviceName}\$") /bin/bash"
 echo "#########################################################################"

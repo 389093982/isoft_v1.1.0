@@ -6,7 +6,7 @@ import (
 	"isoft/isoft_deploy_api/models"
 )
 
-func RunCommandTask(serviceInfo *models.ServiceInfo, envInfo *models.EnvInfo, operate_type string) (tracking_id string) {
+func RunCommandTask(serviceInfo *models.ServiceInfo, envInfo *models.EnvInfo, operate_type, extra_params string) (tracking_id string) {
 	tracking_id = common.RandomUUID()
 	// 开启协程执行任务
 	go func() {
@@ -24,7 +24,7 @@ func RunCommandTask(serviceInfo *models.ServiceInfo, envInfo *models.EnvInfo, op
 			ServiceInfo:   serviceInfo,
 		}
 		// 执行任务
-		ExecutorRouter.RunCommandTask(operate_type, tracking_id)
+		ExecutorRouter.RunCommandTask(operate_type, tracking_id, extra_params)
 	}()
 
 	return

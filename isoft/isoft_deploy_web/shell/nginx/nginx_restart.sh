@@ -23,7 +23,7 @@ sh ./nginx_check.sh ${remoteDeployHomePath} ${serviceName} ${servicePort}
 sh ../common/port_kill.sh ${servicePort}
 
 # 先停止再删除运行的容器
-docker stop --time=20 ${serviceName} && docker rm -f $(docker ps -aq --filter name=${serviceName})
+docker stop --time=20 ${serviceName} && docker rm -f $(docker ps -aq --filter name="${serviceName}\$")
 
 sh ./nginx_check.sh ${remoteDeployHomePath} ${serviceName} ${servicePort}
 
@@ -63,5 +63,5 @@ sh ./nginx_check.sh ${remoteDeployHomePath} ${serviceName} ${servicePort}
 
 echo "#########################################################################"
 echo "Please use the following command to enter Nginx"
-echo "docker exec -it \$(docker ps -aq --filter name=${serviceName}) /bin/bash"
+echo "docker exec -it \$(docker ps -aq --filter name="${serviceName}\$") /bin/bash"
 echo "#########################################################################"

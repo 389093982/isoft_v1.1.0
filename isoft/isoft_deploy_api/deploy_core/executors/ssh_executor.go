@@ -40,7 +40,7 @@ func (this *WriteErrorLog) Write(p []byte) (n int, err error) {
 	return len(p), nil
 }
 
-func (this *ExecutorRouter) RunExecuteRemoteScriptTask(operate_type string) {
+func (this *ExecutorRouter) RunExecuteRemoteScriptTask(operate_type, extra_params string) {
 	sshClient, err := common.SSHConnect(this.EnvInfo.EnvAccount, this.EnvInfo.EnvPasswd, this.EnvInfo.EnvIp, 22)
 	defer sshClient.Close()
 	if err != nil {
@@ -57,7 +57,7 @@ func (this *ExecutorRouter) RunExecuteRemoteScriptTask(operate_type string) {
 		TrackingLogResolver: this.TrackingLogResolver,
 	}
 
-	command, err := deploy.PrepareCommand(this.ServiceInfo, operate_type)
+	command, err := deploy.PrepareCommand(this.ServiceInfo, operate_type, extra_params)
 	if err != nil {
 		logs.Error("prepare command error : %s", err.Error())
 	} else {
