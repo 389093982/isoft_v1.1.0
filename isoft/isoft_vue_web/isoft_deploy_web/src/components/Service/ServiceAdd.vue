@@ -30,10 +30,8 @@
 
         <Row>
           <Col span="12">
-            <FormItem label="服务类型" prop="service_type">
-              <Select v-model="formValidate.service_type" filterable>
-                <Option v-for="item in service_types" :value="item.value" :key="item.value">{{ item.label }}</Option>
-              </Select>
+            <FormItem label="端口号" prop="service_type">
+              <Input v-model="formValidate.service_type" readonly placeholder="请输入服务类型"></Input>
             </FormItem>
           </Col>
           <Col span="12">
@@ -105,7 +103,7 @@
         formValidate: {
           env_ids: '',
           service_name: '',
-          service_type: '',
+          service_type: this.$route.query.service_type,
           mysql_root_pwd: '',
           package_name: '',
           run_mode: '',
@@ -125,28 +123,6 @@
             { required: true, message: '端口号不能为空', trigger: 'blur' }
           ]
         },
-        service_types: [
-          {
-            value: 'beego',
-            label: 'beego'
-          },
-          {
-            value: 'docker',
-            label: 'docker'
-          },
-          {
-            value: 'nginx',
-            label: 'nginx'
-          },
-          {
-            value: 'mysql',
-            label: 'mysql'
-          },
-          {
-            value: 'api',
-            label: 'api'
-          }
-        ]
       }
     },
     methods: {
