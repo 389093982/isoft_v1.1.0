@@ -30,7 +30,7 @@
 
         <Row>
           <Col span="12">
-            <FormItem label="端口号" prop="service_type">
+            <FormItem label="服务类型" prop="service_type">
               <Input v-model="formValidate.service_type" readonly placeholder="请输入服务类型"></Input>
             </FormItem>
           </Col>

@@ -138,6 +138,14 @@ func CheckServicePortExists(env_id int64, service_port int64) (bool, error) {
 	return count > 0, err
 }
 
+// 根据 id 删除服务信息
+func DeleteServiceInfo(service_id int64) error {
+	o := orm.NewOrm()
+	qs := o.QueryTable("service_info")
+	_, err := qs.Filter("id", service_id).Delete()
+	return err
+}
+
 // 根据服务信息
 func FilterServiceInfo(condArr map[string]interface{}) (serviceInfo ServiceInfo, err error) {
 	o := orm.NewOrm()

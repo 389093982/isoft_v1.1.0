@@ -166,7 +166,7 @@
                   style: {
                     marginRight: '5px',
                     // 控制按钮是否显示
-                    display: $.inArray(this.$route.query.service_type, ["mysql","nginx","beego","api"])>=0  ? undefined : 'none'
+                    display: $.inArray(this.$route.query.service_type, ["nginx","beego","api"])>=0  ? undefined : 'none'
                   },
                   on: {
                     click: () => {
@@ -182,7 +182,7 @@
                   style: {
                     marginRight: '5px',
                     // 控制按钮是否显示
-                    display: $.inArray(this.$route.query.service_type, ["mysql","nginx"])>=0  ? undefined : 'none'
+                    display: $.inArray(this.$route.query.service_type, ["other"])>=0  ? undefined : 'none'
                   },
                   on: {
                     click: () => {
@@ -198,7 +198,7 @@
                   style: {
                     marginRight: '5px',
                     // 控制按钮是否显示
-                    display: $.inArray(this.$route.query.service_type, ["mysql"])>=0  ? undefined : 'none'
+                    display: $.inArray(this.$route.query.service_type, ["other"])>=0  ? undefined : 'none'
                   },
                   on: {
                     click: () => {
@@ -206,6 +206,38 @@
                     }
                   }
                 }, '卸载'),
+                h('Button', {
+                  props: {
+                    type: 'error',
+                    size: 'small'
+                  },
+                  style: {
+                    marginRight: '5px',
+                    // 控制按钮是否显示
+                    display: $.inArray(this.$route.query.service_type, ["mysql"])>=0  ? undefined : 'none'
+                  },
+                  on: {
+                    click: () => {
+                      const _this = this;
+                      _this.runDeployTask(params.index,"delete", null, function (data) {
+                        if(data.status=="SUCCESS"){
+                          // 删除当前元素
+                          _this.serviceInfos = _this.serviceInfos.filter(t => t != _this.serviceInfos[params.index]);
+                          // 友好提示
+                          _this.$Notice.success({
+                            title: '删除操作',
+                            desc: '删除成功!'
+                          });
+                        }else{
+                          _this.$Notice.error({
+                            title: '删除操作',
+                            desc: '删除失败!'
+                          });
+                        }
+                      })
+                    }
+                  }
+                }, '删除'),
                 h('Button', {
                   props: {
                     type: 'info',
@@ -230,7 +262,7 @@
                   style: {
                     marginRight: '5px',
                     // 控制按钮是否显示
-                    display: $.inArray(this.$route.query.service_type, ["mysql","nginx","beego","api"])>=0  ? undefined : 'none'
+                    display: $.inArray(this.$route.query.service_type, ["nginx","beego","api"])>=0  ? undefined : 'none'
                   },
                   on: {
                     click: () => {
@@ -398,18 +430,23 @@
         _this.serviceInfos = _serviceInfos;
         _this.total = result.totalcount;
       },
-      async runDeployTask(index,operate_type, extra_params){
+      async runDeployTask(index, operate_type, extra_params, callback){
         const serviceInfo = this.serviceInfos[index];
         const data = await RunDeployTask(serviceInfo.env_id, serviceInfo.id, operate_type, extra_params);
         if(data.status=="SUCCESS"){
-          // 设置转圈效果
-          this.$set(this.serviceInfos[index], 'deploy_status', 'loading');
-          // 获取 vue 实例
-          const _this = this;
-          var interval = setInterval(function () {
-            // 渲染最后一次部署状态
-            _this.renderLastDeployStatus(index,serviceInfo.id,interval);
-          }, 2000);
+          // 有 tracking_id 才渲染转圈效果
+          if(data.tracking_id != "" && data.tracking_id != null && data.tracking_id != undefined){
+            // 设置转圈效果
+            this.$set(this.serviceInfos[index], 'deploy_status', 'loading');
+            // 获取 vue 实例
+            const _this = this;
+            var interval = setInterval(function () {
+              // 渲染最后一次部署状态
+              _this.renderLastDeployStatus(index,serviceInfo.id,interval);
+            }, 2000);
+          }
+          // 任务回调函数
+          callback(data);
         }
       }
     },

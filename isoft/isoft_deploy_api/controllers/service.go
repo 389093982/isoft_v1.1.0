@@ -226,11 +226,19 @@ func (this *ServiceController) RunDeployTask() {
 		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": err.Error()}
 		this.ServeJSON()
 	}
-
-	// 开启协程执行任务
-	tracking_id := executors.RunCommandTask(&serviceInfo, &envInfo, operate_type, extra_params)
-
-	this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "tracking_id": tracking_id}
+	// 简单删除操作,只删除 DB 中的 service 信息
+	if operate_type == "delete" {
+		err := models.DeleteServiceInfo(service_id)
+		if err != nil {
+			this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
+		} else {
+			this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
+		}
+	} else {
+		// 开启协程执行任务
+		tracking_id := executors.RunCommandTask(&serviceInfo, &envInfo, operate_type, extra_params)
+		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "tracking_id": tracking_id}
+	}
 	this.ServeJSON()
 }
 

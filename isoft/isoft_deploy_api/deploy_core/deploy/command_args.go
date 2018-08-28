@@ -3,7 +3,6 @@ package deploy
 import (
 	"errors"
 	"isoft/isoft_deploy_api/models"
-	"strconv"
 	"strings"
 )
 
@@ -13,34 +12,6 @@ type ICommandArgsResolver interface {
 
 type CommandArgs struct {
 	serviceInfo *models.ServiceInfo
-}
-
-func (this *CommandArgs) MysqlInstallCommandArgs() ([]string, error) {
-	// 目标机器 deploy_home 路径
-	remoteDeployHomePath := GetRemoteDeployHomePath(this.serviceInfo.EnvInfo)
-	var slice []string
-	slice = append(slice, remoteDeployHomePath)
-	slice = append(slice, this.serviceInfo.ServiceName)
-	if this.serviceInfo.ServicePort > 0 {
-		slice = append(slice, strconv.FormatInt(this.serviceInfo.ServicePort, 10)) // 端口号
-
-	} else {
-		slice = append(slice, "_")
-	}
-	slice = append(slice, this.serviceInfo.MysqlRootPwd) // rootPwd
-	return slice, nil
-}
-
-func (this *CommandArgs) MysqlUnInstallCommandArgs() ([]string, error) {
-	return this.MysqlInstallCommandArgs()
-}
-
-func (this *CommandArgs) MysqlCheckCommandArgs() ([]string, error) {
-	return this.MysqlInstallCommandArgs()
-}
-
-func (this *CommandArgs) MysqlRestartCommandArgs() ([]string, error) {
-	return this.MysqlInstallCommandArgs()
 }
 
 func (this *CommandArgs) NginxRestartCommandArgs() ([]string, error) {
@@ -122,14 +93,6 @@ func (this *CommandArgs) GetCommandArgs(serviceInfo *models.ServiceInfo, operate
 		return this.NginxCheckCommandArgs()
 	case "nginx_restart":
 		return this.NginxRestartCommandArgs()
-	case "mysql_install":
-		return this.MysqlInstallCommandArgs()
-	case "mysql_uninstall":
-		return this.MysqlUnInstallCommandArgs()
-	case "mysql_check":
-		return this.MysqlCheckCommandArgs()
-	case "mysql_restart":
-		return this.MysqlRestartCommandArgs()
 	default:
 		return this.BeegoStatusCommandArgs()
 	}
