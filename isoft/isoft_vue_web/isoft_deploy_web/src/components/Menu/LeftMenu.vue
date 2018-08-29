@@ -11,24 +11,6 @@
     </Submenu>
     <Submenu name="2">
       <template slot="title">
-        <Icon type="ios-keypad"></Icon>
-        基础软件管理
-      </template>
-      <MenuItem name="2-1">
-        <router-link to="/env/list">java运行环境管理</router-link>
-      </MenuItem>
-      <MenuItem name="2-2">
-        <router-link to="/env/list">python运行环境管理</router-link>
-      </MenuItem>
-      <MenuItem name="2-3">
-        <router-link to="/env/list">golang运行环境管理</router-link>
-      </MenuItem>
-      <MenuItem name="2-4">
-        <router-link to="/env/list">mysql数据库管理</router-link>
-      </MenuItem>
-    </Submenu>
-    <Submenu name="3">
-      <template slot="title">
         <Icon type="ios-analytics"></Icon>
         应用服务管理
       </template>
