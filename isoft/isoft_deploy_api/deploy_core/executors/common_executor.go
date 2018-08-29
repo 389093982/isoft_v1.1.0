@@ -42,7 +42,9 @@ func (this *ExecutorRouter) MysqlInit(operate_type, extra_params string) error {
 	}
 	// 创建数据库
 	if value, ok := m["create_database"]; ok && strings.TrimSpace(value) != "" {
-		if _, err := db.Exec(fmt.Sprintf("create database %s", strings.TrimSpace(value))); err != nil {
+		sql := fmt.Sprintf("create database %s", strings.TrimSpace(value))
+		this.TrackingLogResolver.WriteSuccessLog(sql)
+		if _, err := db.Exec(sql); err != nil {
 			return err
 		} else {
 			this.TrackingLogResolver.WriteSuccessLog("创建数据库成功!")
@@ -54,7 +56,10 @@ func (this *ExecutorRouter) MysqlInit(operate_type, extra_params string) error {
 	create_account, ok1 := m["create_account"]
 	create_passwd, ok2 := m["create_passwd"]
 	if ok1 && ok2 && strings.TrimSpace(create_account) != "" && strings.TrimSpace(create_passwd) != "" {
-		if _, err := db.Exec(fmt.Sprintf("CREATE USER '%s'@'%' IDENTIFIED BY '%s'", create_account, create_passwd)); err != nil {
+		// 将单个的%转换为%%,而%%又会被当做字面%打印,避免问题出现
+		sql := fmt.Sprintf("CREATE USER '%s'@'%%' IDENTIFIED BY '%s'", create_account, create_passwd)
+		this.TrackingLogResolver.WriteSuccessLog(sql)
+		if _, err := db.Exec(sql); err != nil {
 			return err
 		} else {
 			this.TrackingLogResolver.WriteSuccessLog("创建、初始化用户成功!")
