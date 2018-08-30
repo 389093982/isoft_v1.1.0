@@ -30,42 +30,60 @@ func (this *ExecutorRouter) RunExecuteCommonTask(operate_type, extra_params stri
 func (this *ExecutorRouter) MysqlInit(operate_type, extra_params string) error {
 	db, err := db.GetConnection("root", this.ServiceInfo.MysqlRootPwd,
 		this.ServiceInfo.EnvInfo.EnvIp, this.ServiceInfo.ServicePort, "mysql")
+
 	defer db.Close()
+
 	if err != nil {
 		return err
 	}
+
 	// json 格式参数 extra_params 转换
 	m := make(map[string]string)
 	err = json.Unmarshal([]byte(extra_params), &m)
 	if err != nil {
 		return err
 	}
-	// 创建数据库
-	if value, ok := m["create_database"]; ok && strings.TrimSpace(value) != "" {
-		sql := fmt.Sprintf("create database %s", strings.TrimSpace(value))
-		this.TrackingLogResolver.WriteSuccessLog(sql)
-		if _, err := db.Exec(sql); err != nil {
-			return err
-		} else {
-			this.TrackingLogResolver.WriteSuccessLog("创建数据库成功!")
-		}
-	} else {
-		return errors.New("参数 create_database 不合法!")
+
+	if (strings.TrimSpace(m["create_account"]) == "" || strings.TrimSpace(m["create_passwd"]) == "") &&
+		strings.TrimSpace(m["create_database"]) == "" {
+		return errors.New("参数不合法!")
 	}
-	// 创建用户
-	create_account, ok1 := m["create_account"]
-	create_passwd, ok2 := m["create_passwd"]
-	if ok1 && ok2 && strings.TrimSpace(create_account) != "" && strings.TrimSpace(create_passwd) != "" {
+
+	if strings.TrimSpace(m["create_account"]) != "" && strings.TrimSpace(m["create_passwd"]) != "" {
+		// 创建用户
 		// 将单个的%转换为%%,而%%又会被当做字面%打印,避免问题出现
-		sql := fmt.Sprintf("CREATE USER '%s'@'%%' IDENTIFIED BY '%s'", create_account, create_passwd)
+		sql := fmt.Sprintf("CREATE USER '%s'@'%%' IDENTIFIED BY '%s'",
+			strings.TrimSpace(m["create_account"]), strings.TrimSpace(m["create_passwd"]))
 		this.TrackingLogResolver.WriteSuccessLog(sql)
 		if _, err := db.Exec(sql); err != nil {
-			return err
+			this.TrackingLogResolver.WriteErrorLog(err.Error())
 		} else {
 			this.TrackingLogResolver.WriteSuccessLog("创建、初始化用户成功!")
 		}
-	} else {
-		return errors.New("参数 create_account 或 create_passwd 不合法!")
+	}
+
+	if strings.TrimSpace(m["create_database"]) != "" {
+		// 创建数据库
+		sql := fmt.Sprintf("create database %s", strings.TrimSpace(m["create_database"]))
+		this.TrackingLogResolver.WriteSuccessLog(sql)
+		if _, err := db.Exec(sql); err != nil {
+			this.TrackingLogResolver.WriteErrorLog(err.Error())
+		} else {
+			this.TrackingLogResolver.WriteSuccessLog("创建数据库成功!")
+		}
+	}
+
+	if strings.TrimSpace(m["create_database"]) != "" && strings.TrimSpace(m["create_account"]) != "" &&
+		strings.TrimSpace(m["create_passwd"]) != "" {
+		// 添加授权信息
+		sql := fmt.Sprintf("GRANT ALL PRIVILEGES ON %s.* TO '%s'@'%%'",
+			strings.TrimSpace(m["create_database"]), strings.TrimSpace(m["create_account"]))
+		this.TrackingLogResolver.WriteSuccessLog(sql)
+		if _, err = db.Exec(sql); err != nil {
+			this.TrackingLogResolver.WriteErrorLog(err.Error())
+		} else {
+			this.TrackingLogResolver.WriteSuccessLog("为用户添加数据库访问授权成功!")
+		}
 	}
 	return err
 }
