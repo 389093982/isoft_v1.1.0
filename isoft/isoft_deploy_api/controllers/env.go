@@ -3,6 +3,7 @@ package controllers
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/utils/pagination"
 	"isoft/isoft/common"
 	"isoft/isoft_deploy_api/deploy_core/deploy"
@@ -10,7 +11,7 @@ import (
 )
 
 type EnvController struct {
-	BaseController
+	beego.Controller
 }
 
 func (c *EnvController) URLMapping() {

@@ -3,7 +3,995 @@
   <component name="ChangeListManager">
     <list default="true" id="61c01151-84f0-4bfd-a227-5c1f0b5a424d" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_deploy_api/deploy_core/executors/common_executor.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_deploy_api/deploy_core/executors/common_executor.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_api/controllers/docker.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_api/controllers/env.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_deploy_api/controllers/env.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_api/controllers/service.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_deploy_api/controllers/service.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_api/deploy_core/task/service_task.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_api/deploy_core/task/service_task_test.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_api/deploy_core/task/tasks.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_api/lastupdate.tmp" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_deploy_api/lastupdate.tmp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_api/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_deploy_api/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_api/models/service.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_deploy_api/models/service.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_api/routers/commentsRouter_.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_deploy_api/routers/commentsRouter_.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/conf/app.conf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/conf/local.conf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/conf/yun.conf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/controllers/base_controller.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/controllers/docker.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/controllers/env.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/controllers/service.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/deploy_core/constant/constant.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/deploy_core/deploy/command.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/deploy_core/deploy/command_args.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/deploy_core/deploy/deploy.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/deploy_core/deploy/file_transfer.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/deploy_core/deploy/trackinglog.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/deploy_core/executors/shell_executor.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/deploy_core/task/service_task.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/deploy_core/task/service_task_test.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/deploy_core/task/tasks.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/main.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/models/env.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/models/service.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/models/trackinglog.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/routers/router.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/shell/api/api_deploy.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/shell/beego/beego_deploy.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/shell/beego/beego_restart.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/shell/beego/beego_shutdown.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/shell/beego/beego_startup.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/shell/beego/beego_status.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/shell/beego/beego_undeploy.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/shell/common/port_check.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/shell/common/port_kill.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/shell/docker/docker_check.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/shell/docker/docker_container_kill.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/shell/docker/docker_container_logs.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/shell/docker/docker_container_rm.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/shell/docker/docker_container_stop.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/shell/docker/docker_exec_it.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/shell/docker/docker_golang_run.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/shell/docker/docker_images.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/shell/docker/docker_images_rm.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/shell/docker/docker_mysql_run.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/shell/docker/docker_ps.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/shell/docker/docker_pull.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/shell/docker/docker_registry_private_run.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/shell/docker/docker_restart.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/shell/docker/docker_search.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/shell/docker/docker_start.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/shell/docker/docker_stop.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/shell/elasticsearch/elasticsearch_run.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/shell/mysql/mysql_check.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/shell/mysql/mysql_install.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/shell/mysql/mysql_restart.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/shell/nginx/conf.d/default.conf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/shell/nginx/html/50x.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/shell/nginx/html/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/shell/nginx/nginx.conf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/shell/nginx/nginx_check.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/shell/nginx/nginx_install.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/shell/nginx/nginx_restart.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/shell/project/python/iuip_project_restart.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/shell/project/python/publisher_project_restart.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/shell/project/python/timer_project_restart.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/shell/python/python_virtualenv.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/shell/rabbitmq/rabbitmq_run.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/AmazeUI-2.7.2/admin-404.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/AmazeUI-2.7.2/admin-form.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/AmazeUI-2.7.2/admin-gallery.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/AmazeUI-2.7.2/admin-help.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/AmazeUI-2.7.2/admin-index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/AmazeUI-2.7.2/admin-log.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/AmazeUI-2.7.2/admin-table.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/AmazeUI-2.7.2/admin-user.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/AmazeUI-2.7.2/assets/css/admin.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/AmazeUI-2.7.2/assets/css/amazeui.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/AmazeUI-2.7.2/assets/css/amazeui.flat.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/AmazeUI-2.7.2/assets/css/amazeui.flat.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/AmazeUI-2.7.2/assets/css/amazeui.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/AmazeUI-2.7.2/assets/css/app.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/AmazeUI-2.7.2/assets/fonts/FontAwesome.otf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/AmazeUI-2.7.2/assets/fonts/fontawesome-webfont.eot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/AmazeUI-2.7.2/assets/fonts/fontawesome-webfont.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/AmazeUI-2.7.2/assets/fonts/fontawesome-webfont.woff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/AmazeUI-2.7.2/assets/fonts/fontawesome-webfont.woff2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/AmazeUI-2.7.2/assets/i/app-icon72x72@2x.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/AmazeUI-2.7.2/assets/i/examples/admin-chrome.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/AmazeUI-2.7.2/assets/i/examples/admin-firefox.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/AmazeUI-2.7.2/assets/i/examples/admin-ie.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/AmazeUI-2.7.2/assets/i/examples/admin-opera.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/AmazeUI-2.7.2/assets/i/examples/admin-safari.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/AmazeUI-2.7.2/assets/i/examples/adminPage.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/AmazeUI-2.7.2/assets/i/examples/blogPage.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/AmazeUI-2.7.2/assets/i/examples/landing.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/AmazeUI-2.7.2/assets/i/examples/landingPage.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/AmazeUI-2.7.2/assets/i/examples/loginPage.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/AmazeUI-2.7.2/assets/i/examples/sidebarPage.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/AmazeUI-2.7.2/assets/i/favicon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/AmazeUI-2.7.2/assets/i/startup-640x1096.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/AmazeUI-2.7.2/assets/js/amazeui.ie8polyfill.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/AmazeUI-2.7.2/assets/js/amazeui.ie8polyfill.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/AmazeUI-2.7.2/assets/js/amazeui.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/AmazeUI-2.7.2/assets/js/amazeui.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/AmazeUI-2.7.2/assets/js/amazeui.widgets.helper.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/AmazeUI-2.7.2/assets/js/amazeui.widgets.helper.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/AmazeUI-2.7.2/assets/js/app.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/AmazeUI-2.7.2/assets/js/handlebars.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/AmazeUI-2.7.2/blog.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/AmazeUI-2.7.2/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/AmazeUI-2.7.2/iscroll.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/AmazeUI-2.7.2/landing.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/AmazeUI-2.7.2/login.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/AmazeUI-2.7.2/non-responsive.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/AmazeUI-2.7.2/sidebar.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/AmazeUI-2.7.2/widget.basic.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/AmazeUI-2.7.2/widget.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/alert_info/alert_info-1.0.2/css/bootstrap.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/alert_info/alert_info-1.0.2/css/component.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/alert_info/alert_info-1.0.2/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/alert_info/alert_info-1.0.2/js/classie.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/alert_info/alert_info-1.0.2/js/modalEffects.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/alert_info/alert_info/css/bootstrap.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/alert_info/alert_info/css/component.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/alert_info/alert_info/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/alert_info/alert_info/js/classie.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/alert_info/alert_info/js/modalEffects.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/alert_info/alert_info/说明.htm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-3.3.7-dist/css/bootstrap-theme.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-3.3.7-dist/css/bootstrap-theme.css.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-3.3.7-dist/css/bootstrap-theme.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-3.3.7-dist/css/bootstrap-theme.min.css.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-3.3.7-dist/css/bootstrap.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-3.3.7-dist/css/bootstrap.css.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-3.3.7-dist/css/bootstrap.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-3.3.7-dist/css/bootstrap.min.css.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-3.3.7-dist/fonts/glyphicons-halflings-regular.eot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-3.3.7-dist/fonts/glyphicons-halflings-regular.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-3.3.7-dist/fonts/glyphicons-halflings-regular.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-3.3.7-dist/fonts/glyphicons-halflings-regular.woff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-3.3.7-dist/fonts/glyphicons-halflings-regular.woff2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-3.3.7-dist/js/bootstrap.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-3.3.7-dist/js/bootstrap.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-3.3.7-dist/js/npm.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/CHANGELOG.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/CONTRIBUTING.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/Gruntfile.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/bower.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/composer.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/dist/css/bootstrap-select.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/dist/css/bootstrap-select.css.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/dist/css/bootstrap-select.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/dist/js/bootstrap-select.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/dist/js/bootstrap-select.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/dist/js/bootstrap-select.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/dist/js/i18n/defaults-ar_AR.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/dist/js/i18n/defaults-ar_AR.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/dist/js/i18n/defaults-bg_BG.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/dist/js/i18n/defaults-bg_BG.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/dist/js/i18n/defaults-cro_CRO.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/dist/js/i18n/defaults-cro_CRO.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/dist/js/i18n/defaults-cs_CZ.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/dist/js/i18n/defaults-cs_CZ.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/dist/js/i18n/defaults-da_DK.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/dist/js/i18n/defaults-da_DK.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/dist/js/i18n/defaults-de_DE.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/dist/js/i18n/defaults-de_DE.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/dist/js/i18n/defaults-en_US.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/dist/js/i18n/defaults-en_US.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/dist/js/i18n/defaults-es_CL.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/dist/js/i18n/defaults-es_CL.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/dist/js/i18n/defaults-es_ES.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/dist/js/i18n/defaults-es_ES.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/dist/js/i18n/defaults-et_EE.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/dist/js/i18n/defaults-et_EE.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/dist/js/i18n/defaults-eu.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/dist/js/i18n/defaults-eu.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/dist/js/i18n/defaults-fa_IR.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/dist/js/i18n/defaults-fa_IR.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/dist/js/i18n/defaults-fi_FI.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/dist/js/i18n/defaults-fi_FI.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/dist/js/i18n/defaults-fr_FR.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/dist/js/i18n/defaults-fr_FR.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/dist/js/i18n/defaults-hu_HU.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/dist/js/i18n/defaults-hu_HU.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/dist/js/i18n/defaults-id_ID.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/dist/js/i18n/defaults-id_ID.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/dist/js/i18n/defaults-it_IT.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/dist/js/i18n/defaults-it_IT.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/dist/js/i18n/defaults-ja_JP.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/dist/js/i18n/defaults-ja_JP.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/dist/js/i18n/defaults-kh_KM.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/dist/js/i18n/defaults-kh_KM.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/dist/js/i18n/defaults-ko_KR.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/dist/js/i18n/defaults-ko_KR.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/dist/js/i18n/defaults-lt_LT.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/dist/js/i18n/defaults-lt_LT.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/dist/js/i18n/defaults-nb_NO.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/dist/js/i18n/defaults-nb_NO.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/dist/js/i18n/defaults-nl_NL.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/dist/js/i18n/defaults-nl_NL.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/dist/js/i18n/defaults-pl_PL.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/dist/js/i18n/defaults-pl_PL.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/dist/js/i18n/defaults-pt_BR.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/dist/js/i18n/defaults-pt_BR.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/dist/js/i18n/defaults-pt_PT.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/dist/js/i18n/defaults-pt_PT.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/dist/js/i18n/defaults-ro_RO.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/dist/js/i18n/defaults-ro_RO.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/dist/js/i18n/defaults-ru_RU.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/dist/js/i18n/defaults-ru_RU.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/dist/js/i18n/defaults-sk_SK.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/dist/js/i18n/defaults-sk_SK.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/dist/js/i18n/defaults-sl_SI.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/dist/js/i18n/defaults-sl_SI.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/dist/js/i18n/defaults-sv_SE.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/dist/js/i18n/defaults-sv_SE.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/dist/js/i18n/defaults-tr_TR.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/dist/js/i18n/defaults-tr_TR.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/dist/js/i18n/defaults-ua_UA.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/dist/js/i18n/defaults-ua_UA.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/dist/js/i18n/defaults-vi_VN.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/dist/js/i18n/defaults-vi_VN.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/dist/js/i18n/defaults-zh_CN.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/dist/js/i18n/defaults-zh_CN.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/dist/js/i18n/defaults-zh_TW.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/dist/js/i18n/defaults-zh_TW.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/custom_theme/base.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/custom_theme/css/base.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/custom_theme/img/logos/convertizer.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/custom_theme/img/logos/estimateit.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/custom_theme/img/logos/membermeister.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/custom_theme/img/logos/snapappointments.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/custom_theme/img/logos/solveforall.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/custom_theme/img/logos/thermofisher.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/custom_theme/js/base.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/custom_theme/nav.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/custom_theme/toc.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/docs/css/custom.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/docs/dist/css/bootstrap-select.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/docs/dist/css/bootstrap-select.css.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/docs/dist/css/bootstrap-select.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/docs/dist/js/bootstrap-select.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/docs/dist/js/bootstrap-select.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/docs/dist/js/bootstrap-select.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/docs/dist/js/i18n/defaults-ar_AR.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/docs/dist/js/i18n/defaults-ar_AR.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/docs/dist/js/i18n/defaults-bg_BG.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/docs/dist/js/i18n/defaults-bg_BG.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/docs/dist/js/i18n/defaults-cro_CRO.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/docs/dist/js/i18n/defaults-cro_CRO.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/docs/dist/js/i18n/defaults-cs_CZ.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/docs/dist/js/i18n/defaults-cs_CZ.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/docs/dist/js/i18n/defaults-da_DK.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/docs/dist/js/i18n/defaults-da_DK.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/docs/dist/js/i18n/defaults-de_DE.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/docs/dist/js/i18n/defaults-de_DE.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/docs/dist/js/i18n/defaults-en_US.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/docs/dist/js/i18n/defaults-en_US.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/docs/dist/js/i18n/defaults-es_CL.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/docs/dist/js/i18n/defaults-es_CL.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/docs/dist/js/i18n/defaults-es_ES.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/docs/dist/js/i18n/defaults-es_ES.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/docs/dist/js/i18n/defaults-et_EE.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/docs/dist/js/i18n/defaults-et_EE.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/docs/dist/js/i18n/defaults-eu.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/docs/dist/js/i18n/defaults-eu.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/docs/dist/js/i18n/defaults-fa_IR.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/docs/dist/js/i18n/defaults-fa_IR.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/docs/dist/js/i18n/defaults-fi_FI.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/docs/dist/js/i18n/defaults-fi_FI.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/docs/dist/js/i18n/defaults-fr_FR.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/docs/dist/js/i18n/defaults-fr_FR.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/docs/dist/js/i18n/defaults-hu_HU.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/docs/dist/js/i18n/defaults-hu_HU.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/docs/dist/js/i18n/defaults-id_ID.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/docs/dist/js/i18n/defaults-id_ID.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/docs/dist/js/i18n/defaults-it_IT.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/docs/dist/js/i18n/defaults-it_IT.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/docs/dist/js/i18n/defaults-ja_JP.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/docs/dist/js/i18n/defaults-ja_JP.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/docs/dist/js/i18n/defaults-kh_KM.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/docs/dist/js/i18n/defaults-kh_KM.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/docs/dist/js/i18n/defaults-ko_KR.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/docs/dist/js/i18n/defaults-ko_KR.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/docs/dist/js/i18n/defaults-lt_LT.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/docs/dist/js/i18n/defaults-lt_LT.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/docs/dist/js/i18n/defaults-nb_NO.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/docs/dist/js/i18n/defaults-nb_NO.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/docs/dist/js/i18n/defaults-nl_NL.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/docs/dist/js/i18n/defaults-nl_NL.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/docs/dist/js/i18n/defaults-pl_PL.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/docs/dist/js/i18n/defaults-pl_PL.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/docs/dist/js/i18n/defaults-pt_BR.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/docs/dist/js/i18n/defaults-pt_BR.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/docs/dist/js/i18n/defaults-pt_PT.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/docs/dist/js/i18n/defaults-pt_PT.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/docs/dist/js/i18n/defaults-ro_RO.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/docs/dist/js/i18n/defaults-ro_RO.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/docs/dist/js/i18n/defaults-ru_RU.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/docs/dist/js/i18n/defaults-ru_RU.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/docs/dist/js/i18n/defaults-sk_SK.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/docs/dist/js/i18n/defaults-sk_SK.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/docs/dist/js/i18n/defaults-sl_SI.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/docs/dist/js/i18n/defaults-sl_SI.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/docs/dist/js/i18n/defaults-sv_SE.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/docs/dist/js/i18n/defaults-sv_SE.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/docs/dist/js/i18n/defaults-tr_TR.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/docs/dist/js/i18n/defaults-tr_TR.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/docs/dist/js/i18n/defaults-ua_UA.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/docs/dist/js/i18n/defaults-ua_UA.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/docs/dist/js/i18n/defaults-vi_VN.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/docs/dist/js/i18n/defaults-vi_VN.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/docs/dist/js/i18n/defaults-zh_CN.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/docs/dist/js/i18n/defaults-zh_CN.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/docs/dist/js/i18n/defaults-zh_TW.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/docs/dist/js/i18n/defaults-zh_TW.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/docs/examples.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/docs/index.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/docs/methods.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/docs/options.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/docs/playground/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/docs/playground/plnkrOpener.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/docs/playground/test.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/docs/mkdocs.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/js/.jshintrc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/js/bootstrap-select.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/js/i18n/defaults-ar_AR.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/js/i18n/defaults-bg_BG.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/js/i18n/defaults-cro_CRO.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/js/i18n/defaults-cs_CZ.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/js/i18n/defaults-da_DK.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/js/i18n/defaults-de_DE.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/js/i18n/defaults-en_US.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/js/i18n/defaults-es_CL.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/js/i18n/defaults-es_ES.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/js/i18n/defaults-et_EE.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/js/i18n/defaults-eu.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/js/i18n/defaults-fa_IR.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/js/i18n/defaults-fi_FI.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/js/i18n/defaults-fr_FR.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/js/i18n/defaults-hu_HU.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/js/i18n/defaults-id_ID.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/js/i18n/defaults-it_IT.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/js/i18n/defaults-ja_JP.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/js/i18n/defaults-kh_KM.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/js/i18n/defaults-ko_KR.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/js/i18n/defaults-lt_LT.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/js/i18n/defaults-nb_NO.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/js/i18n/defaults-nl_NL.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/js/i18n/defaults-pl_PL.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/js/i18n/defaults-pt_BR.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/js/i18n/defaults-pt_PT.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/js/i18n/defaults-ro_RO.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/js/i18n/defaults-ru_RU.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/js/i18n/defaults-sk_SK.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/js/i18n/defaults-sl_SI.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/js/i18n/defaults-sv_SE.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/js/i18n/defaults-tr_TR.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/js/i18n/defaults-ua_UA.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/js/i18n/defaults-vi_VN.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/js/i18n/defaults-zh_CN.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/js/i18n/defaults-zh_TW.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/less/bootstrap-select.less" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/less/variables.less" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/nuget/MyGet.ps1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/nuget/bootstrap-select.nuspec" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/sass/bootstrap-select.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/sass/variables.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/test.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/CHANGES.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/LICENSE.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/adapters/jquery.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/ckeditor.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/config.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/contents.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/contents_adjust.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/lang/_translationstatus.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/lang/af.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/lang/ar.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/lang/az.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/lang/bg.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/lang/bn.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/lang/bs.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/lang/ca.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/lang/cs.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/lang/cy.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/lang/da.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/lang/de-ch.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/lang/de.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/lang/el.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/lang/en-au.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/lang/en-ca.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/lang/en-gb.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/lang/en.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/lang/eo.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/lang/es-mx.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/lang/es.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/lang/et.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/lang/eu.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/lang/fa.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/lang/fi.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/lang/fo.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/lang/fr-ca.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/lang/fr.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/lang/gl.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/lang/gu.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/lang/he.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/lang/hi.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/lang/hr.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/lang/hu.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/lang/id.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/lang/is.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/lang/it.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/lang/ja.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/lang/ka.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/lang/km.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/lang/ko.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/lang/ku.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/lang/lt.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/lang/lv.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/lang/mk.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/lang/mn.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/lang/ms.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/lang/nb.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/lang/nl.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/lang/no.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/lang/oc.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/lang/pl.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/lang/pt-br.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/lang/pt.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/lang/ro.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/lang/ru.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/lang/si.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/lang/sk.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/lang/sl.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/lang/sq.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/lang/sr-latn.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/lang/sr.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/lang/sv.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/lang/th.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/lang/tr.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/lang/tt.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/lang/ug.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/lang/uk.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/lang/vi.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/lang/zh-cn.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/lang/zh.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/a11yhelp/dialogs/a11yhelp.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/a11yhelp/dialogs/lang/_translationstatus.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/a11yhelp/dialogs/lang/af.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/a11yhelp/dialogs/lang/ar.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/a11yhelp/dialogs/lang/az.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/a11yhelp/dialogs/lang/bg.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/a11yhelp/dialogs/lang/ca.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/a11yhelp/dialogs/lang/cs.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/a11yhelp/dialogs/lang/cy.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/a11yhelp/dialogs/lang/da.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/a11yhelp/dialogs/lang/de-ch.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/a11yhelp/dialogs/lang/de.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/a11yhelp/dialogs/lang/el.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/a11yhelp/dialogs/lang/en-au.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/a11yhelp/dialogs/lang/en-gb.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/a11yhelp/dialogs/lang/en.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/a11yhelp/dialogs/lang/eo.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/a11yhelp/dialogs/lang/es-mx.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/a11yhelp/dialogs/lang/es.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/a11yhelp/dialogs/lang/et.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/a11yhelp/dialogs/lang/eu.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/a11yhelp/dialogs/lang/fa.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/a11yhelp/dialogs/lang/fi.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/a11yhelp/dialogs/lang/fo.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/a11yhelp/dialogs/lang/fr-ca.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/a11yhelp/dialogs/lang/fr.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/a11yhelp/dialogs/lang/gl.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/a11yhelp/dialogs/lang/gu.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/a11yhelp/dialogs/lang/he.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/a11yhelp/dialogs/lang/hi.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/a11yhelp/dialogs/lang/hr.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/a11yhelp/dialogs/lang/hu.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/a11yhelp/dialogs/lang/id.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/a11yhelp/dialogs/lang/it.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/a11yhelp/dialogs/lang/ja.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/a11yhelp/dialogs/lang/km.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/a11yhelp/dialogs/lang/ko.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/a11yhelp/dialogs/lang/ku.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/a11yhelp/dialogs/lang/lt.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/a11yhelp/dialogs/lang/lv.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/a11yhelp/dialogs/lang/mk.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/a11yhelp/dialogs/lang/mn.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/a11yhelp/dialogs/lang/nb.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/a11yhelp/dialogs/lang/nl.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/a11yhelp/dialogs/lang/no.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/a11yhelp/dialogs/lang/oc.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/a11yhelp/dialogs/lang/pl.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/a11yhelp/dialogs/lang/pt-br.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/a11yhelp/dialogs/lang/pt.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/a11yhelp/dialogs/lang/ro.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/a11yhelp/dialogs/lang/ru.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/a11yhelp/dialogs/lang/si.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/a11yhelp/dialogs/lang/sk.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/a11yhelp/dialogs/lang/sl.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/a11yhelp/dialogs/lang/sq.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/a11yhelp/dialogs/lang/sr-latn.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/a11yhelp/dialogs/lang/sr.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/a11yhelp/dialogs/lang/sv.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/a11yhelp/dialogs/lang/th.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/a11yhelp/dialogs/lang/tr.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/a11yhelp/dialogs/lang/tt.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/a11yhelp/dialogs/lang/ug.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/a11yhelp/dialogs/lang/uk.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/a11yhelp/dialogs/lang/vi.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/a11yhelp/dialogs/lang/zh-cn.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/a11yhelp/dialogs/lang/zh.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/about/dialogs/about.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/about/dialogs/hidpi/logo_ckeditor.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/about/dialogs/logo_ckeditor.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/clipboard/dialogs/paste.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/dialog/dialogDefinition.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/icons.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/icons_hidpi.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/image/dialogs/image.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/image/images/noimage.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/link/dialogs/anchor.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/link/dialogs/link.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/link/images/anchor.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/link/images/hidpi/anchor.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/magicline/images/hidpi/icon-rtl.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/magicline/images/hidpi/icon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/magicline/images/icon-rtl.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/magicline/images/icon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/pastefromword/filter/default.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/scayt/CHANGELOG.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/scayt/LICENSE.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/scayt/dialogs/dialog.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/scayt/dialogs/options.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/scayt/dialogs/toolbar.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/scayt/skins/moono-lisa/scayt.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/specialchar/dialogs/lang/_translationstatus.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/specialchar/dialogs/lang/af.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/specialchar/dialogs/lang/ar.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/specialchar/dialogs/lang/az.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/specialchar/dialogs/lang/bg.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/specialchar/dialogs/lang/ca.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/specialchar/dialogs/lang/cs.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/specialchar/dialogs/lang/cy.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/specialchar/dialogs/lang/da.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/specialchar/dialogs/lang/de-ch.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/specialchar/dialogs/lang/de.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/specialchar/dialogs/lang/el.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/specialchar/dialogs/lang/en-au.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/specialchar/dialogs/lang/en-ca.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/specialchar/dialogs/lang/en-gb.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/specialchar/dialogs/lang/en.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/specialchar/dialogs/lang/eo.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/specialchar/dialogs/lang/es-mx.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/specialchar/dialogs/lang/es.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/specialchar/dialogs/lang/et.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/specialchar/dialogs/lang/eu.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/specialchar/dialogs/lang/fa.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/specialchar/dialogs/lang/fi.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/specialchar/dialogs/lang/fr-ca.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/specialchar/dialogs/lang/fr.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/specialchar/dialogs/lang/gl.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/specialchar/dialogs/lang/he.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/specialchar/dialogs/lang/hr.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/specialchar/dialogs/lang/hu.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/specialchar/dialogs/lang/id.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/specialchar/dialogs/lang/it.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/specialchar/dialogs/lang/ja.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/specialchar/dialogs/lang/km.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/specialchar/dialogs/lang/ko.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/specialchar/dialogs/lang/ku.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/specialchar/dialogs/lang/lt.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/specialchar/dialogs/lang/lv.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/specialchar/dialogs/lang/nb.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/specialchar/dialogs/lang/nl.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/specialchar/dialogs/lang/no.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/specialchar/dialogs/lang/oc.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/specialchar/dialogs/lang/pl.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/specialchar/dialogs/lang/pt-br.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/specialchar/dialogs/lang/pt.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/specialchar/dialogs/lang/ro.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/specialchar/dialogs/lang/ru.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/specialchar/dialogs/lang/si.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/specialchar/dialogs/lang/sk.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/specialchar/dialogs/lang/sl.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/specialchar/dialogs/lang/sq.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/specialchar/dialogs/lang/sv.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/specialchar/dialogs/lang/th.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/specialchar/dialogs/lang/tr.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/specialchar/dialogs/lang/tt.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/specialchar/dialogs/lang/ug.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/specialchar/dialogs/lang/uk.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/specialchar/dialogs/lang/vi.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/specialchar/dialogs/lang/zh-cn.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/specialchar/dialogs/lang/zh.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/specialchar/dialogs/specialchar.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/table/dialogs/table.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/tableselection/styles/tableselection.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/tabletools/dialogs/tableCell.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/widget/images/handle.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/wsc/LICENSE.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/wsc/dialogs/ciframe.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/wsc/dialogs/tmpFrameset.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/wsc/dialogs/wsc.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/wsc/dialogs/wsc.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/wsc/dialogs/wsc_ie.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/plugins/wsc/skins/moono-lisa/wsc.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/samples/css/samples.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/samples/img/github-top.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/samples/img/header-bg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/samples/img/header-separator.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/samples/img/logo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/samples/img/logo.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/samples/img/navigation-tip.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/samples/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/samples/js/sample.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/samples/js/sf.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/samples/old/ajax.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/samples/old/api.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/samples/old/appendto.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/samples/old/assets/inlineall/logo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/samples/old/assets/outputxhtml/outputxhtml.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/samples/old/assets/posteddata.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/samples/old/assets/sample.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/samples/old/assets/uilanguages/languages.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/samples/old/datafiltering.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/samples/old/dialog/assets/my_dialog.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/samples/old/dialog/dialog.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/samples/old/divreplace.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/samples/old/enterkey/enterkey.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/samples/old/htmlwriter/assets/outputforflash/outputforflash.fla" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/samples/old/htmlwriter/assets/outputforflash/outputforflash.swf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/samples/old/htmlwriter/assets/outputforflash/swfobject.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/samples/old/htmlwriter/outputforflash.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/samples/old/htmlwriter/outputhtml.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/samples/old/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/samples/old/inlineall.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/samples/old/inlinebycode.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/samples/old/inlinetextarea.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/samples/old/jquery.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/samples/old/magicline/magicline.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/samples/old/readonly.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/samples/old/replacebyclass.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/samples/old/replacebycode.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/samples/old/sample.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/samples/old/sample.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/samples/old/sample_posteddata.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/samples/old/tabindex.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/samples/old/toolbar/toolbar.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/samples/old/uicolor.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/samples/old/uilanguages.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/samples/old/wysiwygarea/fullpage.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/samples/old/xhtmlstyle.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/samples/toolbarconfigurator/css/fontello.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/samples/toolbarconfigurator/font/LICENSE.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/samples/toolbarconfigurator/font/config.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/samples/toolbarconfigurator/font/fontello.eot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/samples/toolbarconfigurator/font/fontello.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/samples/toolbarconfigurator/font/fontello.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/samples/toolbarconfigurator/font/fontello.woff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/samples/toolbarconfigurator/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/samples/toolbarconfigurator/js/abstracttoolbarmodifier.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/samples/toolbarconfigurator/js/fulltoolbareditor.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/samples/toolbarconfigurator/js/toolbarmodifier.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/samples/toolbarconfigurator/js/toolbartextmodifier.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/samples/toolbarconfigurator/lib/codemirror/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/samples/toolbarconfigurator/lib/codemirror/codemirror.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/samples/toolbarconfigurator/lib/codemirror/codemirror.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/samples/toolbarconfigurator/lib/codemirror/javascript.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/samples/toolbarconfigurator/lib/codemirror/neo.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/samples/toolbarconfigurator/lib/codemirror/show-hint.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/samples/toolbarconfigurator/lib/codemirror/show-hint.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/skins/moono-lisa/dialog.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/skins/moono-lisa/dialog_ie.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/skins/moono-lisa/dialog_ie8.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/skins/moono-lisa/dialog_iequirks.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/skins/moono-lisa/editor.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/skins/moono-lisa/editor_gecko.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/skins/moono-lisa/editor_ie.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/skins/moono-lisa/editor_ie8.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/skins/moono-lisa/editor_iequirks.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/skins/moono-lisa/icons.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/skins/moono-lisa/icons_hidpi.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/skins/moono-lisa/images/arrow.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/skins/moono-lisa/images/close.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/skins/moono-lisa/images/hidpi/close.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/skins/moono-lisa/images/hidpi/lock-open.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/skins/moono-lisa/images/hidpi/lock.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/skins/moono-lisa/images/hidpi/refresh.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/skins/moono-lisa/images/lock-open.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/skins/moono-lisa/images/lock.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/skins/moono-lisa/images/refresh.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/skins/moono-lisa/images/spinner.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/skins/moono-lisa/readme.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ckeditor/styles.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/fileupload/zyUpload/control/css/zyUpload.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/fileupload/zyUpload/control/images/Thumbs.db" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/fileupload/zyUpload/control/images/add_img.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/fileupload/zyUpload/control/images/bg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/fileupload/zyUpload/control/images/delete_blue.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/fileupload/zyUpload/control/images/delete_white.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/fileupload/zyUpload/control/images/fileType/Thumbs.db" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/fileupload/zyUpload/control/images/fileType/file.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/fileupload/zyUpload/control/images/fileType/rar.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/fileupload/zyUpload/control/images/fileType/txt.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/fileupload/zyUpload/control/images/fileType/zip.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/fileupload/zyUpload/control/images/success.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/fileupload/zyUpload/control/js/jquery-1.7.2.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/fileupload/zyUpload/control/js/zyUpload.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/fileupload/zyUpload/core/zyFile.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/fileupload/zyUpload/demo.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/fileupload/zyUpload/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/fileupload/zyUpload/jquery-1.7.2.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/fileupload/zyUpload/说明.htm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/fileupload/zyUpload/说明.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/fileupload/zyUpload_1.0.1/control/css/zyUpload.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/fileupload/zyUpload_1.0.1/control/images/Thumbs.db" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/fileupload/zyUpload_1.0.1/control/images/add_img.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/fileupload/zyUpload_1.0.1/control/images/bg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/fileupload/zyUpload_1.0.1/control/images/delete_blue.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/fileupload/zyUpload_1.0.1/control/images/delete_white.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/fileupload/zyUpload_1.0.1/control/images/fileType/Thumbs.db" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/fileupload/zyUpload_1.0.1/control/images/fileType/file.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/fileupload/zyUpload_1.0.1/control/images/fileType/rar.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/fileupload/zyUpload_1.0.1/control/images/fileType/txt.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/fileupload/zyUpload_1.0.1/control/images/fileType/zip.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/fileupload/zyUpload_1.0.1/control/images/success.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/fileupload/zyUpload_1.0.1/control/js/jquery-1.7.2.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/fileupload/zyUpload_1.0.1/control/js/zyUpload.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/fileupload/zyUpload_1.0.1/core/zyFile.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/fileupload/zyUpload_1.0.1/demo.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/fileupload/zyUpload_1.0.1/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/fileupload/zyUpload_1.0.1/jquery-1.7.2.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/fileupload/zyUpload_1.0.1/说明.htm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/fileupload/zyUpload_1.0.1/说明.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/flowchart/images/ztb_active-6.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/flowchart/images/ztb_active.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/flowchart/images/ztb_down.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/flowchart/images/ztb_gx.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/flowchart/images/ztb_gx1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/flowchart/images/ztb_gx2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/flowchart/images/ztb_lc.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/flowchart/images/ztb_sel.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/flowchart/images/ztb_up.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/flowchart/js/jquery-1.9.1.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/flowchart/styles/css.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ilearning_form/css/style.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ilearning_form/images/pwdstrength.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ilearning_form/images/yellow_button.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ilearning_form/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ilearning_form/js/Validate.form.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ilearning_form/js/Validate.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ilearning_form/js/jquery.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ilearning_form/说明.htm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/ilearning_form/说明.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/imgscanner/css/htmleaf-demo.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/imgscanner/css/normalize.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/imgscanner/css/reset.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/imgscanner/css/style.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/imgscanner/dist/easySlider.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/imgscanner/dist/easySlider.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/imgscanner/dist/jquery.boilerplate.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/imgscanner/dist/jquery.boilerplate.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/imgscanner/img/1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/imgscanner/img/2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/imgscanner/img/3.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/imgscanner/img/4.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/imgscanner/img/next.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/imgscanner/img/prev.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/imgscanner/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/imgscanner/js/jquery-2.1.1.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/imgscanner/说明.htm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/jquery-1.11.3.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/jquery-1.12.4.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/jquery_popover/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/jquery_popover/.jshintrc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/jquery_popover/.npmignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/jquery_popover/CONTRIBUTING.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/jquery_popover/Gruntfile.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/jquery_popover/HISTORY.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/jquery_popover/LICENSE.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/jquery_popover/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/jquery_popover/ROADMAP.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/jquery_popover/bower.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/jquery_popover/demo/async-content-another.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/jquery_popover/demo/async-content.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/jquery_popover/demo/bootstrap.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/jquery_popover/demo/bootstrap.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/jquery_popover/demo/demo.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/jquery_popover/demo/index-dev.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/jquery_popover/demo/index-old.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/jquery_popover/demo/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/jquery_popover/demo/jquery.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/jquery_popover/demo/mobile.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/jquery_popover/demo/table-data.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/jquery_popover/demo/test-auto-bottom.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/jquery_popover/demo/test-body-height.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/jquery_popover/demo/test-cache.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/jquery_popover/demo/test-canvas.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/jquery_popover/demo/test-container-scroll-fix.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/jquery_popover/demo/test-container-scroll.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/jquery_popover/demo/test-container.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/jquery_popover/demo/test-global-api.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/jquery_popover/demo/test-issue193.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/jquery_popover/demo/test-issue195.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/jquery_popover/demo/test-issue197.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/jquery_popover/demo/test-issue214.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/jquery_popover/demo/test-manual-show-bug.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/jquery_popover/demo/test-svg.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/jquery_popover/demo/test-wenzhixin-bstable.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/jquery_popover/demo/test.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/jquery_popover/demo/text.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/jquery_popover/dist/jquery.webui-popover.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/jquery_popover/dist/jquery.webui-popover.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/jquery_popover/dist/jquery.webui-popover.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/jquery_popover/dist/jquery.webui-popover.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/jquery_popover/fonts/glyphicons-halflings-regular.eot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/jquery_popover/fonts/glyphicons-halflings-regular.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/jquery_popover/fonts/glyphicons-halflings-regular.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/jquery_popover/fonts/glyphicons-halflings-regular.woff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/jquery_popover/img/loading.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/jquery_popover/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/jquery_popover/src/jquery.webui-popover.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/jquery_popover/src/jquery.webui-popover.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/jquery_popover/src/jquery.webui-popover.less" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/jquery_popover/webui-popover.jquery.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/jsrender.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/leftnav/css/font-awesome.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/leftnav/css/leftnav.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/leftnav/fonts/fontawesome-webfont.eot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/leftnav/fonts/fontawesome-webfont.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/leftnav/fonts/fontawesome-webfont.woff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/leftnav/fonts/fontawesome-webfont.woff2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/leftnav/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/leftnav/js/jquery.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/leftnav/js/leftnav.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/leftnav/说明.htm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/leftnav/说明.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/loading/loading-1.0.0/loading.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/paginator/css/paging.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/paginator/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/paginator/js/jquery-1.11.2.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/paginator/js/paging.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/paginator/js/query.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/paginator/说明.htm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/paginator/说明.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/raty-2.8.0/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/raty-2.8.0/.travis.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/raty-2.8.0/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/raty-2.8.0/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/raty-2.8.0/bower.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/raty-2.8.0/changelog.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/raty-2.8.0/composer.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/raty-2.8.0/demo/favicon.ico" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/raty-2.8.0/demo/fonts/wbotelhos.eot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/raty-2.8.0/demo/fonts/wbotelhos.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/raty-2.8.0/demo/fonts/wbotelhos.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/raty-2.8.0/demo/fonts/wbotelhos.woff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/raty-2.8.0/demo/images/0.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/raty-2.8.0/demo/images/1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/raty-2.8.0/demo/images/2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/raty-2.8.0/demo/images/3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/raty-2.8.0/demo/images/4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/raty-2.8.0/demo/images/5.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/raty-2.8.0/demo/images/cancel-custom-off.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/raty-2.8.0/demo/images/cancel-custom-on.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/raty-2.8.0/demo/images/cancel-off.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/raty-2.8.0/demo/images/cancel-on.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/raty-2.8.0/demo/images/off.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/raty-2.8.0/demo/images/on.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/raty-2.8.0/demo/images/star-half-mono.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/raty-2.8.0/demo/images/star-half.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/raty-2.8.0/demo/images/star-off.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/raty-2.8.0/demo/images/star-on.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/raty-2.8.0/demo/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/raty-2.8.0/demo/javascripts/labs.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/raty-2.8.0/demo/stylesheets/labs.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/raty-2.8.0/lib/fonts/raty.eot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/raty-2.8.0/lib/fonts/raty.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/raty-2.8.0/lib/fonts/raty.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/raty-2.8.0/lib/fonts/raty.woff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/raty-2.8.0/lib/images/cancel-off.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/raty-2.8.0/lib/images/cancel-on.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/raty-2.8.0/lib/images/star-half.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/raty-2.8.0/lib/images/star-off.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/raty-2.8.0/lib/images/star-on.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/raty-2.8.0/lib/jquery.raty.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/raty-2.8.0/lib/jquery.raty.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/raty-2.8.0/package-lock.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/raty-2.8.0/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/raty-2.8.0/spec/cancel_class_spec.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/raty-2.8.0/spec/cancel_hint_spec.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/raty-2.8.0/spec/cancel_off_spec.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/raty-2.8.0/spec/cancel_on_spec.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/raty-2.8.0/spec/cancel_place_spec.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/raty-2.8.0/spec/cancel_spec.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/raty-2.8.0/spec/click_spec.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/raty-2.8.0/spec/common_spec.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/raty-2.8.0/spec/fn_cancel_spec.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/raty-2.8.0/spec/fn_move_spec.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/raty-2.8.0/spec/fn_readonly_spec.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/raty-2.8.0/spec/fn_set_score_spec.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/raty-2.8.0/spec/fn_set_spec.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/raty-2.8.0/spec/get_first_decimal_spec.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/raty-2.8.0/spec/half_spec.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/raty-2.8.0/spec/hints_spec.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/raty-2.8.0/spec/karma.conf.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/raty-2.8.0/spec/lib/boot.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/raty-2.8.0/spec/lib/helper.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/raty-2.8.0/spec/lib/jasmine-html.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/raty-2.8.0/spec/lib/jasmine-jquery.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/raty-2.8.0/spec/lib/jasmine.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/raty-2.8.0/spec/lib/jasmine.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/raty-2.8.0/spec/mouseout_spec.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/raty-2.8.0/spec/mouseover_spec.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/raty-2.8.0/spec/number_max_spec.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/raty-2.8.0/spec/number_spec.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/raty-2.8.0/spec/options_spec.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/raty-2.8.0/spec/path_spec.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/raty-2.8.0/spec/precision_spec.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/raty-2.8.0/spec/readonly_spec.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/raty-2.8.0/spec/run.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/raty-2.8.0/spec/score_name_spec.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/raty-2.8.0/spec/score_spec.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/raty-2.8.0/spec/spec.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/raty-2.8.0/spec/star_off_spec.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/raty-2.8.0/spec/star_on_spec.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/raty-2.8.0/spec/star_type_spec.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/raty-2.8.0/spec/stars_spec.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/raty-2.8.0/spec/target_spec.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/raty-2.8.0/spec/target_type_spec.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/raty-2.8.0/vendor/jquery.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/rightmenu/fonts/icomoon.eot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/rightmenu/fonts/icomoon.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/rightmenu/fonts/icomoon.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/rightmenu/fonts/icomoon.woff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/rightmenu/images/02index-2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/rightmenu/images/02index-banner-8.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/rightmenu/images/arrow.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/rightmenu/images/q1.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/rightmenu/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/rightmenu/js/jquery-1.4.2.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/rightmenu/说明.htm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/rightmenu/说明.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/tabfolder/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/tabfolder/js/jquery-1.7.2.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/tabfolder/js/tab.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/tabfolder/style/common.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/tabfolder/style/style.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/tabfolder/说明.htm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/tabfolder/说明.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/toggle_message/css/style.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/toggle_message/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/toggle_message/js/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/toggle_message/js/jquery.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/toggle_message/说明.htm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/toggle_message/说明.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/common/vue.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/css/header.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/css/initial.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/css/service/service_list.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/js/env/env_list.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/js/header.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/js/service/fileupload.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/js/service/service_edit.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/js/service/service_list.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/static/js/service/service_monitor.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/views/common/footer.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/views/common/header.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/views/env/list.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/views/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/views/layout/layout.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/views/service/edit.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/views/service/list.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/views/service/monitor.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/views/service/tracking_detail.html" beforeDir="false" />
     </list>
     <ignored path="isoft_deploy_web/static/uploadfile/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -35,29 +1023,93 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="ServiceTable.vue" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/Service/ServiceTable.vue">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1666">
-              <caret line="104" column="74" selection-start-line="104" selection-start-column="74" selection-end-line="104" selection-end-column="74" />
-              <folding>
-                <element signature="n#style#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-                <element signature="e#1196#1233#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="common_executor.go" pinned="false" current-in-tab="true">
+      <file leaf-file-name="common_executor.go" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/isoft_deploy_api/deploy_core/executors/common_executor.go">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="23">
-              <caret line="62" column="5" lean-forward="true" selection-start-line="62" selection-start-column="5" selection-end-line="62" selection-end-column="5" />
+              <caret line="62" column="5" selection-start-line="62" selection-start-column="5" selection-end-line="62" selection-end-column="5" />
               <folding>
                 <element signature="e#19#107#0" expanded="true" />
               </folding>
             </state>
           </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="executor.go" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/isoft_deploy_api/deploy_core/executors/executor.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="68">
+              <caret line="8" column="5" selection-start-line="8" selection-start-column="5" selection-end-line="8" selection-end-column="5" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="service.go" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/isoft_deploy_api/models/service.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="375">
+              <caret line="145" lean-forward="true" selection-start-line="145" selection-end-line="145" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="service.go" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/isoft_deploy_api/controllers/service.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="211">
+              <caret line="160" column="9" lean-forward="true" selection-start-line="160" selection-start-column="9" selection-end-line="160" selection-end-column="9" />
+              <folding>
+                <element signature="e#21#294#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="base_controller.go" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/isoft_deploy_api/controllers/base_controller.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="323">
+              <caret line="19" column="4" selection-start-line="19" selection-start-column="4" selection-end-line="21" selection-end-column="20" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="env.go" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/isoft_deploy_api/controllers/env.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1458">
+              <caret line="14" column="1" lean-forward="true" selection-start-line="14" selection-start-column="1" selection-end-line="14" selection-end-column="1" />
+              <folding>
+                <element signature="e#21#200#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="main.go" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/isoft_deploy_api/main.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="153">
+              <caret line="61" selection-start-line="61" selection-end-line="61" />
+              <folding>
+                <element signature="e#14#326#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="LeftMenu.vue" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/Menu/LeftMenu.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="88">
+              <caret line="12" column="29" lean-forward="true" selection-start-line="12" selection-start-column="29" selection-end-line="12" selection-end-column="29" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="constant.go" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/isoft_deploy_api/deploy_core/constant/constant.go">
+          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
       <file leaf-file-name="MysqlInit.vue" pinned="false" current-in-tab="false">
@@ -85,7 +1137,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>deploy.</find>
       <find>remoteDir</find>
       <find>SSHTimerScriptExecutor</find>
       <find>CONNECTION_TEST</find>
@@ -99,11 +1150,11 @@
       <find>service_id</find>
       <find>runDeployTask</find>
       <find>index</find>
-      <find>docker ps -aq --filter</find>
-      <find>docker ps -aq --filter name=${serviceName}</find>
-      <find>docker ps -aq --filter name=</find>
+      <find />
+      <find />
+      <find />
       <find>4444</find>
-      <find>docker ps -aq --filter name=&quot;${serviceName}\$</find>
+      <find />
       <find>uninstall</find>
       <find>rootPwd</find>
       <find>$router</find>
@@ -115,6 +1166,7 @@
       <find>env_id</find>
       <find>info</find>
       <find>TableExpand</find>
+      <find>this.Data[&quot;json&quot;]</find>
     </findStrings>
     <replaceStrings>
       <replace>log.Error</replace>
@@ -124,7 +1176,7 @@
       <replace>serviceMonitors</replace>
       <replace>leftnav/leftnav</replace>
       <replace>/isoft_deploy_web</replace>
-      <replace>{{ .AppName }}</replace>
+      <replace />
       <replace>CommandArgs</replace>
       <replace>config.GetConfigValue(config.RABBITMQ_SERVER)</replace>
       <replace>config.GetConfigValue(config.ES_SERVER)</replace>
@@ -145,7 +1197,7 @@
       <replace>operate_result</replace>
       <replace>_renderLastDeployStatus</replace>
       <replace>renderLastDeployStatus</replace>
-      <replace>docker ps -aq --filter name=&quot;${serviceName}\$&quot;</replace>
+      <replace />
       <replace>mysqlInit</replace>
     </replaceStrings>
     <dirStrings>
@@ -171,7 +1223,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/store/state.js" />
         <option value="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/store/mutations.js" />
         <option value="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/store/actions.js" />
         <option value="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/App.vue" />
@@ -211,17 +1262,18 @@
         <option value="$PROJECT_DIR$/isoft_deploy_api/shell/mysql/mysql_swap.sh" />
         <option value="$PROJECT_DIR$/isoft_deploy_api/shell/mysql/mysql_install.sh" />
         <option value="$PROJECT_DIR$/isoft_deploy_api/shell/mysql/my.cnf" />
-        <option value="$PROJECT_DIR$/isoft_deploy_api/controllers/env.go" />
         <option value="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/api/index.js" />
         <option value="$PROJECT_DIR$/isoft_deploy_api/deploy_core/deploy/command.go" />
         <option value="$PROJECT_DIR$/isoft_deploy_api/deploy_core/deploy/command_args.go" />
         <option value="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/Service/ServiceAdd.vue" />
-        <option value="$PROJECT_DIR$/isoft_deploy_api/models/service.go" />
-        <option value="$PROJECT_DIR$/isoft_deploy_api/controllers/service.go" />
-        <option value="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/Menu/LeftMenu.vue" />
         <option value="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/Service/ServiceTable.vue" />
         <option value="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/Service/MysqlInit.vue" />
         <option value="$PROJECT_DIR$/isoft_deploy_api/deploy_core/executors/common_executor.go" />
+        <option value="$PROJECT_DIR$/isoft_deploy_api/models/service.go" />
+        <option value="$PROJECT_DIR$/isoft_deploy_api/controllers/env.go" />
+        <option value="$PROJECT_DIR$/isoft_deploy_api/controllers/service.go" />
+        <option value="$PROJECT_DIR$/isoft_deploy_api/main.go" />
+        <option value="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/Menu/LeftMenu.vue" />
       </list>
     </option>
   </component>
@@ -248,9 +1300,6 @@
       <path value="$PROJECT_DIR$/isoft_blog_web/static/common/bootstrap-select/package.json" />
       <path value="$PROJECT_DIR$/isoft_blog_web/static/common/jquery_popover/package.json" />
       <path value="$PROJECT_DIR$/isoft_blog_web/static/common/raty-2.8.0/package.json" />
-      <path value="$PROJECT_DIR$/isoft_deploy_web/static/common/bootstrap-select/package.json" />
-      <path value="$PROJECT_DIR$/isoft_deploy_web/static/common/jquery_popover/package.json" />
-      <path value="$PROJECT_DIR$/isoft_deploy_web/static/common/raty-2.8.0/package.json" />
       <path value="$PROJECT_DIR$/isoft_learning_web/static/common/bootstrap-select/package.json" />
       <path value="$PROJECT_DIR$/isoft_learning_web/static/common/jquery_popover/package.json" />
       <path value="$PROJECT_DIR$/isoft_learning_web/static/common/raty-2.8.0/package.json" />
@@ -275,6 +1324,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -282,11 +1332,62 @@
               <item name="isoft" type="b2602c69:ProjectViewProjectNode" />
               <item name="isoft" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="isoft" type="b2602c69:ProjectViewProjectNode" />
+              <item name="isoft" type="462c0819:PsiDirectoryNode" />
+              <item name="isoft_deploy_api" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="isoft" type="b2602c69:ProjectViewProjectNode" />
+              <item name="isoft" type="462c0819:PsiDirectoryNode" />
+              <item name="isoft_deploy_api" type="462c0819:PsiDirectoryNode" />
+              <item name="controllers" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="isoft" type="b2602c69:ProjectViewProjectNode" />
+              <item name="isoft" type="462c0819:PsiDirectoryNode" />
+              <item name="isoft_deploy_api" type="462c0819:PsiDirectoryNode" />
+              <item name="models" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="isoft" type="b2602c69:ProjectViewProjectNode" />
+              <item name="isoft" type="462c0819:PsiDirectoryNode" />
+              <item name="isoft_vue_web" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="isoft" type="b2602c69:ProjectViewProjectNode" />
+              <item name="isoft" type="462c0819:PsiDirectoryNode" />
+              <item name="isoft_vue_web" type="462c0819:PsiDirectoryNode" />
+              <item name="isoft_deploy_web" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="isoft" type="b2602c69:ProjectViewProjectNode" />
+              <item name="isoft" type="462c0819:PsiDirectoryNode" />
+              <item name="isoft_vue_web" type="462c0819:PsiDirectoryNode" />
+              <item name="isoft_deploy_web" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="isoft" type="b2602c69:ProjectViewProjectNode" />
+              <item name="isoft" type="462c0819:PsiDirectoryNode" />
+              <item name="isoft_vue_web" type="462c0819:PsiDirectoryNode" />
+              <item name="isoft_deploy_web" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="isoft" type="b2602c69:ProjectViewProjectNode" />
+              <item name="isoft" type="462c0819:PsiDirectoryNode" />
+              <item name="isoft_vue_web" type="462c0819:PsiDirectoryNode" />
+              <item name="isoft_deploy_web" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+              <item name="Menu" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -315,19 +1416,19 @@
     <property name="settings.editor.splitter.proportion" value="0.29891956" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\zhourui\program\go\goland_workspace\src\isoft\isoft_deploy_api\deploy_core\executors" />
-      <recent name="D:\zhourui\program\go\goland_workspace\src\isoft\isoft_vue_web\isoft_deploy_web\src" />
-      <recent name="D:\zhourui\program\go\goland_workspace\src\isoft\isoft_vue_web\src" />
-      <recent name="D:\zhourui\program\go\goland_workspace\src\isoft\isoft\build\build_pack\pack" />
-      <recent name="D:\zhourui\program\go\goland_workspace\src\isoft\isoft\build\build_main" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\zhourui\program\go\goland_workspace\src\isoft\isoft_deploy_api\shell\mysql" />
       <recent name="D:\zhourui\program\go\goland_workspace\src\isoft\isoft_deploy_api\deploy_core\executors" />
       <recent name="D:\zhourui\program\go\goland_workspace\src\isoft\isoft_vue_web\isoft_deploy_web\src\components" />
       <recent name="D:\zhourui\program\go\goland_workspace\src\isoft\isoft_vue_web\isoft_deploy_web\src\components\Header" />
       <recent name="D:\zhourui\program\go\goland_workspace\src\isoft\isoft_vue_web\isoft_deploy_web\src\components\Service" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\zhourui\program\go\goland_workspace\src\isoft\isoft_deploy_api\deploy_core\executors" />
+      <recent name="D:\zhourui\program\go\goland_workspace\src\isoft\isoft_vue_web\isoft_deploy_web\src" />
+      <recent name="D:\zhourui\program\go\goland_workspace\src\isoft\isoft_vue_web\src" />
+      <recent name="D:\zhourui\program\go\goland_workspace\src\isoft\isoft\build\build_pack\pack" />
+      <recent name="D:\zhourui\program\go\goland_workspace\src\isoft\isoft\build\build_main" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -561,7 +1662,7 @@
       <window_info anchor="right" id="Database" order="0" side_tool="true" weight="0.32983023" />
       <window_info anchor="bottom" id="Database Changes" order="2" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="5" weight="0.34574467" />
-      <window_info active="true" anchor="bottom" id="Run" order="8" sideWeight="0.4987874" visible="true" weight="0.41843972" />
+      <window_info anchor="bottom" id="Run" order="8" sideWeight="0.4987874" weight="0.41843972" />
       <window_info id="Structure" order="2" sideWeight="0.71276593" side_tool="true" weight="0.27405012" />
       <window_info anchor="bottom" id="Terminal" order="3" sideWeight="0.49636218" weight="0.70035464" />
       <window_info id="Favorites" order="0" sideWeight="0.71276593" side_tool="true" weight="0.27405012" />
@@ -579,28 +1680,28 @@
       <window_info anchor="right" id="Coverage" order="4" side_tool="true" weight="0.32983023" />
     </layout>
     <layout-to-restore>
-      <window_info anchor="bottom" id="Version Control" order="5" weight="0.34574467" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="3" weight="0.25" />
       <window_info active="true" content_ui="combo" id="Project" order="1" sideWeight="0.28723404" visible="true" weight="0.27405012" />
       <window_info anchor="bottom" id="Run" order="8" sideWeight="0.4987874" weight="0.41843972" />
+      <window_info anchor="right" id="Ant Build" order="2" weight="0.25" />
+      <window_info anchor="bottom" id="Cvs" order="10" weight="0.25" />
       <window_info anchor="bottom" id="Thumbnails" order="13" weight="0.3297491" />
       <window_info id="Structure" order="2" sideWeight="0.71276593" side_tool="true" weight="0.27405012" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="1" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="2" weight="0.25" />
       <window_info anchor="bottom" id="TODO" order="12" weight="0.3297491" />
+      <window_info anchor="bottom" id="Database Changes" order="2" show_stripe_button="false" />
       <window_info anchor="bottom" id="TypeScript" order="0" weight="0.32978722" />
-      <window_info anchor="bottom" id="Message" order="6" />
+      <window_info anchor="bottom" id="Find" order="7" weight="0.47517732" />
       <window_info anchor="bottom" id="Debug" order="9" sideWeight="0.49717057" weight="0.5177305" />
       <window_info anchor="right" id="Database" order="0" side_tool="true" weight="0.32983023" />
       <window_info anchor="bottom" id="Terminal" order="3" sideWeight="0.49636218" weight="0.70035464" />
       <window_info anchor="bottom" id="Event Log" order="4" sideWeight="0.5012126" side_tool="true" weight="0.41843972" />
-      <window_info anchor="bottom" id="Database Changes" order="2" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Cvs" order="10" weight="0.25" />
-      <window_info id="Favorites" order="0" sideWeight="0.71276593" side_tool="true" weight="0.27405012" />
-      <window_info anchor="bottom" id="Find" order="7" weight="0.47517732" />
+      <window_info anchor="bottom" id="Inspection" order="11" weight="0.4" />
+      <window_info anchor="bottom" id="Version Control" order="5" weight="0.34574467" />
+      <window_info anchor="bottom" id="Message" order="6" />
       <window_info anchor="bottom" id="Messages" order="1" weight="0.55376345" />
       <window_info anchor="right" id="Coverage" order="4" side_tool="true" weight="0.32983023" />
-      <window_info anchor="bottom" id="Inspection" order="11" weight="0.4" />
+      <window_info id="Favorites" order="0" sideWeight="0.71276593" side_tool="true" weight="0.27405012" />
     </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -685,41 +1786,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/isoft_deploy_api/deploy_core/executors/ssh_executor.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1020">
-          <caret line="60" column="33" lean-forward="true" selection-start-line="60" selection-start-column="33" selection-end-line="60" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_deploy_api/deploy_core/deploy/command.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="816">
-          <caret line="48" column="39" selection-start-line="48" selection-start-column="39" selection-end-line="48" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_deploy_api/deploy_core/deploy/command_args.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="8" lean-forward="true" selection-start-line="2" selection-start-column="8" selection-end-line="2" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/Service/ServiceList.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="9" lean-forward="true" selection-start-line="8" selection-start-column="9" selection-end-line="8" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/Service/ServiceAdd.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="544">
-          <caret line="32" column="33" selection-start-line="32" selection-start-column="33" selection-end-line="32" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/Service/ServiceTable.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3587">
@@ -728,13 +1794,6 @@
             <element signature="n#style#0;n#div#0;n#template#0;n#!!top" expanded="true" />
             <element signature="e#1196#1233#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_deploy_api/deploy_core/deploy/tools.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="5" selection-start-line="5" selection-start-column="5" selection-end-line="5" selection-end-column="5" />
         </state>
       </provider>
     </entry>
@@ -831,13 +1890,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_deploy_api/controllers/docker.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="10" column="18" selection-start-line="10" selection-start-column="18" selection-end-line="10" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/vendor/github.com/astaxie/beego/orm/orm_queryset.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
@@ -887,21 +1939,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_deploy_api/controllers/env.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="166">
-          <caret line="40" column="37" selection-start-line="40" selection-start-column="37" selection-end-line="40" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/isoft_deploy_api/shell/mysql/mysql_uninstall.sh" />
-    <entry file="file://$PROJECT_DIR$/isoft_deploy_api/controllers/base_controller.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" selection-start-line="9" selection-end-line="10" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/api/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
@@ -940,31 +1978,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_deploy_api/deploy_core/executors/executor.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="8" column="5" selection-start-line="8" selection-start-column="5" selection-end-line="8" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/Service/ServiceList.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
           <caret line="8" column="9" selection-start-line="8" selection-start-column="9" selection-end-line="8" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_deploy_api/models/service.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-575">
-          <caret line="139" lean-forward="true" selection-start-line="139" selection-end-line="139" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_deploy_api/controllers/service.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3842">
-          <caret line="239" column="85" selection-start-line="239" selection-start-column="74" selection-end-line="239" selection-end-column="85" />
         </state>
       </provider>
     </entry>
@@ -979,13 +1996,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="178">
           <caret line="62" column="19" selection-start-line="62" selection-start-column="19" selection-end-line="62" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/Menu/LeftMenu.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="14" lean-forward="true" selection-start-line="10" selection-start-column="14" selection-end-line="10" selection-end-column="14" />
         </state>
       </provider>
     </entry>
@@ -1007,13 +2017,108 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_deploy_web/views/service/monitor.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_deploy_api/deploy_core/task/service_task.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="7" lean-forward="true" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
+          <folding>
+            <element signature="e#14#110#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_deploy_api/deploy_core/task/tasks.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="5" selection-start-line="5" selection-start-column="5" selection-end-line="5" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_deploy_api/deploy_core/deploy/tools.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="5" selection-start-line="5" selection-start-column="5" selection-end-line="5" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_deploy_api/deploy_core/constant/constant.go">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/isoft_deploy_api/deploy_core/executors/common_executor.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="23">
-          <caret line="62" column="5" lean-forward="true" selection-start-line="62" selection-start-column="5" selection-end-line="62" selection-end-column="5" />
+          <caret line="62" column="5" selection-start-line="62" selection-start-column="5" selection-end-line="62" selection-end-column="5" />
           <folding>
             <element signature="e#19#107#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_deploy_api/deploy_core/executors/executor.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="8" column="5" selection-start-line="8" selection-start-column="5" selection-end-line="8" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_deploy_api/controllers/docker.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="10" column="18" selection-start-line="10" selection-start-column="18" selection-end-line="10" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_deploy_api/controllers/env.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1458">
+          <caret line="14" column="1" lean-forward="true" selection-start-line="14" selection-start-column="1" selection-end-line="14" selection-end-column="1" />
+          <folding>
+            <element signature="e#21#200#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_deploy_api/models/service.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="375">
+          <caret line="145" lean-forward="true" selection-start-line="145" selection-end-line="145" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_deploy_api/controllers/base_controller.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="19" column="4" selection-start-line="19" selection-start-column="4" selection-end-line="21" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_deploy_api/controllers/service.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="211">
+          <caret line="160" column="9" lean-forward="true" selection-start-line="160" selection-start-column="9" selection-end-line="160" selection-end-column="9" />
+          <folding>
+            <element signature="e#21#294#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_deploy_api/main.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="61" selection-start-line="61" selection-end-line="61" />
+          <folding>
+            <element signature="e#14#326#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_web/src/components/Menu/LeftMenu.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="88">
+          <caret line="12" column="29" lean-forward="true" selection-start-line="12" selection-start-column="29" selection-end-line="12" selection-end-column="29" />
         </state>
       </provider>
     </entry>

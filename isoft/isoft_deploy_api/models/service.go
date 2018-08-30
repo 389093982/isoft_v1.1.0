@@ -20,28 +20,6 @@ type ServiceInfo struct {
 	LastUpdatedTime time.Time `json:"last_updated_time"`
 }
 
-type ServiceMonitor struct {
-	Id              int64     `json:"id"`
-	Url             string    `json:"url"`
-	Method          string    `json:"method"`
-	StatusCode      int64     `json:"status_code"`
-	CreatedBy       string    `json:"created_by"`
-	CreatedTime     time.Time `json:"created_time"`
-	LastUpdatedBy   string    `json:"last_updated_by"`
-	LastUpdatedTime time.Time `json:"last_updated_time"`
-}
-
-type ServiceMonitorDetail struct {
-	Id              int64     `json:"id"`
-	Url             string    `json:"url"`
-	Method          string    `json:"method"`
-	StatusCode      int64     `json:"status_code"`
-	CreatedBy       string    `json:"created_by"`
-	CreatedTime     time.Time `json:"created_time"`
-	LastUpdatedBy   string    `json:"last_updated_by"`
-	LastUpdatedTime time.Time `json:"last_updated_time"`
-}
-
 /*
 	载入关系字段示例:
 	func (this *Role) GetList() ([]*Role, error) {
@@ -162,52 +140,5 @@ func FilterServiceInfo(condArr map[string]interface{}) (serviceInfo ServiceInfo,
 		qs = qs.Filter("env_info_id", env_id)
 	}
 	err = qs.One(&serviceInfo)
-	return
-}
-
-func QueryAllServiceMonitor() (serviceMonitors []ServiceMonitor, err error) {
-	o := orm.NewOrm()
-	_, err = o.QueryTable("service_monitor").All(&serviceMonitors)
-	return
-}
-
-func QueryServiceMonitor(condArr map[string]interface{}, page int, offset int) (serviceMonitors []ServiceMonitor, counts int64, err error) {
-	o := orm.NewOrm()
-	qs := o.QueryTable("service_monitor")
-	var cond = orm.NewCondition()
-
-	if _, ok := condArr["search"]; ok {
-		subCond := orm.NewCondition()
-		subCond = cond.And("url__contains", condArr["search"])
-		cond = cond.AndCond(subCond)
-	}
-
-	qs = qs.SetCond(cond)
-	counts, _ = qs.Count()
-
-	qs = qs.Limit(offset, (page-1)*offset)
-
-	// 进行关联查询
-	qs.RelatedSel().All(&serviceMonitors)
-	return
-}
-
-func InsertOrUpdateServiceMonitor(serviceMonitor *ServiceMonitor) (id int64, err error) {
-	o := orm.NewOrm()
-	if serviceMonitor.Id > 0 {
-		id, err = o.Update(serviceMonitor)
-	} else {
-		id, err = o.Insert(serviceMonitor)
-	}
-	return
-}
-
-func InsertOrUpdateServiceMonitorDetail(serviceMonitorDetail *ServiceMonitorDetail) (id int64, err error) {
-	o := orm.NewOrm()
-	if serviceMonitorDetail.Id > 0 {
-		id, err = o.Update(serviceMonitorDetail)
-	} else {
-		id, err = o.Insert(serviceMonitorDetail)
-	}
 	return
 }

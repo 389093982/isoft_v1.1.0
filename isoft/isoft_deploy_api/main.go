@@ -6,7 +6,6 @@ import (
 	"github.com/astaxie/beego/logs"
 	"github.com/astaxie/beego/orm"
 	_ "github.com/go-sql-driver/mysql" // _ 的作用,并不需要把整个包都导入进来,仅仅是是希望它执行init()函数而已
-	"isoft/isoft_deploy_api/deploy_core/task"
 	"isoft/isoft_deploy_api/models"
 	_ "isoft/isoft_deploy_api/routers"
 	"net/url"
@@ -60,8 +59,6 @@ func InitDB() {
 func registerModel() {
 	orm.RegisterModel(new(models.EnvInfo))
 	orm.RegisterModel(new(models.ServiceInfo))
-	orm.RegisterModel(new(models.ServiceMonitor))
-	orm.RegisterModel(new(models.ServiceMonitorDetail))
 	orm.RegisterModel(new(models.TrackingTask))
 	orm.RegisterModel(new(models.TrackingLog))
 }
@@ -84,7 +81,5 @@ func main() {
 	}
 	beego.Run()
 
-	// 运行定时任务
-	task.RunCronTask()
 	beego.Run()
 }
