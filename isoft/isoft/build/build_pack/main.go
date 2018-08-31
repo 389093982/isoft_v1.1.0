@@ -15,7 +15,7 @@ func main() {
 
 	gopath := os.Getenv("GOPATH")
 	packApps := pack.ReadPackApp(filepath.Join(gopath, "src/isoft/isoft/build/build_pack/pack.xml"))
-	err := pack.StartAllPackTask(&packApps, "isoft_deploy_api")
+	err := pack.StartAllPackTask(&packApps, "isoft_deploy_web")
 	if err != nil {
 		log.Println(err)
 	}
