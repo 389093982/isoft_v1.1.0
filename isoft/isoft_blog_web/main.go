@@ -5,18 +5,47 @@ import (
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/logs"
 	"github.com/astaxie/beego/orm"
+	"isoft/isoft/common/apppath"
+	"isoft/isoft/common/fileutil"
 	"isoft/isoft/sso"
 	"isoft/isoft_blog_web/models"
 	_ "isoft/isoft_blog_web/routers"
 	"net/url"
+	"os"
 )
 
 func init() {
-	InitLog()
-	InitDB()
+	initLog()
+	initDB()
 }
 
-func InitDB() {
+func initLog() {
+	var logDir string
+	if beego.BConfig.RunMode == "dev" || beego.BConfig.RunMode == "local" {
+		logDir = "../../../isoft_blog_web_log"
+	} else {
+		// 日志文件所在目录
+		logDir = fileutil.ChangeToLinuxSeparator(apppath.GetAPPRootPath() + "/isoft_blog_web_log")
+	}
+	if ok, _ := fileutil.PathExists(logDir); !ok {
+		err := os.MkdirAll(logDir, os.ModePerm)
+		if err != nil {
+			fmt.Println(err.Error())
+		}
+	}
+
+	// 控制台输出
+	logs.SetLogger(logs.AdapterConsole)
+	// 多文件输出
+	logs.SetLogger(logs.AdapterMultiFile,
+		`{"filename":"`+logDir+`/isoft_blog_web.log","separate":["emergency", "alert", "critical", "error", "warning", "notice", "info", "debug"]}`)
+	// 输出文件名和行号
+	logs.EnableFuncCallDepth(true)
+	// 异步输出日志
+	logs.Async(1e3)
+}
+
+func initDB() {
 	dbhost := beego.AppConfig.String("db.host")
 	dbport := beego.AppConfig.String("db.port")
 	dbname := beego.AppConfig.String("db.name")
@@ -56,18 +85,6 @@ func createTable() {
 	if err != nil {
 		beego.Error(err)
 	}
-}
-
-func InitLog() {
-	// 控制台输出
-	logs.SetLogger(logs.AdapterConsole)
-	// 多文件输出
-	logs.SetLogger(logs.AdapterMultiFile,
-		`{"filename":"../../../../logs/isoft_blog_web.log","separate":["emergency", "alert", "critical", "error", "warning", "notice", "info", "debug"]}`)
-	// 输出文件名和行号
-	logs.EnableFuncCallDepth(true)
-	// 异步输出日志
-	logs.Async(1e3)
 }
 
 func main() {

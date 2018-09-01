@@ -9,15 +9,32 @@ import (
 	"isoft/isoft_sso_web/models"
 	_ "isoft/isoft_sso_web/routers" // 经常看到Golang代码中出现 _ "controller/home" 类似这种的引用,这里的下划线有什么作用呢?
 	// 其实默认每个文件都有一个init函数,加下划线表示引入这个包,仅执行init函数
+	"isoft/isoft/common/apppath"
+	"isoft/isoft/common/fileutil"
 	"net/url"
+	"os"
 )
 
 func initLog() {
+	var logDir string
+	if beego.BConfig.RunMode == "dev" || beego.BConfig.RunMode == "local" {
+		logDir = "../../../isoft_sso_web_log"
+	} else {
+		// 日志文件所在目录
+		logDir = fileutil.ChangeToLinuxSeparator(apppath.GetAPPRootPath() + "/isoft_sso_web_log")
+	}
+	if ok, _ := fileutil.PathExists(logDir); !ok {
+		err := os.MkdirAll(logDir, os.ModePerm)
+		if err != nil {
+			fmt.Println(err.Error())
+		}
+	}
+
 	// 控制台输出
 	logs.SetLogger(logs.AdapterConsole)
 	// 多文件输出
 	logs.SetLogger(logs.AdapterMultiFile,
-		`{"filename":"../../../../logs/isoft_sso_web.log","separate":["emergency", "alert", "critical", "error", "warning", "notice", "info", "debug"]}`)
+		`{"filename":"`+logDir+`/isoft_sso_web.log","separate":["emergency", "alert", "critical", "error", "warning", "notice", "info", "debug"]}`)
 	// 输出文件名和行号
 	logs.EnableFuncCallDepth(true)
 	// 异步输出日志

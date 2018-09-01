@@ -15,11 +15,11 @@ import (
 )
 
 func init() {
-	InitLog()
-	InitDB()
+	initLog()
+	initDB()
 }
 
-func InitLog() {
+func initLog() {
 	var logDir string
 	if beego.BConfig.RunMode == "dev" || beego.BConfig.RunMode == "local" {
 		logDir = "../../../isoft_deploy_web_log"
@@ -45,7 +45,7 @@ func InitLog() {
 	logs.Async(1e3)
 }
 
-func InitDB() {
+func initDB() {
 	dbhost := beego.AppConfig.String("db.host")
 	dbport := beego.AppConfig.String("db.port")
 	dbname := beego.AppConfig.String("db.name")
