@@ -7,7 +7,7 @@ package_name=$2
 
 deploy_home=`echo $(cd ../.. &&  pwd)`
 
-count=`ps -ef | grep "./${service_name}/${package_name}" | grep -v grep |wc -l`
+count=`ps -ef | grep "./${service_name}/${package_name}/${package_name}" | grep -v grep |wc -l`
 
 if [ 0 == $count ];then
     if [ -d ${deploy_home}/project/goproject/${service_name}/${package_name} ];then
