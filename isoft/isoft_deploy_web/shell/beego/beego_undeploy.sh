@@ -11,7 +11,7 @@ deploy_home=`echo $(cd ../.. &&  pwd)`
 sh ./beego_shutdown.sh ${service_name} ${package_name}
 
 # 再删除应用
-if [ -d ${deploy_home}/project/goproject/${service_name}/${package_name} ];then
-    rm -rf ${deploy_home}/project/goproject/${service_name}/${package_name}
+if [ -d ${deploy_home}/project/goproject/${service_name} ];then
+    rm -rf ${deploy_home}/project/goproject/${service_name}
     echo "Remove ${package_name} references file..."
 fi

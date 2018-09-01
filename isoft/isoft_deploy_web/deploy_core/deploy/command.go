@@ -3,6 +3,7 @@ package deploy
 import (
 	"isoft/isoft/common/fileutil"
 	"isoft/isoft_deploy_web/deploy_core/constant"
+	"isoft/isoft_deploy_web/deploy_core/deploy/file_transfer"
 	"isoft/isoft_deploy_web/models"
 	"path/filepath"
 	"strings"
@@ -31,7 +32,7 @@ func getScriptFilePathByCommandType(serviceType, operate_type string) string {
 
 // 准备远程执行的 shell 命令
 func PrepareCommand(serviceInfo *models.ServiceInfo, operate_type, extra_params string) (string, error) {
-	remoteDeployHome := GetRemoteDeployHomePath(serviceInfo.EnvInfo)
+	remoteDeployHome := file_transfer.GetRemoteDeployHomePath(serviceInfo.EnvInfo)
 	// 目标机器脚本路径
 	scriptPath := remoteDeployHome + "/" + getScriptFilePathByCommandType(serviceInfo.ServiceType, operate_type)
 	// 准备 shell 命令相关参数

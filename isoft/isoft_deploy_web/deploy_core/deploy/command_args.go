@@ -2,6 +2,7 @@ package deploy
 
 import (
 	"errors"
+	"isoft/isoft_deploy_web/deploy_core/deploy/file_transfer"
 	"isoft/isoft_deploy_web/models"
 	"strings"
 )
@@ -24,7 +25,7 @@ func (this *CommandArgs) NginxCheckCommandArgs() ([]string, error) {
 
 func (this *CommandArgs) NginxInstallCommandArgs() ([]string, error) {
 	// 目标机器 deploy_home 路径
-	remoteDeployHomePath := GetRemoteDeployHomePath(this.serviceInfo.EnvInfo)
+	remoteDeployHomePath := file_transfer.GetRemoteDeployHomePath(this.serviceInfo.EnvInfo)
 	var slice []string
 	slice = append(slice, remoteDeployHomePath)
 	slice = append(slice, this.serviceInfo.ServiceName)

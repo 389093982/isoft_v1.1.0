@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/astaxie/beego/logs"
 	"isoft/isoft_deploy_web/deploy_core/deploy"
+	"isoft/isoft_deploy_web/deploy_core/deploy/file_transfer"
 	"isoft/isoft_deploy_web/models"
 	"strings"
 	"time"
@@ -17,7 +18,7 @@ type ExecutorRouter struct {
 	// 环境信息
 	EnvInfo             *models.EnvInfo
 	ServiceInfo         *models.ServiceInfo
-	FileTransfers       []*deploy.FileTransfer
+	FileTransfers       []*file_transfer.FileTransfer
 	TrackingLogResolver *deploy.TrackingLogResolver
 }
 

@@ -6,7 +6,7 @@ import (
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/utils/pagination"
 	"isoft/isoft/common"
-	"isoft/isoft_deploy_web/deploy_core/deploy"
+	"isoft/isoft_deploy_web/deploy_core/deploy/file_transfer"
 	"isoft/isoft_deploy_web/models"
 	"time"
 )
@@ -94,7 +94,7 @@ func (this *EnvController) SyncDeployHome() {
 		this.ServeJSON()
 	}
 
-	err = deploy.SyncDeployHome(&envInfo)
+	err = file_transfer.SyncDeployHome(&envInfo)
 	if err != nil {
 		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": err.Error()}
 		this.ServeJSON()

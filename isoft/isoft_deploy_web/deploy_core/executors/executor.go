@@ -2,7 +2,7 @@ package executors
 
 import (
 	"isoft/isoft/common"
-	"isoft/isoft_deploy_web/deploy_core/deploy"
+	"isoft/isoft_deploy_web/deploy_core/deploy/file_transfer"
 	"isoft/isoft_deploy_web/models"
 )
 
@@ -12,7 +12,7 @@ func RunCommandTask(serviceInfo *models.ServiceInfo, envInfo *models.EnvInfo, op
 	go func() {
 		serviceInfo.EnvInfo = envInfo
 		// 文件传输生成器
-		FileTransferCreator := deploy.FileTransferCreator{
+		FileTransferCreator := file_transfer.FileTransferCreator{
 			ServiceInfo: serviceInfo,
 			OperateType: operate_type,
 		}

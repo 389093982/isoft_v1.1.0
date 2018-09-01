@@ -1,4 +1,4 @@
-package deploy
+package file_transfer
 
 import (
 	"github.com/astaxie/beego"
@@ -9,12 +9,12 @@ import (
 )
 
 var (
-	SFTP_SRC_DIR, SFTP_TARGET_DIR string
+	SFTP_SRC_DIR, SFTP_TARGET_DEPLOY_HOME string
 )
 
 func init() {
 	SFTP_SRC_DIR = beego.AppConfig.String("sftp.src.dir")
-	SFTP_TARGET_DIR = beego.AppConfig.String("sftp.target.dir.default")
+	SFTP_TARGET_DEPLOY_HOME = beego.AppConfig.String("sftp.target.deploy_home.default")
 }
 
 // 文件传输器类
@@ -67,43 +67,19 @@ func (this *FileTransferCreator) PrepareFileTransfer() []*FileTransfer {
 	return fileTransfers
 }
 
-type BeegoFileTransferCreator struct {
-	ServiceInfo *models.ServiceInfo
-	OperateType string
-}
-
-// beego 项目部署文件传输
-func (this *BeegoFileTransferCreator) BeegoDeployFileTransfer() []*FileTransfer {
-	FileTransfers := make([]*FileTransfer, 0)
-	// .tar.gz 安装包拷贝
-	FileTransfer := &FileTransfer{
-		LocalFilePath: filepath.Join(SFTP_SRC_DIR, "static", "uploadfile", this.ServiceInfo.ServiceName, this.ServiceInfo.PackageName),
-		// 目标机器是 Linux 系统,需要转换为 Linux 路径分隔符
-		RemoteDir: fileutil.ChangeToLinuxSeparator(filepath.Join(GetRemoteDeployHomePath(this.ServiceInfo.EnvInfo), "beego", "packages", this.ServiceInfo.ServiceName)),
-	}
-	FileTransfers = append(FileTransfers, FileTransfer)
-
-	return FileTransfers
-}
-
-func (this *BeegoFileTransferCreator) PrepareFileTransfer() []*FileTransfer {
-	switch this.OperateType {
-	case "deploy":
-		return this.BeegoDeployFileTransfer()
-	}
-	return nil
-}
-
+// 获取远程目标机器 deploy_home 路径
 func GetRemoteDeployHomePath(envInfo *models.EnvInfo) string {
 	var deploy_home string
+	// envInfo 中没有 deploy_home 配置则使用配置文件中的 SFTP_TARGET_DIR
 	if envInfo.DpeloyHome != "" {
 		deploy_home = envInfo.DpeloyHome
 	} else {
-		deploy_home = SFTP_TARGET_DIR
+		deploy_home = SFTP_TARGET_DEPLOY_HOME
 	}
 	return deploy_home
 }
 
+// 同步本地 deploy_home 到目录机器
 func SyncDeployHome(envInfo *models.EnvInfo) error {
 	sftpClient, err := common.SFTPConnect(envInfo.EnvAccount, envInfo.EnvPasswd, envInfo.EnvIp, 22)
 	if err != nil {
