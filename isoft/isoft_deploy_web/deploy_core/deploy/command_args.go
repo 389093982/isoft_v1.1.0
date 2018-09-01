@@ -4,6 +4,7 @@ import (
 	"errors"
 	"isoft/isoft_deploy_web/deploy_core/deploy/file_transfer"
 	"isoft/isoft_deploy_web/models"
+	"strconv"
 	"strings"
 )
 
@@ -44,9 +45,13 @@ func (this *CommandArgs) BeegoDeployCommandArgs() ([]string, error) {
 	if this.serviceInfo.RunMode == "" {
 		return slice, errors.New("empty param : RunMode")
 	}
+	if this.serviceInfo.ServicePort < 1 {
+		return slice, errors.New("empty param : ServicePort")
+	}
 	slice = append(slice, this.serviceInfo.ServiceName)
 	slice = append(slice, strings.Replace(this.serviceInfo.PackageName, ".tar.gz", "", -1))
 	slice = append(slice, this.serviceInfo.RunMode)
+	slice = append(slice, strconv.FormatInt(this.serviceInfo.ServicePort, 10))
 	return slice, nil
 }
 
