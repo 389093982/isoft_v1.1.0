@@ -154,6 +154,12 @@
     },
     computed:{
       ...mapState(['envInfos']),
+    },
+    watch:{
+      // 路由变化更新 service_type
+      '$route' (to, from) {
+        this.formValidate.service_type = this.$route.query.service_type;
+      }
     }
   }
 </script>
