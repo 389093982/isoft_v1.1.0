@@ -64,19 +64,19 @@ func (this *ServiceController) List() {
 
 func (this *ServiceController) Edit() {
 	env_ids := strings.Split(this.GetString("env_ids"), ",")
-	service_name := this.GetString("service_name")
-	service_type := this.GetString("service_type")
-	mysql_root_pwd := this.GetString("mysql_root_pwd")
-	package_name := this.GetString("package_name")
-	run_mode := this.GetString("run_mode")
+	service_name := strings.TrimSpace(this.GetString("service_name"))
+	service_type := strings.TrimSpace(this.GetString("service_type"))
+	mysql_root_pwd := strings.TrimSpace(this.GetString("mysql_root_pwd"))
+	package_name := strings.TrimSpace(this.GetString("package_name"))
+	run_mode := strings.TrimSpace(this.GetString("run_mode"))
 	service_port, err := this.GetInt64("service_port")
 
-	if strings.TrimSpace(service_name) == "" || strings.TrimSpace(service_type) == "" || err != nil {
+	if service_name == "" || service_type == "" || err != nil {
 		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": "不合法的参数"}
 		this.ServeJSON()
 	}
-
-	if strings.TrimSpace(package_name) == "" {
+	// package_name 为空时动态判断软件包名
+	if package_name == "" {
 		package_name = this.preparePackageName(service_name, service_type)
 	}
 

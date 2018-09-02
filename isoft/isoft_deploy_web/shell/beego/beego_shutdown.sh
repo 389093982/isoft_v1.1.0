@@ -6,7 +6,7 @@ service_name=$1
 package_name=$2
 
 # 先杀进程
-PROCESS=`ps -ef | grep "./${service_name}/${package_name}/${package_name}" | grep -v grep | grep -v PPID | awk '{ print $2}'`
+PROCESS=`ps -ef | grep "./${service_name}_${package_name}" | grep -v grep | grep -v PPID | awk '{ print $2}'`
 for i in $PROCESS
 do
     kill -9 $i

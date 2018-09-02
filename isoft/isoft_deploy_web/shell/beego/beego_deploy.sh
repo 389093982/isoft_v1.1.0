@@ -18,14 +18,17 @@ deploy_home=`echo $(cd ../.. &&  pwd)`
 sh ./beego_undeploy.sh ${service_name} ${package_name}
 
 # 重新创建对应目录
-if [ ! -d ${deploy_home}/project/goproject/${service_name}/${package_name} ];then
-    mkdir -p ${deploy_home}/project/goproject/${service_name}/${package_name}
-    echo "mkdir -p ${deploy_home}/project/goproject/${service_name}/${package_name} successful..."
+if [ ! -d ${deploy_home}/project/goproject/${service_name} ];then
+    mkdir -p ${deploy_home}/project/goproject/${service_name}
+    echo "mkdir -p ${deploy_home}/project/goproject/${service_name} successful..."
 fi
 
 # 进入应用所在目录并解压 tar.gz 包,并设置可执行权限
-cd ${deploy_home}/project/goproject/${service_name}/${package_name}
-tar -xzf ${deploy_home}/upload/beego/packages/${service_name}/${package_name}.tar.gz && chmod +x ./${package_name}
+cd ${deploy_home}/project/goproject/${service_name}
+# 解压操作
+tar -xzf ${deploy_home}/upload/beego/packages/${service_name}/${package_name}.tar.gz
+# 重命名并授权
+mv ${package_name} "${service_name}_${package_name}" && chmod +x ./"${service_name}_${package_name}"
 
 # 修改配置文件
 old_runmode=`cat ./conf/app.conf | grep runmode | grep -v grep`

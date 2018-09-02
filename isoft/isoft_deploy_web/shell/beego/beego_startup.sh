@@ -8,7 +8,7 @@ package_name=$2
 sh_home=`pwd`
 deploy_home=`echo $(cd ../.. &&  pwd)`
 
-cd ${deploy_home}/project/goproject && ./${service_name}/${package_name}/${package_name} &
+cd ${deploy_home}/project/goproject/${service_name} && ./"${service_name}_${package_name}" &
 
 cd ${sh_home}
 
