@@ -53,7 +53,7 @@ func initDB() {
 	dbpass := beego.AppConfig.String("db.pass")
 	timezone := beego.AppConfig.String("db.timezone")
 
-	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8", dbuser, dbpass, dbhost, dbport, dbname)
+	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?allowNativePasswords=true&charset=utf8", dbuser, dbpass, dbhost, dbport, dbname)
 
 	if timezone != "" {
 		dsn = dsn + "&loc=" + url.QueryEscape(timezone)
