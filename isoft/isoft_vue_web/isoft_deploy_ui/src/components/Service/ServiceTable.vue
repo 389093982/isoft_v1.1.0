@@ -78,14 +78,14 @@
         let columns = [];
         // 通过计算属性动态添加列
         columns.push({
-          title: '环境ID',
-          key: 'env_id',
-          width:100
-        });
-        columns.push({
           title: '环境名称',
           key: 'env_name',
           width:100
+        });
+        columns.push({
+          title: 'IP地址',
+          key: 'env_ip',
+          width:120
         });
         columns.push({
           title: '服务名称',
@@ -100,7 +100,7 @@
         columns.push({
           title: '端口号',
           key: 'service_port',
-          width:100
+          width:80
         });
         if($.inArray(this.$route.query.service_type, ["beego","api"])>=0){
           columns.push({
@@ -193,7 +193,7 @@
                 style: {
                   marginRight: '5px',
                   // 控制按钮是否显示
-                  display: $.inArray(this.$route.query.service_type, ["other"])>=0  ? undefined : 'none'
+                  display: $.inArray(this.$route.query.service_type, ["mysql"])>=0  ? undefined : 'none'
                 },
                 on: {
                   click: () => {
@@ -432,6 +432,7 @@
           var _serviceInfo = result.serviceInfos[i];
           _serviceInfo.env_id = _serviceInfo.env_info.id;
           _serviceInfo.env_name = _serviceInfo.env_info.env_name;
+          _serviceInfo.env_ip = _serviceInfo.env_info.env_ip;
           // 动态添加属性
           _serviceInfo['deploy_status'] = '';
           _serviceInfos.push(_serviceInfo);

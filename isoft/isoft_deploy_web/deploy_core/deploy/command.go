@@ -23,6 +23,8 @@ func init() {
 	ScriptPathMappingMap["nginx_check"] = "shell/nginx/nginx_check.sh"
 	ScriptPathMappingMap["nginx_install"] = "shell/nginx/nginx_install.sh"
 	ScriptPathMappingMap["nginx_restart"] = "shell/nginx/nginx_restart.sh"
+	ScriptPathMappingMap["mysql_install"] = "shell/mysql/mysql_install.sh"
+	ScriptPathMappingMap["mysql_adjust"] = "shell/mysql/mysql_adjust.sh"
 }
 
 // 根据操作类型获取对应脚本路径
@@ -40,8 +42,16 @@ func PrepareCommand(serviceInfo *models.ServiceInfo, operate_type, extra_params 
 	if err != nil {
 		return "", err
 	}
-	return "cd " + fileutil.ChangeToLinuxSeparator(filepath.Dir(scriptPath)) +
-		" && ./" + filepath.Base(scriptPath) + " " + args + " && echo " + constant.COMMAND_OVER, nil
+	// 当前脚本命令
+	command := "cd " + fileutil.ChangeToLinuxSeparator(filepath.Dir(scriptPath)) + " && ./" + filepath.Base(scriptPath) + " " + args
+	// 获取 next 操作类型对应的脚本命令
+	if getNextOperateType(operate_type) != "" {
+		nextCommand, err := PrepareCommand(serviceInfo, getNextOperateType(operate_type), extra_params)
+		if err == nil {
+			command += " && " + nextCommand
+		}
+	}
+	return command + " && echo " + constant.COMMAND_OVER, nil
 }
 
 // 准备 shell 命令相关参数
@@ -56,4 +66,12 @@ func PrepareArgs(serviceInfo *models.ServiceInfo, operate_type, extra_params str
 		return "", nil
 	}
 	return strings.Join(argslices, " "), nil
+}
+
+// 多步骤情况下才有 next 操作类型
+func getNextOperateType(operate_type string) string {
+	//if operate_type == "mysql_install"{
+	//	return "mysql_adjust"
+	//}
+	return ""
 }
