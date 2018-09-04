@@ -24,7 +24,6 @@ func init() {
 	ScriptPathMappingMap["nginx_install"] = "shell/nginx/nginx_install.sh"
 	ScriptPathMappingMap["nginx_restart"] = "shell/nginx/nginx_restart.sh"
 	ScriptPathMappingMap["mysql_install"] = "shell/mysql/mysql_install.sh"
-	ScriptPathMappingMap["mysql_adjust"] = "shell/mysql/mysql_adjust.sh"
 }
 
 // 根据操作类型获取对应脚本路径

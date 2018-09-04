@@ -91,12 +91,6 @@ func (this *CommandArgs) MysqlInstallCommandArgs() ([]string, error) {
 	return slice, nil
 }
 
-func (this *CommandArgs) MysqlAdjustCommandArgs() ([]string, error) {
-	var slice []string
-	slice = append(slice, "123456") // rootPwd
-	return slice, nil
-}
-
 func (this *CommandArgs) GetCommandArgs(serviceInfo *models.ServiceInfo, operateType, extra_params string) ([]string, error) {
 	this.serviceInfo = serviceInfo
 	switch operateType {
@@ -118,8 +112,6 @@ func (this *CommandArgs) GetCommandArgs(serviceInfo *models.ServiceInfo, operate
 		return this.NginxRestartCommandArgs()
 	case "mysql_install":
 		return this.MysqlInstallCommandArgs()
-	case "mysql_adjust":
-		return this.MysqlAdjustCommandArgs()
 	default:
 		return this.BeegoStatusCommandArgs()
 	}

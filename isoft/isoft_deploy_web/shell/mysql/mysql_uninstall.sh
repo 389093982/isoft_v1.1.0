@@ -38,9 +38,10 @@ fi
 sh ../common/port_kill.sh ${servicePort}
 
 ###################################################################################################
-if [ -d /var/lib/mysql ];then
-    rm -rf /var/lib/mysql
-fi
+# 数据不删除
+#if [ -d /var/lib/mysql ];then
+#    rm -rf /var/lib/mysql
+#fi
 ###################################################################################################
 
 sh ./mysql_check.sh ${remoteDeployHomePath} ${serviceName} ${servicePort}
