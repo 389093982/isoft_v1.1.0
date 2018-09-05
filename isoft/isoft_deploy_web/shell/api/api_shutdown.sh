@@ -13,4 +13,4 @@ do
     echo "Kill the ${package_name} process [ $i ]"
 done
 
-sh ./beego_check.sh ${service_name} ${package_name}
+sh ./api_check.sh ${service_name} ${package_name}

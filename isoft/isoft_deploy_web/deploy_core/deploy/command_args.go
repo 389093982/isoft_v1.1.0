@@ -16,6 +16,32 @@ type CommandArgs struct {
 	serviceInfo *models.ServiceInfo
 }
 
+func (this *CommandArgs) ApiCheckCommandArgs() ([]string, error) {
+	var slice []string
+	if this.serviceInfo.ServiceName == "" {
+		return slice, errors.New("empty param : ServiceName")
+	}
+	if this.serviceInfo.PackageName == "" {
+		return slice, errors.New("empty param : PackageName")
+	}
+	slice = append(slice, this.serviceInfo.ServiceName)
+	slice = append(slice, strings.Replace(this.serviceInfo.PackageName, ".tar.gz", "", -1))
+	return slice, nil
+}
+
+func (this *CommandArgs) ApiDeployCommandArgs() ([]string, error) {
+	var slice []string
+	if this.serviceInfo.ServiceName == "" {
+		return slice, errors.New("empty param : ServiceName")
+	}
+	if this.serviceInfo.PackageName == "" {
+		return slice, errors.New("empty param : PackageName")
+	}
+	slice = append(slice, this.serviceInfo.ServiceName)
+	slice = append(slice, strings.Replace(this.serviceInfo.PackageName, ".tar.gz", "", -1))
+	return slice, nil
+}
+
 func (this *CommandArgs) NginxRestartCommandArgs() ([]string, error) {
 	return this.NginxInstallCommandArgs()
 }
@@ -55,19 +81,7 @@ func (this *CommandArgs) BeegoDeployCommandArgs() ([]string, error) {
 	return slice, nil
 }
 
-func (this *CommandArgs) BeegoStartupCommandArgs() ([]string, error) {
-	return this.BeegoStatusCommandArgs()
-}
-
-func (this *CommandArgs) BeegoRestartCommandArgs() ([]string, error) {
-	return this.BeegoStatusCommandArgs()
-}
-
-func (this *CommandArgs) BeegoShutdownCommandArgs() ([]string, error) {
-	return this.BeegoStatusCommandArgs()
-}
-
-func (this *CommandArgs) BeegoStatusCommandArgs() ([]string, error) {
+func (this *CommandArgs) BeegoCheckCommandArgs() ([]string, error) {
 	var slice []string
 	if this.serviceInfo.ServiceName == "" {
 		return slice, errors.New("empty param : ServiceName")
@@ -96,14 +110,8 @@ func (this *CommandArgs) GetCommandArgs(serviceInfo *models.ServiceInfo, operate
 	switch operateType {
 	case "beego_deploy":
 		return this.BeegoDeployCommandArgs()
-	case "beego_restart":
-		return this.BeegoRestartCommandArgs()
-	case "beego_shutdown":
-		return this.BeegoShutdownCommandArgs()
-	case "beego_startup":
-		return this.BeegoStartupCommandArgs()
-	case "beego_status":
-		return this.BeegoStatusCommandArgs()
+	case "beego_restart", "beego_shutdown", "beego_startup", "beego_check":
+		return this.BeegoCheckCommandArgs()
 	case "nginx_install":
 		return this.NginxInstallCommandArgs()
 	case "nginx_check":
@@ -112,7 +120,11 @@ func (this *CommandArgs) GetCommandArgs(serviceInfo *models.ServiceInfo, operate
 		return this.NginxRestartCommandArgs()
 	case "mysql_install":
 		return this.MysqlInstallCommandArgs()
+	case "api_deploy":
+		return this.ApiDeployCommandArgs()
+	case "api_check":
+		return this.ApiCheckCommandArgs()
 	default:
-		return this.BeegoStatusCommandArgs()
+		return this.BeegoCheckCommandArgs()
 	}
 }

@@ -171,7 +171,7 @@
               }, '软件包下载'),
               h('Button', {
                 props: {
-                  type: 'info',
+                  type: 'warning',
                   size: 'small'
                 },
                 style: {

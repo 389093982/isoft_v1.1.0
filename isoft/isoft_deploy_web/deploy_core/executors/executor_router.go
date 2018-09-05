@@ -3,6 +3,7 @@ package executors
 import (
 	"fmt"
 	"github.com/astaxie/beego/logs"
+	"isoft/isoft_deploy_web/deploy_core"
 	"isoft/isoft_deploy_web/deploy_core/deploy"
 	"isoft/isoft_deploy_web/deploy_core/deploy/file_transfer"
 	"isoft/isoft_deploy_web/models"
@@ -57,7 +58,7 @@ func (this *ExecutorRouter) RunCommandTask(operate_type string, tracking_id, ext
 	}
 
 	// 全称的操作类型
-	_operate_type := deploy.GetRealCommandType(this.ServiceInfo.ServiceType, operate_type)
+	_operate_type := deploy_core.GetRealCommandType(this.ServiceInfo.ServiceType, operate_type)
 
 	this.TrackingLogResolver.WriteSuccessLog(fmt.Sprintf("start task at :%v", time.Now()))
 	if IsCommonTask(_operate_type) {

@@ -2,6 +2,7 @@ package deploy
 
 import (
 	"isoft/isoft/common/fileutil"
+	"isoft/isoft_deploy_web/deploy_core"
 	"isoft/isoft_deploy_web/deploy_core/constant"
 	"isoft/isoft_deploy_web/deploy_core/deploy/file_transfer"
 	"isoft/isoft_deploy_web/models"
@@ -24,11 +25,13 @@ func init() {
 	ScriptPathMappingMap["nginx_install"] = "shell/nginx/nginx_install.sh"
 	ScriptPathMappingMap["nginx_restart"] = "shell/nginx/nginx_restart.sh"
 	ScriptPathMappingMap["mysql_install"] = "shell/mysql/mysql_install.sh"
+	ScriptPathMappingMap["api_deploy"] = "shell/api/api_deploy.sh"
+	ScriptPathMappingMap["api_check"] = "shell/api/api_check.sh"
 }
 
 // 根据操作类型获取对应脚本路径
 func getScriptFilePathByCommandType(serviceType, operate_type string) string {
-	return ScriptPathMappingMap[GetRealCommandType(serviceType, operate_type)]
+	return ScriptPathMappingMap[deploy_core.GetRealCommandType(serviceType, operate_type)]
 }
 
 // 准备远程执行的 shell 命令
@@ -56,7 +59,7 @@ func PrepareCommand(serviceInfo *models.ServiceInfo, operate_type, extra_params 
 // 准备 shell 命令相关参数
 func PrepareArgs(serviceInfo *models.ServiceInfo, operate_type, extra_params string) (string, error) {
 	resolver := &CommandArgs{}
-	argslices, err := resolver.GetCommandArgs(serviceInfo, GetRealCommandType(serviceInfo.ServiceType, operate_type), extra_params)
+	argslices, err := resolver.GetCommandArgs(serviceInfo, deploy_core.GetRealCommandType(serviceInfo.ServiceType, operate_type), extra_params)
 
 	if err != nil {
 		return "", err

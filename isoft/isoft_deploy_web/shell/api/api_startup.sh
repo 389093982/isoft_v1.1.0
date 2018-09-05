@@ -14,4 +14,4 @@ cd ${sh_home}
 
 sleep 5
 
-sh ./beego_check.sh ${service_name} ${package_name}
+sh ./api_check.sh ${service_name} ${package_name}

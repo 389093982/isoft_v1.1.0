@@ -47,7 +47,7 @@
               <Input v-model="formValidate.run_mode" placeholder="请输入运行模式"></Input>
             </FormItem>
           </Col>
-          <Col span="12" v-if="formValidate.service_type=='beego'">
+          <Col span="12" v-if="formValidate.service_type=='beego' || formValidate.service_type=='api'">
             <FormItem label="部署包名" prop="package_name">
               <Input v-model="formValidate.package_name" placeholder="请输入部署包名"></Input>
             </FormItem>
