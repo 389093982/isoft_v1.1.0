@@ -113,7 +113,7 @@
           columns.push({
             title: '运行模式',
             key: 'run_mode',
-            width:100
+            width:120
           });
         }
         columns.push({

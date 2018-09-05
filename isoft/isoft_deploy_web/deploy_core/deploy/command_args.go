@@ -37,8 +37,12 @@ func (this *CommandArgs) ApiDeployCommandArgs() ([]string, error) {
 	if this.serviceInfo.PackageName == "" {
 		return slice, errors.New("empty param : PackageName")
 	}
+	if this.serviceInfo.PackageName == "" {
+		return slice, errors.New("empty param : PackageName")
+	}
 	slice = append(slice, this.serviceInfo.ServiceName)
 	slice = append(slice, strings.Replace(this.serviceInfo.PackageName, ".tar.gz", "", -1))
+	slice = append(slice, this.serviceInfo.RunMode)
 	return slice, nil
 }
 

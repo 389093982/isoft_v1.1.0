@@ -7,8 +7,6 @@ service_name=$1
 package_name=$2
 # 运行模式
 runmode=$3
-# 端口号
-service_port=$4
 ###########################################################################################################################
 
 sh_home=`pwd`
@@ -30,5 +28,5 @@ cp ${deploy_home}/upload/api/packages/${service_name}/${package_name} .
 mv ${package_name} "${service_name}_${package_name}" && chmod +x ./"${service_name}_${package_name}"
 
 # 启动应用
-cd ${sh_home} && sh ./api_startup.sh ${service_name} ${package_name}
+cd ${sh_home} && sh ./api_startup.sh ${service_name} ${package_name} ${runmode}
 
