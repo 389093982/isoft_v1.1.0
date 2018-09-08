@@ -15,6 +15,11 @@
         </Scroll>
     </Modal>
 
+    <!--
+        一般来讲,获取DOM元素,需document.querySelector(".input1")获取这个dom节点,然后在获取input1的值.
+        但是用ref绑定之后,我们就不需要在获取dom节点了,直接在上面的input上绑定input1,然后$refs里面调用就行.
+        然后在javascript里面这样调用:this.$refs.input1 这样就可以减少获取dom节点的消耗了
+     -->
     <Modal
       v-model="packageUploadModal"
       width="500"
@@ -22,9 +27,11 @@
       :mask-closable="false">
       <div>
           <Upload
+            ref="upload"
+            multiple
             :on-success="uploadComplete"
             :data="{'service_id':packageUploadServiceId}"
-            action="/api/v1/service/fileUpload/">
+            action="/api/service/fileUpload/">
             <Button icon="ios-cloud-upload-outline">软件上传</Button>
           </Upload>
       </div>
@@ -149,7 +156,8 @@
                 on: {
                   click: () => {
                     this.packageUploadModal = true;
-                    this.packageUploadServiceId = this.serviceInfos[params.index]['id']
+                    this.packageUploadServiceId = this.serviceInfos[params.index]['id'];
+                    this.$refs.upload.fileList = [];
                   }
                 }
               }, '软件包上传'),
@@ -391,7 +399,7 @@
       },
       fileDownload(index){
         const service_id = this.serviceInfos[index]['id'];
-        window.location='/api/v1/service/fileDownload/?service_id=' + service_id;
+        window.location='/api/service/fileDownload/?service_id=' + service_id;
       },
       uploadComplete(res, file) {
         if(res.status=="SUCCESS"){

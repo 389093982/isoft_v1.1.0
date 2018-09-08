@@ -75,6 +75,7 @@ func initDB() {
 
 func registerModel() {
 	orm.RegisterModel(new(models.EnvInfo))
+	orm.RegisterModel(new(models.ConfigFile))
 	orm.RegisterModel(new(models.ServiceInfo))
 	orm.RegisterModel(new(models.TrackingTask))
 	orm.RegisterModel(new(models.TrackingLog))

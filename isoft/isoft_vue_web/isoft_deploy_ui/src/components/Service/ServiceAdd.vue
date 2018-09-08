@@ -130,11 +130,10 @@
         var _this = this;
         this.$refs[name].validate(async (valid) => {
           if (valid) {
-            // 返回的是个 Promise 对象,需要调用 then 方法
-            const result = await ServiceEdit(this.formValidate.env_ids.join(','),
-              this.formValidate.service_name, this.formValidate.service_type,
-              this.formValidate.package_name, this.formValidate.run_mode,
-              this.formValidate.service_port, this.formValidate.mysql_root_pwd);
+            const result = await ServiceEdit(_this.formValidate.env_ids.join(','),
+              _this.formValidate.service_name, _this.formValidate.service_type,
+              _this.formValidate.package_name, _this.formValidate.run_mode,
+              _this.formValidate.service_port, _this.formValidate.mysql_root_pwd);
             if(result.status == "SUCCESS"){
               _this.$Message.success('提交成功!');
               // 关闭模态对话框

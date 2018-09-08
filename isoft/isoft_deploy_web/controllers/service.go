@@ -6,6 +6,7 @@ import (
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/utils/pagination"
 	"isoft/isoft/common"
+	"isoft/isoft/common/fileutil"
 	"isoft/isoft_deploy_web/deploy_core/constant"
 	"isoft/isoft_deploy_web/deploy_core/executors"
 	"isoft/isoft_deploy_web/models"
@@ -15,6 +16,14 @@ import (
 	"strings"
 	"time"
 )
+
+var (
+	SFTP_SRC_DIR string
+)
+
+func init() {
+	SFTP_SRC_DIR = fileutil.ChangeToLinuxSeparator(beego.AppConfig.String("sftp.src.dir"))
+}
 
 type ServiceController struct {
 	beego.Controller
@@ -124,7 +133,7 @@ func (this *ServiceController) FileDownload() {
 	service_id, _ := this.GetInt64("service_id")
 	serviceInfo, _ := models.QueryServiceInfoById(service_id)
 	// 文件下载,第二个参数为下载时自定义的文件名
-	this.Ctx.Output.Download(fmt.Sprintf("static/uploadfile/%s/%s",
+	this.Ctx.Output.Download(fmt.Sprintf(SFTP_SRC_DIR+"/static/uploadfile/%s/%s",
 		serviceInfo.ServiceName, serviceInfo.PackageName), serviceInfo.PackageName)
 }
 
@@ -138,7 +147,7 @@ func (this *ServiceController) FileUpload() {
 		// 根据 service_id 创建分级文件夹
 		os.MkdirAll("static/uploadfile/"+serviceInfo.ServiceName, os.ModePerm)
 		// 保存文件
-		err := this.SaveToFile("file", path.Join("static/uploadfile/"+serviceInfo.ServiceName, h.Filename))
+		err := this.SaveToFile("file", path.Join(SFTP_SRC_DIR+"/static/uploadfile/"+serviceInfo.ServiceName, h.Filename))
 		if err != nil {
 			this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": "保存失败！"}
 		} else {

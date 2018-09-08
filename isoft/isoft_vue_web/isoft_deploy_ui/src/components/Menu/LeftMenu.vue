@@ -11,6 +11,15 @@
     </Submenu>
     <Submenu name="2">
       <template slot="title">
+        <Icon type="ios-cube"></Icon>
+        配置管理
+      </template>
+      <MenuItem name="2-1">
+        <router-link to="/config/list">配置管理</router-link>
+      </MenuItem>
+    </Submenu>
+    <Submenu name="3">
+      <template slot="title">
         <Icon type="ios-analytics"></Icon>
         应用服务管理
       </template>
