@@ -77,3 +77,10 @@ func QueryConfigFile(condArr map[string]interface{}, page int, offset int) (conf
 	}
 	return
 }
+
+func QueryConfigFileById(configfile_id int64) (configFile ConfigFile, err error) {
+	o := orm.NewOrm()
+	qs := o.QueryTable("config_file")
+	err = qs.Filter("id", configfile_id).One(&configFile)
+	return
+}

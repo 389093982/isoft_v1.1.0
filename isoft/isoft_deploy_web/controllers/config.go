@@ -6,11 +6,10 @@ import (
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/utils/pagination"
 	"isoft/isoft/common"
-	"isoft/isoft/common/fileutil"
+	"isoft/isoft/common/ziputil"
 	"isoft/isoft_deploy_web/models"
 	"os"
 	"path"
-	"path/filepath"
 	"strconv"
 	"strings"
 	"time"
@@ -85,14 +84,19 @@ func (this *ConfigController) List() {
 func (this *ConfigController) FileDownload() {
 	configFile_id, _ := this.GetInt64("configFile_id")
 	savepath := SFTP_SRC_DIR + "/static/uploadfile/configfile/" + strconv.FormatInt(configFile_id, 10)
-	_, files, err := fileutil.GetAllFile(savepath, false)
+
+	configFile, err := models.QueryConfigFileById(configFile_id)
 	if err != nil {
-		fmt.Printf("filepath.Walk() returned %v\n", err)
+		return
 	}
-	for _, file := range files {
-		// 文件下载,第二个参数为下载时自定义的文件名
-		this.Ctx.Output.Download(filepath.Join(savepath, file.Name()), file.Name())
+	zipPath := SFTP_SRC_DIR + "/static/uploadfile/configfile/" + configFile.EnvProperty + ".zip"
+	defer os.Remove(zipPath)
+	err = ziputil.CompressZip(savepath, zipPath)
+	if err != nil {
+		fmt.Println("ziputil.CompressZip() returned %v\n", err)
 	}
+	// 文件下载,第二个参数为下载时自定义的文件名
+	this.Ctx.Output.Download(zipPath, configFile.EnvProperty+".zip")
 }
 
 func (this *ConfigController) FileUpload() {
