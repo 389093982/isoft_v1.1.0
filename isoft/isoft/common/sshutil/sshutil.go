@@ -1,4 +1,4 @@
-package common
+package sshutil
 
 import (
 	"fmt"
@@ -39,7 +39,7 @@ func SSHConnect(user, password, host string, port int) (*ssh.Session, error) {
 		HostKeyCallback: hostKeyCallbk,
 	}
 
-	// connet to ssh
+	// connet to sshutil
 	addr = fmt.Sprintf("%s:%d", host, port)
 
 	if client, err = ssh.Dial("tcp", addr, clientConfig); err != nil {

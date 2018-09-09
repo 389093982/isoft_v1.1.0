@@ -5,7 +5,8 @@ import (
 	"fmt"
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/utils/pagination"
-	"isoft/isoft/common"
+	"isoft/isoft/common/pageutil"
+	"isoft/isoft/common/sshutil"
 	"isoft/isoft_deploy_web/deploy_core/deploy/file_transfer"
 	"isoft/isoft_deploy_web/models"
 	"time"
@@ -49,7 +50,7 @@ func (this *EnvController) List() {
 
 	if err == nil {
 		data["envInfos"] = envInfos
-		data["paginator"] = common.Paginator(paginator.Page(), paginator.PerPageNums, paginator.Nums())
+		data["paginator"] = pageutil.Paginator(paginator.Page(), paginator.PerPageNums, paginator.Nums())
 	}
 	//序列化
 	json_obj, err := json.Marshal(data)
@@ -70,7 +71,7 @@ func (this *EnvController) ConnectonTest() {
 		if err != nil {
 			this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": err.Error()}
 		} else {
-			err = common.SSHConnectTest(envInfo.EnvAccount, envInfo.EnvPasswd, envInfo.EnvIp, 22)
+			err = sshutil.SSHConnectTest(envInfo.EnvAccount, envInfo.EnvPasswd, envInfo.EnvIp, 22)
 			if err != nil {
 				this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": err.Error()}
 			} else {

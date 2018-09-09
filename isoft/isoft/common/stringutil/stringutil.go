@@ -1,4 +1,4 @@
-package common
+package stringutil
 
 import "github.com/satori/go.uuid"
 

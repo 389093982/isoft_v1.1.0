@@ -27,6 +27,7 @@ func init() {
 	ScriptPathMappingMap["mysql_install"] = "shell/mysql/mysql_install.sh"
 	ScriptPathMappingMap["api_deploy"] = "shell/api/api_deploy.sh"
 	ScriptPathMappingMap["api_check"] = "shell/api/api_check.sh"
+	ScriptPathMappingMap["os_env"] = "shell/os/os_env.sh"
 }
 
 // 根据操作类型获取对应脚本路径

@@ -51,3 +51,7 @@ export const ConfigEdit = (env_ids, env_property, env_value) =>
 // 分页显示配置信息
 export const ConfigList = (current_page,page_size) =>
   ajax(BASE_URL+'/config/list/',{current_page,page_size},'POST')
+
+// 同步测试
+export const SyncConfigFile = (env_id, configFile_id) =>
+  ajax(BASE_URL+'/config/sync_config_file/',{env_id, configFile_id},'POST')

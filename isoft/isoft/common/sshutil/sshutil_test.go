@@ -1,4 +1,4 @@
-package common
+package sshutil
 
 import (
 	"fmt"
@@ -10,6 +10,6 @@ func Test_SSHConnectTest(t *testing.T) {
 	if err != nil {
 		fmt.Println(err.Error())
 	} else {
-		fmt.Println("ssh connect test successful...")
+		fmt.Println("sshutil connect test successful...")
 	}
 }

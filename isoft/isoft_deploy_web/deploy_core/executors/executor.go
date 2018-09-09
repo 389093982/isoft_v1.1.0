@@ -1,13 +1,13 @@
 package executors
 
 import (
-	"isoft/isoft/common"
+	"isoft/isoft/common/stringutil"
 	"isoft/isoft_deploy_web/deploy_core/deploy/file_transfer"
 	"isoft/isoft_deploy_web/models"
 )
 
 func RunCommandTask(serviceInfo *models.ServiceInfo, envInfo *models.EnvInfo, operate_type, extra_params string) (tracking_id string) {
-	tracking_id = common.RandomUUID()
+	tracking_id = stringutil.RandomUUID()
 	// 开启协程执行任务
 	go func() {
 		serviceInfo.EnvInfo = envInfo

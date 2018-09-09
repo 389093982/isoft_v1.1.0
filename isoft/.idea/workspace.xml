@@ -1,12 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="61c01151-84f0-4bfd-a227-5c1f0b5a424d" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/isoft/common/ziputil/ziputil.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/isoft/common/ziputil/ziputil_test.go" afterDir="false" />
+    <list default="true" id="61c01151-84f0-4bfd-a227-5c1f0b5a424d" name="Default" comment="配置包压缩zip下载">
+      <change afterPath="$PROJECT_DIR$/isoft/common/sshutil/ssh_execute.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft/common/page.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft/common/pageutil/page.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft/common/sftputil.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft/common/sftputil/sftputil.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft/common/sftputil_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft/common/sftputil/sftputil_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft/common/sshutil.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft/common/sshutil/sshutil.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft/common/sshutil_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft/common/sshutil/sshutil_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft/common/stringutil.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft/common/stringutil/stringutil.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft/db/connection_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft/db/connection_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_blog_web/conf/app.conf" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_blog_web/conf/app.conf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_blog_web/controllers/blog.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_blog_web/controllers/blog.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_blog_web/controllers/catalog.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_blog_web/controllers/catalog.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/isoft_deploy_web/controllers/config.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_deploy_web/controllers/config.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/models/config.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_deploy_web/models/config.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/controllers/env.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_deploy_web/controllers/env.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/controllers/service.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_deploy_web/controllers/service.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/deploy_core/deploy/command.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_deploy_web/deploy_core/deploy/command.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/deploy_core/deploy/file_transfer/file_transfer.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_deploy_web/deploy_core/deploy/file_transfer/file_transfer.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/deploy_core/executors/executor.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_deploy_web/deploy_core/executors/executor.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/deploy_core/executors/ssh_executor.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_deploy_web/deploy_core/executors/ssh_executor.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/routers/router.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_deploy_web/routers/router.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_learning_web/controllers/course.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_learning_web/controllers/course.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_sso_web/conf/app.conf" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_sso_web/conf/app.conf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_sso_web/controllers/appregister.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_sso_web/controllers/appregister.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_sso_web/controllers/loginrecord.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_sso_web/controllers/loginrecord.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_sso_web/ilearning/util/page.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_ui/src/api/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_ui/src/api/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_ui/src/components/Config/ConfigTable.vue" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_ui/src/components/Config/ConfigTable.vue" afterDir="false" />
     </list>
     <ignored path="isoft_deploy_web/static/uploadfile/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -37,33 +59,88 @@
     <favorites_list name="isoft" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="config.go" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/isoft_deploy_web/controllers/config.go">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="aesutil.go" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/isoft_sso_web/ilearning/util/aesutil.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="93">
-              <caret line="86" lean-forward="true" selection-start-line="86" selection-end-line="86" />
+            <state relative-caret-position="119">
+              <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
               <folding>
-                <element signature="e#21#275#0" expanded="true" />
+                <element signature="e#14#64#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="service.go" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/isoft_deploy_web/models/service.go">
+      <file leaf-file-name="main.go" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/isoft_sso_web/main.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="59">
-              <caret line="67" selection-start-line="67" selection-end-line="72" selection-end-column="1" />
+            <state relative-caret-position="-1152">
+              <caret line="3" column="9" lean-forward="true" selection-start-line="3" selection-start-column="9" selection-end-line="3" selection-end-column="9" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="config.go" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/isoft_deploy_web/models/config.go">
+      <file leaf-file-name="appregister.go" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/isoft_sso_web/controllers/appregister.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="324">
-              <caret line="80" column="24" selection-start-line="80" selection-start-column="5" selection-end-line="80" selection-end-column="24" />
+            <state relative-caret-position="92">
+              <caret line="57" column="37" selection-start-line="57" selection-start-column="29" selection-end-line="57" selection-end-column="37" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="loginrecord.go" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/isoft_sso_web/controllers/loginrecord.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="92">
+              <caret line="33" column="37" selection-start-line="33" selection-start-column="37" selection-end-line="33" selection-end-column="37" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="txyun.conf" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/isoft_sso_web/conf/txyun.conf">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file leaf-file-name="app.conf" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/isoft_sso_web/conf/app.conf">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="17">
+              <caret line="1" column="15" selection-start-line="1" selection-start-column="15" selection-end-line="1" selection-end-column="15" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="app.conf" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/isoft_learning_web/conf/app.conf">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file leaf-file-name="app.conf" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/isoft_blog_web/conf/app.conf">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="68">
+              <caret line="4" column="14" lean-forward="true" selection-start-line="4" selection-start-column="14" selection-end-line="4" selection-end-column="14" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="stringutil.go" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/isoft/common/stringutil/stringutil.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="119">
+              <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="page.go" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/isoft/common/pageutil/page.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="51">
+              <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
             </state>
           </provider>
         </entry>
@@ -84,14 +161,11 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>hostPort</find>
-      <find>123456</find>
-      <find>beego_status</find>
       <find>GetRealCommandType</find>
       <find>api_status</find>
       <find>deploy_status</find>
       <find>beego_startup</find>
-      <find>bee pack</find>
+      <find />
       <find>pack</find>
       <find>service_port</find>
       <find>envInfos</find>
@@ -114,11 +188,14 @@
       <find>SFTP_SRC_DIR</find>
       <find>uploadConfigFileId</find>
       <find>getDir</find>
+      <find>RunSSHShellCommand</find>
+      <find>AesDecrypt</find>
+      <find>AesEncrypt</find>
     </findStrings>
     <replaceStrings>
       <replace>leftnav/leftnav</replace>
       <replace>/isoft_deploy_web</replace>
-      <replace>{{ .AppName }}</replace>
+      <replace />
       <replace>CommandArgs</replace>
       <replace>config.GetConfigValue(config.RABBITMQ_SERVER)</replace>
       <replace>config.GetConfigValue(config.ES_SERVER)</replace>
@@ -139,7 +216,7 @@
       <replace>operate_result</replace>
       <replace>_renderLastDeployStatus</replace>
       <replace>renderLastDeployStatus</replace>
-      <replace>docker ps -aq --filter name=&quot;${serviceName}\$&quot;</replace>
+      <replace />
       <replace>mysqlInit</replace>
       <replace>isoft_deploy_web</replace>
       <replace>isoft_blog_web</replace>
@@ -158,6 +235,7 @@
       <dir>D:\zhourui\soft\install\go\go1.10.1\src\</dir>
       <dir>D:\zhourui\program\go\goland_workspace\src\isoft\isoft_storage\</dir>
       <dir>D:\zhourui\program\go\goland_workspace\src\</dir>
+      <dir>D:\zhourui\program\go\goland_workspace\src\isoft\isoft_sso_web</dir>
     </dirStrings>
   </component>
   <component name="GOROOT" path="$PROJECT_DIR$/../../../../../soft/install/go/go1.10.1" />
@@ -170,23 +248,8 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/isoft/db/flywaydb_test.go" />
-        <option value="$PROJECT_DIR$/isoft/db/persistentdb_test.go" />
-        <option value="$PROJECT_DIR$/isoft/db/persistentdb.go" />
-        <option value="$PROJECT_DIR$/isoft_deploy_web/shell/mysql/my.cnf" />
-        <option value="$PROJECT_DIR$/isoft_deploy_web/shell/mysql/mysql.sh" />
-        <option value="$PROJECT_DIR$/isoft_deploy_web/shell/mysql/mysql_check.sh" />
-        <option value="$PROJECT_DIR$/isoft_deploy_web/shell/mysql/mysql_modify.sh" />
-        <option value="$PROJECT_DIR$/isoft_deploy_web/shell/mysql/mysql_install.sh" />
-        <option value="$PROJECT_DIR$/isoft_deploy_web/shell/mysql/mysql_adjust.sh" />
-        <option value="$PROJECT_DIR$/isoft/db/connection_test.go" />
-        <option value="$PROJECT_DIR$/isoft_deploy_web/shell/mysql/mysql_uninstall.sh" />
-        <option value="$PROJECT_DIR$/isoft/db/connection.go" />
-        <option value="$PROJECT_DIR$/isoft_sso_web/main.go" />
-        <option value="$PROJECT_DIR$/isoft_blog_web/main.go" />
         <option value="$PROJECT_DIR$/isoft_learning_web/main.go" />
         <option value="$PROJECT_DIR$/isoft/build/build_pack/main.go" />
-        <option value="$PROJECT_DIR$/isoft_sso_web/conf/app.conf" />
         <option value="$PROJECT_DIR$/isoft_deploy_web/deploy_core/deploy/file_transfer/beego_file_transfer.go" />
         <option value="$PROJECT_DIR$/isoft_deploy_web/deploy_core/deploy/file_transfer/file_transfer_detail.go" />
         <option value="$PROJECT_DIR$/isoft_deploy_web/shell/beego/beego_shutdown.sh" />
@@ -194,8 +257,6 @@
         <option value="$PROJECT_DIR$/isoft_deploy_web/shell/api/api_check.sh" />
         <option value="$PROJECT_DIR$/isoft_deploy_web/shell/api/api_undeploy.sh" />
         <option value="$PROJECT_DIR$/isoft_deploy_web/deploy_core/deploy/tools.go" />
-        <option value="$PROJECT_DIR$/isoft_deploy_web/deploy_core/deploy/file_transfer/file_transfer.go" />
-        <option value="$PROJECT_DIR$/isoft_deploy_web/deploy_core/deploy/command.go" />
         <option value="$PROJECT_DIR$/isoft_deploy_web/shell/api/api_shutdown.sh" />
         <option value="$PROJECT_DIR$/isoft_deploy_web/shell/api/api_restart.sh" />
         <option value="$PROJECT_DIR$/isoft_deploy_web/deploy_core/executors/executor_router.go" />
@@ -208,19 +269,36 @@
         <option value="$PROJECT_DIR$/isoft_deploy_web/main.go" />
         <option value="$PROJECT_DIR$/isoft_deploy_web/controllers/configfile.go" />
         <option value="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_ui/src/components/Config/ConfigList.vue" />
-        <option value="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_ui/src/api/index.js" />
         <option value="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_ui/src/components/Service/ServiceAdd.vue" />
         <option value="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_ui/src/components/Config/ConfigAdd.vue" />
         <option value="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_ui/src/components/Menu/LeftMenu.vue" />
         <option value="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_ui/src/components/Common/UploadFile.vue" />
         <option value="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_ui/src/components/Service/ServiceTable.vue" />
-        <option value="$PROJECT_DIR$/isoft_deploy_web/routers/router.go" />
-        <option value="$PROJECT_DIR$/isoft_deploy_web/controllers/service.go" />
-        <option value="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_ui/src/components/Config/ConfigTable.vue" />
         <option value="$PROJECT_DIR$/isoft/common/ziputil/ziputil_test.go" />
         <option value="$PROJECT_DIR$/isoft/common/ziputil/ziputil.go" />
         <option value="$PROJECT_DIR$/isoft_deploy_web/models/config.go" />
+        <option value="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_ui/src/api/index.js" />
+        <option value="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_ui/src/components/Config/ConfigTable.vue" />
+        <option value="$PROJECT_DIR$/isoft_deploy_web/routers/router.go" />
+        <option value="$PROJECT_DIR$/isoft/common/ssh/sshutil.go" />
+        <option value="$PROJECT_DIR$/isoft_deploy_web/deploy_core/executors/ssh_executor.go" />
+        <option value="$PROJECT_DIR$/isoft_deploy_web/deploy_core/deploy/command.go" />
+        <option value="$PROJECT_DIR$/isoft/common/sshutil_test.go" />
+        <option value="$PROJECT_DIR$/isoft/common/sshtuil/sshutil.go" />
+        <option value="$PROJECT_DIR$/isoft/common/sshtuil/ssh_execute.go" />
+        <option value="$PROJECT_DIR$/isoft_deploy_web/deploy_core/deploy/file_transfer/file_transfer.go" />
+        <option value="$PROJECT_DIR$/isoft/common/stringutil/stringutil.go" />
+        <option value="$PROJECT_DIR$/isoft_deploy_web/deploy_core/executors/executor.go" />
         <option value="$PROJECT_DIR$/isoft_deploy_web/controllers/config.go" />
+        <option value="$PROJECT_DIR$/isoft_deploy_web/controllers/env.go" />
+        <option value="$PROJECT_DIR$/isoft_deploy_web/controllers/service.go" />
+        <option value="$PROJECT_DIR$/isoft_blog_web/controllers/blog.go" />
+        <option value="$PROJECT_DIR$/isoft_blog_web/controllers/catalog.go" />
+        <option value="$PROJECT_DIR$/isoft_learning_web/controllers/course.go" />
+        <option value="$PROJECT_DIR$/isoft_sso_web/controllers/appregister.go" />
+        <option value="$PROJECT_DIR$/isoft_sso_web/controllers/loginrecord.go" />
+        <option value="$PROJECT_DIR$/isoft_sso_web/conf/app.conf" />
+        <option value="$PROJECT_DIR$/isoft_blog_web/conf/app.conf" />
       </list>
     </option>
   </component>
@@ -271,7 +349,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -282,18 +359,19 @@
             <path>
               <item name="isoft" type="b2602c69:ProjectViewProjectNode" />
               <item name="isoft" type="462c0819:PsiDirectoryNode" />
-              <item name="isoft_deploy_web" type="462c0819:PsiDirectoryNode" />
+              <item name="isoft_blog_web" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="isoft" type="b2602c69:ProjectViewProjectNode" />
               <item name="isoft" type="462c0819:PsiDirectoryNode" />
-              <item name="isoft_deploy_web" type="462c0819:PsiDirectoryNode" />
-              <item name="models" type="462c0819:PsiDirectoryNode" />
+              <item name="isoft_blog_web" type="462c0819:PsiDirectoryNode" />
+              <item name="conf" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -318,23 +396,23 @@
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="Errors" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors" />
     <property name="settings.editor.splitter.proportion" value="0.29891956" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\zhourui\program\go\goland_workspace\src\isoft\isoft_deploy_web\deploy_core" />
-      <recent name="D:\zhourui\program\go\goland_workspace\src\isoft\isoft_deploy_web\deploy_core\deploy\file_transfer" />
-      <recent name="D:\zhourui\program\go\goland_workspace\src\isoft\isoft_doc" />
-      <recent name="D:\zhourui\program\go\goland_workspace\src\isoft\isoft_deploy_api\deploy_core\executors" />
-      <recent name="D:\zhourui\program\go\goland_workspace\src\isoft\isoft_vue_web\isoft_deploy_web\src" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\zhourui\program\go\goland_workspace\src\isoft\isoft\common\ziputil" />
       <recent name="D:\zhourui\program\go\goland_workspace\src\isoft\isoft_vue_web\isoft_deploy_ui\src\components\Config" />
       <recent name="D:\zhourui\program\go\goland_workspace\src\isoft\isoft_deploy_web\models" />
       <recent name="D:\zhourui\program\go\goland_workspace\src\isoft\isoft_deploy_web\shell\api" />
       <recent name="D:\zhourui\program\go\goland_workspace\src\isoft\isoft_deploy_web\shell\mysql" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\zhourui\program\go\goland_workspace\src\isoft\isoft\common\pageutil" />
+      <recent name="D:\zhourui\program\go\goland_workspace\src\isoft\isoft\common\stringutil" />
+      <recent name="D:\zhourui\program\go\goland_workspace\src\isoft\isoft\common\sftputil" />
+      <recent name="D:\zhourui\program\go\goland_workspace\src\isoft\isoft\common\sshtuil" />
+      <recent name="D:\zhourui\program\go\goland_workspace\src\isoft\isoft_deploy_web\deploy_core" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -395,14 +473,6 @@
       <filePath value="$PROJECT_DIR$/isoft_storage/dataServer/dataServer.go" />
       <directory value="$PROJECT_DIR$/" />
     </configuration>
-    <configuration name="go build main.go" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
-      <module name="isoft" />
-      <working_directory value="$PROJECT_DIR$/" />
-      <go_parameters value="-i" />
-      <kind value="FILE" />
-      <filePath value="$PROJECT_DIR$/isoft/build/build_pack/main.go" />
-      <directory value="$PROJECT_DIR$/" />
-    </configuration>
     <configuration name="isoft_blog_web_run" type="GoApplicationRunConfiguration" factoryName="Go Application">
       <module name="isoft" />
       <working_directory value="D:\zhourui\program\go\goland_workspace\src\isoft\isoft_blog_web" />
@@ -437,50 +507,6 @@
       <filePath value="D:\zhourui\program\go\goland_workspace\src\isoft\isoft_sso_web\main.go" />
       <directory value="$PROJECT_DIR$/" />
     </configuration>
-    <configuration name="Test_AAA in isoft/isoft/db" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
-      <module name="isoft" />
-      <working_directory value="$PROJECT_DIR$/isoft/db" />
-      <go_parameters value="-i" />
-      <framework value="gotest" />
-      <kind value="PACKAGE" />
-      <package value="isoft/isoft/db" />
-      <directory value="$PROJECT_DIR$/" />
-      <filePath value="$PROJECT_DIR$/" />
-      <pattern value="^Test_AAA$" />
-    </configuration>
-    <configuration name="Test_Compress in isoft/isoft/common/ziputil" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
-      <module name="isoft" />
-      <working_directory value="$PROJECT_DIR$/isoft/common/ziputil" />
-      <go_parameters value="-i" />
-      <framework value="gotest" />
-      <kind value="PACKAGE" />
-      <package value="isoft/isoft/common/ziputil" />
-      <directory value="$PROJECT_DIR$/" />
-      <filePath value="$PROJECT_DIR$/" />
-      <pattern value="^Test_Compress$" />
-    </configuration>
-    <configuration name="Test_Connection in isoft/isoft/db" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
-      <module name="isoft" />
-      <working_directory value="$PROJECT_DIR$/isoft/db" />
-      <go_parameters value="-i" />
-      <framework value="gotest" />
-      <kind value="PACKAGE" />
-      <package value="isoft/isoft/db" />
-      <directory value="$PROJECT_DIR$/" />
-      <filePath value="$PROJECT_DIR$/" />
-      <pattern value="^Test_Connection$" />
-    </configuration>
-    <configuration name="Test_SyncFile_Static in isoft/isoft/build/build_syncfile/sync" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
-      <module name="isoft" />
-      <working_directory value="$PROJECT_DIR$/isoft/build/build_syncfile/sync" />
-      <go_parameters value="-i" />
-      <framework value="gotest" />
-      <kind value="PACKAGE" />
-      <package value="isoft/isoft/build/build_syncfile/sync" />
-      <directory value="$PROJECT_DIR$/" />
-      <filePath value="$PROJECT_DIR$/" />
-      <pattern value="^Test_SyncFile_Static$" />
-    </configuration>
     <configuration default="true" type="GoTestRunConfiguration" factoryName="Go Test">
       <module name="isoft" />
       <working_directory value="$PROJECT_DIR$/" />
@@ -501,21 +527,7 @@
       <item itemvalue="Go Build.go build dataServer.go-node4" />
       <item itemvalue="Go Build.go build dataServer.go-node3" />
       <item itemvalue="Go Build.go build dataServer.go-node2" />
-      <item itemvalue="Go Build.go build main.go" />
-      <item itemvalue="Go Test.Test_SyncFile_Static in isoft/isoft/build/build_syncfile/sync" />
-      <item itemvalue="Go Test.Test_Connection in isoft/isoft/db" />
-      <item itemvalue="Go Test.Test_AAA in isoft/isoft/db" />
-      <item itemvalue="Go Test.Test_Compress in isoft/isoft/common/ziputil" />
     </list>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Go Test.Test_Compress in isoft/isoft/common/ziputil" />
-        <item itemvalue="Go Build.go build main.go" />
-        <item itemvalue="Go Test.Test_Connection in isoft/isoft/db" />
-        <item itemvalue="Go Test.Test_AAA in isoft/isoft/db" />
-        <item itemvalue="Go Test.Test_SyncFile_Static in isoft/isoft/build/build_syncfile/sync" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="StructureViewFactory">
     <option name="ACTIVE_ACTIONS" value=",EXPORTABILITY_SORTER,ALPHA_COMPARATOR" />
@@ -565,15 +577,16 @@
     <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="1" sideWeight="0.28546098" weight="0.29830235" />
+      <window_info active="true" content_ui="combo" id="Project" order="1" sideWeight="0.28546098" visible="true" weight="0.23201293" />
       <window_info anchor="bottom" id="TODO" order="12" weight="0.3297491" />
-      <window_info anchor="bottom" id="Event Log" order="4" sideWeight="0.50444627" side_tool="true" weight="0.58687943" />
+      <window_info anchor="bottom" id="Event Log" order="4" sideWeight="0.5052546" side_tool="true" weight="0.58687943" />
       <window_info anchor="right" id="Database" order="0" side_tool="true" weight="0.32983023" />
+      <window_info anchor="bottom" id="Find" order="7" weight="0.7907801" />
       <window_info anchor="bottom" id="Database Changes" order="2" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="5" weight="0.87765956" />
-      <window_info anchor="bottom" id="Run" order="8" sideWeight="0.497979" weight="0.5283688" />
+      <window_info anchor="bottom" id="Run" order="8" sideWeight="0.497979" visible="true" weight="0.45921987" />
       <window_info id="Structure" order="2" sideWeight="0.71276593" side_tool="true" weight="0.27405012" />
-      <window_info anchor="bottom" id="Terminal" order="3" sideWeight="0.49555376" weight="0.58687943" />
+      <window_info anchor="bottom" id="Terminal" order="3" sideWeight="0.49474534" weight="0.58687943" />
       <window_info id="Favorites" order="0" sideWeight="0.714539" side_tool="true" weight="0.27728376" />
       <window_info anchor="bottom" id="Debug" order="9" sideWeight="0.49717057" weight="0.28368795" />
       <window_info anchor="bottom" id="TypeScript" order="0" weight="0.32978722" />
@@ -585,33 +598,8 @@
       <window_info anchor="bottom" id="Messages" order="1" weight="0.55376345" />
       <window_info anchor="bottom" id="Message" order="6" />
       <window_info anchor="bottom" id="Cvs" order="10" weight="0.25" />
-      <window_info anchor="bottom" id="Find" order="7" weight="0.47517732" />
       <window_info anchor="right" id="Coverage" order="4" side_tool="true" weight="0.32983023" />
     </layout>
-    <layout-to-restore>
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="3" weight="0.25" />
-      <window_info active="true" content_ui="combo" id="Project" order="1" sideWeight="0.28546098" visible="true" weight="0.29830235" />
-      <window_info anchor="bottom" id="Run" order="8" sideWeight="0.497979" weight="0.5283688" />
-      <window_info anchor="right" id="Ant Build" order="2" weight="0.25" />
-      <window_info anchor="bottom" id="Cvs" order="10" weight="0.25" />
-      <window_info anchor="bottom" id="Thumbnails" order="13" weight="0.3297491" />
-      <window_info id="Structure" order="2" sideWeight="0.71276593" side_tool="true" weight="0.27405012" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="1" type="SLIDING" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="12" weight="0.3297491" />
-      <window_info anchor="bottom" id="Database Changes" order="2" show_stripe_button="false" />
-      <window_info anchor="bottom" id="TypeScript" order="0" weight="0.32978722" />
-      <window_info anchor="bottom" id="Find" order="7" weight="0.47517732" />
-      <window_info anchor="bottom" id="Debug" order="9" sideWeight="0.49717057" weight="0.28368795" />
-      <window_info anchor="right" id="Database" order="0" side_tool="true" weight="0.32983023" />
-      <window_info anchor="bottom" id="Terminal" order="3" sideWeight="0.49555376" weight="0.58687943" />
-      <window_info anchor="bottom" id="Event Log" order="4" sideWeight="0.50444627" side_tool="true" weight="0.58687943" />
-      <window_info anchor="bottom" id="Inspection" order="11" weight="0.4" />
-      <window_info anchor="bottom" id="Version Control" order="5" weight="0.87765956" />
-      <window_info anchor="bottom" id="Message" order="6" />
-      <window_info anchor="bottom" id="Messages" order="1" weight="0.55376345" />
-      <window_info anchor="right" id="Coverage" order="4" side_tool="true" weight="0.32983023" />
-      <window_info id="Favorites" order="0" sideWeight="0.714539" side_tool="true" weight="0.27728376" />
-    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -656,17 +644,13 @@
     <MESSAGE value="支持api类型服务脚本部署" />
     <MESSAGE value="api类型部署添加RunMode参数" />
     <MESSAGE value="支持配置包上传下载" />
-    <option name="LAST_COMMIT_MESSAGE" value="支持配置包上传下载" />
+    <MESSAGE value="配置包压缩zip下载" />
+    <option name="LAST_COMMIT_MESSAGE" value="配置包压缩zip下载" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
-          <url>file://$PROJECT_DIR$/isoft/common/sshutil_test.go</url>
-          <line>8</line>
-          <option name="timeStamp" value="31" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
           <url>file://$PROJECT_DIR$/../golang.org/x/net/internal/sockstest/server.go</url>
           <line>237</line>
@@ -683,7 +667,7 @@
           <option name="timeStamp" value="178" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="197" />
+      <option name="time" value="199" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="GoApplicationRunConfiguration">
@@ -711,236 +695,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/isoft_deploy_web/deploy_core/deploy/command.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="86">
-          <caret line="60" column="30" selection-start-line="60" selection-start-column="30" selection-end-line="60" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_deploy_web/shell/api/api_restart.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="8" selection-start-line="8" selection-start-column="8" selection-end-line="8" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_deploy_web/deploy_core/executors/executor.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="149">
-          <caret line="26" selection-start-line="26" selection-end-line="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_deploy_web/deploy_core/executors/executor_router.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="109">
-          <caret line="37" selection-start-line="37" selection-end-line="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft/build/build_pack/main.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="17" column="28" selection-start-line="17" selection-start-column="28" selection-end-line="17" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_doc/beego_cmd.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" selection-start-line="5" selection-end-line="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft/build/build_pack/pack/pack.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="62" column="5" selection-start-line="62" selection-start-column="5" selection-end-line="62" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/github.com/astaxie/beego/config/json.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3813">
-          <caret line="16" column="7" lean-forward="true" selection-start-line="16" selection-start-column="7" selection-end-line="16" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/github.com/astaxie/beego/beego.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="243">
-          <caret line="109" column="39" selection-start-line="109" selection-start-column="35" selection-end-line="109" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../../../soft/install/go/go1.10.1/src/flag/flag.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="178">
-          <caret line="731" column="5" selection-start-line="731" selection-start-column="5" selection-end-line="731" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_storage/cfg/config.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="14" column="5" selection-start-line="14" selection-start-column="5" selection-end-line="14" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_deploy_web/deploy_core/deploy/command_args.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="42">
-          <caret line="44" column="50" selection-start-line="44" selection-start-column="43" selection-end-line="44" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_deploy_web/shell/api/api_deploy.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" selection-start-line="2" selection-end-line="9" selection-end-column="123" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_deploy_web/shell/api/api_startup.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="20" column="49" lean-forward="true" selection-start-line="20" selection-start-column="49" selection-end-line="20" selection-end-column="49" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/github.com/astaxie/beego/config/config.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3634" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_ui/src/components/Env/EnvAdd.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="173">
-          <caret line="26" selection-start-line="26" selection-end-line="29" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_ui/src/components/Env/EnvList.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="11" lean-forward="true" selection-start-line="2" selection-start-column="11" selection-end-line="2" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_deploy_web/main.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="114">
-          <caret line="77" column="38" selection-start-line="77" selection-start-column="38" selection-end-line="77" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_ui/src/components/Service/ServiceAdd.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1768">
-          <caret line="132" selection-start-line="132" selection-end-line="132" />
-          <folding>
-            <element signature="e#3046#3079#0" expanded="true" />
-            <element signature="e#3184#4007#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_ui/src/components/Config/ConfigAdd.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1054">
-          <caret line="63" column="28" selection-start-line="63" selection-start-column="28" selection-end-line="63" selection-end-column="28" />
-          <folding>
-            <element signature="n#style#0;n#Button#1;n#FormItem#3;n#Form#0;n#div#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="e#1248#1277#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_ui/src/components/Menu/LeftMenu.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="12" column="29" selection-start-line="12" selection-start-column="29" selection-end-line="12" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_ui/src/api/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="426">
-          <caret line="40" column="13" selection-start-line="40" selection-start-column="13" selection-end-line="40" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_ui/src/components/Service/MysqlInit.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="15" selection-start-line="1" selection-start-column="10" selection-end-line="1" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_ui/src/components/Config/ConfigList.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="16" lean-forward="true" selection-start-line="16" selection-end-line="16" />
-          <folding>
-            <element signature="e#120#182#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_ui/node_modules/iview/src/components/upload/upload.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="122">
-          <caret line="43" column="12" selection-start-line="43" selection-start-column="12" selection-end-line="48" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_ui/src/components/Common/UploadFile.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="124">
-          <caret line="53" column="15" lean-forward="true" selection-start-line="53" selection-start-column="15" selection-end-line="53" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_ui/src/components/Service/ServiceList.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="30" selection-start-line="9" selection-start-column="30" selection-end-line="9" selection-end-column="30" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_ui/src/router/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="229">
-          <caret line="16" column="27" selection-start-line="16" selection-start-column="27" selection-end-line="16" selection-end-column="27" />
-          <folding>
-            <element signature="e#0#21#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_ui/src/components/Service/ServiceTable.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="389" column="11" selection-start-line="389" selection-start-column="11" selection-end-line="389" selection-end-column="11" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#Modal#0;n#div#0;n#template#0;n#!!top" />
-            <element signature="e#1469#1506#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_deploy_web/routers/router.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="27" column="63" selection-start-line="27" selection-start-column="63" selection-end-line="27" selection-end-column="63" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../../../../../soft/install/go/go1.10.1/src/internal/testlog/log.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="229">
@@ -962,16 +716,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/github.com/astaxie/beego/controller.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="556" column="20" lean-forward="true" selection-start-line="556" selection-start-column="20" selection-end-line="556" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_deploy_web/conf/app.conf">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/isoft/common/apppath/apppath.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="111">
@@ -986,40 +730,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_deploy_web/conf/txyun.conf">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/isoft_deploy_web/deploy_core/deploy/file_transfer/file_transfer_detail.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="273">
           <caret line="22" column="49" selection-start-line="22" selection-start-column="37" selection-end-line="22" selection-end-column="49" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_deploy_web/deploy_core/deploy/file_transfer/file_transfer.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="11" selection-start-line="11" selection-end-line="18" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_ui/src/components/Config/ConfigTable.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1353">
-          <caret line="15" column="32" selection-start-line="15" selection-start-column="32" selection-end-line="15" selection-end-column="32" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_deploy_web/controllers/service.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2699">
-          <caret line="29" column="1" selection-start-line="29" selection-start-column="1" selection-end-line="29" selection-end-column="1" />
-          <folding>
-            <element signature="e#21#322#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1034,13 +748,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="195">
           <caret line="20" column="5" selection-start-line="20" selection-start-column="5" selection-end-line="20" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft/common/fileutil/fileutil.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="97" column="67" selection-start-line="97" selection-start-column="49" selection-end-line="97" selection-end-column="67" />
         </state>
       </provider>
     </entry>
@@ -1085,13 +792,277 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_ui/src/components/Env/EnvTable.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="171">
+          <caret line="146" column="13" selection-start-line="146" selection-start-column="13" selection-end-line="146" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_ui/src/components/Config/ConfigTable.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="201">
+          <caret line="123" column="34" selection-start-line="123" selection-start-column="34" selection-end-line="123" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_deploy_web/routers/router.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="15" column="66" lean-forward="true" selection-start-line="15" selection-start-column="66" selection-end-line="15" selection-end-column="66" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_ui/src/api/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="392">
+          <caret line="56" column="41" selection-start-line="56" selection-start-column="25" selection-end-line="56" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_deploy_web/deploy_core/executors/executor_router.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="334">
+          <caret line="67" column="34" selection-start-line="67" selection-start-column="34" selection-end-line="67" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../golang.org/x/crypto/ssh/session.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="161">
+          <caret line="129" lean-forward="true" selection-start-line="129" selection-end-line="130" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_deploy_web/deploy_core/executors/ssh_executor.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="7" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_deploy_web/deploy_core/deploy/command.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="680">
+          <caret line="48" column="132" selection-start-line="47" selection-start-column="4" selection-end-line="48" selection-end-column="132" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/github.com/astaxie/beego/controller.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-9045">
+          <caret line="67" column="5" selection-start-line="67" selection-start-column="5" selection-end-line="67" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft/db/debug.test">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../../../soft/install/go/go1.10.1/src/path/filepath/match.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="16" column="4" selection-start-line="16" selection-start-column="4" selection-end-line="16" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft/common/fileutil/fileutil.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1513">
+          <caret line="97" column="67" selection-start-line="97" selection-start-column="49" selection-end-line="97" selection-end-column="67" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft/common/sshutil/sshutil.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-84" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft/common/sshutil/sshutil_test.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="7" lean-forward="true" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
+          <folding>
+            <element signature="e#17#45#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft/common/sshutil/ssh_execute.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" column="22" selection-start-line="11" selection-start-column="22" selection-end-line="11" selection-end-column="22" />
+          <folding>
+            <element signature="e#17#55#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_blog_web/conf/txyun.conf">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_blog_web/conf/local.conf">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" column="14" lean-forward="true" selection-start-line="3" selection-start-column="14" selection-end-line="3" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft/common/sftputil/sftputil.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="7" lean-forward="true" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft/common/sftputil/sftputil_test.go">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_deploy_web/deploy_core/deploy/file_transfer/file_transfer.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="527">
+          <caret line="39" column="16" selection-start-line="39" selection-start-column="16" selection-end-line="39" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/isoft_deploy_web/controllers/config.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="93">
-          <caret line="86" lean-forward="true" selection-start-line="86" selection-end-line="86" />
+        <state relative-caret-position="171">
+          <caret line="78" column="22" selection-start-line="78" selection-start-column="22" selection-end-line="78" selection-end-column="22" />
           <folding>
-            <element signature="e#21#275#0" expanded="true" />
+            <element signature="e#21#346#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_deploy_web/controllers/env.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="47" column="9" lean-forward="true" selection-start-line="47" selection-start-column="9" selection-end-line="47" selection-end-column="9" />
+          <folding>
+            <element signature="e#21#280#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_deploy_web/controllers/service.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="66" column="36" selection-start-line="66" selection-start-column="36" selection-end-line="66" selection-end-column="36" />
+          <folding>
+            <element signature="e#21#353#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_blog_web/controllers/blog.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="142" column="9" lean-forward="true" selection-start-line="142" selection-start-column="9" selection-end-line="142" selection-end-column="9" />
+          <folding>
+            <element signature="e#21#189#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_blog_web/controllers/catalog.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="91" column="9" lean-forward="true" selection-start-line="91" selection-start-column="9" selection-end-line="91" selection-end-column="9" />
+          <folding>
+            <element signature="e#21#189#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_learning_web/controllers/course.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="259">
+          <caret line="323" column="21" selection-start-line="323" selection-start-column="21" selection-end-line="323" selection-end-column="21" />
+          <folding>
+            <element signature="e#21#284#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_deploy_web/deploy_core/executors/executor.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="7" lean-forward="true" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
+          <folding>
+            <element signature="e#19#143#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft/common/pageutil/page.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft/common/stringutil/stringutil.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_sso_web/ilearning/util/page.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="14" selection-start-line="5" selection-start-column="5" selection-end-line="5" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_sso_web/ilearning/util/aesutil.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
+          <folding>
+            <element signature="e#14#64#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_sso_web/main.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1152">
+          <caret line="3" column="9" lean-forward="true" selection-start-line="3" selection-start-column="9" selection-end-line="3" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_sso_web/controllers/appregister.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="92">
+          <caret line="57" column="37" selection-start-line="57" selection-start-column="29" selection-end-line="57" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_sso_web/controllers/loginrecord.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="92">
+          <caret line="33" column="37" selection-start-line="33" selection-start-column="37" selection-end-line="33" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_sso_web/conf/txyun.conf">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_sso_web/conf/app.conf">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" column="15" selection-start-line="1" selection-start-column="15" selection-end-line="1" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_learning_web/conf/app.conf">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_blog_web/conf/app.conf">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="14" lean-forward="true" selection-start-line="4" selection-start-column="14" selection-end-line="4" selection-end-column="14" />
         </state>
       </provider>
     </entry>

@@ -3,7 +3,7 @@ package controllers
 import (
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/utils/pagination"
-	"isoft/isoft_sso_web/ilearning/util"
+	"isoft/isoft/common/pageutil"
 	"isoft/isoft_sso_web/models"
 )
 
@@ -31,7 +31,7 @@ func (this *LoginRecordController) LoginRecordList() {
 
 		if err == nil {
 			this.Data["json"] = &map[string]interface{}{"loginRecords": loginrecords,
-				"paginator": util.Paginator(paginator.Page(), paginator.PerPageNums, paginator.Nums())}
+				"paginator": pageutil.Paginator(paginator.Page(), paginator.PerPageNums, paginator.Nums())}
 		}
 		this.ServeJSON()
 	}

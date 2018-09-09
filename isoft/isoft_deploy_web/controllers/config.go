@@ -5,8 +5,10 @@ import (
 	"fmt"
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/utils/pagination"
-	"isoft/isoft/common"
+	"isoft/isoft/common/pageutil"
+	"isoft/isoft/common/sshutil"
 	"isoft/isoft/common/ziputil"
+	"isoft/isoft_deploy_web/deploy_core/deploy/file_transfer"
 	"isoft/isoft_deploy_web/models"
 	"os"
 	"path"
@@ -69,7 +71,7 @@ func (this *ConfigController) List() {
 
 	if err == nil {
 		data["configFiles"] = configFiles
-		data["paginator"] = common.Paginator(paginator.Page(), paginator.PerPageNums, paginator.Nums())
+		data["paginator"] = pageutil.Paginator(paginator.Page(), paginator.PerPageNums, paginator.Nums())
 	}
 	//序列化
 	json_obj, err := json.Marshal(data)
@@ -84,7 +86,6 @@ func (this *ConfigController) List() {
 func (this *ConfigController) FileDownload() {
 	configFile_id, _ := this.GetInt64("configFile_id")
 	savepath := SFTP_SRC_DIR + "/static/uploadfile/configfile/" + strconv.FormatInt(configFile_id, 10)
-
 	configFile, err := models.QueryConfigFileById(configFile_id)
 	if err != nil {
 		return
@@ -115,5 +116,42 @@ func (this *ConfigController) FileUpload() {
 			this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
 		}
 	}
+	this.ServeJSON()
+}
+
+func (this *ConfigController) SyncConfigFile() {
+	env_id, err1 := this.GetInt64("env_id")
+	configFile_id, err2 := this.GetInt64("configFile_id")
+	if err1 != nil || err2 != nil {
+		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": "param error!"}
+		this.ServeJSON()
+	}
+	envInfo, err := models.FilterEnvInfo(map[string]interface{}{"env_id": env_id})
+	if err != nil {
+		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": err.Error()}
+		this.ServeJSON()
+	}
+	configFile, err := models.QueryConfigFileById(configFile_id)
+	if err != nil {
+		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": err.Error()}
+		this.ServeJSON()
+	}
+
+	err = file_transfer.SyncConfigFile(&envInfo, &configFile)
+	if err != nil {
+		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": err.Error()}
+		this.ServeJSON()
+	}
+
+	command := fmt.Sprintf("%s=%s && export %s && source /etc/profile",
+		configFile.EnvProperty, configFile.EnvValue, configFile.EnvProperty)
+	// 调用脚本设置环境变量
+	err = sshutil.RunSSHShellCommandOnly(envInfo.EnvAccount, envInfo.EnvPasswd, envInfo.EnvIp, command)
+	if err != nil {
+		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": err.Error()}
+		this.ServeJSON()
+	}
+
+	this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
 	this.ServeJSON()
 }

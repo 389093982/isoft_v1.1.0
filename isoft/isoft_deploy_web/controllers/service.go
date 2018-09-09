@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/utils/pagination"
-	"isoft/isoft/common"
 	"isoft/isoft/common/fileutil"
+	"isoft/isoft/common/pageutil"
 	"isoft/isoft_deploy_web/deploy_core/constant"
 	"isoft/isoft_deploy_web/deploy_core/executors"
 	"isoft/isoft_deploy_web/models"
@@ -59,7 +59,7 @@ func (this *ServiceController) List() {
 
 	if err == nil {
 		data["serviceInfos"] = serviceInfos
-		data["paginator"] = common.Paginator(paginator.Page(), paginator.PerPageNums, paginator.Nums())
+		data["paginator"] = pageutil.Paginator(paginator.Page(), paginator.PerPageNums, paginator.Nums())
 	}
 	//序列化
 	json_obj, err := json.Marshal(data)

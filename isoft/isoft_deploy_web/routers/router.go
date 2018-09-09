@@ -27,5 +27,6 @@ func init() {
 	beego.Router("/api/config/list", &controllers.ConfigController{}, "post:List")
 	beego.Router("/api/config/fileDownload", &controllers.ConfigController{}, "get:FileDownload")
 	beego.Router("/api/config/fileUpload", &controllers.ConfigController{}, "post:FileUpload")
+	beego.Router("/api/config/sync_config_file", &controllers.ConfigController{}, "post:SyncConfigFile")
 
 }

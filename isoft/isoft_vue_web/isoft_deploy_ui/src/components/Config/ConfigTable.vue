@@ -24,6 +24,8 @@
 
 <script>
   import {ConfigList} from '../../api'
+  import {SyncConfigFile} from '../../api'
+
   export default {
     name: "ConfigTable",
     data () {
@@ -52,12 +54,12 @@
         columns.push({
           title: '环境变量',
           key: 'env_property',
-          width:200
+          width:150
         });
         columns.push({
-          title: '变量值',
+          title: '变量值/配置包路径',
           key: 'env_value',
-          width:350
+          width:300
         });
         columns.push({
           title: '操作',
@@ -94,6 +96,20 @@
                   }
                 }
               }, '配置包下载'),
+              h('Button', {
+                props: {
+                  type: 'info',
+                  size: 'small'
+                },
+                style: {
+                  marginRight: '5px'
+                },
+                on: {
+                  click: () => {
+                    this.sync_config_file(params.index);
+                  }
+                }
+              }, '配置包同步'),
             ]);
           }
         });
@@ -101,6 +117,13 @@
       }
     },
     methods:{
+      async sync_config_file (index){
+        // 当前行对应的环境 id
+        var configFile_id = this.configFiles[index].id;
+        var env_id = this.configFiles[index].env_id;
+        const result = await SyncConfigFile(env_id, configFile_id);
+        alert(result);
+      },
       fileDownload(index){
         const configFile_id = this.configFiles[index]['id'];
         window.location='/api/config/fileDownload/?configFile_id=' + configFile_id;

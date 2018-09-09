@@ -2,11 +2,12 @@ package file_transfer
 
 import (
 	"github.com/astaxie/beego"
-	"isoft/isoft/common"
 	"isoft/isoft/common/fileutil"
+	"isoft/isoft/common/sftputil"
 	"isoft/isoft_deploy_web/deploy_core"
 	"isoft/isoft_deploy_web/models"
 	"path/filepath"
+	"strconv"
 )
 
 var (
@@ -27,16 +28,16 @@ type FileTransfer struct {
 }
 
 func (this *FileTransfer) Transfer(EnvInfo *models.EnvInfo) error {
-	sftpClient, err := common.SFTPConnect(EnvInfo.EnvAccount, EnvInfo.EnvPasswd, EnvInfo.EnvIp, 22)
+	sftpClient, err := sftputil.SFTPConnect(EnvInfo.EnvAccount, EnvInfo.EnvPasswd, EnvInfo.EnvIp, 22)
 	if err != nil {
 		return err
 	}
 	defer sftpClient.Close()
 
 	if fileutil.IsDir(this.LocalFilePath) {
-		common.SFTPClientCopyDirectoryInto(sftpClient, this.LocalFilePath, this.RemoteDir)
+		sftputil.SFTPClientCopyDirectoryInto(sftpClient, this.LocalFilePath, this.RemoteDir)
 	} else {
-		common.SFTPClientFileCopy(sftpClient, this.LocalFilePath, this.RemoteDir)
+		sftputil.SFTPClientFileCopy(sftpClient, this.LocalFilePath, this.RemoteDir)
 	}
 	return nil
 }
@@ -77,7 +78,7 @@ func GetRemoteDeployHomePath(envInfo *models.EnvInfo) string {
 
 // 同步本地 deploy_home 到目录机器
 func SyncDeployHome(envInfo *models.EnvInfo) error {
-	sftpClient, err := common.SFTPConnect(envInfo.EnvAccount, envInfo.EnvPasswd, envInfo.EnvIp, 22)
+	sftpClient, err := sftputil.SFTPConnect(envInfo.EnvAccount, envInfo.EnvPasswd, envInfo.EnvIp, 22)
 	if err != nil {
 		return err
 	}
@@ -87,6 +88,19 @@ func SyncDeployHome(envInfo *models.EnvInfo) error {
 	remoteDeployHome := GetRemoteDeployHomePath(envInfo)
 
 	// 拷贝脚本目录
-	err = common.SFTPClientCopyDirectoryInto(sftpClient, filepath.Join(SFTP_SRC_DIR, "shell"), remoteDeployHome)
+	err = sftputil.SFTPClientCopyDirectoryInto(sftpClient, filepath.Join(SFTP_SRC_DIR, "shell"), remoteDeployHome)
+	return err
+}
+
+// 同步本地 configFile 到目标机器
+func SyncConfigFile(envInfo *models.EnvInfo, configFile *models.ConfigFile) error {
+	sftpClient, err := sftputil.SFTPConnect(envInfo.EnvAccount, envInfo.EnvPasswd, envInfo.EnvIp, 22)
+	if err != nil {
+		return err
+	}
+	defer sftpClient.Close()
+	savepath := SFTP_SRC_DIR + "/static/uploadfile/configfile/" + strconv.FormatInt(configFile.Id, 10)
+	// 拷贝脚本目录
+	err = sftputil.SFTPClientCopyDirectoryInto(sftpClient, savepath, configFile.EnvValue)
 	return err
 }

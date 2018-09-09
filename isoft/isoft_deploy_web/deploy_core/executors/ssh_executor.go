@@ -3,7 +3,7 @@ package executors
 import (
 	"fmt"
 	"github.com/astaxie/beego/logs"
-	"isoft/isoft/common"
+	"isoft/isoft/common/sshutil"
 	"isoft/isoft_deploy_web/deploy_core/constant"
 	"isoft/isoft_deploy_web/deploy_core/deploy"
 	"isoft/isoft_deploy_web/models"
@@ -42,29 +42,21 @@ func (this *WriteErrorLog) Write(p []byte) (n int, err error) {
 }
 
 func (this *ExecutorRouter) RunExecuteRemoteScriptTask(operate_type, extra_params string) {
-	sshClient, err := common.SSHConnect(this.EnvInfo.EnvAccount, this.EnvInfo.EnvPasswd, this.EnvInfo.EnvIp, 22)
-	defer sshClient.Close()
-	if err != nil {
-		logs.Error("ssh connect error : %s", err.Error())
-		return
-	}
-
-	sshClient.Stdout = &WriteSuccessLog{
+	stdout := &WriteSuccessLog{
 		ServiceInfo:         this.ServiceInfo,
 		TrackingLogResolver: this.TrackingLogResolver,
 	}
-	sshClient.Stderr = &WriteErrorLog{
+	stderr := &WriteErrorLog{
 		ServiceInfo:         this.ServiceInfo,
 		TrackingLogResolver: this.TrackingLogResolver,
 	}
-
 	command, err := deploy.PrepareCommand(this.ServiceInfo, operate_type, extra_params)
 	if err != nil {
 		logs.Error("prepare command error : %s", err.Error())
 	} else {
 		logs.Info("current command is %s", command)
 		this.TrackingLogResolver.WriteSuccessLog(fmt.Sprintf("current command is %s", command))
-		err := sshClient.Run(command)
+		sshutil.RunSSHShellCommand(this.EnvInfo.EnvAccount, this.EnvInfo.EnvPasswd, this.EnvInfo.EnvIp, command, stdout, stderr)
 		if err != nil {
 			logs.Error("run command error : %s", err.Error())
 		}

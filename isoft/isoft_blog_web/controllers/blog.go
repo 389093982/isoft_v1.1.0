@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/utils/pagination"
-	"isoft/isoft/common"
+	"isoft/isoft/common/pageutil"
 	"isoft/isoft_blog_web/models"
 	"time"
 )
@@ -145,7 +145,7 @@ func (this *BlogController) PostList() {
 
 	if err == nil {
 		data["blogs"] = blogs
-		data["paginator"] = common.Paginator(paginator.Page(), paginator.PerPageNums, paginator.Nums())
+		data["paginator"] = pageutil.Paginator(paginator.Page(), paginator.PerPageNums, paginator.Nums())
 	}
 	//序列化
 	json_obj, err := json.Marshal(data)
