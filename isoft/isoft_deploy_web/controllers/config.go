@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/utils/pagination"
+	"isoft/isoft/common/fileutil"
 	"isoft/isoft/common/pageutil"
 	"isoft/isoft/common/sshutil"
 	"isoft/isoft/common/ziputil"
@@ -25,9 +26,10 @@ func (this *ConfigController) Edit() {
 	env_ids := strings.Split(this.GetString("env_ids"), ",")
 	env_property := strings.TrimSpace(this.GetString("env_property"))
 	env_value := strings.TrimSpace(this.GetString("env_value"))
-	if env_property == "" || env_value == "" {
+	if env_property == "" || env_value == "" || !fileutil.CheckFilePathValid(env_value) {
 		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": "不合法的参数"}
 		this.ServeJSON()
+		return
 	}
 	for _, env_id := range env_ids {
 		eid, err := strconv.ParseInt(env_id, 10, 64)
@@ -35,6 +37,7 @@ func (this *ConfigController) Edit() {
 		if err != nil {
 			this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": "不正确的 env_id"}
 			this.ServeJSON()
+			return
 		}
 		configFile := models.ConfigFile{
 			EnvInfo:         &envInfo,
@@ -49,6 +52,7 @@ func (this *ConfigController) Edit() {
 		if err != nil {
 			this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": "保存失败"}
 			this.ServeJSON()
+			return
 		}
 	}
 	this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
@@ -120,38 +124,36 @@ func (this *ConfigController) FileUpload() {
 }
 
 func (this *ConfigController) SyncConfigFile() {
+	defer func() {
+		if err := recover(); err != nil {
+			this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": err}
+		} else {
+			this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
+		}
+		this.ServeJSON()
+	}()
 	env_id, err1 := this.GetInt64("env_id")
 	configFile_id, err2 := this.GetInt64("configFile_id")
 	if err1 != nil || err2 != nil {
-		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": "param error!"}
-		this.ServeJSON()
+		panic("Invalid param error!")
 	}
 	envInfo, err := models.FilterEnvInfo(map[string]interface{}{"env_id": env_id})
 	if err != nil {
-		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": err.Error()}
-		this.ServeJSON()
+		panic(err.Error())
 	}
 	configFile, err := models.QueryConfigFileById(configFile_id)
 	if err != nil {
-		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": err.Error()}
-		this.ServeJSON()
+		panic(err.Error())
 	}
-
 	err = file_transfer.SyncConfigFile(&envInfo, &configFile)
 	if err != nil {
-		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": err.Error()}
-		this.ServeJSON()
+		panic(err.Error())
 	}
-
 	command := fmt.Sprintf("%s=%s && export %s && source /etc/profile",
 		configFile.EnvProperty, configFile.EnvValue, configFile.EnvProperty)
 	// 调用脚本设置环境变量
 	err = sshutil.RunSSHShellCommandOnly(envInfo.EnvAccount, envInfo.EnvPasswd, envInfo.EnvIp, command)
 	if err != nil {
-		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": err.Error()}
-		this.ServeJSON()
+		panic(err.Error())
 	}
-
-	this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
-	this.ServeJSON()
 }
