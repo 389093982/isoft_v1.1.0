@@ -9,6 +9,7 @@ import (
 	"isoft/isoft/common/pageutil"
 	"isoft/isoft/common/sshutil"
 	"isoft/isoft/common/ziputil"
+	"isoft/isoft_deploy_web/deploy_core/deploy"
 	"isoft/isoft_deploy_web/deploy_core/deploy/file_transfer"
 	"isoft/isoft_deploy_web/models"
 	"os"
@@ -145,12 +146,12 @@ func (this *ConfigController) SyncConfigFile() {
 	if err != nil {
 		panic(err.Error())
 	}
+	// 同步配置文件到目标机器指定目录
 	err = file_transfer.SyncConfigFile(&envInfo, &configFile)
 	if err != nil {
 		panic(err.Error())
 	}
-	command := fmt.Sprintf("%s=%s && export %s && source /etc/profile",
-		configFile.EnvProperty, configFile.EnvValue, configFile.EnvProperty)
+	command := deploy.PrepareSimpleCommand(&envInfo, "env_writer", configFile.EnvProperty+" "+configFile.EnvValue)
 	// 调用脚本设置环境变量
 	err = sshutil.RunSSHShellCommandOnly(envInfo.EnvAccount, envInfo.EnvPasswd, envInfo.EnvIp, command)
 	if err != nil {

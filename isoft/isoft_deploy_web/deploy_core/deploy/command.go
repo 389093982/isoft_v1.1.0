@@ -27,26 +27,18 @@ func init() {
 	ScriptPathMappingMap["mysql_install"] = "shell/mysql/mysql_install.sh"
 	ScriptPathMappingMap["api_deploy"] = "shell/api/api_deploy.sh"
 	ScriptPathMappingMap["api_check"] = "shell/api/api_check.sh"
-	ScriptPathMappingMap["os_env"] = "shell/os/os_env.sh"
-}
-
-// 根据操作类型获取对应脚本路径
-func getScriptFilePathByCommandType(serviceType, operate_type string) string {
-	return ScriptPathMappingMap[deploy_core.GetRealCommandType(serviceType, operate_type)]
+	ScriptPathMappingMap["env_writer"] = "shell/common/env_writer.sh"
 }
 
 // 准备远程执行的 shell 命令
 func PrepareCommand(serviceInfo *models.ServiceInfo, operate_type, extra_params string) (string, error) {
-	remoteDeployHome := file_transfer.GetRemoteDeployHomePath(serviceInfo.EnvInfo)
-	// 目标机器脚本路径
-	scriptPath := remoteDeployHome + "/" + getScriptFilePathByCommandType(serviceInfo.ServiceType, operate_type)
 	// 准备 shell 命令相关参数
 	args, err := PrepareArgs(serviceInfo, operate_type, extra_params)
 	if err != nil {
 		return "", err
 	}
 	// 当前脚本命令
-	command := "cd " + fileutil.ChangeToLinuxSeparator(filepath.Dir(scriptPath)) + " && ./" + filepath.Base(scriptPath) + " " + args
+	command := PrepareSimpleCommand(serviceInfo.EnvInfo, deploy_core.GetRealCommandType(serviceInfo.ServiceType, operate_type), args)
 	// 获取 next 操作类型对应的脚本命令
 	if getNextOperateType(operate_type) != "" {
 		nextCommand, err := PrepareCommand(serviceInfo, getNextOperateType(operate_type), extra_params)
@@ -55,6 +47,16 @@ func PrepareCommand(serviceInfo *models.ServiceInfo, operate_type, extra_params 
 		}
 	}
 	return command + " && echo " + constant.COMMAND_OVER, nil
+}
+
+// 准备简单脚本命令
+func PrepareSimpleCommand(envInfo *models.EnvInfo, command_type string, args string) string {
+	remoteDeployHome := file_transfer.GetRemoteDeployHomePath(envInfo)
+	// 目标机器脚本路径, serviceType 和 operate_type 拼接成 command_type
+	scriptPath := remoteDeployHome + "/" + ScriptPathMappingMap[command_type]
+	// 当前脚本命令
+	command := "cd " + fileutil.ChangeToLinuxSeparator(filepath.Dir(scriptPath)) + " && ./" + filepath.Base(scriptPath) + " " + args
+	return command
 }
 
 // 准备 shell 命令相关参数

@@ -54,12 +54,12 @@
         columns.push({
           title: '环境变量',
           key: 'env_property',
-          width:150
+          width:200
         });
         columns.push({
           title: '变量值/配置包路径',
           key: 'env_value',
-          width:300
+          width:250
         });
         columns.push({
           title: '操作',
@@ -121,8 +121,19 @@
         // 当前行对应的环境 id
         var configFile_id = this.configFiles[index].id;
         var env_id = this.configFiles[index].env_id;
-        const result = await SyncConfigFile(env_id, configFile_id);
-        alert(result);
+        const data = await SyncConfigFile(env_id, configFile_id);
+        if(data.status=="SUCCESS"){
+          // 友好提示
+          this.$Notice.success({
+            title: '同步操作',
+            desc: '同步成功!'
+          });
+        }else{
+          this.$Notice.error({
+            title: '同步操作',
+            desc: '同步失败!'
+          });
+        }
       },
       fileDownload(index){
         const configFile_id = this.configFiles[index]['id'];

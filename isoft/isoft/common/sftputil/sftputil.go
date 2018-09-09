@@ -51,7 +51,7 @@ func SFTPClientChmodXForShell(sftpClient *sftp.Client, filepath string) {
 	}
 }
 
-func SFTPClientFileCopy(sftpClient *sftp.Client, localFilePath, remoteDir string) error {
+func sftpClientFileCopy(sftpClient *sftp.Client, localFilePath, remoteDir string) error {
 	if ok, err := fileutil.PathExists(localFilePath); ok == false {
 		return err
 	}
@@ -92,7 +92,7 @@ func SFTPClientFileCopy(sftpClient *sftp.Client, localFilePath, remoteDir string
 }
 
 // localFilePath、remoteDir 本地文件路径和远程机器上的文件夹
-func SFTPFileCopy(user, password, host string, port int, localFilePath, remoteDir string) {
+func SFTPFileCopy(user, password, host string, port int, localFilePath, remoteDir string) error {
 	var (
 		err        error
 		sftpClient *sftp.Client
@@ -100,15 +100,14 @@ func SFTPFileCopy(user, password, host string, port int, localFilePath, remoteDi
 	// 创建 sftp 连接
 	sftpClient, err = SFTPConnect(user, password, host, port)
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
 	defer sftpClient.Close()
-
-	SFTPClientFileCopy(sftpClient, localFilePath, remoteDir)
+	return sftpClientFileCopy(sftpClient, localFilePath, remoteDir)
 }
 
-// localFilePath、remoteDir 本地文件路径和远程机器上的文件夹
-func SFTPDirectoryCopy(user, password, host string, port int, localDirectoryPath, remoteDir string) {
+// localFilePath、remoteDir 本地文件路径和远程机器上的文件夹,相当于移动重命名
+func SFTPDirectoryRenameCopy(user, password, host string, port int, localDirectoryPath, remoteDir string) error {
 	var (
 		err        error
 		sftpClient *sftp.Client
@@ -116,15 +115,41 @@ func SFTPDirectoryCopy(user, password, host string, port int, localDirectoryPath
 	// 创建 sftp 连接
 	sftpClient, err = SFTPConnect(user, password, host, port)
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
 	defer sftpClient.Close()
+	filepaths, _, err := fileutil.GetAllFile(localDirectoryPath, true)
+	if err != nil {
+		return err
+	}
+	for _, filepath := range filepaths {
+		if fileutil.IsFile(filepath) {
+			err = sftpClientFileCopy(sftpClient, filepath, remoteDir)
+			if err != nil {
+				return err
+			}
+		}
+	}
+	return nil
+}
 
-	SFTPClientCopyDirectoryInto(sftpClient, localDirectoryPath, remoteDir)
+// localFilePath、remoteDir 本地文件路径和远程机器上的文件夹,相当于移动到目标机器子目录
+func SFTPDirectoryCopy(user, password, host string, port int, localDirectoryPath, remoteDir string) error {
+	var (
+		err        error
+		sftpClient *sftp.Client
+	)
+	// 创建 sftp 连接
+	sftpClient, err = SFTPConnect(user, password, host, port)
+	if err != nil {
+		return err
+	}
+	defer sftpClient.Close()
+	return sftpClientCopyDirectoryInto(sftpClient, localDirectoryPath, remoteDir)
 }
 
 // localDirectoryPath、remoteDir 本地文件夹路径和远程机器上的文件夹,拷贝本地文件夹到远程机器指定文件夹里面
-func SFTPClientCopyDirectoryInto(sftpClient *sftp.Client, localDirectoryPath, remoteDir string) error {
+func sftpClientCopyDirectoryInto(sftpClient *sftp.Client, localDirectoryPath, remoteDir string) error {
 	filepaths, _, err := fileutil.GetAllFile(localDirectoryPath, true)
 	if err != nil {
 		return err
@@ -141,7 +166,7 @@ func SFTPClientCopyDirectoryInto(sftpClient *sftp.Client, localDirectoryPath, re
 				// 目标机器对应的文件路径
 				remoteFilePath := strings.Replace(localFilePath, localDirectoryPath, targetDirectoryPath, -1)
 
-				err := SFTPClientFileCopy(sftpClient, filepath, path.Dir(remoteFilePath))
+				err := sftpClientFileCopy(sftpClient, filepath, path.Dir(remoteFilePath))
 				if err != nil {
 					return err
 				}

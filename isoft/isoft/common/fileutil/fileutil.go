@@ -114,6 +114,10 @@ func GetAllFile(dirpath string, recursion bool) (filepaths []string, files []os.
 	return filepaths, files, err
 }
 
+func IsFile(path string) bool {
+	return !IsDir(path)
+}
+
 func IsDir(path string) bool {
 	f, err := os.Stat(path)
 	if err == nil {

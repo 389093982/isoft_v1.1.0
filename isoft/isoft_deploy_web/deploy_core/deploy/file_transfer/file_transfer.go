@@ -27,19 +27,18 @@ type FileTransfer struct {
 	RemoteDir string
 }
 
-func (this *FileTransfer) Transfer(EnvInfo *models.EnvInfo) error {
-	sftpClient, err := sftputil.SFTPConnect(EnvInfo.EnvAccount, EnvInfo.EnvPasswd, EnvInfo.EnvIp, 22)
+func (this *FileTransfer) Transfer(envInfo *models.EnvInfo) error {
+	sftpClient, err := sftputil.SFTPConnect(envInfo.EnvAccount, envInfo.EnvPasswd, envInfo.EnvIp, 22)
 	if err != nil {
 		return err
 	}
 	defer sftpClient.Close()
 
 	if fileutil.IsDir(this.LocalFilePath) {
-		sftputil.SFTPClientCopyDirectoryInto(sftpClient, this.LocalFilePath, this.RemoteDir)
+		return sftputil.SFTPDirectoryCopy(envInfo.EnvAccount, envInfo.EnvPasswd, envInfo.EnvIp, 22, this.LocalFilePath, this.RemoteDir)
 	} else {
-		sftputil.SFTPClientFileCopy(sftpClient, this.LocalFilePath, this.RemoteDir)
+		return sftputil.SFTPFileCopy(envInfo.EnvAccount, envInfo.EnvPasswd, envInfo.EnvIp, 22, this.LocalFilePath, this.RemoteDir)
 	}
-	return nil
 }
 
 type IFileTransferCreator interface {
@@ -78,29 +77,15 @@ func GetRemoteDeployHomePath(envInfo *models.EnvInfo) string {
 
 // 同步本地 deploy_home 到目录机器
 func SyncDeployHome(envInfo *models.EnvInfo) error {
-	sftpClient, err := sftputil.SFTPConnect(envInfo.EnvAccount, envInfo.EnvPasswd, envInfo.EnvIp, 22)
-	if err != nil {
-		return err
-	}
-	defer sftpClient.Close()
-
 	// 远程机器 deploy_home
 	remoteDeployHome := GetRemoteDeployHomePath(envInfo)
-
 	// 拷贝脚本目录
-	err = sftputil.SFTPClientCopyDirectoryInto(sftpClient, filepath.Join(SFTP_SRC_DIR, "shell"), remoteDeployHome)
-	return err
+	return sftputil.SFTPDirectoryCopy(envInfo.EnvAccount, envInfo.EnvPasswd, envInfo.EnvIp, 22, filepath.Join(SFTP_SRC_DIR, "shell"), remoteDeployHome)
 }
 
 // 同步本地 configFile 到目标机器
 func SyncConfigFile(envInfo *models.EnvInfo, configFile *models.ConfigFile) error {
-	sftpClient, err := sftputil.SFTPConnect(envInfo.EnvAccount, envInfo.EnvPasswd, envInfo.EnvIp, 22)
-	if err != nil {
-		return err
-	}
-	defer sftpClient.Close()
 	savepath := SFTP_SRC_DIR + "/static/uploadfile/configfile/" + strconv.FormatInt(configFile.Id, 10)
 	// 拷贝脚本目录
-	err = sftputil.SFTPClientCopyDirectoryInto(sftpClient, savepath, configFile.EnvValue)
-	return err
+	return sftputil.SFTPDirectoryRenameCopy(envInfo.EnvAccount, envInfo.EnvPasswd, envInfo.EnvIp, 22, savepath, configFile.EnvValue)
 }
