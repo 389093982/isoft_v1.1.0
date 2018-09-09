@@ -12,10 +12,11 @@ runmode=$3
 sh_home=`pwd`
 deploy_home=`echo $(cd ../.. &&  pwd)`
 
-cd ${deploy_home}/project/goproject/${service_name} && ./"${service_name}_${package_name}" ${runmode} &
+cd ${deploy_home}/project/goproject/${service_name} && ./${service_name}_${package_name} ${runmode} &
 
 cd ${sh_home}
 
 sleep 5
 
-sh ./api_check.sh ${service_name} ${package_name}
+echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+sh ./api_check.sh ${service_name} ${package_name} ${runmode}

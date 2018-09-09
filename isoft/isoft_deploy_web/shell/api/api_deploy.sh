@@ -13,7 +13,7 @@ sh_home=`pwd`
 deploy_home=`echo $(cd ../.. &&  pwd)`
 
 # 进行卸载操作
-sh ./api_undeploy.sh ${service_name} ${package_name}
+sh ./api_undeploy.sh ${service_name} ${package_name} ${runmode}
 
 # 重新创建对应目录
 if [ ! -d ${deploy_home}/project/goproject/${service_name} ];then

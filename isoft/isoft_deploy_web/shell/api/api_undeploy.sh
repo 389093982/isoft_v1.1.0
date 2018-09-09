@@ -13,7 +13,7 @@ runmode=$3
 deploy_home=`echo $(cd ../.. &&  pwd)`
 
 # 先杀进程
-sh ./api_shutdown.sh ${service_name} ${package_name}
+sh ./api_shutdown.sh ${service_name} ${package_name} ${runmode}
 
 # 再删除应用
 if [ -d ${deploy_home}/project/goproject/${service_name} ];then

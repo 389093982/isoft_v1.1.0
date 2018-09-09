@@ -9,6 +9,5 @@ package_name=$2
 runmode=$3
 ###########################################################################################################################
 
-
-sh ./api_shutdown.sh ${service_name} ${package_name}
-sh ./api_startup.sh ${service_name} ${package_name}
+sh ./api_shutdown.sh ${service_name} ${package_name} ${runmode}
+sh ./api_startup.sh ${service_name} ${package_name} ${runmode}
