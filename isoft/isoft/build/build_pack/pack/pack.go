@@ -37,6 +37,7 @@ func ReadPackApp(filepath string) (packApps PackApps) {
 
 // 开始打包所有任务
 func StartAllPackTask(packApps *PackApps, filterAppName string) (err error) {
+	os.MkdirAll("D:/autopack/", os.ModePerm)
 	for _, packApp := range packApps.PackApps {
 		if filterAppName == "" || (filterAppName == packApp.AppName) {
 			if err = ChangeAppRootPath(packApp.Apppath); err != nil {
@@ -56,7 +57,7 @@ func StartPackCommonTask(appName, appPath string, packApp PackApp) (err error) {
 	// 运行命令
 	RunCommand("go", "build", packApp.PackArgs)
 	// 移动文件
-	err = os.Rename(fmt.Sprintf("./%s", appName), fmt.Sprintf("D:/%s", appName))
+	err = os.Rename(fmt.Sprintf("./%s", appName), fmt.Sprintf("D:/autopack/%s", appName))
 	return
 }
 
@@ -65,7 +66,7 @@ func StartPackBeegoTask(appName, appPath string) (err error) {
 	// 运行命令
 	RunCommand(fileutil.ChangeToLinuxSeparator(filepath.Join(gopath, "bin/bee.exe")), "pack", "-be", "GOOS=linux")
 	// 移动文件
-	err = os.Rename(fmt.Sprintf("./%s.tar.gz", appName), fmt.Sprintf("D:/%s.tar.gz", appName))
+	err = os.Rename(fmt.Sprintf("./%s.tar.gz", appName), fmt.Sprintf("D:/autopack/%s.tar.gz", appName))
 	return
 }
 

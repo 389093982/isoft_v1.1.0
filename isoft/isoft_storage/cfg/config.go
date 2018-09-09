@@ -4,17 +4,20 @@ import (
 	"flag"
 	"fmt"
 	"github.com/larspensjo/config"
+	"isoft/isoft/common/fileutil"
 	"log"
+	"os"
+)
+
+var (
+	ISOFT_STORAGE_CFG = fileutil.ChangeToLinuxSeparator(os.Getenv("ISOFT_STORAGE_CFG"))
+	configFile        = flag.String("configfile", ISOFT_STORAGE_CFG+"/config.ini", "configuration file")
 )
 
 const RABBITMQ_SERVER string = "RABBITMQ_SERVER"
 const LISTEN_ADDRESS string = "LISTEN_ADDRESS"
 const ES_SERVER string = "ES_SERVER"
 const STORAGE_ROOT string = "STORAGE_ROOT"
-
-var (
-	configFile = flag.String("configfile", "D:/zhourui/program/go/goland_workspace/src/isoft/isoft_storage/cfg/config.ini", "configuration file")
-)
 
 var configmap = make(map[string]string)
 

@@ -2,7 +2,7 @@ package temp
 
 import (
 	"encoding/json"
-	"isoft/isoft/common"
+	"isoft/isoft/common/stringutil"
 	"isoft/isoft_storage/cfg"
 	"log"
 	"net/http"
@@ -21,7 +21,7 @@ type tempInfo struct {
 // 本方法不会存储文件内容,只创建临时对象,并返回临时对象关联的 uuid
 func post(w http.ResponseWriter, r *http.Request) {
 	// 生成 uuid
-	uuid := common.RandomUUID()
+	uuid := stringutil.RandomUUID()
 	name := strings.Split(r.URL.EscapedPath(), "/")[2]
 	size, e := strconv.ParseInt(r.Header.Get("size"), 0, 64)
 	if e != nil {
