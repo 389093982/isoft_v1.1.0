@@ -16,19 +16,6 @@ type CommandArgs struct {
 	serviceInfo *models.ServiceInfo
 }
 
-func (this *CommandArgs) ApiCheckCommandArgs() ([]string, error) {
-	var slice []string
-	if this.serviceInfo.ServiceName == "" {
-		return slice, errors.New("empty param : ServiceName")
-	}
-	if this.serviceInfo.PackageName == "" {
-		return slice, errors.New("empty param : PackageName")
-	}
-	slice = append(slice, this.serviceInfo.ServiceName)
-	slice = append(slice, strings.Replace(this.serviceInfo.PackageName, ".tar.gz", "", -1))
-	return slice, nil
-}
-
 func (this *CommandArgs) ApiDeployCommandArgs() ([]string, error) {
 	var slice []string
 	if this.serviceInfo.ServiceName == "" {
@@ -37,8 +24,8 @@ func (this *CommandArgs) ApiDeployCommandArgs() ([]string, error) {
 	if this.serviceInfo.PackageName == "" {
 		return slice, errors.New("empty param : PackageName")
 	}
-	if this.serviceInfo.PackageName == "" {
-		return slice, errors.New("empty param : PackageName")
+	if this.serviceInfo.RunMode == "" {
+		return slice, errors.New("empty param : RunMode")
 	}
 	slice = append(slice, this.serviceInfo.ServiceName)
 	slice = append(slice, strings.Replace(this.serviceInfo.PackageName, ".tar.gz", "", -1))
@@ -124,10 +111,8 @@ func (this *CommandArgs) GetCommandArgs(serviceInfo *models.ServiceInfo, operate
 		return this.NginxRestartCommandArgs()
 	case "mysql_install":
 		return this.MysqlInstallCommandArgs()
-	case "api_deploy":
+	case "api_check", "api_deploy", "api_restart", "api_shutdown", "api_startup", "api_undeploy":
 		return this.ApiDeployCommandArgs()
-	case "api_check":
-		return this.ApiCheckCommandArgs()
 	default:
 		return this.BeegoCheckCommandArgs()
 	}

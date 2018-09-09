@@ -25,8 +25,12 @@ func init() {
 	ScriptPathMappingMap["nginx_install"] = "shell/nginx/nginx_install.sh"
 	ScriptPathMappingMap["nginx_restart"] = "shell/nginx/nginx_restart.sh"
 	ScriptPathMappingMap["mysql_install"] = "shell/mysql/mysql_install.sh"
-	ScriptPathMappingMap["api_deploy"] = "shell/api/api_deploy.sh"
 	ScriptPathMappingMap["api_check"] = "shell/api/api_check.sh"
+	ScriptPathMappingMap["api_deploy"] = "shell/api/api_deploy.sh"
+	ScriptPathMappingMap["api_restart"] = "shell/api/api_restart.sh"
+	ScriptPathMappingMap["api_shutdown"] = "shell/api/api_shutdown.sh"
+	ScriptPathMappingMap["api_startup"] = "shell/api/api_startup.sh"
+	ScriptPathMappingMap["api_undeploy"] = "shell/api/api_undeploy.sh"
 	ScriptPathMappingMap["env_writer"] = "shell/common/env_writer.sh"
 }
 
