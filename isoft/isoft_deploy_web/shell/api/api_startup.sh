@@ -12,11 +12,19 @@ runmode=$3
 sh_home=`pwd`
 deploy_home=`echo $(cd ../.. &&  pwd)`
 
-cd ${deploy_home}/project/goproject/${service_name} && ./${service_name}_${package_name} ${runmode} &
+echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+############# 将 runmode 以逗号进行分割作为脚本调用参数
+string=${runmode}
+array=(${string//,/ })
+#for var in ${array[@]}
+#do
+#   echo $var
+#done
+cd ${deploy_home}/project/goproject/${service_name} && ./${service_name}_${package_name} ${array[@]} &
+echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
 
 cd ${sh_home}
 
 sleep 5
 
-echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
 sh ./api_check.sh ${service_name} ${package_name} ${runmode}

@@ -97,7 +97,7 @@
         columns.push({
           title: '服务名称',
           key: 'service_name',
-          width:200
+          width:150
         });
         columns.push({
           title: '服务类型',
@@ -120,7 +120,7 @@
           columns.push({
             title: '运行模式',
             key: 'run_mode',
-            width:120
+            width:150
           });
         }
         columns.push({
