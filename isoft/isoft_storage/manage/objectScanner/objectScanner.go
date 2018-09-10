@@ -2,32 +2,16 @@ package main
 
 import (
 	"../../apiServer/objects"
-	"flag"
-	"fmt"
 	"isoft/isoft_storage/cfg"
 	"isoft/isoft_storage/lib/es"
 	"isoft/isoft_storage/lib/utils"
 	"log"
 	"os"
-	"path/filepath"
-	"strings"
 )
 
 func main() {
-	if len(os.Args) > 1 {
-		sectionSearch := flag.String("sectionSearch", os.Args[1], "sectionSearch")
-		cfg.InitConfig(*sectionSearch)
-	} else {
-		fmt.Println("os args length error...")
-	}
-
-	files, _ := filepath.Glob(cfg.GetConfigValue(cfg.STORAGE_ROOT) + "/objects/*")
-
-	for i := range files {
-		hash := strings.Split(filepath.Base(files[i]), ".")[0]
-		// 检查数据
-		verify(hash)
-	}
+	// 启动前初始化参数,参数初始化失败会终止程序
+	cfg.InitConfigWithOsArgs(os.Args)
 }
 
 func verify(hash string) {

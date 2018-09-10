@@ -6,7 +6,6 @@ import (
 	"./objects"
 	"./temp"
 	"./versions"
-	"flag"
 	"fmt"
 	"isoft/isoft_storage/cfg"
 	"log"
@@ -15,12 +14,8 @@ import (
 )
 
 func main() {
-	if len(os.Args) > 1 {
-		sectionSearch := flag.String("sectionSearch", os.Args[1], "sectionSearch")
-		cfg.InitConfig(*sectionSearch)
-	} else {
-		fmt.Println("os args length error...")
-	}
+	// 启动前初始化参数,参数初始化失败会终止程序
+	cfg.InitConfigWithOsArgs(os.Args)
 
 	// 使用协程,主要用于接收数据服务节点发送过来的心跳消息
 	go heartbeat.ListenHeartbeat()

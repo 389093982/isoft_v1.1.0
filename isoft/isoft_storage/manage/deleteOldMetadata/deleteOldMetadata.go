@@ -1,8 +1,6 @@
 package main
 
 import (
-	"flag"
-	"fmt"
 	"isoft/isoft_storage/cfg"
 	"isoft/isoft_storage/lib/es"
 	"log"
@@ -12,12 +10,8 @@ import (
 const MIN_VERSION_COUNT = 5
 
 func main() {
-	if len(os.Args) > 1 {
-		sectionSearch := flag.String("sectionSearch", os.Args[1], "sectionSearch")
-		cfg.InitConfig(*sectionSearch)
-	} else {
-		fmt.Println("os args length error...")
-	}
+	// 启动前初始化参数,参数初始化失败会终止程序
+	cfg.InitConfigWithOsArgs(os.Args)
 
 	// 查询所有版本数量大于等于 6 的对象
 	buckets, e := es.SearchVersionStatus(MIN_VERSION_COUNT + 1)

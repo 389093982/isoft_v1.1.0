@@ -5,7 +5,6 @@ import (
 	"./locate"
 	"./objects"
 	"./temp"
-	"flag"
 	"fmt"
 	"isoft/isoft_storage/cfg"
 	"log"
@@ -14,12 +13,8 @@ import (
 )
 
 func main() {
-	if len(os.Args) > 1 {
-		sectionSearch := flag.String("sectionSearch", os.Args[1], "sectionSearch")
-		cfg.InitConfig(*sectionSearch)
-	} else {
-		fmt.Println("os args length error...")
-	}
+	// 启动前初始化参数,参数初始化失败会终止程序
+	cfg.InitConfigWithOsArgs(os.Args)
 
 	// 应用启动时对节点本地磁盘上的对象进行定位的,缓存对象定位信息,防止过于频繁的磁盘访问
 	locate.CollectObjects()

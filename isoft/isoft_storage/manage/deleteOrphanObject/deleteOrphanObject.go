@@ -1,8 +1,6 @@
 package main
 
 import (
-	"flag"
-	"fmt"
 	"isoft/isoft_storage/cfg"
 	"isoft/isoft_storage/lib/es"
 	"log"
@@ -14,12 +12,8 @@ import (
 
 // 删除没有元数据引用的对象数据
 func main() {
-	if len(os.Args) > 1 {
-		sectionSearch := flag.String("sectionSearch", os.Args[1], "sectionSearch")
-		cfg.InitConfig(*sectionSearch)
-	} else {
-		fmt.Println("os args length error...")
-	}
+	// 启动前初始化参数,参数初始化失败会终止程序
+	cfg.InitConfigWithOsArgs(os.Args)
 
 	files, _ := filepath.Glob(cfg.GetConfigValue(cfg.STORAGE_ROOT) + "/objects/*")
 
