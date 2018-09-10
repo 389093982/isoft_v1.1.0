@@ -141,7 +141,7 @@
             width:150
           });
         }
-        if($.inArray("deploy_status", this.hiddenColumn) < 0 && $.inArray(this.$route.query.service_type, ["beego","api"])>=0){
+        if($.inArray("deploy_status", this.hiddenColumn) < 0){
           columns.push({
             title: '操作结果',
             key: 'deploy_status',
@@ -490,8 +490,10 @@
               _this.renderLastDeployStatus(index,serviceInfo.id,interval);
             }, 2000);
           }
-          // 任务回调函数
-          callback(data);
+          if(callback != null){
+            // 任务回调函数
+            callback(data);
+          }
         }
       }
     },
