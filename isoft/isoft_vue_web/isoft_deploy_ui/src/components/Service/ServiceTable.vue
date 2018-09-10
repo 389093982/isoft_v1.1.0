@@ -1,5 +1,10 @@
 <template>
   <div style="margin-top: 10px;">
+    <Row style="margin-bottom: 5px;">
+      <Col span="12"><ServiceAdd style="float: left;"/></Col>
+      <Col span="12"><Button type="info" @click="hiddenColumnFunc()" style="float: right;">隐藏列</Button></Col>
+    </Row>
+
     <Table :columns="columns1" :data="serviceInfos" size="small" height="400"></Table>
     <Page :total="total" show-sizer :styles="{'text-align': 'center','margin-top': '10px'}"/>
 
@@ -57,11 +62,12 @@
   import {GetServiceTrackingLogDetail} from '../../api'
   import {FileDownload} from '../../api'
   import Loading from '../../components/Common/Loading.vue'
+  import ServiceAdd from "../../components/Service/ServiceAdd.vue"
   import MysqlInit from "./MysqlInit"
 
   export default {
     name: "ServiceTable",
-    components: {MysqlInit},
+    components: {MysqlInit,ServiceAdd},
     data () {
       return {
         // 日志详情标志
@@ -77,70 +83,84 @@
         // 新建账号和数据库 modal 时所选择的 index
         mysqlInit_index: -1,
         serviceInfos: [],
-        total:0
+        total:0,
+        // 需要隐藏的列
+        hiddenColumn:[]
       }
     },
     computed:{
       columns1(){
         let columns = [];
         // 通过计算属性动态添加列
-        columns.push({
-          title: '环境名称',
-          key: 'env_name',
-          width:100
-        });
-        columns.push({
-          title: 'IP地址',
-          key: 'env_ip',
-          width:120
-        });
-        columns.push({
-          title: '服务名称',
-          key: 'service_name',
-          width:150
-        });
-        columns.push({
-          title: '服务类型',
-          key: 'service_type',
-          width:100
-        });
-        columns.push({
-          title: '端口号',
-          key: 'service_port',
-          width:80
-        });
-        if($.inArray(this.$route.query.service_type, ["beego","api"])>=0){
+        if($.inArray("env_name", this.hiddenColumn) < 0){
+          columns.push({
+            title: '环境名称',
+            key: 'env_name',
+            width:100
+          });
+        };
+        if($.inArray("env_ip", this.hiddenColumn) < 0){
+          columns.push({
+            title: 'IP地址',
+            key: 'env_ip',
+            width:120
+          });
+        };
+        if($.inArray("service_name", this.hiddenColumn) < 0){
+          columns.push({
+            title: '服务名称',
+            key: 'service_name',
+            width:150
+          });
+        };
+        if($.inArray("service_type", this.hiddenColumn) < 0){
+          columns.push({
+            title: '服务类型',
+            key: 'service_type',
+            width:100
+          });
+        };
+        if($.inArray("service_port", this.hiddenColumn) < 0){
+          columns.push({
+            title: '端口号',
+            key: 'service_port',
+            width:80
+          });
+        };
+        if($.inArray("package_name", this.hiddenColumn) < 0 && $.inArray(this.$route.query.service_type, ["beego","api"])>=0){
           columns.push({
             title: '部署包名',
             key: 'package_name',
             width:200
           });
         }
-        if($.inArray(this.$route.query.service_type, ["beego","api"])>=0){
+        if($.inArray("run_mode", this.hiddenColumn) < 0 && $.inArray(this.$route.query.service_type, ["beego","api"])>=0){
           columns.push({
             title: '运行模式',
             key: 'run_mode',
             width:150
           });
         }
-        columns.push({
-          title: '操作结果',
-          key: 'deploy_status',
-          width:100,
-          render: (h, params) => {
-            // 动态渲染子组件
-            var operate_result = params['row']['deploy_status'];
-            if(operate_result=='loading'){
-              return h(Loading);
-            }else{
-              return h('div',operate_result);
+        if($.inArray("deploy_status", this.hiddenColumn) < 0 && $.inArray(this.$route.query.service_type, ["beego","api"])>=0){
+          columns.push({
+            title: '操作结果',
+            key: 'deploy_status',
+            width:100,
+            render: (h, params) => {
+              // 动态渲染子组件
+              var operate_result = params['row']['deploy_status'];
+              if(operate_result=='loading'){
+                return h(Loading);
+              }else{
+                return h('div',operate_result);
+              }
             }
-          }
-        });
+          });
+        }
         columns.push({
           title: '操作',
           key: 'operate',
-          width:550,
+          width:650,
           render: (h, params) => {
             return h('div', [
               h('Button', {
@@ -392,6 +412,13 @@
       }
     },
     methods:{
+      hiddenColumnFunc(){
+        if(this.hiddenColumn == false){
+          this.hiddenColumn = ["service_type","service_port","package_name","run_mode"];
+        }else{
+          this.hiddenColumn = [];
+        }
+      },
       mysqlInit_handleSubmit(data){
         // 关闭模态对话框
         this.mysqlInitModal = false;
