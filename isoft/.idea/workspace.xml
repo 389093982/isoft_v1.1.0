@@ -1,266 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="61c01151-84f0-4bfd-a227-5c1f0b5a424d" name="Default" comment="配置优化">
-      <change afterPath="$PROJECT_DIR$/isoft_doc/golang.org.x.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/isoft_storage/lib/log/log.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../github.com/klauspost/cpuid" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../github.com/klauspost/reedsolomon" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../github.com/kr/fs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../github.com/larspensjo/config" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../github.com/pkg/errors" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../github.com/pkg/sftp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../github.com/streadway/amqp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../golang.org/x/crypto" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../golang.org/x/net" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Gopkg.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Gopkg.toml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_doc/go_dep.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_storage/apiServer/apiServer.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_storage/apiServer/apiServer.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_storage/apiServer/objects/get_stream.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_storage/apiServer/objects/get_stream.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_storage/apiServer/objects/post.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_storage/apiServer/objects/post.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_storage/apiServer/objects/put_stream.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_storage/apiServer/objects/put_stream.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_storage/apiServer/objects/store.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_storage/apiServer/objects/store.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_storage/apiServer/temp/put.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_storage/apiServer/temp/put.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_storage/dataServer/dataServer.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_storage/dataServer/dataServer.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_storage/dataServer/objects/del.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_storage/dataServer/objects/del.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_storage/dataServer/objects/get_object.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_storage/dataServer/objects/get_object.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_storage/dataServer/temp/commit.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_storage/dataServer/temp/commit.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_storage/manage/objectScanner/objectScanner.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_storage/manage/objectScanner/objectScanner.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/.gosimpleignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/.travis.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/CONTRIBUTING.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/LICENSE" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/admin.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/adminui.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/app.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/beego.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/config.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/config/config.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/config/fake.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/config/ini.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/config/json.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/context/acceptencoder.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/context/context.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/context/input.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/context/output.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/context/param/conv.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/context/param/methodparams.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/context/param/options.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/context/param/parsers.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/context/renderer.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/context/response.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/controller.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/doc.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/error.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/filter.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/flash.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/grace/conn.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/grace/grace.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/grace/listener.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/grace/server.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/hooks.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/log.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/logs/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/logs/accesslog.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/logs/color.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/logs/color_windows.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/logs/conn.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/logs/console.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/logs/file.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/logs/jianliao.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/logs/log.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/logs/logger.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/logs/multifile.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/logs/slack.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/logs/smtp.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/mime.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/mime.go.733062071" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_doc/go_mod.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/namespace.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/orm/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/orm/cmd.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/orm/cmd_utils.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/orm/db.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/orm/db_alias.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/orm/db_mysql.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/orm/db_oracle.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/orm/db_postgres.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/orm/db_sqlite.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/orm/db_tables.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/orm/db_tidb.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/orm/db_utils.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/orm/models.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/orm/models_boot.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/orm/models_fields.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/orm/models_info_f.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/orm/models_info_m.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/orm/models_utils.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/orm/orm.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/orm/orm_conds.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/orm/orm_log.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/orm/orm_object.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/orm/orm_querym2m.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/orm/orm_queryset.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/orm/orm_raw.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/orm/qb.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/orm/qb_mysql.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/orm/qb_tidb.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/orm/types.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/orm/utils.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/parser.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/policy.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/router.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/session/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/session/sess_cookie.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/session/sess_file.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/session/sess_mem.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/session/sess_utils.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/session/session.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/staticfile.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/template.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/templatefunc.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/toolbox/healthcheck.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/toolbox/profile.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/toolbox/statistics.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/toolbox/task.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/toolbox/task.go.600106252" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/tree.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/utils/caller.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/utils/captcha/LICENSE" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/utils/debug.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/utils/file.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/utils/mail.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/utils/pagination/controller.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/utils/pagination/doc.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/utils/pagination/paginator.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/utils/pagination/utils.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/utils/rand.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/utils/safemap.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/utils/slice.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/astaxie/beego/utils/utils.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/dgrijalva/jwt-go/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/dgrijalva/jwt-go/.travis.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/dgrijalva/jwt-go/LICENSE" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/dgrijalva/jwt-go/MIGRATION_GUIDE.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/dgrijalva/jwt-go/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/dgrijalva/jwt-go/VERSION_HISTORY.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/dgrijalva/jwt-go/claims.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/dgrijalva/jwt-go/doc.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/dgrijalva/jwt-go/ecdsa.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/dgrijalva/jwt-go/ecdsa_utils.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/dgrijalva/jwt-go/errors.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/dgrijalva/jwt-go/hmac.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/dgrijalva/jwt-go/map_claims.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/dgrijalva/jwt-go/none.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/dgrijalva/jwt-go/parser.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/dgrijalva/jwt-go/rsa.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/dgrijalva/jwt-go/rsa_pss.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/dgrijalva/jwt-go/rsa_utils.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/dgrijalva/jwt-go/signing_method.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/dgrijalva/jwt-go/token.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/go-sql-driver/mysql/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/go-sql-driver/mysql/.travis.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/go-sql-driver/mysql/AUTHORS" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/go-sql-driver/mysql/CHANGELOG.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/go-sql-driver/mysql/CONTRIBUTING.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/go-sql-driver/mysql/LICENSE" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/go-sql-driver/mysql/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/go-sql-driver/mysql/appengine.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/go-sql-driver/mysql/buffer.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/go-sql-driver/mysql/collations.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/go-sql-driver/mysql/connection.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/go-sql-driver/mysql/const.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/go-sql-driver/mysql/driver.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/go-sql-driver/mysql/dsn.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/go-sql-driver/mysql/errors.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/go-sql-driver/mysql/infile.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/go-sql-driver/mysql/packets.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/go-sql-driver/mysql/result.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/go-sql-driver/mysql/rows.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/go-sql-driver/mysql/statement.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/go-sql-driver/mysql/transaction.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/go-sql-driver/mysql/utils.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/gopherjs/gopherjs/LICENSE" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/gopherjs/gopherjs/js/js.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/jtolds/gls/LICENSE" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/jtolds/gls/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/jtolds/gls/context.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/jtolds/gls/gen_sym.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/jtolds/gls/gid.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/jtolds/gls/id_pool.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/jtolds/gls/stack_tags.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/jtolds/gls/stack_tags_js.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/jtolds/gls/stack_tags_main.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/satori/go.uuid/.travis.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/satori/go.uuid/LICENSE" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/satori/go.uuid/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/satori/go.uuid/codec.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/satori/go.uuid/generator.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/satori/go.uuid/sql.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/satori/go.uuid/uuid.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/smartystreets/assertions/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/smartystreets/assertions/.travis.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/smartystreets/assertions/CONTRIBUTING.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/smartystreets/assertions/LICENSE.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/smartystreets/assertions/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/smartystreets/assertions/collections.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/smartystreets/assertions/doc.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/smartystreets/assertions/equal_method.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/smartystreets/assertions/equality.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/smartystreets/assertions/filter.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/smartystreets/assertions/internal/go-render/LICENSE" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/smartystreets/assertions/internal/go-render/render/render.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/smartystreets/assertions/internal/go-render/render/render_time.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/smartystreets/assertions/internal/oglematchers/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/smartystreets/assertions/internal/oglematchers/.travis.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/smartystreets/assertions/internal/oglematchers/LICENSE" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/smartystreets/assertions/internal/oglematchers/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/smartystreets/assertions/internal/oglematchers/any_of.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/smartystreets/assertions/internal/oglematchers/contains.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/smartystreets/assertions/internal/oglematchers/deep_equals.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/smartystreets/assertions/internal/oglematchers/equals.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/smartystreets/assertions/internal/oglematchers/greater_or_equal.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/smartystreets/assertions/internal/oglematchers/greater_than.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/smartystreets/assertions/internal/oglematchers/less_or_equal.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/smartystreets/assertions/internal/oglematchers/less_than.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/smartystreets/assertions/internal/oglematchers/matcher.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/smartystreets/assertions/internal/oglematchers/not.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/smartystreets/assertions/internal/oglematchers/transform_description.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/smartystreets/assertions/messages.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/smartystreets/assertions/panic.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/smartystreets/assertions/quantity.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/smartystreets/assertions/serializer.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/smartystreets/assertions/strings.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/smartystreets/assertions/time.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/smartystreets/assertions/type.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/smartystreets/goconvey/LICENSE.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/smartystreets/goconvey/convey/assertions.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/smartystreets/goconvey/convey/context.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/smartystreets/goconvey/convey/convey.goconvey" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/smartystreets/goconvey/convey/discovery.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/smartystreets/goconvey/convey/doc.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/smartystreets/goconvey/convey/gotest/utils.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/smartystreets/goconvey/convey/init.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/smartystreets/goconvey/convey/nilReporter.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/smartystreets/goconvey/convey/reporting/console.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/smartystreets/goconvey/convey/reporting/doc.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/smartystreets/goconvey/convey/reporting/dot.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/smartystreets/goconvey/convey/reporting/gotest.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/smartystreets/goconvey/convey/reporting/init.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/smartystreets/goconvey/convey/reporting/json.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/smartystreets/goconvey/convey/reporting/printer.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/smartystreets/goconvey/convey/reporting/problems.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/smartystreets/goconvey/convey/reporting/reporter.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/smartystreets/goconvey/convey/reporting/reporting.goconvey" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/smartystreets/goconvey/convey/reporting/reports.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/smartystreets/goconvey/convey/reporting/statistics.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/smartystreets/goconvey/convey/reporting/story.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/smartystreets/goconvey/web/client/resources/fonts/Open_Sans/LICENSE.txt" beforeDir="false" />
-    </list>
+    <list default="true" id="61c01151-84f0-4bfd-a227-5c1f0b5a424d" name="Default" comment="项目转换至golang1.11&#10;不再支持相对路径引用" />
     <ignored path="isoft_deploy_web/static/uploadfile/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -291,117 +32,9 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="encoder.go" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/isoft_storage/lib/rs/encoder.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
-              <caret line="2" column="7" lean-forward="true" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
-              <folding>
-                <element signature="e#12#64#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="get.go" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/isoft_storage/lib/rs/get.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
-              <caret line="2" column="7" lean-forward="true" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
-              <folding>
-                <element signature="e#12#75#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="put.go" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/isoft_storage/lib/rs/put.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
-              <caret line="2" column="7" lean-forward="true" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
-              <folding>
-                <element signature="e#12#75#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="resumable_get.go" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/isoft_storage/lib/rs/resumable_get.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
-              <caret line="2" column="7" lean-forward="true" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
-              <folding>
-                <element signature="e#12#68#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="resumable_put.go" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/isoft_storage/lib/rs/resumable_put.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
-              <caret line="2" column="7" lean-forward="true" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
-              <folding>
-                <element signature="e#12#163#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="types.go" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/isoft_storage/lib/types/types.go">
+      <file leaf-file-name="go_mod.txt" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/isoft_doc/go_mod.txt">
           <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file leaf-file-name="utils.go" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/isoft_storage/lib/utils/utils.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
-              <caret line="2" column="7" lean-forward="true" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
-              <folding>
-                <element signature="e#15#101#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="deleteOldMetadata.go" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/isoft_storage/manage/deleteOldMetadata/deleteOldMetadata.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
-              <caret line="2" column="7" lean-forward="true" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
-              <folding>
-                <element signature="e#14#94#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="deleteOrphanObject.go" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/isoft_storage/manage/deleteOrphanObject/deleteOrphanObject.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
-              <caret line="2" column="7" lean-forward="true" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
-              <folding>
-                <element signature="e#14#134#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="objectScanner.go" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/isoft_storage/manage/objectScanner/objectScanner.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="11" column="13" lean-forward="true" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
-              <folding>
-                <element signature="e#14#154#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
         </entry>
       </file>
     </leaf>
@@ -622,160 +255,6 @@
               <item name="isoft" type="b2602c69:ProjectViewProjectNode" />
               <item name="isoft" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="isoft" type="b2602c69:ProjectViewProjectNode" />
-              <item name="isoft" type="462c0819:PsiDirectoryNode" />
-              <item name="isoft_storage" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="isoft" type="b2602c69:ProjectViewProjectNode" />
-              <item name="isoft" type="462c0819:PsiDirectoryNode" />
-              <item name="isoft_storage" type="462c0819:PsiDirectoryNode" />
-              <item name="apiServer" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="isoft" type="b2602c69:ProjectViewProjectNode" />
-              <item name="isoft" type="462c0819:PsiDirectoryNode" />
-              <item name="isoft_storage" type="462c0819:PsiDirectoryNode" />
-              <item name="apiServer" type="462c0819:PsiDirectoryNode" />
-              <item name="heartbeat" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="isoft" type="b2602c69:ProjectViewProjectNode" />
-              <item name="isoft" type="462c0819:PsiDirectoryNode" />
-              <item name="isoft_storage" type="462c0819:PsiDirectoryNode" />
-              <item name="apiServer" type="462c0819:PsiDirectoryNode" />
-              <item name="locate" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="isoft" type="b2602c69:ProjectViewProjectNode" />
-              <item name="isoft" type="462c0819:PsiDirectoryNode" />
-              <item name="isoft_storage" type="462c0819:PsiDirectoryNode" />
-              <item name="apiServer" type="462c0819:PsiDirectoryNode" />
-              <item name="objects" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="isoft" type="b2602c69:ProjectViewProjectNode" />
-              <item name="isoft" type="462c0819:PsiDirectoryNode" />
-              <item name="isoft_storage" type="462c0819:PsiDirectoryNode" />
-              <item name="apiServer" type="462c0819:PsiDirectoryNode" />
-              <item name="temp" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="isoft" type="b2602c69:ProjectViewProjectNode" />
-              <item name="isoft" type="462c0819:PsiDirectoryNode" />
-              <item name="isoft_storage" type="462c0819:PsiDirectoryNode" />
-              <item name="apiServer" type="462c0819:PsiDirectoryNode" />
-              <item name="versions" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="isoft" type="b2602c69:ProjectViewProjectNode" />
-              <item name="isoft" type="462c0819:PsiDirectoryNode" />
-              <item name="isoft_storage" type="462c0819:PsiDirectoryNode" />
-              <item name="dataServer" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="isoft" type="b2602c69:ProjectViewProjectNode" />
-              <item name="isoft" type="462c0819:PsiDirectoryNode" />
-              <item name="isoft_storage" type="462c0819:PsiDirectoryNode" />
-              <item name="dataServer" type="462c0819:PsiDirectoryNode" />
-              <item name="heartbeat" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="isoft" type="b2602c69:ProjectViewProjectNode" />
-              <item name="isoft" type="462c0819:PsiDirectoryNode" />
-              <item name="isoft_storage" type="462c0819:PsiDirectoryNode" />
-              <item name="dataServer" type="462c0819:PsiDirectoryNode" />
-              <item name="locate" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="isoft" type="b2602c69:ProjectViewProjectNode" />
-              <item name="isoft" type="462c0819:PsiDirectoryNode" />
-              <item name="isoft_storage" type="462c0819:PsiDirectoryNode" />
-              <item name="dataServer" type="462c0819:PsiDirectoryNode" />
-              <item name="objects" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="isoft" type="b2602c69:ProjectViewProjectNode" />
-              <item name="isoft" type="462c0819:PsiDirectoryNode" />
-              <item name="isoft_storage" type="462c0819:PsiDirectoryNode" />
-              <item name="dataServer" type="462c0819:PsiDirectoryNode" />
-              <item name="temp" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="isoft" type="b2602c69:ProjectViewProjectNode" />
-              <item name="isoft" type="462c0819:PsiDirectoryNode" />
-              <item name="isoft_storage" type="462c0819:PsiDirectoryNode" />
-              <item name="lib" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="isoft" type="b2602c69:ProjectViewProjectNode" />
-              <item name="isoft" type="462c0819:PsiDirectoryNode" />
-              <item name="isoft_storage" type="462c0819:PsiDirectoryNode" />
-              <item name="lib" type="462c0819:PsiDirectoryNode" />
-              <item name="es" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="isoft" type="b2602c69:ProjectViewProjectNode" />
-              <item name="isoft" type="462c0819:PsiDirectoryNode" />
-              <item name="isoft_storage" type="462c0819:PsiDirectoryNode" />
-              <item name="lib" type="462c0819:PsiDirectoryNode" />
-              <item name="log" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="isoft" type="b2602c69:ProjectViewProjectNode" />
-              <item name="isoft" type="462c0819:PsiDirectoryNode" />
-              <item name="isoft_storage" type="462c0819:PsiDirectoryNode" />
-              <item name="lib" type="462c0819:PsiDirectoryNode" />
-              <item name="objectstream" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="isoft" type="b2602c69:ProjectViewProjectNode" />
-              <item name="isoft" type="462c0819:PsiDirectoryNode" />
-              <item name="isoft_storage" type="462c0819:PsiDirectoryNode" />
-              <item name="lib" type="462c0819:PsiDirectoryNode" />
-              <item name="types" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="isoft" type="b2602c69:ProjectViewProjectNode" />
-              <item name="isoft" type="462c0819:PsiDirectoryNode" />
-              <item name="isoft_storage" type="462c0819:PsiDirectoryNode" />
-              <item name="lib" type="462c0819:PsiDirectoryNode" />
-              <item name="utils" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="isoft" type="b2602c69:ProjectViewProjectNode" />
-              <item name="isoft" type="462c0819:PsiDirectoryNode" />
-              <item name="isoft_storage" type="462c0819:PsiDirectoryNode" />
-              <item name="manage" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="isoft" type="b2602c69:ProjectViewProjectNode" />
-              <item name="isoft" type="462c0819:PsiDirectoryNode" />
-              <item name="isoft_storage" type="462c0819:PsiDirectoryNode" />
-              <item name="manage" type="462c0819:PsiDirectoryNode" />
-              <item name="deleteOldMetadata" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="isoft" type="b2602c69:ProjectViewProjectNode" />
-              <item name="isoft" type="462c0819:PsiDirectoryNode" />
-              <item name="isoft_storage" type="462c0819:PsiDirectoryNode" />
-              <item name="manage" type="462c0819:PsiDirectoryNode" />
-              <item name="deleteOrphanObject" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="isoft" type="b2602c69:ProjectViewProjectNode" />
-              <item name="isoft" type="462c0819:PsiDirectoryNode" />
-              <item name="isoft_storage" type="462c0819:PsiDirectoryNode" />
-              <item name="manage" type="462c0819:PsiDirectoryNode" />
-              <item name="objectScanner" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="isoft" type="b2602c69:ProjectViewProjectNode" />
-              <item name="isoft" type="462c0819:PsiDirectoryNode" />
-              <item name="isoft_storage" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
@@ -786,7 +265,7 @@
   <component name="PropertiesComponent">
     <property name="DefaultGoTemplateProperty" value="Go File" />
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
-    <property name="GO_FMT" value="true" />
+    <property name="GO_FMT" value="false" />
     <property name="SearchEverywhereHistoryKey" value="''&#9;null&#9;null" />
     <property name="configurable.Global.GOPATH.is.expanded" value="true" />
     <property name="configurable.Module.GOPATH.is.expanded" value="true" />
@@ -836,7 +315,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Go Build.go build apiServer.go">
+  <component name="RunManager" selected="Go Build.go build dataServer.go-node2">
     <configuration name="go build apiServer.go" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
       <module name="isoft" />
       <working_directory value="D:\zhourui\program\go\goland_workspace\src\isoft\isoft_storage\apiServer" />
@@ -1023,7 +502,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="1" sideWeight="0.28368795" visible="true" weight="0.25707355" />
       <window_info anchor="bottom" id="TODO" order="12" weight="0.3297491" />
@@ -1077,7 +555,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="调整sso和blog应用日志目录" />
     <MESSAGE value="调整ilearning应用日志目录" />
     <MESSAGE value="移动端口号配置&#10;自动部署支持端口号修改" />
     <MESSAGE value="beego类型应用部署优化" />
@@ -1102,7 +579,8 @@
     <MESSAGE value="表格隐藏显示列功能实现" />
     <MESSAGE value="代码优化" />
     <MESSAGE value="配置优化" />
-    <option name="LAST_COMMIT_MESSAGE" value="配置优化" />
+    <MESSAGE value="项目转换至golang1.11&#10;不再支持相对路径引用" />
+    <option name="LAST_COMMIT_MESSAGE" value="项目转换至golang1.11&#10;不再支持相对路径引用" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
@@ -1157,43 +635,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/isoft_storage/apiServer/locate/locate.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="7" lean-forward="true" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
-          <folding>
-            <element signature="e#16#177#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_storage/apiServer/objects/del.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="7" lean-forward="true" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
-          <folding>
-            <element signature="e#17#87#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_storage/apiServer/objects/get.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="7" lean-forward="true" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
-          <folding>
-            <element signature="e#17#172#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_storage/apiServer/objects/get_stream.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="32" lean-forward="true" selection-start-line="4" selection-start-column="32" selection-end-line="4" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/isoft_storage/apiServer/objects/handler.go">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -1613,13 +1054,40 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/isoft_storage/manage/objectScanner/objectScanner.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="11" column="13" lean-forward="true" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
+        <state relative-caret-position="102">
+          <caret line="7" column="8" lean-forward="true" selection-start-line="7" selection-start-column="8" selection-end-line="7" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/google.golang.org/appengine/cloudsql/cloudsql.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="307">
+          <caret line="56" column="1" lean-forward="true" selection-start-line="56" selection-start-column="1" selection-end-line="56" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/google.golang.org/appengine/cloudsql/cloudsql_classic.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="7" lean-forward="true" selection-start-line="8" selection-start-column="7" selection-end-line="8" selection-end-column="7" />
           <folding>
-            <element signature="e#14#154#0" expanded="true" />
+            <element signature="e#198#238#0" expanded="true" />
           </folding>
         </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/google.golang.org/appengine/cloudsql/cloudsql_vm.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="7" lean-forward="true" selection-start-line="8" selection-start-column="7" selection-end-line="8" selection-end-column="7" />
+          <folding>
+            <element signature="e#199#226#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_doc/go_mod.txt">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
   </component>
   <component name="masterDetails">
