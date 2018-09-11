@@ -1,12 +1,12 @@
 package main
 
 import (
-	"../../apiServer/objects"
 	"isoft/isoft_storage/cfg"
 	"isoft/isoft_storage/lib/es"
 	"isoft/isoft_storage/lib/utils"
 	"log"
 	"os"
+	"isoft/isoft_storage/apiServer/objects"
 )
 
 func main() {

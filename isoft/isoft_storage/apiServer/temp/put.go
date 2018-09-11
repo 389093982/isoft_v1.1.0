@@ -1,7 +1,6 @@
 package temp
 
 import (
-	"../locate"
 	"io"
 	"isoft/isoft_storage/lib/es"
 	"isoft/isoft_storage/lib/rs"
@@ -10,6 +9,7 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
+	"isoft/isoft_storage/apiServer/locate"
 )
 
 func put(w http.ResponseWriter, r *http.Request) {

@@ -1,7 +1,6 @@
 package objects
 
 import (
-	"../locate"
 	"crypto/sha256"
 	"encoding/base64"
 	"isoft/isoft_storage/cfg"
@@ -10,6 +9,7 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+	"isoft/isoft_storage/dataServer/locate"
 )
 
 func getFile(name string) string {

@@ -1,16 +1,16 @@
 package main
 
 import (
-	"./heartbeat"
-	"./locate"
-	"./objects"
-	"./temp"
-	"./versions"
-	"fmt"
 	"isoft/isoft_storage/cfg"
-	"log"
-	"net/http"
 	"os"
+	"isoft/isoft_storage/apiServer/heartbeat"
+	"net/http"
+	"isoft/isoft_storage/apiServer/locate"
+	"isoft/isoft_storage/apiServer/versions"
+	"fmt"
+	"strings"
+	"isoft/isoft_storage/apiServer/objects"
+	"isoft/isoft_storage/apiServer/temp"
 )
 
 func main() {
@@ -30,7 +30,13 @@ func main() {
 	// 提供对象的列表功能,用于查询所有对象或指定对象的所有版本
 	http.HandleFunc("/versions/", versions.Handler)
 
-	fmt.Println(fmt.Sprintf("Start ListenAndServe address %s", cfg.GetConfigValue(cfg.LISTEN_ADDRESS)))
+	LISTEN_ADDRESS := cfg.GetConfigValue(cfg.LISTEN_ADDRESS)
 
-	log.Fatal(http.ListenAndServe(cfg.GetConfigValue(cfg.LISTEN_ADDRESS), nil))
+	fmt.Println(fmt.Sprintf("Start ListenAndServe address %s", LISTEN_ADDRESS))
+
+	bind_address := string([]rune(LISTEN_ADDRESS)[strings.Index(LISTEN_ADDRESS, ":"):])
+
+	fmt.Println(fmt.Sprintf("Start bind_address %s", bind_address))
+
+	http.ListenAndServe(bind_address, nil)
 }

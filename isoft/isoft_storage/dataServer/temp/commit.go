@@ -1,7 +1,6 @@
 package temp
 
 import (
-	"../locate"
 	"compress/gzip"
 	"io"
 	"isoft/isoft_storage/cfg"
@@ -10,6 +9,7 @@ import (
 	"os"
 	"strconv"
 	"strings"
+	"isoft/isoft_storage/dataServer/locate"
 )
 
 // 获取分片 hash 值

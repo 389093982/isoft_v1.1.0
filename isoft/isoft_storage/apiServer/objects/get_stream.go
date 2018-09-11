@@ -1,10 +1,10 @@
 package objects
 
 import (
-	"../heartbeat"
-	"../locate"
 	"fmt"
 	"isoft/isoft_storage/lib/rs"
+	"isoft/isoft_storage/apiServer/heartbeat"
+	"isoft/isoft_storage/apiServer/locate"
 )
 
 func GetStream(hash string, size int64) (*rs.RSGetStream, error) {

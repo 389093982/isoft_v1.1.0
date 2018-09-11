@@ -1,9 +1,9 @@
 package objects
 
 import (
-	"../heartbeat"
 	"fmt"
 	"isoft/isoft_storage/lib/rs"
+	"isoft/isoft_storage/apiServer/heartbeat"
 )
 
 // putStream(NewRSPutStream) -> NewTempPutStream

@@ -1,0 +1,30 @@
+其实 golang 在 github 上建立了一个镜像库,如 https://github.com/golang/net 即是 https://golang.org/x/net 的镜像库
+
+获取 golang.org/x/net 包,其实只需要以下步骤:
+
+mkdir -p $GOPATH/src/golang.org/x
+cd $GOPATH/src/golang.org/x
+git clone https://github.com/golang/net.git
+
+
+在国内访问 golang.org/x的各个包都需要翻墙,你可以在 go.mod中使用 replace 替换成 github 上对应的库
+
+egg:
+
+go get github.com/golang/image@master
+然后我们查看版本号:
+cat go.mod
+有了版本号,我们就能replace了:
+go mod edit -replace=golang.org/x/image@v0.0.0-20180708004352-c73c2afc3b81=github.com/golang/image@v0.0.0-20180708004352-c73c2afc3b81
+现在我们查看一下go.mod:
+replace信息已经更新了,现在我们只要go mod tidy或者go build,我们的代码就可以使用new-package了.
+更新后的go.sum,依赖已经替换成了镜像:
+目前来看,replace做的远不如go get那样方便人性化,不过毕竟还只是测试阶段的功能,期待一下它在go1.12的表现吧.
+
+关于 $GOPROXY
+当我们使用go的时候,go默认会直接从代码库中去下载所需的相关依赖,GOPROXY 这个环境变量可以让我们控制自己从哪里去下载源代码,
+如果 GOPROXY 没有设置,go 会直接从代码库下载相关依赖代码.如果你像下面这样设置了这个环境变量,那么你就会通过 goproxy.io 下载所有的源代码.
+export GOPROXY=https://goproxy.io
+你可以通过置空这个环境变量来关闭,export GOPROXY=
+如果要开机、全局生效的就要在/etc/profile中也加入即可.
+查看当前系统中的变量,这里过滤GO的配置

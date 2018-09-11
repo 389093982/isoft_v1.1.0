@@ -1,15 +1,15 @@
 package main
 
 import (
-	"./heartbeat"
-	"./locate"
-	"./objects"
-	"./temp"
 	"fmt"
 	"isoft/isoft_storage/cfg"
-	"log"
 	"net/http"
 	"os"
+	"strings"
+	"isoft/isoft_storage/dataServer/locate"
+	"isoft/isoft_storage/dataServer/heartbeat"
+	"isoft/isoft_storage/dataServer/objects"
+	"isoft/isoft_storage/dataServer/temp"
 )
 
 func main() {
@@ -30,7 +30,13 @@ func main() {
 
 	http.HandleFunc("/temp/", temp.Handler)
 
-	fmt.Println(fmt.Sprintf("Start ListenAndServe address %s", cfg.GetConfigValue(cfg.LISTEN_ADDRESS)))
+	LISTEN_ADDRESS := cfg.GetConfigValue(cfg.LISTEN_ADDRESS)
 
-	log.Fatal(http.ListenAndServe(cfg.GetConfigValue(cfg.LISTEN_ADDRESS), nil))
+	fmt.Println(fmt.Sprintf("Start ListenAndServe address %s", LISTEN_ADDRESS))
+
+	bind_address := string([]rune(LISTEN_ADDRESS)[strings.Index(LISTEN_ADDRESS, ":"):])
+
+	fmt.Println(fmt.Sprintf("Start bind_address %s", bind_address))
+
+	http.ListenAndServe(bind_address, nil)
 }
