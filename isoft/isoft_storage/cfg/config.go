@@ -8,6 +8,7 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+	"isoft/isoft/common/logutil"
 )
 
 func GetConfigValue(key string) string {
@@ -29,6 +30,10 @@ func InitConfigWithOsArgs(args []string) {
 	}()
 	// 初始化配置,两个参数分别是环境名称和 section 名称
 	initCfg(args[1], args[2])
+	// 创建必要的文件夹
+	mkNecessaryDir()
+	// 日志初始化
+	setLogger(args[2])
 }
 
 func initCfg(env_name, section_name string) {
@@ -70,4 +75,20 @@ func initConfigData(section_name string) {
 			}
 		}
 	}
+}
+
+// 创建必要的文件夹,此处主要指 STORAGE_ROOT
+func mkNecessaryDir()  {
+	STORAGE_ROOT := GetConfigValue(STORAGE_ROOT)
+	os.MkdirAll(STORAGE_ROOT, os.ModePerm)
+	os.MkdirAll(filepath.Join(STORAGE_ROOT, "objects"), os.ModePerm)
+	os.MkdirAll(filepath.Join(STORAGE_ROOT, "temp"), os.ModePerm)
+}
+
+func setLogger(section_name string)  {
+	STORAGE_LOGDIR := GetConfigValue(STORAGE_LOGDIR)
+	// 创建日志文件夹
+	os.MkdirAll(STORAGE_LOGDIR, os.ModePerm)
+	// 设置日志配置信息
+	logutil.SetLogger(STORAGE_LOGDIR, fmt.Sprintf("%s.txt", section_name))
 }

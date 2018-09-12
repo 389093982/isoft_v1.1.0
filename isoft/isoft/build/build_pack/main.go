@@ -4,7 +4,6 @@ import (
 	"isoft/isoft/build/build_pack/pack"
 	"log"
 	"os"
-	"path/filepath"
 )
 
 func main() {
@@ -13,8 +12,7 @@ func main() {
 	os.Setenv("GOOS", "linux")
 	defer os.Setenv("GOOS", GOOS)
 
-	gopath := os.Getenv("GOPATH")
-	packApps := pack.ReadPackApp(filepath.Join(gopath, "src/isoft/isoft/build/build_pack/pack.xml"))
+	packApps := pack.ReadPackApp("./pack.xml")
 	err := pack.StartAllPackTask(&packApps, "")
 	if err != nil {
 		log.Println(err)

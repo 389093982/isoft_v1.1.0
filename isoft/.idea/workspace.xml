@@ -2,12 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="61c01151-84f0-4bfd-a227-5c1f0b5a424d" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/isoft_storage/lib/logutil/logutil.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/isoft_storage/lib/logutil/logutil_test.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_storage/lib/log/logutil.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_storage/lib/logutil/logrous.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft/build/build_pack/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft/build/build_pack/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft/build/build_pack/pack/pack.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft/build/build_pack/pack/pack.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_storage/apiServer/apiServer.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_storage/apiServer/apiServer.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_storage/cfg/aliyun_cfg.ini" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_storage/cfg/aliyun_cfg.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_storage/cfg/config.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_storage/cfg/config.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_storage/cfg/constant.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_storage/cfg/constant.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_storage/cfg/local_cfg.ini" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_storage/cfg/local_cfg.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_storage/cfg/txyun_cfg.ini" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_storage/cfg/txyun_cfg.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_storage/lib/logutil/logrous.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft/common/logutil/logrous.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_storage/lib/logutil/logutil.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft/common/logutil/logutil.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_storage/lib/logutil/logutil_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft/common/logutil/logutil_test.go" afterDir="false" />
     </list>
     <ignored path="isoft_deploy_web/static/uploadfile/" />
     <ignored path="../.idea/inspectionProfiles/profiles_settings.xml" />
@@ -40,38 +46,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="logrous.go" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/isoft_storage/lib/logutil/logrous.go">
+      <file leaf-file-name="config.go" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/isoft_storage/cfg/config.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="72">
-              <caret line="17" column="34" lean-forward="true" selection-start-line="17" selection-start-column="34" selection-end-line="17" selection-end-column="34" />
-              <folding>
-                <element signature="e#13#182#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="logutil.go" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/isoft_storage/lib/logutil/logutil.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="8" column="22" selection-start-line="8" selection-start-column="22" selection-end-line="8" selection-end-column="22" />
-              <folding>
-                <element signature="e#17#65#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="logutil_test.go" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/isoft_storage/lib/logutil/logutil_test.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
-              <folding>
-                <element signature="e#12#40#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="127">
+              <caret line="75" column="9" lean-forward="true" selection-start-line="75" selection-start-column="9" selection-end-line="75" selection-end-column="9" />
             </state>
           </provider>
         </entry>
@@ -179,6 +158,7 @@
         <option value="file://$PROJECT_DIR$/../.." />
       </list>
     </option>
+    <option name="useGoPathFromSystemEnvironment" value="false" />
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_ui/src/App.vue" root0="FORCE_HIGHLIGHTING" />
@@ -186,9 +166,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/isoft/common/sftputil/sftputil.go" />
-        <option value="$PROJECT_DIR$/isoft_deploy_web/controllers/config.go" />
-        <option value="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_ui/src/components/Config/ConfigTable.vue" />
         <option value="$PROJECT_DIR$/isoft_deploy_web/deploy_core/deploy/command.go" />
         <option value="$PROJECT_DIR$/isoft_deploy_web/shell/api/api_check.sh" />
         <option value="$PROJECT_DIR$/isoft_deploy_web/deploy_core/deploy/command_args.go" />
@@ -200,8 +177,6 @@
         <option value="$PROJECT_DIR$/isoft_storage/osargs/main.go" />
         <option value="$PROJECT_DIR$/isoft_storage/manage/deleteOldMetadata/deleteOldMetadata.go" />
         <option value="$PROJECT_DIR$/isoft_storage/manage/deleteOrphanObject/deleteOrphanObject.go" />
-        <option value="$PROJECT_DIR$/isoft_storage/cfg/constant.go" />
-        <option value="$PROJECT_DIR$/isoft_storage/cfg/config.go" />
         <option value="$PROJECT_DIR$/isoft_deploy_web/shell/api/api_startup.sh" />
         <option value="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_ui/src/components/Service/ServiceList.vue" />
         <option value="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_ui/src/components/Header/Header.vue" />
@@ -211,13 +186,10 @@
         <option value="$PROJECT_DIR$/isoft_deploy_web/conf/txyun.conf" />
         <option value="$PROJECT_DIR$/isoft_learning_web/conf/txyun.conf" />
         <option value="$PROJECT_DIR$/isoft_sso_web/conf/txyun.conf" />
-        <option value="$PROJECT_DIR$/isoft_storage/cfg/txyun_cfg.ini" />
-        <option value="$PROJECT_DIR$/isoft_storage/cfg/aliyun_cfg.ini" />
         <option value="$PROJECT_DIR$/isoft/db/connection_test.go" />
         <option value="$PROJECT_DIR$/go.mod" />
         <option value="$PROJECT_DIR$/isoft_doc/golang.org.x.txt" />
         <option value="$PROJECT_DIR$/isoft_doc/go_mod.txt" />
-        <option value="$PROJECT_DIR$/isoft_storage/apiServer/apiServer.go" />
         <option value="$PROJECT_DIR$/isoft_storage/apiServer/objects/get_stream.go" />
         <option value="$PROJECT_DIR$/isoft_storage/apiServer/objects/post.go" />
         <option value="$PROJECT_DIR$/isoft_storage/apiServer/objects/put_stream.go" />
@@ -237,6 +209,14 @@
         <option value="$PROJECT_DIR$/isoft_storage/lib/logutil/logutil.go" />
         <option value="$PROJECT_DIR$/isoft_storage/lib/logutil/logutil_test.go" />
         <option value="$PROJECT_DIR$/isoft_storage/lib/logutil/logrous.go" />
+        <option value="$PROJECT_DIR$/isoft/build/build_pack/main.go" />
+        <option value="$PROJECT_DIR$/isoft/build/build_pack/pack/pack.go" />
+        <option value="$PROJECT_DIR$/isoft_storage/cfg/txyun_cfg.ini" />
+        <option value="$PROJECT_DIR$/isoft_storage/cfg/aliyun_cfg.ini" />
+        <option value="$PROJECT_DIR$/isoft_storage/cfg/local_cfg.ini" />
+        <option value="$PROJECT_DIR$/isoft_storage/apiServer/apiServer.go" />
+        <option value="$PROJECT_DIR$/isoft_storage/cfg/constant.go" />
+        <option value="$PROJECT_DIR$/isoft_storage/cfg/config.go" />
       </list>
     </option>
   </component>
@@ -303,14 +283,13 @@
               <item name="isoft" type="b2602c69:ProjectViewProjectNode" />
               <item name="isoft" type="462c0819:PsiDirectoryNode" />
               <item name="isoft_storage" type="462c0819:PsiDirectoryNode" />
-              <item name="lib" type="462c0819:PsiDirectoryNode" />
+              <item name="apiServer" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="isoft" type="b2602c69:ProjectViewProjectNode" />
               <item name="isoft" type="462c0819:PsiDirectoryNode" />
               <item name="isoft_storage" type="462c0819:PsiDirectoryNode" />
-              <item name="lib" type="462c0819:PsiDirectoryNode" />
-              <item name="logutil" type="462c0819:PsiDirectoryNode" />
+              <item name="cfg" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -331,7 +310,7 @@
     <property name="go.gopath.indexing.explicitly.defined" value="true" />
     <property name="go.sdk.automatically.set" value="true" />
     <property name="go.vendoring.notification.had.been.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/isoft_storage/apiServer" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/isoft_storage/dataServer" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.standard" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -353,11 +332,11 @@
       <recent name="D:\zhourui\program\go\goland_workspace\src\isoft\isoft_vue_web\isoft_deploy_ui\src\components\Config" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\zhourui\program\go\goland_workspace\src\isoft\isoft\common" />
       <recent name="D:\zhourui\program\go\goland_workspace\src\isoft\isoft\common\pageutil" />
       <recent name="D:\zhourui\program\go\goland_workspace\src\isoft\isoft\common\stringutil" />
       <recent name="D:\zhourui\program\go\goland_workspace\src\isoft\isoft\common\sftputil" />
       <recent name="D:\zhourui\program\go\goland_workspace\src\isoft\isoft\common\sshtuil" />
-      <recent name="D:\zhourui\program\go\goland_workspace\src\isoft\isoft_deploy_web\deploy_core" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -372,8 +351,8 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Go Test.Test_Log in isoft/isoft_storage/lib/logutil">
-    <configuration name="go build apiServer.go" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Go Test.Test_Log in isoft/isoft/common/logutil">
+    <configuration name="go build apiServer.go-node1" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true">
       <module name="isoft" />
       <working_directory value="D:\zhourui\program\go\goland_workspace\src\isoft\isoft_storage\apiServer" />
       <go_parameters value="-i" />
@@ -382,9 +361,27 @@
       <filePath value="$PROJECT_DIR$/isoft_storage/apiServer/apiServer.go" />
       <directory value="$PROJECT_DIR$/" />
     </configuration>
+    <configuration name="go build apiServer.go-node2" type="GoApplicationRunConfiguration" factoryName="Go Application">
+      <module name="isoft" />
+      <working_directory value="D:\zhourui\program\go\goland_workspace\src\isoft\isoft_storage\apiServer" />
+      <go_parameters value="-i" />
+      <parameters value="local apiServer2" />
+      <kind value="FILE" />
+      <filePath value="$PROJECT_DIR$/isoft_storage/apiServer/apiServer.go" />
+      <directory value="$PROJECT_DIR$/" />
+    </configuration>
+    <configuration name="go build dataServer.go-node1" type="GoApplicationRunConfiguration" factoryName="Go Application">
+      <module name="isoft" />
+      <working_directory value="D:\zhourui\program\go\goland_workspace\src\isoft\isoft_storage\dataServer" />
+      <go_parameters value="-i" />
+      <parameters value="local dataServer1" />
+      <kind value="FILE" />
+      <filePath value="$PROJECT_DIR$/isoft_storage/dataServer/dataServer.go" />
+      <directory value="$PROJECT_DIR$/" />
+    </configuration>
     <configuration name="go build dataServer.go-node2" type="GoApplicationRunConfiguration" factoryName="Go Application">
       <module name="isoft" />
-      <working_directory value="$PROJECT_DIR$/" />
+      <working_directory value="D:\zhourui\program\go\goland_workspace\src\isoft\isoft_storage\dataServer" />
       <go_parameters value="-i" />
       <parameters value="local dataServer2" />
       <kind value="FILE" />
@@ -393,43 +390,43 @@
     </configuration>
     <configuration name="go build dataServer.go-node3" type="GoApplicationRunConfiguration" factoryName="Go Application">
       <module name="isoft" />
-      <working_directory value="$PROJECT_DIR$/" />
+      <working_directory value="D:\zhourui\program\go\goland_workspace\src\isoft\isoft_storage\dataServer" />
       <go_parameters value="-i" />
-      <parameters value="dataServer3" />
+      <parameters value="local dataServer3" />
       <kind value="FILE" />
       <filePath value="$PROJECT_DIR$/isoft_storage/dataServer/dataServer.go" />
       <directory value="$PROJECT_DIR$/" />
     </configuration>
     <configuration name="go build dataServer.go-node4" type="GoApplicationRunConfiguration" factoryName="Go Application">
       <module name="isoft" />
-      <working_directory value="$PROJECT_DIR$/" />
+      <working_directory value="D:\zhourui\program\go\goland_workspace\src\isoft\isoft_storage\dataServer" />
       <go_parameters value="-i" />
-      <parameters value="dataServer4" />
+      <parameters value="local dataServer4" />
       <kind value="FILE" />
       <filePath value="$PROJECT_DIR$/isoft_storage/dataServer/dataServer.go" />
       <directory value="$PROJECT_DIR$/" />
     </configuration>
     <configuration name="go build dataServer.go-node5" type="GoApplicationRunConfiguration" factoryName="Go Application">
       <module name="isoft" />
-      <working_directory value="$PROJECT_DIR$/" />
+      <working_directory value="D:\zhourui\program\go\goland_workspace\src\isoft\isoft_storage\dataServer" />
       <go_parameters value="-i" />
-      <parameters value="dataServer5" />
+      <parameters value="local dataServer5" />
       <kind value="FILE" />
       <filePath value="$PROJECT_DIR$/isoft_storage/dataServer/dataServer.go" />
       <directory value="$PROJECT_DIR$/" />
     </configuration>
     <configuration name="go build dataServer.go-node6" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true">
       <module name="isoft" />
-      <working_directory value="$PROJECT_DIR$/" />
+      <working_directory value="D:\zhourui\program\go\goland_workspace\src\isoft\isoft_storage\dataServer" />
       <go_parameters value="-i" />
-      <parameters value="dataServer6" />
+      <parameters value="local dataServer6" />
       <kind value="FILE" />
       <filePath value="$PROJECT_DIR$/isoft_storage/dataServer/dataServer.go" />
       <directory value="$PROJECT_DIR$/" />
     </configuration>
     <configuration name="go build main.go" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
       <module name="isoft" />
-      <working_directory value="$PROJECT_DIR$/" />
+      <working_directory value="D:\zhourui\program\go\goland_workspace\src\isoft\isoft\build\build_pack" />
       <go_parameters value="-i" />
       <kind value="FILE" />
       <filePath value="$PROJECT_DIR$/isoft/build/build_pack/main.go" />
@@ -469,16 +466,16 @@
       <filePath value="D:\zhourui\program\go\goland_workspace\src\isoft\isoft_sso_web\main.go" />
       <directory value="$PROJECT_DIR$/" />
     </configuration>
-    <configuration name="Test_Connection in isoft/isoft/db" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+    <configuration name="Test_Log in isoft/isoft/common/logutil" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="isoft" />
-      <working_directory value="$PROJECT_DIR$/isoft/db" />
+      <working_directory value="$PROJECT_DIR$/isoft/common/logutil" />
       <go_parameters value="-i" />
       <framework value="gotest" />
       <kind value="PACKAGE" />
-      <package value="isoft/isoft/db" />
+      <package value="isoft/isoft/common/logutil" />
       <directory value="$PROJECT_DIR$/" />
       <filePath value="$PROJECT_DIR$/" />
-      <pattern value="^Test_Connection$" />
+      <pattern value="^Test_Log$" />
     </configuration>
     <configuration name="Test_Log in isoft/isoft_storage/lib/logutil" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="isoft" />
@@ -510,19 +507,21 @@
       <item itemvalue="Go Build.go build dataServer.go-node4" />
       <item itemvalue="Go Build.go build dataServer.go-node3" />
       <item itemvalue="Go Build.go build dataServer.go-node2" />
+      <item itemvalue="Go Build.go build dataServer.go-node1" />
+      <item itemvalue="Go Build.go build apiServer.go-node2" />
+      <item itemvalue="Go Build.go build apiServer.go-node1" />
       <item itemvalue="Go Build.go build dataServer.go-node6" />
-      <item itemvalue="Go Build.go build apiServer.go" />
       <item itemvalue="Go Build.go build main.go" />
-      <item itemvalue="Go Test.Test_Connection in isoft/isoft/db" />
       <item itemvalue="Go Test.Test_Log in isoft/isoft_storage/lib/logutil" />
+      <item itemvalue="Go Test.Test_Log in isoft/isoft/common/logutil" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Go Test.Test_Log in isoft/isoft/common/logutil" />
+        <item itemvalue="Go Build.go build main.go" />
+        <item itemvalue="Go Build.go build dataServer.go-node6" />
+        <item itemvalue="Go Build.go build apiServer.go-node1" />
         <item itemvalue="Go Test.Test_Log in isoft/isoft_storage/lib/logutil" />
-        <item itemvalue="Go Build.go build apiServer.go" />
-        <item itemvalue="Go Test.Test_Connection in isoft/isoft/db" />
-        <item itemvalue="Go Build.go build main.go" />
-        <item itemvalue="Go Build.go build main.go" />
       </list>
     </recent_temporary>
   </component>
@@ -530,9 +529,6 @@
     <option name="ACTIVE_ACTIONS" value=",EXPORTABILITY_SORTER,ALPHA_COMPARATOR" />
   </component>
   <component name="TestHistory">
-    <history-entry file="Test_GetOsEnv_in_isoft_isoft_storage_cfg - 2018.09.09 at 16h 44m 05s.xml">
-      <configuration name="Test_GetOsEnv in isoft/isoft_storage/cfg" configurationId="GoTestRunConfiguration" />
-    </history-entry>
     <history-entry file="Test_GetOsEnv_in_isoft_isoft_storage_cfg - 2018.09.09 at 16h 49m 12s.xml">
       <configuration name="Test_GetOsEnv in isoft/isoft_storage/cfg" configurationId="GoTestRunConfiguration" />
     </history-entry>
@@ -560,6 +556,9 @@
     <history-entry file="Test_Log_in_isoft_isoft_storage_lib_logutil - 2018.09.12 at 21h 53m 56s.xml">
       <configuration name="Test_Log in isoft/isoft_storage/lib/logutil" configurationId="GoTestRunConfiguration" />
     </history-entry>
+    <history-entry file="Test_Log_in_isoft_isoft_common_logutil - 2018.09.12 at 23h 21m 55s.xml">
+      <configuration name="Test_Log in isoft/isoft/common/logutil" configurationId="GoTestRunConfiguration" />
+    </history-entry>
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -574,13 +573,13 @@
     <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="1" sideWeight="0.28368795" weight="0.25626516" />
+      <window_info active="true" content_ui="combo" id="Project" order="1" sideWeight="0.28368795" visible="true" weight="0.25626516" />
       <window_info anchor="bottom" id="TODO" order="12" weight="0.3297491" />
       <window_info anchor="bottom" id="Event Log" order="4" sideWeight="0.50687146" side_tool="true" weight="0.30319148" />
       <window_info anchor="right" id="Database" order="0" side_tool="true" weight="0.32983023" />
       <window_info anchor="bottom" id="Database Changes" order="2" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="5" weight="0.87765956" />
-      <window_info anchor="bottom" id="Run" order="8" sideWeight="0.49393696" weight="0.54964536" />
+      <window_info anchor="bottom" id="Run" order="8" sideWeight="0.49393696" weight="0.48049647" />
       <window_info id="Structure" order="2" sideWeight="0.71631205" side_tool="true" weight="0.24171382" />
       <window_info anchor="bottom" id="Terminal" order="3" sideWeight="0.49312854" weight="0.30319148" />
       <window_info id="Favorites" order="0" sideWeight="0.71631205" side_tool="true" weight="0.24171382" />
@@ -597,30 +596,6 @@
       <window_info anchor="bottom" id="Find" order="7" weight="0.7907801" />
       <window_info anchor="right" id="Coverage" order="4" side_tool="true" weight="0.32983023" />
     </layout>
-    <layout-to-restore>
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="3" weight="0.25" />
-      <window_info active="true" content_ui="combo" id="Project" order="1" sideWeight="0.28368795" visible="true" weight="0.25626516" />
-      <window_info anchor="bottom" id="Run" order="8" sideWeight="0.49393696" weight="0.35283688" />
-      <window_info anchor="right" id="Ant Build" order="2" weight="0.25" />
-      <window_info anchor="bottom" id="Cvs" order="10" weight="0.25" />
-      <window_info anchor="bottom" id="Thumbnails" order="13" weight="0.3297491" />
-      <window_info id="Structure" order="2" sideWeight="0.71631205" side_tool="true" weight="0.24171382" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="1" type="SLIDING" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="12" weight="0.3297491" />
-      <window_info anchor="bottom" id="Database Changes" order="2" show_stripe_button="false" />
-      <window_info anchor="bottom" id="TypeScript" order="0" weight="0.32978722" />
-      <window_info anchor="bottom" id="Find" order="7" weight="0.7907801" />
-      <window_info anchor="bottom" id="Debug" order="9" sideWeight="0.49717057" weight="0.30851063" />
-      <window_info anchor="right" id="Database" order="0" side_tool="true" weight="0.32983023" />
-      <window_info anchor="bottom" id="Terminal" order="3" sideWeight="0.49312854" weight="0.30319148" />
-      <window_info anchor="bottom" id="Event Log" order="4" sideWeight="0.50687146" side_tool="true" weight="0.30319148" />
-      <window_info anchor="bottom" id="Inspection" order="11" weight="0.4" />
-      <window_info anchor="bottom" id="Version Control" order="5" weight="0.87765956" />
-      <window_info anchor="bottom" id="Message" order="6" />
-      <window_info anchor="bottom" id="Messages" order="1" weight="0.55376345" />
-      <window_info anchor="right" id="Coverage" order="4" side_tool="true" weight="0.32983023" />
-      <window_info id="Favorites" order="0" sideWeight="0.71631205" side_tool="true" weight="0.24171382" />
-    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -650,7 +625,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="调整ilearning应用日志目录" />
     <MESSAGE value="移动端口号配置&#10;自动部署支持端口号修改" />
     <MESSAGE value="beego类型应用部署优化" />
     <MESSAGE value="配置文件优化" />
@@ -675,7 +649,8 @@
     <MESSAGE value="代码优化" />
     <MESSAGE value="配置优化" />
     <MESSAGE value="项目转换至golang1.11&#10;不再支持相对路径引用" />
-    <option name="LAST_COMMIT_MESSAGE" value="项目转换至golang1.11&#10;不再支持相对路径引用" />
+    <MESSAGE value="logrous日志功能添加" />
+    <option name="LAST_COMMIT_MESSAGE" value="logrous日志功能添加" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
@@ -730,171 +705,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/isoft_storage/lib/logutil/logrous.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="10" lean-forward="true" selection-start-line="8" selection-start-column="10" selection-end-line="8" selection-end-column="10" />
-          <folding>
-            <element signature="e#13#182#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_storage/apiServer/apiServer.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="12" column="39" selection-start-line="12" selection-start-column="39" selection-end-line="12" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_storage/cfg/config.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="34" lean-forward="true" selection-start-line="4" selection-start-column="34" selection-end-line="4" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_storage/dataServer/heartbeat/heartbeat.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="7" lean-forward="true" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_storage/dataServer/locate/locate.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="7" lean-forward="true" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_storage/dataServer/objects/del.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="14" column="24" lean-forward="true" selection-start-line="14" selection-start-column="24" selection-end-line="14" selection-end-column="24" />
-          <folding>
-            <element signature="e#17#113#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_storage/dataServer/objects/get.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="7" lean-forward="true" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_storage/dataServer/objects/get_object.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="493">
-          <caret line="29" column="28" selection-start-line="29" selection-start-column="28" selection-end-line="29" selection-end-column="28" />
-          <folding>
-            <element signature="e#17#155#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_storage/dataServer/objects/handler.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="7" lean-forward="true" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_storage/dataServer/objects/send.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="7" lean-forward="true" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
-          <folding>
-            <element signature="e#17#63#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_storage/dataServer/temp/commit.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="14" column="14" lean-forward="true" selection-start-line="14" selection-start-column="14" selection-end-line="14" selection-end-column="14" />
-          <folding>
-            <element signature="e#14#159#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_storage/dataServer/temp/del.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="7" lean-forward="true" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_storage/dataServer/temp/handler.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="7" lean-forward="true" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_storage/dataServer/temp/patch.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="7" lean-forward="true" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_storage/dataServer/temp/post.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="7" lean-forward="true" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
-          <folding>
-            <element signature="e#14#148#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_storage/dataServer/temp/put.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="7" lean-forward="true" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_storage/dataServer/dataServer.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="28">
-          <caret line="11" column="40" selection-start-line="11" selection-start-column="40" selection-end-line="11" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_storage/lib/es/es.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="7" lean-forward="true" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_storage/lib/objectstream/get.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="7" lean-forward="true" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_storage/lib/objectstream/get_test.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="7" lean-forward="true" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_storage/lib/objectstream/put.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="7" lean-forward="true" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/isoft_storage/lib/objectstream/put_test.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
@@ -948,6 +758,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
           <caret line="2" column="7" lean-forward="true" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
+          <folding>
+            <element signature="e#12#75#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -955,6 +768,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
           <caret line="2" column="7" lean-forward="true" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
+          <folding>
+            <element signature="e#12#75#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -962,13 +778,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
           <caret line="2" column="7" lean-forward="true" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_storage/lib/rs/resumable_put.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="7" lean-forward="true" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
+          <folding>
+            <element signature="e#12#68#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1063,33 +875,177 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_storage/lib/logutil/logrous.go">
+    <entry file="file://$PROJECT_DIR$/isoft/build/build_pack/pack.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft/build/build_pack/pack/pack.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="72">
-          <caret line="17" column="34" lean-forward="true" selection-start-line="17" selection-start-column="34" selection-end-line="17" selection-end-column="34" />
+        <state relative-caret-position="232">
+          <caret line="59" column="71" selection-start-line="59" selection-start-column="71" selection-end-line="59" selection-end-column="71" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_storage/test/put.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="127">
+          <caret line="19" column="42" lean-forward="true" selection-start-line="19" selection-start-column="42" selection-end-line="19" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../../../soft/install/go/go1.11/src/net/http/server.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="178">
+          <caret line="3001" column="5" selection-start-line="3001" selection-start-column="5" selection-end-line="3001" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_storage/apiServer/objects/handler.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="5" selection-start-line="5" selection-start-column="5" selection-end-line="5" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_storage/lib/rs/resumable_put.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="651">
+          <caret line="41" column="5" selection-start-line="41" selection-start-column="5" selection-end-line="41" selection-end-column="5" />
           <folding>
-            <element signature="e#13#182#0" expanded="true" />
+            <element signature="e#12#163#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_storage/lib/logutil/logutil.go">
+    <entry file="file://$PROJECT_DIR$/isoft/common/sshutil/ssh_execute.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
-          <caret line="8" column="22" selection-start-line="8" selection-start-column="22" selection-end-line="8" selection-end-column="22" />
+          <caret line="10" column="5" selection-start-line="10" selection-start-column="5" selection-end-line="10" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_deploy_web/deploy_core/executors/ssh_executor.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="373">
+          <caret line="58" column="27" selection-start-line="58" selection-start-column="27" selection-end-line="58" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_deploy_web/deploy_core/executors/executor_router.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="436">
+          <caret line="67" column="30" lean-forward="true" selection-start-line="67" selection-start-column="30" selection-end-line="67" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_deploy_web/deploy_core/executors/executor.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="26" column="29" selection-start-line="26" selection-start-column="29" selection-end-line="26" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft/build/build_pack/main.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="15" column="25" selection-start-line="15" selection-start-column="25" selection-end-line="15" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_storage/apiServer/locate/handler.go">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_storage/apiServer/locate/locate.go">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_storage/apiServer/temp/handler.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="5" selection-start-line="4" selection-start-column="5" selection-end-line="4" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_storage/apiServer/temp/head.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="13" column="43" lean-forward="true" selection-start-line="13" selection-start-column="43" selection-end-line="13" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_storage/apiServer/temp/put.go">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_storage/cfg/txyun_cfg.ini">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" selection-start-line="3" selection-end-line="3" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_storage/cfg/local_cfg.ini">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" column="14" selection-start-line="3" selection-end-line="3" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft/common/logutil/logrous.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="7" lean-forward="true" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
           <folding>
-            <element signature="e#17#65#0" expanded="true" />
+            <element signature="e#17#192#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_storage/lib/logutil/logutil_test.go">
+    <entry file="file://$PROJECT_DIR$/isoft/common/logutil/logutil.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
+        <state relative-caret-position="34">
+          <caret line="2" column="7" lean-forward="true" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
           <folding>
-            <element signature="e#12#40#0" expanded="true" />
+            <element signature="e#17#69#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_storage/apiServer/apiServer.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="17" column="20" lean-forward="true" selection-start-line="17" selection-start-column="20" selection-end-line="17" selection-end-column="20" />
+          <folding>
+            <element signature="e#14#291#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_storage/cfg/aliyun_cfg.ini">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" column="14" selection-start-line="3" selection-end-line="3" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_storage/cfg/constant.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="45" selection-start-line="6" selection-start-column="45" selection-end-line="6" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft/common/logutil/logutil_test.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
+          <folding>
+            <element signature="e#17#38#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_storage/cfg/config.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="127">
+          <caret line="75" column="9" lean-forward="true" selection-start-line="75" selection-start-column="9" selection-end-line="75" selection-end-column="9" />
         </state>
       </provider>
     </entry>

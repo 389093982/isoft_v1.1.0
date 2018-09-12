@@ -22,6 +22,7 @@ func main() {
 
 	// 接口服务提供对外的 REST 接口,接口服务作为 HTTP 客户端向数据服务发送请求
 	http.HandleFunc("/objects/", objects.Handler)
+
 	http.HandleFunc("/temp/", temp.Handler)
 
 	// 接口服务对外提供定位功能,向数据服务节点群发定位消息并接收反馈消息
