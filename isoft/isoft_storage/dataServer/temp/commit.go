@@ -4,12 +4,12 @@ import (
 	"compress/gzip"
 	"io"
 	"isoft/isoft_storage/cfg"
+	"isoft/isoft_storage/dataServer/locate"
 	"isoft/isoft_storage/lib/utils"
 	"net/url"
 	"os"
 	"strconv"
 	"strings"
-	"isoft/isoft_storage/dataServer/locate"
 )
 
 // 获取分片 hash 值

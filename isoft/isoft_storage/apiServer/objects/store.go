@@ -3,10 +3,10 @@ package objects
 import (
 	"fmt"
 	"io"
+	"isoft/isoft_storage/apiServer/locate"
 	"isoft/isoft_storage/lib/utils"
 	"net/http"
 	"net/url"
-	"isoft/isoft_storage/apiServer/locate"
 )
 
 func storeObject(r io.Reader, hash string, size int64) (int, error) {

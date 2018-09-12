@@ -1,16 +1,16 @@
 package main
 
 import (
-	"isoft/isoft_storage/cfg"
-	"os"
-	"isoft/isoft_storage/apiServer/heartbeat"
-	"net/http"
-	"isoft/isoft_storage/apiServer/locate"
-	"isoft/isoft_storage/apiServer/versions"
 	"fmt"
-	"strings"
+	"isoft/isoft_storage/apiServer/heartbeat"
+	"isoft/isoft_storage/apiServer/locate"
 	"isoft/isoft_storage/apiServer/objects"
 	"isoft/isoft_storage/apiServer/temp"
+	"isoft/isoft_storage/apiServer/versions"
+	"isoft/isoft_storage/cfg"
+	"net/http"
+	"os"
+	"strings"
 )
 
 func main() {

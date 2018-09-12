@@ -2,11 +2,11 @@ package objects
 
 import (
 	"isoft/isoft_storage/cfg"
+	"isoft/isoft_storage/dataServer/locate"
 	"net/http"
 	"os"
 	"path/filepath"
 	"strings"
-	"isoft/isoft_storage/dataServer/locate"
 )
 
 func del(w http.ResponseWriter, r *http.Request) {

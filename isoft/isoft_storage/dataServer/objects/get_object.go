@@ -4,12 +4,12 @@ import (
 	"crypto/sha256"
 	"encoding/base64"
 	"isoft/isoft_storage/cfg"
+	"isoft/isoft_storage/dataServer/locate"
 	"log"
 	"net/url"
 	"os"
 	"path/filepath"
 	"strings"
-	"isoft/isoft_storage/dataServer/locate"
 )
 
 func getFile(name string) string {

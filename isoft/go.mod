@@ -11,12 +11,16 @@ require (
 	github.com/klauspost/reedsolomon v0.0.0-20180704173009-925cb01d6510
 	github.com/kr/fs v0.1.0 // indirect
 	github.com/larspensjo/config v0.0.0-20160228172812-b6db95dc6321
+	github.com/lestrrat/go-file-rotatelogs v0.0.0-20180223000712-d3151e2a480f
+	github.com/lestrrat/go-strftime v0.0.0-20180220042222-ba3bf9c1d042 // indirect
 	github.com/lib/pq v1.0.0 // indirect
 	github.com/mattn/go-sqlite3 v1.9.0 // indirect
 	github.com/pkg/errors v0.8.0
 	github.com/pkg/sftp v1.8.2
 	github.com/pmezard/go-difflib v1.0.0 // indirect
+	github.com/rifflock/lfshook v0.0.0-20180313183424-62f5e0662816
 	github.com/satori/go.uuid v1.2.0
+	github.com/sirupsen/logrus v1.0.6
 	github.com/smartystreets/assertions v0.0.0-20180820201707-7c9eb446e3cf // indirect
 	github.com/smartystreets/goconvey v0.0.0-20180222194500-ef6db91d284a
 	github.com/streadway/amqp v0.0.0-20180806233856-70e15c650864

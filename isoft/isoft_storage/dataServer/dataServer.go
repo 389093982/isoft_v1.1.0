@@ -3,13 +3,13 @@ package main
 import (
 	"fmt"
 	"isoft/isoft_storage/cfg"
+	"isoft/isoft_storage/dataServer/heartbeat"
+	"isoft/isoft_storage/dataServer/locate"
+	"isoft/isoft_storage/dataServer/objects"
+	"isoft/isoft_storage/dataServer/temp"
 	"net/http"
 	"os"
 	"strings"
-	"isoft/isoft_storage/dataServer/locate"
-	"isoft/isoft_storage/dataServer/heartbeat"
-	"isoft/isoft_storage/dataServer/objects"
-	"isoft/isoft_storage/dataServer/temp"
 )
 
 func main() {
