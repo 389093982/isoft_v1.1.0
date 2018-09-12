@@ -11,9 +11,16 @@ import (
 	"net/http"
 	"os"
 	"strings"
+	"isoft/isoft/common/logutil"
 )
 
 func main() {
+	defer func() {
+		if err := recover();err != nil{
+			logutil.Errorln(err)
+		}
+	}()
+
 	// 启动前初始化参数,参数初始化失败会终止程序
 	cfg.InitConfigWithOsArgs(os.Args)
 
@@ -39,5 +46,7 @@ func main() {
 
 	fmt.Println(fmt.Sprintf("Start bind_address %s", bind_address))
 
-	http.ListenAndServe(bind_address, nil)
+	if err := http.ListenAndServe(bind_address, nil); err != nil{
+		logutil.Errorln(err)
+	}
 }
