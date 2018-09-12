@@ -1,4 +1,4 @@
-package log
+package logutil
 
 import (
 	rotatelogs "github.com/lestrrat/go-file-rotatelogs"
@@ -7,10 +7,13 @@ import (
 	log "github.com/sirupsen/logrus"
 	"path"
 	"time"
+	"os"
 )
 
 // config logrus log to local filesystem, with file rotation
-func ConfigLocalFilesystemLogger(logPath string, logFileName string, maxAge time.Duration, rotationTime time.Duration) {
+func configLocalFilesystemLogger(logPath string, logFileName string, maxAge time.Duration, rotationTime time.Duration) {
+	// logPath 不存在则自动创建目录
+	os.Mkdir(logPath, os.ModePerm)
 	baseLogPaht := path.Join(logPath, logFileName)
 	writer, err := rotatelogs.New(
 		baseLogPaht+".%Y%m%d%H%M",
@@ -29,6 +32,6 @@ func ConfigLocalFilesystemLogger(logPath string, logFileName string, maxAge time
 		log.ErrorLevel: writer,
 		log.FatalLevel: writer,
 		log.PanicLevel: writer,
-	}, &log.TextFormatter{DisableColors: true})
+	}, &log.TextFormatter{DisableColors: true})	// 支持 JSONFormatter 和 TextFormatter
 	log.AddHook(lfHook)
 }
