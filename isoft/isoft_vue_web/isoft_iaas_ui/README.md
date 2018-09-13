@@ -1,4 +1,4 @@
-# isoft_deploy_ui
+# isoft_iaas_ui
 
 > A Vue.js project
 
