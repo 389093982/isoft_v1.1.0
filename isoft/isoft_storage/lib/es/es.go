@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"isoft/isoft/common/logutil"
 	"isoft/isoft_storage/cfg"
 	"net/http"
 	"net/url"
@@ -50,10 +51,11 @@ func SearchLatestVersion(name string) (meta Metadata, e error) {
 		cfg.GetConfigValue(cfg.ES_SERVER), url.PathEscape(name))
 	r, e := http.Get(url)
 	if e != nil {
+		logutil.Errorln(e)
 		return
 	}
 	if r.StatusCode != http.StatusOK {
-		e = fmt.Errorf("fail to search latest metadata: %d", r.StatusCode)
+		logutil.Errorln(r)
 		return
 	}
 	result, _ := ioutil.ReadAll(r.Body)

@@ -1,6 +1,7 @@
 package objects
 
 import (
+	"isoft/isoft/common/logutil"
 	"isoft/isoft_storage/apiServer/heartbeat"
 	"isoft/isoft_storage/apiServer/locate"
 	"isoft/isoft_storage/lib/es"
@@ -42,13 +43,14 @@ func post(w http.ResponseWriter, r *http.Request) {
 	}
 	ds := heartbeat.ChooseRandomDataServers(rs.ALL_SHARDS, nil)
 	if len(ds) != rs.ALL_SHARDS {
-		log.Println("cannot find enough dataServer")
+		logutil.Errorln("cannot find enough dataServer:", len(ds))
 		w.WriteHeader(http.StatusServiceUnavailable)
 		return
 	}
 	// 生成对象的 putStream
 	stream, e := rs.NewRSResumablePutStream(ds, name, url.PathEscape(hash), size)
 	if e != nil {
+		logutil.Errorln(e)
 		log.Println(e)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
