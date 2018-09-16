@@ -5,7 +5,12 @@ remoteDeployHomePath=$1
 # elasticsearch 安装目录
 installPath=$2
 
-sh ./elasticsearch_uninstall.sh
+if [ -z ${remoteDeployHomePath} ] || [ -z ${installPath} ];then
+    echo "invalid param error..."
+    exit;
+fi
+
+sh ./elasticsearch_uninstall.sh ${installPath}
 # elasticsearch 安装包路径
 packageName=`ls ${remoteDeployHomePath}/install/elasticsearch | grep elasticsearch | grep tar.gz`
 elasticsearch_targz=${remoteDeployHomePath}/install/elasticsearch/${packageName}
@@ -15,7 +20,7 @@ sh_home=`pwd`
 cd ${installPath} && tar -xzf ${elasticsearch_targz}
 echo "tar -xzf ${elasticsearch_targz} success..."
 cd ${sh_home}
-installName=`ls ${installPath} | grep elasticsearch | grep -v logs | grep -v data | head -1`
+installName=`ls ${installPath} | grep elasticsearch | grep -v logs | grep -v data | grep -v tar.gz | head -1`
 mv ${installPath}/${installName} ${installPath}/elasticsearch
 
 # 修改 elasticsearch 数据和日志存储目录
@@ -30,11 +35,13 @@ old_elasticsearch_logs=`cat ${elasticsearch_yml} | grep path.logs`
 old_elasticsearch_data=`echo $old_elasticsearch_data | sed 's#\/#\\\/#g'`
 old_elasticsearch_logs=`echo $old_elasticsearch_logs | sed 's#\/#\\\/#g'`
 
-if [ -d ${installPath}/elasticsearch_data ];then
+if [ ! -d ${installPath}/elasticsearch_data ];then
     mkdir -p ${installPath}/elasticsearch_data
+    echo "mkdir -p ${installPath}/elasticsearch_data"
 fi
-if [ -d ${installPath}/elasticsearch_logs ];then
+if [ ! -d ${installPath}/elasticsearch_logs ];then
     mkdir -p ${installPath}/elasticsearch_logs
+    echo "mkdir -p ${installPath}/elasticsearch_logs"
 fi
 
 elasticsearch_data="path.data: ${installPath}/elasticsearch_data"
