@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="61c01151-84f0-4bfd-a227-5c1f0b5a424d" name="Default" comment="文件上传功能完善">
-      <change afterPath="$PROJECT_DIR$/isoft_deploy_web/shell/elasticsearch/elasticsearch_install.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/isoft_deploy_web/shell/elasticsearch/elasticsearch_uninstall.sh" afterDir="false" />
+    <list default="true" id="61c01151-84f0-4bfd-a227-5c1f0b5a424d" name="Default" comment="elasticsearch脚本安装">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/shell/elasticsearch/elasticsearch_run.sh" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_deploy_web/shell/elasticsearch/elasticsearch_run.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_deploy_web/shell/elasticsearch/elasticsearch_install.sh" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_deploy_web/shell/elasticsearch/elasticsearch_install.sh" afterDir="false" />
     </list>
     <ignored path="isoft_deploy_web/static/uploadfile/" />
     <ignored path="../.idea/inspectionProfiles/profiles_settings.xml" />
@@ -48,27 +46,38 @@
           <entry key="project.open.time.10" value="1" />
           <entry key="project.open.time.11" value="1" />
           <entry key="project.open.time.12" value="1" />
+          <entry key="project.open.time.13" value="1" />
           <entry key="project.open.time.14" value="1" />
           <entry key="project.open.time.15" value="1" />
           <entry key="project.open.time.16" value="1" />
           <entry key="project.open.time.17" value="1" />
           <entry key="project.open.time.22" value="1" />
-          <entry key="project.opened" value="8" />
+          <entry key="project.opened" value="9" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="conf" value="8" />
+          <entry key="css" value="1" />
           <entry key="go" value="69" />
+          <entry key="html" value="2" />
           <entry key="ini" value="6" />
+          <entry key="js" value="20" />
+          <entry key="json" value="1" />
           <entry key="s" value="2" />
-          <entry key="sh" value="31" />
+          <entry key="sh" value="38" />
+          <entry key="txt" value="3" />
+          <entry key="vue" value="13" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
+          <entry key="CSS" value="1" />
           <entry key="Go" value="69" />
-          <entry key="PLAIN_TEXT" value="45" />
+          <entry key="HTML" value="2" />
+          <entry key="JSON" value="1" />
+          <entry key="JavaScript" value="20" />
+          <entry key="PLAIN_TEXT" value="68" />
           <entry key="x86 Plan9 Assembly" value="2" />
         </counts>
       </usages-collector>
@@ -76,14 +85,15 @@
         <counts>
           <entry key="conf" value="16" />
           <entry key="go" value="1219" />
-          <entry key="sh" value="1141" />
-          <entry key="txt" value="15" />
+          <entry key="sh" value="1429" />
+          <entry key="txt" value="32" />
+          <entry key="vue" value="107" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="Go" value="1219" />
-          <entry key="PLAIN_TEXT" value="1172" />
+          <entry key="PLAIN_TEXT" value="1584" />
         </counts>
       </usages-collector>
     </session>
@@ -93,13 +103,14 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/isoft_deploy_web/shell/elasticsearch/elasticsearch_install.sh">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="13" column="13" lean-forward="true" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
-            </state>
-          </provider>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/isoft_deploy_web/shell/mysql/mysql_adjust.sh">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/isoft_deploy_web/shell/mysql/mysql_check.sh">
+          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
@@ -112,10 +123,29 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/isoft_deploy_web/shell/elasticsearch/elasticsearch_uninstall.sh">
+        <entry file="file://$PROJECT_DIR$/isoft_deploy_web/shell/mysql/mysql_modify.sh">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/isoft_deploy_web/shell/mysql/mysql_uninstall.sh">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/isoft_deploy_web/shell/common/env_writer.sh">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="9" column="13" lean-forward="true" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+            <state relative-caret-position="901">
+              <caret line="53" column="46" selection-start-line="53" selection-start-column="46" selection-end-line="53" selection-end-column="57" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/isoft_deploy_web/shell/elasticsearch/elasticsearch_install.sh">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="177">
+              <caret line="71" column="40" lean-forward="true" selection-start-line="71" selection-start-column="40" selection-end-line="71" selection-end-column="40" />
             </state>
           </provider>
         </entry>
@@ -136,13 +166,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>getDir</find>
-      <find>RunSSHShellCommand</find>
-      <find>AesDecrypt</find>
-      <find>AesEncrypt</find>
-      <find>ISOFT_STORAGE_CFG</find>
-      <find>configfile</find>
-      <find>SFTPClient</find>
       <find>sftpClient</find>
       <find>getScriptFilePathByCommandType</find>
       <find>runmode</find>
@@ -166,6 +189,13 @@
       <find>sed -i</find>
       <find>\/</find>
       <find>installDir</find>
+      <find>run dev</find>
+      <find>port</find>
+      <find>MysqlInit</find>
+      <find>serviceInfos</find>
+      <find>refreshServiceList</find>
+      <find>ServiceList</find>
+      <find>bashrc</find>
     </findStrings>
     <replaceStrings>
       <replace>&quot;,</replace>
@@ -233,10 +263,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/isoft_storage/lib/log/log4go.json" />
-        <option value="$PROJECT_DIR$/isoft_storage/lib/log/log.go" />
-        <option value="$PROJECT_DIR$/isoft_storage/lib/log/logutil_test.go" />
-        <option value="$PROJECT_DIR$/isoft_storage/lib/log/logrous.go" />
         <option value="$PROJECT_DIR$/isoft_storage/lib/log/logutil.go" />
         <option value="$PROJECT_DIR$/isoft_storage/lib/logutil/logutil.go" />
         <option value="$PROJECT_DIR$/isoft_storage/lib/logutil/logutil_test.go" />
@@ -282,8 +308,12 @@
         <option value="$PROJECT_DIR$/isoft_deploy_web/shell/elasticsearch/elasticsearch_run.sh" />
         <option value="$PROJECT_DIR$/isoft_deploy_web/shell/common/killprocess.sh" />
         <option value="$PROJECT_DIR$/isoft_deploy_web/shell/elasticsearch/killprocess.sh" />
-        <option value="$PROJECT_DIR$/isoft_deploy_web/shell/elasticsearch/elasticsearch_install.sh" />
         <option value="$PROJECT_DIR$/isoft_deploy_web/shell/elasticsearch/elasticsearch_uninstall.sh" />
+        <option value="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_ui/src/components/Env/EnvList.vue" />
+        <option value="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_ui/src/App.vue" />
+        <option value="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_ui/src/components/Service/demo.vue" />
+        <option value="$PROJECT_DIR$/isoft_vue_web/isoft_deploy_ui/src/components/Service/ServiceTable.vue" />
+        <option value="$PROJECT_DIR$/isoft_deploy_web/shell/elasticsearch/elasticsearch_install.sh" />
       </list>
     </option>
   </component>
@@ -360,13 +390,6 @@
               <item name="isoft" type="462c0819:PsiDirectoryNode" />
               <item name="isoft_deploy_web" type="462c0819:PsiDirectoryNode" />
               <item name="shell" type="462c0819:PsiDirectoryNode" />
-              <item name="common" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="isoft" type="b2602c69:ProjectViewProjectNode" />
-              <item name="isoft" type="462c0819:PsiDirectoryNode" />
-              <item name="isoft_deploy_web" type="462c0819:PsiDirectoryNode" />
-              <item name="shell" type="462c0819:PsiDirectoryNode" />
               <item name="elasticsearch" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -405,16 +428,16 @@
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="com.goide.configuration.GoLibrariesConfigurableProvider" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
     <property name="settings.editor.splitter.proportion" value="0.29891956" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\zhourui\program\go\goland_workspace\src\isoft\isoft_vue_web\isoft_deploy_ui\src\components\Service" />
       <recent name="D:\zhourui\program\go\goland_workspace\src\isoft\isoft\common" />
       <recent name="D:\zhourui\program\go\goland_workspace\src\isoft\isoft\common\pageutil" />
       <recent name="D:\zhourui\program\go\goland_workspace\src\isoft\isoft\common\stringutil" />
       <recent name="D:\zhourui\program\go\goland_workspace\src\isoft\isoft\common\sftputil" />
-      <recent name="D:\zhourui\program\go\goland_workspace\src\isoft\isoft\common\sshtuil" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\zhourui\program\go\goland_workspace\src\isoft\isoft_deploy_web\shell\elasticsearch" />
@@ -436,7 +459,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Go Build.go build apiServer.go-node1">
+  <component name="RunManager" selected="Go Build.isoft_deploy_web_run">
     <configuration name="go build apiServer.go-node1" type="GoApplicationRunConfiguration" factoryName="Go Application">
       <module name="isoft" />
       <working_directory value="D:\zhourui\program\go\goland_workspace\src\isoft\isoft_storage\apiServer" />
@@ -688,12 +711,12 @@
     <editor active="true" />
     <layout>
       <window_info id="Favorites" order="0" sideWeight="0.71631205" side_tool="true" weight="0.24171382" />
-      <window_info content_ui="combo" id="Project" order="1" sideWeight="0.28368795" weight="0.26434922" />
+      <window_info content_ui="combo" id="Project" order="1" sideWeight="0.28368795" weight="0.2950687" />
       <window_info id="Structure" order="2" sideWeight="0.71631205" side_tool="true" weight="0.24171382" />
       <window_info anchor="bottom" id="TypeScript" order="0" weight="0.32978722" />
       <window_info anchor="bottom" id="Messages" order="1" weight="0.55376345" />
       <window_info anchor="bottom" id="Database Changes" order="2" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Terminal" order="3" sideWeight="0.49312854" weight="0.48134992" />
+      <window_info anchor="bottom" id="Terminal" order="3" sideWeight="0.49312854" weight="0.6394316" />
       <window_info anchor="bottom" id="Event Log" order="4" sideWeight="0.50687146" side_tool="true" weight="0.30319148" />
       <window_info anchor="bottom" id="Version Control" order="5" weight="0.8774423" />
       <window_info anchor="bottom" id="Message" order="6" />
@@ -710,30 +733,6 @@
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="3" weight="0.25" />
       <window_info anchor="right" id="Coverage" order="4" side_tool="true" weight="0.32983023" />
     </layout>
-    <layout-to-restore>
-      <window_info id="Favorites" order="0" sideWeight="0.71631205" side_tool="true" weight="0.24171382" />
-      <window_info active="true" content_ui="combo" id="Project" order="1" sideWeight="0.28368795" visible="true" weight="0.26434922" />
-      <window_info id="Structure" order="2" sideWeight="0.71631205" side_tool="true" weight="0.24171382" />
-      <window_info anchor="bottom" id="TypeScript" order="0" weight="0.32978722" />
-      <window_info anchor="bottom" id="Messages" order="1" weight="0.55376345" />
-      <window_info anchor="bottom" id="Database Changes" order="2" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Terminal" order="3" sideWeight="0.49312854" weight="0.48134992" />
-      <window_info anchor="bottom" id="Event Log" order="4" sideWeight="0.50687146" side_tool="true" weight="0.30319148" />
-      <window_info anchor="bottom" id="Version Control" order="5" weight="0.8774423" />
-      <window_info anchor="bottom" id="Message" order="6" />
-      <window_info anchor="bottom" id="Find" order="7" weight="0.7907801" />
-      <window_info anchor="bottom" id="Run" order="8" sideWeight="0.49393696" weight="0.41740674" />
-      <window_info anchor="bottom" id="Debug" order="9" sideWeight="0.49717057" weight="0.6909414" />
-      <window_info anchor="bottom" id="Cvs" order="10" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="11" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="12" weight="0.3297491" />
-      <window_info anchor="bottom" id="Thumbnails" order="13" weight="0.3297491" />
-      <window_info anchor="right" id="Database" order="0" side_tool="true" weight="0.32983023" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="1" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="2" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="3" weight="0.25" />
-      <window_info anchor="right" id="Coverage" order="4" side_tool="true" weight="0.32983023" />
-    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -763,7 +762,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="解决路由变化服务类型不变化bug" />
     <MESSAGE value="修改配置文件bug" />
     <MESSAGE value="bug修改" />
     <MESSAGE value="mysql无法启动问题修复" />
@@ -788,7 +786,8 @@
     <MESSAGE value="记录启动日志" />
     <MESSAGE value="iaas项目IFile提交" />
     <MESSAGE value="文件上传功能完善" />
-    <option name="LAST_COMMIT_MESSAGE" value="文件上传功能完善" />
+    <MESSAGE value="elasticsearch脚本安装" />
+    <option name="LAST_COMMIT_MESSAGE" value="elasticsearch脚本安装" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
@@ -847,209 +846,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/../../pkg/mod/github.com/astaxie/beego@v1.10.1/router.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="251">
-          <caret line="719" selection-start-line="719" selection-end-line="719" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../../../soft/install/go/go1.11/src/net/http/client.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="514" selection-start-line="514" selection-end-line="514" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_iaas_web/conf/aliyun.conf">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="19" lean-forward="true" selection-start-line="9" selection-start-column="19" selection-end-line="9" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_iaas_web/conf/txyun.conf">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="12" lean-forward="true" selection-start-line="9" selection-start-column="12" selection-end-line="9" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft/build/build_pack/main.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="13" lean-forward="true" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_iaas_web/conf/dev.conf">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="18" selection-start-line="9" selection-start-column="18" selection-end-line="9" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_storage/apiServer/objects/post.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="83">
-          <caret line="41" column="14" lean-forward="true" selection-start-line="41" selection-start-column="14" selection-end-line="41" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_iaas_web/conf/app.conf">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="25" lean-forward="true" selection-start-line="8" selection-start-column="25" selection-end-line="8" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_storage/test/put.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" selection-start-line="5" selection-end-line="5" selection-end-column="80" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../../../soft/install/go/go1.11/src/net/url/url.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="124">
-          <caret line="676" selection-start-line="676" selection-end-line="676" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../../../soft/install/go/go1.11/src/strings/strings.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="107">
-          <caret line="302" selection-start-line="302" selection-end-line="302" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_storage/apiServer/locate/locate.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="239">
-          <caret line="25" selection-start-line="25" selection-end-line="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_storage/apiServer/locate/handler.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="18" selection-start-line="18" selection-end-line="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../../../soft/install/go/go1.11/src/strings/reader.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="415">
-          <caret line="149" column="5" selection-start-line="149" selection-start-column="5" selection-end-line="149" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft/common/hashutil/hashutil_test.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="13" lean-forward="true" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../../../soft/install/go/go1.11/src/crypto/sha256/sha256.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="129">
-          <caret line="179" selection-start-line="179" selection-end-line="179" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../../../soft/install/go/go1.11/src/fmt/print.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="106">
-          <caret line="200" selection-start-line="200" selection-end-line="200" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft/common/encryptutil/md5util.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="6" column="1" lean-forward="true" selection-start-line="6" selection-start-column="1" selection-end-line="6" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft/common/encryptutil/md5util_test.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="12" lean-forward="true" selection-start-line="12" selection-end-line="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_storage/apiServer/apiServer.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="98">
-          <caret line="30" column="44" selection-start-line="30" selection-start-column="44" selection-end-line="30" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_storage/apiServer/objects/store.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="14" selection-start-line="14" selection-end-line="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_storage/apiServer/objects/handler.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="14" column="9" lean-forward="true" selection-start-line="14" selection-start-column="9" selection-end-line="14" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_storage/apiServer/objects/put.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="13" column="29" selection-start-line="13" selection-start-column="29" selection-end-line="13" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_storage/lib/utils/utils.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="32" selection-start-line="32" selection-end-line="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft/common/hashutil/hashutil.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="12" column="19" selection-start-line="12" selection-start-column="19" selection-end-line="12" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/github.com/astaxie/beego/context/context.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="178">
-          <caret line="53" column="29" selection-start-line="53" selection-start-column="29" selection-end-line="53" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../../../soft/install/go/go1.11/src/io/io.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="76" column="5" selection-start-line="76" selection-start-column="5" selection-end-line="76" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../../../soft/install/go/go1.11/src/mime/multipart/formdata.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="178">
-          <caret line="159" column="5" selection-start-line="159" selection-start-column="5" selection-end-line="159" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../../../soft/install/go/go1.11/src/net/http/request.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="178">
-          <caret line="1296" column="50" lean-forward="true" selection-start-line="1296" selection-start-column="50" selection-end-line="1296" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/vendor/github.com/astaxie/beego/controller.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
@@ -1085,17 +881,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_deploy_web/shell/mysql/mysql_adjust.sh">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_deploy_web/shell/mysql/mysql_check.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-228" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_deploy_web/shell/mysql/mysql_modify.sh">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/isoft_deploy_web/shell/api/api_deploy.sh">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -1104,11 +889,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/isoft_deploy_web/shell/api/api_check.sh">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_deploy_web/shell/mysql/mysql_uninstall.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-346" />
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/isoft_deploy_web/shell/project/python/iuip_project_restart.sh">
       <provider selected="true" editor-type-id="text-editor" />
@@ -1137,26 +917,166 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_deploy_web/shell/common/killprocess.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" selection-start-line="2" selection-end-line="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_deploy_web/shell/elasticsearch/killprocess.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" selection-start-line="2" selection-end-line="12" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_deploy_web/shell/common/killprocess.sh" />
+    <entry file="file://$PROJECT_DIR$/isoft_deploy_web/shell/elasticsearch/killprocess.sh" />
     <entry file="file://$PROJECT_DIR$/isoft_deploy_web/shell/elasticsearch/elasticsearch_uninstall.sh">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
           <caret line="9" column="13" lean-forward="true" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
         </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_ui/dist/index.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_ui/dist/static/css/app.b18ae28967867479b2b58a91be58ce15.css">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_ui/dist/static/js/app.a266c7509c185f11364e.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_ui/dist/static/js/vendor.98e801db1ea51952ee3e.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_ui/dist/static/js/manifest.2ae2e69a05c33dfc65f8.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_ui/src/components/Env/EnvAdd.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="21" lean-forward="true" selection-start-line="5" selection-start-column="21" selection-end-line="5" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_ui/src/components/Env/EnvList.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="19" column="3" lean-forward="true" selection-start-line="19" selection-start-column="3" selection-end-line="19" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_ui/build/check-versions.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_ui/build/build.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_ui/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="85" selection-start-line="7" selection-start-column="60" selection-end-line="7" selection-end-column="85" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_ui/config/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="13" selection-start-line="13" selection-end-line="18" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_ui/build/vue-loader.conf.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_ui/src/components/Service/ServiceAdd.vue">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_ui/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="18" selection-start-line="8" selection-start-column="18" selection-end-line="8" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_ui/src/api/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" column="4" selection-start-line="10" selection-start-column="4" selection-end-line="10" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_ui/src/router/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="407">
+          <caret line="24" column="21" lean-forward="true" selection-start-line="24" selection-start-column="21" selection-end-line="24" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_ui/src/App.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="372">
+          <caret line="36" column="12" selection-start-line="36" selection-start-column="4" selection-end-line="36" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_ui/src/api/ajax.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-139">
+          <caret line="4" column="25" lean-forward="true" selection-start-line="4" selection-start-column="25" selection-end-line="4" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_ui/config/prod.env.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_ui/build/webpack.dev.conf.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1224">
+          <caret line="72" column="20" selection-start-line="72" selection-start-column="16" selection-end-line="72" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_ui/build/webpack.base.conf.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="2" selection-start-line="2" selection-start-column="2" selection-end-line="2" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_ui/build/webpack.prod.conf.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" selection-start-line="10" selection-end-line="11" selection-end-column="57" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_doc/vue_project.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="60" column="18" selection-start-line="60" selection-start-column="12" selection-end-line="60" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_ui/src/components/Service/MysqlInit.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="365">
+          <caret line="37" column="23" lean-forward="true" selection-end-line="88" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_ui/src/components/Service/ServiceList.vue">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_ui/src/components/Service/demo.vue" />
+    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_ui/src/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="14" lean-forward="true" selection-start-line="14" selection-end-line="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_ui/src/components/Service/ServiceTable.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="118">
+          <caret line="12" column="17" lean-forward="true" selection-start-line="12" selection-start-column="17" selection-end-line="12" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_deploy_web/shell/mysql/mysql_adjust.sh">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_deploy_web/shell/mysql/mysql_check.sh">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/isoft_deploy_web/shell/mysql/mysql_install.sh">
       <provider selected="true" editor-type-id="text-editor">
@@ -1165,10 +1085,23 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_deploy_web/shell/mysql/mysql_modify.sh">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_deploy_web/shell/mysql/mysql_uninstall.sh">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_deploy_web/shell/common/env_writer.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="901">
+          <caret line="53" column="46" selection-start-line="53" selection-start-column="46" selection-end-line="53" selection-end-column="57" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/isoft_deploy_web/shell/elasticsearch/elasticsearch_install.sh">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="13" column="13" lean-forward="true" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
+        <state relative-caret-position="177">
+          <caret line="71" column="40" lean-forward="true" selection-start-line="71" selection-start-column="40" selection-end-line="71" selection-end-column="40" />
         </state>
       </provider>
     </entry>

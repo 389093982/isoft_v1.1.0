@@ -80,7 +80,7 @@ Xmx="-Xmx100m"
 sed -i "s/$old_Xms/$Xms/g" ${jvm_file}
 sed -i "s/$old_Xmx/$Xmx/g" ${jvm_file}
 
+# 普通用户无法使用java,首先切换普通用户判断 $PATH 是否有 JAVA_HOME 环境变量,其次判断该路径是否有访问权限
 su - elasticsearch -c "cd ${installPath}/elasticsearch/bin && ./elasticsearch &"
 echo "start elasticsearch success..."
-
 
