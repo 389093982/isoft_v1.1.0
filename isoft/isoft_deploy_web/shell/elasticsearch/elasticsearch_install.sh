@@ -111,6 +111,6 @@ echo "start elasticsearch success..."
 # * hard nproc 4096
 # 前面的*符号必须带上，然后重新启动就可以了。执行完成后可以使用命令 ulimit -n 查看进程数
 # 2.[2]: max virtual memory areas vm.max_map_count [65530] is too low, increase to at least [262144]  需要修改系统变量的最大值了
-# 解决方案：切换到root用户修改配置sysctl.conf  增加配置值： vm.max_map_count=655360
+# 解决方案：切换到root用户修改配置 /etc/sysctl.conf  增加配置值： vm.max_map_count=655360
 # 执行命令 sysctl -p   这样就可以了，然后重新启动ES服务 就可以了
 ######################################################################################################################################

@@ -85,7 +85,7 @@
         <counts>
           <entry key="conf" value="16" />
           <entry key="go" value="1219" />
-          <entry key="sh" value="1429" />
+          <entry key="sh" value="1632" />
           <entry key="txt" value="32" />
           <entry key="vue" value="107" />
         </counts>
@@ -93,7 +93,7 @@
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="Go" value="1219" />
-          <entry key="PLAIN_TEXT" value="1584" />
+          <entry key="PLAIN_TEXT" value="1787" />
         </counts>
       </usages-collector>
     </session>
@@ -144,8 +144,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/isoft_deploy_web/shell/elasticsearch/elasticsearch_install.sh">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="177">
-              <caret line="71" column="40" lean-forward="true" selection-start-line="71" selection-start-column="40" selection-end-line="71" selection-end-column="40" />
+            <state relative-caret-position="418">
+              <caret line="71" column="37" selection-start-line="71" selection-start-column="8" selection-end-line="71" selection-end-column="37" />
             </state>
           </provider>
         </entry>
@@ -166,7 +166,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>sftpClient</find>
       <find>getScriptFilePathByCommandType</find>
       <find>runmode</find>
       <find>/etc/profile</find>
@@ -196,6 +195,7 @@
       <find>refreshServiceList</find>
       <find>ServiceList</find>
       <find>bashrc</find>
+      <find>/home/data/test.sh</find>
     </findStrings>
     <replaceStrings>
       <replace>&quot;,</replace>
@@ -1100,8 +1100,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/isoft_deploy_web/shell/elasticsearch/elasticsearch_install.sh">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="177">
-          <caret line="71" column="40" lean-forward="true" selection-start-line="71" selection-start-column="40" selection-end-line="71" selection-end-column="40" />
+        <state relative-caret-position="418">
+          <caret line="71" column="37" selection-start-line="71" selection-start-column="8" selection-end-line="71" selection-end-column="37" />
         </state>
       </provider>
     </entry>
