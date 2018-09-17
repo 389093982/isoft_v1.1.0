@@ -13,6 +13,12 @@ fi
 sh ./elasticsearch_uninstall.sh ${installPath}
 # elasticsearch 安装包路径
 packageName=`ls ${remoteDeployHomePath}/install/elasticsearch | grep elasticsearch | grep tar.gz`
+
+if [ -z ${packageName} ];then
+    echo "packageName was not found..."
+    exit;
+fi
+
 elasticsearch_targz=${remoteDeployHomePath}/install/elasticsearch/${packageName}
 
 # 解压
@@ -55,6 +61,17 @@ elasticsearch_logs=`echo $elasticsearch_logs | sed 's#\/#\\\/#g'`
 # 双引号: shell处理命令时,要对其中的内容进行算术扩展.如果想让shell扩展后得到sed命令所要的格式,使用双引号即可.
 sed -i "s/$old_elasticsearch_data/$elasticsearch_data/g" ${elasticsearch_yml}
 sed -i "s/$old_elasticsearch_logs/$elasticsearch_logs/g" ${elasticsearch_yml}
+# 允许所有 ip 访问
+old_network_host=`cat ${elasticsearch_yml} | grep network.host`
+network_host="network.host: 0.0.0.0"
+sed -i "s/$old_network_host/${network_host}/g" ${elasticsearch_yml}
+
+
+# 设置允许跨域
+enabled="http.cors.enabled: true"
+origin="http.cors.allow-origin: \"*\""
+echo ${enabled} >> ${elasticsearch_yml}
+echo ${origin} >> ${elasticsearch_yml}
 echo "modify ${elasticsearch_yml} file success..."
 
 userdel elasticsearch
@@ -84,3 +101,16 @@ sed -i "s/$old_Xmx/$Xmx/g" ${jvm_file}
 su - elasticsearch -c "cd ${installPath}/elasticsearch/bin && ./elasticsearch &"
 echo "start elasticsearch success..."
 
+
+######################################################################################################################################
+# 1.[1]: max file descriptors [4096] for elasticsearch process is too low, increase to at least [65536] 意思是说你的进程不够用了
+# 解决方案： 切到root 用户：进入到security目录下的limits.conf；执行命令 vim /etc/security/limits.conf 在文件的末尾添加下面的参数值：
+# * soft nofile 65536
+# * hard nofile 131072
+# * soft nproc 2048
+# * hard nproc 4096
+# 前面的*符号必须带上，然后重新启动就可以了。执行完成后可以使用命令 ulimit -n 查看进程数
+# 2.[2]: max virtual memory areas vm.max_map_count [65530] is too low, increase to at least [262144]  需要修改系统变量的最大值了
+# 解决方案：切换到root用户修改配置sysctl.conf  增加配置值： vm.max_map_count=655360
+# 执行命令 sysctl -p   这样就可以了，然后重新启动ES服务 就可以了
+######################################################################################################################################
