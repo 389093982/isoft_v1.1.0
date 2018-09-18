@@ -50,15 +50,18 @@ func (this *ExecutorRouter) RunExecuteRemoteScriptTask(operate_type, extra_param
 		ServiceInfo:         this.ServiceInfo,
 		TrackingLogResolver: this.TrackingLogResolver,
 	}
+
 	command, err := deploy.PrepareCommand(this.ServiceInfo, operate_type, extra_params)
 	if err != nil {
 		logs.Error("prepare command error : %s", err.Error())
-	} else {
-		logs.Info("current command is %s", command)
-		this.TrackingLogResolver.WriteSuccessLog(fmt.Sprintf("current command is %s", command))
-		sshutil.RunSSHShellCommand(this.EnvInfo.EnvAccount, this.EnvInfo.EnvPasswd, this.EnvInfo.EnvIp, command, stdout, stderr)
-		if err != nil {
-			logs.Error("run command error : %s", err.Error())
-		}
+		return
+	}
+
+	logs.Info("current command is %s", command)
+	this.TrackingLogResolver.WriteSuccessLog(fmt.Sprintf("current command is %s", command))
+	err = sshutil.RunSSHShellCommand(this.EnvInfo.EnvAccount, this.EnvInfo.EnvPasswd, this.EnvInfo.EnvIp, command, stdout, stderr)
+	if err != nil {
+		logs.Error("run command error : %s", err.Error())
+		return
 	}
 }

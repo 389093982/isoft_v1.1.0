@@ -10,10 +10,11 @@ func RunSSHShellCommandOnly(sshAccount, sshPwd, sshIp, command string) error {
 
 func RunSSHShellCommand(sshAccount, sshPwd, sshIp, command string, stdout, stderr io.Writer) error {
 	sshClient, err := SSHConnect(sshAccount, sshPwd, sshIp, 22)
-	defer sshClient.Close()
 	if err != nil {
 		return err
 	}
+	// 避免 err 导致 sshClient 空指针异常,需要放在 err 判断之后
+	defer sshClient.Close()
 	sshClient.Stdout = stdout
 	sshClient.Stderr = stderr
 	err = sshClient.Run(command)

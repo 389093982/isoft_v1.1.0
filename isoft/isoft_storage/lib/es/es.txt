@@ -1,0 +1,8 @@
+创建索引
+PUT 193.112.162.61:9200/objects?pretty
+
+查看所有索引
+GET 193.112.162.61:9200/_cat/indices?v
+
+删除索引
+DELETE 193.112.162.61:9200/objects?pretty

@@ -488,7 +488,7 @@
             var interval = setInterval(function () {
               // 渲染最后一次部署状态
               _this.renderLastDeployStatus(index,serviceInfo.id,interval);
-            }, 2000);
+            }, 5000);
           }
           if(callback != null){
             // 任务回调函数

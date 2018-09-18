@@ -17,6 +17,9 @@ http.cors.allow-origin: "*"
 # 创建索引
 # curl 193.112.162.61:9200/metadata -XPUT -d'{"mappings":{"objects":{"properties":{"name":{"type":"string","index":"not_analyzed"},"version":{"type":"integer"},"size":{"type":"integer"},"hash":{"type":"string"}}}}}'
 
+curl -H "Content-Type: application/json" -XPUT 193.112.162.61:9200/metadata -d'{"mappings":{"objects":{"properties":{"name":{"type":"string","index":"not_analyzed"},"version":{"type":"integer"},"size":{"type":"integer"},"hash":{"type":"string"}}}}}'
+{"error":"Content-Type header [application/x-www-form-urlencoded] is not supported","status":406}
+
 # 通过如下语句,列出所有索引
 # curl '193.112.162.61:9200/_cat/indices?v'
 

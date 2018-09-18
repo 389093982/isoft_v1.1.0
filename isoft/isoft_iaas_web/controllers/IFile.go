@@ -54,7 +54,7 @@ func (this *IFileController) FileUpload() {
 	// 在请求头中添加 hash 值
 	req.Header.Add("digest", "SHA-256=" + hashutil.CalculateHash(strings.NewReader(filecontent)))
 	res, err := http.DefaultClient.Do(req)
-	if err != nil{
+	if err != nil || res.StatusCode != 200{
 		panic(err)
 	}
 	defer res.Body.Close()
