@@ -2,8 +2,8 @@ package locate
 
 import (
 	"isoft/isoft_storage/cfg"
+	"isoft/isoft_storage/lib/models"
 	"isoft/isoft_storage/lib/rabbitmq"
-	"isoft/isoft_storage/lib/types"
 	"path/filepath"
 	"strconv"
 	"strings"
@@ -52,7 +52,7 @@ func StartLocate() {
 		id := Locate(hash)
 		if id != -1 {
 			// 不存在则不返回消息,存在则返回消息
-			q.Send(msg.ReplyTo, types.LocateMessage{Addr: cfg.GetConfigValue(cfg.LISTEN_ADDRESS), Id: id})
+			q.Send(msg.ReplyTo, models.LocateMessage{Addr: cfg.GetConfigValue(cfg.LISTEN_ADDRESS), Id: id})
 		}
 	}
 }

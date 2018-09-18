@@ -3,9 +3,9 @@ package locate
 import (
 	"encoding/json"
 	"isoft/isoft_storage/cfg"
+	"isoft/isoft_storage/lib/models"
 	"isoft/isoft_storage/lib/rabbitmq"
 	"isoft/isoft_storage/lib/rs"
-	"isoft/isoft_storage/lib/types"
 	"time"
 )
 
@@ -25,7 +25,7 @@ func Locate(hash string) (locateInfo map[int]string) {
 		if len(msg.Body) == 0 {
 			return
 		}
-		var info types.LocateMessage
+		var info models.LocateMessage
 		json.Unmarshal(msg.Body, &info)
 		locateInfo[info.Id] = info.Addr
 	}
