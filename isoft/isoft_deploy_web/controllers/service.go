@@ -10,6 +10,7 @@ import (
 	"isoft/isoft_deploy_web/deploy_core/constant"
 	"isoft/isoft_deploy_web/deploy_core/executors"
 	"isoft/isoft_deploy_web/models"
+	"mime/multipart"
 	"os"
 	"path"
 	"strconv"
@@ -138,22 +139,38 @@ func (this *ServiceController) FileDownload() {
 }
 
 func (this *ServiceController) FileUpload() {
-	service_id, _ := this.GetInt64("service_id")
-	serviceInfo, _ := models.QueryServiceInfoById(service_id)
-	_, h, err := this.GetFile("file")
-	if err != nil {
-		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": "保存失败！"}
-	} else {
-		// 根据 service_id 创建分级文件夹
-		os.MkdirAll("static/uploadfile/"+serviceInfo.ServiceName, os.ModePerm)
-		// 保存文件
-		err := this.SaveToFile("file", path.Join(SFTP_SRC_DIR+"/static/uploadfile/"+serviceInfo.ServiceName, h.Filename))
-		if err != nil {
+	defer func() {
+		if err := recover(); err != nil{
 			this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": "保存失败！"}
-		} else {
-			this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
+			this.ServeJSON()
 		}
+	}()
+	var (
+		service_id int64
+		serviceInfo models.ServiceInfo
+		h *multipart.FileHeader
+		err error
+	)
+	if service_id, err = this.GetInt64("service_id"); err != nil{
+		panic("invalid param service_id")
 	}
+	if serviceInfo, err = models.QueryServiceInfoById(service_id); err != nil{
+		panic("invalid param service_id, serviceInfo not found")
+	}
+	if _, h, err = this.GetFile("file"); err != nil {
+		panic("invalid file info")
+	}
+	// 上传文件名和 PackageName 不一致,则校验不通过
+	if h.Filename != serviceInfo.PackageName{
+		panic("invalid filename, not match with package_name")
+	}
+	// 根据服务类型创建分级文件夹,一种类型放在同一个目录
+	os.MkdirAll("static/uploadfile/"+serviceInfo.ServiceType, os.ModePerm)
+	// 安装包上传保存,多实例场景相同的软件包只需要传一次即可,同名的会覆盖
+	if err = this.SaveToFile("file", path.Join(SFTP_SRC_DIR+"/static/uploadfile/"+serviceInfo.ServiceType, h.Filename));err != nil {
+		panic("file save err")
+	}
+	this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
 	this.ServeJSON()
 }
 

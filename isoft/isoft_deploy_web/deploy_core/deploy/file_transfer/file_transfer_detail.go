@@ -18,9 +18,9 @@ func ApiDeployFileTransfer(serviceInfo *models.ServiceInfo) []*FileTransfer {
 
 func DeployFileTransfer(serviceInfo *models.ServiceInfo, serviceType string) []*FileTransfer {
 	FileTransfers := make([]*FileTransfer, 0)
-	// .tar.gz 安装包拷贝
+	// 安装包拷贝,本地多实例场景相同的软件包只需要传一次即可
 	FileTransfer := &FileTransfer{
-		LocalFilePath: filepath.Join(SFTP_SRC_DIR, "static", "uploadfile", serviceInfo.ServiceName, serviceInfo.PackageName),
+		LocalFilePath: filepath.Join(SFTP_SRC_DIR, "static", "uploadfile", serviceInfo.ServiceType, serviceInfo.PackageName),
 		// 目标机器是 Linux 系统,需要转换为 Linux 路径分隔符
 		RemoteDir: fileutil.ChangeToLinuxSeparator(
 			filepath.Join(GetRemoteDeployHomePath(serviceInfo.EnvInfo), "upload/"+serviceType+"/packages", serviceInfo.ServiceName)),

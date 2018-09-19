@@ -11,10 +11,6 @@ import (
 	"time"
 )
 
-var (
-	FileTransferHistoryMap = make(map[string]int)
-)
-
 type ExecutorRouter struct {
 	// 环境信息
 	EnvInfo             *models.EnvInfo
@@ -31,15 +27,9 @@ func (this *ExecutorRouter) transfer() {
 			logs.Error("invalid transfer task!")
 			break
 		}
-		if _, ok := FileTransferHistoryMap[transfer.LocalFilePath]; !ok {
-			// 存入传输历史
-			FileTransferHistoryMap[transfer.LocalFilePath] = 1
-			// 开始传输
-			transfer.Transfer(this.EnvInfo)
-			this.TrackingLogResolver.WriteSuccessLog(fmt.Sprintf("copy file %s to %s", transfer.LocalFilePath, transfer.RemoteDir))
-			// 从传输历史中删除
-			delete(FileTransferHistoryMap, transfer.LocalFilePath)
-		}
+		// 开始传输
+		transfer.Transfer(this.EnvInfo)
+		this.TrackingLogResolver.WriteSuccessLog(fmt.Sprintf("copy file %s to %s", transfer.LocalFilePath, transfer.RemoteDir))
 	}
 }
 
