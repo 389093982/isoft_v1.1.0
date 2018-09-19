@@ -62,6 +62,7 @@ func (this *ExecutorRouter) RunExecuteRemoteScriptTask(operate_type, extra_param
 	err = sshutil.RunSSHShellCommand(this.EnvInfo.EnvAccount, this.EnvInfo.EnvPasswd, this.EnvInfo.EnvIp, command, stdout, stderr)
 	if err != nil {
 		logs.Error("run command error : %s", err.Error())
+		this.TrackingLogResolver.WriteErrorLog(fmt.Sprintf("run command error : %s", err.Error()))
 		return
 	}
 }

@@ -5,8 +5,9 @@
       <Col span="12"><Button type="info" @click="hiddenColumnFunc()" style="float: right;">隐藏列</Button></Col>
     </Row>
 
-    <Table :columns="columns1" :data="serviceInfos" size="small" height="400"></Table>
-    <Page :total="total" show-sizer :styles="{'text-align': 'center','margin-top': '10px'}"/>
+    <Table :columns="columns1" :data="serviceInfos" size="small" height="450"></Table>
+    <Page :total="total" :page-size="offset" show-total show-sizer :styles="{'text-align': 'center','margin-top': '10px'}"
+          @on-change="handleChange" @on-page-size-change="handlePageSizeChange"/>
 
     <Modal
       v-model="showServiceTrackingLogDetailFlag"
@@ -83,9 +84,14 @@
         // 新建账号和数据库 modal 时所选择的 index
         mysqlInit_index: -1,
         serviceInfos: [],
-        total:0,
         // 需要隐藏的列
-        hiddenColumn:[]
+        hiddenColumn:[],
+        // 当前页
+        current_page:1,
+        // 总页数
+        total:1,
+        // 每页记录数
+        offset:10,
       }
     },
     computed:{
@@ -460,7 +466,7 @@
       },
       async refreshServiceList(){
         const _this = this;
-        const data = await ServiceList(this.$route.query.service_type,1,10);
+        const data = await ServiceList(this.$route.query.service_type, this.current_page, this.offset);
         var result = JSON.parse(data);
         var _serviceInfos=[];
         for(var i=0; i<result.serviceInfos.length; i++){
@@ -473,7 +479,7 @@
           _serviceInfos.push(_serviceInfo);
         }
         _this.serviceInfos = _serviceInfos;
-        _this.total = result.totalcount;
+        _this.total = result.paginator.totalcount;
       },
       async runDeployTask(index, operate_type, extra_params, callback){
         const serviceInfo = this.serviceInfos[index];
@@ -495,7 +501,15 @@
             callback(data);
           }
         }
-      }
+      },
+      handleChange(page){
+        this.current_page = page;
+        this.refreshServiceList();
+      },
+      handlePageSizeChange(pageSize){
+        this.offset = pageSize;
+        this.refreshServiceList();
+      },
     },
     mounted:function(){
       this.refreshServiceList();

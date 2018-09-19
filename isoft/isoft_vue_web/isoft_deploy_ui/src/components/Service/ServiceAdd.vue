@@ -42,7 +42,7 @@
         </Row>
 
         <Row>
-          <Col span="12" v-if="formValidate.service_type=='beego'">
+          <Col span="12" v-if="formValidate.service_type=='beego' || formValidate.service_type=='api'">
             <FormItem label="运行模式" prop="run_mode">
               <Input v-model="formValidate.run_mode" placeholder="请输入运行模式"></Input>
             </FormItem>

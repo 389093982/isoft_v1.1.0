@@ -18,8 +18,8 @@ export const EnvList = (current_page,offset) =>
 export const EnvAll = () => ajax(BASE_URL+'/env/all/',{},'POST')
 
 // 分页显示服务信息
-export const ServiceList = (service_type,current_page,page_size) =>
-  ajax(BASE_URL+'/service/list/',{service_type,current_page,page_size},'POST')
+export const ServiceList = (service_type,current_page,offset) =>
+  ajax(BASE_URL+'/service/list/',{service_type,current_page,offset},'POST')
 
 // 连接测试
 export const ConnectTest = (env_id) =>
