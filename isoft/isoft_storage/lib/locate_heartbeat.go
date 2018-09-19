@@ -2,6 +2,7 @@ package lib
 
 import (
 	"encoding/json"
+	"fmt"
 	"isoft/isoft_storage/cfg"
 	"isoft/isoft_storage/lib/models"
 	"isoft/isoft_storage/lib/rabbitmq"
@@ -57,6 +58,7 @@ func (this *LocateAndHeartbeatProxy) ReceiveAndModifyHeartbeat(dataServers map[s
 	for msg := range c {
 		// 获取监听地址
 		dataServer, e := strconv.Unquote(string(msg.Body))
+		fmt.Println("receive dataServer :", dataServer)
 		if e != nil {
 			panic(e)
 		}

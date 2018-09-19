@@ -49,6 +49,11 @@ func (this *ExecutorRouter) RunCommandTask(operate_type string, tracking_id, ext
 		ServiceInfo: this.ServiceInfo,
 	}
 	this.TrackingLogResolver.StartRecordNewTask(tracking_id, this.ServiceInfo.ServiceName+"#"+operate_type)
+	defer func() {
+		if err := recover(); err != nil{
+			this.TrackingLogResolver.EndRecordTask()
+		}
+	}()
 
 	if len(this.FileTransfers) > 0 {
 		this.TrackingLogResolver.WriteSuccessLog("start file transfer...")
