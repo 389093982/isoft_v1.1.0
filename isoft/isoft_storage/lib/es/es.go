@@ -6,21 +6,16 @@ import (
 	"io/ioutil"
 	"isoft/isoft/common/logutil"
 	"isoft/isoft_storage/cfg"
+	"isoft/isoft_storage/lib/models"
 	"net/http"
 	"net/url"
 	"strings"
 )
 
-// 元数据信息
-type Metadata struct {
-	Name    string
-	Version int
-	Size    int64
-	Hash    string
-}
+
 
 type hit struct {
-	Source Metadata `json:"_source"`
+	Source models.Metadata `json:"_source"`
 }
 
 type searchResult struct {
@@ -30,7 +25,7 @@ type searchResult struct {
 	}
 }
 
-func getMetadata(name string, versionId int) (meta Metadata, e error) {
+func getMetadata(name string, versionId int) (meta models.Metadata, e error) {
 	url := fmt.Sprintf("http://%s/metadata/objects/%s_%d/_source",
 		cfg.GetConfigValue(cfg.ES_SERVER), name, versionId)
 	r, e := http.Get(url)
@@ -46,7 +41,7 @@ func getMetadata(name string, versionId int) (meta Metadata, e error) {
 	return
 }
 
-func SearchLatestVersion(name string) (meta Metadata, e error) {
+func SearchLatestVersion(name string) (meta models.Metadata, e error) {
 	url := fmt.Sprintf("http://%s/metadata/_search?q=name:%s&size=1&sort=version:desc",
 		cfg.GetConfigValue(cfg.ES_SERVER), url.PathEscape(name))
 	r, e := http.Get(url)
@@ -67,7 +62,7 @@ func SearchLatestVersion(name string) (meta Metadata, e error) {
 	return
 }
 
-func GetMetadata(name string, version int) (Metadata, error) {
+func GetMetadata(name string, version int) (models.Metadata, error) {
 	if version == 0 {
 		return SearchLatestVersion(name)
 	}
@@ -104,7 +99,7 @@ func AddVersion(name, hash string, size int64) error {
 	return PutMetadata(name, version.Version+1, size, hash)
 }
 
-func SearchAllVersions(name string, from, size int) ([]Metadata, error) {
+func SearchAllVersions(name string, from, size int) ([]models.Metadata, error) {
 	url := fmt.Sprintf("http://%s/metadata/_search?sort=name,version&from=%d&size=%d",
 		cfg.GetConfigValue(cfg.ES_SERVER), from, size)
 	if name != "" {
@@ -114,7 +109,7 @@ func SearchAllVersions(name string, from, size int) ([]Metadata, error) {
 	if e != nil {
 		return nil, e
 	}
-	metas := make([]Metadata, 0)
+	metas := make([]models.Metadata, 0)
 	result, _ := ioutil.ReadAll(r.Body)
 	var sr searchResult
 	json.Unmarshal(result, &sr)
@@ -148,7 +143,8 @@ type aggregateResult struct {
 	}
 }
 
-func SearchVersionStatus(min_doc_count int) ([]Bucket, error) {
+// 返回值 key 为对象名, value 为对象现有版本数量、最小版本信息
+func SearchVersionStatus(min_doc_count int) (versionMap map[string][]int, err error) {
 	client := http.Client{}
 	url := fmt.Sprintf("http://%s/metadata/_search", cfg.GetConfigValue(cfg.ES_SERVER))
 	body := fmt.Sprintf(`
@@ -178,7 +174,13 @@ func SearchVersionStatus(min_doc_count int) ([]Bucket, error) {
 	b, _ := ioutil.ReadAll(r.Body)
 	var ar aggregateResult
 	json.Unmarshal(b, &ar)
-	return ar.Aggregations.Group_by_name.Buckets, nil
+
+	buckets := ar.Aggregations.Group_by_name.Buckets
+	for i := range buckets {
+		bucket := buckets[i]
+		versionMap[bucket.Key] = []int{bucket.Doc_count, int(bucket.Min_version.Value)}
+	}
+	return versionMap, nil
 }
 
 func HasHash(hash string) (bool, error) {

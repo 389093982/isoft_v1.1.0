@@ -3,7 +3,7 @@ package main
 import (
 	"isoft/isoft_storage/apiServer/objects"
 	"isoft/isoft_storage/cfg"
-	"isoft/isoft_storage/lib/es"
+	"isoft/isoft_storage/lib"
 	"isoft/isoft_storage/lib/utils"
 	"log"
 	"os"
@@ -17,7 +17,7 @@ func main() {
 func verify(hash string) {
 	log.Println("verify", hash)
 	// 从元数据服务中获取该散列值对应的对象大小
-	size, e := es.SearchHashSize(hash)
+	size, e := lib.MetaDataProxy{}.SearchHashSize(hash)
 	if e != nil {
 		log.Println(e)
 		return

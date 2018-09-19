@@ -2,8 +2,7 @@ package locate
 
 import (
 	"isoft/isoft_storage/cfg"
-	"isoft/isoft_storage/lib/models"
-	"isoft/isoft_storage/lib/rabbitmq"
+	"isoft/isoft_storage/lib"
 	"path/filepath"
 	"strconv"
 	"strings"
@@ -37,24 +36,8 @@ func Del(hash string) {
 }
 
 func StartLocate() {
-	// 直接将 RabbitMQ 消息队列里收到的对象散列值作为 Locate 参数
-	q := rabbitmq.New(cfg.GetConfigValue(cfg.RABBITMQ_SERVER))
-	defer q.Close()
-	q.Bind("dataServers")
-	c := q.Consume()
-	for msg := range c {
-		// 接收 hash 值
-		hash, e := strconv.Unquote(string(msg.Body))
-		if e != nil {
-			panic(e)
-		}
-		// 定位 hash 值是否存在
-		id := Locate(hash)
-		if id != -1 {
-			// 不存在则不返回消息,存在则返回消息
-			q.Send(msg.ReplyTo, models.LocateMessage{Addr: cfg.GetConfigValue(cfg.LISTEN_ADDRESS), Id: id})
-		}
-	}
+	proxy := &lib.LocateAndHeartbeatProxy{}
+	proxy.ReceiveDealAndSendLocateInfo(Locate)
 }
 
 // 应用启动时对节点本地磁盘上的对象进行定位的,缓存对象定位信息,防止过于频繁的磁盘访问

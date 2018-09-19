@@ -2,7 +2,7 @@ package main
 
 import (
 	"isoft/isoft_storage/cfg"
-	"isoft/isoft_storage/lib/es"
+	"isoft/isoft_storage/lib"
 	"log"
 	"net/http"
 	"os"
@@ -21,7 +21,7 @@ func main() {
 		// 获取对象的 hash 值
 		hash := strings.Split(filepath.Base(files[i]), ".")[0]
 		// 判断元数据中是否有对象的 hash 值
-		hashInMetadata, e := es.HasHash(hash)
+		hashInMetadata, e := lib.MetaDataProxy{}.HasHash(hash)
 		if e != nil {
 			log.Println(e)
 			return

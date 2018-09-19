@@ -4,7 +4,7 @@ import (
 	"compress/gzip"
 	"fmt"
 	"io"
-	"isoft/isoft_storage/lib/es"
+	"isoft/isoft_storage/lib"
 	"isoft/isoft_storage/lib/utils"
 	"log"
 	"net/http"
@@ -30,7 +30,8 @@ func get(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 	// 获取对象元数据信息
-	meta, e := es.GetMetadata(name, version)
+	proxy := &lib.MetaDataProxy{}
+	meta, e := proxy.GetMetadata(name, version)
 	if e != nil {
 		log.Println(e)
 		w.WriteHeader(http.StatusInternalServerError)

@@ -3,7 +3,7 @@ package temp
 import (
 	"io"
 	"isoft/isoft_storage/apiServer/locate"
-	"isoft/isoft_storage/lib/es"
+	"isoft/isoft_storage/lib"
 	"isoft/isoft_storage/lib/rs"
 	"isoft/isoft_storage/lib/utils"
 	"log"
@@ -80,7 +80,8 @@ func put(w http.ResponseWriter, r *http.Request) {
 				stream.Commit(true)
 			}
 			// 记录版本
-			e = es.AddVersion(stream.Name, stream.Hash, stream.Size)
+			proxy := &lib.MetaDataProxy{}
+			e = proxy.AddVersion(stream.Name, stream.Hash, stream.Size)
 			if e != nil {
 				log.Println(e)
 				w.WriteHeader(http.StatusInternalServerError)

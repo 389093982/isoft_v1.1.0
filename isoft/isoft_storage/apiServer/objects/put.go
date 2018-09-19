@@ -1,7 +1,7 @@
 package objects
 
 import (
-	"isoft/isoft_storage/lib/es"
+	"isoft/isoft_storage/lib"
 	"isoft/isoft_storage/lib/utils"
 	"log"
 	"net/http"
@@ -36,7 +36,8 @@ func put(w http.ResponseWriter, r *http.Request) {
 	// 获取对象名称
 	name := strings.Split(r.URL.EscapedPath(), "/")[2]
 	// 添加对象版本信息
-	e = es.AddVersion(name, hash, size)
+	proxy := &lib.MetaDataProxy{}
+	e = proxy.AddVersion(name, hash, size)
 	if e != nil {
 		log.Println(e)
 		w.WriteHeader(http.StatusInternalServerError)

@@ -4,7 +4,7 @@ import (
 	"isoft/isoft/common/logutil"
 	"isoft/isoft_storage/apiServer/heartbeat"
 	"isoft/isoft_storage/apiServer/locate"
-	"isoft/isoft_storage/lib/es"
+	"isoft/isoft_storage/lib"
 	"isoft/isoft_storage/lib/rs"
 	"isoft/isoft_storage/lib/utils"
 	"log"
@@ -32,7 +32,8 @@ func post(w http.ResponseWriter, r *http.Request) {
 	}
 	if locate.Exist(url.PathEscape(hash)) {
 		// 散列值已经存在,则不做任何保存操作,直接添加版本
-		e = es.AddVersion(name, hash, size)
+		proxy := &lib.MetaDataProxy{}
+		e = proxy.AddVersion(name, hash, size)
 		if e != nil {
 			log.Println(e)
 			w.WriteHeader(http.StatusInternalServerError)

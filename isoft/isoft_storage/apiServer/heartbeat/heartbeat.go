@@ -2,9 +2,7 @@ package heartbeat
 
 import (
 	"isoft/isoft/common/logutil"
-	"isoft/isoft_storage/cfg"
-	"isoft/isoft_storage/lib/rabbitmq"
-	"strconv"
+	"isoft/isoft_storage/lib"
 	"sync"
 	"time"
 )
@@ -31,23 +29,8 @@ func ListenDataServerHeartbeat() {
 			ListenDataServerHeartbeat()
 		}
 	}()
-
-	q := rabbitmq.New(cfg.GetConfigValue(cfg.RABBITMQ_SERVER))
-	defer q.Close()
-	q.Bind("apiServers")
-	c := q.Consume()
-	// 循环遍历数据服务监听地址
-	for msg := range c {
-		// 获取监听地址
-		dataServer, e := strconv.Unquote(string(msg.Body))
-		if e != nil {
-			panic(e)
-		}
-		mutex.Lock()
-		// 更新监听地址的时间
-		dataServers[dataServer] = time.Now()
-		mutex.Unlock()
-	}
+	proxy := &lib.LocateAndHeartbeatProxy{}
+	proxy.ReceiveAndModifyHeartbeat(dataServers, &mutex)
 }
 
 // 清除超过指定时间没收到心跳消息的数据服务节点,默认使用 10 s

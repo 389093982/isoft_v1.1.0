@@ -2,7 +2,7 @@ package versions
 
 import (
 	"encoding/json"
-	"isoft/isoft_storage/lib/es"
+	"isoft/isoft_storage/lib"
 	"log"
 	"net/http"
 	"strings"
@@ -21,7 +21,8 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	name := strings.Split(r.URL.EscapedPath(), "/")[2]
 	for {
 		// 查询元数据
-		metas, e := es.SearchAllVersions(name, from, size)
+		proxy := &lib.MetaDataProxy{}
+		metas, e := proxy.SearchAllVersions(name, from, size)
 		if e != nil {
 			log.Println(e)
 			w.WriteHeader(http.StatusInternalServerError)
