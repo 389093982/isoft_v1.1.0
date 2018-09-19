@@ -9,15 +9,16 @@ func RunSSHShellCommandOnly(sshAccount, sshPwd, sshIp, command string) error {
 }
 
 func RunSSHShellCommand(sshAccount, sshPwd, sshIp, command string, stdout, stderr io.Writer) error {
-	sshClient, err := SSHConnect(sshAccount, sshPwd, sshIp, 22)
+	client, session, err := SSHConnect(sshAccount, sshPwd, sshIp, 22)
 	if err != nil {
 		return err
 	}
-	// 避免 err 导致 sshClient 空指针异常,需要放在 err 判断之后
-	defer sshClient.Close()
-	sshClient.Stdout = stdout
-	sshClient.Stderr = stderr
-	err = sshClient.Run(command)
+	// 避免 err 导致 session 空指针异常,需要放在 err 判断之后
+	defer client.Close()
+	defer session.Close()
+	session.Stdout = stdout
+	session.Stderr = stderr
+	err = session.Run(command)
 	if err != nil {
 		return err
 	}

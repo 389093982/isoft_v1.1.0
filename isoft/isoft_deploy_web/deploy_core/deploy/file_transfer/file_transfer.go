@@ -28,12 +28,12 @@ type FileTransfer struct {
 }
 
 func (this *FileTransfer) Transfer(envInfo *models.EnvInfo) error {
-	sftpClient, err := sftputil.SFTPConnect(envInfo.EnvAccount, envInfo.EnvPasswd, envInfo.EnvIp, 22)
+	sshClient, sftpClient, err := sftputil.SFTPConnect(envInfo.EnvAccount, envInfo.EnvPasswd, envInfo.EnvIp, 22)
 	if err != nil {
 		return err
 	}
+	defer sshClient.Close()
 	defer sftpClient.Close()
-
 	if fileutil.IsDir(this.LocalFilePath) {
 		return sftputil.SFTPDirectoryCopy(envInfo.EnvAccount, envInfo.EnvPasswd, envInfo.EnvIp, 22, this.LocalFilePath, this.RemoteDir)
 	} else {

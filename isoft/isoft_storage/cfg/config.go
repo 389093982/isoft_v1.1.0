@@ -15,7 +15,7 @@ func GetConfigValue(key string) string {
 	if value, ok := configmap[key]; ok == true {
 		return value
 	}
-	log.Println("get cfg value error!")
+	log.Println("get cfg value error for key :", key)
 	return ""
 }
 
