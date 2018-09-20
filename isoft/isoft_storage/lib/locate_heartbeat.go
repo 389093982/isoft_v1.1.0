@@ -50,6 +50,12 @@ func (this *LocateAndHeartbeatProxy) ReceiveDealAndSendLocateInfo(locateFunc fun
 }
 
 func (this *LocateAndHeartbeatProxy) ReceiveAndModifyHeartbeat(dataServers map[string]time.Time, mutex *sync.Mutex)  {
+	defer func() {
+		if err := recover(); err != nil{
+			// 异常退出后需要重新执行
+			this.ReceiveAndModifyHeartbeat(dataServers, mutex)
+		}
+	}()
 	q := rabbitmq.New(cfg.GetConfigValue(cfg.RABBITMQ_SERVER))
 	defer q.Close()
 	q.Bind("apiServers")
