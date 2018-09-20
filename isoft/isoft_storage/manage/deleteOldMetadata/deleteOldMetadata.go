@@ -14,7 +14,8 @@ func main() {
 	cfg.InitConfigWithOsArgs(os.Args)
 
 	// 查询所有版本数量大于等于 MIN_VERSION_COUNT + 1 的对象
-	versionMap, err := lib.MetaDataProxy{}.SearchVersionStatus(MIN_VERSION_COUNT + 1)
+	proxy := &lib.MetaDataProxy{}
+	versionMap, err := proxy.SearchVersionStatus(MIN_VERSION_COUNT + 1)
 	if err != nil {
 		log.Println(err)
 		return
@@ -24,7 +25,7 @@ func main() {
 		// 循环遍历每一个 bucket,从该对象当前最小的版本号开始一一删除,直到最后还剩 5 个版本
 		for v := 0; v < versionInfo[0] - MIN_VERSION_COUNT; v++ {
 			// 根据对象名称,删除对象指定版本
-			lib.MetaDataProxy{}.DelMetadata(name, v + int(versionInfo[1]))
+			proxy.DelMetadata(name, v + int(versionInfo[1]))
 		}
 	}
 }

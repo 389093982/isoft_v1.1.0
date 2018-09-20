@@ -17,7 +17,8 @@ func main() {
 func verify(hash string) {
 	log.Println("verify", hash)
 	// 从元数据服务中获取该散列值对应的对象大小
-	size, e := lib.MetaDataProxy{}.SearchHashSize(hash)
+	proxy := &lib.MetaDataProxy{}
+	size, e := proxy.SearchHashSize(hash)
 	if e != nil {
 		log.Println(e)
 		return

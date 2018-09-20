@@ -21,7 +21,8 @@ func main() {
 		// 获取对象的 hash 值
 		hash := strings.Split(filepath.Base(files[i]), ".")[0]
 		// 判断元数据中是否有对象的 hash 值
-		hashInMetadata, e := lib.MetaDataProxy{}.HasHash(hash)
+		proxy := &lib.MetaDataProxy{}
+		hashInMetadata, e := proxy.HasHash(hash)
 		if e != nil {
 			log.Println(e)
 			return

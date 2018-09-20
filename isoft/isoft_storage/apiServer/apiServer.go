@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"isoft/isoft_storage/apiServer/api"
 	"isoft/isoft_storage/apiServer/heartbeat"
 	"isoft/isoft_storage/apiServer/locate"
 	"isoft/isoft_storage/apiServer/objects"
@@ -37,6 +38,9 @@ func main() {
 
 	// 提供对象的列表功能,用于查询所有对象或指定对象的所有版本
 	http.HandleFunc("/versions/", versions.Handler)
+
+	// 管理分布式对象存储系统统一接口
+	http.HandleFunc("/api/", api.Handler)
 
 	LISTEN_ADDRESS := cfg.GetConfigValue(cfg.LISTEN_ADDRESS)
 

@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"github.com/astaxie/beego"
 	"io/ioutil"
-	"isoft/isoft/common/encryptutil"
 	"isoft/isoft/common/hashutil"
 	"net/http"
+	"net/url"
 	"strings"
 )
 
@@ -46,7 +46,7 @@ func (this *IFileController) FileUpload() {
 	}
 	filecontent := string(bytes)
 	// 调用 isoft_istorage_web 发送 put 请求调用分布式对象存储接口,对象名称使用文件名称的 MD5 值
-	url := fmt.Sprintf("%s/objects/%s", isoft_istorage_web, encryptutil.EncryptWithMD5(h.Filename))
+	url := fmt.Sprintf("%s/objects/%s", isoft_istorage_web, url.PathEscape(h.Filename))
 	req, err := http.NewRequest("PUT", url, strings.NewReader(filecontent))
 	if err != nil {
 		panic(err)
