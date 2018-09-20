@@ -1,6 +1,8 @@
 package controllers
 
 import (
+	"bytes"
+	"encoding/json"
 	"fmt"
 	"github.com/astaxie/beego"
 	"io/ioutil"
@@ -63,5 +65,39 @@ func (this *IFileController) FileUpload() {
 		panic(err)
 	}
 	this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "Status":res.Status,"body":body, "filename":h.Filename}
+	this.ServeJSON()
+}
+
+// 分页查询元数据信息
+func (this *IFileController) MetaDataList()  {
+	defer func() {
+		if err := recover(); err != nil{
+			this.Data["json"] = &map[string]interface{}{"status": "ERROR", "msg": err}
+			this.ServeJSON()
+		}
+	}()
+
+	name := this.GetString("name")
+	params := fmt.Sprintf(`{"name":%s}`, name)
+	url := fmt.Sprintf("%s/api/searchAllVersions", isoft_istorage_web)
+	req, err := http.NewRequest("POST", url, bytes.NewBuffer([]byte(params)))
+	if err != nil {
+		panic(err)
+	}
+	req.Header.Set("Content-type", "application/json")
+	res, err := http.DefaultClient.Do(req)
+	if err != nil || res.StatusCode != 200{
+		panic(err)
+	}
+	body, err := ioutil.ReadAll(res.Body)
+	if err != nil{
+		panic(err)
+	}
+	var metadatasMap map[string]interface{}
+	err = json.Unmarshal(body, &metadatasMap)
+	if err != nil{
+		panic(err)
+	}
+	this.Data["json"] = &metadatasMap
 	this.ServeJSON()
 }

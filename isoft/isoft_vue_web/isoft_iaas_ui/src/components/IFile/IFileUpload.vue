@@ -22,7 +22,7 @@
 
 <script>
     export default {
-      name: "FileUpload",
+      name: "IFileUpload",
       data () {
         return {
           // 文件上传 modal

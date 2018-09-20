@@ -27,7 +27,7 @@ func SearchAllVersions(w http.ResponseWriter, r *http.Request)  {
 	if err != nil{
 		result, _ = json.Marshal(map[string]interface{}{"status":"ERROR","msg":"SearchAllVersions error"})
 	}else{
-		result, err = json.Marshal(map[string]interface{}{"status":"SUCCESS","data":metadatas})
+		result, err = json.Marshal(map[string]interface{}{"status":"SUCCESS","metadatas":metadatas})
 		if err != nil{
 			result, err = json.Marshal(map[string]interface{}{"status":"ERROR","msg":"SearchAllVersions error"})
 		}

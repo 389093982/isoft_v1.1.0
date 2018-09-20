@@ -8,4 +8,5 @@ import (
 func init() {
     beego.Router("/", &controllers.MainController{})
 	beego.Router("/api/ifile/fileUpload/", &controllers.IFileController{}, "post:FileUpload")
+	beego.Router("/api/ifile/metadatalist/", &controllers.IFileController{}, "post:MetaDataList")
 }

@@ -6,7 +6,7 @@
         IFile 文件管理
       </template>
       <MenuItem name="1-1">
-        <router-link to="/ifile/upload">IFile 文件上传</router-link>
+        <router-link to="/ifile/ifile">IFile 文件管理</router-link>
       </MenuItem>
     </Submenu>
   </Menu>
