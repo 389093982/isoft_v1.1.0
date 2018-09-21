@@ -1,6 +1,13 @@
 <template>
   <div>
-    <IFileUpload/>
+    <Row style="margin-bottom: 10px;">
+      <Col span="12">
+        <IFileUpload/>
+      </Col>
+      <Col span="12">
+        <Input v-model="search_name" search enter-button placeholder="搜索对象名称" @on-search="input_search"/>
+      </Col>
+    </Row>
 
     <Table :columns="columns1" :data="metadatas" size="small" height="450"></Table>
     <Page :total="total" :page-size="offset" show-total show-sizer :styles="{'text-align': 'center','margin-top': '10px'}"
@@ -17,6 +24,8 @@
     components: {IFileUpload},
     data(){
       return {
+        // 搜索的对象名称
+        search_name : "",
         // 当前页
         current_page:1,
         // 总页数
@@ -50,7 +59,7 @@
     },
     methods:{
       async refreshMetaDataList(){
-        const data = await FilterPageMetadatas(this.current_page, this.offset);
+        const data = await FilterPageMetadatas(this.search_name, this.current_page, this.offset);
         if(data.status == "SUCCESS"){
           this.metadatas = data.metadatas;
           this.total = data.paginator.totalcount;
@@ -64,6 +73,9 @@
         this.offset = pageSize;
         this.refreshMetaDataList();
       },
+      input_search(){
+        this.refreshMetaDataList();
+      }
     },
     mounted:function(){
       this.refreshMetaDataList();

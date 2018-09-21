@@ -7,6 +7,6 @@ import ajax from './ajax'
 const BASE_URL = '/api'
 
 // 查询所有的元数据信息
-export const FilterPageMetadatas = (current_page,offset) => ajax(BASE_URL+'/ifile/filterPageMetadatas/',{current_page,offset},'POST')
+export const FilterPageMetadatas = (name,current_page,offset) => ajax(BASE_URL+'/ifile/filterPageMetadatas/',{name,current_page,offset},'POST')
 
 
