@@ -2,7 +2,7 @@ package pageutil
 
 import "math"
 
-//分页方法，根据传递过来的页数，每页数，总数，返回分页的内容 7个页数 前 1，2，3，4，5 后 的格式返回,小于5页返回具体页数
+//分页方法,根据传递过来的页数,每页数,总数,返回分页的内容 7个页数 前 1,2,3,4,5 后 的格式返回,小于5页返回具体页数
 func Paginator(page, prepage int, nums int64) map[string]interface{} {
 
 	var firstpage int //前一页地址

@@ -12,8 +12,6 @@ import (
 	"strings"
 )
 
-
-
 type hit struct {
 	Source models.Metadata `json:"_source"`
 }
@@ -99,6 +97,58 @@ func AddVersion(name, hash string, size int64) error {
 	return PutMetadata(name, version.Version+1, size, hash)
 }
 
+// 根据对象名称 name 模糊匹配统计总数量
+func MetadataListCount(name string) (int64, error) {
+	client := http.Client{}
+	url := fmt.Sprintf("http://%s/metadata/_count", cfg.GetConfigValue(cfg.ES_SERVER))
+	body := fmt.Sprintf(`
+        {
+			"query":{
+				"wildcard":{"name":"*%s*"}
+			}
+		}`,name)
+	request, _ := http.NewRequest("POST", url, strings.NewReader(body))
+	r, e := client.Do(request)
+	if e != nil {
+		fmt.Println(e)
+	}
+	result, _ := ioutil.ReadAll(r.Body)
+	var countResult map[string]interface{}
+	json.Unmarshal(result, &countResult)
+	return int64(countResult["count"].(float64)), nil
+}
+
+// 根据对象名称 name 模糊匹配
+func MetadataList(name string, from, size int) ([]models.Metadata, error) {
+	client := http.Client{}
+	url := fmt.Sprintf("http://%s/metadata/_search", cfg.GetConfigValue(cfg.ES_SERVER))
+	body := fmt.Sprintf(`
+        {
+			"from": %d, "size": %d,
+			"sort":[
+				{"name":{"order":"asc"}},
+				{"version":{"order":"desc"}}
+			],
+			"query":{
+				"wildcard":{"name":"*%s*"}
+			}
+		}`, from, size, name)
+	request, _ := http.NewRequest("POST", url, strings.NewReader(body))
+	r, e := client.Do(request)
+	if e != nil {
+		fmt.Println(e)
+	}
+	metas := make([]models.Metadata, 0)
+	result, _ := ioutil.ReadAll(r.Body)
+	var sr searchResult
+	json.Unmarshal(result, &sr)
+	for i := range sr.Hits.Hits {
+		metas = append(metas, sr.Hits.Hits[i].Source)
+	}
+	return metas, nil
+}
+
+// 根据对象名称 name 精确匹配
 func SearchAllVersions(name string, from, size int) ([]models.Metadata, error) {
 	url := fmt.Sprintf("http://%s/metadata/_search?sort=name,version&from=%d&size=%d",
 		cfg.GetConfigValue(cfg.ES_SERVER), from, size)

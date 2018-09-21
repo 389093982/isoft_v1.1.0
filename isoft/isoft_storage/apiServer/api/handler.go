@@ -15,8 +15,8 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	// 获取操作名称
 	methodName := strings.Split(r.URL.EscapedPath(), "/")[2]
 	switch strings.TrimSpace(methodName) {
-	case "searchAllVersions":
-		SearchAllVersions(w, r)
+	case "filterPageMetadatas":
+		FilterPageMetadatas(w, r)
 	default:
 		w.WriteHeader(http.StatusInternalServerError)
 		return

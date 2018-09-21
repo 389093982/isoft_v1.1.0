@@ -1,6 +1,7 @@
 package lib
 
 import (
+	"isoft/isoft/common/pageutil"
 	"isoft/isoft_storage/lib/es"
 	"isoft/isoft_storage/lib/models"
 )
@@ -46,4 +47,25 @@ func (this *MetaDataProxy) SearchHashSize(hash string) (size int64, e error) {
 // 返回值 key 为对象名, value 为对象现有版本数量、最小版本信息
 func (this *MetaDataProxy) SearchVersionStatus(minVersionCount int) (map[string][]int, error) {
 	return es.SearchVersionStatus(minVersionCount)
+}
+
+
+// 分页查询元数据信息,根据对象名称模糊匹配
+func (this *MetaDataProxy) FilterPageMetadatas(name string, from, size int) (metadatas []models.Metadata, paginator map[string]interface{}, err error) {
+	metadatas, err = es.MetadataList(name, from, size)
+	if err != nil{
+		return
+	}
+	count, err := es.MetadataListCount(name)
+	if err != nil{
+		return
+	}
+	// 当前页
+	current_page := from / size + 1
+	// 三个参数分别是 当前页数,每页数,总数
+	paginator = pageutil.Paginator(current_page, size, count)
+	if err != nil{
+		return
+	}
+	return
 }
