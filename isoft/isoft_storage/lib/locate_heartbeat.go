@@ -17,6 +17,12 @@ type LocateAndHeartbeatProxy struct {
 }
 
 func (this *LocateAndHeartbeatProxy) SendHeartbeat()  {
+	defer func() {
+		if err := recover(); err != nil{
+			// 出现异常时需要重新执行
+			this.SendHeartbeat()
+		}
+	}()
 	q := rabbitmq.New(cfg.GetConfigValue(cfg.RABBITMQ_SERVER))
 	defer q.Close()
 	// 无线循环发送心跳信息
@@ -29,6 +35,12 @@ func (this *LocateAndHeartbeatProxy) SendHeartbeat()  {
 }
 
 func (this *LocateAndHeartbeatProxy) ReceiveDealAndSendLocateInfo(locateFunc func(hash string) int)  {
+	defer func() {
+		if err := recover(); err != nil{
+			// 出现异常时需要重新执行
+			this.ReceiveDealAndSendLocateInfo(locateFunc)
+		}
+	}()
 	// 直接将 RabbitMQ 消息队列里收到的对象散列值作为 Locate 参数
 	q := rabbitmq.New(cfg.GetConfigValue(cfg.RABBITMQ_SERVER))
 	defer q.Close()

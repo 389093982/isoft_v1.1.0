@@ -39,7 +39,13 @@ func post(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	// 将生产的 uuid 存放在 STORAGE_ROOT/temp/uuid.dat 临时文件中去
-	os.Create(cfg.GetConfigValue(cfg.STORAGE_ROOT) + "/temp/" + t.Uuid + ".dat")
+	f, err := os.Create(cfg.GetConfigValue(cfg.STORAGE_ROOT) + "/temp/" + t.Uuid + ".dat")
+	if err != nil{
+		log.Println(e)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+	defer f.Close()
 	w.Write([]byte(uuid))
 }
 

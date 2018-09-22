@@ -9,8 +9,11 @@ import (
 	"io"
 	"io/ioutil"
 	"isoft/isoft/common/hashutil"
+	"isoft/isoft/common/stringutil"
 	"net/http"
 	"net/url"
+	"os"
+	"path"
 	"strings"
 )
 
@@ -19,7 +22,6 @@ var isoft_istorage_web string
 func init()  {
 	isoft_istorage_web = beego.AppConfig.String("isoft_istorage_web")
 }
-
 
 type IFileController struct {
 	beego.Controller
@@ -34,29 +36,24 @@ func (this *IFileController) FileUpload() {
 			return
 		}
 	}()
-	// 判断是否是文件上传
-	_, h, err := this.GetFile("file")
-	if err != nil {
+	realFileName, tempFilePath, hash, err := this.saveTempFileAndCalculateHash()
+	if err != nil{
 		panic(err)
 	}
-	file, _, err := this.Ctx.Request.FormFile("file")
-	if err != nil {
+	// 调用 isoft_istorage_web 发送 put 请求调用分布式对象存储接口
+	url := fmt.Sprintf("%s/objects/%s", isoft_istorage_web, url.PathEscape(realFileName))
+	f, bfRd, err := getBufferdReaderFromFile(tempFilePath)
+	if err != nil{
 		panic(err)
 	}
-	defer file.Close()
-	bytes, err := ioutil.ReadAll(file)
-	if err != nil {
-		panic(err)
-	}
-	filecontent := string(bytes)
-	// 调用 isoft_istorage_web 发送 put 请求调用分布式对象存储接口,对象名称使用文件名称的 MD5 值
-	url := fmt.Sprintf("%s/objects/%s", isoft_istorage_web, url.PathEscape(h.Filename))
-	req, err := http.NewRequest("PUT", url, strings.NewReader(filecontent))
+	defer f.Close()
+	bytes, _:= ioutil.ReadAll(bfRd)
+	req, err := http.NewRequest("PUT", url, strings.NewReader(string(bytes)))
 	if err != nil {
 		panic(err)
 	}
 	// 在请求头中添加 hash 值
-	req.Header.Add("digest", "SHA-256=" + hashutil.CalculateHash(strings.NewReader(filecontent)))
+	req.Header.Add("digest", "SHA-256=" + hash)
 	res, err := http.DefaultClient.Do(req)
 	if err != nil || res.StatusCode != 200{
 		panic(err)
@@ -66,8 +63,42 @@ func (this *IFileController) FileUpload() {
 	if err != nil{
 		panic(err)
 	}
-	this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "Status":res.Status,"body":body, "filename":h.Filename}
+	this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "Status":res.Status,"body":body, "filename":realFileName}
 	this.ServeJSON()
+}
+
+func (this *IFileController) saveTempFileAndCalculateHash() (realFileName string, filepath string, hash string, err error) {
+	// 判断是否是文件上传
+	_, h, err := this.GetFile("file")
+	if err != nil {
+		return
+	}
+	file, _, err := this.Ctx.Request.FormFile("file")
+	if err != nil {
+		return
+	}
+	defer file.Close()
+	savePath := "D:/demo"
+	os.Mkdir(savePath, os.ModePerm)
+	filepath = path.Join(savePath, stringutil.RandomUUID())
+	if err = this.SaveToFile("file", filepath);err != nil {
+		return
+	}
+	if f, bfRd, err := getBufferdReaderFromFile(filepath); err == nil{
+		defer f.Close()
+		hash := hashutil.CalculateHash(bfRd)
+		return h.Filename, filepath, hash, nil
+	}
+	return
+}
+
+func getBufferdReaderFromFile(filepath string) (*os.File, io.Reader, error) {
+	f, err := os.Open(filepath)
+	if err != nil {
+		return f, nil, err
+	}
+	bfRd := bufio.NewReader(f)
+	return f, bfRd,nil
 }
 
 // 分页查询元数据信息
@@ -167,7 +198,7 @@ func (this *IFileController) FileDownload()  {
 	}
 	raw := res.Body
 	defer raw.Close()
-	reader := bufio.NewReaderSize(raw, 1024*100)
+	reader := bufio.NewReaderSize(raw, 1024*1024)
 	this.Ctx.ResponseWriter.Header().Set("Content-Type", "application/octet-stream")
 	this.Ctx.ResponseWriter.Header().Set("Content-Disposition", fmt.Sprintf("attachment; filename=\"%s\"", name))
 	io.Copy(this.Ctx.ResponseWriter, reader)
