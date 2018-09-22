@@ -1,5 +1,6 @@
 <template>
   <div>
+
     <Row style="margin-bottom: 10px;">
       <Col span="12">
         <IFileUpload/>
@@ -12,18 +13,33 @@
     <Table :columns="columns1" :data="metadatas" size="small" height="450"></Table>
     <Page :total="total" :page-size="offset" show-total show-sizer :styles="{'text-align': 'center','margin-top': '10px'}"
           @on-change="handleChange" @on-page-size-change="handlePageSizeChange"/>
+
+    <Modal
+      v-model="showShardsModel"
+      title="对象分片信息"
+      :mask-closable="false">
+      <p v-for="(key,value) in shards">
+        存储物理机器地址:{{key}}  -  分片id:{{value}}
+      </p>
+    </Modal>
+
   </div>
 </template>
 
 <script>
   import IFileUpload from "./IFileUpload.vue"
   import {FilterPageMetadatas} from '../../api'
+  import {LocateShards} from '../../api'
 
   export default {
     name: "IFile",
     components: {IFileUpload},
     data(){
       return {
+        // 显示对象分片信息对话框
+        showShardsModel:false,
+        // 对象分片信息
+        shards:[],
         // 搜索的对象名称
         search_name : "",
         // 当前页
@@ -53,6 +69,45 @@
           {
             title: 'Hash',
             key: 'Hash',
+            width:350,
+          },
+          {
+            title: '操作',
+            key: 'operate',
+            width:300,
+            render: (h, params) => {
+              return h('div', [
+                h('Button', {
+                  props: {
+                    type: 'success',
+                    size: 'small'
+                  },
+                  style: {
+                    marginRight: '5px',
+                  },
+                  on: {
+                    click: () => {
+                      // 分片定位
+                      this.locateShards(params.index);
+                    }
+                  }
+                }, '分片查询'),
+                h('Button', {
+                  props: {
+                    type: 'error',
+                    size: 'small'
+                  },
+                  style: {
+                    marginRight: '5px',
+                  },
+                  on: {
+                    click: () => {
+                      this.fileDownload(params.index);
+                    }
+                  }
+                }, '文件下载'),
+              ]);
+            }
           }
         ]
       }
@@ -75,7 +130,20 @@
       },
       input_search(){
         this.refreshMetaDataList();
-      }
+      },
+      async locateShards(index){
+        const hash = this.metadatas[index]['Hash'];
+        const data = await LocateShards(hash);
+        if(data.status=="SUCCESS"){
+          this.shards = data.shards;
+          this.showShardsModel = true;
+        }
+      },
+      fileDownload(index){
+        const name = this.metadatas[index]['Name'];
+        const version = this.metadatas[index]['Version'];
+        window.location='/api/ifile/fileDownload/?name=' + name + "&version=" + version;
+      },
     },
     mounted:function(){
       this.refreshMetaDataList();

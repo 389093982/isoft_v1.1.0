@@ -1,10 +1,12 @@
 package controllers
 
 import (
+	"bufio"
 	"bytes"
 	"encoding/json"
 	"fmt"
 	"github.com/astaxie/beego"
+	"io"
 	"io/ioutil"
 	"isoft/isoft/common/hashutil"
 	"net/http"
@@ -118,4 +120,55 @@ func (this *IFileController) FilterPageMetadatas()  {
 	}
 	this.Data["json"] = &metadatasMap
 	this.ServeJSON()
+}
+
+// 分片定位
+func (this *IFileController) LocateShards()  {
+	defer func() {
+		if err := recover(); err != nil{
+			this.Data["json"] = &map[string]interface{}{"status": "ERROR", "msg": err}
+			this.ServeJSON()
+		}
+	}()
+	hash := strings.TrimSpace(this.GetString("hash", ""))
+	url := fmt.Sprintf("%s/locate/%s", isoft_istorage_web, hash)
+	req, err := http.NewRequest("GET", url, nil)
+	if err != nil {
+		panic(err)
+	}
+	res, err := http.DefaultClient.Do(req)
+	if err != nil || res.StatusCode != 200{
+		panic(err)
+	}
+	body, err := ioutil.ReadAll(res.Body)
+	if err != nil{
+		panic(err)
+	}
+	var locateShardsMap map[string]interface{}
+	err = json.Unmarshal(body, &locateShardsMap)
+	if err != nil{
+		panic(err)
+	}
+	this.Data["json"] = &map[string]interface{}{"status":"SUCCESS", "shards":&locateShardsMap}
+	this.ServeJSON()
+}
+
+func (this *IFileController) FileDownload()  {
+	name := strings.TrimSpace(this.GetString("name", ""))
+	version := strings.TrimSpace(this.GetString("version", ""))
+	url := fmt.Sprintf("%s/objects/%s?version=%s", isoft_istorage_web, name, version)
+	req, err := http.NewRequest("GET", url, nil)
+	if err != nil {
+		panic(err)
+	}
+	res, err := http.DefaultClient.Do(req)
+	if err != nil || res.StatusCode != 200{
+		panic(err)
+	}
+	raw := res.Body
+	defer raw.Close()
+	reader := bufio.NewReaderSize(raw, 1024*100)
+	this.Ctx.ResponseWriter.Header().Set("Content-Type", "application/octet-stream")
+	this.Ctx.ResponseWriter.Header().Set("Content-Disposition", fmt.Sprintf("attachment; filename=\"%s\"", name))
+	io.Copy(this.Ctx.ResponseWriter, reader)
 }
