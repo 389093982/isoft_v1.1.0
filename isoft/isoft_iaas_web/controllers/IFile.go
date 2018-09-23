@@ -8,9 +8,13 @@ import (
 	"github.com/astaxie/beego"
 	"io"
 	"io/ioutil"
+	"isoft/isoft/common/fileutil"
 	"isoft/isoft/common/hashutil"
+	"isoft/isoft/common/stringutil"
 	"net/http"
 	"net/url"
+	"os"
+	"path"
 	"strings"
 )
 
@@ -27,7 +31,6 @@ type IFileController struct {
 func (this *IFileController) FileUpload() {
 	defer func() {
 		if err := recover(); err != nil{
-			fmt.Println(err)
 			this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": "保存失败！"}
 			this.ServeJSON()
 			return
@@ -36,17 +39,26 @@ func (this *IFileController) FileUpload() {
 	// 判断是否是文件上传
 	file, h, err := this.GetFile("file")
 	if err != nil {
-		return
+		panic(err)
 	}
 	defer file.Close()
-	bytes, err:= ioutil.ReadAll(file)
-	if err != nil {
-		return
+	tempfilepath := path.Join("D:/demo", stringutil.RandomUUID() + "_" + h.Filename)
+	if err = this.SaveToFile("file", tempfilepath);err != nil {
+		panic("file save err")
 	}
-	hash := hashutil.CalculateHashWithString(string(bytes))
+	defer fileutil.RemoveFileOrDirectory(tempfilepath)
+	hash,err := hashutil.CalculateHashWithBigFile(tempfilepath)
+	if err != nil{
+		panic(err)
+	}
+	f, err := os.Open(tempfilepath)
+	if err != nil {
+		panic(err)
+	}
+	defer f.Close()
 	// 调用 isoft_istorage_web 发送 put 请求调用分布式对象存储接口
 	url := fmt.Sprintf("%s/objects/%s", isoft_istorage_web, url.PathEscape(h.Filename))
-	req, err := http.NewRequest("PUT", url, strings.NewReader(string(bytes)))
+	req, err := http.NewRequest("PUT", url, f)
 	if err != nil {
 		panic(err)
 	}
@@ -162,7 +174,7 @@ func (this *IFileController) FileDownload()  {
 	}
 	raw := res.Body
 	defer raw.Close()
-	reader := bufio.NewReaderSize(raw, 1024*1024)
+	reader := bufio.NewReaderSize(raw, 1024*1024*10)
 	this.Ctx.ResponseWriter.Header().Set("Content-Type", "application/octet-stream")
 	this.Ctx.ResponseWriter.Header().Set("Content-Disposition", fmt.Sprintf("attachment; filename=\"%s\"", name))
 	io.Copy(this.Ctx.ResponseWriter, reader)
