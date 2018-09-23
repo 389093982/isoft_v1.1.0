@@ -34,4 +34,7 @@ func configLocalFilesystemLogger(logPath string, logFileName string, maxAge time
 		log.PanicLevel: writer,
 	}, &log.TextFormatter{DisableColors: true})	// 支持 JSONFormatter 和 TextFormatter
 	log.AddHook(lfHook)
+
+	// 日志记录代码行号的 hook
+	log.AddHook(NewContextHook())
 }

@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"io"
 	"io/ioutil"
+	"isoft/isoft/common/logutil"
 	"isoft/isoft_storage/cfg"
 	"log"
 	"net/http"
@@ -48,16 +49,17 @@ func patch(w http.ResponseWriter, r *http.Request) {
 	if actual > tempinfo.Size {
 		os.Remove(datFile)
 		os.Remove(infoFile)
-		log.Println("actual size", actual, "exceeds", tempinfo.Size)
+		logutil.Errorln("actual size", actual, "exceeds", tempinfo.Size)
 		w.WriteHeader(http.StatusInternalServerError)
 	}
 }
 
 func readFromFile(uuid string) (*tempInfo, error) {
 	// 读取 STORAGE_ROOT/temp/uuid 文件获取临时对象信息
-	f, e := os.Open(cfg.GetConfigValue(cfg.STORAGE_ROOT) + "/temp/" + uuid)
-	if e != nil {
-		return nil, e
+	f, err := os.Open(cfg.GetConfigValue(cfg.STORAGE_ROOT) + "/temp/" + uuid)
+	if err != nil {
+		logutil.Errorln(err)
+		return nil, err
 	}
 	defer f.Close()
 	b, _ := ioutil.ReadAll(f)

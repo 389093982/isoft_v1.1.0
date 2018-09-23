@@ -19,9 +19,12 @@ import (
 )
 
 var isoft_istorage_web string
+var file_upload_dir string
 
 func init()  {
 	isoft_istorage_web = beego.AppConfig.String("isoft_istorage_web")
+	file_upload_dir = beego.AppConfig.String("file.upload.dir")
+	os.MkdirAll(file_upload_dir, os.ModePerm)
 }
 
 type IFileController struct {
@@ -42,7 +45,7 @@ func (this *IFileController) FileUpload() {
 		panic(err)
 	}
 	defer file.Close()
-	tempfilepath := path.Join("D:/demo", stringutil.RandomUUID() + "_" + h.Filename)
+	tempfilepath := path.Join(file_upload_dir, stringutil.RandomUUID() + "_" + h.Filename)
 	if err = this.SaveToFile("file", tempfilepath);err != nil {
 		panic("file save err")
 	}
