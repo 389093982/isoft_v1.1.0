@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="61c01151-84f0-4bfd-a227-5c1f0b5a424d" name="Default" comment="增加日志打印记录文件名、方法名和行号">
+    <list default="true" id="61c01151-84f0-4bfd-a227-5c1f0b5a424d" name="Default" comment="文件上传时添加 hash 计算">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_iaas_web/controllers/IFile.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_iaas_web/controllers/IFile.go" afterDir="false" />
     </list>
     <ignored path="isoft_deploy_web/static/uploadfile/" />
     <ignored path="../.idea/inspectionProfiles/profiles_settings.xml" />
@@ -60,7 +59,7 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="conf" value="31" />
+          <entry key="conf" value="34" />
           <entry key="css" value="1" />
           <entry key="go" value="678" />
           <entry key="html" value="2" />
@@ -81,7 +80,7 @@
           <entry key="HTML" value="2" />
           <entry key="JSON" value="1" />
           <entry key="JavaScript" value="36" />
-          <entry key="PLAIN_TEXT" value="129" />
+          <entry key="PLAIN_TEXT" value="132" />
           <entry key="TypeScript" value="1" />
           <entry key="Vue.js" value="23" />
           <entry key="x86 Plan9 Assembly" value="3" />
@@ -89,20 +88,20 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="conf" value="133" />
-          <entry key="go" value="12815" />
+          <entry key="conf" value="136" />
+          <entry key="go" value="12818" />
           <entry key="ini" value="20" />
           <entry key="js" value="63" />
           <entry key="sh" value="1643" />
-          <entry key="txt" value="276" />
+          <entry key="txt" value="295" />
           <entry key="vue" value="1253" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Go" value="12815" />
+          <entry key="Go" value="12818" />
           <entry key="JavaScript" value="63" />
-          <entry key="PLAIN_TEXT" value="2179" />
+          <entry key="PLAIN_TEXT" value="2201" />
           <entry key="Vue.js" value="1146" />
         </counts>
       </usages-collector>
@@ -113,11 +112,38 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/isoft_iaas_web/controllers/IFile.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="438">
-              <caret line="57" column="47" lean-forward="true" selection-start-line="57" selection-start-column="47" selection-end-line="57" selection-end-column="47" />
+            <state relative-caret-position="85">
+              <caret line="17" lean-forward="true" selection-start-line="17" selection-end-line="17" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/isoft_iaas_web/conf/aliyun.conf">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="170">
+              <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/isoft_iaas_web/conf/dev.conf">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="187">
+              <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/isoft_iaas_web/conf/txyun.conf">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="187">
+              <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
             </state>
           </provider>
         </entry>
@@ -292,9 +318,6 @@
         <option value="$PROJECT_DIR$/isoft/common/hashutil/hashutil_test.go" />
         <option value="$PROJECT_DIR$/isoft/common/fileutil/file_reader.go" />
         <option value="$PROJECT_DIR$/isoft/common/hashutil/hashutil.go" />
-        <option value="$PROJECT_DIR$/isoft_iaas_web/conf/dev.conf" />
-        <option value="$PROJECT_DIR$/isoft_iaas_web/conf/txyun.conf" />
-        <option value="$PROJECT_DIR$/isoft_iaas_web/conf/aliyun.conf" />
         <option value="$PROJECT_DIR$/isoft/common/logutil/logrous.go" />
         <option value="$PROJECT_DIR$/isoft/common/logutil/logrous_hook.go" />
         <option value="$PROJECT_DIR$/isoft_storage/dataServer/temp/put.go" />
@@ -308,6 +331,9 @@
         <option value="$PROJECT_DIR$/isoft_storage/apiServer/objects/put.go" />
         <option value="$PROJECT_DIR$/isoft_storage/apiServer/objects/store.go" />
         <option value="$PROJECT_DIR$/isoft_iaas_web/controllers/IFile.go" />
+        <option value="$PROJECT_DIR$/isoft_iaas_web/conf/aliyun.conf" />
+        <option value="$PROJECT_DIR$/isoft_iaas_web/conf/dev.conf" />
+        <option value="$PROJECT_DIR$/isoft_iaas_web/conf/txyun.conf" />
       </list>
     </option>
   </component>
@@ -376,25 +402,7 @@
               <item name="isoft" type="b2602c69:ProjectViewProjectNode" />
               <item name="isoft" type="462c0819:PsiDirectoryNode" />
               <item name="isoft_iaas_web" type="462c0819:PsiDirectoryNode" />
-              <item name="controllers" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="isoft" type="b2602c69:ProjectViewProjectNode" />
-              <item name="isoft" type="462c0819:PsiDirectoryNode" />
-              <item name="isoft_storage" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="isoft" type="b2602c69:ProjectViewProjectNode" />
-              <item name="isoft" type="462c0819:PsiDirectoryNode" />
-              <item name="isoft_storage" type="462c0819:PsiDirectoryNode" />
-              <item name="apiServer" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="isoft" type="b2602c69:ProjectViewProjectNode" />
-              <item name="isoft" type="462c0819:PsiDirectoryNode" />
-              <item name="isoft_storage" type="462c0819:PsiDirectoryNode" />
-              <item name="apiServer" type="462c0819:PsiDirectoryNode" />
-              <item name="objects" type="462c0819:PsiDirectoryNode" />
+              <item name="conf" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -723,30 +731,6 @@
     <editor active="true" />
     <layout>
       <window_info id="Favorites" order="0" sideWeight="0.71631205" side_tool="true" weight="0.24171382" />
-      <window_info content_ui="combo" id="Project" order="1" sideWeight="0.28368795" weight="0.3597413" />
-      <window_info id="Structure" order="2" sideWeight="0.71631205" side_tool="true" weight="0.24171382" />
-      <window_info anchor="bottom" id="TypeScript" order="0" weight="0.32978722" />
-      <window_info anchor="bottom" id="Messages" order="1" weight="0.55376345" />
-      <window_info anchor="bottom" id="Database Changes" order="2" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Terminal" order="3" sideWeight="0.49312854" weight="0.59147424" />
-      <window_info anchor="bottom" id="Event Log" order="4" sideWeight="0.50687146" side_tool="true" weight="0.30195382" />
-      <window_info anchor="bottom" id="Version Control" order="5" weight="0.8774423" />
-      <window_info anchor="bottom" id="Message" order="6" />
-      <window_info anchor="bottom" id="Find" order="7" weight="0.79040855" />
-      <window_info anchor="bottom" id="Run" order="8" sideWeight="0.49393696" weight="0.37122557" />
-      <window_info anchor="bottom" id="Debug" order="9" sideWeight="0.49717057" weight="0.5275311" />
-      <window_info anchor="bottom" id="Cvs" order="10" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="11" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="12" weight="0.3285968" />
-      <window_info anchor="bottom" id="Thumbnails" order="13" weight="0.3297491" />
-      <window_info anchor="right" id="Database" order="0" side_tool="true" weight="0.32983023" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="1" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="2" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="3" weight="0.25" />
-      <window_info anchor="right" id="Coverage" order="4" side_tool="true" weight="0.32983023" />
-    </layout>
-    <layout-to-restore>
-      <window_info id="Favorites" order="0" sideWeight="0.71631205" side_tool="true" weight="0.24171382" />
       <window_info active="true" content_ui="combo" id="Project" order="1" sideWeight="0.28368795" visible="true" weight="0.3597413" />
       <window_info id="Structure" order="2" sideWeight="0.71631205" side_tool="true" weight="0.24171382" />
       <window_info anchor="bottom" id="TypeScript" order="0" weight="0.32978722" />
@@ -768,7 +752,7 @@
       <window_info anchor="right" id="Ant Build" order="2" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="3" weight="0.25" />
       <window_info anchor="right" id="Coverage" order="4" side_tool="true" weight="0.32983023" />
-    </layout-to-restore>
+    </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -798,7 +782,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="配置包同步支持环境变量修改" />
     <MESSAGE value="storage项目部署脚本优化" />
     <MESSAGE value="ssh执行脚本无法获取环境变量bug修复" />
     <MESSAGE value="配置文件读取优化" />
@@ -823,7 +806,8 @@
     <MESSAGE value="文件下载功能实现" />
     <MESSAGE value="代码优化" />
     <MESSAGE value="增加日志打印记录文件名、方法名和行号" />
-    <option name="LAST_COMMIT_MESSAGE" value="增加日志打印记录文件名、方法名和行号" />
+    <MESSAGE value="文件上传时添加 hash 计算" />
+    <option name="LAST_COMMIT_MESSAGE" value="文件上传时添加 hash 计算" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
@@ -930,29 +914,8 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_iaas_web/conf/txyun.conf">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" selection-start-line="11" selection-end-line="12" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/isoft_iaas_web/conf/app.conf">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_iaas_web/conf/aliyun.conf">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="12" selection-start-line="12" selection-end-line="12" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_iaas_web/conf/dev.conf">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" selection-start-line="11" selection-end-line="12" selection-end-column="25" />
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/isoft_storage/dataServer/temp/handler.go">
       <provider selected="true" editor-type-id="text-editor">
@@ -1228,8 +1191,29 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/isoft_iaas_web/controllers/IFile.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="438">
-          <caret line="57" column="47" lean-forward="true" selection-start-line="57" selection-start-column="47" selection-end-line="57" selection-end-column="47" />
+        <state relative-caret-position="85">
+          <caret line="17" lean-forward="true" selection-start-line="17" selection-end-line="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_iaas_web/conf/aliyun.conf">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_iaas_web/conf/dev.conf">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_iaas_web/conf/txyun.conf">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
         </state>
       </provider>
     </entry>

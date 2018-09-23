@@ -11,17 +11,13 @@ import (
 	"isoft/isoft/common/hashutil"
 	"net/http"
 	"net/url"
-	"os"
 	"strings"
 )
 
 var isoft_istorage_web string
-var file_upload_dir string
 
 func init()  {
 	isoft_istorage_web = beego.AppConfig.String("isoft_istorage_web")
-	file_upload_dir = beego.AppConfig.String("file.upload.dir")
-	os.MkdirAll(file_upload_dir, os.ModePerm)
 }
 
 type IFileController struct {
