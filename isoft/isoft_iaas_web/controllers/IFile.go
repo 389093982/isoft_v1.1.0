@@ -8,13 +8,10 @@ import (
 	"github.com/astaxie/beego"
 	"io"
 	"io/ioutil"
-	"isoft/isoft/common/fileutil"
 	"isoft/isoft/common/hashutil"
-	"isoft/isoft/common/stringutil"
 	"net/http"
 	"net/url"
 	"os"
-	"path"
 	"strings"
 )
 
@@ -40,28 +37,20 @@ func (this *IFileController) FileUpload() {
 		}
 	}()
 	// 判断是否是文件上传
-	file, h, err := this.GetFile("file")
+	f, h, err := this.GetFile("file")
 	if err != nil {
 		panic(err)
 	}
-	defer file.Close()
-	tempfilepath := path.Join(file_upload_dir, stringutil.RandomUUID() + "_" + h.Filename)
-	if err = this.SaveToFile("file", tempfilepath);err != nil {
-		panic("file save err")
-	}
-	defer fileutil.RemoveFileOrDirectory(tempfilepath)
-	hash,err := hashutil.CalculateHashWithBigFile(tempfilepath)
-	if err != nil{
-		panic(err)
-	}
-	f, err := os.Open(tempfilepath)
-	if err != nil {
-		panic(err)
-	}
-	defer f.Close()
+
+	bReader := bytes.Buffer{}
+	// io.TeeReader、io.MultiReader
+	reader := io.TeeReader(f, &bReader)
+	// 定位对象用对象名,存储对象用 hash 值
+	hash := hashutil.CalculateHash(reader)
+
 	// 调用 isoft_istorage_web 发送 put 请求调用分布式对象存储接口
 	url := fmt.Sprintf("%s/objects/%s", isoft_istorage_web, url.PathEscape(h.Filename))
-	req, err := http.NewRequest("PUT", url, f)
+	req, err := http.NewRequest("PUT", url, &bReader)
 	if err != nil {
 		panic(err)
 	}
