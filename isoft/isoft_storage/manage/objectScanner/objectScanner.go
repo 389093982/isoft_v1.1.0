@@ -1,10 +1,10 @@
 package main
 
 import (
+	"isoft/isoft/common/hashutil"
 	"isoft/isoft_storage/apiServer/objects"
 	"isoft/isoft_storage/cfg"
 	"isoft/isoft_storage/lib"
-	"isoft/isoft_storage/lib/utils"
 	"log"
 	"os"
 )
@@ -30,7 +30,7 @@ func verify(hash string) {
 		return
 	}
 	// 计算 stream 的 hash
-	d := utils.CalculateHash(stream)
+	d := hashutil.CalculateHash(stream)
 	if d != hash {
 		// hash 值不一致则需要记录 log 输出错误报告
 		log.Printf("object hash mismatch, calculated=%s, requested=%s", d, hash)

@@ -3,9 +3,9 @@ package temp
 import (
 	"compress/gzip"
 	"io"
+	"isoft/isoft/common/hashutil"
 	"isoft/isoft_storage/cfg"
 	"isoft/isoft_storage/dataServer/locate"
-	"isoft/isoft_storage/lib/utils"
 	"net/url"
 	"os"
 	"strconv"
@@ -30,7 +30,7 @@ func commitTempObject(datFile string, tempinfo *tempInfo) {
 	f, _ := os.Open(datFile)
 	defer f.Close()
 	// d 表示当前分片计算出来的 hash 值
-	d := url.PathEscape(utils.CalculateHash(f))
+	d := url.PathEscape(hashutil.CalculateHash(f))
 	f.Seek(0, io.SeekStart)
 	// 正式文件名称
 	w, _ := os.Create(cfg.GetConfigValue(cfg.STORAGE_ROOT) + "/objects/" + tempinfo.Name + "." + d)

@@ -14,6 +14,12 @@ github.com/astaxie/beego/utils
 github.com/dgrijalva/jwt-go
 # github.com/go-sql-driver/mysql v1.4.0
 github.com/go-sql-driver/mysql
+# github.com/go-xorm/builder v0.0.0-20180322150003-a9b7ffcca3f0
+github.com/go-xorm/builder
+# github.com/go-xorm/core v0.0.0-20180322150003-0177c08cee88
+github.com/go-xorm/core
+# github.com/go-xorm/xorm v0.7.0
+github.com/go-xorm/xorm
 # github.com/gopherjs/gopherjs v0.0.0-20180825215210-0210a2f0f73c
 github.com/gopherjs/gopherjs/js
 # github.com/jtolds/gls v4.2.1+incompatible
@@ -52,12 +58,12 @@ github.com/smartystreets/goconvey/convey/gotest
 github.com/streadway/amqp
 # golang.org/x/crypto v0.0.0-20180910181607-0e37d006457b
 golang.org/x/crypto/ssh
+golang.org/x/crypto/ssh/terminal
 golang.org/x/crypto/curve25519
 golang.org/x/crypto/ed25519
 golang.org/x/crypto/internal/chacha20
 golang.org/x/crypto/poly1305
 golang.org/x/crypto/acme/autocert
-golang.org/x/crypto/ssh/terminal
 golang.org/x/crypto/ed25519/internal/edwards25519
 golang.org/x/crypto/internal/subtle
 golang.org/x/crypto/acme

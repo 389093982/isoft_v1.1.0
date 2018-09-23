@@ -3,8 +3,8 @@ package objects
 import (
 	"fmt"
 	"io"
+	"isoft/isoft/common/hashutil"
 	"isoft/isoft_storage/apiServer/locate"
-	"isoft/isoft_storage/lib/utils"
 	"net/http"
 	"net/url"
 )
@@ -24,7 +24,7 @@ func storeObject(r io.Reader, hash string, size int64) (int, error) {
 	reader := io.TeeReader(r, stream)
 
 	// 重新计算 hash 值
-	d := utils.CalculateHash(reader)
+	d := hashutil.CalculateHash(reader)
 	if d != hash {
 		// commit = false,底层调用数据服务的 temp 接口的 delete 方法删除临时文件
 		// 删除临时文件 uuid 和 uuid.dat 文件

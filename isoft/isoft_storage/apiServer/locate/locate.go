@@ -8,7 +8,7 @@ import (
 // 并向数据服务节点群发对象名字的定位消息,并接收反馈消息
 func Locate(hash string) (locateInfo map[int]string) {
 	proxy := &lib.LocateAndHeartbeatProxy{}
-	return proxy.SendAndReceiveLocateInfo(hash)
+	return proxy.RetrySendAndReceiveLocateInfo(hash, 3)
 }
 
 func Exist(hash string) bool {

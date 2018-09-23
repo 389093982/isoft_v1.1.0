@@ -25,6 +25,8 @@ echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 cd ${sh_home}
 
-sleep 5
+sleep 10
 
 sh ./api_check.sh ${service_name} ${package_name} ${runmode}
+
+exit;

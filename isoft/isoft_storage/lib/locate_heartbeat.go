@@ -87,7 +87,18 @@ func (this *LocateAndHeartbeatProxy) ReceiveAndModifyHeartbeat(dataServers map[s
 	}
 }
 
-func (this *LocateAndHeartbeatProxy) SendAndReceiveLocateInfo(hash string) (locateInfo map[int]string) {
+// 发送和接收定位失败需要进行重试,最多重试 retry 次
+func (this *LocateAndHeartbeatProxy) RetrySendAndReceiveLocateInfo(hash string, retry int) (locateInfo map[int]string) {
+	if retry <= 0{
+		return
+	}
+	defer func() {
+		if err := recover(); err != nil{
+			retry--
+			locateInfo = this.RetrySendAndReceiveLocateInfo(hash, retry)
+			return
+		}
+	}()
 	q := rabbitmq.New(cfg.GetConfigValue(cfg.RABBITMQ_SERVER))
 	q.Publish("dataServers", hash)
 	c := q.Consume()

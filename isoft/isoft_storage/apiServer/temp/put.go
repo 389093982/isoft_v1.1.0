@@ -2,6 +2,7 @@ package temp
 
 import (
 	"io"
+	"isoft/isoft/common/hashutil"
 	"isoft/isoft_storage/apiServer/locate"
 	"isoft/isoft_storage/lib"
 	"isoft/isoft_storage/lib/rs"
@@ -63,7 +64,7 @@ func put(w http.ResponseWriter, r *http.Request) {
 			// 获取临时对象 getStram
 			getStream, e := rs.NewRSResumableGetStream(stream.Servers, stream.Uuids, stream.Size)
 			// 计算 hash
-			hash := url.PathEscape(utils.CalculateHash(getStream))
+			hash := url.PathEscape(hashutil.CalculateHash(getStream))
 			// hash 不一致,上传有误
 			if hash != stream.Hash {
 				stream.Commit(false)
