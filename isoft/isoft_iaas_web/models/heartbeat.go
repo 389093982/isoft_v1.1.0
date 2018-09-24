@@ -24,17 +24,6 @@ type LocateMessage struct {
 	LastUpdatedTime time.Time `json:"last_updated_time"`
 }
 
-type MetaData struct {
-	Name            string    `json:"name"`    // 对象名称
-	Version         int       `json:"version"` // 对象版本
-	Size            int64     `json:"size"`    // 对象大小
-	Hash            string    `json:"hash"`    // 对象 hash 值
-	CreatedBy       string    `json:"created_by"`
-	CreatedTime     time.Time `json:"created_time"`
-	LastUpdatedBy   string    `json:"last_updated_by"`
-	LastUpdatedTime time.Time `json:"last_updated_time"`
-}
-
 // 查询所有活着的心跳信息
 func QueryAllAliveHeartBeat() (heartBeats []HeartBeat, err error) {
 	o := orm.NewOrm()
@@ -61,7 +50,6 @@ func InsertOrUpdateHeartBeat(heartBeat *HeartBeat) (id int64, err error) {
 	}
 	return
 }
-
 
 func FilterHeartBeat(condArr map[string]interface{}) (heartBeat HeartBeat, err error) {
 	o := orm.NewOrm()

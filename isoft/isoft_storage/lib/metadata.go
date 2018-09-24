@@ -1,79 +1,173 @@
 package lib
 
 import (
-	"isoft/isoft/common/pageutil"
+	"encoding/json"
+	"errors"
+	"fmt"
+	"io/ioutil"
+	"isoft/isoft/common/logutil"
+	"isoft/isoft_storage/cfg"
 	"isoft/isoft_storage/lib/es"
 	"isoft/isoft_storage/lib/models"
+	"net/http"
+	"strings"
 )
 
 type MetaDataProxy struct {
+	
+}
+
+func convertToMetadata(metadataMap map[string]interface{}) (meta models.Metadata) {
+	meta.Name = metadataMap["name"].(string)
+	meta.Version = int(metadataMap["version"].(float64))
+	meta.Size = int64(metadataMap["size"].(float64))
+	meta.Hash = metadataMap["hash"].(string)
+	return
 }
 
 func (this *MetaDataProxy) SearchLatestVersion(name string) (meta models.Metadata, e error) {
-	retry := 3
-	for {
-		retry--
-		if retry <= 0 {
-			return
-		}
-		meta, e = es.SearchLatestVersion(name)
-		if e == nil {
-			return
+	url := fmt.Sprintf("http://%s/api/metadata/searchLatestVersion", cfg.GetConfigValue(cfg.ISOFT_STORAGE_API))
+	resp, err := http.Post(url,"application/x-www-form-urlencoded", strings.NewReader("name=" + name))
+	if err != nil{
+		panic(err)
+	}
+	responseBody, _ := ioutil.ReadAll(resp.Body)
+	responseMap := make(map[string]interface{})
+	json.Unmarshal(responseBody, &responseMap)
+	if responseMap["status"] != "SUCCESS"{
+		logutil.Errorln(errors.New(responseMap["errorMsg"].(string)))
+		return meta, errors.New(responseMap["errorMsg"].(string))
+	}
+	return convertToMetadata(responseMap["metadata"].(map[string]interface{})), nil
+}
+
+func (this *MetaDataProxy) GetMetadata(name string, version int) (meta models.Metadata, err error) {
+	url := fmt.Sprintf("http://%s/api/metadata/getMetadata", cfg.GetConfigValue(cfg.ISOFT_STORAGE_API))
+	resp, err := http.Post(url,"application/x-www-form-urlencoded",
+		strings.NewReader(fmt.Sprintf("name=%s&version=%d",name,version)))
+	if err != nil{
+		panic(err)
+	}
+	responseBody, _ := ioutil.ReadAll(resp.Body)
+	responseMap := make(map[string]interface{})
+	json.Unmarshal(responseBody, &responseMap)
+	if responseMap["status"] != "SUCCESS"{
+		logutil.Errorln(errors.New(responseMap["errorMsg"].(string)))
+		return meta, errors.New(responseMap["errorMsg"].(string))
+	}
+	return convertToMetadata(responseMap["metadata"].(map[string]interface{})), nil
+}
+
+func (this *MetaDataProxy) PutMetadata(name string, version int, size int64, hash string) error {
+	url := fmt.Sprintf("http://%s/api/metadata/putMetadata", cfg.GetConfigValue(cfg.ISOFT_STORAGE_API))
+	resp, err := http.Post(url,"application/x-www-form-urlencoded",
+		strings.NewReader(fmt.Sprintf("name=%s&version=%d&size=%d&hash=%s",name,version,size,hash)))
+	if err != nil{
+		panic(err)
+	}
+	responseBody, _ := ioutil.ReadAll(resp.Body)
+	responseMap := make(map[string]interface{})
+	json.Unmarshal(responseBody, &responseMap)
+	if responseMap["status"] != "SUCCESS"{
+		logutil.Errorln(errors.New(responseMap["errorMsg"].(string)))
+		return errors.New(responseMap["errorMsg"].(string))
+	}
+	return nil
+}
+
+func (this *MetaDataProxy) AddVersion(name, hash string, size int64) error {
+	url := fmt.Sprintf("http://%s/api/metadata/addVersion", cfg.GetConfigValue(cfg.ISOFT_STORAGE_API))
+	resp, err := http.Post(url,"application/x-www-form-urlencoded",
+		strings.NewReader(fmt.Sprintf("name=%s&size=%d&hash=%s",name,size,hash)))
+	if err != nil{
+		panic(err)
+	}
+	responseBody, _ := ioutil.ReadAll(resp.Body)
+	responseMap := make(map[string]interface{})
+	json.Unmarshal(responseBody, &responseMap)
+	if responseMap["status"] != "SUCCESS"{
+		logutil.Errorln(errors.New(responseMap["errorMsg"].(string)))
+		return errors.New(responseMap["errorMsg"].(string))
+	}
+	return nil
+}
+
+func (this *MetaDataProxy) SearchAllVersions(name string, from, size int) (metadatas []models.Metadata, err error) {
+	url := fmt.Sprintf("http://%s/api/metadata/addVersion", cfg.GetConfigValue(cfg.ISOFT_STORAGE_API))
+	resp, err := http.Post(url,"application/x-www-form-urlencoded",
+		strings.NewReader(fmt.Sprintf("name=%s&from=%d&size=%d",name,from,size)))
+	if err != nil{
+		panic(err)
+	}
+	responseBody, _ := ioutil.ReadAll(resp.Body)
+	responseMap := make(map[string]interface{})
+	json.Unmarshal(responseBody, &responseMap)
+	if responseMap["status"] != "SUCCESS"{
+		logutil.Errorln(errors.New(responseMap["errorMsg"].(string)))
+		return nil, errors.New(responseMap["errorMsg"].(string))
+	}else{
+		metadataMaps := responseMap["metadatas"].([]interface{})
+		for _, metadataMap := range metadataMaps{
+			meta := convertToMetadata(metadataMap.(map[string]interface{}))
+			metadatas = append(metadatas, meta)
 		}
 	}
 	return
 }
 
-func (this *MetaDataProxy) GetMetadata(name string, version int) (models.Metadata, error) {
-	return es.GetMetadata(name, version)
-}
-
-func (this *MetaDataProxy) PutMetadata(name string, version int, size int64, hash string) error {
-	return es.PutMetadata(name, version, size, hash)
-}
-
-func (this *MetaDataProxy) AddVersion(name, hash string, size int64) error {
-	return es.AddVersion(name, hash, size)
-}
-
-func (this *MetaDataProxy) SearchAllVersions(name string, from, size int) ([]models.Metadata, error) {
-	return es.SearchAllVersions(name, from, size)
-}
-
-func (this *MetaDataProxy) DelMetadata(name string, version int) {
-	es.DelMetadata(name, version)
+func (this *MetaDataProxy) DelMetadata(name string, version int) error{
+	url := fmt.Sprintf("http://%s/api/metadata/delMetadata", cfg.GetConfigValue(cfg.ISOFT_STORAGE_API))
+	resp, err := http.Post(url,"application/x-www-form-urlencoded",
+		strings.NewReader(fmt.Sprintf("name=%s&version=%s",name,version)))
+	if err != nil{
+		panic(err)
+	}
+	responseBody, _ := ioutil.ReadAll(resp.Body)
+	responseMap := make(map[string]interface{})
+	json.Unmarshal(responseBody, &responseMap)
+	if responseMap["status"] != "SUCCESS"{
+		logutil.Errorln(errors.New(responseMap["errorMsg"].(string)))
+		return errors.New(responseMap["errorMsg"].(string))
+	}
+	return nil
 }
 
 func (this *MetaDataProxy) HasHash(hash string) (bool, error) {
-	return es.HasHash(hash)
+	url := fmt.Sprintf("http://%s/api/metadata/hasHash", cfg.GetConfigValue(cfg.ISOFT_STORAGE_API))
+	resp, err := http.Post(url,"application/x-www-form-urlencoded",
+		strings.NewReader(fmt.Sprintf("hash=%s",hash)))
+	if err != nil{
+		panic(err)
+	}
+	responseBody, _ := ioutil.ReadAll(resp.Body)
+	responseMap := make(map[string]interface{})
+	json.Unmarshal(responseBody, &responseMap)
+	if responseMap["status"] != "SUCCESS"{
+		logutil.Errorln(errors.New(responseMap["errorMsg"].(string)))
+		return false, errors.New(responseMap["errorMsg"].(string))
+	}
+	return true, nil
 }
 
 func (this *MetaDataProxy) SearchHashSize(hash string) (size int64, e error) {
-	return es.SearchHashSize(hash)
+	url := fmt.Sprintf("http://%s/api/metadata/searchHashSize", cfg.GetConfigValue(cfg.ISOFT_STORAGE_API))
+	resp, err := http.Post(url,"application/x-www-form-urlencoded",
+		strings.NewReader(fmt.Sprintf("hash=%s",hash)))
+	if err != nil{
+		panic(err)
+	}
+	responseBody, _ := ioutil.ReadAll(resp.Body)
+	responseMap := make(map[string]interface{})
+	json.Unmarshal(responseBody, &responseMap)
+	if responseMap["status"] != "SUCCESS"{
+		logutil.Errorln(errors.New(responseMap["errorMsg"].(string)))
+		return size, errors.New(responseMap["errorMsg"].(string))
+	}
+	return responseMap["size"].(int64), nil
 }
 
 // 查询所有版本数量大于等于 minVersionCount 的对象
 // 返回值 key 为对象名, value 为对象现有版本数量、最小版本信息
 func (this *MetaDataProxy) SearchVersionStatus(minVersionCount int) (map[string][]int, error) {
 	return es.SearchVersionStatus(minVersionCount)
-}
-
-// 分页查询元数据信息,根据对象名称模糊匹配
-func (this *MetaDataProxy) FilterPageMetadatas(name string, from, size int) (metadatas []models.Metadata, paginator map[string]interface{}, err error) {
-	metadatas, err = es.MetadataList(name, from, size)
-	if err != nil {
-		return
-	}
-	count, err := es.MetadataListCount(name)
-	if err != nil {
-		return
-	}
-	// 当前页
-	current_page := from/size + 1
-	// 三个参数分别是 当前页数,每页数,总数
-	paginator = pageutil.Paginator(current_page, size, count)
-	if err != nil {
-		return
-	}
-	return
 }

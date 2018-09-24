@@ -52,23 +52,23 @@
         metadatas: [],
         columns1 : [
           {
-            title: 'Name',
-            key: 'Name',
+            title: 'name',
+            key: 'name',
             width:300
           },
           {
-            title: 'Version',
-            key: 'Version',
+            title: 'version',
+            key: 'version',
             width:100
           },
           {
-            title: 'Size',
-            key: 'Size',
+            title: 'size',
+            key: 'size',
             width:100
           },
           {
-            title: 'Hash',
-            key: 'Hash',
+            title: 'hash',
+            key: 'hash',
             width:350,
           },
           {
@@ -132,7 +132,7 @@
         this.refreshMetaDataList();
       },
       async locateShards(index){
-        const hash = this.metadatas[index]['Hash'];
+        const hash = this.metadatas[index]['hash'];
         const data = await LocateShards(hash);
         if(data.status=="SUCCESS"){
           this.shards = data.shards;
@@ -140,8 +140,8 @@
         }
       },
       fileDownload(index){
-        const name = this.metadatas[index]['Name'];
-        const version = this.metadatas[index]['Version'];
+        const name = this.metadatas[index]['name'];
+        const version = this.metadatas[index]['version'];
         window.location='/api/ifile/fileDownload/?name=' + name + "&version=" + version;
       },
     },

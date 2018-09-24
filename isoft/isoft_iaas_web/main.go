@@ -44,6 +44,7 @@ func initDB() {
 
 func registerModel() {
 	orm.RegisterModel(new(models.HeartBeat))
+	orm.RegisterModel(new(models.MetaData))
 }
 
 // 自动建表
