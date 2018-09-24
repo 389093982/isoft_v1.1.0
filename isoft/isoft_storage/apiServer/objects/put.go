@@ -18,15 +18,6 @@ func put(w http.ResponseWriter, r *http.Request) {
 	// 定位对象用对象名,存储对象用 hash 值
 	hash := hashutil.CalculateHash(reader)
 
-	// 定位对象用对象名,存储对象用 hash 值
-	// 从请求头中获取 hash 值
-	//hash := utils.GetHashFromHeader(r.Header)
-	//if hash == "" {
-	//	log.Println("missing object hash in digest header")
-	//	w.WriteHeader(http.StatusBadRequest)
-	//	return
-	//}
-
 	size := utils.GetSizeFromHeader(r.Header)
 
 	// 存储对象,底层调用数据服务节点的存储功能
