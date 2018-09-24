@@ -1,19 +1,19 @@
 package logutil
 
 import (
-	"time"
 	log "github.com/sirupsen/logrus"
+	"time"
 )
 
-func SetLogger(logPath, logFileName string)  {
-	configLocalFilesystemLogger(logPath, logFileName, time.Hour * 24 * 30, time.Hour * 24)
+func SetLogger(logPath, logFileName string) {
+	configLocalFilesystemLogger(logPath, logFileName, time.Hour*24*30, time.Hour*24)
 }
 
-func ErrorLog(args ...interface{})  {
+func ErrorLog(args ...interface{}) {
 	log.Error(args...)
 }
 
-func Errorln(args ...interface{})  {
+func Errorln(args ...interface{}) {
 	log.Errorln(args...)
 }
 
@@ -32,4 +32,3 @@ func Infoln(args ...interface{}) {
 func Infof(format string, args ...interface{}) {
 	log.Infof(format, args...)
 }
-

@@ -106,7 +106,7 @@ func MetadataListCount(name string) (int64, error) {
 			"query":{
 				"wildcard":{"name":"*%s*"}
 			}
-		}`,name)
+		}`, name)
 	request, _ := http.NewRequest("POST", url, strings.NewReader(body))
 	r, e := client.Do(request)
 	if e != nil {

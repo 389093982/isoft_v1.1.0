@@ -21,11 +21,11 @@ func main() {
 		return
 	}
 	// 返回值 key 为对象名, value 为对象现有版本数量、最小版本信息
-	for name, versionInfo := range versionMap{
+	for name, versionInfo := range versionMap {
 		// 循环遍历每一个 bucket,从该对象当前最小的版本号开始一一删除,直到最后还剩 5 个版本
-		for v := 0; v < versionInfo[0] - MIN_VERSION_COUNT; v++ {
+		for v := 0; v < versionInfo[0]-MIN_VERSION_COUNT; v++ {
 			// 根据对象名称,删除对象指定版本
-			proxy.DelMetadata(name, v + int(versionInfo[1]))
+			proxy.DelMetadata(name, v+int(versionInfo[1]))
 		}
 	}
 }

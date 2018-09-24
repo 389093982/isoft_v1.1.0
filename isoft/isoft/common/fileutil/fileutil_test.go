@@ -18,9 +18,9 @@ func Test_GetAllFile(t *testing.T) {
 	}
 }
 
-func Test_CreateDir(t *testing.T)  {
+func Test_CreateDir(t *testing.T) {
 	err := os.Mkdir("D:/build/isoft_storage_log", os.ModePerm)
-	if err != nil{
+	if err != nil {
 		fmt.Println(err)
 	}
 }

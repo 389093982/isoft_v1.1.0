@@ -1,6 +1,7 @@
 package hashutil
 
 import (
+	"bufio"
 	"crypto/sha256"
 	"encoding/base64"
 	"fmt"
@@ -14,9 +15,26 @@ import (
 func CalculateHash(r io.Reader) string {
 	h := sha256.New()
 	_, err := io.Copy(h, r)
-	if err != nil{
+	if err != nil {
 		fmt.Println("CalculateHash err")
 		return ""
+	}
+	return base64.StdEncoding.EncodeToString(h.Sum(nil))
+}
+
+func CalculateHashWithReader(reader io.Reader) string {
+	h := sha256.New()
+	breader := bufio.NewReader(reader)
+	buf := make([]byte, 1024*1024*10)
+	for {
+		n, err := breader.Read(buf)
+		if err != nil && err != io.EOF {
+			return ""
+		}
+		if n == 0 {
+			break
+		}
+		io.WriteString(h, string(buf[:n])) // append into the hash
 	}
 	return base64.StdEncoding.EncodeToString(h.Sum(nil))
 }
@@ -25,7 +43,7 @@ func CalculateHashWithString(msg string) string {
 	h := sha256.New()
 	reader := strings.NewReader(msg)
 	_, err := io.Copy(h, reader)
-	if err != nil{
+	if err != nil {
 		fmt.Println("CalculateHashWithString err")
 		return ""
 	}
@@ -34,7 +52,7 @@ func CalculateHashWithString(msg string) string {
 
 func CalculateHashWithFileS(filepath string) (hash string, err error) {
 	bytes, err := ioutil.ReadFile(filepath)
-	if err != nil{
+	if err != nil {
 		return "", err
 	}
 	return CalculateHashWithString(string(bytes)), nil
@@ -44,18 +62,18 @@ func CalculateHashWithFile(filepath string) (hash string, err error) {
 	file, err := os.Open(filepath)
 	defer file.Close()
 	if err != nil {
-		return "",err
+		return "", err
 	}
 	h := sha256.New()
-	_, err = io.Copy(h,file)
-	if err != nil{
+	_, err = io.Copy(h, file)
+	if err != nil {
 		return "", err
 	}
 	return base64.StdEncoding.EncodeToString(h.Sum(nil)), nil
 }
 
-func CalculateHashWithBigFile(filepath string) (hash string, err error){
-	const filechunk = 1024 * 1024*10 // 文件块大小设置为 10M 大小可以调整
+func CalculateHashWithBufferedFile(filepath string) (hash string, err error) {
+	const filechunk = 1024 * 1024 * 10 // 文件块大小设置为 10M 大小可以调整
 	file, err := os.Open(filepath)
 	if err != nil {
 		panic(err.Error())
@@ -63,7 +81,7 @@ func CalculateHashWithBigFile(filepath string) (hash string, err error){
 	defer file.Close()
 	// calculate the file size
 	info, err := file.Stat()
-	if err != nil{
+	if err != nil {
 		return "", err
 	}
 	filesize := info.Size()
@@ -77,4 +95,3 @@ func CalculateHashWithBigFile(filepath string) (hash string, err error){
 	}
 	return base64.StdEncoding.EncodeToString(h.Sum(nil)), nil
 }
-

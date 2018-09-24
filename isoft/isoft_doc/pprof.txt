@@ -1,0 +1,12 @@
+对于 web 应用需要在代码中引入 _ "net/http/pprof"
+log.Fatal(http.ListenAndServe(":9876", nil))
+
+http://localhost:9876/debug/pprof
+
+打开链接 http://localhost:9876/debug/pprof/profile 稍后片刻,可以下载到文件 profile
+go tool pprof test profile,输入 top 命令得到
+打开链接 http://localhost:9876/debug/pprof/heap 稍后片刻,可以下载到文件 heap.gz
+使用 go tool pprof test heap.gz,然后输入 top 或 web 命令查看相关内容
+
+go tool pprof http://localhost:6060/debug/pprof/block
+

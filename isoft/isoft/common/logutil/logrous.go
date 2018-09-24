@@ -5,9 +5,9 @@ import (
 	"github.com/pkg/errors"
 	"github.com/rifflock/lfshook"
 	log "github.com/sirupsen/logrus"
+	"os"
 	"path"
 	"time"
-	"os"
 )
 
 // config logrus log to local filesystem, with file rotation
@@ -32,7 +32,7 @@ func configLocalFilesystemLogger(logPath string, logFileName string, maxAge time
 		log.ErrorLevel: writer,
 		log.FatalLevel: writer,
 		log.PanicLevel: writer,
-	}, &log.TextFormatter{DisableColors: true})	// 支持 JSONFormatter 和 TextFormatter
+	}, &log.TextFormatter{DisableColors: true}) // 支持 JSONFormatter 和 TextFormatter
 	log.AddHook(lfHook)
 
 	// 日志记录代码行号的 hook

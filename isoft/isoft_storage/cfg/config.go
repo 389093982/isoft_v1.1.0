@@ -4,11 +4,11 @@ import (
 	"fmt"
 	"github.com/larspensjo/config"
 	"isoft/isoft/common/fileutil"
+	"isoft/isoft/common/logutil"
 	"log"
 	"os"
 	"path/filepath"
 	"strings"
-	"isoft/isoft/common/logutil"
 )
 
 func GetConfigValue(key string) string {
@@ -78,14 +78,14 @@ func initConfigData(section_name string) {
 }
 
 // 创建必要的文件夹,此处主要指 STORAGE_ROOT
-func mkNecessaryDir()  {
+func mkNecessaryDir() {
 	STORAGE_ROOT := GetConfigValue(STORAGE_ROOT)
 	os.MkdirAll(STORAGE_ROOT, os.ModePerm)
 	os.MkdirAll(filepath.Join(STORAGE_ROOT, "objects"), os.ModePerm)
 	os.MkdirAll(filepath.Join(STORAGE_ROOT, "temp"), os.ModePerm)
 }
 
-func setLogger(section_name string)  {
+func setLogger(section_name string) {
 	STORAGE_LOGDIR := GetConfigValue(STORAGE_LOGDIR)
 	// 创建日志文件夹
 	os.MkdirAll(STORAGE_LOGDIR, os.ModePerm)

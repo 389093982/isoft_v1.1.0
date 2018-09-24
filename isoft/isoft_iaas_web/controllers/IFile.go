@@ -16,7 +16,7 @@ import (
 
 var isoft_istorage_web string
 
-func init()  {
+func init() {
 	isoft_istorage_web = beego.AppConfig.String("isoft_istorage_web")
 }
 
@@ -26,7 +26,7 @@ type IFileController struct {
 
 func (this *IFileController) FileUpload() {
 	defer func() {
-		if err := recover(); err != nil{
+		if err := recover(); err != nil {
 			this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": "保存失败！"}
 			this.ServeJSON()
 			return
@@ -51,44 +51,44 @@ func (this *IFileController) FileUpload() {
 		panic(err)
 	}
 	// 在请求头中添加 hash 值
-	req.Header.Add("digest", "SHA-256=" + hash)
+	req.Header.Add("digest", "SHA-256="+hash)
 	res, err := http.DefaultClient.Do(req)
-	if err != nil || res.StatusCode != 200{
+	if err != nil || res.StatusCode != 200 {
 		panic(err)
 	}
 	defer res.Body.Close()
 	body, err := ioutil.ReadAll(res.Body)
-	if err != nil{
+	if err != nil {
 		panic(err)
 	}
-	this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "Status":res.Status,"body":body, "filename":h.Filename}
+	this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "Status": res.Status, "body": body, "filename": h.Filename}
 	this.ServeJSON()
 }
 
 // 分页查询元数据信息
-func (this *IFileController) FilterPageMetadatas()  {
+func (this *IFileController) FilterPageMetadatas() {
 	defer func() {
-		if err := recover(); err != nil{
+		if err := recover(); err != nil {
 			this.Data["json"] = &map[string]interface{}{"status": "ERROR", "msg": err}
 			this.ServeJSON()
 		}
 	}()
 	var (
-		name string
+		name         string
 		current_page int
-		offset int
-		err error
+		offset       int
+		err          error
 	)
 	name = strings.TrimSpace(this.GetString("name", ""))
-	if current_page, err = this.GetInt("current_page",1); err != nil{
+	if current_page, err = this.GetInt("current_page", 1); err != nil {
 		panic(err)
 	}
-	if offset, err = this.GetInt("offset",1); err != nil{
+	if offset, err = this.GetInt("offset", 1); err != nil {
 		panic(err)
 	}
 	paramMap := make(map[string]interface{})
 	paramMap["name"] = name
-	paramMap["from"] = (current_page-1) * offset
+	paramMap["from"] = (current_page - 1) * offset
 	paramMap["size"] = offset
 	paramByte, err := json.Marshal(paramMap)
 	if err != nil {
@@ -101,16 +101,16 @@ func (this *IFileController) FilterPageMetadatas()  {
 	}
 	req.Header.Set("Content-type", "application/json")
 	res, err := http.DefaultClient.Do(req)
-	if err != nil || res.StatusCode != 200{
+	if err != nil || res.StatusCode != 200 {
 		panic(err)
 	}
 	body, err := ioutil.ReadAll(res.Body)
-	if err != nil{
+	if err != nil {
 		panic(err)
 	}
 	var metadatasMap map[string]interface{}
 	err = json.Unmarshal(body, &metadatasMap)
-	if err != nil{
+	if err != nil {
 		panic(err)
 	}
 	this.Data["json"] = &metadatasMap
@@ -118,9 +118,9 @@ func (this *IFileController) FilterPageMetadatas()  {
 }
 
 // 分片定位
-func (this *IFileController) LocateShards()  {
+func (this *IFileController) LocateShards() {
 	defer func() {
-		if err := recover(); err != nil{
+		if err := recover(); err != nil {
 			this.Data["json"] = &map[string]interface{}{"status": "ERROR", "msg": err}
 			this.ServeJSON()
 		}
@@ -132,23 +132,23 @@ func (this *IFileController) LocateShards()  {
 		panic(err)
 	}
 	res, err := http.DefaultClient.Do(req)
-	if err != nil || res.StatusCode != 200{
+	if err != nil || res.StatusCode != 200 {
 		panic(err)
 	}
 	body, err := ioutil.ReadAll(res.Body)
-	if err != nil{
+	if err != nil {
 		panic(err)
 	}
 	var locateShardsMap map[string]interface{}
 	err = json.Unmarshal(body, &locateShardsMap)
-	if err != nil{
+	if err != nil {
 		panic(err)
 	}
-	this.Data["json"] = &map[string]interface{}{"status":"SUCCESS", "shards":&locateShardsMap}
+	this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "shards": &locateShardsMap}
 	this.ServeJSON()
 }
 
-func (this *IFileController) FileDownload()  {
+func (this *IFileController) FileDownload() {
 	name := strings.TrimSpace(this.GetString("name", ""))
 	version := strings.TrimSpace(this.GetString("version", ""))
 	url := fmt.Sprintf("%s/objects/%s?version=%s", isoft_istorage_web, name, version)
@@ -157,7 +157,7 @@ func (this *IFileController) FileDownload()  {
 		panic(err)
 	}
 	res, err := http.DefaultClient.Do(req)
-	if err != nil || res.StatusCode != 200{
+	if err != nil || res.StatusCode != 200 {
 		panic(err)
 	}
 	raw := res.Body

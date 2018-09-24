@@ -5,6 +5,6 @@ import (
 )
 
 func Test_Log(t *testing.T) {
-	SetLogger(`D:/log`,"log.txt")
+	SetLogger(`D:/log`, "log.txt")
 	Errorln("error....")
 }

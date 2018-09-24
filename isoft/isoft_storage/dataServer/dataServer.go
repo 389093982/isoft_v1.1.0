@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"isoft/isoft/common/logutil"
 	"isoft/isoft_storage/cfg"
 	"isoft/isoft_storage/dataServer/heartbeat"
 	"isoft/isoft_storage/dataServer/locate"
@@ -10,12 +11,11 @@ import (
 	"net/http"
 	"os"
 	"strings"
-	"isoft/isoft/common/logutil"
 )
 
 func main() {
 	defer func() {
-		if err := recover();err != nil{
+		if err := recover(); err != nil {
 			logutil.Errorln(err)
 		}
 	}()
@@ -45,7 +45,7 @@ func main() {
 
 	fmt.Println(fmt.Sprintf("Start bind_address %s", bind_address))
 
-	if err := http.ListenAndServe(bind_address, nil); err != nil{
+	if err := http.ListenAndServe(bind_address, nil); err != nil {
 		logutil.Errorln(err)
 	}
 }

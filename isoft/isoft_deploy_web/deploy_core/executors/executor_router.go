@@ -40,7 +40,7 @@ func (this *ExecutorRouter) RunCommandTask(operate_type string, tracking_id, ext
 	}
 	this.TrackingLogResolver.StartRecordNewTask(tracking_id, this.ServiceInfo.ServiceName+"#"+operate_type)
 	defer func() {
-		if err := recover(); err != nil{
+		if err := recover(); err != nil {
 			this.TrackingLogResolver.EndRecordTask()
 		}
 	}()

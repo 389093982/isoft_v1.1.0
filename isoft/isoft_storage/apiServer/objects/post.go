@@ -1,6 +1,7 @@
 package objects
 
 import (
+	"fmt"
 	"isoft/isoft/common/logutil"
 	"isoft/isoft_storage/apiServer/heartbeat"
 	"isoft/isoft_storage/apiServer/locate"
@@ -12,6 +13,7 @@ import (
 	"net/url"
 	"strconv"
 	"strings"
+	"time"
 )
 
 // post 函数和 put 函数处理流程在前半段是一样的,都是从请求 URL 中获取对象名称,从请求的响应头部获取对象的大小和散列值,
@@ -42,9 +44,11 @@ func post(w http.ResponseWriter, r *http.Request) {
 		}
 		return
 	}
+
+	startTime := time.Now()
 	ds := heartbeat.ChooseRandomDataServers(rs.ALL_SHARDS, nil)
+	fmt.Println("ChooseRandomDataServers 1:", time.Now().Sub(startTime))
 	if len(ds) != rs.ALL_SHARDS {
-		logutil.Errorln("cannot find enough dataServer:", len(ds))
 		w.WriteHeader(http.StatusServiceUnavailable)
 		return
 	}

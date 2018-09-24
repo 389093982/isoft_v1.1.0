@@ -1,6 +1,7 @@
 package heartbeat
 
 import (
+	"isoft/isoft/common/logutil"
 	"math/rand"
 )
 
@@ -24,6 +25,7 @@ func ChooseRandomDataServers(n int, exclude map[int]string) (ds []string) {
 	length := len(candidates)
 	// 判断节点数量是否满足要求
 	if length < n {
+		logutil.Errorln("ChooseRandomDataServers err, only find:", length)
 		return
 	}
 	// length >= n 时

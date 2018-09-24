@@ -22,8 +22,8 @@ func ListenHeartbeat() {
 // 主要用于接收数据服务节点发送过来的心跳消息
 func ListenDataServerHeartbeat() {
 	defer func() {
-		if err := recover();err != nil{
-			logutil.Errorln("ListenDataServerHeartbeat error:",err)
+		if err := recover(); err != nil {
+			logutil.Errorln("ListenDataServerHeartbeat error:", err)
 			// 异常控制, 5s 后重新心跳检测
 			time.Sleep(5 * time.Second)
 			ListenDataServerHeartbeat()

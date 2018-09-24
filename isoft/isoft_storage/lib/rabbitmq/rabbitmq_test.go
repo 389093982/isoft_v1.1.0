@@ -17,11 +17,10 @@ func Test_New(t *testing.T) {
 	for msg := range c {
 		// 获取监听地址
 		dataServer, err := strconv.Unquote(string(msg.Body))
-		if err != nil{
+		if err != nil {
 			fmt.Println(err)
-		}else{
+		} else {
 			fmt.Println(dataServer)
 		}
 	}
 }
-

@@ -12,6 +12,7 @@ type contextHook struct {
 	Skip   int
 	levels []logrus.Level
 }
+
 // NewContextHook use to make an hook
 // 根据上面的推断, 我们递归深度可以设置到5即可.
 func NewContextHook(levels ...logrus.Level) logrus.Hook {
@@ -36,21 +37,23 @@ func (hook contextHook) Fire(entry *logrus.Entry) error {
 	entry.Data[hook.Field] = findCaller(hook.Skip)
 	return nil
 }
+
 // 对caller进行递归查询, 直到找到非logrus包产生的第一个调用.
 // 因为filename我获取到了上层目录名, 因此所有logrus包的调用的文件名都是 logrus/...
 // 因此通过排除logrus开头的文件名, 就可以排除所有logrus包的自己的函数调用
 func findCaller(skip int) string {
 	file := ""
 	line := 0
-	fnName:= ""
+	fnName := ""
 	for i := 0; i < 10; i++ {
 		file, line, fnName = getCaller(skip + i)
-		if !strings.HasPrefix(file, "logrus") && !strings.HasPrefix(file, "logutil") {			// 即非 logrus 也非 logutil
+		if !strings.HasPrefix(file, "logrus") && !strings.HasPrefix(file, "logutil") { // 即非 logrus 也非 logutil
 			break
 		}
 	}
 	return fmt.Sprintf("%s ~ %s:%d", file, fnName, line)
 }
+
 // 获取函数名称的: fnName := runtime.FuncForPC(pc).Name()
 // 在标准库log里面我们可以选择记录文件的全路径或者文件名, 但是在使用过程成并发最合适的,
 // 因为文件的全路径往往很长, 而文件名在多个包中往往有重复, 因此这里选择多取一层, 取到文件所在的上层目录那层.
