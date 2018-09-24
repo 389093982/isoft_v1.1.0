@@ -8,7 +8,6 @@ import (
 	"github.com/astaxie/beego"
 	"io"
 	"io/ioutil"
-	"isoft/isoft/common/hashutil"
 	"net/http"
 	"net/url"
 	"strings"
@@ -33,25 +32,17 @@ func (this *IFileController) FileUpload() {
 		}
 	}()
 	// 判断是否是文件上传
-	f, h, err := this.GetFile("file")
+	file, h, err := this.GetFile("file")
 	if err != nil {
 		panic(err)
 	}
-
-	bReader := bytes.Buffer{}
-	// io.TeeReader、io.MultiReader
-	reader := io.TeeReader(f, &bReader)
-	// 定位对象用对象名,存储对象用 hash 值
-	hash := hashutil.CalculateHash(reader)
 
 	// 调用 isoft_istorage_web 发送 put 请求调用分布式对象存储接口
 	url := fmt.Sprintf("%s/objects/%s", isoft_istorage_web, url.PathEscape(h.Filename))
-	req, err := http.NewRequest("PUT", url, &bReader)
+	req, err := http.NewRequest("PUT", url, file)
 	if err != nil {
 		panic(err)
 	}
-	// 在请求头中添加 hash 值
-	req.Header.Add("digest", "SHA-256=" + hash)
 	res, err := http.DefaultClient.Do(req)
 	if err != nil || res.StatusCode != 200{
 		panic(err)

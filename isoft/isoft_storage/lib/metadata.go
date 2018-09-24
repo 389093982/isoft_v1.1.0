@@ -12,7 +12,18 @@ type MetaDataProxy struct {
 }
 
 func (this *MetaDataProxy) SearchLatestVersion(name string) (meta models.Metadata, e error) {
-	return es.SearchLatestVersion(name)
+	retry := 3
+	for{
+		retry --
+		if retry <= 0{
+			return
+		}
+		meta, e = es.SearchLatestVersion(name)
+		if e == nil{
+			return
+		}
+	}
+	return
 }
 
 func (this *MetaDataProxy) GetMetadata(name string, version int) (models.Metadata, error) {
