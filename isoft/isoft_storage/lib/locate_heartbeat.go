@@ -56,7 +56,7 @@ func (this *LocateAndHeartbeatProxy) ReceiveDealAndSendLocateInfo(locateFunc fun
 		id := locateFunc(hash)
 		if id != -1 {
 			// 不存在则不返回消息,存在则返回消息
-			q.Send(msg.ReplyTo, models.LocateMessage{Addr: cfg.GetConfigValue(cfg.LISTEN_ADDRESS), Id: id})
+			q.Send(msg.ReplyTo, models.LocateMessage{Addr: cfg.GetConfigValue(cfg.LISTEN_ADDRESS), ShardId: id})
 		}
 	}
 }
@@ -115,7 +115,7 @@ func (this *LocateAndHeartbeatProxy) RetrySendAndReceiveLocateInfo(hash string, 
 		}
 		var info models.LocateMessage
 		json.Unmarshal(msg.Body, &info)
-		locateInfo[info.Id] = info.Addr
+		locateInfo[info.ShardId] = info.Addr
 	}
 	return
 }
