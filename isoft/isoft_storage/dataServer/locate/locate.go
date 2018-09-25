@@ -2,7 +2,6 @@ package locate
 
 import (
 	"isoft/isoft_storage/cfg"
-	"isoft/isoft_storage/lib"
 	"path/filepath"
 	"strconv"
 	"strings"
@@ -33,11 +32,6 @@ func Del(hash string) {
 	mutex.Lock()
 	delete(objects, hash)
 	mutex.Unlock()
-}
-
-func StartLocate() {
-	proxy := &lib.LocateAndHeartbeatProxy{}
-	proxy.ReceiveDealAndSendLocateInfo(Locate)
 }
 
 // 应用启动时对节点本地磁盘上的对象进行定位的,缓存对象定位信息,防止过于频繁的磁盘访问

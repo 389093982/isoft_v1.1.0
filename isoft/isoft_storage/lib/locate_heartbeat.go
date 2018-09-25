@@ -7,10 +7,7 @@ import (
 	"io/ioutil"
 	"isoft/isoft_storage/cfg"
 	"isoft/isoft_storage/lib/models"
-	"isoft/isoft_storage/lib/rabbitmq"
-	"isoft/isoft_storage/lib/rs"
 	"net/http"
-	"strconv"
 	"strings"
 	"sync"
 	"time"
@@ -84,62 +81,40 @@ func (this *LocateAndHeartbeatProxy) ReceiveAndModifyHeartbeat(dataServers map[s
 	}
 }
 
-// 发送和接收定位失败需要进行重试,最多重试 retry 次
-func (this *LocateAndHeartbeatProxy) RetrySendAndReceiveLocateInfo(hash string, retry int) (locateInfo map[int]string) {
-	if retry <= 0 {
-		return
+func (this *LocateAndHeartbeatProxy) SendAndReceiveLocateInfo(dataServers []string, hash string, retry int) (locateInfo map[int]string) {
+	locateInfoStrChan := make(chan string, len(dataServers))
+	wg := &sync.WaitGroup{}
+	for _, server := range dataServers{
+		wg.Add(1)
+		go sendAndReceiveLocateInfo(locateInfoStrChan, server, hash, wg)
 	}
-	defer func() {
-		if err := recover(); err != nil {
-			retry--
-			locateInfo = this.RetrySendAndReceiveLocateInfo(hash, retry)
-			return
+	wg.Wait()
+	close(locateInfoStrChan)
+	if len(locateInfoStrChan) != 0{
+		locateInfo = make(map[int]string,len(dataServers))
+		// 获取所有定位信息
+		for locateInfoStr := range locateInfoStrChan{
+			var info models.LocateMessage
+			err := json.Unmarshal([]byte(locateInfoStr), &info)
+			if err != nil{
+				break
+			}
+			locateInfo[info.ShardId] = info.Addr
 		}
-	}()
-	q := rabbitmq.New(cfg.GetConfigValue(cfg.RABBITMQ_SERVER))
-	q.Publish("dataServers", hash)
-	c := q.Consume()
-	go func() {
-		time.Sleep(time.Second)
-		q.Close()
-	}()
-	locateInfo = make(map[int]string)
-	// 循环获取 6 条定位消息
-	for i := 0; i < rs.ALL_SHARDS; i++ {
-		msg := <-c
-		if len(msg.Body) == 0 {
-			return
-		}
-		var info models.LocateMessage
-		json.Unmarshal(msg.Body, &info)
-		locateInfo[info.ShardId] = info.Addr
 	}
-	return
+	return locateInfo
 }
 
-func (this *LocateAndHeartbeatProxy) ReceiveDealAndSendLocateInfo(locateFunc func(hash string) int) {
-	defer func() {
-		if err := recover(); err != nil {
-			// 出现异常时需要重新执行
-			this.ReceiveDealAndSendLocateInfo(locateFunc)
-		}
-	}()
-	// 直接将 RabbitMQ 消息队列里收到的对象散列值作为 Locate 参数
-	q := rabbitmq.New(cfg.GetConfigValue(cfg.RABBITMQ_SERVER))
-	defer q.Close()
-	q.Bind("dataServers")
-	c := q.Consume()
-	for msg := range c {
-		// 接收 hash 值
-		hash, e := strconv.Unquote(string(msg.Body))
-		if e != nil {
-			panic(e)
-		}
-		// 定位 hash 值是否存在
-		id := locateFunc(hash)
-		if id != -1 {
-			// 不存在则不返回消息,存在则返回消息
-			q.Send(msg.ReplyTo, models.LocateMessage{Addr: cfg.GetConfigValue(cfg.LISTEN_ADDRESS), ShardId: id})
+func sendAndReceiveLocateInfo(locateInfoStrChan chan<- string, server string, hash string, wg *sync.WaitGroup)  {
+	defer wg.Done()
+	// 先调用数据服务 temp 接口的 post 方法生产临时文件,接收返回的 uuid 信息
+	url := fmt.Sprintf("http://%s/locate/%s", server, hash)
+	resp, err := http.Post(url,"application/x-www-form-urlencoded", nil)
+	if err == nil && resp != nil && resp.StatusCode == 200{
+		body, err := ioutil.ReadAll(resp.Body)
+		if err == nil{
+			locateInfoStrChan <- string(body)
 		}
 	}
 }
+

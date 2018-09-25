@@ -7,7 +7,6 @@ import (
 	"io/ioutil"
 	"isoft/isoft/common/logutil"
 	"isoft/isoft_storage/cfg"
-	"isoft/isoft_storage/lib/es"
 	"isoft/isoft_storage/lib/models"
 	"net/http"
 	"strings"
@@ -168,6 +167,7 @@ func (this *MetaDataProxy) SearchHashSize(hash string) (size int64, e error) {
 
 // 查询所有版本数量大于等于 minVersionCount 的对象
 // 返回值 key 为对象名, value 为对象现有版本数量、最小版本信息
-func (this *MetaDataProxy) SearchVersionStatus(minVersionCount int) (map[string][]int, error) {
-	return es.SearchVersionStatus(minVersionCount)
+func (this *MetaDataProxy) SearchVersionStatus(minVersionCount int) (m map[string][]int, err error) {
+	//return es.SearchVersionStatus(minVersionCount)
+	return
 }
