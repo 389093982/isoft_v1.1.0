@@ -35,7 +35,7 @@ func storeObject(r io.Reader, hash string, size int64) (int, error) {
 
 	startTime = time.Now()
 	// 重新计算 hash 值
-	d := hashutil.CalculateHashWithReader(reader)
+	d := hashutil.CalculateHash(reader)
 	endTime = time.Now()
 	fmt.Println("storeObject hashutil.CalculateHash cost time :", endTime.Sub(startTime))
 

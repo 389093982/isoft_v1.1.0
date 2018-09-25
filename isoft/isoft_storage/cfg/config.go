@@ -30,8 +30,11 @@ func InitConfigWithOsArgs(args []string) {
 	}()
 	// 初始化配置,两个参数分别是环境名称和 section 名称
 	initCfg(args[1], args[2])
-	// 创建必要的文件夹
-	mkNecessaryDir()
+
+	if strings.HasPrefix(args[1], "dataServer"){
+		// 创建必要的文件夹
+		mkNecessaryDir()
+	}
 	// 日志初始化
 	setLogger(args[2])
 }

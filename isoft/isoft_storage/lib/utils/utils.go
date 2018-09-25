@@ -31,6 +31,7 @@ func GetHashFromHeader(h http.Header) string {
 }
 
 func GetSizeFromHeader(h http.Header) int64 {
+	// content-length 是 http 请求头的固有属性无需手动设置
 	size, _ := strconv.ParseInt(h.Get("content-length"), 0, 64)
 	return size
 }

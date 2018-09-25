@@ -38,6 +38,7 @@ func (this *IFileController) FileUpload() {
 		panic(err)
 	}
 
+
 	bReader := bytes.Buffer{}
 	// io.TeeReader、io.MultiReader
 	reader := io.TeeReader(f, &bReader)
