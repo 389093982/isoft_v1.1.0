@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"bufio"
 	"bytes"
 	"encoding/json"
 	"fmt"
@@ -9,8 +8,10 @@ import (
 	"io"
 	"io/ioutil"
 	"isoft/isoft/common/hashutil"
+	"mime"
 	"net/http"
 	"net/url"
+	"path/filepath"
 	"strings"
 )
 
@@ -74,7 +75,7 @@ func (this *IFileController) LocateShards() {
 			this.ServeJSON()
 		}
 	}()
-	hash := strings.TrimSpace(this.GetString("hash", ""))
+	hash := strings.Replace(strings.TrimSpace(this.GetString("hash"))," ","+",-1)
 	url := fmt.Sprintf("%s/locate/%s", isoft_istorage_web, hash)
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
@@ -109,10 +110,34 @@ func (this *IFileController) FileDownload() {
 	if err != nil || res.StatusCode != 200 {
 		panic(err)
 	}
-	raw := res.Body
-	defer raw.Close()
-	reader := bufio.NewReaderSize(raw, 1024*1024*10)
-	this.Ctx.ResponseWriter.Header().Set("Content-Type", "application/octet-stream")
+	ctype := mime.TypeByExtension(filepath.Ext(name))
+	if ctype != ""{
+		ctype = "application/octet-stream"
+	}
+	this.Ctx.ResponseWriter.Header().Set("Content-Type", ctype)
+	// Content-Disposition 响应头,设置文件在浏览器打开还是下载
+	// Content-Disposition 属性有两种类型:inline和attachment inline:将文件内容直接显示在页面 attachment:弹出对话框让用户下载具体例子
 	this.Ctx.ResponseWriter.Header().Set("Content-Disposition", fmt.Sprintf("attachment; filename=\"%s\"", name))
-	io.Copy(this.Ctx.ResponseWriter, reader)
+	io.Copy(this.Ctx.ResponseWriter, res.Body)
 }
+
+func (this *IFileController) GetImgOrVedioMedia() {
+	name := strings.TrimSpace(this.GetString("name", ""))
+	version := strings.TrimSpace(this.GetString("version", ""))
+	url := fmt.Sprintf("%s/objects/%s?version=%s", isoft_istorage_web, name, version)
+	req, err := http.NewRequest("GET", url, nil)
+	if err != nil {
+		panic(err)
+	}
+	res, err := http.DefaultClient.Do(req)
+	if err != nil || res.StatusCode != 200 {
+		panic(err)
+	}
+	ctype := mime.TypeByExtension(filepath.Ext(name))
+	if ctype != ""{
+		ctype = "application/octet-stream"
+	}
+	this.Ctx.ResponseWriter.Header().Set("Content-Type", ctype)
+	io.Copy(this.Ctx.ResponseWriter, res.Body)
+}
+

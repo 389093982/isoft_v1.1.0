@@ -40,7 +40,7 @@ func (this *MetadataController) PutMetadata() {
 	name := this.GetString("name")
 	version, _ := this.GetInt("version", -1)
 	size, _:= this.GetInt64("size", -1)
-	hash := this.GetString("hash")
+	hash := strings.Replace(strings.TrimSpace(this.GetString("hash"))," ","+",-1)
 	metadata := &models.MetaData{
 		Name:name,
 		Version:version,
@@ -63,7 +63,7 @@ func (this *MetadataController) PutMetadata() {
 func (this *MetadataController) AddVersion() {
 	name := this.GetString("name")
 	size, _:= this.GetInt64("size", -1)
-	hash := this.GetString("hash")
+	hash := strings.Replace(strings.TrimSpace(this.GetString("hash"))," ","+",-1)
 	metadata := &models.MetaData{
 		Name:name,
 		Size:size,
@@ -114,7 +114,7 @@ func (this *MetadataController) DelMetadata() {
 }
 
 func (this *MetadataController) HasHash() {
-	hash := this.GetString("hash")
+	hash := strings.Replace(strings.TrimSpace(this.GetString("hash"))," ","+",-1)
 	b := models.HasHash(hash)
 	if !b{
 		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": "hash was not found!"}

@@ -3,7 +3,7 @@
 
     <Row style="margin-bottom: 10px;">
       <Col span="12">
-        <IFileUpload/>
+        <IFileUpload @refreshTable="refreshMetaDataList"/>
       </Col>
       <Col span="12">
         <Input v-model="search_name" search enter-button placeholder="搜索对象名称" @on-search="input_search"/>
@@ -23,6 +23,23 @@
       </p>
     </Modal>
 
+    <Modal
+      v-model="showImgModel"
+      title="显示图片"
+      :mask-closable="false">
+      <img :src="showImageSrc" alt="smile" />
+    </Modal>
+
+    <Modal
+      v-model="playVedioModel"
+      title="播放视频"
+      :mask-closable="false">
+      <video ref="video" width="320" height="240" controls>
+        <source type="video/mp4">
+        您的浏览器不支持 video 标签。
+      </video>
+    </Modal>
+
   </div>
 </template>
 
@@ -38,6 +55,10 @@
       return {
         // 显示对象分片信息对话框
         showShardsModel:false,
+        showImgModel:false,
+        showImageSrc:'',
+        playVedioModel:false,
+        playVedioSrc:'',
         // 对象分片信息
         shards:[],
         // 搜索的对象名称
@@ -69,12 +90,12 @@
           {
             title: 'hash',
             key: 'hash',
-            width:350,
+            width:380,
           },
           {
             title: '操作',
             key: 'operate',
-            width:300,
+            width:400,
             render: (h, params) => {
               return h('div', [
                 h('Button', {
@@ -106,6 +127,34 @@
                     }
                   }
                 }, '文件下载'),
+                h('Button', {
+                  props: {
+                    type: 'info',
+                    size: 'small'
+                  },
+                  style: {
+                    marginRight: '5px',
+                  },
+                  on: {
+                    click: () => {
+                      this.showImg(params.index);
+                    }
+                  }
+                }, '图片预览'),
+                h('Button', {
+                  props: {
+                    type: 'warning',
+                    size: 'small'
+                  },
+                  style: {
+                    marginRight: '5px',
+                  },
+                  on: {
+                    click: () => {
+                      this.playVedio(params.index);
+                    }
+                  }
+                }, '视频播放'),
               ]);
             }
           }
@@ -143,6 +192,18 @@
         const name = this.metadatas[index]['name'];
         const version = this.metadatas[index]['version'];
         window.location='/api/ifile/fileDownload/?name=' + name + "&version=" + version;
+      },
+      showImg(index){
+        const name = this.metadatas[index]['name'];
+        const version = this.metadatas[index]['version'];
+        this.showImageSrc = "/api/ifile/getImgOrVedioMedia?name=" + name + "&version=" + version;
+        this.showImgModel = true;
+      },
+      playVedio(index){
+        const name = this.metadatas[index]['name'];
+        const version = this.metadatas[index]['version'];
+        this.$refs.video.src = "/api/ifile/getImgOrVedioMedia?name=" + name + "&version=" + version;
+        this.playVedioModel = true;
       },
     },
     mounted:function(){

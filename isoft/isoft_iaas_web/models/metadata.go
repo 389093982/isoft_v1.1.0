@@ -67,7 +67,7 @@ func FilterPageMetadatas(condArr map[string]interface{}, page int, offset int) (
 		qs.Filter("name__contains", name)
 	}
 	counts, _ = qs.Count()
-	_, err = qs.Limit(offset, (page-1)*offset).All(&metaDatas)
+	_, err = qs.OrderBy("-last_updated_time","-version").Limit(offset, (page-1)*offset).All(&metaDatas)
 	return
 }
 
