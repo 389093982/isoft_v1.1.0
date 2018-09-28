@@ -80,20 +80,16 @@
           this.total = data.paginator.totalcount;
         }
       },
-      handlePageSizeChange (value){
+      handlePageSizeChange (pageSize){
         // 设置每页数量
-        if(value != 10){
-          this.pageSize= value;
-          this.refreshMonitorHeartBeatList();
-        }
+        this.pageSize= pageSize;
+        this.refreshMonitorHeartBeatList();
       },
-      handleChange (value){
-        if(value != 1){
-          // 设置当前页数
-          this.pageNum = value;
-          // 重新加载表格数据
-          this.refreshMonitorHeartBeatList();
-        }
+      handleChange (page){
+        // 设置当前页数
+        this.pageNum = page;
+        // 重新加载表格数据
+        this.refreshMonitorHeartBeatList();
       },
       initFormatter(){
         Date.prototype.Format = function (formatStr) {

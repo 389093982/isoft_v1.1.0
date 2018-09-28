@@ -48,7 +48,7 @@ func (this *IFileController) FileUpload() {
 	hash := hashutil.CalculateHash(reader)
 
 	// 调用 isoft_istorage_web 发送 put 请求调用分布式对象存储接口
-	url := fmt.Sprintf("%s/objects/%s", isoft_istorage_web, url.PathEscape(h.Filename))
+	url := fmt.Sprintf("http://%s/objects/%s", isoft_istorage_web, url.PathEscape(h.Filename))
 	req, err := http.NewRequest("PUT", url, &bReader)
 	if err != nil {
 		panic(err)
@@ -77,7 +77,7 @@ func (this *IFileController) LocateShards() {
 		}
 	}()
 	hash := strings.Replace(strings.TrimSpace(this.GetString("hash"))," ","+",-1)
-	url := fmt.Sprintf("%s/locate/%s", isoft_istorage_web, hash)
+	url := fmt.Sprintf("http://%s/locate/%s", isoft_istorage_web, hash)
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		panic(err)
@@ -102,7 +102,7 @@ func (this *IFileController) LocateShards() {
 func (this *IFileController) FileDownload() {
 	name := strings.TrimSpace(this.GetString("name", ""))
 	version := strings.TrimSpace(this.GetString("version", ""))
-	url := fmt.Sprintf("%s/objects/%s?version=%s", isoft_istorage_web, name, version)
+	url := fmt.Sprintf("http://%s/objects/%s?version=%s", isoft_istorage_web, name, version)
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		panic(err)
@@ -125,7 +125,7 @@ func (this *IFileController) FileDownload() {
 func (this *IFileController) GetImgOrVedioMedia() {
 	name := strings.TrimSpace(this.GetString("name", ""))
 	version := strings.TrimSpace(this.GetString("version", ""))
-	url := fmt.Sprintf("%s/objects/%s?version=%s", isoft_istorage_web, name, version)
+	url := fmt.Sprintf("http://%s/objects/%s?version=%s", isoft_istorage_web, name, version)
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		panic(err)

@@ -5,7 +5,6 @@ import (
 	"github.com/larspensjo/config"
 	"isoft/isoft/common/fileutil"
 	"isoft/isoft/common/logutil"
-	"log"
 	"os"
 	"path/filepath"
 	"strings"
@@ -15,7 +14,7 @@ func GetConfigValue(key string) string {
 	if value, ok := configmap[key]; ok == true {
 		return value
 	}
-	log.Println("get cfg value error for key :", key)
+	logutil.Errorln("get cfg value error for key :", key)
 	return ""
 }
 
