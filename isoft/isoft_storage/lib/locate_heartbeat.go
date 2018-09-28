@@ -28,7 +28,7 @@ func (this *LocateAndHeartbeatProxy) SendHeartbeat() {
 	}()
 	// 无线循环发送心跳信息
 	for {
-		url := fmt.Sprintf("http://%s/api/heartbeat/sendHeartBeat", cfg.GetConfigValue(cfg.ISOFT_STORAGE_API))
+		url := fmt.Sprintf("http://%s/api/heartbeat/sendHeartBeat", cfg.GetConfigValue(cfg.ISOFT_IAAS_WEB))
 		resp, err := http.Post(url,"application/x-www-form-urlencoded", strings.NewReader("addr=" + cfg.GetConfigValue(cfg.LISTEN_ADDRESS)))
 		if err != nil{
 			panic(err)
@@ -55,7 +55,7 @@ func (this *LocateAndHeartbeatProxy) ReceiveAndModifyHeartbeat(dataServers map[s
 
 	// 每隔 5 s 循环查询一次心跳信息
 	for{
-		url := fmt.Sprintf("http://%s/api/heartbeat/queryAllAliveHeartBeat", cfg.GetConfigValue(cfg.ISOFT_STORAGE_API))
+		url := fmt.Sprintf("http://%s/api/heartbeat/queryAllAliveHeartBeat", cfg.GetConfigValue(cfg.ISOFT_IAAS_WEB))
 		resp, err := http.Get(url)
 		if err != nil{
 			panic(err)

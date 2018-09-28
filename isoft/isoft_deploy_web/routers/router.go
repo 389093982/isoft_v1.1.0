@@ -29,4 +29,6 @@ func init() {
 	beego.Router("/api/config/fileUpload", &controllers.ConfigController{}, "post:FileUpload")
 	beego.Router("/api/config/sync_config_file", &controllers.ConfigController{}, "post:SyncConfigFile")
 
+	beego.Router("/api/monitor/sendMonitorHeartBeat", &controllers.MonitorHeartBeatController{}, "post:SendMonitorHeartBeat")
+	beego.Router("/api/monitor/filterPageMonitorHeartBeat", &controllers.MonitorHeartBeatController{}, "post:FilterPageMonitorHeartBeat")
 }

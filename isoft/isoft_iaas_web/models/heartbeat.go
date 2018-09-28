@@ -28,14 +28,13 @@ type LocateMessage struct {
 func QueryAllAliveHeartBeat() (heartBeats []HeartBeat, err error) {
 	o := orm.NewOrm()
 	qs := o.QueryTable("heart_beat")
-	m, _ := time.ParseDuration("-1m")			// 1s 前
-	_, err = qs.Filter("last_updated_time__gt", time.Now().Add(m * 10)).All(&heartBeats)		// 10s 前
+	s, _ := time.ParseDuration("-1s")			// 1s 前
+	_, err = qs.Filter("last_updated_time__gt", time.Now().Add(s * 10)).All(&heartBeats)		// 10s 前
 	return
 }
 
 // 插入或者更新心跳信息
 func InsertOrUpdateHeartBeat(heartBeat *HeartBeat) (id int64, err error) {
-	// 根据联合条件 env_id 和 service_name 判断是否存在
 	oldHeartBeat, err := FilterHeartBeat(map[string]interface{}{"addr": heartBeat.Addr})
 	if err == nil {
 		heartBeat.Id = oldHeartBeat.Id
@@ -54,7 +53,6 @@ func InsertOrUpdateHeartBeat(heartBeat *HeartBeat) (id int64, err error) {
 func FilterHeartBeat(condArr map[string]interface{}) (heartBeat HeartBeat, err error) {
 	o := orm.NewOrm()
 	qs := o.QueryTable("heart_beat")
-	// 根据 service_id 去查询
 	if addr, ok := condArr["addr"]; ok {
 		qs = qs.Filter("addr", addr)
 	}

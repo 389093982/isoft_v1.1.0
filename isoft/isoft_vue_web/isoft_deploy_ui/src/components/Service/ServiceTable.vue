@@ -454,6 +454,16 @@
           this.showServiceTrackingLogDetailFlag = true;
         }
       },
+      renderLastDeployStatusInterval(serviceInfo, index){
+        // 设置转圈效果
+        this.$set(this.serviceInfos[index], 'deploy_status', 'loading');
+        // 获取 vue 实例
+        const _this = this;
+        var interval = setInterval(function () {
+          // 渲染最后一次部署状态
+          _this.renderLastDeployStatus(index,serviceInfo.id,interval);
+        }, 5000);
+      },
       async renderLastDeployStatus(index,service_id,interval){
         // 设置转圈效果
         this.$set(this.serviceInfos[index], 'deploy_status', 'loading');
@@ -480,6 +490,10 @@
         }
         _this.serviceInfos = _serviceInfos;
         _this.total = result.paginator.totalcount;
+
+        for(var i=0; i<result.serviceInfos.length; i++){
+          this.renderLastDeployStatusInterval(result.serviceInfos[i], i);
+        }
       },
       async runDeployTask(index, operate_type, extra_params, callback){
         const serviceInfo = this.serviceInfos[index];
@@ -487,14 +501,7 @@
         if(data.status=="SUCCESS"){
           // 有 tracking_id 才渲染转圈效果
           if(data.tracking_id != "" && data.tracking_id != null && data.tracking_id != undefined){
-            // 设置转圈效果
-            this.$set(this.serviceInfos[index], 'deploy_status', 'loading');
-            // 获取 vue 实例
-            const _this = this;
-            var interval = setInterval(function () {
-              // 渲染最后一次部署状态
-              _this.renderLastDeployStatus(index,serviceInfo.id,interval);
-            }, 5000);
+            this.renderLastDeployStatusInterval(serviceInfo, index);
           }
           if(callback != null){
             // 任务回调函数

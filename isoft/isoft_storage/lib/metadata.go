@@ -25,7 +25,7 @@ func convertToMetadata(metadataMap map[string]interface{}) (meta models.Metadata
 }
 
 func (this *MetaDataProxy) SearchLatestVersion(name string) (meta models.Metadata, e error) {
-	url := fmt.Sprintf("http://%s/api/metadata/searchLatestVersion", cfg.GetConfigValue(cfg.ISOFT_STORAGE_API))
+	url := fmt.Sprintf("http://%s/api/metadata/searchLatestVersion", cfg.GetConfigValue(cfg.ISOFT_IAAS_WEB))
 	resp, err := http.Post(url,"application/x-www-form-urlencoded", strings.NewReader("name=" + name))
 	if err != nil{
 		panic(err)
@@ -41,7 +41,7 @@ func (this *MetaDataProxy) SearchLatestVersion(name string) (meta models.Metadat
 }
 
 func (this *MetaDataProxy) GetMetadata(name string, version int) (meta models.Metadata, err error) {
-	url := fmt.Sprintf("http://%s/api/metadata/getMetadata", cfg.GetConfigValue(cfg.ISOFT_STORAGE_API))
+	url := fmt.Sprintf("http://%s/api/metadata/getMetadata", cfg.GetConfigValue(cfg.ISOFT_IAAS_WEB))
 	resp, err := http.Post(url,"application/x-www-form-urlencoded",
 		strings.NewReader(fmt.Sprintf("name=%s&version=%d",name,version)))
 	if err != nil{
@@ -58,7 +58,7 @@ func (this *MetaDataProxy) GetMetadata(name string, version int) (meta models.Me
 }
 
 func (this *MetaDataProxy) PutMetadata(name string, version int, size int64, hash string) error {
-	url := fmt.Sprintf("http://%s/api/metadata/putMetadata", cfg.GetConfigValue(cfg.ISOFT_STORAGE_API))
+	url := fmt.Sprintf("http://%s/api/metadata/putMetadata", cfg.GetConfigValue(cfg.ISOFT_IAAS_WEB))
 	resp, err := http.Post(url,"application/x-www-form-urlencoded",
 		strings.NewReader(fmt.Sprintf("name=%s&version=%d&size=%d&hash=%s",name,version,size,hash)))
 	if err != nil{
@@ -75,7 +75,7 @@ func (this *MetaDataProxy) PutMetadata(name string, version int, size int64, has
 }
 
 func (this *MetaDataProxy) AddVersion(name, hash string, size int64) error {
-	url := fmt.Sprintf("http://%s/api/metadata/addVersion", cfg.GetConfigValue(cfg.ISOFT_STORAGE_API))
+	url := fmt.Sprintf("http://%s/api/metadata/addVersion", cfg.GetConfigValue(cfg.ISOFT_IAAS_WEB))
 	resp, err := http.Post(url,"application/x-www-form-urlencoded",
 		strings.NewReader(fmt.Sprintf("name=%s&size=%d&hash=%s",name,size,hash)))
 	if err != nil{
@@ -92,7 +92,7 @@ func (this *MetaDataProxy) AddVersion(name, hash string, size int64) error {
 }
 
 func (this *MetaDataProxy) SearchAllVersions(name string, from, size int) (metadatas []models.Metadata, err error) {
-	url := fmt.Sprintf("http://%s/api/metadata/addVersion", cfg.GetConfigValue(cfg.ISOFT_STORAGE_API))
+	url := fmt.Sprintf("http://%s/api/metadata/addVersion", cfg.GetConfigValue(cfg.ISOFT_IAAS_WEB))
 	resp, err := http.Post(url,"application/x-www-form-urlencoded",
 		strings.NewReader(fmt.Sprintf("name=%s&from=%d&size=%d",name,from,size)))
 	if err != nil{
@@ -115,7 +115,7 @@ func (this *MetaDataProxy) SearchAllVersions(name string, from, size int) (metad
 }
 
 func (this *MetaDataProxy) DelMetadata(name string, version int) error{
-	url := fmt.Sprintf("http://%s/api/metadata/delMetadata", cfg.GetConfigValue(cfg.ISOFT_STORAGE_API))
+	url := fmt.Sprintf("http://%s/api/metadata/delMetadata", cfg.GetConfigValue(cfg.ISOFT_IAAS_WEB))
 	resp, err := http.Post(url,"application/x-www-form-urlencoded",
 		strings.NewReader(fmt.Sprintf("name=%s&version=%s",name,version)))
 	if err != nil{
@@ -132,7 +132,7 @@ func (this *MetaDataProxy) DelMetadata(name string, version int) error{
 }
 
 func (this *MetaDataProxy) HasHash(hash string) (bool, error) {
-	url := fmt.Sprintf("http://%s/api/metadata/hasHash", cfg.GetConfigValue(cfg.ISOFT_STORAGE_API))
+	url := fmt.Sprintf("http://%s/api/metadata/hasHash", cfg.GetConfigValue(cfg.ISOFT_IAAS_WEB))
 	resp, err := http.Post(url,"application/x-www-form-urlencoded",
 		strings.NewReader(fmt.Sprintf("hash=%s",hash)))
 	if err != nil{
@@ -149,7 +149,7 @@ func (this *MetaDataProxy) HasHash(hash string) (bool, error) {
 }
 
 func (this *MetaDataProxy) SearchHashSize(hash string) (size int64, e error) {
-	url := fmt.Sprintf("http://%s/api/metadata/searchHashSize", cfg.GetConfigValue(cfg.ISOFT_STORAGE_API))
+	url := fmt.Sprintf("http://%s/api/metadata/searchHashSize", cfg.GetConfigValue(cfg.ISOFT_IAAS_WEB))
 	resp, err := http.Post(url,"application/x-www-form-urlencoded",
 		strings.NewReader(fmt.Sprintf("hash=%s",hash)))
 	if err != nil{

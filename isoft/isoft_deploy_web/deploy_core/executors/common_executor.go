@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/pkg/errors"
-	"isoft/isoft/db"
+	"isoft/isoft/common/dbutil"
 	"strings"
 )
 
@@ -28,7 +28,7 @@ func (this *ExecutorRouter) RunExecuteCommonTask(operate_type, extra_params stri
 }
 
 func (this *ExecutorRouter) MysqlInit(operate_type, extra_params string) error {
-	db, err := db.GetConnection("root", this.ServiceInfo.MysqlRootPwd,
+	db, err := dbutil.GetConnection("root", this.ServiceInfo.MysqlRootPwd,
 		this.ServiceInfo.EnvInfo.EnvIp, this.ServiceInfo.ServicePort, "mysql")
 
 	defer db.Close()
@@ -89,7 +89,7 @@ func (this *ExecutorRouter) MysqlInit(operate_type, extra_params string) error {
 }
 
 func (this *ExecutorRouter) MysqlConnectionTest(operate_type string) (err error) {
-	db, err := db.GetConnection("root", this.ServiceInfo.MysqlRootPwd,
+	db, err := dbutil.GetConnection("root", this.ServiceInfo.MysqlRootPwd,
 		this.ServiceInfo.EnvInfo.EnvIp, this.ServiceInfo.ServicePort, "mysql")
 	defer db.Close()
 	if err != nil {

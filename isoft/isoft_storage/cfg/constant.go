@@ -3,4 +3,5 @@ package cfg
 const LISTEN_ADDRESS string = "LISTEN_ADDRESS"
 const STORAGE_ROOT string = "STORAGE_ROOT"
 const STORAGE_LOGDIR string = "STORAGE_LOGDIR"
-const ISOFT_STORAGE_API string = "ISOFT_STORAGE_API"
+const ISOFT_IAAS_WEB string = "ISOFT_IAAS_WEB"
+const ISOFT_DEPLOY_WEB string = "ISOFT_DEPLOY_WEB"

@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"isoft/isoft/business/monitor"
 	"isoft/isoft/common/logutil"
 	"isoft/isoft_storage/cfg"
 	"isoft/isoft_storage/dataServer/heartbeat"
@@ -44,6 +45,9 @@ func main() {
 	bind_address := string([]rune(LISTEN_ADDRESS)[strings.Index(LISTEN_ADDRESS, ":"):])
 
 	fmt.Println(fmt.Sprintf("Start bind_address %s", bind_address))
+
+	// 每隔 5 s 发送一次心跳检测信息给监控系统
+	go monitor.RecordMonitorHeartBeatLog(cfg.GetConfigValue(cfg.ISOFT_DEPLOY_WEB), LISTEN_ADDRESS)
 
 	if err := http.ListenAndServe(bind_address, nil); err != nil {
 		logutil.Errorln(err)

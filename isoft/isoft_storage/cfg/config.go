@@ -21,11 +21,12 @@ func GetConfigValue(key string) string {
 
 func InitConfigWithOsArgs(args []string) {
 	if len(args) != 3 {
-		log.Fatal("Input parameter length is not valid...")
+		logutil.Errorln("Input parameter length is not valid...")
+		return
 	}
 	defer func() {
 		if err := recover(); err != nil {
-			log.Fatal(err)
+			logutil.Errorln(err)
 		}
 	}()
 	// 初始化配置,两个参数分别是环境名称和 section 名称

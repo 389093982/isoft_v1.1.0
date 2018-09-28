@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/astaxie/beego"
+	"github.com/astaxie/beego/logs"
 	"io"
 	"io/ioutil"
 	"isoft/isoft/common/hashutil"
@@ -28,9 +29,9 @@ type IFileController struct {
 func (this *IFileController) FileUpload() {
 	defer func() {
 		if err := recover(); err != nil {
-			this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": "保存失败！"}
+			logs.Error(err)
+			this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": err}
 			this.ServeJSON()
-			return
 		}
 	}()
 	// 判断是否是文件上传

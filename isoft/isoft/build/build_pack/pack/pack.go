@@ -43,13 +43,25 @@ func StartAllPackTask(packApps *PackApps, filterAppName string) (err error) {
 			if err = ChangeAppRootPath(packApp.Apppath); err != nil {
 				return
 			}
-			if packApp.PackType == "beego" {
+			switch packApp.PackType {
+			case "beego":
 				err = StartPackBeegoTask(packApp.AppName, packApp.Apppath)
-			} else if packApp.PackType == "common" {
+			case "common":
 				err = StartPackCommonTask(packApp.AppName, packApp.Apppath, packApp)
+			case "vue":
+				err = StartPackVueTask(packApp.AppName, packApp.Apppath, packApp)
 			}
 		}
 	}
+	return
+}
+
+func StartPackVueTask(appName, appPath string, packApp PackApp) (err error) {
+	// 运行命令
+	RunCommand("npm", "run", "build")
+	os.RemoveAll(fmt.Sprintf("D:/build/autopack/%s", appName + "_dist"))
+	// 移动文件
+	err = os.Rename("./dist", fmt.Sprintf("D:/build/autopack/%s", appName + "_dist"))
 	return
 }
 

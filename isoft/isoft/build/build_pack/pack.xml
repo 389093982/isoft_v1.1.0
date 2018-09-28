@@ -7,6 +7,11 @@
     </packapp>
     <packapp>
         <packType>beego</packType>
+        <appName>isoft_iaas_web</appName>
+        <apppath>src\isoft\isoft_iaas_web</apppath>
+    </packapp>
+    <packapp>
+        <packType>beego</packType>
         <appName>isoft_blog_web</appName>
         <apppath>src\isoft\isoft_blog_web</apppath>
     </packapp>
@@ -31,5 +36,15 @@
         <appName>dataServer</appName>
         <apppath>src\isoft\isoft_storage\dataServer</apppath>
         <packArgs>dataServer.go</packArgs>
+    </packapp>
+    <packapp>
+        <packType>vue</packType>
+        <appName>isoft_deploy_ui</appName>
+        <apppath>src\isoft\isoft_vue_web\isoft_deploy_ui</apppath>
+    </packapp>
+    <packapp>
+        <packType>vue</packType>
+        <appName>isoft_iaas_ui</appName>
+        <apppath>src\isoft\isoft_vue_web\isoft_iaas_ui</apppath>
     </packapp>
 </packapps>

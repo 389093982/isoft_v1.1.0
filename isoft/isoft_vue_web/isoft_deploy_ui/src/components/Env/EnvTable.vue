@@ -2,7 +2,7 @@
 <div style="margin-top: 10px;">
   <Table :columns="columns1" :data="envInfos" stripe border size="small"></Table>
   <Page :total="total" :current="pageNum" :page-size="pageSize" show-total show-sizer :styles="{'text-align': 'center','margin-top': '10px'}"
-        @on-change="pageOnChage" @on-page-size-change="pageSizeChage"/>
+        @on-change="handleChange" @on-page-size-change="handlePageSizeChange"/>
 </div>
 </template>
 
@@ -109,14 +109,14 @@
           _this.total = result.paginator.totalcount;
         })
       },
-      pageSizeChage (value){
+      handlePageSizeChange (value){
         // 设置每页数量
         if(value != 10){
           this.pageSize= value;
           this.refreshEnvList();
         }
       },
-      pageOnChage (value){
+      handleChange (value){
         if(value != 1){
           // 设置当前页数
           this.pageNum = value;
