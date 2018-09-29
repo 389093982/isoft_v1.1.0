@@ -31,11 +31,8 @@ func InitConfigWithOsArgs(args []string) {
 	// 初始化配置,两个参数分别是环境名称和 section 名称
 	initCfg(args[1], args[2])
 
-	// 第二个参数是 section 名称
-	if strings.HasPrefix(args[2], "dataServer"){
-		// 创建必要的文件夹
-		mkNecessaryDir()
-	}
+	// 创建必要的文件夹
+	mkNecessaryDir()
 	// 日志初始化
 	setLogger(args[2])
 }
@@ -84,9 +81,11 @@ func initConfigData(section_name string) {
 // 创建必要的文件夹,此处主要指 STORAGE_ROOT
 func mkNecessaryDir() {
 	STORAGE_ROOT := GetConfigValue(STORAGE_ROOT)
-	os.MkdirAll(STORAGE_ROOT, os.ModePerm)
-	os.MkdirAll(filepath.Join(STORAGE_ROOT, "objects"), os.ModePerm)
-	os.MkdirAll(filepath.Join(STORAGE_ROOT, "temp"), os.ModePerm)
+	if STORAGE_ROOT != ""{			// 只有 dataServer 才需要创建文件夹
+		os.MkdirAll(STORAGE_ROOT, os.ModePerm)
+		os.MkdirAll(filepath.Join(STORAGE_ROOT, "objects"), os.ModePerm)
+		os.MkdirAll(filepath.Join(STORAGE_ROOT, "temp"), os.ModePerm)
+	}
 }
 
 func setLogger(section_name string) {
