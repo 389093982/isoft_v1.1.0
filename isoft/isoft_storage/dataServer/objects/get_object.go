@@ -3,9 +3,9 @@ package objects
 import (
 	"crypto/sha256"
 	"encoding/base64"
+	"isoft/isoft/common/logutil"
 	"isoft/isoft_storage/cfg"
 	"isoft/isoft_storage/dataServer/locate"
-	"log"
 	"net/url"
 	"os"
 	"path/filepath"
@@ -27,7 +27,7 @@ func getFile(name string) string {
 	// 从文件名中截取的 hash
 	hash := strings.Split(file, ".")[2]
 	if d != hash {
-		log.Println("object hash mismatch, remove", file)
+		logutil.Errorln("object hash mismatch, remove", file)
 		// hash 值不匹配,表示是一个无效文件,需要删除文件和定位信息
 		locate.Del(hash)
 		os.Remove(file)

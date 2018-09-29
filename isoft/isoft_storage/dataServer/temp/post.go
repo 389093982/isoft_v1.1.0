@@ -2,9 +2,9 @@ package temp
 
 import (
 	"encoding/json"
+	"isoft/isoft/common/logutil"
 	"isoft/isoft/common/stringutil"
 	"isoft/isoft_storage/cfg"
-	"log"
 	"net/http"
 	"os"
 	"strconv"
@@ -23,25 +23,25 @@ func post(w http.ResponseWriter, r *http.Request) {
 	// 生成 uuid
 	uuid := stringutil.RandomUUID()
 	name := strings.Split(r.URL.EscapedPath(), "/")[2]
-	size, e := strconv.ParseInt(r.Header.Get("size"), 0, 64)
-	if e != nil {
-		log.Println(e)
+	size, err := strconv.ParseInt(r.Header.Get("size"), 0, 64)
+	if err != nil {
+		logutil.Errorln(err)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
 	// 创建临时对象描述信息
 	t := tempInfo{uuid, name, size}
 	// 将临时对象描述信息写到临时文件中去,保存文件路径为 STORAGE_ROOT/temp/uuid
-	e = t.writeToFile()
-	if e != nil {
-		log.Println(e)
+	err = t.writeToFile()
+	if err != nil {
+		logutil.Errorln(err)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
 	// 将生产的 uuid 存放在 STORAGE_ROOT/temp/uuid.dat 临时文件中去
 	f, err := os.Create(cfg.GetConfigValue(cfg.STORAGE_ROOT) + "/temp/" + t.Uuid + ".dat")
 	if err != nil {
-		log.Println(e)
+		logutil.Errorln(err)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
@@ -51,9 +51,10 @@ func post(w http.ResponseWriter, r *http.Request) {
 
 // 将临时对象描述信息写到临时文件中去,保存文件路径为 STORAGE_ROOT/temp/uuid
 func (t *tempInfo) writeToFile() error {
-	f, e := os.Create(cfg.GetConfigValue(cfg.STORAGE_ROOT) + "/temp/" + t.Uuid)
-	if e != nil {
-		return e
+	f, err := os.Create(cfg.GetConfigValue(cfg.STORAGE_ROOT) + "/temp/" + t.Uuid)
+	if err != nil {
+		logutil.Errorln(err)
+		return err
 	}
 	defer f.Close()
 	b, _ := json.Marshal(t)

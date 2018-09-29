@@ -33,13 +33,13 @@ func NewRSGetStream(locateInfo map[int]string, dataServers []string, hash string
 
 	writers := make([]io.Writer, ALL_SHARDS)
 	perShard := (size + DATA_SHARDS - 1) / DATA_SHARDS
-	var e error
+	var err error
 	for i := range readers {
 		if readers[i] == nil { // 表示需要进行恢复
 			// 调用 NewTempPutStream 创建相应的临时对象写入流用于恢复分片
-			writers[i], e = objectstream.NewTempPutStream(locateInfo[i], fmt.Sprintf("%s.%d", hash, i), perShard)
-			if e != nil {
-				return nil, e
+			writers[i], err = objectstream.NewTempPutStream(locateInfo[i], fmt.Sprintf("%s.%d", hash, i), perShard)
+			if err != nil {
+				return nil, err
 			}
 		}
 	}

@@ -4,9 +4,9 @@ import (
 	"compress/gzip"
 	"fmt"
 	"io"
+	"isoft/isoft/common/logutil"
 	"isoft/isoft_storage/lib"
 	"isoft/isoft_storage/lib/utils"
-	"log"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -20,20 +20,20 @@ func get(w http.ResponseWriter, r *http.Request) {
 	// 从请求参数中获取对象版本
 	versionId := r.URL.Query()["version"]
 	version := 0 // 0 代表最新版本
-	var e error
+	var err error
 	if len(versionId) != 0 {
-		version, e = strconv.Atoi(versionId[0])
-		if e != nil {
-			log.Println(e)
+		version, err = strconv.Atoi(versionId[0])
+		if err != nil {
+			logutil.Errorln(err)
 			w.WriteHeader(http.StatusBadRequest)
 			return
 		}
 	}
 	// 获取对象元数据信息
 	proxy := &lib.MetaDataProxy{}
-	meta, e := proxy.GetMetadata(name, version)
-	if e != nil {
-		log.Println(e)
+	meta, err := proxy.GetMetadata(name, version)
+	if err != nil {
+		logutil.Errorln(err)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
@@ -45,9 +45,9 @@ func get(w http.ResponseWriter, r *http.Request) {
 	hash := url.PathEscape(meta.Hash)
 
 	// 根据对象 hash 值获取对象的 getStream
-	stream, e := GetStream(hash, meta.Size)
-	if e != nil {
-		log.Println(e)
+	stream, err := GetStream(hash, meta.Size)
+	if err != nil {
+		logutil.Errorln(err)
 		w.WriteHeader(http.StatusNotFound)
 		return
 	}

@@ -2,9 +2,9 @@ package objects
 
 import (
 	"fmt"
+	"isoft/isoft/common/logutil"
 	"isoft/isoft_storage/lib"
 	"isoft/isoft_storage/lib/utils"
-	"log"
 	"net/http"
 	"strings"
 	"time"
@@ -15,7 +15,7 @@ func put(w http.ResponseWriter, r *http.Request) {
 	// 从请求头中获取 hash 值
 	hash := utils.GetHashFromHeader(r.Header)
 	if hash == "" {
-		log.Println("missing object hash in digest header")
+		logutil.Errorln("missing object hash in digest header")
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
@@ -23,10 +23,10 @@ func put(w http.ResponseWriter, r *http.Request) {
 	// 存储对象,底层调用数据服务节点的存储功能
 	// 不一定能存储成功,比如定位 hash 值已经存储,则无需存储文件,但是元数据版本必须要升版本
 	startTime := time.Now()
-	c, e := storeObject(r.Body, hash, size)
+	c, err := storeObject(r.Body, hash, size)
 	fmt.Println("storeObject cost time :", time.Now().Sub(startTime))
-	if e != nil {
-		log.Println(e)
+	if err != nil {
+		logutil.Errorln(err)
 		w.WriteHeader(c)
 		return
 	}
@@ -39,9 +39,9 @@ func put(w http.ResponseWriter, r *http.Request) {
 	name := strings.Split(r.URL.EscapedPath(), "/")[2]
 	// 添加对象版本信息
 	proxy := &lib.MetaDataProxy{}
-	e = proxy.AddVersion(name, hash, size)
-	if e != nil {
-		log.Println(e)
+	err = proxy.AddVersion(name, hash, size)
+	if err != nil {
+		logutil.Errorln(err)
 		w.WriteHeader(http.StatusInternalServerError)
 	}
 }

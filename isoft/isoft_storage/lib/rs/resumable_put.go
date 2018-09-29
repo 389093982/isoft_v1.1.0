@@ -5,9 +5,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"isoft/isoft/common/logutil"
 	"isoft/isoft_storage/lib/objectstream"
 	"isoft/isoft_storage/lib/utils"
-	"log"
 	"net/http"
 )
 
@@ -66,13 +66,13 @@ func (s *RSResumablePutStream) ToToken() string {
 }
 
 func (s *RSResumablePutStream) CurrentSize() int64 {
-	r, e := http.Head(fmt.Sprintf("http://%s/temp/%s", s.Servers[0], s.Uuids[0]))
-	if e != nil {
-		log.Println(e)
+	r, err := http.Head(fmt.Sprintf("http://%s/temp/%s", s.Servers[0], s.Uuids[0]))
+	if err != nil {
+		logutil.Errorln(err)
 		return -1
 	}
 	if r.StatusCode != http.StatusOK {
-		log.Println(r.StatusCode)
+		logutil.Errorln(r.StatusCode)
 		return -1
 	}
 	size := utils.GetSizeFromHeader(r.Header) * DATA_SHARDS

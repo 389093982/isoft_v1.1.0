@@ -2,8 +2,8 @@ package temp
 
 import (
 	"fmt"
+	"isoft/isoft/common/logutil"
 	"isoft/isoft_storage/lib/rs"
-	"log"
 	"net/http"
 	"strings"
 )
@@ -11,9 +11,9 @@ import (
 func head(w http.ResponseWriter, r *http.Request) {
 	token := strings.Split(r.URL.EscapedPath(), "/")[2]
 	// 根据 token 恢复出 stream
-	stream, e := rs.NewRSResumablePutStreamFromToken(token)
-	if e != nil {
-		log.Println(e)
+	stream, err := rs.NewRSResumablePutStreamFromToken(token)
+	if err != nil {
+		logutil.Errorln(err)
 		w.WriteHeader(http.StatusForbidden)
 		return
 	}

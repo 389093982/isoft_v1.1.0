@@ -1,8 +1,8 @@
 package temp
 
 import (
+	"isoft/isoft/common/logutil"
 	"isoft/isoft_storage/cfg"
-	"log"
 	"net/http"
 	"os"
 	"strings"
@@ -11,26 +11,26 @@ import (
 func put(w http.ResponseWriter, r *http.Request) {
 	uuid := strings.Split(r.URL.EscapedPath(), "/")[2]
 	// 读取 STORAGE_ROOT/temp/uuid 文件获取临时对象信息
-	tempinfo, e := readFromFile(uuid)
-	if e != nil {
-		log.Println(e)
+	tempinfo, err := readFromFile(uuid)
+	if err != nil {
+		logutil.Errorln(err)
 		w.WriteHeader(http.StatusNotFound)
 		return
 	}
 	// STORAGE_ROOT/temp/uuid.dat 文件,含上传对象内容的临时文件
 	infoFile := cfg.GetConfigValue(cfg.STORAGE_ROOT) + "/temp/" + uuid
 	datFile := infoFile + ".dat"
-	f, e := os.Open(datFile)
+	f, err := os.Open(datFile)
 	defer f.Close()
-	if e != nil {
-		log.Println(e)
+	if err != nil {
+		logutil.Errorln(err)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
 
-	info, e := f.Stat()
-	if e != nil {
-		log.Println(e)
+	info, err := f.Stat()
+	if err != nil {
+		logutil.Errorln(err)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
@@ -40,7 +40,7 @@ func put(w http.ResponseWriter, r *http.Request) {
 	// 判断文件大小是否正确
 	if actual != tempinfo.Size {
 		os.Remove(datFile)
-		log.Println("actual size mismatch, expect", tempinfo.Size, "actual", actual)
+		logutil.Errorln("actual size mismatch, expect", tempinfo.Size, "actual", actual)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}

@@ -3,21 +3,21 @@ package objects
 import (
 	"compress/gzip"
 	"io"
-	"log"
+	"isoft/isoft/common/logutil"
 	"os"
 )
 
 func sendFile(w io.Writer, file string) {
-	f, e := os.Open(file)
-	if e != nil {
-		log.Println(e)
+	f, err := os.Open(file)
+	if err != nil {
+		logutil.Errorln(err)
 		return
 	}
 	defer f.Close()
 	// gzip 解压,再读取数据
-	gzipStream, e := gzip.NewReader(f)
-	if e != nil {
-		log.Println(e)
+	gzipStream, err := gzip.NewReader(f)
+	if err != nil {
+		logutil.Errorln(err)
 		return
 	}
 	io.Copy(w, gzipStream)

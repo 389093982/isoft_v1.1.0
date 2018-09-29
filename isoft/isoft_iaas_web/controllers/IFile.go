@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/astaxie/beego"
-	"github.com/astaxie/beego/logs"
 	"io"
 	"io/ioutil"
 	"isoft/isoft/common/hashutil"
@@ -29,8 +28,7 @@ type IFileController struct {
 func (this *IFileController) FileUpload() {
 	defer func() {
 		if err := recover(); err != nil {
-			logs.Error(err)
-			this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": err}
+			this.Data["json"] = &map[string]string{"status": "ERROR", "errorMsg": fmt.Sprint(err)}
 			this.ServeJSON()
 		}
 	}()
@@ -39,14 +37,11 @@ func (this *IFileController) FileUpload() {
 	if err != nil {
 		panic(err)
 	}
-
-
 	bReader := bytes.Buffer{}
 	// io.TeeReader、io.MultiReader
 	reader := io.TeeReader(f, &bReader)
 	// 定位对象用对象名,存储对象用 hash 值
 	hash := hashutil.CalculateHash(reader)
-
 	// 调用 isoft_istorage_web 发送 put 请求调用分布式对象存储接口
 	url := fmt.Sprintf("http://%s/objects/%s", isoft_istorage_web, url.PathEscape(h.Filename))
 	req, err := http.NewRequest("PUT", url, &bReader)

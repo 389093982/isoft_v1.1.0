@@ -21,9 +21,9 @@ func storeObject(r io.Reader, hash string, size int64) (int, error) {
 
 	startTime = time.Now()
 	// 创建存储对象 hash 对应的 putStream,生成临时文件对象
-	stream, e := putStream(url.PathEscape(hash), size)
-	if e != nil {
-		return http.StatusInternalServerError, e
+	stream, err := putStream(url.PathEscape(hash), size)
+	if err != nil {
+		return http.StatusInternalServerError, err
 	}
 	endTime = time.Now()
 	fmt.Println("storeObject putStream cost time :", endTime.Sub(startTime))

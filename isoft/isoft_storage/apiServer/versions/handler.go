@@ -2,8 +2,8 @@ package versions
 
 import (
 	"encoding/json"
+	"isoft/isoft/common/logutil"
 	"isoft/isoft_storage/lib"
-	"log"
 	"net/http"
 	"strings"
 )
@@ -22,9 +22,9 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	for {
 		// 查询元数据
 		proxy := &lib.MetaDataProxy{}
-		metas, e := proxy.SearchAllVersions(name, from, size)
-		if e != nil {
-			log.Println(e)
+		metas, err := proxy.SearchAllVersions(name, from, size)
+		if err != nil {
+			logutil.Errorln(err)
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}

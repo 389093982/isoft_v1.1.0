@@ -100,6 +100,6 @@ func recordHeatBeat()  {
 }
 
 func main() {
-	recordHeatBeat()
 	beego.Run()
+	go recordHeatBeat()
 }

@@ -23,13 +23,13 @@ func NewRSPutStream(dataServers []string, hash string, size int64) (*RSPutStream
 	perShard := (size + DATA_SHARDS - 1) / DATA_SHARDS
 	// 创建长度为 6 的 io.Writer 数组,每一个元素用来存放 objectstream.NewTempPutStream,用于上传一个分片对象
 	writers := make([]io.Writer, ALL_SHARDS)
-	var e error
+	var err error
 	for i := range writers {
 		// NewTempPutStream 底层主要是调用数据服务 temp 接口的 post 方法生产临时文件
-		writers[i], e = objectstream.NewTempPutStream(dataServers[i],
+		writers[i], err = objectstream.NewTempPutStream(dataServers[i],
 			fmt.Sprintf("%s.%d", hash, i), perShard) // 每个分片的大小是计算出来的, size/4 再向上取整
-		if e != nil {
-			return nil, e
+		if err != nil {
+			return nil, err
 		}
 	}
 	enc := NewEncoder(writers)

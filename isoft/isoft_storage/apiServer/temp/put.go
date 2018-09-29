@@ -3,11 +3,11 @@ package temp
 import (
 	"io"
 	"isoft/isoft/common/hashutil"
+	"isoft/isoft/common/logutil"
 	"isoft/isoft_storage/apiServer/locate"
 	"isoft/isoft_storage/lib"
 	"isoft/isoft_storage/lib/rs"
 	"isoft/isoft_storage/lib/utils"
-	"log"
 	"net/http"
 	"net/url"
 	"strings"
@@ -16,9 +16,9 @@ import (
 func put(w http.ResponseWriter, r *http.Request) {
 	// 从请求 url 地址中获取 token
 	token := strings.Split(r.URL.EscapedPath(), "/")[2]
-	stream, e := rs.NewRSResumablePutStreamFromToken(token)
-	if e != nil {
-		log.Println(e)
+	stream, err := rs.NewRSResumablePutStreamFromToken(token)
+	if err != nil {
+		logutil.Errorln(err)
 		w.WriteHeader(http.StatusForbidden)
 		return
 	}
@@ -39,16 +39,16 @@ func put(w http.ResponseWriter, r *http.Request) {
 	bytes := make([]byte, rs.BLOCK_SIZE)
 	for {
 		// 多次写入,每次写入 32000 字节,直到写完为止
-		n, e := io.ReadFull(r.Body, bytes) // n 表示一次读取的实际读取量
-		if e != nil && e != io.EOF && e != io.ErrUnexpectedEOF {
-			log.Println(e)
+		n, err := io.ReadFull(r.Body, bytes) // n 表示一次读取的实际读取量
+		if err != nil && err != io.EOF && err != io.ErrUnexpectedEOF {
+			logutil.Errorln(err)
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
 		current += int64(n)
 		if current > stream.Size { // 读取错误
 			stream.Commit(false)
-			log.Println("resumable put exceed size")
+			logutil.Errorln("resumable put exceed size")
 			w.WriteHeader(http.StatusForbidden)
 			return
 		}
@@ -62,13 +62,13 @@ func put(w http.ResponseWriter, r *http.Request) {
 			// 立即写入临时对象
 			stream.Flush()
 			// 获取临时对象 getStram
-			getStream, e := rs.NewRSResumableGetStream(stream.Servers, stream.Uuids, stream.Size)
+			getStream, err := rs.NewRSResumableGetStream(stream.Servers, stream.Uuids, stream.Size)
 			// 计算 hash
 			hash := url.PathEscape(hashutil.CalculateHash(getStream))
 			// hash 不一致,上传有误
 			if hash != stream.Hash {
 				stream.Commit(false)
-				log.Println("resumable put done but hash mismatch")
+				logutil.Errorln("resumable put done but hash mismatch")
 				w.WriteHeader(http.StatusForbidden)
 				return
 			}
@@ -82,9 +82,9 @@ func put(w http.ResponseWriter, r *http.Request) {
 			}
 			// 记录版本
 			proxy := &lib.MetaDataProxy{}
-			e = proxy.AddVersion(stream.Name, stream.Hash, stream.Size)
-			if e != nil {
-				log.Println(e)
+			err = proxy.AddVersion(stream.Name, stream.Hash, stream.Size)
+			if err != nil {
+				logutil.Errorln(err)
 				w.WriteHeader(http.StatusInternalServerError)
 			}
 			return
