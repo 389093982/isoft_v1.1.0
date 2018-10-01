@@ -11,10 +11,13 @@ import (
 	"net/url"
 	"strconv"
 	"strings"
+	"time"
 )
 
 // 默认使用最新的版本,可以不传 ?version=xx,版本号从 1 开始递增
 func get(w http.ResponseWriter, r *http.Request) {
+	defer utils.RecordTimeCostForMethod("apiServer objects get", time.Now())
+
 	// 从请求路径中截取对象名称
 	name := strings.Split(r.URL.EscapedPath(), "/")[2]
 	// 从请求参数中获取对象版本
@@ -67,6 +70,9 @@ func get(w http.ResponseWriter, r *http.Request) {
 			break
 		}
 	}
+
+	defer utils.RecordTimeCostForMethod("api objects get io.copy", time.Now())
+
 	if acceptGzip {
 		// 下载可支持 gzip 格式下载
 		w.Header().Set("content-encoding", "gzip")

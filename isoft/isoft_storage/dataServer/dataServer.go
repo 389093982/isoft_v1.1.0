@@ -40,11 +40,11 @@ func main() {
 
 	LISTEN_ADDRESS := cfg.GetConfigValue(cfg.LISTEN_ADDRESS)
 
-	fmt.Println(fmt.Sprintf("Start ListenAndServe address %s", LISTEN_ADDRESS))
+	logutil.Infoln(fmt.Sprintf("Start ListenAndServe address %s", LISTEN_ADDRESS))
 
 	bind_address := string([]rune(LISTEN_ADDRESS)[strings.Index(LISTEN_ADDRESS, ":"):])
 
-	fmt.Println(fmt.Sprintf("Start bind_address %s", bind_address))
+	logutil.Infoln(fmt.Sprintf("Start bind_address %s", bind_address))
 
 	// 每隔 5 s 发送一次心跳检测信息给监控系统
 	go monitor.RecordMonitorHeartBeatLog(cfg.GetConfigValue(cfg.ISOFT_DEPLOY_WEB), LISTEN_ADDRESS)

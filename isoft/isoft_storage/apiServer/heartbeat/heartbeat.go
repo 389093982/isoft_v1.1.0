@@ -3,6 +3,7 @@ package heartbeat
 import (
 	"isoft/isoft/common/logutil"
 	"isoft/isoft_storage/lib"
+	"isoft/isoft_storage/lib/utils"
 	"sync"
 	"time"
 )
@@ -13,6 +14,7 @@ var mutex sync.Mutex
 
 // 心跳检测
 func ListenHeartbeat() {
+	defer utils.RecordTimeCostForMethod("ListenHeartbeat", time.Now())
 	// 主要用于接收数据服务节点发送过来的心跳消息
 	go ListenDataServerHeartbeat()
 	// 清除超过指定时间没收到心跳消息的数据服务节点,默认使用 10 s

@@ -11,8 +11,6 @@ func init() {
 	beego.Router("/api/ifile/locateShards/", &controllers.IFileController{}, "post:LocateShards")
 	beego.Router("/api/ifile/fileDownload/", &controllers.IFileController{}, "get:FileDownload")
 
-	beego.Router("/api/ifile/getImgOrVedioMedia/", &controllers.IFileController{}, "get:GetImgOrVedioMedia")
-
 	beego.Router("/api/heartbeat/sendHeartBeat/", &controllers.HeartBeatController{}, "post:SendHeartBeat")
 	beego.Router("/api/heartbeat/queryAllAliveHeartBeat/", &controllers.HeartBeatController{}, "get:QueryAllAliveHeartBeat")
 

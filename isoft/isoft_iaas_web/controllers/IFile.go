@@ -117,23 +117,5 @@ func (this *IFileController) FileDownload() {
 	io.Copy(this.Ctx.ResponseWriter, res.Body)
 }
 
-func (this *IFileController) GetImgOrVedioMedia() {
-	name := strings.TrimSpace(this.GetString("name", ""))
-	version := strings.TrimSpace(this.GetString("version", ""))
-	url := fmt.Sprintf("http://%s/objects/%s?version=%s", isoft_istorage_web, name, version)
-	req, err := http.NewRequest("GET", url, nil)
-	if err != nil {
-		panic(err)
-	}
-	res, err := http.DefaultClient.Do(req)
-	if err != nil || res.StatusCode != 200 {
-		panic(err)
-	}
-	ctype := mime.TypeByExtension(filepath.Ext(name))
-	if ctype != ""{
-		ctype = "application/octet-stream"
-	}
-	this.Ctx.ResponseWriter.Header().Set("Content-Type", ctype)
-	io.Copy(this.Ctx.ResponseWriter, res.Body)
-}
+
 

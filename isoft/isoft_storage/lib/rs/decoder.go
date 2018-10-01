@@ -57,15 +57,15 @@ func (d *decoder) getData() error {
 			// reader 为 nil 表示不可读,即数据丢失,需要修复
 			repairIds = append(repairIds, i)
 		} else {
-			// 可读分片,创建最大缓存量的字节数组 8000 个字节
+			// 可读分片,创建最大缓存量的字节数组 BLOCK_PER_SHARD 个字节
 			shards[i] = make([]byte, BLOCK_PER_SHARD)
-			// 从 reader 中一次读取 8000 个字节数据保存到字节数组中去
+			// 从 reader 中一次读取 BLOCK_PER_SHARD 个字节数据保存到字节数组中去
 			n, e := io.ReadFull(d.readers[i], shards[i])
 			if e != nil && e != io.EOF && e != io.ErrUnexpectedEOF {
 				// 读取失败
 				shards[i] = nil
 			} else if n != BLOCK_PER_SHARD {
-				// 读取的数据长度 n 不到 8000 字节,则截取前 n 个
+				// 读取的数据长度 n 不到 BLOCK_PER_SHARD 字节,则截取前 n 个
 				shards[i] = shards[i][:n]
 			}
 		}

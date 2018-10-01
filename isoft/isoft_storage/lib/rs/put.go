@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"io"
 	"isoft/isoft_storage/lib/objectstream"
+	"isoft/isoft_storage/lib/utils"
+	"time"
 )
 
 type RSPutStream struct {
@@ -39,6 +41,8 @@ func NewRSPutStream(dataServers []string, hash string, size int64) (*RSPutStream
 }
 
 func (s *RSPutStream) Commit(success bool) {
+	defer utils.RecordTimeCostForMethod("lib rs put RSPutStream", time.Now())
+
 	// Flush 方法将数据写入数据服务接口,生成临时文件
 	s.Flush()
 	for i := range s.writers {

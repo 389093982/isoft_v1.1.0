@@ -5,10 +5,13 @@ import (
 	"isoft/isoft_storage/apiServer/heartbeat"
 	"isoft/isoft_storage/apiServer/locate"
 	"isoft/isoft_storage/lib/rs"
+	"isoft/isoft_storage/lib/utils"
 	"time"
 )
 
 func GetStream(hash string, size int64) (*rs.RSGetStream, error) {
+	defer utils.RecordTimeCostForMethod("api objects get_stream GetStream", time.Now())
+
 	// 根据对象 hash 值获取定位消息
 	locateInfo := locate.Locate(hash)
 	// 小于 4 个分片数据,数据无法还原
@@ -19,9 +22,7 @@ func GetStream(hash string, size int64) (*rs.RSGetStream, error) {
 	// 定位信息数组长度不为 6,表示该对象有部分分片丢失
 	if len(locateInfo) != rs.ALL_SHARDS {
 		// 随机选取 rs.ALL_SHARDS-len(locateInfo) 个数据服务节点进行修复,排除 locateInfo 所在的已有分片节点
-		startTime := time.Now()
 		dataServers = heartbeat.ChooseRandomDataServers(rs.ALL_SHARDS-len(locateInfo), locateInfo)
-		fmt.Println("ChooseRandomDataServers 2:", time.Now().Sub(startTime))
 	}
 	return rs.NewRSGetStream(locateInfo, dataServers, hash, size)
 }

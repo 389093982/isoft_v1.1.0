@@ -7,6 +7,7 @@ import (
 	"io/ioutil"
 	"isoft/isoft_storage/cfg"
 	"isoft/isoft_storage/lib/models"
+	"isoft/isoft_storage/lib/utils"
 	"net/http"
 	"strings"
 	"sync"
@@ -70,7 +71,6 @@ func (this *LocateAndHeartbeatProxy) ReceiveAndModifyHeartbeat(dataServers map[s
 			for _, heartbeat := range heartbeats{
 				// 获取监听地址
 				dataServer := heartbeat.(map[string]interface{})["addr"].(string)
-				fmt.Println("receive dataServer :", dataServer)
 				mutex.Lock()
 				// 更新监听地址的时间
 				dataServers[dataServer] = time.Now()
@@ -82,6 +82,8 @@ func (this *LocateAndHeartbeatProxy) ReceiveAndModifyHeartbeat(dataServers map[s
 }
 
 func (this *LocateAndHeartbeatProxy) SendAndReceiveLocateInfo(dataServers []string, hash string, retry int) (locateInfo map[int]string) {
+	defer utils.RecordTimeCostForMethod("lib locate_heartbeat SendAndReceiveLocateInfo", time.Now())
+
 	locateInfoStrChan := make(chan string, len(dataServers))
 	wg := &sync.WaitGroup{}
 	for _, server := range dataServers{

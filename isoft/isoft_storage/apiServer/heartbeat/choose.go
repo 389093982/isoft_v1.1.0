@@ -2,11 +2,15 @@ package heartbeat
 
 import (
 	"isoft/isoft/common/logutil"
+	"isoft/isoft_storage/lib/utils"
 	"math/rand"
+	"time"
 )
 
 // n 表示选取的随机数据服务节点数,exclude 表示返回的随机数据服务节点不能包含哪些节点
 func ChooseRandomDataServers(n int, exclude map[int]string) (ds []string) {
+	defer utils.RecordTimeCostForMethod("apiServer heartbeat ChooseRandomDataServers", time.Now())
+
 	candidates := make([]string, 0)
 	reverseExcludeMap := make(map[string]int)
 	for id, addr := range exclude {

@@ -3,7 +3,9 @@ package objectstream
 import (
 	"fmt"
 	"io"
+	"isoft/isoft_storage/lib/utils"
 	"net/http"
+	"time"
 )
 
 type GetStream struct {
@@ -11,6 +13,8 @@ type GetStream struct {
 }
 
 func newGetStream(url string) (*GetStream, error) {
+	defer utils.RecordTimeCostForMethod("lib objectstream get newGetStream", time.Now())
+
 	r, e := http.Get(url)
 	if e != nil {
 		return nil, e

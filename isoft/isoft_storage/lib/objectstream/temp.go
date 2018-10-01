@@ -4,8 +4,10 @@ import (
 	"fmt"
 	"io/ioutil"
 	"isoft/isoft/common/logutil"
+	"isoft/isoft_storage/lib/utils"
 	"net/http"
 	"strings"
+	"time"
 )
 
 type TempPutStream struct {
@@ -60,6 +62,9 @@ func (w *TempPutStream) Commit(good bool) {
 	if good {
 		method = "PUT"
 	}
+
+	defer utils.RecordTimeCostForMethod("lib objectstream Commit " + method, time.Now())
+
 	// delete 情况下删除临时文件, put 情况下将临时文件转正
 	request, _ := http.NewRequest(method, "http://"+w.Server+"/temp/"+w.Uuid, nil)
 	client := http.Client{}

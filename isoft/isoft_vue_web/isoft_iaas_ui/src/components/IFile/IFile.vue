@@ -30,11 +30,12 @@
       <img :src="showImageSrc" alt="smile" />
     </Modal>
 
+    <!-- preload=none 当页面加载后不载入视频 -->
     <Modal
       v-model="playVedioModel"
       title="播放视频"
       :mask-closable="false">
-      <video ref="video" width="320" height="240" controls>
+      <video ref="video" width="320" height="240" controls preload="none">
         <source type="video/mp4">
         您的浏览器不支持 video 标签。
       </video>
@@ -192,18 +193,6 @@
         const name = this.metadatas[index]['name'];
         const version = this.metadatas[index]['version'];
         window.location='/api/ifile/fileDownload/?name=' + name + "&version=" + version;
-      },
-      showImg(index){
-        const name = this.metadatas[index]['name'];
-        const version = this.metadatas[index]['version'];
-        this.showImageSrc = "/api/ifile/getImgOrVedioMedia?name=" + name + "&version=" + version;
-        this.showImgModel = true;
-      },
-      playVedio(index){
-        const name = this.metadatas[index]['name'];
-        const version = this.metadatas[index]['version'];
-        this.$refs.video.src = "/api/ifile/getImgOrVedioMedia?name=" + name + "&version=" + version;
-        this.playVedioModel = true;
       },
     },
     mounted:function(){

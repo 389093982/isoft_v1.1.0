@@ -2,17 +2,17 @@ package objects
 
 import (
 	"errors"
-	"fmt"
 	"isoft/isoft_storage/apiServer/heartbeat"
 	"isoft/isoft_storage/lib/rs"
+	"isoft/isoft_storage/lib/utils"
 	"time"
 )
 
 // putStream(NewRSPutStream) -> NewTempPutStream
 func putStream(hash string, size int64) (*rs.RSPutStream, error) {
-	startTime := time.Now()
+	defer utils.RecordTimeCostForMethod("apiServer objects putStream", time.Now())
+
 	servers := heartbeat.ChooseRandomDataServers(rs.ALL_SHARDS, nil) // 选择总分片数量个 server
-	fmt.Println("ChooseRandomDataServers 3:", time.Now().Sub(startTime))
 	if len(servers) != rs.ALL_SHARDS {
 		return nil, errors.New("cannot find enough dataServer")
 	}
