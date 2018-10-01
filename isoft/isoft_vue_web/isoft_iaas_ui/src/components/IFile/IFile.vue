@@ -1,6 +1,5 @@
 <template>
   <div>
-
     <Row style="margin-bottom: 10px;">
       <Col span="12">
         <IFileUpload @refreshTable="refreshMetaDataList"/>
@@ -22,25 +21,6 @@
         存储物理机器地址:{{key}}  -  分片id:{{value}}
       </p>
     </Modal>
-
-    <Modal
-      v-model="showImgModel"
-      title="显示图片"
-      :mask-closable="false">
-      <img :src="showImageSrc" alt="smile" />
-    </Modal>
-
-    <!-- preload=none 当页面加载后不载入视频 -->
-    <Modal
-      v-model="playVedioModel"
-      title="播放视频"
-      :mask-closable="false">
-      <video ref="video" width="320" height="240" controls preload="none">
-        <source type="video/mp4">
-        您的浏览器不支持 video 标签。
-      </video>
-    </Modal>
-
   </div>
 </template>
 
@@ -56,10 +36,6 @@
       return {
         // 显示对象分片信息对话框
         showShardsModel:false,
-        showImgModel:false,
-        showImageSrc:'',
-        playVedioModel:false,
-        playVedioSrc:'',
         // 对象分片信息
         shards:[],
         // 搜索的对象名称
@@ -128,34 +104,6 @@
                     }
                   }
                 }, '文件下载'),
-                h('Button', {
-                  props: {
-                    type: 'info',
-                    size: 'small'
-                  },
-                  style: {
-                    marginRight: '5px',
-                  },
-                  on: {
-                    click: () => {
-                      this.showImg(params.index);
-                    }
-                  }
-                }, '图片预览'),
-                h('Button', {
-                  props: {
-                    type: 'warning',
-                    size: 'small'
-                  },
-                  style: {
-                    marginRight: '5px',
-                  },
-                  on: {
-                    click: () => {
-                      this.playVedio(params.index);
-                    }
-                  }
-                }, '视频播放'),
               ]);
             }
           }
