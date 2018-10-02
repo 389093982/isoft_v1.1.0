@@ -16,12 +16,6 @@ import (
 )
 
 func main() {
-	defer func() {
-		if err := recover(); err != nil {
-			logutil.Errorln(err)
-		}
-	}()
-
 	// 启动前初始化参数,参数初始化失败会终止程序
 	cfg.InitConfigWithOsArgs(os.Args)
 

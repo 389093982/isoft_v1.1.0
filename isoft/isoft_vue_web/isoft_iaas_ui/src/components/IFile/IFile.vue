@@ -2,7 +2,8 @@
   <div>
     <Row style="margin-bottom: 10px;">
       <Col span="12">
-        <IFileUpload @refreshTable="refreshMetaDataList"/>
+        <IFileUpload @refreshTable="refreshMetaDataList" action="/api/ifile/fileUpload/" uploadLabel="上传到网盘"/>
+        <IFileUpload @refreshTable="refreshMetaDataList" action="/api/ifile/fileUpload2/" uploadLabel="上传到文件服务器"/>
       </Col>
       <Col span="12">
         <Input v-model="search_name" search enter-button placeholder="搜索对象名称" @on-search="input_search"/>
@@ -68,6 +69,11 @@
             title: 'hash',
             key: 'hash',
             width:380,
+          },
+          {
+            title: 'app_name',
+            key: 'app_name',
+            width:100,
           },
           {
             title: '操作',
@@ -140,7 +146,8 @@
       fileDownload(index){
         const name = this.metadatas[index]['name'];
         const version = this.metadatas[index]['version'];
-        window.location='/api/ifile/fileDownload/?name=' + name + "&version=" + version;
+        const app_name = this.metadatas[index]['app_name'];
+        window.location='/api/ifile/fileDownload/?name=' + name + "&version=" + version + "&app_name=" + app_name;
       },
     },
     mounted:function(){

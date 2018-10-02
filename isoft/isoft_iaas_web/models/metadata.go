@@ -11,6 +11,7 @@ type MetaData struct {
 	Version         int       `json:"version"` // 对象版本
 	Size            int64     `json:"size"`    // 对象大小
 	Hash            string    `json:"hash"`    // 对象 hash 值
+	AppName			string	  `json:"app_name"`
 	CreatedBy       string    `json:"created_by"`
 	CreatedTime     time.Time `json:"created_time"`
 	LastUpdatedBy   string    `json:"last_updated_by"`
@@ -24,7 +25,7 @@ func SearchLatestVersion(name string) (metaData MetaData, err error) {
 	return
 }
 
-func GetMetadata(name string, version int) (metaData MetaData, err error) {
+func GetMetadata(name string, version int, app_name string) (metaData MetaData, err error) {
 	o := orm.NewOrm()
 	qs := o.QueryTable("meta_data")
 	err = qs.Filter("name", name).Filter("version", version).One(&metaData)

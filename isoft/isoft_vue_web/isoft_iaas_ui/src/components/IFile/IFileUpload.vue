@@ -1,28 +1,37 @@
 <template>
-<div>
-  <Button type="success" @click="fileUploadModal = true">文件上传</Button>
-
+<span>
+  <Button type="success" @click="fileUploadModal = true">{{ uploadLabel }}</Button>
   <Modal
     v-model="fileUploadModal"
     width="500"
-    title="文件上传"
+    :title="uploadLabel"
     :mask-closable="false">
     <div>
       <Upload
         ref="upload"
         multiple
         :on-success="uploadComplete"
-        action="/api/ifile/fileUpload/">
-        <Button icon="ios-cloud-upload-outline">文件上传</Button>
+        :action="action">
+        <Button icon="ios-cloud-upload-outline">{{ uploadLabel }}</Button>
       </Upload>
     </div>
   </Modal>
-</div>
+</span>
 </template>
 
 <script>
     export default {
       name: "IFileUpload",
+      props: {
+        uploadLabel: {
+          type: String,
+          default: '文件上传'
+        },
+        action: {
+          type: String,
+          default: ''
+        }
+      },
       data () {
         return {
           // 文件上传 modal
