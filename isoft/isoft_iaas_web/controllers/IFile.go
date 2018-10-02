@@ -153,9 +153,6 @@ func (this *IFileController) FileDownload() {
 	}else{
 		_url = fmt.Sprintf("http://%s/objects/%s?version=%s", isoft_istorage_web, name, version)
 	}
-
-	fmt.Println(_url)
-
 	req, err := http.NewRequest("GET", _url, nil)
 	if err != nil {
 		panic(err)
@@ -174,6 +171,5 @@ func (this *IFileController) FileDownload() {
 	this.Ctx.ResponseWriter.Header().Set("Content-Disposition", fmt.Sprintf("attachment; filename=\"%s\"", name))
 	io.Copy(this.Ctx.ResponseWriter, res.Body)
 }
-
 
 
