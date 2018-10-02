@@ -83,9 +83,11 @@ func mkNecessaryDir(section_name string) {
 	STORAGE_ROOT := GetConfigValue(STORAGE_ROOT)
 	if STORAGE_ROOT != ""{
 		os.MkdirAll(STORAGE_ROOT, os.ModePerm)
-		// 只有 dataServer 才需要创建子目录
-		os.MkdirAll(filepath.Join(STORAGE_ROOT, "objects"), os.ModePerm)
-		os.MkdirAll(filepath.Join(STORAGE_ROOT, "temp"), os.ModePerm)
+		if strings.HasPrefix(section_name, "dataServer"){
+			// 只有 dataServer 才需要创建子目录
+			os.MkdirAll(filepath.Join(STORAGE_ROOT, "objects"), os.ModePerm)
+			os.MkdirAll(filepath.Join(STORAGE_ROOT, "temp"), os.ModePerm)
+		}
 	}
 }
 

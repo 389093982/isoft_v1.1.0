@@ -15,6 +15,7 @@ import (
 )
 
 type MetaDataProxy struct {
+	AppName string
 }
 
 func convertToMetadata(metadataMap map[string]interface{}) (meta models.Metadata) {
@@ -83,10 +84,13 @@ func (this *MetaDataProxy) PutMetadata(name string, version int, size int64, has
 
 func (this *MetaDataProxy) AddVersion(name, hash string, size int64) error {
 	defer utils.RecordTimeCostForMethod("lib metadata AddVersion", time.Now())
+	if this.AppName == ""{
+		this.AppName = "dataServer"
+	}
 
 	url := fmt.Sprintf("http://%s/api/metadata/addVersion", cfg.GetConfigValue(cfg.ISOFT_IAAS_WEB))
 	resp, err := http.Post(url,"application/x-www-form-urlencoded",
-		strings.NewReader(fmt.Sprintf("name=%s&size=%d&hash=%s",name,size,hash)))
+		strings.NewReader(fmt.Sprintf("name=%s&size=%d&hash=%s&appName=%s",name,size,hash, this.AppName)))
 	if err != nil{
 		panic(err)
 	}

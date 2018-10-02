@@ -27,7 +27,8 @@ func (this *MetadataController) SearchLatestVersion()  {
 func (this *MetadataController) GetMetadata() {
 	name := this.GetString("name")
 	version, _ := this.GetInt("version", -1)
-	metadata, err := models.GetMetadata(name, version)
+	app_name := this.GetString("app_name")
+	metadata, err := models.GetMetadata(name, version, app_name)
 	if err != nil{
 		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": err.Error()}
 	}else{
@@ -64,10 +65,12 @@ func (this *MetadataController) AddVersion() {
 	name := this.GetString("name")
 	size, _:= this.GetInt64("size", -1)
 	hash := strings.Replace(strings.TrimSpace(this.GetString("hash"))," ","+",-1)
+	appName := this.GetString("appName")
 	metadata := &models.MetaData{
 		Name:name,
 		Size:size,
 		Hash:hash,
+		AppName:appName,
 		CreatedBy:"AutoInsert",
 		CreatedTime:time.Now(),
 		LastUpdatedBy:"AutoInsert",
