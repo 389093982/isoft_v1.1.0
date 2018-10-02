@@ -10,7 +10,7 @@ type decoder struct {
 	writers   []io.Writer
 	enc       reedsolomon.Encoder
 	size      int64
-	cache     []byte
+	cache     []byte				// cache 没有更多数据时会调用 getData 方法获取更多的数据
 	cacheSize int
 	total     int64 // 表示当前已经读取了多少字节
 }
