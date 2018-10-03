@@ -2,10 +2,19 @@ package routers
 
 import (
 	"github.com/astaxie/beego"
+	"github.com/astaxie/beego/plugins/cors"
 	"isoft/isoft_iaas_web/controllers"
 )
 
 func init() {
+	beego.InsertFilter("*", beego.BeforeRouter, cors.Allow(&cors.Options{
+		AllowAllOrigins:  true,
+		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowHeaders:     []string{"Origin", "Authorization", "Access-Control-Allow-Origin", "Access-Control-Allow-Headers", "Content-Type"},
+		ExposeHeaders:    []string{"Content-Length", "Access-Control-Allow-Origin", "Access-Control-Allow-Headers", "Content-Type"},
+		AllowCredentials: true,
+	}))
+
 	beego.Router("/", &controllers.MainController{})
 	beego.Router("/api/ifile/fileUpload/", &controllers.IFileController{}, "post:FileUpload")
 	beego.Router("/api/ifile/fileUpload2/", &controllers.IFileController{}, "post:FileUpload2")
@@ -27,6 +36,5 @@ func init() {
 	beego.Router("/api/metadata/searchVersionStatus/", &controllers.MetadataController{}, "post:SearchVersionStatus")
 	beego.Router("/api/metadata/filterPageMetadatas/", &controllers.MetadataController{}, "post:FilterPageMetadatas")
 
-	beego.Router("/api/auth/getJWTTokenByCode/", &controllers.AuthController{}, "get,post:GetJWTTokenByCode")
 	beego.Router("/api/auth/redirectToLogin/", &controllers.AuthController{}, "get,post:RedirectToLogin")
 }

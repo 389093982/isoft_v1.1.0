@@ -13,6 +13,5 @@ export const FilterPageMetadatas = (name,current_page,offset) => ajax(BASE_URL+'
 // 分片定位请求
 export const LocateShards = (hash) => ajax(BASE_URL+'/ifile/locateShards/',{hash},'POST')
 
-// 单点登录获取 token 地址
-export const GetJWTTokenByCode = (code) => ajax(BASE_URL+'/auth/getJWTTokenByCode/',{code},'POST')
+
 

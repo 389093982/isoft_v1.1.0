@@ -40,6 +40,9 @@
 </template>
 
 <script>
+  import {getCookie} from '../../tools'
+  import {delCookie} from '../../tools'
+
   export default {
     name: "Header",
     data () {
@@ -50,13 +53,13 @@
     },
     methods:{
       cancelUser() {
-        localStorage.removeItem("userName");
+        delCookie("userName");
         this.loginUserName = "";
         window.location.href = "/api/auth/redirectToLogin/?redirectUrl=" + window.location.href;
       }
     },
     mounted:function(){
-      this.loginUserName = localStorage.getItem("userName");
+      this.loginUserName = getCookie("userName");
     },
   }
 </script>

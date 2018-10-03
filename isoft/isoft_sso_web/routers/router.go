@@ -8,7 +8,6 @@ import (
 func init() {
 	beego.Router("/user/regist", &controllers.UserController{}, "get,post:Regist")
 	beego.Router("/user/login", &controllers.UserController{}, "get,post:Login")
-	beego.Router("/user/getJWTTokenByCode", &controllers.UserController{}, "get,post:GetJWTTokenByCode")
 
 	beego.Router("/userlogin/loginRecordList", &controllers.LoginRecordController{}, "get,post:LoginRecordList")
 

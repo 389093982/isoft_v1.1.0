@@ -6,6 +6,9 @@ import axios from 'axios'
 import Qs from 'qs'
 import store from "../store";
 
+// 允许带认证信息的配置
+axios.defaults.withCredentials=true;
+
 // axios 拦截器拦截 401 异常跳往登录页面
 axios.interceptors.response.use(
   response => {
@@ -15,9 +18,6 @@ axios.interceptors.response.use(
     if (error.response) {
       switch (error.response.status) {
         case 401:
-          localStorage.removeItem("userName");
-          localStorage.removeItem("token");
-          localStorage.removeItem("isLogin");
           window.location.href = "/api/auth/redirectToLogin/?redirectUrl=" + window.location.href;
       }
     }
@@ -40,11 +40,11 @@ export default function ajax (url, data={}, type='GET') {
         url = url + '?' + dataStr
       }
       // 发送get请求,得到 promise 对象
-      promise = axios.get(url,{headers:{"token":localStorage.getItem("token")}})
+      promise = axios.get(url)
     } else {
       // 发送post请求,得到 promise 对象
       // 使用 Qs.stringify 来解决 axios 发 post 请求,后端接收不到参数的解决方案
-      promise = axios.post(url, Qs.stringify(data), {headers:{"token":localStorage.getItem("token")}})
+      promise = axios.post(url, Qs.stringify(data))
     }
     promise.then(function (response) {
       // 成功了调用resolve()

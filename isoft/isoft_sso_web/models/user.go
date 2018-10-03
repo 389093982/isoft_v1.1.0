@@ -19,8 +19,6 @@ type User struct {
 type UserToken struct {
 	Id              int       `pk json:"id"`
 	UserName        string    `json:"user_name"`
-	// 一次性 code,客户端无法根据 cookie 获取 token_string,则使用 redirectUrl 中的请求参数 code 获取 token_string
-	Code			string    `json:"code"`
 	TokenString     string    `json:"token_string"`
 	CreatedBy       string    `json:"created_by"`        // 创建人
 	CreatedTime     time.Time `json:"created_time"`      // 创建时间
@@ -52,8 +50,7 @@ func SaveUserToken(userToken UserToken) error {
 	err := o.QueryTable("user_token").Filter("user_name", userToken.UserName).One(&uToken)
 	if err == nil {
 		uToken.TokenString = userToken.TokenString
-		uToken.Code = userToken.Code
-		o.Update(&uToken, "token_string", "code")
+		o.Update(&uToken, "token_string")
 	} else {
 		_, err := o.Insert(&userToken)
 		return err
@@ -73,8 +70,3 @@ func QueryUserTokenByName(username string) (userToken UserToken, err error) {
 	return
 }
 
-func QueryUserTokenByCode(code string) (userToken UserToken, err error) {
-	o := orm.NewOrm()
-	err = o.QueryTable("user_token").Filter("code", code).OrderBy("-created_time").One(&userToken)
-	return
-}

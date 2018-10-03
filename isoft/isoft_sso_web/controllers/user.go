@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/logs"
-	"isoft/isoft/common/stringutil"
 	"isoft/isoft_sso_web/models"
 	"strings"
 	"time"
@@ -18,23 +17,6 @@ func init() {
 
 type UserController struct {
 	beego.Controller
-}
-
-
-func (this *UserController) GetJWTTokenByCode()  {
-	code := this.GetString("code")
-	userToken, err := models.QueryUserTokenByCode(code)
-	if err != nil{
-		this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
-	}else{
-		userName, err := ValidateAndParseJWT(userToken.TokenString)
-		if err != nil{
-			this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
-		}else{
-			this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "userName": userName, "isLogin":"isLogin", "token": userToken.TokenString}
-		}
-	}
-	this.ServeJSON()
 }
 
 func (this *UserController) CheckOrInValidateTokenString() {
@@ -142,14 +124,10 @@ func SuccessedLogin(username string, this *UserController, origin string, refere
 	// 设置 cookie 信息
 	this.Ctx.ResponseWriter.Header().Set("Access-Control-Allow-Origin", "*")
 	this.Ctx.ResponseWriter.Header().Set("Access-Control-Allow-Credentials", "true")
-
-	code := stringutil.RandomUUID()
-
 	tokenString, err := CreateJWT(username)
 	if err == nil {
 		var userToken models.UserToken
 		userToken.UserName = username
-		userToken.Code = code
 		userToken.TokenString = tokenString
 		userToken.CreatedBy = "SYSTEM"
 		userToken.CreatedTime = time.Now()
@@ -159,17 +137,12 @@ func SuccessedLogin(username string, this *UserController, origin string, refere
 
 		// 设置 cookie 有效时间为 24 小时
 		this.Ctx.SetCookie("token", tokenString, 3600*24, "/")
+		this.Ctx.SetCookie("userName", username, 3600*24, "/")
+		this.Ctx.SetCookie("isLogin", "isLogin", 3600*24, "/")
 	}
 
 	// 则重定向到 redirectUrl,原生的方法是：w.Header().Set("Location", "http://www.baidu.com") w.WriteHeader(301)
-	redirectUrl := referers[1]
-	if strings.Contains(redirectUrl, "?"){
-		// code 只能使用一次,不可重复使用
-		redirectUrl += "&code=" + code
-	}else{
-		redirectUrl += "?code=" + code
-	}
-	this.Redirect(redirectUrl, 301)
+	this.Redirect(referers[1], 301)
 }
 
 func ErrorAuthorizedLogin(username string, this *UserController, origin string, referer string) {
