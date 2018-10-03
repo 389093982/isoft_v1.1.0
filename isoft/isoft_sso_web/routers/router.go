@@ -3,11 +3,22 @@ package routers
 import (
 	"github.com/astaxie/beego"
 	"isoft/isoft_sso_web/controllers"
+	"github.com/astaxie/beego/plugins/cors"
 )
 
 func init() {
+	// 这段代码放在router.go文件的init()的开头
+	beego.InsertFilter("*", beego.BeforeRouter, cors.Allow(&cors.Options{
+		AllowAllOrigins:  true,
+		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowHeaders:     []string{"Origin", "Authorization", "Access-Control-Allow-Origin", "Access-Control-Allow-Headers", "Content-Type"},
+		ExposeHeaders:    []string{"Content-Length", "Access-Control-Allow-Origin", "Access-Control-Allow-Headers", "Content-Type"},
+		AllowCredentials: true,
+	}))
+
 	beego.Router("/user/regist", &controllers.UserController{}, "get,post:Regist")
 	beego.Router("/user/login", &controllers.UserController{}, "get,post:Login")
+	beego.Router("/user/getJWTTokenByCode", &controllers.UserController{}, "get,post:GetJWTTokenByCode")
 
 	beego.Router("/userlogin/loginRecordList", &controllers.LoginRecordController{}, "get,post:LoginRecordList")
 

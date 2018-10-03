@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/logs"
+	"isoft/isoft/common/stringutil"
 	"isoft/isoft_sso_web/models"
 	"strings"
 	"time"
@@ -19,6 +20,23 @@ type UserController struct {
 	beego.Controller
 }
 
+
+func (this *UserController) GetJWTTokenByCode()  {
+	code := this.GetString("code")
+	userToken, err := models.QueryUserTokenByCode(code)
+	if err != nil{
+		this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
+	}else{
+		userName, err := ValidateAndParseJWT(userToken.TokenString)
+		if err != nil{
+			this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
+		}else{
+			this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "userName": userName, "isLogin":"isLogin", "token": userToken.TokenString}
+		}
+	}
+	this.ServeJSON()
+}
+
 func (this *UserController) CheckOrInValidateTokenString() {
 	tokenString := this.GetString("tokenString")
 	username := this.GetString("username")
@@ -27,14 +45,14 @@ func (this *UserController) CheckOrInValidateTokenString() {
 		this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
 		username, err := ValidateAndParseJWT(tokenString)
 		if err == nil {
-			_, err = models.QueryUserToken(username)
+			_, err = models.QueryUserTokenByName(username)
 			if err == nil {
 				this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "username": username}
 			}
 		}
 	} else {
 		// 删除 tokenString,使客户端登录信息失效
-		userToken, _ := models.QueryUserToken(username)
+		userToken, _ := models.QueryUserTokenByName(username)
 		models.DeleteUserToken(userToken)
 		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
 	}
@@ -123,12 +141,15 @@ func SuccessedLogin(username string, this *UserController, origin string, refere
 
 	// 设置 cookie 信息
 	this.Ctx.ResponseWriter.Header().Set("Access-Control-Allow-Origin", "*")
+	this.Ctx.ResponseWriter.Header().Set("Access-Control-Allow-Credentials", "true")
+
+	code := stringutil.RandomUUID()
 
 	tokenString, err := CreateJWT(username)
 	if err == nil {
-
 		var userToken models.UserToken
 		userToken.UserName = username
+		userToken.Code = code
 		userToken.TokenString = tokenString
 		userToken.CreatedBy = "SYSTEM"
 		userToken.CreatedTime = time.Now()
@@ -141,7 +162,14 @@ func SuccessedLogin(username string, this *UserController, origin string, refere
 	}
 
 	// 则重定向到 redirectUrl,原生的方法是：w.Header().Set("Location", "http://www.baidu.com") w.WriteHeader(301)
-	this.Redirect(referers[1], 301)
+	redirectUrl := referers[1]
+	if strings.Contains(redirectUrl, "?"){
+		// code 只能使用一次,不可重复使用
+		redirectUrl += "&code=" + code
+	}else{
+		redirectUrl += "?code=" + code
+	}
+	this.Redirect(redirectUrl, 301)
 }
 
 func ErrorAuthorizedLogin(username string, this *UserController, origin string, referer string) {

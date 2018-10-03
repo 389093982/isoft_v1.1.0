@@ -10,6 +10,7 @@ import (
 	"isoft/isoft/common/apppath"
 	"isoft/isoft/common/fileutil"
 	"isoft/isoft/common/osutil"
+	"isoft/isoft/sso"
 	"isoft/isoft_iaas_web/models"
 	_ "isoft/isoft_iaas_web/routers"
 	"net/url"
@@ -100,6 +101,10 @@ func recordHeatBeat()  {
 }
 
 func main() {
+	// 登录过滤器
+	beego.InsertFilter(`/api/(^(?!auth).*)` , beego.BeforeExec, sso.LoginFilterWithStatusCode)
+
 	beego.Run()
+
 	go recordHeatBeat()
 }

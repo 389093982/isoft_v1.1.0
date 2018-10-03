@@ -5,6 +5,7 @@ github.com/astaxie/beego/session
 github.com/astaxie/beego/logs
 github.com/astaxie/beego/orm
 github.com/astaxie/beego/utils/pagination
+github.com/astaxie/beego/plugins/cors
 github.com/astaxie/beego/config
 github.com/astaxie/beego/context/param
 github.com/astaxie/beego/grace
@@ -14,12 +15,6 @@ github.com/astaxie/beego/utils
 github.com/dgrijalva/jwt-go
 # github.com/go-sql-driver/mysql v1.4.0
 github.com/go-sql-driver/mysql
-# github.com/go-xorm/builder v0.0.0-20180322150003-a9b7ffcca3f0
-github.com/go-xorm/builder
-# github.com/go-xorm/core v0.0.0-20180322150003-0177c08cee88
-github.com/go-xorm/core
-# github.com/go-xorm/xorm v0.7.0
-github.com/go-xorm/xorm
 # github.com/gopherjs/gopherjs v0.0.0-20180825215210-0210a2f0f73c
 github.com/gopherjs/gopherjs/js
 # github.com/jtolds/gls v4.2.1+incompatible
@@ -54,8 +49,6 @@ github.com/smartystreets/assertions/internal/oglematchers
 github.com/smartystreets/goconvey/convey
 github.com/smartystreets/goconvey/convey/reporting
 github.com/smartystreets/goconvey/convey/gotest
-# github.com/streadway/amqp v0.0.0-20180806233856-70e15c650864
-github.com/streadway/amqp
 # golang.org/x/crypto v0.0.0-20180910181607-0e37d006457b
 golang.org/x/crypto/ssh
 golang.org/x/crypto/ssh/terminal

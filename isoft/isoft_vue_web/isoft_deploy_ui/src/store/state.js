@@ -2,5 +2,5 @@
 状态对象
  */
 export default {
-  envInfos:{}, // 环境清单
+  envInfos:{},            // 环境清单
 }

@@ -90,7 +90,7 @@ func createTable() {
 
 func main() {
 	// 登录过滤器
-	beego.InsertFilter("/*", beego.BeforeExec, sso.LoginFilter)
+	beego.InsertFilter("/*", beego.BeforeExec, sso.LoginFilterWithRedirect)
 
 	beego.Run()
 }

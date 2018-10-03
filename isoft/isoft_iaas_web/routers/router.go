@@ -26,4 +26,7 @@ func init() {
 	beego.Router("/api/metadata/searchHashSize/", &controllers.MetadataController{}, "post:SearchHashSize")
 	beego.Router("/api/metadata/searchVersionStatus/", &controllers.MetadataController{}, "post:SearchVersionStatus")
 	beego.Router("/api/metadata/filterPageMetadatas/", &controllers.MetadataController{}, "post:FilterPageMetadatas")
+
+	beego.Router("/api/auth/getJWTTokenByCode/", &controllers.AuthController{}, "get,post:GetJWTTokenByCode")
+	beego.Router("/api/auth/redirectToLogin/", &controllers.AuthController{}, "get,post:RedirectToLogin")
 }

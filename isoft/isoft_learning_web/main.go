@@ -94,6 +94,6 @@ func createTable() {
 }
 
 func main() {
-	beego.InsertFilter("/*", beego.BeforeExec, sso.LoginFilter)
+	beego.InsertFilter("/*", beego.BeforeExec, sso.LoginFilterWithRedirect)
 	beego.Run()
 }
