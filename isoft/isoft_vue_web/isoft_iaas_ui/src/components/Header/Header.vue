@@ -31,8 +31,8 @@
           <span v-else>登录</span>
         </template>
         <MenuGroup title="账号管理">
-          <MenuItem name="4-1">注销</MenuItem>
-          <MenuItem name="4-2">切换账号</MenuItem>
+          <MenuItem name="4-1" @click.native="cancelUser">注销</MenuItem>
+          <MenuItem name="4-2" @click.native="cancelUser">切换账号</MenuItem>
         </MenuGroup>
       </Submenu>
     </Menu>
@@ -46,6 +46,13 @@
       return {
         theme1: 'light',
         loginUserName:'',
+      }
+    },
+    methods:{
+      cancelUser() {
+        localStorage.removeItem("userName");
+        this.loginUserName = "";
+        window.location.href = "/api/auth/redirectToLogin/?redirectUrl=" + window.location.href;
       }
     },
     mounted:function(){
