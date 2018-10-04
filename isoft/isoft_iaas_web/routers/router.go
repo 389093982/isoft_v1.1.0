@@ -57,5 +57,5 @@ func initIBlogRouter(){
 	beego.Router("/api/blog/delete", &iblog.BlogController{}, "post:PostDelete")
 	beego.Router("/api/blog/search", &iblog.BlogController{}, "get:Search")
 	beego.Router("/api/blog/publish", &iblog.BlogController{}, "post:PostPublish")
-	beego.Router("/api/blog/detail", &iblog.BlogController{}, "get:Detail")
+	beego.Router("/api/blog/showBlogDetail", &iblog.BlogController{}, "get:ShowBlogDetail")
 }

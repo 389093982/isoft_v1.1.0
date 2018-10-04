@@ -5,6 +5,7 @@ import IBlog from '../components/IBlog/IBlog.vue'
 import BlogList from '../components/IBlog/BlogList.vue'
 import CatalogAdd from '../components/IBlog/CatalogAdd.vue'
 import BlogAdd from '../components/IBlog/BlogAdd.vue'
+import BlogDetail from '../components/IBlog/BlogDetail.vue'
 
 Vue.use(Router)
 
@@ -26,6 +27,10 @@ export default new Router({
         {
           path: 'blog_list',
           component: BlogList
+        },
+        {
+          path: 'blog_detail',
+          component: BlogDetail
         },
       ]
     },

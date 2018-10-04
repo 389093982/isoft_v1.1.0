@@ -23,22 +23,18 @@ func (this *BlogController) GetMyBlogs() {
 	this.ServeJSON()
 }
 
-func (this *BlogController) Detail() {
+func (this *BlogController) ShowBlogDetail() {
 	blog_id, err := this.GetInt64("blog_id")
-	detail := this.GetString("detail")
 	if err == nil {
-		if detail == "detail" {
-			blog, err := iblog.QueryBlogById(blog_id)
-			if err == nil {
-				this.Data["BlogContent"] = blog.Content
-				this.TplName = "blog/_blog_detail.html"
-			}
-		} else {
-			this.Data["BlogId"] = blog_id
-			this.Layout = "layout/layout_front.html"
-			this.TplName = "blog/blog_detail.html"
+		iblog.UpdateBlogViews(blog_id)
+		blog, err := iblog.QueryBlogById(blog_id)
+		if err == nil {
+			this.Data["json"] = &map[string]interface{}{"status":"SUCCESS","blog":&blog}
 		}
+	}else{
+		this.Data["json"] = &map[string]interface{}{"status":"ERROR"}
 	}
+	this.ServeJSON()
 }
 
 func (this *BlogController) Search() {

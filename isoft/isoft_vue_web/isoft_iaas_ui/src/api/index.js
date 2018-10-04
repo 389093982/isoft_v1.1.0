@@ -25,6 +25,8 @@ export const GetMyBlogs = () => ajax(BASE_URL+'/blog/getMyBlogs',{},'GET')
 // 编辑或者新增博客文章
 export const BlogEdit = (blog_title, key_words, catalog_id, content) => ajax(BASE_URL+'/blog/edit',{blog_title, key_words, catalog_id, content},'POST')
 
-//
+// 热门博客分页列表
 export const BlogList = (offset,current_page) => ajax(BASE_URL+'/blog/blogList',{offset,current_page},'GET')
 
+// 根据 blog_id 查询 blog 详细信息
+export const ShowBlogDetail = (blog_id) => ajax(BASE_URL+'/blog/showBlogDetail',{blog_id},'GET')

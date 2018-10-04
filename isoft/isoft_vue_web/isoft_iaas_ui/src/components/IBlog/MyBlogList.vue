@@ -1,7 +1,9 @@
 <template>
   <div>
-    我的博客文章
-    <p v-for="myblog in myblogs">{{myblog.blog_title}}</p>
+    <Divider>我的博客文章</Divider>
+    <p v-for="myblog in myblogs" style="margin-bottom: 4px;font-size: 14px;color: #8a8a8a;line-height: 24px;">
+      {{myblog.blog_title}}
+    </p>
   </div>
 </template>
 

@@ -20,7 +20,7 @@
   import MyCatalogList from "./MyCatalogList.vue"
   import MyBlogList from "./MyBlogList.vue"
   export default {
-    name: "BlogList",
+    name: "IBlog",
     components:{MyCatalogList,MyBlogList},
   }
 </script>
