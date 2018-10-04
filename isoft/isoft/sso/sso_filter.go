@@ -64,6 +64,10 @@ func (this *LoginManager) IsWhiteUrl() bool {
 	if _, ok := loginWhiteList[this.ctx.Input.URL()]; ok {
 		return true
 	}
+	// 鉴权接口也放行
+	if strings.HasPrefix(this.ctx.Input.URL(), "/api/auth"){
+		return true
+	}
 	return false
 }
 
@@ -89,9 +93,11 @@ func (this *LoginManager) ResetUserName(username string) {
 	if this.ctx.Input.CruSession == nil {
 		// 从未访问过是没有 session 的,需要重新创建
 		this.ctx.Input.CruSession, _ = globalSessions.SessionStart(this.ctx.ResponseWriter, this.ctx.Request)
+		this.ctx.Input.CruSession.Set("userName", username)
 		this.ctx.Input.CruSession.Set("UserName", username)
 	} else {
 		// 登录信息认证通过
+		this.ctx.Input.CruSession.Set("userName", username)
 		this.ctx.Input.CruSession.Set("UserName", username)
 	}
 }

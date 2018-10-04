@@ -1,4 +1,4 @@
-package models
+package ifile
 
 import (
 	"github.com/astaxie/beego/orm"

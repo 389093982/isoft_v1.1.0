@@ -1,10 +1,10 @@
-package controllers
+package ifile
 
 import (
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/utils/pagination"
 	"isoft/isoft/common/pageutil"
-	"isoft/isoft_iaas_web/models"
+	"isoft/isoft_iaas_web/models/ifile"
 	"strings"
 	"time"
 )
@@ -15,7 +15,7 @@ type MetadataController struct {
 
 func (this *MetadataController) SearchLatestVersion()  {
 	name := this.GetString("name")
-	metadata, err := models.SearchLatestVersion(name)
+	metadata, err := ifile.SearchLatestVersion(name)
 	if err != nil{
 		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": err.Error()}
 	}else{
@@ -28,7 +28,7 @@ func (this *MetadataController) GetMetadata() {
 	name := this.GetString("name")
 	version, _ := this.GetInt("version", -1)
 	app_name := this.GetString("app_name")
-	metadata, err := models.GetMetadata(name, version, app_name)
+	metadata, err := ifile.GetMetadata(name, version, app_name)
 	if err != nil{
 		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": err.Error()}
 	}else{
@@ -42,7 +42,7 @@ func (this *MetadataController) PutMetadata() {
 	version, _ := this.GetInt("version", -1)
 	size, _:= this.GetInt64("size", -1)
 	hash := strings.Replace(strings.TrimSpace(this.GetString("hash"))," ","+",-1)
-	metadata := &models.MetaData{
+	metadata := &ifile.MetaData{
 		Name:name,
 		Version:version,
 		Size:size,
@@ -52,7 +52,7 @@ func (this *MetadataController) PutMetadata() {
 		LastUpdatedBy:"AutoInsert",
 		LastUpdatedTime:time.Now(),
 	}
-	err := models.PutMetadata(metadata)
+	err := ifile.PutMetadata(metadata)
 	if err != nil{
 		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": err.Error()}
 	}else{
@@ -66,7 +66,7 @@ func (this *MetadataController) AddVersion() {
 	size, _:= this.GetInt64("size", -1)
 	hash := strings.Replace(strings.TrimSpace(this.GetString("hash"))," ","+",-1)
 	appName := this.GetString("appName")
-	metadata := &models.MetaData{
+	metadata := &ifile.MetaData{
 		Name:name,
 		Size:size,
 		Hash:hash,
@@ -76,13 +76,13 @@ func (this *MetadataController) AddVersion() {
 		LastUpdatedBy:"AutoInsert",
 		LastUpdatedTime:time.Now(),
 	}
-	oldmetadata, err := models.SearchLatestVersion(name)
+	oldmetadata, err := ifile.SearchLatestVersion(name)
 	if err == nil{
 		metadata.Version = oldmetadata.Version + 1
 	}else{
 		metadata.Version = 1
 	}
-	err = models.PutMetadata(metadata)
+	err = ifile.PutMetadata(metadata)
 	if err != nil{
 		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": err.Error()}
 	}else{
@@ -95,7 +95,7 @@ func (this *MetadataController) SearchAllVersions() {
 	name := this.GetString("name")
 	from, _:= this.GetInt64("from", 0)
 	size, _:= this.GetInt64("size", 10)
-	metadatas, err := models.SearchAllVersions(name, from, size)
+	metadatas, err := ifile.SearchAllVersions(name, from, size)
 	if err != nil{
 		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": err.Error()}
 	}else{
@@ -107,7 +107,7 @@ func (this *MetadataController) SearchAllVersions() {
 func (this *MetadataController) DelMetadata() {
 	name := this.GetString("name")
 	version, _ := this.GetInt("version", -1)
-	err := models.DelMetadata(name,version)
+	err := ifile.DelMetadata(name,version)
 	if err != nil{
 		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": err.Error()}
 	}else{
@@ -118,7 +118,7 @@ func (this *MetadataController) DelMetadata() {
 
 func (this *MetadataController) HasHash() {
 	hash := strings.Replace(strings.TrimSpace(this.GetString("hash"))," ","+",-1)
-	b := models.HasHash(hash)
+	b := ifile.HasHash(hash)
 	if !b{
 		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": "hash was not found!"}
 	}else{
@@ -148,7 +148,7 @@ func (this *MetadataController) FilterPageMetadatas() {
 	if offset, err = this.GetInt("offset", 1); err != nil {
 		panic(err)
 	}
-	metadatas, count, err := models.FilterPageMetadatas(map[string]interface{}{"name":name}, current_page, offset)
+	metadatas, count, err := ifile.FilterPageMetadatas(map[string]interface{}{"name": name}, current_page, offset)
 	if err != nil {
 		this.Data["json"] = &map[string]interface{}{"status":"ERROR"}
 	} else {

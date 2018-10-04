@@ -40,8 +40,8 @@
 </template>
 
 <script>
-  import {getCookie} from '../../tools'
-  import {delCookie} from '../../tools'
+  import {getCookie} from '../../../tools/index'
+  import {delCookie} from '../../../tools/index'
 
   export default {
     name: "Header",

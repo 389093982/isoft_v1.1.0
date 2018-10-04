@@ -11,7 +11,8 @@ import (
 	"isoft/isoft/common/fileutil"
 	"isoft/isoft/common/osutil"
 	"isoft/isoft/sso"
-	"isoft/isoft_iaas_web/models"
+	"isoft/isoft_iaas_web/models/iblog"
+	"isoft/isoft_iaas_web/models/ifile"
 	_ "isoft/isoft_iaas_web/routers"
 	"net/url"
 	"os"
@@ -77,8 +78,10 @@ func initDB() {
 }
 
 func registerModel() {
-	orm.RegisterModel(new(models.HeartBeat))
-	orm.RegisterModel(new(models.MetaData))
+	orm.RegisterModel(new(ifile.HeartBeat))
+	orm.RegisterModel(new(ifile.MetaData))
+	orm.RegisterModel(new(iblog.Catalog))
+	orm.RegisterModel(new(iblog.Blog))
 }
 
 // 自动建表
@@ -102,7 +105,7 @@ func recordHeatBeat()  {
 
 func main() {
 	// 登录过滤器
-	beego.InsertFilter(`/api/(^(?!auth).*)` , beego.BeforeExec, sso.LoginFilterWithStatusCode)
+	beego.InsertFilter("*", beego.BeforeExec, sso.LoginFilterWithStatusCode)
 
 	beego.Run()
 

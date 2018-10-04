@@ -1,4 +1,4 @@
-package controllers
+package sso
 
 import (
 	"fmt"

@@ -21,9 +21,9 @@
 </template>
 
 <script>
-import Header from './components/Header/Header.vue'
-import Footer from './components/Footer/Footer.vue'
-import LeftMenu from './components/Menu/LeftMenu.vue'
+import Header from './components/Common/Header/Header.vue'
+import Footer from './components/Common/Footer/Footer.vue'
+import LeftMenu from './components/Common/Menu/LeftMenu.vue'
 
 export default {
   name: 'App',

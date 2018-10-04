@@ -1,4 +1,4 @@
-package controllers
+package ifile
 
 import (
 	"bytes"
@@ -8,7 +8,7 @@ import (
 	"io"
 	"io/ioutil"
 	"isoft/isoft/common/hashutil"
-	"isoft/isoft_iaas_web/models"
+	"isoft/isoft_iaas_web/models/ifile"
 	"mime"
 	"net/http"
 	"net/url"
@@ -146,7 +146,7 @@ func (this *IFileController) FileDownload() {
 		if err != nil{
 			_version = 1
 		}
-		metadata, err := models.GetMetadata(name, _version, app_name)
+		metadata, err := ifile.GetMetadata(name, _version, app_name)
 		if err == nil{
 			_url = fmt.Sprintf("http://%s/download/%s", isoft_istorage_web2, url.PathEscape(metadata.Hash))
 		}

@@ -1,8 +1,8 @@
-package controllers
+package ifile
 
 import (
 	"github.com/astaxie/beego"
-	"isoft/isoft_iaas_web/models"
+	"isoft/isoft_iaas_web/models/ifile"
 	"time"
 )
 
@@ -12,14 +12,14 @@ type HeartBeatController struct {
 
 func (this *HeartBeatController) SendHeartBeat()  {
 	addr := this.GetString("addr")
-	heartBeat := models.HeartBeat{
+	heartBeat := ifile.HeartBeat{
 		Addr:addr,
 		CreatedBy:"AutoInsert",
 		CreatedTime:time.Now(),
 		LastUpdatedBy:"AutoInsert",
 		LastUpdatedTime:time.Now(),
 	}
-	_, err := models.InsertOrUpdateHeartBeat(&heartBeat)
+	_, err := ifile.InsertOrUpdateHeartBeat(&heartBeat)
 	if err != nil{
 		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": err.Error()}
 	}else{
@@ -29,7 +29,7 @@ func (this *HeartBeatController) SendHeartBeat()  {
 }
 
 func (this *HeartBeatController) QueryAllAliveHeartBeat()  {
-	heartbeats,err := models.QueryAllAliveHeartBeat()
+	heartbeats,err := ifile.QueryAllAliveHeartBeat()
 	if err != nil{
 		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": err.Error()}
 	}else{
