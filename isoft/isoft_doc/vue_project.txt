@@ -121,3 +121,14 @@ module.exports = {
     },
 
 #################################################################################################################################
+
+background: url("../../../assets/search.png") 50% 50% no-repeat; 引入设置
+1、在webpack.prod.conf.js文件里output里面添加：publicPath:'./'
+2、在utils.js文件里添加 publicPath:'../../'
+3、在config/index.js文件里，添加assetsPublicPath:'./'
+
+#################################################################################################################################
+图片轮播插件
+npm install swiper
+import Swiper from ‘swiper’;
+import ‘swiper/dist/css/swiper.min.css’;

@@ -2,7 +2,6 @@ package controllers
 
 import (
 	"github.com/astaxie/beego"
-	"isoft/isoft/sso"
 	"isoft/isoft_learning_web/models"
 )
 
@@ -47,11 +46,11 @@ func (this *CommonController) CheckLoginUser() {
 }
 
 func (this *CommonController) Logout() {
-	redirectUrl := this.GetString("redirectUrl")
-	sso.RedirectToLogout(this.Ctx, redirectUrl)
+	//redirectUrl := this.GetString("redirectUrl")
+	//sso.RedirectToLogout(this.Ctx, redirectUrl)
 }
 
 func (this *CommonController) Login() {
-	redirectUrl := this.GetString("redirectUrl")
-	sso.RedirectToLogin(this.Ctx, redirectUrl)
+	//redirectUrl := this.GetString("redirectUrl")
+	//sso.RedirectToLogin(this.Ctx, redirectUrl)
 }

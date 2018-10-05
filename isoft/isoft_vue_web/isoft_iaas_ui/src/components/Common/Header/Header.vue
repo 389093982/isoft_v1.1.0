@@ -1,41 +1,49 @@
 <template>
   <div>
-    <Menu mode="horizontal" :theme="theme1" active-name="1" style="padding-left: 650px;">
-      <Submenu name="1">
-        <template slot="title">
-          <Icon type="ios-stats" />
-          统计分析
-        </template>
-        <MenuGroup title="使用">
-          <MenuItem name="1-1">新增和启动</MenuItem>
-          <MenuItem name="1-2">活跃分析</MenuItem>
-          <MenuItem name="1-3">时段分析</MenuItem>
-        </MenuGroup>
-        <MenuGroup title="留存">
-          <MenuItem name="1-4">用户留存</MenuItem>
-          <MenuItem name="1-5">流失用户</MenuItem>
-        </MenuGroup>
-      </Submenu>
-      <MenuItem name="2">
-        <Icon type="ios-construct" />
-        综合设置
-      </MenuItem>
-      <MenuItem name="3">
-        <Icon type="ios-paper" />
-        内容管理
-      </MenuItem>
-      <Submenu name="4">
-        <template slot="title">
-          <Icon type="ios-people" />
-          <span v-if="loginUserName">{{loginUserName}}</span>
-          <span v-else>登录</span>
-        </template>
-        <MenuGroup title="账号管理">
-          <MenuItem name="4-1" @click.native="cancelUser">注销</MenuItem>
-          <MenuItem name="4-2" @click.native="cancelUser">切换账号</MenuItem>
-        </MenuGroup>
-      </Submenu>
-    </Menu>
+    <!-- 图钉,固定在最顶部 -->
+    <Affix>
+      <Menu mode="horizontal" :theme="theme1" active-name="1" style="padding-left: 650px;">
+        <Submenu name="1">
+          <template slot="title">
+            <Icon type="ios-stats" />
+            精品应用
+          </template>
+          <MenuGroup title="博客天地">
+            <MenuItem name="1-1"><router-link to="/iblog/blog_list">热门博文推荐</router-link></MenuItem>
+            <MenuItem name="1-2"><router-link to="/iblog/catalog_add">新增/编辑分类</router-link></MenuItem>
+            <MenuItem name="1-3"><router-link to="/iblog/blog_add">新增/编辑文章</router-link></MenuItem>
+            <MenuItem name="1-4">我的博客空间</MenuItem>
+          </MenuGroup>
+          <MenuGroup title="在线学习系统">
+            <MenuItem name="1-5"><router-link to="/ilearning/index">精品课程</router-link></MenuItem>
+            <MenuItem name="1-6"><router-link to="/inote/index">云笔记</router-link></MenuItem>
+          </MenuGroup>
+          <MenuGroup title="云存储">
+            <MenuItem name="1-7"><router-link to="/ifile/ifile">IFile 文件存储</router-link></MenuItem>
+            <MenuItem name="1-8"><router-link to="/ifile/ifile">IFile 对象存储</router-link></MenuItem>
+          </MenuGroup>
+        </Submenu>
+        <MenuItem name="2">
+          <Icon type="ios-construct" />
+          综合设置
+        </MenuItem>
+        <MenuItem name="3">
+          <Icon type="ios-paper" />
+          内容管理
+        </MenuItem>
+        <Submenu name="4">
+          <template slot="title">
+            <Icon type="ios-people" />
+            <span v-if="loginUserName">{{loginUserName}}</span>
+            <span v-else>登录</span>
+          </template>
+          <MenuGroup title="账号管理">
+            <MenuItem name="4-1" @click.native="cancelUser">注销</MenuItem>
+            <MenuItem name="4-2" @click.native="cancelUser">切换账号</MenuItem>
+          </MenuGroup>
+        </Submenu>
+      </Menu>
+    </Affix>
   </div>
 </template>
 

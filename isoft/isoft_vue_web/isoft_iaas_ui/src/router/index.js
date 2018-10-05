@@ -6,6 +6,8 @@ import BlogList from '../components/IBlog/BlogList.vue'
 import CatalogAdd from '../components/IBlog/CatalogAdd.vue'
 import BlogAdd from '../components/IBlog/BlogAdd.vue'
 import BlogDetail from '../components/IBlog/BlogDetail.vue'
+import ILearningIndex from '../components/ILearning/Index.vue'
+import CourseSpace from '../components/ILearning/CourseSpace.vue'
 
 Vue.use(Router)
 
@@ -37,6 +39,14 @@ export default new Router({
     {
       path: '/ifile/ifile',
       component: IFile
+    },
+    {
+      path: '/ilearning/index',
+      component: ILearningIndex,
+    },
+    {
+      path: '/ilearning/course_space',
+      component: CourseSpace,
     },
     {
       path: '/',

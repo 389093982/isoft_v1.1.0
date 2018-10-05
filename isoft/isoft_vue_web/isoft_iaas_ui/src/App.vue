@@ -1,38 +1,29 @@
 <template>
   <div id="app">
-    <Layout :style="{minHeight: '100vh'}">
+    <Layout :style="{minHeight: '550px'}">
       <Header>
         <Header/>
       </Header>
-      <Layout>
-        <Sider hide-trigger :style="{background: '#fff'}">
-          <LeftMenu/>
-        </Sider>
-        <Content :style="{padding: '24px', minHeight: '550px', background: '#fff'}">
-          <router-view/>
-        </Content>
-      </Layout>
+      <Content :style="{padding: '18px', minHeight: '550px', background: '#f5f6f7', lineHeight: '24px', fontSize: '14px'}">
+        <router-view/>
+      </Content>
       <Footer>
         <Footer/>
       </Footer>
     </Layout>
-
   </div>
 </template>
 
 <script>
 import Header from './components/Common/Header/Header.vue'
 import Footer from './components/Common/Footer/Footer.vue'
-import LeftMenu from './components/Common/Menu/LeftMenu.vue'
 
 export default {
   name: 'App',
   components: {
-    LeftMenu,
     Header,
     Footer
   },
-
 }
 </script>
 
