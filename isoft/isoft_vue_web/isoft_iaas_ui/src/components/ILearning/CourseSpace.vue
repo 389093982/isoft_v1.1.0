@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <div style="background: #FFFFFF;padding: 10px;">
     <Tabs :animated="false">
       <TabPane label="我要开课">
-        <MyCourseList/>
+        <NewCourse/>
       </TabPane>
       <TabPane label="我的课程">
         <MyCourseList/>
@@ -15,9 +15,11 @@
 
 <script>
   import MyCourseList from "./CourseSpace/MyCourseList.vue"
+  import NewCourse from "./CourseSpace/NewCourse.vue"
+
   export default {
     name: "CourseSpace",
-    components:{MyCourseList}
+    components:{MyCourseList,NewCourse}
   }
 </script>
 

@@ -13,6 +13,7 @@ import (
 	"isoft/isoft/sso"
 	"isoft/isoft_iaas_web/models/iblog"
 	"isoft/isoft_iaas_web/models/ifile"
+	"isoft/isoft_iaas_web/models/ilearning"
 	_ "isoft/isoft_iaas_web/routers"
 	"net/url"
 	"os"
@@ -80,8 +81,17 @@ func initDB() {
 func registerModel() {
 	orm.RegisterModel(new(ifile.HeartBeat))
 	orm.RegisterModel(new(ifile.MetaData))
+
 	orm.RegisterModel(new(iblog.Catalog))
 	orm.RegisterModel(new(iblog.Blog))
+
+	orm.RegisterModel(new(ilearning.Course))
+	orm.RegisterModel(new(ilearning.CourseVedio))
+	orm.RegisterModel(new(ilearning.Favorite))
+	orm.RegisterModel(new(ilearning.TopicTheme))
+	orm.RegisterModel(new(ilearning.TopicReply))
+	orm.RegisterModel(new(ilearning.Note))
+	orm.RegisterModel(new(ilearning.Configuration))
 }
 
 // 自动建表

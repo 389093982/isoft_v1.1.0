@@ -4,6 +4,7 @@ import (
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/plugins/cors"
 	"isoft/isoft_iaas_web/controllers"
+	"isoft/isoft_iaas_web/controllers/ilearning"
 	"isoft/isoft_iaas_web/controllers/sso"
 	"isoft/isoft_iaas_web/controllers/ifile"
 	"isoft/isoft_iaas_web/controllers/iblog"
@@ -22,6 +23,15 @@ func init() {
 	beego.Router("/api/auth/redirectToLogin/", &sso.AuthController{}, "get,post:RedirectToLogin")
 	initIFileRouter()
 	initIBlogRouter()
+	initILearningRouter()
+}
+
+func initILearningRouter()  {
+	beego.Router("/api/ilearning/newCourse", &ilearning.CourseController{}, "get,post:NewCourse")
+	beego.Router("/api/ilearning/getMyCourseList", &ilearning.CourseController{}, "get,post:GetMyCourseList")
+	beego.Router("/api/ilearning/changeCourseImg", &ilearning.CourseController{}, "get,post:ChangeCourseImg")
+	beego.Router("/api/ilearning/uploadVedio", &ilearning.CourseController{}, "get,post:UploadVedio")
+	beego.Router("/api/ilearning/endUpdate", &ilearning.CourseController{}, "get,post:EndUpdate")
 }
 
 func initIFileRouter()  {

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="background: #FFFFFF;padding: 10px;">
     <!-- 显示全部课程类型 -->
     <ShowCourseTypes/>
     <p>111</p>
