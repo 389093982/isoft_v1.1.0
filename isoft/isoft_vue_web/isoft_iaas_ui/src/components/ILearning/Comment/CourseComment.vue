@@ -34,9 +34,8 @@
         // 提交评论内容
         submit_comment:"",
         // 被评论人
-        refer_user_name:this.course.last_updated_by,
+        refer_user_name:"",
         topic_type:"course_topic_type",
-
       }
     },
     methods:{
@@ -58,6 +57,7 @@
     watch:{
       // 监听 props 修改
       course(curVal,oldVal){
+        this.refer_user_name = curVal.course_author;
         this.refreshTopicTheme();
       },
     },

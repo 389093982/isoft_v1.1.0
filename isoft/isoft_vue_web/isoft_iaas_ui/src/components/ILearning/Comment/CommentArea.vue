@@ -4,7 +4,7 @@
       <p><router-link to="">{{topic_reply.created_by}}</router-link></p>
       <p>
         回复<router-link to="">{{topic_reply.refer_user_name}}</router-link>:{{topic_reply.reply_content}}
-        <span style="float: right;"><Time :time="topic_reply.created_time"/></span>
+        <span style="float: right;"><Time :time="topic_reply.created_time" :interval="1"/></span>
       </p>
       <p>
         <Row>
@@ -14,7 +14,7 @@
             </a>
           </Col>
           <Col span="4" style="text-align: right;">
-            <a href="javascript:;" @click="replyComment(topic_reply.id,topic_type.created_by)">回复他/她</a>&nbsp;
+            <a v-if="topic_reply.depth < 4" href="javascript:;" @click="replyComment(topic_reply.id,topic_type.created_by)">回复他/她</a>&nbsp;
             <a href="javascript:;">点赞</a>
           </Col>
         </Row>
