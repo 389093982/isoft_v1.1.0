@@ -48,3 +48,12 @@ export const ToggleFavorite = (favorite_id, favorite_type) => ajax(BASE_URL+'/il
 
 // 查询评论主题
 export const FilterTopicTheme = (topic_id, topic_type) => ajax(BASE_URL+'/ilearning/filterTopicTheme',{topic_id, topic_type},'GET')
+
+// 添加评论
+export const AddTopicReply = (parent_id, reply_content, topic_id, topic_type, refer_user_name) =>
+  ajax(BASE_URL+'/ilearning/addTopicReply',{parent_id, reply_content, topic_id, topic_type, refer_user_name},'GET')
+
+// 获取评论列表
+export const FilterTopicReply = (topic_id, topic_type, parent_id) =>
+  ajax(BASE_URL+'/ilearning/filterTopicReply',{topic_id, topic_type, parent_id},'GET')
+

@@ -18,8 +18,9 @@ type TopicTheme struct {
 
 type TopicReply struct {
 	Id              int         `json:"id"`
-	ParentId        int         `json:"parent_id" orm:"default(0)` // 父级评论回复 id
+	ParentId        int         `json:"parent_id" orm:"default(0)` 		// 父级评论回复 id
 	TopicTheme      *TopicTheme `orm:"rel(fk)" json:"topic_theme"`
+	Depth			int			`json:"depth"`							// 当前评论深度
 	ReplyType       string      `json:"reply_type"`                     // 评论类型
 	ReplyContent    string      `json:"reply_content" orm:"size(4000)"` // 评论内容
 	ReferUserName   string      `json:"refer_user_name"`                // 被评论人

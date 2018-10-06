@@ -37,6 +37,8 @@ func initILearningRouter()  {
 	beego.Router("/api/ilearning/toggle_favorite", &ilearning.CourseController{}, "get,post:ToggleFavorite")
 
 	beego.Router("/api/ilearning/filterTopicTheme", &ilearning.CommentController{}, "get,post:FilterTopicTheme")
+	beego.Router("/api/ilearning/addTopicReply", &ilearning.CommentController{}, "get,post:AddTopicReply")
+	beego.Router("/api/ilearning/filterTopicReply", &ilearning.CommentController{}, "get,post:FilterTopicReply")
 }
 
 func initIFileRouter()  {

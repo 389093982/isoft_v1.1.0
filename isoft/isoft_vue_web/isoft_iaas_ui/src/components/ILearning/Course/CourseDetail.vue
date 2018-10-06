@@ -45,7 +45,7 @@
         </Row>
         <hr>
         <!-- 课程评论 -->
-        <CourseComment :course="course"/>
+        <CourseComment :course="course" style="margin-top: 50px;"/>
       </Col>
       <!-- 推荐系统 -->
       <Col span="8"><Recommand /></Col>
