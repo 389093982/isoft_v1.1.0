@@ -34,13 +34,15 @@
         </Row>
         <hr>
         <!-- 视频链接 -->
-        <Row>
+        <Row style="margin: 10px 0 10px 0">
           <Col span="12" v-for="cVideo in cVideos" style="padding: 5px;">
             <Row>
               <Col span="2">{{cVideo.video_number}}</Col>
               <Col span="18">{{cVideo.video_name}}</Col>
               <Col span="4">
-                <router-link :to="{path:'/ilearning/video_play',query:{video_id:cVideo.id}}"><Button size="small" type="success">立即播放</Button></router-link>
+                <router-link :to="{path:'/ilearning/video_play',query:{course_id:course.id,video_id:cVideo.id}}">
+                  <Button size="small" type="success">立即播放</Button>
+                </router-link>
               </Col>
             </Row>
           </Col>
