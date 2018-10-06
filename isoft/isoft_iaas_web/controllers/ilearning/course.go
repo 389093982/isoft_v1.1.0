@@ -12,11 +12,11 @@ import (
 )
 
 var UploadFileSavePathImg string
-var UploadFileSavePathVedio string
+var UploadFileSavePathVideo string
 
 func init() {
 	UploadFileSavePathImg = beego.AppConfig.String("UploadFileSavePathImg")
-	UploadFileSavePathVedio = beego.AppConfig.String("UploadFileSavePathVedio")
+	UploadFileSavePathVideo = beego.AppConfig.String("UploadFileSavePathVideo")
 }
 
 type CourseController struct {
@@ -47,14 +47,14 @@ func (this *CourseController) ShowCourseDetail() {
 		return
 	}
 	course, err := ilearning.QueryCourseById(id)
-	cVedios, err := ilearning.QueryCourseVedio(id)
+	cVideos, err := ilearning.QueryCourseVideo(id)
 	user_name := this.Ctx.Input.Session("UserName").(string)
 	// 课程是否收藏
 	flag1 := ilearning.IsFavorite(user_name, id, "course_collect")
 	// 课程是否点赞
 	flag2 := ilearning.IsFavorite(user_name, id, "course_praise")
 	this.Data["json"] = &map[string]interface{}{"status":"SUCCESS", "course":&course,
-		"cVedios":&cVedios, "course_collect":flag1, "course_parise":flag2}
+		"cVideos":&cVideos, "course_collect":flag1, "course_parise":flag2}
 	this.ServeJSON()
 }
 
@@ -74,11 +74,11 @@ func (this *CourseController) EndUpdate() {
 	this.ServeJSON()
 }
 
-func (this *CourseController) UploadVedio() {
+func (this *CourseController) UploadVideo() {
 	user_name := this.Ctx.Input.Session("UserName").(string)
 	// 获取课程 id
 	id, err1 := this.GetInt("id")
-	vedio_number, err2 := this.GetInt("vedio_number")
+	video_number, err2 := this.GetInt("video_number")
 	f, fh, err3 := this.GetFile("file")
 	defer f.Close()
 	// 检查文件格式是否是视频格式
@@ -90,16 +90,16 @@ func (this *CourseController) UploadVedio() {
 		// fh.Filename 原始文件名,存储时使用 UUID 进行重命名
 		u := uuid.NewV4()
 		newFileName := u.String() + path.Ext(fh.Filename)
-		saveFilePath := path.Join(UploadFileSavePathVedio, newFileName)
+		saveFilePath := path.Join(UploadFileSavePathVideo, newFileName)
 		// 与 this.GetFile("file") 保持一致的名字
 		err := this.SaveToFile("file", saveFilePath)
 		if err == nil {
 			// 刷新 DB 记录
-			id, flag := ilearning.UploadVedio(id, vedio_number, "http://localhost:8086/" + saveFilePath, fh.Filename)
+			id, flag := ilearning.UploadVideo(id, video_number, "http://localhost:8086/" + saveFilePath, fh.Filename)
 			// 刷新评论主题
 			topic_theme := ilearning.TopicTheme{}
 			topic_theme.TopicId = int(id)
-			topic_theme.TopicType = "course_vedio_topic_type"
+			topic_theme.TopicType = "course_video_topic_type"
 			topic_theme.TopicContent = strings.Join([]string{user_name, "@", fh.Filename,
 				"视频更新啦，喜欢该课程的小伙伴们不要错过奥，简洁、直观、免费的课程，能让你更快的掌握知识"}, "")
 			topic_theme.CreatedBy = user_name

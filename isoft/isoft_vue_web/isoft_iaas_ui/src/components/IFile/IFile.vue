@@ -31,7 +31,7 @@
     </Modal>
 
     <Modal
-      v-model="playVedioModel"
+      v-model="playVideoModel"
       title="播放视频"
       :mask-closable="false">
       <video ref="video" width="320" height="240" controls>
@@ -54,8 +54,8 @@
       return {
         showImgModel:false,
         showImageSrc:'',
-        playVedioModel:false,
-        playVedioSrc:'',
+        playVideoModel:false,
+        playVideoSrc:'',
         // 显示对象分片信息对话框
         showShardsModel:false,
         // 对象分片信息
@@ -155,7 +155,7 @@
                   },
                   on: {
                     click: () => {
-                      this.playVedio(params.index);
+                      this.playVideo(params.index);
                     }
                   }
                 }, '视频播放'),
@@ -205,12 +205,12 @@
         this.showImageSrc = "http://127.0.0.1:10001/download/" + hash  + ".mp4";
         this.showImgModel = true;
       },
-      playVedio(index){
+      playVideo(index){
         const name = this.metadatas[index]['name'];
         const version = this.metadatas[index]['version'];
         const hash = this.metadatas[index]['hash'];
         this.$refs.video.src = "http://127.0.0.1:10001/download/" + hash  + ".mp4";
-        this.playVedioModel = true;
+        this.playVideoModel = true;
       },
     },
     mounted:function(){

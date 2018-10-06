@@ -20,11 +20,11 @@ type Course struct {
 	WatchNumber    int     `json:"watch_number"`      // 课程观看次数
 }
 
-type CourseVedio struct {
+type CourseVideo struct {
 	Id          int     `json:"id"`
 	Course      *Course `orm:"rel(fk)" json:"course"`
-	VedioName   string  `json:"vedio_name"`   // 视频名称
-	VedioNumber int     `json:"vedio_number"` // 视频集数编号
+	VideoName   string  `json:"video_name"`   // 视频名称
+	VideoNumber int     `json:"video_number"` // 视频集数编号
 	FirstPlay   string  `json:"first_play"`   // 第一存储/播放位置
 	SecondPlay  string  `json:"second_play"`  // 第二存储/播放位置
 }
@@ -49,9 +49,9 @@ func UpdateWatchNumber(course_id int) {
 	})
 }
 
-func QueryCourseVedio(id int) (cVedios []CourseVedio, err error) {
+func QueryCourseVideo(id int) (cVideos []CourseVideo, err error) {
 	o := orm.NewOrm()
-	_, err = o.QueryTable("course_vedio").Filter("course_id", id).All(&cVedios)
+	_, err = o.QueryTable("course_video").Filter("course_id", id).All(&cVideos)
 	return
 }
 
@@ -68,24 +68,24 @@ func EndUpdate(id int) (flag bool) {
 }
 
 // 四个参数：课程 id,视频集数,存储文件路径,原始文件名
-func UploadVedio(course_id int, vedio_number int, saveFilePath string, fileName string) (id int64, flag bool) { // 默认 flag 为 false
+func UploadVideo(course_id int, video_number int, saveFilePath string, fileName string) (id int64, flag bool) { // 默认 flag 为 false
 	o := orm.NewOrm()
 	// 查询 course 相关信息
 	var course Course
 	o.QueryTable("course").Filter("id", course_id).Limit(1).One(&course)
-	count, err1 := o.QueryTable("course_vedio").Filter("course_id", course_id).Filter("vedio_number", vedio_number).Count()
+	count, err1 := o.QueryTable("course_video").Filter("course_id", course_id).Filter("video_number", video_number).Count()
 	if err1 == nil {
 		if count > 0 {
-			_, err2 := o.QueryTable("course_vedio").Filter("course_id", course_id).
-				Filter("vedio_number", vedio_number).Update(orm.Params{
-				"vedio_name": fileName, "first_play": saveFilePath, "second_play": saveFilePath,
+			_, err2 := o.QueryTable("course_video").Filter("course_id", course_id).
+				Filter("video_number", video_number).Update(orm.Params{
+				"video_name": fileName, "first_play": saveFilePath, "second_play": saveFilePath,
 			})
 			if err2 == nil {
 				flag = true
 			}
 		} else {
-			var cVedio = CourseVedio{Course: &course, VedioName: fileName, VedioNumber: vedio_number, FirstPlay: saveFilePath, SecondPlay: saveFilePath}
-			_, err3 := o.Insert(&cVedio)
+			var cVideo = CourseVideo{Course: &course, VideoName: fileName, VideoNumber: video_number, FirstPlay: saveFilePath, SecondPlay: saveFilePath}
+			_, err3 := o.Insert(&cVideo)
 			if err3 == nil {
 				flag = true
 			}
@@ -93,8 +93,8 @@ func UploadVedio(course_id int, vedio_number int, saveFilePath string, fileName 
 	}
 	if flag {
 		// 更新完视频需要更新课程表里面的视频集数
-		if vedio_number > course.CourseNumber {
-			course.CourseNumber = vedio_number
+		if video_number > course.CourseNumber {
+			course.CourseNumber = video_number
 			if _, err := o.Update(&course); err == nil {
 				flag = true
 			}
@@ -103,7 +103,7 @@ func UploadVedio(course_id int, vedio_number int, saveFilePath string, fileName 
 
 	// 查询记录 id
 	var list orm.ParamsList
-	o.QueryTable("course_vedio").Filter("course_id", course_id).Filter("vedio_number", vedio_number).ValuesFlat(&list, "id")
+	o.QueryTable("course_video").Filter("course_id", course_id).Filter("video_number", video_number).ValuesFlat(&list, "id")
 	_id, ok := list[0].(int64)
 	if ok {
 		id = _id

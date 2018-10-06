@@ -35,11 +35,13 @@
         <hr>
         <!-- 视频链接 -->
         <Row>
-          <Col span="12" v-for="cVedio in cVedios" style="padding: 5px;">
+          <Col span="12" v-for="cVideo in cVideos" style="padding: 5px;">
             <Row>
-              <Col span="2">{{cVedio.vedio_number}}</Col>
-              <Col span="18">{{cVedio.vedio_name}}</Col>
-              <Col span="4"><Button size="small" type="success">立即播放</Button></Col>
+              <Col span="2">{{cVideo.video_number}}</Col>
+              <Col span="18">{{cVideo.video_name}}</Col>
+              <Col span="4">
+                <router-link :to="{path:'/ilearning/video_play',query:{video_id:cVideo.id}}"><Button size="small" type="success">立即播放</Button></router-link>
+              </Col>
             </Row>
           </Col>
         </Row>
@@ -67,7 +69,7 @@
         // 当前课程
         course:{},
         // 视频清单
-        cVedios:[],
+        cVideos:[],
         // 课程收藏
         course_collect:false,
         // 课程点赞
@@ -79,7 +81,7 @@
         const result = await ShowCourseDetail(course_id);
         if(result.status=="SUCCESS"){
           this.course = result.course;
-          this.cVedios = result.cVedios;
+          this.cVideos = result.cVideos;
           this.course_collect = result.course_collect;
           this.course_parise = result.course_parise;
         }

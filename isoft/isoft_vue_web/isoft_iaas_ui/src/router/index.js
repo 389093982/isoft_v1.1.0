@@ -9,6 +9,7 @@ import BlogDetail from '../components/IBlog/BlogDetail.vue'
 import ILearningIndex from '../components/ILearning/Index.vue'
 import CourseSpace from '../components/ILearning/CourseSpace.vue'
 import CourseDetail from '../components/ILearning/Course/CourseDetail.vue'
+import VideoPay from '../components/ILearning/Course/VideoPay.vue'
 
 Vue.use(Router)
 
@@ -52,6 +53,10 @@ export default new Router({
     {
       path: '/ilearning/course_detail',
       component: CourseDetail,
+    },
+    {
+      path: '/ilearning/video_play',
+      component: VideoPay,
     },
     {
       path: '/',

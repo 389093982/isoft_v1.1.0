@@ -28,7 +28,7 @@
             </span>
           </p>
           <p><router-link :to="{path:'/ilearning/course_detail',query:{course_id:myCourse.id}}" style="color:green;font-family: Arial;font-weight: 700;">查看视频详情</router-link></p>
-          <p><UploadVedio v-if="myCourse.course_status != '已完结'" :course="myCourse" @uploadComplete="uploadVedioComplete"/></p>
+          <p><UploadVideo v-if="myCourse.course_status != '已完结'" :course="myCourse" @uploadComplete="uploadVideoComplete"/></p>
         </Col>
       </Row>
     </div>
@@ -39,11 +39,11 @@
   import {GetMyCourseList} from "../../../api"
   import {EndUpdate} from "../../../api"
   import ChangeCourseImg from "../Course/ChangeCourseImg.vue"
-  import UploadVedio from "../Course/UploadVedio.vue"
+  import UploadVideo from "../Course/UploadVideo.vue"
 
   export default {
     name: "MyCourseList",
-    components:{ChangeCourseImg,UploadVedio},
+    components:{ChangeCourseImg,UploadVideo},
     data(){
       return {
         // 我的课程
@@ -60,7 +60,7 @@
       uploadImgComplete:function () {
         this.refreshMyCourseList();
       },
-      uploadVedioComplete:function () {
+      uploadVideoComplete:function () {
         this.refreshMyCourseList();
       },
       endUpdate:async function (course_id) {
