@@ -39,3 +39,12 @@ export const GetMyCourseList = () => ajax(BASE_URL+'/ilearning/getMyCourseList',
 
 // 完结视频更新
 export const EndUpdate = (course_id) => ajax(BASE_URL+'/ilearning/endUpdate',{course_id},'GET')
+
+// 显示课程详细信息
+export const ShowCourseDetail = (course_id) => ajax(BASE_URL+'/ilearning/showCourseDetail',{course_id},'GET')
+
+// 切换收藏点赞
+export const ToggleFavorite = (favorite_id, favorite_type) => ajax(BASE_URL+'/ilearning/toggle_favorite',{favorite_id, favorite_type},'GET')
+
+// 查询评论主题
+export const FilterTopicTheme = (topic_id, topic_type) => ajax(BASE_URL+'/ilearning/filterTopicTheme',{topic_id, topic_type},'GET')

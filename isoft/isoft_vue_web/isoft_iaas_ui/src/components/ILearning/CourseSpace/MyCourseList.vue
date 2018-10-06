@@ -27,7 +27,7 @@
                   @click="endUpdate(myCourse.id)">完结更新</a>
             </span>
           </p>
-          <p><router-link to="" style="color:green;font-family: Arial;font-weight: 700;">查看视频详情</router-link></p>
+          <p><router-link :to="{path:'/ilearning/course_detail',query:{course_id:myCourse.id}}" style="color:green;font-family: Arial;font-weight: 700;">查看视频详情</router-link></p>
           <p><UploadVedio v-if="myCourse.course_status != '已完结'" :course="myCourse" @uploadComplete="uploadVedioComplete"/></p>
         </Col>
       </Row>

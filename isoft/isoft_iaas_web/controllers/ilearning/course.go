@@ -23,6 +23,41 @@ type CourseController struct {
 	beego.Controller
 }
 
+func (this *CourseController) ToggleFavorite() {
+	// 获取课程 id
+	favorite_id, _ := this.GetInt("favorite_id")
+	favorite_type := this.GetString("favorite_type")
+	user_name := this.Ctx.Input.Session("UserName").(string)
+	flag := ilearning.IsFavorite(user_name, favorite_id, favorite_type)
+	if flag {
+		ilearning.DelFavorite(user_name, favorite_id, favorite_type)
+	} else {
+		ilearning.AddFavorite(user_name, favorite_id, favorite_type)
+	}
+	this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
+	this.ServeJSON()
+}
+
+func (this *CourseController) ShowCourseDetail() {
+	// 获取课程 id
+	id, err := this.GetInt("course_id")
+	if err != nil{
+		this.Data["json"] = &map[string]interface{}{"status":"SUCCESS"}
+		this.ServeJSON()
+		return
+	}
+	course, err := ilearning.QueryCourseById(id)
+	cVedios, err := ilearning.QueryCourseVedio(id)
+	user_name := this.Ctx.Input.Session("UserName").(string)
+	// 课程是否收藏
+	flag1 := ilearning.IsFavorite(user_name, id, "course_collect")
+	// 课程是否点赞
+	flag2 := ilearning.IsFavorite(user_name, id, "course_praise")
+	this.Data["json"] = &map[string]interface{}{"status":"SUCCESS", "course":&course,
+		"cVedios":&cVedios, "course_collect":flag1, "course_parise":flag2}
+	this.ServeJSON()
+}
+
 func (this *CourseController) EndUpdate() {
 	// 获取课程 id
 	id, err := this.GetInt("course_id")
@@ -64,7 +99,7 @@ func (this *CourseController) UploadVedio() {
 			// 刷新评论主题
 			topic_theme := ilearning.TopicTheme{}
 			topic_theme.TopicId = int(id)
-			topic_theme.TopicType = "course_vedio#id"
+			topic_theme.TopicType = "course_vedio_topic_type"
 			topic_theme.TopicContent = strings.Join([]string{user_name, "@", fh.Filename,
 				"视频更新啦，喜欢该课程的小伙伴们不要错过奥，简洁、直观、免费的课程，能让你更快的掌握知识"}, "")
 			topic_theme.CreatedBy = user_name
@@ -153,7 +188,7 @@ func (this *CourseController) NewCourse() {
 	}
 	topic_theme := ilearning.TopicTheme{}
 	topic_theme.TopicId = int(id)
-	topic_theme.TopicType = "course#id"
+	topic_theme.TopicType = "course_topic_type"
 	topic_theme.TopicContent = strings.Join([]string{user_name, "@", course_name,
 		"课程更新啦，喜欢该课程的小伙伴们不要错过奥，简洁、直观、免费的课程，能让你更快的掌握知识@", course_short_desc}, "")
 	topic_theme.CreatedBy = user_name

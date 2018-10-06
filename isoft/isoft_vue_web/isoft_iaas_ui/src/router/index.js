@@ -8,6 +8,7 @@ import BlogAdd from '../components/IBlog/BlogAdd.vue'
 import BlogDetail from '../components/IBlog/BlogDetail.vue'
 import ILearningIndex from '../components/ILearning/Index.vue'
 import CourseSpace from '../components/ILearning/CourseSpace.vue'
+import CourseDetail from '../components/ILearning/Course/CourseDetail.vue'
 
 Vue.use(Router)
 
@@ -47,6 +48,10 @@ export default new Router({
     {
       path: '/ilearning/course_space',
       component: CourseSpace,
+    },
+    {
+      path: '/ilearning/course_detail',
+      component: CourseDetail,
     },
     {
       path: '/',

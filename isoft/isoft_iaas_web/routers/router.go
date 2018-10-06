@@ -32,6 +32,11 @@ func initILearningRouter()  {
 	beego.Router("/api/ilearning/changeCourseImg", &ilearning.CourseController{}, "get,post:ChangeCourseImg")
 	beego.Router("/api/ilearning/uploadVedio", &ilearning.CourseController{}, "get,post:UploadVedio")
 	beego.Router("/api/ilearning/endUpdate", &ilearning.CourseController{}, "get,post:EndUpdate")
+	beego.Router("/api/ilearning/showCourseDetail", &ilearning.CourseController{}, "get,post:ShowCourseDetail")
+
+	beego.Router("/api/ilearning/toggle_favorite", &ilearning.CourseController{}, "get,post:ToggleFavorite")
+
+	beego.Router("/api/ilearning/filterTopicTheme", &ilearning.CommentController{}, "get,post:FilterTopicTheme")
 }
 
 func initIFileRouter()  {
