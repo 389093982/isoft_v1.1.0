@@ -25,6 +25,17 @@ func (this *CommentController) FilterTopicReply() {
 	this.ServeJSON()
 }
 
+func getIncrementDepth(parent_id int) int {
+	if parent_id == 0{
+		return 1
+	}
+	topic_reply, err := ilearning.QueryTopicReplyById(parent_id)
+	if err != nil{
+		return 1
+	}
+	return topic_reply.Depth + 1
+}
+
 func (this *CommentController) AddTopicReply() {
 	user_name := this.Ctx.Input.Session("UserName").(string)
 	// 获取 topic_id 和 topic_type
@@ -50,6 +61,8 @@ func (this *CommentController) AddTopicReply() {
 	topic_reply.CreatedTime = time.Now()
 	topic_reply.LastUpdatedBy = user_name
 	topic_reply.LastUpdatedTime = time.Now()
+	// 深度 + 1
+	topic_reply.Depth = getIncrementDepth(parent_id)
 	_, err := ilearning.AddTopicReply(&topic_reply)
 	ilearning.ModifySubReplyAmount(parent_id)
 	if err == nil {

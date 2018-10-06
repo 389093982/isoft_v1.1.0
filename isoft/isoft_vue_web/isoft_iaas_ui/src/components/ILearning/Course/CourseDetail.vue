@@ -57,7 +57,7 @@
   import {ShowCourseDetail} from "../../../api"
   import {ToggleFavorite} from "../../../api"
   import Recommand from "./Recommand.vue"
-  import CourseComment from "./CourseComment.vue"
+  import CourseComment from "../Comment/CourseComment.vue"
 
   export default {
     name: "CourseDetail",

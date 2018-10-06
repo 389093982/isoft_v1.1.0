@@ -40,6 +40,12 @@ func AddTopicTheme(topic_theme *TopicTheme) (id int64, err error) {
 	return
 }
 
+func QueryTopicReplyById(id int) (topic_reply TopicReply, err error) {
+	o := orm.NewOrm()
+	err = o.QueryTable("topic_reply").Filter("id", id).One(&topic_reply)
+	return
+}
+
 func FilterTopicTheme(topic_id int, topic_type string) (topic_theme TopicTheme, err error) {
 	o := orm.NewOrm()
 	err = o.QueryTable("topic_theme").Filter("topic_id", topic_id).Filter("topic_type", topic_type).One(&topic_theme)
