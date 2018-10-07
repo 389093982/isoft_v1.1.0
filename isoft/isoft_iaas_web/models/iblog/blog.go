@@ -80,12 +80,12 @@ func PublishBlogById(blog_id int64) (err error) {
 }
 
 // 更新博客浏览次数
-func UpdateBlogViews(blog_id int64) (err error)  {
+func UpdateBlogViews(blog_id int64) (err error) {
 	blog, err := QueryBlogById(blog_id)
-	if err != nil{
+	if err != nil {
 		return
 	}
-	blog.Views ++
+	blog.Views++
 	_, err = InsertOrUpdateBlog(&blog)
 	return
 }

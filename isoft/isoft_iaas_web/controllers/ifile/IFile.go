@@ -113,7 +113,7 @@ func (this *IFileController) LocateShards() {
 			this.ServeJSON()
 		}
 	}()
-	hash := strings.Replace(strings.TrimSpace(this.GetString("hash"))," ","+",-1)
+	hash := strings.Replace(strings.TrimSpace(this.GetString("hash")), " ", "+", -1)
 	url := fmt.Sprintf("http://%s/locate/%s", isoft_istorage_web, hash)
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
@@ -141,16 +141,16 @@ func (this *IFileController) FileDownload() {
 	version := strings.TrimSpace(this.GetString("version", ""))
 	app_name := strings.TrimSpace(this.GetString("app_name", ""))
 	var _url string
-	if app_name == "fileServer"{
+	if app_name == "fileServer" {
 		_version, err := strconv.Atoi(version)
-		if err != nil{
+		if err != nil {
 			_version = 1
 		}
 		metadata, err := ifile.GetMetadata(name, _version, app_name)
-		if err == nil{
+		if err == nil {
 			_url = fmt.Sprintf("http://%s/download/%s", isoft_istorage_web2, url.PathEscape(metadata.Hash))
 		}
-	}else{
+	} else {
 		_url = fmt.Sprintf("http://%s/objects/%s?version=%s", isoft_istorage_web, name, version)
 	}
 	req, err := http.NewRequest("GET", _url, nil)
@@ -162,7 +162,7 @@ func (this *IFileController) FileDownload() {
 		panic(err)
 	}
 	ctype := mime.TypeByExtension(filepath.Ext(name))
-	if ctype != ""{
+	if ctype != "" {
 		ctype = "application/octet-stream"
 	}
 	this.Ctx.ResponseWriter.Header().Set("Content-Type", ctype)
@@ -171,5 +171,3 @@ func (this *IFileController) FileDownload() {
 	this.Ctx.ResponseWriter.Header().Set("Content-Disposition", fmt.Sprintf("attachment; filename=\"%s\"", name))
 	io.Copy(this.Ctx.ResponseWriter, res.Body)
 }
-
-

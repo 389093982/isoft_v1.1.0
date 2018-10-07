@@ -11,7 +11,7 @@ type MetaData struct {
 	Version         int       `json:"version"` // 对象版本
 	Size            int64     `json:"size"`    // 对象大小
 	Hash            string    `json:"hash"`    // 对象 hash 值
-	AppName			string	  `json:"app_name"`
+	AppName         string    `json:"app_name"`
 	CreatedBy       string    `json:"created_by"`
 	CreatedTime     time.Time `json:"created_time"`
 	LastUpdatedBy   string    `json:"last_updated_by"`
@@ -41,7 +41,7 @@ func PutMetadata(metadata *MetaData) (err error) {
 func SearchAllVersions(name string, from, size int64) (metadatas []MetaData, err error) {
 	o := orm.NewOrm()
 	qs := o.QueryTable("meta_data")
-	_, err = qs.Filter("name",name).Limit(size, from).All(&metadatas)
+	_, err = qs.Filter("name", name).Limit(size, from).All(&metadatas)
 	return
 }
 
@@ -59,7 +59,6 @@ func HasHash(hash string) bool {
 	return b
 }
 
-
 func FilterPageMetadatas(condArr map[string]interface{}, page int, offset int) (metaDatas []MetaData, counts int64, err error) {
 	o := orm.NewOrm()
 	qs := o.QueryTable("meta_data")
@@ -68,11 +67,10 @@ func FilterPageMetadatas(condArr map[string]interface{}, page int, offset int) (
 		qs.Filter("name__contains", name)
 	}
 	counts, _ = qs.Count()
-	_, err = qs.OrderBy("-last_updated_time","-version").Limit(offset, (page-1)*offset).All(&metaDatas)
+	_, err = qs.OrderBy("-last_updated_time", "-version").Limit(offset, (page-1)*offset).All(&metaDatas)
 	return
 }
 
-func SearchHashSize()  {
+func SearchHashSize() {
 
 }
-

@@ -14,17 +14,16 @@ type CatalogController struct {
 	beego.Controller
 }
 
-func (this *CatalogController) GetMyCatalogs()  {
+func (this *CatalogController) GetMyCatalogs() {
 	user_name := this.Ctx.Input.Session("UserName").(string)
 	catalogs, err := iblog.QueryAllCatalog(user_name)
 	if err != nil {
 		this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
-	}else{
+	} else {
 		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "catalogs": &catalogs}
 	}
 	this.ServeJSON()
 }
-
 
 func (this *CatalogController) Edit() {
 	catalog_id, err := this.GetInt64("catalog_id")

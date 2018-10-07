@@ -17,9 +17,8 @@ type AuthController struct {
 	beego.Controller
 }
 
-func (this *AuthController) RedirectToLogin()  {
+func (this *AuthController) RedirectToLogin() {
 	url := fmt.Sprintf("%s/user/login", isoft_sso_url)
 	redirectUrl := this.GetString("redirectUrl")
-	this.Redirect(url + "?redirectUrl=" + redirectUrl, 301)
+	this.Redirect(url+"?redirectUrl="+redirectUrl, 301)
 }
-

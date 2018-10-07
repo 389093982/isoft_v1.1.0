@@ -7,7 +7,7 @@ import (
 
 type HeartBeat struct {
 	Id              int64     `json:"id"`
-	Addr      		string    `json:"addr"` // 服务器名称
+	Addr            string    `json:"addr"` // 服务器名称
 	CreatedBy       string    `json:"created_by"`
 	CreatedTime     time.Time `json:"created_time"`
 	LastUpdatedBy   string    `json:"last_updated_by"`
@@ -28,8 +28,8 @@ type LocateMessage struct {
 func QueryAllAliveHeartBeat() (heartBeats []HeartBeat, err error) {
 	o := orm.NewOrm()
 	qs := o.QueryTable("heart_beat")
-	s, _ := time.ParseDuration("-1s")			// 1s 前
-	_, err = qs.Filter("last_updated_time__gt", time.Now().Add(s * 10)).All(&heartBeats)		// 10s 前
+	s, _ := time.ParseDuration("-1s")                                                  // 1s 前
+	_, err = qs.Filter("last_updated_time__gt", time.Now().Add(s*10)).All(&heartBeats) // 10s 前
 	return
 }
 

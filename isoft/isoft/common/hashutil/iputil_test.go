@@ -9,4 +9,3 @@ import (
 func Test_GetLocalIp(t *testing.T) {
 	fmt.Println(osutil.GetLocalIp())
 }
-

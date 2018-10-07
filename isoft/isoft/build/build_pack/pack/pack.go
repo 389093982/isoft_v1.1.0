@@ -59,9 +59,9 @@ func StartAllPackTask(packApps *PackApps, filterAppName string) (err error) {
 func StartPackVueTask(appName, appPath string, packApp PackApp) (err error) {
 	// 运行命令
 	RunCommand("npm", "run", "build")
-	os.RemoveAll(fmt.Sprintf("D:/build/autopack/%s", appName + "_dist"))
+	os.RemoveAll(fmt.Sprintf("D:/build/autopack/%s", appName+"_dist"))
 	// 移动文件
-	err = os.Rename("./dist", fmt.Sprintf("D:/build/autopack/%s", appName + "_dist"))
+	err = os.Rename("./dist", fmt.Sprintf("D:/build/autopack/%s", appName+"_dist"))
 	return
 }
 

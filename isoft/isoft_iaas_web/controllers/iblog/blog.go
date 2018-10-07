@@ -17,7 +17,7 @@ func (this *BlogController) GetMyBlogs() {
 	blogs, err := iblog.QueryAllBlog(user_name)
 	if err != nil {
 		this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
-	}else{
+	} else {
 		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "blogs": &blogs}
 	}
 	this.ServeJSON()
@@ -29,10 +29,10 @@ func (this *BlogController) ShowBlogDetail() {
 		iblog.UpdateBlogViews(blog_id)
 		blog, err := iblog.QueryBlogById(blog_id)
 		if err == nil {
-			this.Data["json"] = &map[string]interface{}{"status":"SUCCESS","blog":&blog}
+			this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "blog": &blog}
 		}
-	}else{
-		this.Data["json"] = &map[string]interface{}{"status":"ERROR"}
+	} else {
+		this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
 	}
 	this.ServeJSON()
 }
@@ -138,10 +138,10 @@ func (this *BlogController) BlogList() {
 	blogs, count, err := iblog.QueryBlog(condArr, current_page, offset)
 	paginator := pagination.SetPaginator(this.Ctx, offset, count)
 	if err != nil {
-		this.Data["json"] = &map[string]interface{}{"status":"ERROR"}
-	}else{
+		this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
+	} else {
 		paginatorMap := pageutil.Paginator(paginator.Page(), paginator.PerPageNums, paginator.Nums())
-		this.Data["json"] = &map[string]interface{}{"status":"SUCCESS","blogs":&blogs,"paginator":&paginatorMap}
+		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "blogs": &blogs, "paginator": &paginatorMap}
 	}
 	this.ServeJSON()
 }

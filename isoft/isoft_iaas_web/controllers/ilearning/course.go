@@ -41,8 +41,8 @@ func (this *CourseController) ToggleFavorite() {
 func (this *CourseController) ShowCourseDetail() {
 	// 获取课程 id
 	id, err := this.GetInt("course_id")
-	if err != nil{
-		this.Data["json"] = &map[string]interface{}{"status":"SUCCESS"}
+	if err != nil {
+		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
 		this.ServeJSON()
 		return
 	}
@@ -53,8 +53,8 @@ func (this *CourseController) ShowCourseDetail() {
 	flag1 := ilearning.IsFavorite(user_name, id, "course_collect")
 	// 课程是否点赞
 	flag2 := ilearning.IsFavorite(user_name, id, "course_praise")
-	this.Data["json"] = &map[string]interface{}{"status":"SUCCESS", "course":&course,
-		"cVideos":&cVideos, "course_collect":flag1, "course_parise":flag2}
+	this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "course": &course,
+		"cVideos": &cVideos, "course_collect": flag1, "course_parise": flag2}
 	this.ServeJSON()
 }
 
@@ -95,7 +95,7 @@ func (this *CourseController) UploadVideo() {
 		err := this.SaveToFile("file", saveFilePath)
 		if err == nil {
 			// 刷新 DB 记录
-			id, flag := ilearning.UploadVideo(id, video_number, "http://localhost:8086/" + saveFilePath, fh.Filename)
+			id, flag := ilearning.UploadVideo(id, video_number, "http://localhost:8086/"+saveFilePath, fh.Filename)
 			// 刷新评论主题
 			comment_theme := ilearning.CommentTheme{}
 			comment_theme.CommentId = int(id)
@@ -139,7 +139,7 @@ func (this *CourseController) ChangeCourseImg() {
 		saveFilePath := path.Join(UploadFileSavePathImg, newFileName)
 		err := this.SaveToFile("file", saveFilePath)
 		// 更新图片
-		flag := ilearning.ChangeImage(id, "http://localhost:8086/" + saveFilePath)
+		flag := ilearning.ChangeImage(id, "http://localhost:8086/"+saveFilePath)
 		if err == nil && flag == true {
 			this.Data["json"] = &map[string]interface{}{"path": saveFilePath, "status": "SUCCESS"}
 		} else {
@@ -149,7 +149,7 @@ func (this *CourseController) ChangeCourseImg() {
 	}
 }
 
-func (this *CourseController) GetMyCourseList()  {
+func (this *CourseController) GetMyCourseList() {
 	condArr := make(map[string]string)
 	offset, _ := this.GetInt("offset", 10)            // 每页记录数
 	current_page, _ := this.GetInt("current_page", 1) // 当前页
@@ -158,14 +158,13 @@ func (this *CourseController) GetMyCourseList()  {
 	paginator := pagination.SetPaginator(this.Ctx, offset, count)
 	//初始化
 	if err != nil {
-		this.Data["json"] = &map[string]interface{}{"status":"ERROR"}
-	}else{
+		this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
+	} else {
 		paginatorMap := pageutil.Paginator(paginator.Page(), paginator.PerPageNums, paginator.Nums())
-		this.Data["json"] = &map[string]interface{}{"status":"SUCCESS","courses":&courses,"paginator":&paginatorMap}
+		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "courses": &courses, "paginator": &paginatorMap}
 	}
 	this.ServeJSON()
 }
-
 
 func (this *CourseController) NewCourse() {
 	user_name := this.Ctx.Input.Session("UserName").(string)
@@ -182,9 +181,9 @@ func (this *CourseController) NewCourse() {
 	course.CourseAuthor = user_name
 	id, err := ilearning.AddNewCourse(&course)
 	if err == nil {
-		this.Data["json"] = &map[string]interface{}{"status":"SUCCESS"}
+		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
 	} else {
-		this.Data["json"] = &map[string]interface{}{"status":"ERROR"}
+		this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
 	}
 	comment_theme := ilearning.CommentTheme{}
 	comment_theme.CommentId = int(id)

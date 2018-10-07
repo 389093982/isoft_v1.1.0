@@ -168,4 +168,3 @@ func QueryCourse(condArr map[string]string, page int, offset int) (courses []Cou
 	qs.All(&courses)
 	return
 }
-

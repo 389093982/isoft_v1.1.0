@@ -63,7 +63,7 @@ func (w *TempPutStream) Commit(good bool) {
 		method = "PUT"
 	}
 
-	defer utils.RecordTimeCostForMethod("lib objectstream Commit " + method, time.Now())
+	defer utils.RecordTimeCostForMethod("lib objectstream Commit "+method, time.Now())
 
 	// delete 情况下删除临时文件, put 情况下将临时文件转正
 	request, _ := http.NewRequest(method, "http://"+w.Server+"/temp/"+w.Uuid, nil)

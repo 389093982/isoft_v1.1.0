@@ -12,7 +12,7 @@ import (
 	"strings"
 )
 
-func main()  {
+func main() {
 	// 启动前初始化参数,参数初始化失败会终止程序
 	cfg.InitConfigWithOsArgs(os.Args)
 

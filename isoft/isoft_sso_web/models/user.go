@@ -69,4 +69,3 @@ func QueryUserTokenByName(username string) (userToken UserToken, err error) {
 	err = o.QueryTable("user_token").Filter("user_name", username).OrderBy("-created_time").One(&userToken)
 	return
 }
-

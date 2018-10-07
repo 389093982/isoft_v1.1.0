@@ -13,7 +13,7 @@ func Locate(hash string) (locateInfo map[int]string) {
 	defer utils.RecordTimeCostForMethod("apiServer locate Locate", time.Now())
 
 	proxy := &lib.LocateAndHeartbeatProxy{}
-	return proxy.SendAndReceiveLocateInfo(heartbeat.GetDataServers(),hash, 3)
+	return proxy.SendAndReceiveLocateInfo(heartbeat.GetDataServers(), hash, 3)
 }
 
 func Exist(hash string) bool {

@@ -7,28 +7,28 @@ import (
 
 type CommentTheme struct {
 	Id              int       `json:"id"`
-	CommentId         int       `json:"comment_id"`                       // 评论主题 id
-	CommentType       string    `json:"comment_type"`                     // 评论主题类型
-	CommentContent    string    `json:"comment_content" orm:"size(4000)"` // 评论主题内容
-	CreatedBy       string    `json:"created_by"`                     // 评论主题创建人
-	CreatedTime     time.Time `json:"created_time"`                   // 评论主题创建时间
-	LastUpdatedBy   string    `json:"last_updated_by"`                // 评论主题修改人
-	LastUpdatedTime time.Time `json:"last_updated_time"`              // 评论主题修改时间
+	CommentId       int       `json:"comment_id"`                       // 评论主题 id
+	CommentType     string    `json:"comment_type"`                     // 评论主题类型
+	CommentContent  string    `json:"comment_content" orm:"size(4000)"` // 评论主题内容
+	CreatedBy       string    `json:"created_by"`                       // 评论主题创建人
+	CreatedTime     time.Time `json:"created_time"`                     // 评论主题创建时间
+	LastUpdatedBy   string    `json:"last_updated_by"`                  // 评论主题修改人
+	LastUpdatedTime time.Time `json:"last_updated_time"`                // 评论主题修改时间
 }
 
 type CommentReply struct {
-	Id              int         `json:"id"`
-	ParentId        int         `json:"parent_id" orm:"default(0)` 		// 父级评论回复 id
-	CommentTheme      *CommentTheme `orm:"rel(fk)" json:"comment_theme"`
-	Depth			int			`json:"depth"`							// 当前评论深度
-	ReplyType       string      `json:"reply_type"`                     // 评论类型
-	ReplyContent    string      `json:"reply_content" orm:"size(4000)"` // 评论内容
-	ReferUserName   string      `json:"refer_user_name"`                // 被评论人
-	SubReplyAmount  int         `json:"sub_reply_amount"`               // 子评论数
-	CreatedBy       string      `json:"created_by"`                     // 评论回复创建人
-	CreatedTime     time.Time   `json:"created_time"`                   // 评论回复创建时间
-	LastUpdatedBy   string      `json:"last_updated_by"`                // 评论回复修改人
-	LastUpdatedTime time.Time   `json:"last_updated_time"`              // 评论回复修改时间
+	Id              int           `json:"id"`
+	ParentId        int           `json:"parent_id" orm:"default(0)` 	  // 父级评论回复 id
+	CommentTheme    *CommentTheme `orm:"rel(fk)" json:"comment_theme"`
+	Depth           int           `json:"depth"`                          // 当前评论深度
+	ReplyType       string        `json:"reply_type"`                     // 评论类型
+	ReplyContent    string        `json:"reply_content" orm:"size(4000)"` // 评论内容
+	ReferUserName   string        `json:"refer_user_name"`                // 被评论人
+	SubReplyAmount  int           `json:"sub_reply_amount"`               // 子评论数
+	CreatedBy       string        `json:"created_by"`                     // 评论回复创建人
+	CreatedTime     time.Time     `json:"created_time"`                   // 评论回复创建时间
+	LastUpdatedBy   string        `json:"last_updated_by"`                // 评论回复修改人
+	LastUpdatedTime time.Time     `json:"last_updated_time"`              // 评论回复修改时间
 }
 
 func AddCommentTheme(comment_theme *CommentTheme) (id int64, err error) {

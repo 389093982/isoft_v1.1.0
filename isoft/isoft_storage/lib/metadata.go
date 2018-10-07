@@ -30,14 +30,14 @@ func (this *MetaDataProxy) SearchLatestVersion(name string) (meta models.Metadat
 	defer utils.RecordTimeCostForMethod("lib metadata SearchLatestVersion", time.Now())
 
 	url := fmt.Sprintf("http://%s/api/metadata/searchLatestVersion", cfg.GetConfigValue(cfg.ISOFT_IAAS_WEB))
-	resp, err := http.Post(url,"application/x-www-form-urlencoded", strings.NewReader("name=" + name))
-	if err != nil{
+	resp, err := http.Post(url, "application/x-www-form-urlencoded", strings.NewReader("name="+name))
+	if err != nil {
 		panic(err)
 	}
 	responseBody, _ := ioutil.ReadAll(resp.Body)
 	responseMap := make(map[string]interface{})
 	json.Unmarshal(responseBody, &responseMap)
-	if responseMap["status"] != "SUCCESS"{
+	if responseMap["status"] != "SUCCESS" {
 		logutil.Errorln(errors.New(responseMap["errorMsg"].(string)))
 		return meta, errors.New(responseMap["errorMsg"].(string))
 	}
@@ -48,15 +48,15 @@ func (this *MetaDataProxy) GetMetadata(name string, version int) (meta models.Me
 	defer utils.RecordTimeCostForMethod("lib metadata GetMetadata", time.Now())
 
 	url := fmt.Sprintf("http://%s/api/metadata/getMetadata", cfg.GetConfigValue(cfg.ISOFT_IAAS_WEB))
-	resp, err := http.Post(url,"application/x-www-form-urlencoded",
-		strings.NewReader(fmt.Sprintf("name=%s&version=%d",name,version)))
-	if err != nil{
+	resp, err := http.Post(url, "application/x-www-form-urlencoded",
+		strings.NewReader(fmt.Sprintf("name=%s&version=%d", name, version)))
+	if err != nil {
 		panic(err)
 	}
 	responseBody, _ := ioutil.ReadAll(resp.Body)
 	responseMap := make(map[string]interface{})
 	json.Unmarshal(responseBody, &responseMap)
-	if responseMap["status"] != "SUCCESS"{
+	if responseMap["status"] != "SUCCESS" {
 		logutil.Errorln(errors.New(responseMap["errorMsg"].(string)))
 		return meta, errors.New(responseMap["errorMsg"].(string))
 	}
@@ -67,15 +67,15 @@ func (this *MetaDataProxy) PutMetadata(name string, version int, size int64, has
 	defer utils.RecordTimeCostForMethod("lib metadata PutMetadata", time.Now())
 
 	url := fmt.Sprintf("http://%s/api/metadata/putMetadata", cfg.GetConfigValue(cfg.ISOFT_IAAS_WEB))
-	resp, err := http.Post(url,"application/x-www-form-urlencoded",
-		strings.NewReader(fmt.Sprintf("name=%s&version=%d&size=%d&hash=%s",name,version,size,hash)))
-	if err != nil{
+	resp, err := http.Post(url, "application/x-www-form-urlencoded",
+		strings.NewReader(fmt.Sprintf("name=%s&version=%d&size=%d&hash=%s", name, version, size, hash)))
+	if err != nil {
 		panic(err)
 	}
 	responseBody, _ := ioutil.ReadAll(resp.Body)
 	responseMap := make(map[string]interface{})
 	json.Unmarshal(responseBody, &responseMap)
-	if responseMap["status"] != "SUCCESS"{
+	if responseMap["status"] != "SUCCESS" {
 		logutil.Errorln(errors.New(responseMap["errorMsg"].(string)))
 		return errors.New(responseMap["errorMsg"].(string))
 	}
@@ -84,20 +84,20 @@ func (this *MetaDataProxy) PutMetadata(name string, version int, size int64, has
 
 func (this *MetaDataProxy) AddVersion(name, hash string, size int64) error {
 	defer utils.RecordTimeCostForMethod("lib metadata AddVersion", time.Now())
-	if this.AppName == ""{
+	if this.AppName == "" {
 		this.AppName = "dataServer"
 	}
 
 	url := fmt.Sprintf("http://%s/api/metadata/addVersion", cfg.GetConfigValue(cfg.ISOFT_IAAS_WEB))
-	resp, err := http.Post(url,"application/x-www-form-urlencoded",
-		strings.NewReader(fmt.Sprintf("name=%s&size=%d&hash=%s&appName=%s",name,size,hash, this.AppName)))
-	if err != nil{
+	resp, err := http.Post(url, "application/x-www-form-urlencoded",
+		strings.NewReader(fmt.Sprintf("name=%s&size=%d&hash=%s&appName=%s", name, size, hash, this.AppName)))
+	if err != nil {
 		panic(err)
 	}
 	responseBody, _ := ioutil.ReadAll(resp.Body)
 	responseMap := make(map[string]interface{})
 	json.Unmarshal(responseBody, &responseMap)
-	if responseMap["status"] != "SUCCESS"{
+	if responseMap["status"] != "SUCCESS" {
 		logutil.Errorln(errors.New(responseMap["errorMsg"].(string)))
 		return errors.New(responseMap["errorMsg"].(string))
 	}
@@ -108,20 +108,20 @@ func (this *MetaDataProxy) SearchAllVersions(name string, from, size int) (metad
 	defer utils.RecordTimeCostForMethod("lib metadata SearchAllVersions", time.Now())
 
 	url := fmt.Sprintf("http://%s/api/metadata/addVersion", cfg.GetConfigValue(cfg.ISOFT_IAAS_WEB))
-	resp, err := http.Post(url,"application/x-www-form-urlencoded",
-		strings.NewReader(fmt.Sprintf("name=%s&from=%d&size=%d",name,from,size)))
-	if err != nil{
+	resp, err := http.Post(url, "application/x-www-form-urlencoded",
+		strings.NewReader(fmt.Sprintf("name=%s&from=%d&size=%d", name, from, size)))
+	if err != nil {
 		panic(err)
 	}
 	responseBody, _ := ioutil.ReadAll(resp.Body)
 	responseMap := make(map[string]interface{})
 	json.Unmarshal(responseBody, &responseMap)
-	if responseMap["status"] != "SUCCESS"{
+	if responseMap["status"] != "SUCCESS" {
 		logutil.Errorln(errors.New(responseMap["errorMsg"].(string)))
 		return nil, errors.New(responseMap["errorMsg"].(string))
-	}else{
+	} else {
 		metadataMaps := responseMap["metadatas"].([]interface{})
-		for _, metadataMap := range metadataMaps{
+		for _, metadataMap := range metadataMaps {
 			meta := convertToMetadata(metadataMap.(map[string]interface{}))
 			metadatas = append(metadatas, meta)
 		}
@@ -129,19 +129,19 @@ func (this *MetaDataProxy) SearchAllVersions(name string, from, size int) (metad
 	return
 }
 
-func (this *MetaDataProxy) DelMetadata(name string, version int) error{
+func (this *MetaDataProxy) DelMetadata(name string, version int) error {
 	defer utils.RecordTimeCostForMethod("lib metadata DelMetadata", time.Now())
 
 	url := fmt.Sprintf("http://%s/api/metadata/delMetadata", cfg.GetConfigValue(cfg.ISOFT_IAAS_WEB))
-	resp, err := http.Post(url,"application/x-www-form-urlencoded",
-		strings.NewReader(fmt.Sprintf("name=%s&version=%s",name,version)))
-	if err != nil{
+	resp, err := http.Post(url, "application/x-www-form-urlencoded",
+		strings.NewReader(fmt.Sprintf("name=%s&version=%s", name, version)))
+	if err != nil {
 		panic(err)
 	}
 	responseBody, _ := ioutil.ReadAll(resp.Body)
 	responseMap := make(map[string]interface{})
 	json.Unmarshal(responseBody, &responseMap)
-	if responseMap["status"] != "SUCCESS"{
+	if responseMap["status"] != "SUCCESS" {
 		logutil.Errorln(errors.New(responseMap["errorMsg"].(string)))
 		return errors.New(responseMap["errorMsg"].(string))
 	}
@@ -152,15 +152,15 @@ func (this *MetaDataProxy) HasHash(hash string) (bool, error) {
 	defer utils.RecordTimeCostForMethod("lib metadata HasHash", time.Now())
 
 	url := fmt.Sprintf("http://%s/api/metadata/hasHash", cfg.GetConfigValue(cfg.ISOFT_IAAS_WEB))
-	resp, err := http.Post(url,"application/x-www-form-urlencoded",
-		strings.NewReader(fmt.Sprintf("hash=%s",hash)))
-	if err != nil{
+	resp, err := http.Post(url, "application/x-www-form-urlencoded",
+		strings.NewReader(fmt.Sprintf("hash=%s", hash)))
+	if err != nil {
 		panic(err)
 	}
 	responseBody, _ := ioutil.ReadAll(resp.Body)
 	responseMap := make(map[string]interface{})
 	json.Unmarshal(responseBody, &responseMap)
-	if responseMap["status"] != "SUCCESS"{
+	if responseMap["status"] != "SUCCESS" {
 		logutil.Errorln(errors.New(responseMap["errorMsg"].(string)))
 		return false, errors.New(responseMap["errorMsg"].(string))
 	}
@@ -171,15 +171,15 @@ func (this *MetaDataProxy) SearchHashSize(hash string) (size int64, e error) {
 	defer utils.RecordTimeCostForMethod("lib metadata SearchHashSize", time.Now())
 
 	url := fmt.Sprintf("http://%s/api/metadata/searchHashSize", cfg.GetConfigValue(cfg.ISOFT_IAAS_WEB))
-	resp, err := http.Post(url,"application/x-www-form-urlencoded",
-		strings.NewReader(fmt.Sprintf("hash=%s",hash)))
-	if err != nil{
+	resp, err := http.Post(url, "application/x-www-form-urlencoded",
+		strings.NewReader(fmt.Sprintf("hash=%s", hash)))
+	if err != nil {
 		panic(err)
 	}
 	responseBody, _ := ioutil.ReadAll(resp.Body)
 	responseMap := make(map[string]interface{})
 	json.Unmarshal(responseBody, &responseMap)
-	if responseMap["status"] != "SUCCESS"{
+	if responseMap["status"] != "SUCCESS" {
 		logutil.Errorln(errors.New(responseMap["errorMsg"].(string)))
 		return size, errors.New(responseMap["errorMsg"].(string))
 	}

@@ -13,13 +13,13 @@ type MetadataController struct {
 	beego.Controller
 }
 
-func (this *MetadataController) SearchLatestVersion()  {
+func (this *MetadataController) SearchLatestVersion() {
 	name := this.GetString("name")
 	metadata, err := ifile.SearchLatestVersion(name)
-	if err != nil{
+	if err != nil {
 		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": err.Error()}
-	}else{
-		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "metadata":metadata}
+	} else {
+		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "metadata": metadata}
 	}
 	this.ServeJSON()
 }
@@ -29,10 +29,10 @@ func (this *MetadataController) GetMetadata() {
 	version, _ := this.GetInt("version", -1)
 	app_name := this.GetString("app_name")
 	metadata, err := ifile.GetMetadata(name, version, app_name)
-	if err != nil{
+	if err != nil {
 		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": err.Error()}
-	}else{
-		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "metadata":metadata}
+	} else {
+		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "metadata": metadata}
 	}
 	this.ServeJSON()
 }
@@ -40,22 +40,22 @@ func (this *MetadataController) GetMetadata() {
 func (this *MetadataController) PutMetadata() {
 	name := this.GetString("name")
 	version, _ := this.GetInt("version", -1)
-	size, _:= this.GetInt64("size", -1)
-	hash := strings.Replace(strings.TrimSpace(this.GetString("hash"))," ","+",-1)
+	size, _ := this.GetInt64("size", -1)
+	hash := strings.Replace(strings.TrimSpace(this.GetString("hash")), " ", "+", -1)
 	metadata := &ifile.MetaData{
-		Name:name,
-		Version:version,
-		Size:size,
-		Hash:hash,
-		CreatedBy:"AutoInsert",
-		CreatedTime:time.Now(),
-		LastUpdatedBy:"AutoInsert",
-		LastUpdatedTime:time.Now(),
+		Name:            name,
+		Version:         version,
+		Size:            size,
+		Hash:            hash,
+		CreatedBy:       "AutoInsert",
+		CreatedTime:     time.Now(),
+		LastUpdatedBy:   "AutoInsert",
+		LastUpdatedTime: time.Now(),
 	}
 	err := ifile.PutMetadata(metadata)
-	if err != nil{
+	if err != nil {
 		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": err.Error()}
-	}else{
+	} else {
 		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
 	}
 	this.ServeJSON()
@@ -63,29 +63,29 @@ func (this *MetadataController) PutMetadata() {
 
 func (this *MetadataController) AddVersion() {
 	name := this.GetString("name")
-	size, _:= this.GetInt64("size", -1)
-	hash := strings.Replace(strings.TrimSpace(this.GetString("hash"))," ","+",-1)
+	size, _ := this.GetInt64("size", -1)
+	hash := strings.Replace(strings.TrimSpace(this.GetString("hash")), " ", "+", -1)
 	appName := this.GetString("appName")
 	metadata := &ifile.MetaData{
-		Name:name,
-		Size:size,
-		Hash:hash,
-		AppName:appName,
-		CreatedBy:"AutoInsert",
-		CreatedTime:time.Now(),
-		LastUpdatedBy:"AutoInsert",
-		LastUpdatedTime:time.Now(),
+		Name:            name,
+		Size:            size,
+		Hash:            hash,
+		AppName:         appName,
+		CreatedBy:       "AutoInsert",
+		CreatedTime:     time.Now(),
+		LastUpdatedBy:   "AutoInsert",
+		LastUpdatedTime: time.Now(),
 	}
 	oldmetadata, err := ifile.SearchLatestVersion(name)
-	if err == nil{
+	if err == nil {
 		metadata.Version = oldmetadata.Version + 1
-	}else{
+	} else {
 		metadata.Version = 1
 	}
 	err = ifile.PutMetadata(metadata)
-	if err != nil{
+	if err != nil {
 		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": err.Error()}
-	}else{
+	} else {
 		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
 	}
 	this.ServeJSON()
@@ -93,13 +93,13 @@ func (this *MetadataController) AddVersion() {
 
 func (this *MetadataController) SearchAllVersions() {
 	name := this.GetString("name")
-	from, _:= this.GetInt64("from", 0)
-	size, _:= this.GetInt64("size", 10)
+	from, _ := this.GetInt64("from", 0)
+	size, _ := this.GetInt64("size", 10)
 	metadatas, err := ifile.SearchAllVersions(name, from, size)
-	if err != nil{
+	if err != nil {
 		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": err.Error()}
-	}else{
-		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "metadatas":metadatas}
+	} else {
+		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "metadatas": metadatas}
 	}
 	this.ServeJSON()
 }
@@ -107,21 +107,21 @@ func (this *MetadataController) SearchAllVersions() {
 func (this *MetadataController) DelMetadata() {
 	name := this.GetString("name")
 	version, _ := this.GetInt("version", -1)
-	err := ifile.DelMetadata(name,version)
-	if err != nil{
+	err := ifile.DelMetadata(name, version)
+	if err != nil {
 		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": err.Error()}
-	}else{
+	} else {
 		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
 	}
 	this.ServeJSON()
 }
 
 func (this *MetadataController) HasHash() {
-	hash := strings.Replace(strings.TrimSpace(this.GetString("hash"))," ","+",-1)
+	hash := strings.Replace(strings.TrimSpace(this.GetString("hash")), " ", "+", -1)
 	b := ifile.HasHash(hash)
-	if !b{
+	if !b {
 		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": "hash was not found!"}
-	}else{
+	} else {
 		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
 	}
 	this.ServeJSON()
@@ -150,19 +150,19 @@ func (this *MetadataController) FilterPageMetadatas() {
 	}
 	metadatas, count, err := ifile.FilterPageMetadatas(map[string]interface{}{"name": name}, current_page, offset)
 	if err != nil {
-		this.Data["json"] = &map[string]interface{}{"status":"ERROR"}
+		this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
 	} else {
 		paginator := pagination.SetPaginator(this.Ctx, offset, count)
 		paginatorMap := pageutil.Paginator(paginator.Page(), paginator.PerPageNums, paginator.Nums())
-		this.Data["json"] = &map[string]interface{}{"status":"SUCCESS","metadatas":metadatas, "paginator":paginatorMap}
+		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "metadatas": metadatas, "paginator": paginatorMap}
 	}
 	this.ServeJSON()
 }
 
-func (this *MetadataController) SearchHashSize()  {
+func (this *MetadataController) SearchHashSize() {
 
 }
 
-func (this *MetadataController) SearchVersionStatus()  {
+func (this *MetadataController) SearchVersionStatus() {
 
 }

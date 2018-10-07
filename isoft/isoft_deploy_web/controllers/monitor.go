@@ -12,26 +12,26 @@ type MonitorHeartBeatController struct {
 	beego.Controller
 }
 
-func (this *MonitorHeartBeatController) SendMonitorHeartBeat()  {
+func (this *MonitorHeartBeatController) SendMonitorHeartBeat() {
 	addr := this.GetString("addr")
 	monitorHeartBeat := models.MonitorHeartBeat{
-		Addr:addr,
-		CreatedBy:"AutoInsert",
-		CreatedTime:time.Now(),
-		LastUpdatedBy:"AutoInsert",
-		LastUpdatedTime:time.Now(),
+		Addr:            addr,
+		CreatedBy:       "AutoInsert",
+		CreatedTime:     time.Now(),
+		LastUpdatedBy:   "AutoInsert",
+		LastUpdatedTime: time.Now(),
 	}
 	_, err := models.InsertOrUpdateMonitorHeartBeat(&monitorHeartBeat)
-	if err != nil{
+	if err != nil {
 		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": err.Error()}
-	}else{
+	} else {
 		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
 	}
 	this.ServeJSON()
 }
 
-func (this *MonitorHeartBeatController) FilterPageMonitorHeartBeat()  {
-	page_size, _ := this.GetInt("page_size", 10)            // 每页记录数
+func (this *MonitorHeartBeatController) FilterPageMonitorHeartBeat() {
+	page_size, _ := this.GetInt("page_size", 10)      // 每页记录数
 	current_page, _ := this.GetInt("current_page", 1) // 当前页
 
 	condArr := make(map[string]interface{})
@@ -44,7 +44,7 @@ func (this *MonitorHeartBeatController) FilterPageMonitorHeartBeat()  {
 		dataMap["monitorHeartBeats"] = monitorHeartBeats
 		dataMap["paginator"] = pageutil.Paginator(paginator.Page(), paginator.PerPageNums, paginator.Nums())
 		dataMap["alives"] = getAliveMonitorHeartBeats(monitorHeartBeats)
-	}else{
+	} else {
 		dataMap["status"] = "ERROR"
 		dataMap["errorMsg"] = err.Error()
 	}
@@ -53,9 +53,9 @@ func (this *MonitorHeartBeatController) FilterPageMonitorHeartBeat()  {
 }
 
 func getAliveMonitorHeartBeats(monitorHeartBeats []models.MonitorHeartBeat) (alives []string) {
-	for _, monitorHeartBeat := range monitorHeartBeats{
-		s, _ := time.ParseDuration("-1s")			// 1s 前
-		if time.Now().Add(s * 10).Before(monitorHeartBeat.LastUpdatedTime){
+	for _, monitorHeartBeat := range monitorHeartBeats {
+		s, _ := time.ParseDuration("-1s") // 1s 前
+		if time.Now().Add(s * 10).Before(monitorHeartBeat.LastUpdatedTime) {
 			alives = append(alives, monitorHeartBeat.Addr)
 		}
 	}

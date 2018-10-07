@@ -7,7 +7,7 @@ import (
 
 type MonitorHeartBeat struct {
 	Id              int64     `json:"id"`
-	Addr      		string    `json:"addr"` // 服务器名称
+	Addr            string    `json:"addr"` // 服务器名称
 	CreatedBy       string    `json:"created_by"`
 	CreatedTime     time.Time `json:"created_time"`
 	LastUpdatedBy   string    `json:"last_updated_by"`

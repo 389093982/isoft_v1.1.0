@@ -26,11 +26,11 @@ func (this *CommentController) FilterCommentReply() {
 }
 
 func getIncrementDepth(parent_id int) int {
-	if parent_id == 0{
+	if parent_id == 0 {
 		return 1
 	}
 	comment_reply, err := ilearning.QueryCommentReplyById(parent_id)
-	if err != nil{
+	if err != nil {
 		return 1
 	}
 	return comment_reply.Depth + 1

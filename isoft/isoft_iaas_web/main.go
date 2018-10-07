@@ -19,7 +19,7 @@ import (
 	"os"
 )
 
-func init()  {
+func init() {
 	initLog()
 	initDB()
 }
@@ -105,12 +105,12 @@ func createTable() {
 	}
 }
 
-func recordHeatBeat()  {
+func recordHeatBeat() {
 	localIp, _ := osutil.GetLocalIp()
 	httpport := beego.AppConfig.String("httpport")
 	ISOFT_DEPLOY_WEB := beego.AppConfig.String("ISOFT_DEPLOY_WEB")
 	// 每隔 5 s 发送一次心跳检测信息给监控系统
-	go monitor.RecordMonitorHeartBeatLog(ISOFT_DEPLOY_WEB, localIp + ":" + httpport)
+	go monitor.RecordMonitorHeartBeatLog(ISOFT_DEPLOY_WEB, localIp+":"+httpport)
 }
 
 func main() {

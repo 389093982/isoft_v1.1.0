@@ -5,6 +5,6 @@ import (
 	"time"
 )
 
-func RecordTimeCostForMethod(label string, startTime time.Time)  {
-	logutil.Infoln(label, "cost time", time.Now().Sub(startTime).Nanoseconds() / 1e6, "ms")
+func RecordTimeCostForMethod(label string, startTime time.Time) {
+	logutil.Infoln(label, "cost time", time.Now().Sub(startTime).Nanoseconds()/1e6, "ms")
 }

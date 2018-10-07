@@ -4,10 +4,10 @@ import (
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/plugins/cors"
 	"isoft/isoft_iaas_web/controllers"
+	"isoft/isoft_iaas_web/controllers/iblog"
+	"isoft/isoft_iaas_web/controllers/ifile"
 	"isoft/isoft_iaas_web/controllers/ilearning"
 	"isoft/isoft_iaas_web/controllers/sso"
-	"isoft/isoft_iaas_web/controllers/ifile"
-	"isoft/isoft_iaas_web/controllers/iblog"
 )
 
 func init() {
@@ -26,7 +26,7 @@ func init() {
 	initILearningRouter()
 }
 
-func initILearningRouter()  {
+func initILearningRouter() {
 	beego.Router("/api/ilearning/newCourse", &ilearning.CourseController{}, "get,post:NewCourse")
 	beego.Router("/api/ilearning/getMyCourseList", &ilearning.CourseController{}, "get,post:GetMyCourseList")
 	beego.Router("/api/ilearning/changeCourseImg", &ilearning.CourseController{}, "get,post:ChangeCourseImg")
@@ -41,7 +41,7 @@ func initILearningRouter()  {
 	beego.Router("/api/ilearning/filterCommentReply", &ilearning.CommentController{}, "get,post:FilterCommentReply")
 }
 
-func initIFileRouter()  {
+func initIFileRouter() {
 	beego.Router("/api/ifile/fileUpload/", &ifile.IFileController{}, "post:FileUpload")
 	beego.Router("/api/ifile/fileUpload2/", &ifile.IFileController{}, "post:FileUpload2")
 	beego.Router("/api/ifile/locateShards/", &ifile.IFileController{}, "post:LocateShards")
@@ -63,7 +63,7 @@ func initIFileRouter()  {
 	beego.Router("/api/metadata/filterPageMetadatas/", &ifile.MetadataController{}, "post:FilterPageMetadatas")
 }
 
-func initIBlogRouter(){
+func initIBlogRouter() {
 	beego.Router("/api/catalog/edit", &iblog.CatalogController{}, "get:Edit;post:PostEdit")
 	beego.Router("/api/catalog/getMyCatalogs", &iblog.CatalogController{}, "get:GetMyCatalogs")
 	beego.Router("/api/catalog/delete", &iblog.CatalogController{}, "post:PostDelete")

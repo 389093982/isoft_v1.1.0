@@ -22,7 +22,7 @@ func UploadHandler(w http.ResponseWriter, r *http.Request) {
 		// 特殊字符进行转义
 		hash := strings.Split(r.URL.EscapedPath(), "/")[3]
 		size := utils.GetSizeFromHeader(r.Header)
-		hash = strings.Replace(strings.TrimSpace(hash)," ","+",-1)
+		hash = strings.Replace(strings.TrimSpace(hash), " ", "+", -1)
 
 		dst, err := os.Create(filepath.Join(STORAGE_ROOT, hash))
 		if err != nil {
@@ -35,7 +35,7 @@ func UploadHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		// 添加对象版本信息
-		proxy := &lib.MetaDataProxy{AppName:"fileServer"}
+		proxy := &lib.MetaDataProxy{AppName: "fileServer"}
 		err = proxy.AddVersion(name, hash, size)
 		if err != nil {
 			logutil.Errorln(err)
@@ -46,4 +46,3 @@ func UploadHandler(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusMethodNotAllowed)
 	}
 }
-

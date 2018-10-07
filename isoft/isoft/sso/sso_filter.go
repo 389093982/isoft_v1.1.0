@@ -19,7 +19,7 @@ var (
 	loginWhiteList map[string]string
 )
 
-func initWhiteList()  {
+func initWhiteList() {
 	loginWhiteList := make(map[string]string, 1)
 	loginWhiteList["/common/login"] = "/common/login"
 	loginWhiteList["/common/login/"] = "/common/login/"
@@ -44,7 +44,6 @@ func init() {
 	go globalSessions.GC()
 }
 
-
 type LoginManager struct {
 	ctx *context.Context
 }
@@ -52,9 +51,9 @@ type LoginManager struct {
 // 从 cookie 中或者 header 中获取 token
 func (this *LoginManager) GetTokenString() string {
 	var tokenString string
-	if strings.TrimSpace(this.ctx.GetCookie("token")) != ""{
+	if strings.TrimSpace(this.ctx.GetCookie("token")) != "" {
 		tokenString = this.ctx.GetCookie("token")
-	}else if strings.TrimSpace(this.ctx.Request.Header.Get("token")) != ""{
+	} else if strings.TrimSpace(this.ctx.Request.Header.Get("token")) != "" {
 		tokenString = this.ctx.Request.Header.Get("token")
 	}
 	return tokenString
@@ -65,22 +64,22 @@ func (this *LoginManager) IsWhiteUrl() bool {
 		return true
 	}
 	// 鉴权接口也放行
-	if strings.HasPrefix(this.ctx.Input.URL(), "/api/auth"){
+	if strings.HasPrefix(this.ctx.Input.URL(), "/api/auth") {
 		return true
 	}
 	return false
 }
 
 func (this *LoginManager) ResponseWithErrorType(errorType string) {
-	if errorType == "redirect"{
+	if errorType == "redirect" {
 		// 前去登录
 		this.ResponseWithRedirect()
-	}else{
+	} else {
 		this.ResponseWithStatusCode()
 	}
 }
 
-func (this *LoginManager) ResponseWithStatusCode()  {
+func (this *LoginManager) ResponseWithStatusCode() {
 	this.ctx.ResponseWriter.WriteHeader(401)
 }
 
