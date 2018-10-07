@@ -10,8 +10,9 @@ import ILearningIndex from '../components/ILearning/Index.vue'
 import CourseSpace from '../components/ILearning/CourseSpace.vue'
 import CourseDetail from '../components/ILearning/Course/CourseDetail.vue'
 import VideoPay from '../components/ILearning/Course/VideoPay.vue'
+import Configuration from '../components/CMS/Configuration.vue'
 
-Vue.use(Router)
+Vue.use(Router);
 
 export default new Router({
   routes: [
@@ -57,6 +58,10 @@ export default new Router({
     {
       path: '/ilearning/video_play',
       component: VideoPay,
+    },
+    {
+      path: '/ilearning/configuration',
+      component: Configuration,
     },
     {
       path: '/',

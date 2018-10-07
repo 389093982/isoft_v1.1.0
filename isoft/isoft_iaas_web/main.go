@@ -11,6 +11,7 @@ import (
 	"isoft/isoft/common/fileutil"
 	"isoft/isoft/common/osutil"
 	"isoft/isoft/sso"
+	"isoft/isoft_iaas_web/models/cms"
 	"isoft/isoft_iaas_web/models/iblog"
 	"isoft/isoft_iaas_web/models/ifile"
 	"isoft/isoft_iaas_web/models/ilearning"
@@ -91,7 +92,7 @@ func registerModel() {
 	orm.RegisterModel(new(ilearning.CommentTheme))
 	orm.RegisterModel(new(ilearning.CommentReply))
 	orm.RegisterModel(new(ilearning.Note))
-	orm.RegisterModel(new(ilearning.Configuration))
+	orm.RegisterModel(new(cms.Configuration))
 }
 
 // 自动建表

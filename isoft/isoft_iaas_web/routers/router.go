@@ -4,6 +4,7 @@ import (
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/plugins/cors"
 	"isoft/isoft_iaas_web/controllers"
+	"isoft/isoft_iaas_web/controllers/cms"
 	"isoft/isoft_iaas_web/controllers/iblog"
 	"isoft/isoft_iaas_web/controllers/ifile"
 	"isoft/isoft_iaas_web/controllers/ilearning"
@@ -24,6 +25,13 @@ func init() {
 	initIFileRouter()
 	initIBlogRouter()
 	initILearningRouter()
+	initCMSRouter()
+}
+
+func initCMSRouter()  {
+	beego.Router("/api/cms/queryAllConfigurations", &cms.ConfigurationController{}, "get,post:QueryAllConfigurations")
+	beego.Router("/api/cms/addConfiguration", &cms.ConfigurationController{}, "get,post:AddConfiguration")
+	beego.Router("/api/cms/filterConfigurations", &cms.ConfigurationController{}, "get,post:FilterConfigurations")
 }
 
 func initILearningRouter() {

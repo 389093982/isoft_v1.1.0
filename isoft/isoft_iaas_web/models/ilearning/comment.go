@@ -18,7 +18,7 @@ type CommentTheme struct {
 
 type CommentReply struct {
 	Id              int           `json:"id"`
-	ParentId        int           `json:"parent_id" orm:"default(0)` 	  // 父级评论回复 id
+	ParentId        int           `json:"parent_id" orm:"default(0)` // 父级评论回复 id
 	CommentTheme    *CommentTheme `orm:"rel(fk)" json:"comment_theme"`
 	Depth           int           `json:"depth"`                          // 当前评论深度
 	ReplyType       string        `json:"reply_type"`                     // 评论类型

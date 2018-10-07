@@ -27,10 +27,15 @@
           <Icon type="ios-construct" />
           综合设置
         </MenuItem>
-        <MenuItem name="3">
-          <Icon type="ios-paper" />
-          内容管理
-        </MenuItem>
+        <Submenu name="3">
+          <template slot="title">
+            <Icon type="ios-paper" />
+            内容管理
+          </template>
+          <MenuGroup title="配置项管理">
+            <MenuItem name="3-1" @click.native="$router.push({path: '/ilearning/configuration'})">查看配置项</MenuItem>
+          </MenuGroup>
+        </Submenu>
         <Submenu name="4">
           <template slot="title">
             <Icon type="ios-people" />

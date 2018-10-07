@@ -32,7 +32,8 @@ export const BlogList = (offset,current_page) => ajax(BASE_URL+'/blog/blogList',
 export const ShowBlogDetail = (blog_id) => ajax(BASE_URL+'/blog/showBlogDetail',{blog_id},'GET')
 
 // 新建课程
-export const NewCourse = (course_name,course_type,course_sub_type,course_short_desc) => ajax(BASE_URL+'/ilearning/newCourse',{course_name,course_type,course_sub_type,course_short_desc},'GET')
+export const NewCourse = (course_name,course_type,course_sub_type,course_short_desc) =>
+  ajax(BASE_URL+'/ilearning/newCourse',{course_name,course_type,course_sub_type,course_short_desc},'GET')
 
 // 分页查询我的课程清单
 export const GetMyCourseList = () => ajax(BASE_URL+'/ilearning/getMyCourseList',{},'GET')
@@ -57,3 +58,12 @@ export const AddCommentReply = (parent_id, reply_content, comment_id, comment_ty
 export const FilterCommentReply = (comment_id, comment_type, parent_id) =>
   ajax(BASE_URL+'/ilearning/filterCommentReply',{comment_id, comment_type, parent_id},'GET')
 
+// 添加配置项
+export const AddConfiguration = (parent_id, configuration_name, configuration_value) =>
+  ajax(BASE_URL+'/cms/addConfiguration',{parent_id, configuration_name, configuration_value},'GET')
+
+// 根据名称查询配置项
+export const QueryAllConfigurations = (configuration_name) => ajax(BASE_URL+'/cms/queryAllConfigurations',{configuration_name},'GET')
+
+// 分页查询配置项信息
+export const FilterConfigurations = (search,offset,current_page) => ajax(BASE_URL+'/cms/filterConfigurations',{search, offset,current_page},'GET')

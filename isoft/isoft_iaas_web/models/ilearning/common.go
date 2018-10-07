@@ -12,18 +12,6 @@ type Favorite struct {
 	UserName     string `json:"user_name"`
 }
 
-// 配置项
-type Configuration struct {
-	Id                 int           `json:"id"`
-	ConfigurationName  string        `json:"configuration_name"`
-	ConfigurationValue orm.TextField `json:"configuration_value"`
-}
-
-func QueryConfiguration(configuration_name string) (configuration Configuration, err error) {
-	o := orm.NewOrm()
-	err = o.QueryTable("configuration").Filter("configuration_name", configuration_name).One(&configuration)
-	return
-}
 
 // Favorite 表设计优化
 // 目前提供四种 api：AddFavorite、DelFavorite、IsFavorite、QueryFavoriteIds
