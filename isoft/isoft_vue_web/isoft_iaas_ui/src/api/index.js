@@ -47,13 +47,13 @@ export const ShowCourseDetail = (course_id) => ajax(BASE_URL+'/ilearning/showCou
 export const ToggleFavorite = (favorite_id, favorite_type) => ajax(BASE_URL+'/ilearning/toggle_favorite',{favorite_id, favorite_type},'GET')
 
 // 查询评论主题
-export const FilterTopicTheme = (topic_id, topic_type) => ajax(BASE_URL+'/ilearning/filterTopicTheme',{topic_id, topic_type},'GET')
+export const FilterCommentTheme = (comment_id, comment_type) => ajax(BASE_URL+'/ilearning/filterCommentTheme',{comment_id, comment_type},'GET')
 
 // 添加评论
-export const AddTopicReply = (parent_id, reply_content, topic_id, topic_type, refer_user_name) =>
-  ajax(BASE_URL+'/ilearning/addTopicReply',{parent_id, reply_content, topic_id, topic_type, refer_user_name},'GET')
+export const AddCommentReply = (parent_id, reply_content, comment_id, comment_type, refer_user_name) =>
+  ajax(BASE_URL+'/ilearning/addCommentReply',{parent_id, reply_content, comment_id, comment_type, refer_user_name},'GET')
 
 // 获取评论列表
-export const FilterTopicReply = (topic_id, topic_type, parent_id) =>
-  ajax(BASE_URL+'/ilearning/filterTopicReply',{topic_id, topic_type, parent_id},'GET')
+export const FilterCommentReply = (comment_id, comment_type, parent_id) =>
+  ajax(BASE_URL+'/ilearning/filterCommentReply',{comment_id, comment_type, parent_id},'GET')
 

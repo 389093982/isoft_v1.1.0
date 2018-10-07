@@ -88,8 +88,8 @@ func registerModel() {
 	orm.RegisterModel(new(ilearning.Course))
 	orm.RegisterModel(new(ilearning.CourseVideo))
 	orm.RegisterModel(new(ilearning.Favorite))
-	orm.RegisterModel(new(ilearning.TopicTheme))
-	orm.RegisterModel(new(ilearning.TopicReply))
+	orm.RegisterModel(new(ilearning.CommentTheme))
+	orm.RegisterModel(new(ilearning.CommentReply))
 	orm.RegisterModel(new(ilearning.Note))
 	orm.RegisterModel(new(ilearning.Configuration))
 }

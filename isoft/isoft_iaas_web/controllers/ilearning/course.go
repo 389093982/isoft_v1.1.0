@@ -97,17 +97,17 @@ func (this *CourseController) UploadVideo() {
 			// 刷新 DB 记录
 			id, flag := ilearning.UploadVideo(id, video_number, "http://localhost:8086/" + saveFilePath, fh.Filename)
 			// 刷新评论主题
-			topic_theme := ilearning.TopicTheme{}
-			topic_theme.TopicId = int(id)
-			topic_theme.TopicType = "course_video_topic_type"
-			topic_theme.TopicContent = strings.Join([]string{user_name, "@", fh.Filename,
+			comment_theme := ilearning.CommentTheme{}
+			comment_theme.CommentId = int(id)
+			comment_theme.CommentType = "course_video_comment_type"
+			comment_theme.CommentContent = strings.Join([]string{user_name, "@", fh.Filename,
 				"视频更新啦，喜欢该课程的小伙伴们不要错过奥，简洁、直观、免费的课程，能让你更快的掌握知识"}, "")
-			topic_theme.CreatedBy = user_name
-			topic_theme.CreatedTime = time.Now()
-			topic_theme.LastUpdatedBy = user_name
-			topic_theme.LastUpdatedTime = time.Now()
+			comment_theme.CreatedBy = user_name
+			comment_theme.CreatedTime = time.Now()
+			comment_theme.LastUpdatedBy = user_name
+			comment_theme.LastUpdatedTime = time.Now()
 			// 增加一条评论主题
-			ilearning.AddTopicTheme(&topic_theme)
+			ilearning.AddCommentTheme(&comment_theme)
 
 			if flag == true {
 				this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "msg": "保存成功!"}
@@ -186,16 +186,16 @@ func (this *CourseController) NewCourse() {
 	} else {
 		this.Data["json"] = &map[string]interface{}{"status":"ERROR"}
 	}
-	topic_theme := ilearning.TopicTheme{}
-	topic_theme.TopicId = int(id)
-	topic_theme.TopicType = "course_topic_type"
-	topic_theme.TopicContent = strings.Join([]string{user_name, "@", course_name,
+	comment_theme := ilearning.CommentTheme{}
+	comment_theme.CommentId = int(id)
+	comment_theme.CommentType = "course_comment_type"
+	comment_theme.CommentContent = strings.Join([]string{user_name, "@", course_name,
 		"课程更新啦，喜欢该课程的小伙伴们不要错过奥，简洁、直观、免费的课程，能让你更快的掌握知识@", course_short_desc}, "")
-	topic_theme.CreatedBy = user_name
-	topic_theme.CreatedTime = time.Now()
-	topic_theme.LastUpdatedBy = user_name
-	topic_theme.LastUpdatedTime = time.Now()
+	comment_theme.CreatedBy = user_name
+	comment_theme.CreatedTime = time.Now()
+	comment_theme.LastUpdatedBy = user_name
+	comment_theme.LastUpdatedTime = time.Now()
 	// 增加一条评论主题
-	ilearning.AddTopicTheme(&topic_theme)
+	ilearning.AddCommentTheme(&comment_theme)
 	this.ServeJSON()
 }

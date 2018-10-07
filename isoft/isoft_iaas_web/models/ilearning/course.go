@@ -100,7 +100,6 @@ func UploadVideo(course_id int, video_number int, saveFilePath string, fileName 
 			}
 		}
 	}
-
 	// 查询记录 id
 	var list orm.ParamsList
 	o.QueryTable("course_video").Filter("course_id", course_id).Filter("video_number", video_number).ValuesFlat(&list, "id")
@@ -146,18 +145,15 @@ func QueryCourse(condArr map[string]string, page int, offset int) (courses []Cou
 	o := orm.NewOrm()
 	qs := o.QueryTable("course")
 	var cond = orm.NewCondition()
-
 	if _, ok := condArr["search"]; ok {
 		subCond := orm.NewCondition()
 		subCond = cond.And("course_type__contains", condArr["search"]).Or("course_sub_type__contains", condArr["search"])
 		cond = cond.AndCond(subCond)
 	}
-
 	if _, ok := condArr["CourseAuthor"]; ok {
 		cond = cond.And("CourseAuthor", condArr["CourseAuthor"])
 		//.Filter("username",user.Username).Where(where).Limit(strconv.Itoa(p.Offset()), strconv.Itoa(pagesize)).Order(`op.id desc`).Select()
 	}
-
 	if _, ok := condArr["querysOrder"]; ok {
 		querysOrder := condArr["querysOrder"]
 		// 多个排序条件使用 @ 符号进行分割
@@ -166,11 +162,10 @@ func QueryCourse(condArr map[string]string, page int, offset int) (courses []Cou
 			qs = qs.OrderBy(v)
 		}
 	}
-
 	qs = qs.SetCond(cond)
 	counts, _ = qs.Count()
-
 	qs = qs.Limit(offset, (page-1)*offset)
 	qs.All(&courses)
 	return
 }
+

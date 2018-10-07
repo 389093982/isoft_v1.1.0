@@ -19,12 +19,12 @@
 </template>
 
 <script>
-  import {AddTopicReply} from "../../../api/index"
+  import {AddCommentReply} from "../../../api/index"
 
   export default {
     name: "CommentForm",
     // 父组件传递给子组件的字段
-    props:["parent_id", "topic_id", "topic_type", "refer_user_name"],
+    props:["parent_id", "comment_id", "comment_type", "refer_user_name"],
     data(){
       return {
         reply_content:"",
@@ -33,10 +33,10 @@
     methods:{
       submitComment: async function () {
         var reply_content = this.submit_comment;
-        const result = await AddTopicReply(this.parent_id, this.reply_content, this.topic_id, this.topic_type, this.refer_user_name);
+        const result = await AddCommentReply(this.parent_id, this.reply_content, this.comment_id, this.comment_type, this.refer_user_name);
         if(result.status=="SUCCESS"){
-          // 调用父组件的 refreshTopicReply 方法
-          this.$emit('refreshTopicReply');
+          // 调用父组件的 refreshCommentReply 方法
+          this.$emit('refreshCommentReply');
         }
       }
     }
