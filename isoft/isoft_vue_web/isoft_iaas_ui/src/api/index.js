@@ -58,6 +58,15 @@ export const AddCommentReply = (parent_id, reply_content, comment_id, comment_ty
 export const FilterCommentReply = (comment_id, comment_type, parent_id) =>
   ajax(BASE_URL+'/ilearning/filterCommentReply',{comment_id, comment_type, parent_id},'GET')
 
+// 获取所有课程类型
+export const GetAllCourseType = () => ajax(BASE_URL+'/ilearning/getAllCourseType',{},'GET')
+
+// 获取热门推荐的课程
+export const GetHotCourseRecommend = () => ajax(BASE_URL+'/ilearning/getHotCourseRecommend',{},'GET')
+
+// 根据课程名称获取所有子类型名称
+export const GetAllCourseSubType = (course_type) => ajax(BASE_URL+'/ilearning/getAllCourseSubType',{course_type},'GET')
+
 // 添加配置项
 export const AddConfiguration = (parent_id, configuration_name, configuration_value) =>
   ajax(BASE_URL+'/cms/addConfiguration',{parent_id, configuration_name, configuration_value},'GET')
@@ -67,3 +76,6 @@ export const QueryAllConfigurations = (configuration_name) => ajax(BASE_URL+'/cm
 
 // 分页查询配置项信息
 export const FilterConfigurations = (search,offset,current_page) => ajax(BASE_URL+'/cms/filterConfigurations',{search, offset,current_page},'GET')
+
+
+

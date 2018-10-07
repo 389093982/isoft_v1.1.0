@@ -1,5 +1,5 @@
 <template>
-  <div style="background: #FFFFFF;padding: 10px;">
+  <div style="background: #FFFFFF;padding: 10px;box-shadow: 2px 2px 1px #888888;">
     <Tabs :animated="false">
       <TabPane label="我要开课">
         <NewCourse/>

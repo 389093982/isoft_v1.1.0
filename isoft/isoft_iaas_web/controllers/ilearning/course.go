@@ -23,6 +23,27 @@ type CourseController struct {
 	beego.Controller
 }
 
+func (this *CourseController) GetAllCourseSubType() {
+	course_type := this.GetString("course_type")
+	list, err := ilearning.CourseSubTypeList(course_type)
+	if err == nil {
+		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "sub_course_types": list}
+	} else {
+		this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
+	}
+	this.ServeJSON()
+}
+
+func (this *CourseController) GetAllCourseType() {
+	list,err := ilearning.GetAllCourseType()
+	if err != nil{
+		this.Data["json"] = &map[string]interface{}{"status":"ERROR"}
+	}else{
+		this.Data["json"] = &map[string]interface{}{"status":"SUCCESS","course_types":&list}
+	}
+	this.ServeJSON()
+}
+
 func (this *CourseController) ToggleFavorite() {
 	// 获取课程 id
 	favorite_id, _ := this.GetInt("favorite_id")
@@ -196,5 +217,18 @@ func (this *CourseController) NewCourse() {
 	comment_theme.LastUpdatedTime = time.Now()
 	// 增加一条评论主题
 	ilearning.AddCommentTheme(&comment_theme)
+	this.ServeJSON()
+}
+
+func (this *CourseController) GetHotCourseRecommend()  {
+	// 热门推荐,根据观看量查询前 50 个
+	condArr := make(map[string]string)
+	condArr["querysOrder"] = "-watch_number"
+	courses, _, err := ilearning.QueryCourse(condArr, 1, 50)
+	if err != nil{
+		this.Data["json"] = &map[string]interface{}{"status":"ERROR"}
+	}else{
+		this.Data["json"] = &map[string]interface{}{"status":"SUCCESS", "courses":&courses}
+	}
 	this.ServeJSON()
 }

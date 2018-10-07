@@ -1,5 +1,5 @@
 <template>
-  <div style="width: 88%; height: 88%; margin: 0 auto;">
+  <div style="width: 88%; height: 88%; margin: 0 auto;box-shadow: 2px 2px 1px #888888;">
     <video ref="video" width="100%" height="100%" controls autoplay="autoplay">
       <source type="video/mp4">
       <source type="video/ogg">

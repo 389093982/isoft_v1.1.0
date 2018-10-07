@@ -168,3 +168,13 @@ func QueryCourse(condArr map[string]string, page int, offset int) (courses []Cou
 	qs.All(&courses)
 	return
 }
+
+// 获取全部课程类型
+func GetAllCourseType() (list orm.ParamsList, err error) {
+	o := orm.NewOrm()
+	num, err := o.Raw("SELECT DISTINCT course_type FROM course").ValuesFlat(&list)
+	if err == nil && num > 0 {
+		return list, nil
+	}
+	return
+}
