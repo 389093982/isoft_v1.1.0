@@ -1,9 +1,8 @@
 <template>
   <div style="background: #FFFFFF;padding: 10px;">
-    <!-- 显示全部课程类型 -->
-    <ShowCourseTypes/>
+    <HotCourseType/>
+    <TotalCourseType/>
     <p>111</p>
-
     <p>111</p>
     <p>111</p>
     <p>111</p>
@@ -16,10 +15,11 @@
 </template>
 
 <script>
-  import ShowCourseTypes from "./CourseType/ShowCourseTypes.vue"
+  import HotCourseType from "./CourseType/HotCourseType.vue"
+  import TotalCourseType from "./CourseType/TotalCourseType.vue"
   export default {
     name: "Index",
-    components:{ShowCourseTypes},
+    components:{HotCourseType,TotalCourseType},
   }
 </script>
 

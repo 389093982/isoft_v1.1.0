@@ -33,8 +33,12 @@ func (this *ConfigurationController) FilterConfigurations()  {
 
 func (this *ConfigurationController) QueryAllConfigurations()  {
 	configuration_name := this.GetString("configuration_name")
-	configurations := cms.QueryAllConfigurations(configuration_name, 0)
-	this.Data["json"] = &map[string]interface{}{"status":"SUCCESS", "configurations":&configurations}
+	configurations, err := cms.QueryAllConfigurations(configuration_name, 0)
+	if err != nil{
+		this.Data["json"] = &map[string]interface{}{"status":"ERROR"}
+	}else{
+		this.Data["json"] = &map[string]interface{}{"status":"SUCCESS", "configurations":&configurations}
+	}
 	this.ServeJSON()
 }
 
@@ -44,7 +48,7 @@ func (this *ConfigurationController) AddConfiguration()  {
 	configuration_name := this.GetString("configuration_name")
 	configuration_value := this.GetString("configuration_value")
 	configuration := &cms.Configuration{
-		PrantId:parent_id,
+		ParentId:parent_id,
 		ConfigurationName:configuration_name,
 		ConfigurationValue:configuration_value,
 		CreatedBy:user_name,

@@ -14,8 +14,8 @@
 </template>
 
 <script>
-  import MyCourseList from "./CourseSpace/MyCourseList.vue"
-  import NewCourse from "./CourseSpace/NewCourse.vue"
+  import MyCourseList from "./MyCourseList.vue"
+  import NewCourse from "./NewCourse.vue"
 
   export default {
     name: "CourseSpace",
