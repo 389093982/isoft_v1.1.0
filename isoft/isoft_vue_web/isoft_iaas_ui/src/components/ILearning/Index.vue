@@ -11,6 +11,7 @@
         <HotIssue/>
       </Col>
     </Row>
+    <SiteGuide/>
     <p>111</p>
     <p>111</p>
     <p>111</p>
@@ -28,10 +29,11 @@
   import HotRecommend from "./Course/HotRecommend.vue"
   import NewsNotice from "./Course/NewsNotice.vue"
   import HotIssue from "./Course/HotIssue.vue"
+  import SiteGuide from "./Site/SiteGuide.vue"
 
   export default {
     name: "Index",
-    components:{ChooseCourseType,HotRecommend,NewsNotice,HotIssue},
+    components:{ChooseCourseType,HotRecommend,NewsNotice,HotIssue,SiteGuide},
   }
 </script>
 

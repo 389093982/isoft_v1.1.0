@@ -25,15 +25,25 @@ function checkEmpty(checkStr){
 
 Vue.config.productionTip = false
 
+// 登录判断
 router.beforeEach(async (to, from, next) => {
+  // LoadingBar 加载进度条
+  iView.LoadingBar.start();
+
   var userName = getCookie("userName");
   var isLogin = getCookie("isLogin");
   var token = getCookie("token");
   if(checkEmpty(userName) || checkEmpty(isLogin) || checkEmpty(token) || isLogin != "isLogin"){
+    // 跳往登录页面
     window.location.href = "/api/auth/redirectToLogin/?redirectUrl=" + window.location.href;
   }else{
     next();
   }
+});
+
+router.afterEach(route => {
+  // LoadingBar 加载进度条
+  iView.LoadingBar.finish();
 });
 
 /* eslint-disable no-new */
