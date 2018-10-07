@@ -1,11 +1,11 @@
 <template>
   <div style="margin-top: 20px;">
-    <a href="javascript:;" @click="showAll=!showAll">显示全部课程分类</a>
+    <a href="javascript:;" @click="showAll=!showAll" style="color: red;">显示全部课程分类</a>
     <div v-if="showAll == true">
       <ul>
         <li v-for="course_type in course_types" style="margin:10px 10px 0 0;list-style:none;float: left;">
           <Poptip trigger="hover" :title="course_type" content="content" placement="bottom" @on-popper-show="loadSubCourseType(course_type)">
-            <a href="javascript:;" style="font-size: 14px;color: #626262;" @click="submit(course_type)">
+            <a href="javascript:;" style="font-size: 14px;" @click="submit(course_type)">
               {{course_type}}
             </a>
 
@@ -13,7 +13,7 @@
               <ul>
                 <li v-for="sub_course_type in sub_course_types"
                     style="padding-left: 10px;list-style:none;float: left;">
-                  <a href="javascript:;" style="font-size: 14px;color: #626262;" @click="submit(sub_course_type)">
+                  <a href="javascript:;" style="font-size: 14px;" @click="submit(sub_course_type)">
                     {{sub_course_type}}
                   </a>
                 </li>
@@ -62,7 +62,10 @@
 </script>
 
 <style scoped>
- a{
-   color: red;
- }
+  a{
+    color: #626262;
+  }
+  a:hover{
+    color: red;
+  }
 </style>

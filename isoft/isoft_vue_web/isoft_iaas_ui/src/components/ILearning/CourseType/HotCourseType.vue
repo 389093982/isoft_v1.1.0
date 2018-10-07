@@ -1,28 +1,30 @@
 <template>
   <div>
-    热门课程推荐
-    <ul>
-      <li v-for="(configuration,index) in configurations" style="margin:10px 10px 0 0;list-style:none;float: left;">
+    <a href="javascript:;" @click="showAll=!showAll" style="color: red;">热门课程推荐</a>
+    <div v-if="showAll == true">
+      <ul>
+        <li v-for="(configuration,index) in configurations" style="margin:10px 10px 0 0;list-style:none;float: left;">
 
-        <Poptip trigger="hover" :title="configuration.configuration_value" content="content" placement="bottom">
-          <a href="javascript:;" style="font-size: 14px;color: #626262;" @click="submit(configuration.configuration_value)">
-            {{configuration.configuration_value}}
-          </a>
+          <Poptip trigger="hover" :title="configuration.configuration_value" content="content" placement="bottom">
+            <a href="javascript:;" style="font-size: 14px;" @click="submit(configuration.configuration_value)">
+              {{configuration.configuration_value}}
+            </a>
 
-          <div class="api" slot="content">
-            <ul>
-              <li v-for="(sub_configuration,index) in configuration.sub_configurations"
-                  style="padding-left: 10px;list-style:none;float: left;">
-                <a href="javascript:;" style="font-size: 14px;color: #626262;" @click="submit(configuration.configuration_value)">
-                  {{sub_configuration.configuration_value}}
-                </a>
-              </li>
-            </ul>
-          </div>
-        </Poptip>
+            <div class="api" slot="content">
+              <ul>
+                <li v-for="(sub_configuration,index) in configuration.sub_configurations"
+                    style="padding-left: 10px;list-style:none;float: left;">
+                  <a href="javascript:;" style="font-size: 14px;" @click="submit(configuration.configuration_value)">
+                    {{sub_configuration.configuration_value}}
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </Poptip>
 
-      </li>
-    </ul>
+        </li>
+      </ul>
+    </div>
     <div style="clear: both;"></div>
   </div>
 </template>
@@ -35,6 +37,7 @@
     data(){
       return {
         configurations:[],
+        showAll:true,
       }
     },
     methods: {
@@ -55,5 +58,10 @@
 </script>
 
 <style scoped>
-
+  a{
+    color: #626262;
+  }
+  a:hover{
+    color: red;
+  }
 </style>
