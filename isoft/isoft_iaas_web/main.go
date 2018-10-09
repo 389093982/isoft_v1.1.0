@@ -115,10 +115,10 @@ func recordHeatBeat() {
 }
 
 func main() {
-	// 登录过滤器
-	beego.InsertFilter("*", beego.BeforeExec, sso.LoginFilterWithStatusCode)
+	// 登录过滤器,以 /api 开头的请求为 ajax 请求,需要返回 401 状态码,否则为非 ajax 请求,需要跳往登录页面
+	beego.InsertFilter("/api/*", beego.BeforeExec, sso.LoginFilterWithStatusCode)
+	beego.InsertFilter(`/(^(?!api).*)`, beego.BeforeExec, sso.LoginFilterWithRedirect)
 
 	beego.Run()
-
 	go recordHeatBeat()
 }

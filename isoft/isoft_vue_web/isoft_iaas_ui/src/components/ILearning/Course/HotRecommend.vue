@@ -7,11 +7,11 @@
       <ul>
         <li v-for="course in courses" style="float: left;padding: 10px 9px 0;width: 140px;height: 125px;overflow: hidden;
           text-align: center;position: relative;">
-          <a href="javascript:;" style="text-align: center;">
+          <router-link :to="{path:'/ilearning/course_detail',query:{course_id:course.id}}">
             <img v-if="course.small_image" :src="course.small_image" height="90px" width="120px"/>
             <img v-else src="../../../assets/default.png" height="90px" width="120px"/>
             <p>{{course.course_name}}</p>
-          </a>
+          </router-link>
         </li>
       </ul>
     </div>

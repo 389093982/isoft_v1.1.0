@@ -29,10 +29,11 @@
               <a href="javascript:;" v-else @click="toggle_favorite(course.id,'course_collect')">加入收藏</a>&nbsp;
               <a href="javascript:;" v-if="course_parise==true" @click="toggle_favorite(course.id,'course_praise')">取消点赞</a>
               <a href="javascript:;" v-else @click="toggle_favorite(course.id,'course_praise')">我要点赞</a>
+              <router-link to="/ilearning/index" style="float: right;"><Button size="small" type="success">搜索同类资源</Button></router-link>
             </p>
           </Col>
         </Row>
-        <hr>
+        <hr style="margin-top: 10px;">
         <!-- 视频链接 -->
         <Row style="margin: 10px 0 10px 0">
           <Col span="12" v-for="cVideo in cVideos" style="padding: 5px;">
@@ -52,7 +53,10 @@
         <CourseComment :course="course" style="margin-top: 50px;"/>
       </Col>
       <!-- 推荐系统 -->
-      <Col span="8"><Recommand /></Col>
+      <Col span="8">
+        <Recommand />
+        <CommunicationGroup/>
+      </Col>
     </Row>
   </div>
 </template>
@@ -62,10 +66,11 @@
   import {ToggleFavorite} from "../../../api"
   import Recommand from "./Recommand.vue"
   import CourseComment from "../Comment/CourseComment.vue"
+  import CommunicationGroup from "../Site/CommunicationGroup.vue"
 
   export default {
     name: "CourseDetail",
-    components:{Recommand,CourseComment},
+    components:{CourseComment,Recommand,CommunicationGroup},
     data(){
       return {
         // 当前课程

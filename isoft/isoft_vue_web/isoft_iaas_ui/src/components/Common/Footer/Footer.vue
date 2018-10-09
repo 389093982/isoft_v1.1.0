@@ -1,5 +1,9 @@
 <template>
   <div id="footer">
+    <BackTop>
+      <div class="top">返回顶端</div>
+    </BackTop>
+
     <p>
       <a href="#">关于我们</a> |
       <a href="#">联系我们</a> |
@@ -23,6 +27,14 @@
 </script>
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
+  .top{
+    padding: 10px;
+    background: rgba(0, 153, 229, .7);
+    color: #fff;
+    text-align: center;
+    border-radius: 2px;
+  }
+
   #footer
     height 80px
     background-color #ffffff

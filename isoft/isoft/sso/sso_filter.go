@@ -74,10 +74,11 @@ func (this *LoginManager) ResponseWithErrorType(errorType string) {
 	if errorType == "redirect" {
 		// 前去登录
 		this.ResponseWithRedirect()
-	} else {
+	} else if errorType == "statusCode" {
 		this.ResponseWithStatusCode()
 	}
 }
+
 
 func (this *LoginManager) ResponseWithStatusCode() {
 	this.ctx.ResponseWriter.WriteHeader(401)

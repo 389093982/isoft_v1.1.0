@@ -13,7 +13,7 @@ func main() {
 	defer os.Setenv("GOOS", GOOS)
 
 	packApps := pack.ReadPackApp("./pack.xml")
-	err := pack.StartAllPackTask(&packApps, "dataServer")
+	err := pack.StartAllPackTask(&packApps, "isoft_iaas_web")
 	if err != nil {
 		log.Println(err)
 	}
