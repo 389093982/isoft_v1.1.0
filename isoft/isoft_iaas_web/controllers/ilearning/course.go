@@ -204,7 +204,7 @@ func (this *CourseController) NewCourse() {
 	if err == nil {
 		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
 	} else {
-		this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
+		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errMsg": err.Error()}
 	}
 	comment_theme := ilearning.CommentTheme{}
 	comment_theme.CommentId = int(id)

@@ -28,7 +28,7 @@
     components:{Search,HotCourseType,TotalCourseType},
     methods: {
       searchFunc:function (data) {
-        alert(data);
+        this.$router.push({ name: '/ilearning/course_search', params: { search: data }});
       }
     }
   }

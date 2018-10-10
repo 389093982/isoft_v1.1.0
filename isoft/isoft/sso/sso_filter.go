@@ -104,17 +104,18 @@ func (this *LoginManager) ResetUserName(username string) {
 
 func (this *LoginManager) CheckOrInValidateTokenString() bool {
 	resp, err := http.Get(isoft_sso_url + "/user/checkOrInValidateTokenString?tokenString=" + this.GetTokenString() + "&operateType=check")
+	if err != nil{
+		return false
+	}
 	defer resp.Body.Close()
+	body, err := ioutil.ReadAll(resp.Body)
 	if err == nil {
-		body, err := ioutil.ReadAll(resp.Body)
-		if err == nil {
-			jsonStr := string(body)
-			var jsonMap map[string]string
-			json.Unmarshal([]byte(jsonStr), &jsonMap)
-			if jsonMap["status"] == "SUCCESS" {
-				this.ResetUserName(jsonMap["username"])
-				return true
-			}
+		jsonStr := string(body)
+		var jsonMap map[string]string
+		json.Unmarshal([]byte(jsonStr), &jsonMap)
+		if jsonMap["status"] == "SUCCESS" {
+			this.ResetUserName(jsonMap["username"])
+			return true
 		}
 	}
 	return false

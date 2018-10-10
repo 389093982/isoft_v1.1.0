@@ -11,6 +11,7 @@ import CourseSpace from '../components/ILearning/CourseSpace/CourseSpace.vue'
 import CourseDetail from '../components/ILearning/Course/CourseDetail.vue'
 import VideoPay from '../components/ILearning/Course/VideoPay.vue'
 import Configuration from '../components/CMS/Configuration.vue'
+import CourseSearch from "../components/ILearning/Course/CourseSearch.vue"
 
 Vue.use(Router);
 
@@ -62,6 +63,10 @@ export default new Router({
     {
       path: '/ilearning/configuration',
       component: Configuration,
+    },
+    {
+      path: '/ilearning/course_search',
+      component: CourseSearch,
     },
     {
       path: '/',

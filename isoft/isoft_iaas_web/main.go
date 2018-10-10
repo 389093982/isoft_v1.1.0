@@ -6,10 +6,8 @@ import (
 	"github.com/astaxie/beego/logs"
 	"github.com/astaxie/beego/orm"
 	_ "github.com/go-sql-driver/mysql" // _ 的作用,并不需要把整个包都导入进来,仅仅是是希望它执行init()函数而已
-	"isoft/isoft/business/monitor"
 	"isoft/isoft/common/apppath"
 	"isoft/isoft/common/fileutil"
-	"isoft/isoft/common/osutil"
 	"isoft/isoft/sso"
 	"isoft/isoft_iaas_web/models/cms"
 	"isoft/isoft_iaas_web/models/iblog"
@@ -106,19 +104,10 @@ func createTable() {
 	}
 }
 
-func recordHeatBeat() {
-	localIp, _ := osutil.GetLocalIp()
-	httpport := beego.AppConfig.String("httpport")
-	ISOFT_DEPLOY_WEB := beego.AppConfig.String("ISOFT_DEPLOY_WEB")
-	// 每隔 5 s 发送一次心跳检测信息给监控系统
-	go monitor.RecordMonitorHeartBeatLog(ISOFT_DEPLOY_WEB, localIp+":"+httpport)
-}
-
 func main() {
 	// 登录过滤器,以 /api 开头的请求为 ajax 请求,需要返回 401 状态码,否则为非 ajax 请求,需要跳往登录页面
 	beego.InsertFilter("/api/*", beego.BeforeExec, sso.LoginFilterWithStatusCode)
 	beego.InsertFilter(`/(^(?!api).*)`, beego.BeforeExec, sso.LoginFilterWithRedirect)
 
 	beego.Run()
-	go recordHeatBeat()
 }
