@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <span>
     <a href="javascript:;" @click="showCourseType = true"><Icon type="md-book" />&nbsp;选择推荐分类</a>
     <Modal
       v-model="showCourseType"
@@ -28,7 +28,7 @@
         </Scroll>
       </div>
     </Modal>
-  </div>
+  </span>
 </template>
 
 <script>

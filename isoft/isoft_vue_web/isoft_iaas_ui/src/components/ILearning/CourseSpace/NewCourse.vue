@@ -2,13 +2,15 @@
   <div>
     <Row>
       <Col span="12">
-        <ChooseHotCourseType/>
         <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="100">
           <FormItem label="课程名称" prop="course_name">
             <Input v-model="formValidate.course_name" placeholder="Enter course name..."/>
           </FormItem>
           <FormItem label="课程类型" prop="course_type">
-            <Input v-model="formValidate.course_type" placeholder="Enter course type..."></Input>
+            <Row>
+              <Col span="19"><Input v-model="formValidate.course_type" placeholder="Enter course type..."></Input></Col>
+              <Col span="5"><ChooseHotCourseType/></Col>
+            </Row>
           </FormItem>
           <FormItem label="课程子类型" prop="course_sub_type">
             <Input v-model="formValidate.course_sub_type" placeholder="Enter course sub type..."></Input>
