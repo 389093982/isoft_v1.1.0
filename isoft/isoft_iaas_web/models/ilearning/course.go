@@ -145,14 +145,13 @@ func QueryCourse(condArr map[string]string, page int, offset int) (courses []Cou
 	o := orm.NewOrm()
 	qs := o.QueryTable("course")
 	var cond = orm.NewCondition()
-	if _, ok := condArr["search"]; ok {
+	if search, ok := condArr["search"]; ok && strings.TrimSpace(search) != "" {
 		subCond := orm.NewCondition()
-		subCond = cond.And("course_type__contains", condArr["search"]).Or("course_sub_type__contains", condArr["search"])
+		subCond = cond.And("course_type__contains", search).Or("course_sub_type__contains", search)
 		cond = cond.AndCond(subCond)
 	}
 	if _, ok := condArr["CourseAuthor"]; ok {
 		cond = cond.And("CourseAuthor", condArr["CourseAuthor"])
-		//.Filter("username",user.Username).Where(where).Limit(strconv.Itoa(p.Offset()), strconv.Itoa(pagesize)).Order(`op.id desc`).Select()
 	}
 	if _, ok := condArr["querysOrder"]; ok {
 		querysOrder := condArr["querysOrder"]

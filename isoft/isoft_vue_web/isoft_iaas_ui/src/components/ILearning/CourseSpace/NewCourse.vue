@@ -2,6 +2,7 @@
   <div>
     <Row>
       <Col span="12">
+        <ChooseHotCourseType/>
         <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="100">
           <FormItem label="课程名称" prop="course_name">
             <Input v-model="formValidate.course_name" placeholder="Enter course name..."/>
@@ -30,9 +31,11 @@
 
 <script>
   import {NewCourse} from "../../../api"
+  import ChooseHotCourseType from "../CourseType/ChooseHotCourseType.vue"
 
   export default {
     name: "NewCourse",
+    components:{ChooseHotCourseType},
     data(){
       return {
         formValidate: {

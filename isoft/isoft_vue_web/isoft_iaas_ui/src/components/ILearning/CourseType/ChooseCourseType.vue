@@ -28,7 +28,10 @@
     components:{Search,HotCourseType,TotalCourseType},
     methods: {
       searchFunc:function (data) {
-        this.$router.push({ name: '/ilearning/course_search', params: { search: data }});
+        // params是路由的一部分
+        // query是拼接在url后面的参数
+        // 由于动态路由也是传递params的,所以在 this.$router.push() 方法中path不能和params一起使用,否则params将无效.需要用name来指定页面
+        this.$router.push({ path: '/ilearning/course_search', query: { search: data }});
       }
     }
   }

@@ -170,11 +170,9 @@ func (this *CourseController) ChangeCourseImg() {
 	}
 }
 
-func (this *CourseController) GetMyCourseList() {
-	condArr := make(map[string]string)
+func (this *CourseController) SearchCourseListPaginator(condArr map[string]string)  {
 	offset, _ := this.GetInt("offset", 10)            // 每页记录数
 	current_page, _ := this.GetInt("current_page", 1) // 当前页
-	condArr["CourseAuthor"] = this.Ctx.Input.Session("UserName").(string)
 	courses, count, err := ilearning.QueryCourse(condArr, current_page, offset)
 	paginator := pagination.SetPaginator(this.Ctx, offset, count)
 	//初始化
@@ -185,6 +183,16 @@ func (this *CourseController) GetMyCourseList() {
 		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "courses": &courses, "paginator": &paginatorMap}
 	}
 	this.ServeJSON()
+}
+
+func (this *CourseController) SearchCourseList()  {
+	search := this.GetString("search")
+	this.SearchCourseListPaginator(map[string]string{"search":search})
+}
+
+func (this *CourseController) GetMyCourseList() {
+	CourseAuthor := this.Ctx.Input.Session("UserName").(string)
+	this.SearchCourseListPaginator(map[string]string{"CourseAuthor":CourseAuthor})
 }
 
 func (this *CourseController) NewCourse() {

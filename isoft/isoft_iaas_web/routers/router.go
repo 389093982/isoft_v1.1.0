@@ -44,6 +44,7 @@ func initILearningRouter() {
 	beego.Router("/api/ilearning/getAllCourseType", &ilearning.CourseController{}, "get,post:GetAllCourseType")
 	beego.Router("/api/ilearning/getAllCourseSubType", &ilearning.CourseController{}, "get,post:GetAllCourseSubType")
 	beego.Router("/api/ilearning/getHotCourseRecommend", &ilearning.CourseController{}, "get,post:GetHotCourseRecommend")
+	beego.Router("/api/ilearning/searchCourseList", &ilearning.CourseController{}, "get,post:SearchCourseList")
 
 	beego.Router("/api/ilearning/toggle_favorite", &ilearning.CourseController{}, "get,post:ToggleFavorite")
 

@@ -65,6 +65,9 @@ export default new Router({
       component: Configuration,
     },
     {
+      // this.$router.push({ name: 'xxx'});
+      // this.$router.push({ path: 'xxx'});
+      name:'course_search',
       path: '/ilearning/course_search',
       component: CourseSearch,
     },
