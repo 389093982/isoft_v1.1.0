@@ -1,30 +1,21 @@
 <template>
-  <div style="margin-top: 25px;">
-    <a href="javascript:;" @click="showAll=!showAll" style="color: red;">显示全部课程分类</a>
-    <div v-if="showAll == true">
-      <ul>
-        <li v-for="course_type in course_types" style="margin:10px 10px 0 0;list-style:none;float: left;">
-          <Poptip trigger="hover" :title="course_type" content="content" placement="bottom" @on-popper-show="loadSubCourseType(course_type)">
-            <a href="javascript:;" style="font-size: 14px;" @click="submit(course_type)">
-              {{course_type}}
-            </a>
-
-            <div class="api" slot="content">
-              <ul>
-                <li v-for="sub_course_type in sub_course_types"
-                    style="padding-left: 10px;list-style:none;float: left;">
-                  <a href="javascript:;" style="font-size: 14px;" @click="submit(sub_course_type)">
-                    {{sub_course_type}}
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </Poptip>
-
+  <div>
+      <ul style="overflow:hidden">
+        <li v-for="course_type in course_types" style="margin:5px;padding:5px;list-style:none;
+          float: left;background: rgba(219,167,255,0.34);">
+          <a href="javascript:;" style="font-size: 14px;" @click="loadSubCourseType(course_type)">
+            <span>{{course_type}}</span>
+          </a>
         </li>
       </ul>
-    </div>
-    <div style="clear: both;"></div>
+      <ul style="overflow:hidden">
+        <li v-for="sub_course_type in sub_course_types"
+            style="padding-left: 10px;list-style:none;float: left;">
+          <a href="javascript:;" style="font-size: 14px;" @click="submit(sub_course_type)">
+            {{sub_course_type}}
+          </a>
+        </li>
+      </ul>
   </div>
 </template>
 
@@ -36,7 +27,6 @@
     name: "TotalCourseType",
     data(){
       return {
-        showAll:false,
         course_types:[],
         sub_course_types:[],
       }
@@ -46,6 +36,7 @@
         const result = await GetAllCourseType();
         if(result.status=="SUCCESS"){
           this.course_types = result.course_types;
+          this.loadSubCourseType(result.course_types[0]);
         }
       },
       loadSubCourseType:async function(course_type){

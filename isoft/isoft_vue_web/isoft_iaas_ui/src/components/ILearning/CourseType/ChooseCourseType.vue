@@ -11,8 +11,10 @@
         margin-right: 20px;color: red;">>>进入我的课程空间</router-link>
       </div>
       <div style="padding: 20px;">
-        <HotCourseType/>
-        <TotalCourseType/>
+        <a href="javascript:;" @click="showCourseType='hot'" style="color: red;">热门课程推荐</a>
+        <a href="javascript:;" @click="showCourseType='total'" style="color: red;">显示全部课程分类</a>
+        <HotCourseType v-show="showCourseType==='hot'"/>
+        <TotalCourseType v-show="showCourseType==='total'"/>
       </div>
     </div>
   </div>
@@ -26,6 +28,11 @@
   export default {
     name: "ChooseCourseType",
     components:{Search,HotCourseType,TotalCourseType},
+    data(){
+      return {
+        showCourseType:"hot",
+      }
+    },
     methods: {
       searchFunc:function (data) {
         // params是路由的一部分
