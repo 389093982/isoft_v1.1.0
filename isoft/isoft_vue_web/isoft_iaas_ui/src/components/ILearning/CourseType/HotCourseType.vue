@@ -1,7 +1,8 @@
 <template>
   <div>
+    课程大类：
     <!-- 对父级CSS选择器加overflow:hidden样式,可以清除父级内使用float产生浮动.优点是可以很少CSS代码即可解决浮动产生 -->
-    <ul style="overflow:hidden">
+    <ul style="overflow:hidden;border-bottom: 2px solid #edf1f2;">
       <li v-for="(configuration,index) in configurations" style="list-style:none;float: left;">
         <a href="javascript:;" style="margin:5px;padding-left:15px;padding-right:15px;font-size: 14px;
             display: inline-block;color: #fff;background: rgb(34,195,0);"
@@ -10,7 +11,8 @@
         </a>
       </li>
     </ul>
-    <ul style="overflow:hidden">
+    详细分类：
+    <ul style="overflow:hidden;border-bottom: 2px solid #edf1f2;">
       <li v-for="(sub_configuration,index) in currentConfiguration.sub_configurations" style="list-style:none;float: left;">
         <a href="javascript:;" style="margin:5px;padding-left:15px;padding-right:15px;font-size: 14px;
             display: inline-block;color: #fff;background: rgb(255,98,37);"

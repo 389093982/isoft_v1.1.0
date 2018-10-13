@@ -1,6 +1,7 @@
 <template>
   <div>
-      <ul style="overflow:hidden">
+      课程大类：
+      <ul style="overflow:hidden;border-bottom: 2px solid #edf1f2;">
         <li v-for="course_type in course_types" style="list-style:none;float: left;">
           <a href="javascript:;" style="margin:5px;padding-left:15px;padding-right:15px;font-size: 14px;
              display: inline-block;color: #fff;background: rgb(34,195,0);"
@@ -9,7 +10,8 @@
           </a>
         </li>
       </ul>
-      <ul style="overflow:hidden">
+      详细分类：
+      <ul style="overflow:hidden;border-bottom: 2px solid #edf1f2;">
         <li v-for="sub_course_type in sub_course_types" style="list-style:none;float: left;">
           <a href="javascript:;" style="margin:5px;padding-left:15px;padding-right:15px;font-size: 14px;
              display: inline-block;color: #fff;background: rgb(255,98,37);"
