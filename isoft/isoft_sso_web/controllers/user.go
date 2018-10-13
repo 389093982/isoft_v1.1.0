@@ -135,10 +135,10 @@ func SuccessedLogin(username string, this *UserController, origin string, refere
 		userToken.LastUpdatedTime = time.Now()
 		models.SaveUserToken(userToken)
 
-		// 设置 cookie 有效时间为 10 分钟
-		this.Ctx.SetCookie("token", tokenString, 60*10, "/")
-		this.Ctx.SetCookie("userName", username, 60*10, "/")
-		this.Ctx.SetCookie("isLogin", "isLogin", 60*10, "/")
+		// 设置 cookie 有效时间为 60 分钟
+		this.Ctx.SetCookie("token", tokenString, 60*60, "/")
+		this.Ctx.SetCookie("userName", username, 60*60, "/")
+		this.Ctx.SetCookie("isLogin", "isLogin", 60*60, "/")
 	}
 
 	// 则重定向到 redirectUrl,原生的方法是：w.Header().Set("Location", "http://www.baidu.com") w.WriteHeader(301)

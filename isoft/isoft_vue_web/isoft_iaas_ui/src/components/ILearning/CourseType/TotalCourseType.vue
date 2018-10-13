@@ -1,17 +1,18 @@
 <template>
   <div>
       <ul style="overflow:hidden">
-        <li v-for="course_type in course_types" style="margin:5px;padding:5px;list-style:none;
-          float: left;background: rgba(219,167,255,0.34);">
-          <a href="javascript:;" style="font-size: 14px;" @click="loadSubCourseType(course_type)">
+        <li v-for="course_type in course_types" style="list-style:none;float: left;">
+          <a href="javascript:;" style="margin:5px;padding-left:15px;padding-right:15px;font-size: 14px;
+             display: inline-block;color: #fff;background: rgb(34,195,0);"
+             @click="loadSubCourseType(course_type)">
             <span>{{course_type}}</span>
           </a>
         </li>
       </ul>
       <ul style="overflow:hidden">
-        <li v-for="sub_course_type in sub_course_types"
-            style="padding-left: 10px;list-style:none;float: left;">
-          <a href="javascript:;" style="font-size: 14px;" @click="submit(sub_course_type)">
+        <li v-for="sub_course_type in sub_course_types" style="list-style:none;float: left;">
+          <a href="javascript:;" style="margin:5px;padding-left:15px;padding-right:15px;font-size: 14px;
+             display: inline-block;color: #fff;background: rgb(255,98,37);" @click="submit(sub_course_type)">
             {{sub_course_type}}
           </a>
         </li>

@@ -12,7 +12,7 @@
       </div>
       <div style="padding: 20px;">
         <a href="javascript:;" @click="showCourseType='hot'" style="color: red;">热门课程推荐</a>
-        <a href="javascript:;" @click="showCourseType='total'" style="color: red;">显示全部课程分类</a>
+        <a href="javascript:;" @click="showCourseType='total'" style="color: red;">更多>></a>
         <HotCourseType v-show="showCourseType==='hot'"/>
         <TotalCourseType v-show="showCourseType==='total'"/>
       </div>
@@ -39,6 +39,9 @@
         // query是拼接在url后面的参数
         // 由于动态路由也是传递params的,所以在 this.$router.push() 方法中path不能和params一起使用,否则params将无效.需要用name来指定页面
         this.$router.push({ path: '/ilearning/course_search', query: { search: data }});
+      },
+      toggle:function (data) {
+        alert(data);
       }
     }
   }
