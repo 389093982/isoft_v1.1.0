@@ -4,7 +4,7 @@
     <ul style="overflow:hidden">
       <li v-for="(configuration,index) in configurations" style="list-style:none;float: left;">
         <a href="javascript:;" style="margin:5px;padding-left:15px;padding-right:15px;font-size: 14px;
-            display: inline-block;color: #fff;background: rgb(34,195,0);"
+            display: inline-block;color: #fff;background: rgba(34,195,0,0.55);"
             @click="currentConfiguration=configuration">
           <span>{{configuration.configuration_value}}</span>
         </a>
@@ -13,7 +13,7 @@
     <ul style="overflow:hidden">
       <li v-for="(sub_configuration,index) in currentConfiguration.sub_configurations" style="list-style:none;float: left;">
         <a href="javascript:;" style="margin:5px;padding-left:15px;padding-right:15px;font-size: 14px;
-            display: inline-block;color: #fff;background: rgb(255,98,37);"
+            display: inline-block;color: #fff;background: rgba(255,98,37,0.55);"
             @click="submit(sub_configuration.configuration_value)">
           {{sub_configuration.configuration_value}}
         </a>

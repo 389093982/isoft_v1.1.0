@@ -11,10 +11,10 @@
         margin-right: 20px;color: red;">>>进入我的课程空间</router-link>
       </div>
       <div style="padding: 20px;">
-        <a href="javascript:;" @click="showCourseType='hot'" style="color: red;">热门课程推荐</a>
-        <a href="javascript:;" @click="showCourseType='total'" style="color: red;">更多>></a>
-        <HotCourseType v-show="showCourseType==='hot'"/>
-        <TotalCourseType v-show="showCourseType==='total'"/>
+        <a href="javascript:;" @click="showCourseType=true" style="color: red;">热门课程推荐</a>
+        <a href="javascript:;" @click="showCourseType=!showCourseType" style="color: red;float: right;">更多>></a>
+        <HotCourseType v-show="showCourseType===true"/>
+        <TotalCourseType v-show="showCourseType===false"/>
       </div>
     </div>
   </div>
@@ -30,7 +30,7 @@
     components:{Search,HotCourseType,TotalCourseType},
     data(){
       return {
-        showCourseType:"hot",
+        showCourseType:true,
       }
     },
     methods: {
