@@ -15,35 +15,38 @@ import CourseSearch from "../components/ILearning/Course/CourseSearch.vue"
 
 Vue.use(Router);
 
+export const IBlogRouter = {
+    path: '/iblog',
+    component: IBlog,
+    // 二级路由的配置
+    children: [
+      {
+        path: 'catalog_add',
+        component: CatalogAdd
+      },
+      {
+        path: 'blog_add',
+        component: BlogAdd
+      },
+      {
+        path: 'blog_list',
+        component: BlogList
+      },
+      {
+        path: 'blog_detail',
+        component: BlogDetail
+      },
+    ]
+  };
+export const IFileRouter = {
+    path: '/ifile/ifile',
+    component: IFile
+  };
+
 export default new Router({
   routes: [
-    {
-      path: '/iblog',
-      component: IBlog,
-      // 二级路由的配置
-      children: [
-        {
-          path: 'catalog_add',
-          component: CatalogAdd
-        },
-        {
-          path: 'blog_add',
-          component: BlogAdd
-        },
-        {
-          path: 'blog_list',
-          component: BlogList
-        },
-        {
-          path: 'blog_detail',
-          component: BlogDetail
-        },
-      ]
-    },
-    {
-      path: '/ifile/ifile',
-      component: IFile
-    },
+    IBlogRouter,
+    IFileRouter,
     {
       path: '/ilearning/index',
       component: ILearningIndex,

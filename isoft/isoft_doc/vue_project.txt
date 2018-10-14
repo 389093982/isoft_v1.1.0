@@ -129,5 +129,7 @@ background: url("../../../assets/search.png") 50% 50% no-repeat; 引入设置
 
 #################################################################################################################################
 
-vue-markdown编辑器
+# vue-markdown编辑器
 npm install mavon-editor --save
+# 回显页面
+npm install marked --save
