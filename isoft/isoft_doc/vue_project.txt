@@ -128,3 +128,15 @@ background: url("../../../assets/search.png") 50% 50% no-repeat; 引入设置
 3、在config/index.js文件里，添加assetsPublicPath:'./'
 
 #################################################################################################################################
+
+# vue-markdown编辑器
+npm install mavon-editor --save
+# 回显页面
+npm install showdown --save
+
+import showdown from 'showdown';
+let converter = new showdown.Converter();
+//html变量是HTML代码字符串
+//text是Markdown语法的字符串
+let html = converter.makeHtml(text);
+document.getElementById('id').innerHTML = html;

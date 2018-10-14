@@ -11,14 +11,14 @@
         <Col span="3">编辑次数 0</Col>
       </Row>
     </div>
-    <p>
-      {{blog.content}}
-    </p>
+    <div class="article" v-html="compiledMarkdown"></div>
   </div>
 </template>
 
 <script>
   import {ShowBlogDetail} from "../../api"
+  // 导入 showdown
+  import showdown from 'showdown';
 
   export default {
     name: "BlogDetail",
@@ -33,6 +33,13 @@
         if(result.status=="SUCCESS"){
           this.blog = result.blog;
         }
+      }
+    },
+    computed:{
+      compiledMarkdown () {
+        let converter = new showdown.Converter();
+        let html = converter.makeHtml(this.blog.content);
+        return html;
       }
     },
     mounted:function () {
