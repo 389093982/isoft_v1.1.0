@@ -18,6 +18,8 @@
         <div>
           <HotCourseType v-show="showCourseType===true"/>
           <TotalCourseType v-show="showCourseType===false"/>
+
+          <a style="float: right;">个性化推荐</a>
         </div>
       </div>
     </div>

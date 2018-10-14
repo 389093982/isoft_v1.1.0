@@ -15,7 +15,7 @@
         </Select>
       </FormItem>
       <FormItem label="文章内容" prop="content">
-        <Input v-model="formValidate.content" type="textarea" :autosize="{minRows: 20,maxRows: 50}" placeholder="Enter content..."></Input>
+        <mavon-editor v-model="formValidate.content" :ishljs = "true"/>
       </FormItem>
       <FormItem>
         <Button type="primary" @click="handleSubmit('formValidate')">Submit</Button>

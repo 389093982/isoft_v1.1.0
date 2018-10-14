@@ -128,7 +128,6 @@ background: url("../../../assets/search.png") 50% 50% no-repeat; 引入设置
 3、在config/index.js文件里，添加assetsPublicPath:'./'
 
 #################################################################################################################################
-图片轮播插件
-npm install swiper
-import Swiper from ‘swiper’;
-import ‘swiper/dist/css/swiper.min.css’;
+
+vue-markdown编辑器
+npm install mavon-editor --save
