@@ -6,6 +6,7 @@ import BlogList from '../components/IBlog/BlogList.vue'
 import CatalogAdd from '../components/IBlog/CatalogAdd.vue'
 import BlogAdd from '../components/IBlog/BlogAdd.vue'
 import BlogDetail from '../components/IBlog/BlogDetail.vue'
+import ILearning from '../components/ILearning/ILearning.vue'
 import ILearningIndex from '../components/ILearning/Index.vue'
 import CourseSpace from '../components/ILearning/CourseSpace/CourseSpace.vue'
 import CourseDetail from '../components/ILearning/Course/CourseDetail.vue'
@@ -38,42 +39,53 @@ export const IBlogRouter = {
       },
     ]
   };
+
 export const IFileRouter = {
     path: '/ifile/ifile',
     component: IFile
   };
 
+export const ILearningRouter = {
+    path: '/ilearning',
+    component: ILearning,
+    // 二级路由的配置
+    children: [
+      {
+        path: 'index',
+        component: ILearningIndex,
+      },
+      {
+        path: 'course_space',
+        component: CourseSpace,
+      },
+      {
+        path: 'course_detail',
+        component: CourseDetail,
+      },
+      {
+        path: 'video_play',
+        component: VideoPay,
+      },
+      {
+        path: 'configuration',
+        component: Configuration,
+      },
+      {
+        // this.$router.push({ name: 'xxx'});
+        // this.$router.push({ path: 'xxx'});
+        name:'course_search',
+        path: 'course_search',
+        component: CourseSearch,
+      },
+    ]
+  };
+
+
 export default new Router({
   routes: [
     IBlogRouter,
     IFileRouter,
-    {
-      path: '/ilearning/index',
-      component: ILearningIndex,
-    },
-    {
-      path: '/ilearning/course_space',
-      component: CourseSpace,
-    },
-    {
-      path: '/ilearning/course_detail',
-      component: CourseDetail,
-    },
-    {
-      path: '/ilearning/video_play',
-      component: VideoPay,
-    },
-    {
-      path: '/ilearning/configuration',
-      component: Configuration,
-    },
-    {
-      // this.$router.push({ name: 'xxx'});
-      // this.$router.push({ path: 'xxx'});
-      name:'course_search',
-      path: '/ilearning/course_search',
-      component: CourseSearch,
-    },
+    ILearningRouter,
     {
       path: '/',
       redirect: '/ifile/ifile'
