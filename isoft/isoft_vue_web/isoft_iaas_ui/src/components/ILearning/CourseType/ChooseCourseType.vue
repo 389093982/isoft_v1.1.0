@@ -16,10 +16,8 @@
           <a href="javascript:;" @click="showCourseType=!showCourseType" style="color: red;float: right;">更多>></a>
         </div>
         <div>
-          <HotCourseType v-show="showCourseType===true"/>
-          <TotalCourseType v-show="showCourseType===false"/>
-
-          <a style="float: right;">个性化推荐</a>
+          <HotCourseType v-show="showCourseType===true" @submitFunc="searchFunc"/>
+          <TotalCourseType v-show="showCourseType===false" @submitFunc="searchFunc"/>
         </div>
       </div>
     </div>

@@ -3,8 +3,9 @@
     <Row>
       <!-- 评论表单 -->
       <Col span="14" style="padding-right: 10px;">
-        <Input v-model="reply_content" type="textarea" :rows="8" placeholder="Enter something..." />
-        <Button type="success" style="margin-top: 5px;float: right;" @click="submitComment">发表评论</Button>
+        <Input v-model.trim="reply_content" type="textarea" :rows="8" placeholder="Enter something..." />
+        <Button type="success" style="margin: 5px;float: right;" @click="submitComment">发表评论</Button>
+        <Button type="error" style="margin: 5px;float: right;" @click="submitComment">我要提问</Button>
       </Col>
       <Col span="10" style="border: 1px solid #e9e9e9;font-size:12px;padding: 10px;">
         <p>发表评论需知：</p>

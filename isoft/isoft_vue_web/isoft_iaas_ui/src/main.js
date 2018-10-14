@@ -12,13 +12,13 @@ import {getCookie} from './tools'
 import iView from 'iview'
 import 'iview/dist/styles/iview.css'
 
+import iEditor from 'iview-editor';
+// 使用 css
+import 'iview/dist/styles/iview.css';
+import 'iview-editor/dist/iview-editor.css';
+
 Vue.use(iView);
-
-// 使用 vue-markdown
-import mavonEditor from 'mavon-editor'
-import 'mavon-editor/dist/css/index.css'
-Vue.use(mavonEditor)
-
+Vue.use(iEditor);
 
 function checkEmpty(checkStr){
   if(checkStr == null || checkStr == undefined || checkStr == ""){

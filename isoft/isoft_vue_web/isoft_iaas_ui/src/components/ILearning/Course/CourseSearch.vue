@@ -1,7 +1,7 @@
 <template>
   <div style="background: #FFFFFF;padding: 10px;box-shadow: 2px 2px 1px #888888;">
     <Row>
-      <Col span="16">
+      <Col v-if="courses.length > 0" span="16">
         <div style="border-bottom: 1px solid #ccc;padding: 15px;border-right: 1px solid #ccc;padding: 15px;" v-for="course in courses">
           <Row>
             <Col span="8">
@@ -26,6 +26,9 @@
             </Col>
           </Row>
         </div>
+      </Col>
+      <Col v-else span="16">
+        未找到相应的搜索结果
       </Col>
       <Col span="8">
         <SiteDashBoard style="border: 1px solid #ccc;padding: 15px;margin-left: 5px;"/>

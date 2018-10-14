@@ -1,6 +1,6 @@
 <template>
   <div>
-      课程大类：
+     <div style="float: left;">课程大类：</div>
       <ul style="overflow:hidden;border-bottom: 2px solid #edf1f2;">
         <li v-for="course_type in course_types" style="list-style:none;float: left;">
           <a href="javascript:;" style="margin:5px;padding-left:15px;padding-right:15px;font-size: 14px;
@@ -10,7 +10,7 @@
           </a>
         </li>
       </ul>
-      详细分类：
+      <div style="float: left;">详细分类：</div>
       <ul style="overflow:hidden;border-bottom: 2px solid #edf1f2;">
         <li v-for="sub_course_type in sub_course_types" style="list-style:none;float: left;">
           <a href="javascript:;" style="margin:5px;padding-left:15px;padding-right:15px;font-size: 14px;
@@ -48,6 +48,9 @@
         if(result.status=="SUCCESS"){
           this.sub_course_types = result.sub_course_types;
         }
+      },
+      submit:function (data) {
+        this.$emit("submitFunc", data);
       }
     },
     mounted:function () {
