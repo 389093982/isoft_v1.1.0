@@ -3,6 +3,10 @@
  */
 import Vue from 'vue'
 
-export default {
+import {RECEIVE_HOTCOURSETYPECONFIGURATIONS} from "./mutation-types"
 
+export default {
+  [RECEIVE_HOTCOURSETYPECONFIGURATIONS] (state, {hotCourseTypeConfigurations}) {
+    state.hotCourseTypeConfigurations = hotCourseTypeConfigurations;
+  },
 }

@@ -15,16 +15,25 @@
 </template>
 
 <script>
-import Header from './components/Common/Header/Header.vue'
-import Footer from './components/Common/Footer/Footer.vue'
+  import {mapActions} from 'vuex'
 
-export default {
-  name: 'App',
-  components: {
-    Header,
-    Footer
-  },
-}
+  import Header from './components/Common/Header/Header.vue'
+  import Footer from './components/Common/Footer/Footer.vue'
+
+  export default {
+    name: 'App',
+    components: {
+      Header,
+      Footer
+    },
+    mounted () {
+      // this.$store.dispatch('getHotCourseTypeConfigurations')
+      this.getHotCourseTypeConfigurations()
+    },
+    methods: {
+      ...mapActions(['getHotCourseTypeConfigurations'])
+    },
+  }
 </script>
 
 <style lang="stylus" type="text/stylus" rel="stylesheet/stylus">

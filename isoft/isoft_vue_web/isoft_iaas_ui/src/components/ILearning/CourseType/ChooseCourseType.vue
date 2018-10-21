@@ -22,6 +22,13 @@
           <TotalCourseType v-show="showCourseType===false" @submitFunc="searchFunc"/>
         </div>
       </div>
+
+      <div style="text-align: right;padding: 10px;">
+        <a href="javascript:;">
+          <img src="../../../assets/images/common/free.jpg"/>
+        </a>
+
+      </div>
     </div>
   </div>
 </template>
