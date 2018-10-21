@@ -5,13 +5,13 @@
     <span style="float: right"><Time :time="comment_theme.created_time"/></span>
   </div>
   <div>
-    <CommentForm :parent_id="parent_id" :comment_id="course.id" :comment_type="comment_type"
+    <CommentForm :parent_id="parent_id" :comment_id="course.id" :theme_type="theme_type"
        :refer_user_name="refer_user_name" @refreshCommentReply="refreshCommentReply"/>
   </div>
   <hr>
   <div>
     <!-- 评论列表 -->
-    <CommentArea ref="_commentArea" v-if="this.course.id" parent_id="0" :comment_id="this.course.id" :comment_type="comment_type"/>
+    <CommentArea ref="_commentArea" v-if="this.course.id" parent_id="0" :comment_id="this.course.id" :theme_type="theme_type"/>
   </div>
 </div>
 </template>
@@ -35,7 +35,7 @@
         submit_comment:"",
         // 被评论人
         refer_user_name:"",
-        comment_type:"course_comment_type",
+        theme_type:"course_theme_type",
       }
     },
     methods:{
@@ -46,8 +46,8 @@
       },
       // 刷新评论主题
       refreshCommentTheme:async function(){
-        // comment_id, comment_type 分别如下参数
-        const result = await FilterCommentTheme(this.course.id, this.comment_type);
+        // comment_id, theme_type 分别如下参数
+        const result = await FilterCommentTheme(this.course.id, this.theme_type);
         if(result.status=="SUCCESS"){
           this.comment_theme = result.comment_theme;
           this.refreshCommentReply();

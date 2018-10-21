@@ -60,7 +60,7 @@ func (this *CommentController) AddTopicReply() {
 	// 构造 TopicReply 实例
 	var topic_reply models.TopicReply
 	topic_reply.ParentId = parent_id
-	topic_reply.ReplyType = "comment"
+	topic_reply.ReplyThemeType = "comment"
 	topic_reply.ReplyContent = reply_content
 	topic_reply.TopicTheme = &topicTheme
 	topic_reply.ReferUserName = refer_user_name

@@ -4,8 +4,8 @@
       <!-- 评论表单 -->
       <Col span="14" style="padding-right: 10px;">
         <Input v-model.trim="reply_content" type="textarea" :rows="8" placeholder="Enter something..." />
-        <Button type="success" style="margin: 5px;float: right;" @click="submitComment">发表评论</Button>
-        <Button type="error" style="margin: 5px;float: right;" @click="submitComment">我要提问</Button>
+        <Button type="success" style="margin: 5px;float: right;" @click="submitComment('comment')">发表评论</Button>
+        <Button type="error" style="margin: 5px;float: right;" @click="submitComment('question')">我要提问</Button>
       </Col>
       <Col span="10" style="border: 1px solid #e9e9e9;font-size:12px;padding: 10px;">
         <p>发表评论需知：</p>
@@ -25,19 +25,25 @@
   export default {
     name: "CommentForm",
     // 父组件传递给子组件的字段
-    props:["parent_id", "comment_id", "comment_type", "refer_user_name"],
+    props:["parent_id", "comment_id", "theme_type", "refer_user_name"],
     data(){
       return {
         reply_content:"",
       }
     },
     methods:{
-      submitComment: async function () {
-        var reply_content = this.submit_comment;
-        const result = await AddCommentReply(this.parent_id, this.reply_content, this.comment_id, this.comment_type, this.refer_user_name);
-        if(result.status=="SUCCESS"){
-          // 调用父组件的 refreshCommentReply 方法
-          this.$emit('refreshCommentReply');
+      submitComment: async function (reply_comment_type) {
+        if(this.reply_content == undefined || this.reply_content.length < 10){
+          this.$Notice.error({
+            title: '温馨提示',
+            desc: "评论信息过短,需要10个字符以上！"
+          });
+        }else{
+          const result = await AddCommentReply(this.parent_id, this.reply_content, this.comment_id, this.theme_type, reply_comment_type, this.refer_user_name);
+          if(result.status=="SUCCESS"){
+            // 调用父组件的 refreshCommentReply 方法
+            this.$emit('refreshCommentReply');
+          }
         }
       }
     }

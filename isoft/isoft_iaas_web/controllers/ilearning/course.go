@@ -120,7 +120,7 @@ func (this *CourseController) UploadVideo() {
 			// 刷新评论主题
 			comment_theme := ilearning.CommentTheme{}
 			comment_theme.CommentId = int(id)
-			comment_theme.CommentType = "course_video_comment_type"
+			comment_theme.ThemeType = "course_video_theme_type"
 			comment_theme.CommentContent = strings.Join([]string{user_name, "@", fh.Filename,
 				"视频更新啦，喜欢该课程的小伙伴们不要错过奥，简洁、直观、免费的课程，能让你更快的掌握知识"}, "")
 			comment_theme.CreatedBy = user_name
@@ -216,7 +216,7 @@ func (this *CourseController) NewCourse() {
 	}
 	comment_theme := ilearning.CommentTheme{}
 	comment_theme.CommentId = int(id)
-	comment_theme.CommentType = "course_comment_type"
+	comment_theme.ThemeType = "course_theme_type"
 	comment_theme.CommentContent = strings.Join([]string{user_name, "@", course_name,
 		"课程更新啦，喜欢该课程的小伙伴们不要错过奥，简洁、直观、免费的课程，能让你更快的掌握知识@", course_short_desc}, "")
 	comment_theme.CreatedBy = user_name

@@ -24,14 +24,14 @@
             </a>
           </Col>
           <Col span="4" style="text-align: right;">
-            <a v-if="comment_reply.depth < 4" href="javascript:;" @click="replyComment(comment_reply.id,comment_type.created_by)">回复他/她</a>&nbsp;
+            <a v-if="comment_reply.depth < 4" href="javascript:;" @click="replyComment(comment_reply.id,comment_reply.created_by)">回复他/她</a>&nbsp;
             <a href="javascript:;">点赞</a>
           </Col>
         </Row>
       </p>
       <!-- 递归,子评论区域 -->
       <CommentArea v-if="comment_reply.sub_reply_amount > 0 && refreshAndShow == true"
-         :parent_id="comment_reply.id" :comment_id="comment_id" :comment_type="comment_type"/>
+         :parent_id="comment_reply.id" :comment_id="comment_id" :theme_type="theme_type"/>
     </div>
 
     <!-- 评论表单 -->
@@ -40,7 +40,7 @@
       width="800"
       title="回复"
       :mask-closable="false">
-      <CommentForm v-if="showCommentForm" :parent_id="_parent_id" :comment_id="comment_id" :comment_type="comment_type"
+      <CommentForm v-if="showCommentForm" :parent_id="_parent_id" :comment_id="comment_id" :theme_type="theme_type"
         :refer_user_name="_refer_user_name" @refreshCommentReply="refreshCommentReply"/>
     </Modal>
 
@@ -54,7 +54,7 @@
   export default {
     name: "CommentArea",
     // 评论清单
-    props:["parent_id","comment_id","comment_type"],
+    props:["parent_id","comment_id","theme_type"],
     components:{CommentForm},
     data(){
       return {
@@ -70,7 +70,7 @@
     methods:{
       // 刷新当前父级评论对应的评论列表
       refreshCommentReply:async function(){
-        const result = await FilterCommentReply(this.comment_id, this.comment_type, this.parent_id);
+        const result = await FilterCommentReply(this.comment_id, this.theme_type, this.parent_id);
         if(result.status=="SUCCESS"){
           this.showCommentForm = false;
           this.comment_replys = result.comment_replys;
