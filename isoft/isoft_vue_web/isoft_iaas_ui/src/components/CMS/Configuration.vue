@@ -72,7 +72,15 @@
           },
           {
             title: '状态',
-            key: 'status'
+            key: 'status',
+            render: function (h, params) {
+              if(params['row']['status'] == 0){
+                return h('div',"失效");
+              }else{
+                return h('div',"生效");
+              }
+
+            }
           }
         ],
         formValidate: {
