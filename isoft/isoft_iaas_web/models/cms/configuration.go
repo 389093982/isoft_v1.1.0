@@ -15,6 +15,7 @@ type Configuration struct {
 	CreatedTime        time.Time        `json:"created_time"`
 	LastUpdatedBy      string           `json:"last_updated_by"`
 	LastUpdatedTime    time.Time        `json:"last_updated_time"`
+	Status 			   int 				`json:"status"`									// 状态 -1 表示失效
 }
 
 func FilterConfigurations(condArr map[string]string, page int, offset int) (configurations []Configuration, counts int64, err error) {

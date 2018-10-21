@@ -17,7 +17,10 @@
               浏览量：{{course.watch_number}}
               课程分数：<Rate disabled show-text allow-half v-model="course.score"/> &nbsp;
             </p>
-            <p>课程名称：{{course.course_name}}</p>
+            <p>
+              课程名称：{{course.course_name}}
+              <router-link to="/ilearning/index" style="margin-left: 30px;">搜索同类资源</router-link>
+            </p>
             <p>作者：{{course.course_author}}</p>
             <p>课程类型：{{course.course_type}}</p>
             <p>课程子类型：{{course.course_sub_type}}</p>
@@ -29,7 +32,6 @@
               <a href="javascript:;" v-else @click="toggle_favorite(course.id,'course_collect')">加入收藏</a>&nbsp;
               <a href="javascript:;" v-if="course_parise==true" @click="toggle_favorite(course.id,'course_praise')">取消点赞</a>
               <a href="javascript:;" v-else @click="toggle_favorite(course.id,'course_praise')">我要点赞</a>
-              <router-link to="/ilearning/index" style="float: right;"><Button size="small" type="success">搜索同类资源</Button></router-link>
             </p>
           </Col>
         </Row>

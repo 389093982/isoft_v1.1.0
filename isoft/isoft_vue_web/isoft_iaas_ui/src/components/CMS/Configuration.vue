@@ -59,16 +59,20 @@
             key: 'id'
           },
           {
-            title: 'parent_id',
+            title: '父级id',
             key: 'parent_id'
           },
           {
-            title: 'configuration_name',
+            title: '配置项名称',
             key: 'configuration_name'
           },
           {
-            title: 'configuration_value',
+            title: '配置项值',
             key: 'configuration_value'
+          },
+          {
+            title: '状态',
+            key: 'status'
           }
         ],
         formValidate: {
