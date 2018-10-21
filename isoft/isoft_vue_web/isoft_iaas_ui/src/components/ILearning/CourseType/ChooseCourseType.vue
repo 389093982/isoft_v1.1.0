@@ -2,7 +2,7 @@
   <div>
     <div style="margin-bottom: 10px;">
       <Search @submitFunc="searchFunc"/>
-    </div>
+     </div>
 
     <div style="border: solid 1px #d9d9d9;">
       <div style="background-color: #f6f6f6;height: 38px;border-bottom: solid 1px #d9d9d9;">
@@ -13,7 +13,9 @@
       <div style="padding: 20px;">
         <div style="border-bottom: 2px solid #edf1f2;">
           <a href="javascript:;" @click="showCourseType=true" style="color: red;">热门课程推荐</a>
-          <a href="javascript:;" @click="showCourseType=!showCourseType" style="color: red;float: right;">更多>></a>
+          <a href="javascript:;" @click="showCourseType=!showCourseType" style="color: red;float: right;">
+            <img src="../../../assets/images/common/more.jpg"/>
+          </a>
         </div>
         <div>
           <HotCourseType v-show="showCourseType===true" @submitFunc="searchFunc"/>

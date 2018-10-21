@@ -2,7 +2,9 @@
   <div>
     <div style="background-color: #f6f6f6;height: 38px;border-bottom: solid 1px #d9d9d9;">
       <p style="float: left;line-height: 38px;margin-left: 20px;">热门问题</p>
-      <a href="javascript:;" style="float: right;line-height: 38px;margin-right: 20px;color: red;">我要提问>></a>
+      <a href="javascript:;" style="float: right;line-height: 38px;margin-right: 20px;color: red;">
+        <img src="../../../assets/images/common/question.jpg"/>
+      </a>
     </div>
     <div style="background: #ffffff;font-size: 14px;padding-bottom: 10px;">
       <ul style="padding-left: 0em;">

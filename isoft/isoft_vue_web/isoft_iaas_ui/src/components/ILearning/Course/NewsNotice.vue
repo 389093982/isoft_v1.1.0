@@ -2,7 +2,9 @@
   <div style="border-bottom: solid 1px #d9d9d9;">
     <div style="background-color: #f6f6f6;height: 38px;border-bottom: solid 1px #d9d9d9;">
       <p style="float: left;line-height: 38px;margin-left: 20px;">新闻公告</p>
-      <a href="javascript:;" style="float: right;line-height: 38px;margin-right: 20px;color: red;">更多>></a>
+      <a href="javascript:;" style="float: right;line-height: 38px;margin-right: 20px;color: red;">
+        <img src="../../../assets/images/common/more.jpg"/>
+      </a>
     </div>
     <div style="background: #ffffff;font-size: 14px;padding-bottom: 10px;">
       <ul style="padding-left: 0em;">
