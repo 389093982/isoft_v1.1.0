@@ -23,19 +23,14 @@
       </p>
       <p>
         <Row>
-          <Col span="20">
-            <a href="javascript:;" @click="refreshAndShow = !refreshAndShow">
-              <Icon type="ios-arrow-round-down" />展开/隐藏子评论({{comment_reply.sub_reply_amount}})
-            </a>
-          </Col>
-          <Col span="4" style="text-align: right;">
+          <span style="float: right;">
             <a v-if="comment_reply.depth < 4" href="javascript:;" @click="replyComment(comment_reply.id,comment_reply.created_by)">回复他/她</a>&nbsp;
             <a href="javascript:;">点赞</a>
-          </Col>
+          </span>
         </Row>
       </p>
       <!-- 递归,子评论区域 -->
-      <CommentArea v-if="comment_reply.sub_reply_amount > 0 && refreshAndShow == true"
+      <CommentArea v-if="comment_reply.sub_reply_amount > 0"
          :parent_id="comment_reply.id" :comment_id="comment_id" :theme_type="theme_type"/>
 
     </div>
@@ -69,8 +64,6 @@
         // 回复评论,两个参数分别是被评论id,被评论人
         _parent_id:0,
         _refer_user_name:"",
-        // 刷新和展开子组件评论
-        refreshAndShow:false,
       }
     },
     methods:{
@@ -83,11 +76,6 @@
         if(result.status=="SUCCESS"){
           this.showCommentForm = false;
           this.comment_replys = result.comment_replys;
-          // 同时刷新其子组件对应的评论列表,之前是展开的才需要进行展开
-          if(this.refreshAndShow == true){
-            this.refreshAndShow = false;
-            this.$nextTick(() => {this.refreshAndShow=true});
-          }
         }
       },
       // 回复评论,两个参数分别是被评论id,被评论人

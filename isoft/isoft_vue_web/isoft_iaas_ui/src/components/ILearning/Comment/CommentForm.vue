@@ -42,7 +42,7 @@
           const result = await AddCommentReply(this.parent_id, this.reply_content, this.comment_id, this.theme_type, reply_comment_type, this.refer_user_name);
           if(result.status=="SUCCESS"){
             // 调用父组件的 refreshCommentReply 方法
-            this.$emit('refreshCommentReply',reply_comment_type);
+            this.$emit('refreshCommentReply','all');
           }
         }
       }
