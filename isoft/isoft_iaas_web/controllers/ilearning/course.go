@@ -35,11 +35,11 @@ func (this *CourseController) GetAllCourseSubType() {
 }
 
 func (this *CourseController) GetAllCourseType() {
-	list,err := ilearning.GetAllCourseType()
-	if err != nil{
-		this.Data["json"] = &map[string]interface{}{"status":"ERROR"}
-	}else{
-		this.Data["json"] = &map[string]interface{}{"status":"SUCCESS","course_types":&list}
+	list, err := ilearning.GetAllCourseType()
+	if err != nil {
+		this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
+	} else {
+		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "course_types": &list}
 	}
 	this.ServeJSON()
 }
@@ -170,7 +170,7 @@ func (this *CourseController) ChangeCourseImg() {
 	}
 }
 
-func (this *CourseController) SearchCourseListPaginator(condArr map[string]string)  {
+func (this *CourseController) SearchCourseListPaginator(condArr map[string]string) {
 	offset, _ := this.GetInt("offset", 10)            // 每页记录数
 	current_page, _ := this.GetInt("current_page", 1) // 当前页
 	courses, count, err := ilearning.QueryCourse(condArr, current_page, offset)
@@ -185,14 +185,14 @@ func (this *CourseController) SearchCourseListPaginator(condArr map[string]strin
 	this.ServeJSON()
 }
 
-func (this *CourseController) SearchCourseList()  {
+func (this *CourseController) SearchCourseList() {
 	search := this.GetString("search")
-	this.SearchCourseListPaginator(map[string]string{"search":search})
+	this.SearchCourseListPaginator(map[string]string{"search": search})
 }
 
 func (this *CourseController) GetMyCourseList() {
 	CourseAuthor := this.Ctx.Input.Session("UserName").(string)
-	this.SearchCourseListPaginator(map[string]string{"CourseAuthor":CourseAuthor})
+	this.SearchCourseListPaginator(map[string]string{"CourseAuthor": CourseAuthor})
 }
 
 func (this *CourseController) NewCourse() {
@@ -228,15 +228,15 @@ func (this *CourseController) NewCourse() {
 	this.ServeJSON()
 }
 
-func (this *CourseController) GetHotCourseRecommend()  {
+func (this *CourseController) GetHotCourseRecommend() {
 	// 热门推荐,根据观看量查询前 50 个
 	condArr := make(map[string]string)
 	condArr["querysOrder"] = "-watch_number"
 	courses, _, err := ilearning.QueryCourse(condArr, 1, 50)
-	if err != nil{
-		this.Data["json"] = &map[string]interface{}{"status":"ERROR"}
-	}else{
-		this.Data["json"] = &map[string]interface{}{"status":"SUCCESS", "courses":&courses}
+	if err != nil {
+		this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
+	} else {
+		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "courses": &courses}
 	}
 	this.ServeJSON()
 }

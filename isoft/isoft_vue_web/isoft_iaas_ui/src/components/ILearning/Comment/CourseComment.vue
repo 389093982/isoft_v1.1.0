@@ -8,10 +8,16 @@
     <CommentForm :parent_id="parent_id" :comment_id="course.id" :theme_type="theme_type"
        :refer_user_name="refer_user_name" @refreshCommentReply="refreshCommentReply"/>
   </div>
-  <hr>
-  <div>
+  <div style="margin-top: 30px;">
+    <div style="text-align: right;">
+      <a href="javascript:;" @click="refreshCommentReply('all')">全部</a>
+      <Divider type="vertical" />
+      <a href="javascript:;" @click="refreshCommentReply('comment')">评论</a>
+      <Divider type="vertical" />
+      <a href="javascript:;" @click="refreshCommentReply('question')">提问</a>
+    </div>
     <!-- 评论列表 -->
-    <CommentArea ref="_commentArea" v-if="this.course.id" parent_id="0" :comment_id="this.course.id" :theme_type="theme_type"/>
+    <CommentArea ref="_commentArea" v-if="this.course.id" parent_id="0" :comment_id="this.course.id" :theme_type="theme_type"></CommentArea>
   </div>
 </div>
 </template>
@@ -40,9 +46,9 @@
     },
     methods:{
       // 重新刷新评论列表
-      refreshCommentReply () {
+      refreshCommentReply (reply_comment_type) {
         // 调用子组件的刷新方法
-        this.$refs._commentArea.refreshCommentReply();
+        this.$refs._commentArea.refreshCommentReply(reply_comment_type);
       },
       // 刷新评论主题
       refreshCommentTheme:async function(){

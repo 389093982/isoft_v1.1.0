@@ -79,7 +79,6 @@ func (this *LoginManager) ResponseWithErrorType(errorType string) {
 	}
 }
 
-
 func (this *LoginManager) ResponseWithStatusCode() {
 	this.ctx.ResponseWriter.WriteHeader(401)
 }
@@ -104,7 +103,7 @@ func (this *LoginManager) ResetUserName(username string) {
 
 func (this *LoginManager) CheckOrInValidateTokenString() bool {
 	resp, err := http.Get(isoft_sso_url + "/user/checkOrInValidateTokenString?tokenString=" + this.GetTokenString() + "&operateType=check")
-	if err != nil{
+	if err != nil {
 		return false
 	}
 	defer resp.Body.Close()

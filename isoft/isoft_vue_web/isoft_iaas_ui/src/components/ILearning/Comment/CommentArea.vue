@@ -8,7 +8,12 @@
         </router-link>
       </p>
       <p>
-        回复
+        <span v-if="comment_reply.reply_comment_type == 'comment'">
+          回复
+        </span>
+        <span v-else>
+          提问
+        </span>
         <router-link to="">
         <Avatar size="small" src="https://i.loli.net/2017/08/21/599a521472424.jpg" />
         {{comment_reply.refer_user_name}}
@@ -32,6 +37,7 @@
       <!-- 递归,子评论区域 -->
       <CommentArea v-if="comment_reply.sub_reply_amount > 0 && refreshAndShow == true"
          :parent_id="comment_reply.id" :comment_id="comment_id" :theme_type="theme_type"/>
+
     </div>
 
     <!-- 评论表单 -->
@@ -69,8 +75,11 @@
     },
     methods:{
       // 刷新当前父级评论对应的评论列表
-      refreshCommentReply:async function(){
-        const result = await FilterCommentReply(this.comment_id, this.theme_type, this.parent_id);
+      refreshCommentReply:async function(reply_comment_type){
+        if(reply_comment_type == undefined){
+          reply_comment_type = "all";
+        }
+        const result = await FilterCommentReply(this.comment_id, this.theme_type, this.parent_id, reply_comment_type);
         if(result.status=="SUCCESS"){
           this.showCommentForm = false;
           this.comment_replys = result.comment_replys;
@@ -89,7 +98,7 @@
       },
     },
     mounted:function () {
-      this.refreshCommentReply();
+      this.refreshCommentReply('all');
     }
   }
 </script>

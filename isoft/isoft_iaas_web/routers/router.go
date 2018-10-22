@@ -28,7 +28,7 @@ func init() {
 	initCMSRouter()
 }
 
-func initCMSRouter()  {
+func initCMSRouter() {
 	beego.Router("/api/cms/queryAllConfigurations", &cms.ConfigurationController{}, "get,post:QueryAllConfigurations")
 	beego.Router("/api/cms/addConfiguration", &cms.ConfigurationController{}, "get,post:AddConfiguration")
 	beego.Router("/api/cms/filterConfigurations", &cms.ConfigurationController{}, "get,post:FilterConfigurations")

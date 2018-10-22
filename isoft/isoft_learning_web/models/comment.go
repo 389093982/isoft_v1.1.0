@@ -20,7 +20,7 @@ type TopicReply struct {
 	Id              int         `json:"id"`
 	ParentId        int         `json:"parent_id" orm:"default(0)` // 父级评论回复 id
 	TopicTheme      *TopicTheme `orm:"rel(fk)" json:"topic_theme"`
-	ReplyThemeType       string      `json:"reply_theme_type"`                     // 评论类型
+	ReplyThemeType  string      `json:"reply_theme_type"`               // 评论类型
 	ReplyContent    string      `json:"reply_content" orm:"size(4000)"` // 评论内容
 	ReferUserName   string      `json:"refer_user_name"`                // 被评论人
 	SubReplyAmount  int         `json:"sub_reply_amount"`               // 子评论数

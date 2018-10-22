@@ -24,4 +24,3 @@ func LoginFilterWithRedirect(ctx *context.Context) {
 func LoginFilterWithStatusCode(ctx *context.Context) {
 	LoginFilter(ctx, "statusCode")
 }
-

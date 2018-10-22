@@ -14,9 +14,10 @@ func (this *CommentController) FilterCommentReply() {
 	// 获取 comment_id 和 theme_type
 	comment_id, _ := this.GetInt("comment_id")
 	theme_type := this.GetString("theme_type")
+	reply_comment_type := this.GetString("reply_comment_type")
 	// 获取父评论 id
 	parent_id, _ := this.GetInt("parent_id")
-	comment_replys, err := ilearning.FilterCommentReply(comment_id, theme_type, parent_id)
+	comment_replys, err := ilearning.FilterCommentReply(comment_id, theme_type, parent_id, reply_comment_type)
 	if err == nil {
 		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "comment_replys": comment_replys}
 	} else {

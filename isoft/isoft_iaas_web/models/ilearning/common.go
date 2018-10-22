@@ -12,7 +12,6 @@ type Favorite struct {
 	UserName     string `json:"user_name"`
 }
 
-
 // Favorite 表设计优化
 // 目前提供四种 api：AddFavorite、DelFavorite、IsFavorite、QueryFavoriteIds
 // 分表表示：新增喜爱、删除喜爱、是否喜爱、查询所有喜爱 id
