@@ -3,7 +3,7 @@
     <Row>
       <!-- 评论表单 -->
       <Col span="14" style="padding-right: 10px;">
-        <Input v-model.trim="reply_content" type="textarea" :rows="8" placeholder="Enter something..." />
+        <Input v-model.trim="reply_content" type="textarea" :rows="8" placeholder="发表你的评论信息！" />
         <Button type="success" style="margin: 5px;float: right;" @click="submitComment('comment')">发表评论</Button>
         <Button type="error" style="margin: 5px;float: right;" @click="submitComment('question')">我要提问</Button>
       </Col>
@@ -39,7 +39,8 @@
             desc: "评论信息过短,需要10个字符以上！"
           });
         }else{
-          const result = await AddCommentReply(this.parent_id, this.reply_content, this.comment_id, this.theme_type, reply_comment_type, this.refer_user_name);
+          const result = await AddCommentReply(this.parent_id, this.reply_content, this.comment_id,
+            this.theme_type, reply_comment_type, this.refer_user_name);
           if(result.status=="SUCCESS"){
             // 调用父组件的 refreshCommentReply 方法
             this.$emit('refreshCommentReply','all');

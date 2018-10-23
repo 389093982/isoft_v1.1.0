@@ -71,7 +71,7 @@ func (this *BlogController) PostEdit() {
 	blog_title := this.GetString("blog_title")
 	key_words := this.GetString("key_words")
 	catalog_id, _ := this.GetInt64("catalog_id", -1)
-	blog_status, _ := this.GetInt8("blog_status", 0)
+	blog_status, _ := this.GetInt8("blog_status", 1)
 	content := this.GetString("content")
 	user_name := this.Ctx.Input.Session("UserName").(string)
 	catalog, _ := iblog.QueryCatalogById(catalog_id)

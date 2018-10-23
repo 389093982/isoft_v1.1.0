@@ -131,12 +131,10 @@ background: url("../../../assets/search.png") 50% 50% no-repeat; 引入设置
 
 # vue-markdown编辑器
 npm install mavon-editor --save
-# 回显页面
-npm install showdown --save
 
-import showdown from 'showdown';
-let converter = new showdown.Converter();
-//html变量是HTML代码字符串
-//text是Markdown语法的字符串
-let html = converter.makeHtml(text);
-document.getElementById('id').innerHTML = html;
+# 使用marked将markdown语法解析成html并且高亮代码
+安装marked插件
+npm install marked --save
+npm install highlight.js
+
+

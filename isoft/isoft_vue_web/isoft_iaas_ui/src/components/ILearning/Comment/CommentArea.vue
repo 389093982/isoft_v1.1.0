@@ -24,7 +24,7 @@
       <p>
         <Row>
           <span style="float: right;">
-            <a v-if="comment_reply.depth < 4" href="javascript:;" @click="replyComment(comment_reply.id,comment_reply.created_by)">回复他/她</a>&nbsp;
+            <a v-if="comment_reply.depth < 3" href="javascript:;" @click="replyComment(comment_reply.id,comment_reply.created_by)">回复他/她</a>&nbsp;
             <a href="javascript:;">点赞</a>
           </span>
         </Row>

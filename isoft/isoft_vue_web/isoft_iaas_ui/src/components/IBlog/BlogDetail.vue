@@ -1,5 +1,5 @@
 <template>
-  <div v-if="blog">
+  <div v-if="blog" style="background: #ffffff;margin: 10px;padding: 20px;min-height: 800px;">
     <h3>{{blog.blog_title}}</h3>
     <div style="border-bottom: 1px solid #f4f4f4;margin-top:20px;margin-bottom: 20px;">
       <Row>
@@ -17,8 +17,27 @@
 
 <script>
   import {ShowBlogDetail} from "../../api"
-  // 导入 showdown
-  import showdown from 'showdown';
+
+  let marked = require('marked');
+  let hljs = require('highlight.js');
+  import 'highlight.js/styles/default.css';
+  marked.setOptions({
+    renderer: new marked.Renderer(),
+    gfm: true,
+    tables: true,
+    breaks: false,
+    pedantic: false,
+    sanitize: false,
+    smartLists: true,
+    smartypants: false,
+    highlight: function (code, lang) {
+      if (lang && hljs.getLanguage(lang)) {
+        return hljs.highlight(lang, code, true).value;
+      } else {
+        return hljs.highlightAuto(code).value;
+      }
+    }
+  });
 
   export default {
     name: "BlogDetail",
@@ -37,9 +56,10 @@
     },
     computed:{
       compiledMarkdown () {
-        let converter = new showdown.Converter();
-        let html = converter.makeHtml(this.blog.content);
-        return html;
+        let detail = this.blog.content;
+        return marked(detail || '', {
+          sanitize: true
+        });
       }
     },
     mounted:function () {
@@ -49,5 +69,7 @@
 </script>
 
 <style scoped>
-
+  .article td{
+    border: 1px solid red;
+  }
 </style>

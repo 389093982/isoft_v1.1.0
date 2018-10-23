@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="padding: 30px;">
     <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80">
       <FormItem label="文章标题" prop="blog_title">
         <Input v-model="formValidate.blog_title" placeholder="Enter blog title..."/>
@@ -15,7 +15,7 @@
         </Select>
       </FormItem>
       <FormItem label="文章内容" prop="content">
-        <mavon-editor v-model="formValidate.content" :ishljs = "true"/>
+        <mavon-editor v-model="formValidate.content" :ishljs = "true" style="z-index: auto;"/>
       </FormItem>
       <FormItem>
         <Button type="primary" @click="handleSubmit('formValidate')">Submit</Button>
