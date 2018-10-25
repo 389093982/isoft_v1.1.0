@@ -9,6 +9,8 @@ import BlogDetail from '../components/IBlog/BlogDetail.vue'
 import ILearning from '../components/ILearning/ILearning.vue'
 import ILearningIndex from '../components/ILearning/Index.vue'
 import CourseSpace from '../components/ILearning/CourseSpace/CourseSpace.vue'
+import NewCourse from '../components/ILearning/CourseSpace/NewCourse.vue'
+import MyCourseList from '../components/ILearning/CourseSpace/MyCourseList.vue'
 import CourseDetail from '../components/ILearning/Course/CourseDetail.vue'
 import VideoPay from '../components/ILearning/Course/VideoPay.vue'
 import Configuration from '../components/CMS/Configuration.vue'
@@ -57,6 +59,11 @@ export const ILearningRouter = {
       {
         path: 'course_space',
         component: CourseSpace,
+        redirect: '/ilearning/course_space/newCourse',
+        children: [
+          {path: 'newCourse',component: NewCourse,},
+          {path: 'myCourseList',component: MyCourseList,},
+        ]
       },
       {
         path: 'course_detail',
