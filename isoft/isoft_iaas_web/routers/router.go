@@ -5,6 +5,7 @@ import (
 	"github.com/astaxie/beego/plugins/cors"
 	"isoft/isoft_iaas_web/controllers"
 	"isoft/isoft_iaas_web/controllers/cms"
+	"isoft/isoft_iaas_web/controllers/easyshare"
 	"isoft/isoft_iaas_web/controllers/iblog"
 	"isoft/isoft_iaas_web/controllers/ifile"
 	"isoft/isoft_iaas_web/controllers/ilearning"
@@ -26,6 +27,11 @@ func init() {
 	initIBlogRouter()
 	initILearningRouter()
 	initCMSRouter()
+	initEasyShareRouter()
+}
+
+func initEasyShareRouter()  {
+	beego.Router("/api/easyshare/filterShareLinkList", &easyshare.ShareLinkController{}, "get,post:FilterShareLinkList")
 }
 
 func initCMSRouter() {

@@ -1,0 +1,29 @@
+package easyshare
+
+import (
+	"github.com/astaxie/beego/orm"
+	"time"
+)
+
+// 共享链接模型类
+type ShareLink struct {
+	Id              int       `json:"id"`
+	ShareType       string    `json:"share_type"`        // 分享类型
+	Author          string    `json:"author"`            // 作者
+	LinkHref        string    `json:"link_href"`         // 分享链接
+	CreatedBy       string    `json:"created_by"`        // 创建人
+	CreatedTime     time.Time `json:"created_time"`      // 创建时间
+	LastUpdatedBy   string    `json:"last_updated_by"`   // 修改人
+	LastUpdatedTime time.Time `json:"last_updated_time"` // 修改时间
+}
+
+func FilterShareLinkList(condArr map[string]string, page int, offset int) (shareLink []ShareLink, counts int64, err error) {
+	o := orm.NewOrm()
+	qs := o.QueryTable("share_link")
+	qs = qs.OrderBy("-last_updated_time")
+	counts, _ = qs.Count()
+	qs = qs.Limit(offset, (page-1)*offset)
+	qs.All(&shareLink)
+	return
+
+}

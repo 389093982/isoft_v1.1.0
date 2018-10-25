@@ -22,7 +22,7 @@ type CommentReply struct {
 	CommentTheme     *CommentTheme `orm:"rel(fk)" json:"comment_theme"`
 	Depth            int           `json:"depth"`                          // 当前评论深度
 	ReplyThemeType   string        `json:"reply_theme_type"`               // 评论主题类型,对应 CommentTheme 中的 ThemeType
-	ReplyCommentType string        `json:"reply_comment_type"`               // 评论类型(question:提问,comment:评论)
+	ReplyCommentType string        `json:"reply_comment_type"`             // 评论类型(question:提问,comment:评论)
 	ReplyContent     string        `json:"reply_content" orm:"size(4000)"` // 评论内容
 	ReferUserName    string        `json:"refer_user_name"`                // 被评论人
 	SubReplyAmount   int           `json:"sub_reply_amount"`               // 子评论数
@@ -63,8 +63,8 @@ func FilterCommentReply(comment_id int, theme_type string, parent_id int, reply_
 	o := orm.NewOrm()
 	commentTheme, _ := FilterCommentTheme(comment_id, theme_type)
 	qs := o.QueryTable("comment_reply")
-	if reply_comment_type != "" && reply_comment_type != "all"{
-		qs = qs.Filter("reply_comment_type",reply_comment_type)
+	if reply_comment_type != "" && reply_comment_type != "all" {
+		qs = qs.Filter("reply_comment_type", reply_comment_type)
 	}
 	qs = qs.Filter("comment_theme_id", commentTheme.Id).Filter("parent_id", parent_id)
 	_, err = qs.OrderBy("-created_time").All(&comment_replys)

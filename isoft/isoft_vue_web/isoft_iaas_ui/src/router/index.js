@@ -15,6 +15,7 @@ import CourseDetail from '../components/ILearning/Course/CourseDetail.vue'
 import VideoPay from '../components/ILearning/Course/VideoPay.vue'
 import Configuration from '../components/CMS/Configuration.vue'
 import CourseSearch from "../components/ILearning/Course/CourseSearch.vue"
+import ShareLinkList from "../components/EasyShare/ShareLinkList.vue"
 
 Vue.use(Router);
 
@@ -40,12 +41,18 @@ export const IBlogRouter = {
         component: BlogDetail
       },
     ]
-  };
+};
 
 export const IFileRouter = {
     path: '/ifile/ifile',
     component: IFile
-  };
+};
+
+export const ShareLinkListRouter = {
+  path: '/easyshare/list',
+  component: ShareLinkList
+};
+
 
 export const ILearningRouter = {
     path: '/ilearning',
@@ -93,6 +100,7 @@ export default new Router({
     IBlogRouter,
     IFileRouter,
     ILearningRouter,
+    ShareLinkListRouter,
     {
       path: '/',
       redirect: '/ifile/ifile'

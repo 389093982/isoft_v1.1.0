@@ -80,5 +80,5 @@ export const QueryAllConfigurations = (configuration_name) => ajax(BASE_URL+'/cm
 // 分页查询配置项信息
 export const FilterConfigurations = (search,offset,current_page) => ajax(BASE_URL+'/cms/filterConfigurations',{search, offset,current_page},'GET');
 
-
-
+// 获取ShareLink 信息
+export const FilterShareLinkList = (offset,current_page) => ajax(BASE_URL+'/easyshare/filterShareLinkList',{offset,current_page},'GET');

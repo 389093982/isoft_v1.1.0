@@ -50,6 +50,8 @@
             <MenuGroup title="账号管理">
               <MenuItem name="4-1" @click.native="cancelUser">注销</MenuItem>
               <MenuItem name="4-2" @click.native="cancelUser">切换账号</MenuItem>
+              <MenuItem name="4-3"><router-link to="/user/manage">个人中心</router-link></MenuItem>
+              <MenuItem name="4-3"><router-link to="/easyshare/list">易分享</router-link></MenuItem>
             </MenuGroup>
           </Submenu>
         </div>
