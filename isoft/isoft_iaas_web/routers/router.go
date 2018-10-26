@@ -30,8 +30,9 @@ func init() {
 	initEasyShareRouter()
 }
 
-func initEasyShareRouter()  {
+func initEasyShareRouter() {
 	beego.Router("/api/easyshare/filterShareLinkList", &easyshare.ShareLinkController{}, "get,post:FilterShareLinkList")
+	beego.Router("/api/easyshare/addNewShareLink", &easyshare.ShareLinkController{}, "get,post:AddNewShareLink")
 }
 
 func initCMSRouter() {

@@ -26,6 +26,8 @@
 </template>
 
 <script>
+  import {AddNewShareLink} from "../../api"
+
   export default {
     name: "ShareLinkAdd",
     data(){
@@ -53,9 +55,17 @@
         };
 
         var _this = this;
-        this.$refs[name].validate((valid) => {
+        this.$refs[name].validate(async (valid) => {
           if (valid) {
-            alert(111);
+            const result = await AddNewShareLink(_this.formValidate.share_type, _this.formValidate.link_href);
+            if(result.status == "SUCCESS"){
+              _this.$Message.success('提交成功!');
+              _this.$router.go(0);     // 页面刷新,等价于 location.reload()
+            }else{
+              _this.$Message.error('提交失败!');
+            }
+          } else {
+            _this.$Message.error('验证失败!');
           }
         })
       },

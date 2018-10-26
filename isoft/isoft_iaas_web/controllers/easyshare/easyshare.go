@@ -5,13 +5,14 @@ import (
 	"github.com/astaxie/beego/utils/pagination"
 	"isoft/isoft/common/pageutil"
 	"isoft/isoft_iaas_web/models/easyshare"
+	"time"
 )
 
 type ShareLinkController struct {
 	beego.Controller
 }
 
-func (this *ShareLinkController) FilterShareLinkList()  {
+func (this *ShareLinkController) FilterShareLinkList() {
 	offset, _ := this.GetInt("offset", 10)            // 每页记录数
 	current_page, _ := this.GetInt("current_page", 1) // 当前页
 	shareLinks, count, err := easyshare.FilterShareLinkList(map[string]string{}, current_page, offset)
@@ -26,3 +27,25 @@ func (this *ShareLinkController) FilterShareLinkList()  {
 	this.ServeJSON()
 }
 
+func (this *ShareLinkController) AddNewShareLink() {
+	share_type := this.GetString("share_type")
+	link_href := this.GetString("link_href")
+	userName := this.GetSession("UserName").(string)
+	shareLink := easyshare.ShareLink{
+		ShareType:       share_type,
+		Author:          userName,
+		LinkHref:        link_href,
+		CreatedBy:       userName,
+		CreatedTime:     time.Now(),
+		LastUpdatedBy:   userName,
+		LastUpdatedTime: time.Now(),
+	}
+	_, err := easyshare.AddNewShareLink(&shareLink)
+	//初始化
+	if err != nil {
+		this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
+	} else {
+		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
+	}
+	this.ServeJSON()
+}

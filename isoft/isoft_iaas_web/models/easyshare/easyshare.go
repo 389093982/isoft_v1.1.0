@@ -25,5 +25,10 @@ func FilterShareLinkList(condArr map[string]string, page int, offset int) (share
 	qs = qs.Limit(offset, (page-1)*offset)
 	qs.All(&shareLink)
 	return
+}
 
+func AddNewShareLink(shareLink *ShareLink) (int64, error) {
+	o := orm.NewOrm()
+	id, err := o.Insert(shareLink)
+	return id, err
 }
