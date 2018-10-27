@@ -69,7 +69,5 @@
 </script>
 
 <style scoped>
-  .article td{
-    border: 1px solid red;
-  }
+  @import "../../assets/css/markdown2.css";
 </style>

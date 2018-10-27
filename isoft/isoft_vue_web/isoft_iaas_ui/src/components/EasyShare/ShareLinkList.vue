@@ -29,6 +29,12 @@
           <Row>
             <Col span="8"><h6 style="color: #333;font-weight: 500;">热门分享</h6></Col>
             <Col span="4" offset="12"><a href="javascript:;">更多></a></Col>
+            <Divider />
+          </Row>
+          <Row>
+            <Col span="8"><h6 style="color: #333;font-weight: 500;">热门用户</h6></Col>
+            <Col span="4" offset="12"><a href="javascript:;">更多></a></Col>
+            <Divider />
           </Row>
         </Col>
       </Row>
