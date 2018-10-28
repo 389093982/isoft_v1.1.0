@@ -15,7 +15,7 @@
         </Select>
       </FormItem>
       <FormItem label="文章内容" prop="content">
-        <mavon-editor v-model="formValidate.content" :ishljs = "true" style="z-index: auto;"/>
+        <mavon-editor v-model="formValidate.content" :ishljs = "true"/>
       </FormItem>
       <FormItem>
         <Button type="primary" @click="handleSubmit('formValidate')">Submit</Button>

@@ -11,7 +11,7 @@
         <Col span="3">编辑次数 0</Col>
       </Row>
     </div>
-    <div class="article" v-html="compiledMarkdown"></div>
+    <div class="markdown" v-html="compiledMarkdown"></div>
   </div>
 </template>
 
@@ -69,5 +69,5 @@
 </script>
 
 <style scoped>
-  @import "../../assets/css/markdown2.css";
+  @import "../../assets/css/vue-markdown2.css";
 </style>
