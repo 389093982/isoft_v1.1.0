@@ -18,6 +18,7 @@ type Blog struct {
 	Id              int64     `json:"id"`
 	Author          string    `json:"author"` // 博客作者
 	BlogTitle       string    `json:"blog_title"`
+	ShortDesc		string	  `json:"short_desc"`	// 简短描述
 	KeyWords        string    `json:"key_words"` // 搜索关键词
 	Catalog         *Catalog  `json:"catalog" orm:"rel(fk)"`
 	Content         string    `json:"content" orm:"type(text)"`

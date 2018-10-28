@@ -23,7 +23,7 @@ export const GetMyCatalogs = () => ajax(BASE_URL+'/catalog/getMyCatalogs',{},'GE
 export const GetMyBlogs = () => ajax(BASE_URL+'/blog/getMyBlogs',{},'GET');
 
 // 编辑或者新增博客文章
-export const BlogEdit = (blog_title, key_words, catalog_id, content) => ajax(BASE_URL+'/blog/edit',{blog_title, key_words, catalog_id, content},'POST');
+export const BlogEdit = (blog_title, short_desc, key_words, catalog_id, content) => ajax(BASE_URL+'/blog/edit',{blog_title, short_desc, key_words, catalog_id, content},'POST');
 
 // 热门博客分页列表
 export const BlogList = (offset,current_page) => ajax(BASE_URL+'/blog/blogList',{offset,current_page},'GET');

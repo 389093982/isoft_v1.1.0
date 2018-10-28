@@ -8,7 +8,7 @@
          <h3>{{searchblog.blog_title}}</h3>
        </router-link>
        <p style="margin-bottom: 4px;font-size: 14px;color: #8a8a8a;line-height: 24px;">
-         {{searchblog.content | filterLimitFunc}}
+         {{searchblog.short_desc | filterLimitFunc}}
        </p>
        <p>
          <Row>

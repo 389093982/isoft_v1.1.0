@@ -69,6 +69,7 @@ func (this *BlogController) Edit() {
 func (this *BlogController) PostEdit() {
 	blog_id, err := this.GetInt64("blog_id")
 	blog_title := this.GetString("blog_title")
+	short_desc := this.GetString("short_desc")
 	key_words := this.GetString("key_words")
 	catalog_id, _ := this.GetInt64("catalog_id", -1)
 	blog_status, _ := this.GetInt8("blog_status", 1)
@@ -80,6 +81,7 @@ func (this *BlogController) PostEdit() {
 		blog, err = iblog.QueryBlogById(blog_id)
 		if err == nil {
 			blog.BlogTitle = blog_title
+			blog.ShortDesc = short_desc
 			blog.KeyWords = key_words
 			blog.BlogStatus = blog_status
 			blog.Catalog = &catalog
@@ -92,6 +94,7 @@ func (this *BlogController) PostEdit() {
 		blog = iblog.Blog{
 			Author:          user_name,
 			BlogTitle:       blog_title,
+			ShortDesc: 		 short_desc,
 			KeyWords:        key_words,
 			Catalog:         &catalog,
 			Content:         content,

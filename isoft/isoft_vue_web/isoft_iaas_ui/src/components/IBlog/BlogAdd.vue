@@ -4,6 +4,9 @@
       <FormItem label="文章标题" prop="blog_title">
         <Input v-model="formValidate.blog_title" placeholder="Enter blog title..."/>
       </FormItem>
+      <FormItem label="简短描述" prop="short_desc">
+        <Input v-model="formValidate.short_desc" placeholder="Enter short_desc..."></Input>
+      </FormItem>
       <FormItem label="检索词条" prop="key_words">
         <Input v-model="formValidate.key_words" placeholder="Enter key_words..."></Input>
       </FormItem>
@@ -66,6 +69,9 @@
           blog_title: [
             { required: true, message: '文章标题不能为空', trigger: 'blur' }
           ],
+          short_desc: [
+            { required: true, message: '简短描述不能为空', trigger: 'blur' }
+          ],
           key_words: [
             { required: true, message: '检索词条不能为空', trigger: 'blur' }
           ],
@@ -83,7 +89,7 @@
         var _this = this;
         this.$refs[name].validate(async (valid) => {
           if (valid) {
-            const result = await BlogEdit(_this.formValidate.blog_title,
+            const result = await BlogEdit(_this.formValidate.blog_title,_this.formValidate.short_desc,
               _this.formValidate.key_words, _this.formValidate.catalog_id, _this.formValidate.content);
             if(result.status == "SUCCESS"){
               _this.$Message.success('提交成功!');
