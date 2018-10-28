@@ -11,7 +11,21 @@
         <!-- 表单正文 -->
         <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="100">
           <FormItem label="分享类型" prop="share_type">
-            <Input v-model="formValidate.share_type" placeholder="请输入分享类型"></Input>
+            <Row>
+              <Col span="20">
+                <Input v-model="formValidate.share_type" placeholder="请输入分享类型"></Input>
+              </Col>
+              <Col span="4" style="text-align: right;">
+                <Poptip v-model="visible" placement="left-start" width="420">
+                  <a href="javascript:;">热门分类</a>
+                  <div slot="content">
+                    <span v-for="type in hot_share_type" style="margin: 5px;float: left;">
+                      <Button @click="closePoptip(type)">{{type}}</Button>
+                    </span>
+                  </div>
+                </Poptip>
+              </Col>
+            </Row>
           </FormItem>
           <FormItem label="分享链接" prop="link_href">
             <Input v-model="formValidate.link_href" placeholder="请输入分享链接"></Input>
@@ -32,7 +46,9 @@
     name: "ShareLinkAdd",
     data(){
       return {
+        visible:false,
         showShareLinkAddFlag:false,
+        hot_share_type:["Java","Python","Golang","Java","Python","Golang","Java","Python","Golang"],
         formValidate: {
           share_type: '',
           link_href: '',
@@ -48,6 +64,10 @@
       }
     },
     methods: {
+      closePoptip (type) {
+        this.formValidate.share_type=type;
+        this.visible = false;
+      },
       handleSubmit (name) {
         let data = {
           share_type:this.formValidate.share_type,
