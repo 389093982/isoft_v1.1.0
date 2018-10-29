@@ -16,4 +16,12 @@ export const getCookie = function getCookie(c_name) {
 //删除cookie
 export const delCookie = function delCookie(name) {
   document.cookie = name+"=;expires="+(new Date(0)).toGMTString();
-}
+};
+
+export const checkEmpty = function checkEmpty(checkStr){
+  if(checkStr == null || checkStr == undefined || checkStr == ""){
+    return true;
+  }
+  return false;
+};
+

@@ -7,25 +7,24 @@ import $ from 'jquery'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.min'
 import store from './store'
-import {getCookie} from './tools'
 
+// 工具方法
+import {getCookie} from './tools'
+import {checkEmpty} from './tools'
+
+// 引用全局静态数据
+import global_ from './components/GlobalData'     //引用文件
+Vue.prototype.GLOBAL = global_                    //挂载到Vue实例上面,通过 this.GLOBAL.xxx 访问全局变量
+
+// 使用 iview
 import iView from 'iview'
 import 'iview/dist/styles/iview.css'
-
 Vue.use(iView);
 
 // 使用 vue-markdown
 import mavonEditor from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
 Vue.use(mavonEditor)
-
-
-function checkEmpty(checkStr){
-  if(checkStr == null || checkStr == undefined || checkStr == ""){
-    return true;
-  }
-  return false;
-}
 
 Vue.config.productionTip = false
 

@@ -27,6 +27,9 @@
               </Col>
             </Row>
           </FormItem>
+          <FormItem label="简短描述" prop="share_desc">
+            <Input v-model="formValidate.share_desc" placeholder="请输入简短描述"></Input>
+          </FormItem>
           <FormItem label="分享链接" prop="link_href">
             <Input v-model="formValidate.link_href" placeholder="请输入分享链接"></Input>
           </FormItem>
@@ -48,14 +51,18 @@
       return {
         visible:false,
         showShareLinkAddFlag:false,
-        hot_share_type:["Java","Python","Golang","Java","Python","Golang","Java","Python","Golang"],
+        hot_share_type: this.GLOBAL.hot_share_type,
         formValidate: {
           share_type: '',
+          share_desc: '',
           link_href: '',
         },
         ruleValidate: {
           share_type: [
-            { required: true, message: '分享类型不能为空', trigger: 'blur' }
+            { required: true, message: '分享类型不能为空', trigger: 'change' }
+          ],
+          share_desc: [
+            { required: true, message: '分享链接不能为空', trigger: 'blur' }
           ],
           link_href: [
             { required: true, message: '分享链接不能为空', trigger: 'blur' }
@@ -69,15 +76,10 @@
         this.visible = false;
       },
       handleSubmit (name) {
-        let data = {
-          share_type:this.formValidate.share_type,
-          link_href:this.formValidate.link_href,
-        };
-
         var _this = this;
         this.$refs[name].validate(async (valid) => {
           if (valid) {
-            const result = await AddNewShareLink(_this.formValidate.share_type, _this.formValidate.link_href);
+            const result = await AddNewShareLink(_this.formValidate.share_type, _this.formValidate.share_desc, _this.formValidate.link_href);
             if(result.status == "SUCCESS"){
               _this.$Message.success('提交成功!');
               _this.$router.go(0);     // 页面刷新,等价于 location.reload()

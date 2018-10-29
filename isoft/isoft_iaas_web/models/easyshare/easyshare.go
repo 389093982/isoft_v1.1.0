@@ -9,6 +9,7 @@ import (
 type ShareLink struct {
 	Id              int       `json:"id"`
 	ShareType       string    `json:"share_type"`        // 分享类型
+	ShareDesc		string	  `json:"share_desc"`		 // 分享描述
 	Author          string    `json:"author"`            // 作者
 	LinkHref        string    `json:"link_href"`         // 分享链接
 	CreatedBy       string    `json:"created_by"`        // 创建人

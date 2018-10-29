@@ -1,5 +1,22 @@
 <template>
   <div>
+    <div style="margin:15px;">
+      <Row :gutter="16">
+        <Col span="6">
+          <div>col-6</div>
+        </Col>
+        <Col span="6">
+          <div>col-6</div>
+        </Col>
+        <Col span="6">
+          <div>col-6</div>
+        </Col>
+        <Col span="6">
+          <div>col-6</div>
+        </Col>
+      </Row>
+    </div>
+
     <div style="margin: 0 15px;background-color: #fff;border: 1px solid #e6e6e6;border-radius: 4px;">
       <Row>
         <Col span="16" style="padding: 0 0 20px;border-right: 1px solid #e6e6e6;">
