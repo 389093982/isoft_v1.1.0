@@ -5,7 +5,7 @@
         <a href="javascript:;" @click="previous" v-show="showPrevious"><img src="/static/images/arrow_left.png"/></a>
       </Col>
       <Col span="5" v-for="share_type in getCurrentPage">
-        <a href="javascript:;" style="color: #999;">
+        <a href="javascript:;" style="color: #999;" @click="chooseItem(share_type.name)">
           <div class="item" style="padding:10px; height: 100px;">
             <Row>
               <Col span="6">
@@ -31,8 +31,10 @@
     name: "HotShareLinkItem",
     data(){
       return {
+        // 热门分享类型
         hot_share_type: this.GLOBAL.hot_share_type,
-        currentPageNo:1,    // 当前页
+        // 当前页
+        currentPageNo:1,
       }
     },
     computed:{
@@ -49,11 +51,13 @@
       }
     },
     methods:{
+      // 获取前一页
       previous: function(){
         if(this.currentPageNo > 1){
           this.currentPageNo = this.currentPageNo - 1;
         }
       },
+      // 获取后一页
       next: function(){
         const total_page = Math.ceil(this.hot_share_type.length / 4);
         if(this.currentPageNo < total_page){
@@ -64,6 +68,9 @@
       pagination: function (pageNo, pageSize, array) {
         let offset = (pageNo - 1) * pageSize;
         return (offset + pageSize >= array.length) ? array.slice(offset, array.length) : array.slice(offset, offset + pageSize);
+      },
+      chooseItem:function (share_name) {
+        this.$emit('chooseItem',share_name);
       }
     }
   }

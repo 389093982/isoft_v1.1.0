@@ -20,7 +20,7 @@
                   <a href="javascript:;">热门分类</a>
                   <div slot="content">
                     <span v-for="type in hot_share_type" style="margin: 5px;float: left;">
-                      <Button @click="closePoptip(type.name)">{{type.name}}</Button>
+                      <Tag><a @click="closePoptip(type.name)">{{type.name}}</a></Tag>
                     </span>
                   </div>
                 </Poptip>

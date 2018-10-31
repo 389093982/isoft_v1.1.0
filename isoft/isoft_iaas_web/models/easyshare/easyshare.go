@@ -21,6 +21,9 @@ type ShareLink struct {
 func FilterShareLinkList(condArr map[string]string, page int, offset int) (shareLink []ShareLink, counts int64, err error) {
 	o := orm.NewOrm()
 	qs := o.QueryTable("share_link")
+	if share_type, ok := condArr["share_type"]; ok && share_type != "all" {
+		qs = qs.Filter("share_type",share_type)
+	}
 	qs = qs.OrderBy("-last_updated_time")
 	counts, _ = qs.Count()
 	qs = qs.Limit(offset, (page-1)*offset)
