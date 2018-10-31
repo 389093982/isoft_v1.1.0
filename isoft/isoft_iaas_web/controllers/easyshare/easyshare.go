@@ -15,8 +15,9 @@ type ShareLinkController struct {
 func (this *ShareLinkController) FilterShareLinkList() {
 	offset, _ := this.GetInt("offset", 10)            // 每页记录数
 	current_page, _ := this.GetInt("current_page", 1) // 当前页
-	share_type := this.GetString("share_type")
-	shareLinks, count, err := easyshare.FilterShareLinkList(map[string]string{"share_type":share_type}, current_page, offset)
+	search_type := this.GetString("search_type")
+	userName := this.GetSession("UserName").(string)
+	shareLinks, count, err := easyshare.FilterShareLinkList(map[string]string{"search_type":search_type}, current_page, offset, userName)
 	paginator := pagination.SetPaginator(this.Ctx, offset, count)
 	//初始化
 	if err != nil {

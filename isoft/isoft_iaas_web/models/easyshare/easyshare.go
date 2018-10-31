@@ -18,11 +18,17 @@ type ShareLink struct {
 	LastUpdatedTime time.Time `json:"last_updated_time"` // 修改时间
 }
 
-func FilterShareLinkList(condArr map[string]string, page int, offset int) (shareLink []ShareLink, counts int64, err error) {
+func FilterShareLinkList(condArr map[string]string, page int, offset int, userName string) (shareLink []ShareLink, counts int64, err error) {
 	o := orm.NewOrm()
 	qs := o.QueryTable("share_link")
-	if share_type, ok := condArr["share_type"]; ok && share_type != "all" {
-		qs = qs.Filter("share_type",share_type)
+	if search_type, ok := condArr["search_type"]; ok {
+		if search_type == "_hot"{
+
+		}else if search_type == "_personal"{
+			qs = qs.Filter("created_by",userName)
+		}else if search_type != "_all"{
+			qs = qs.Filter("share_type",search_type)
+		}
 	}
 	qs = qs.OrderBy("-last_updated_time")
 	counts, _ = qs.Count()

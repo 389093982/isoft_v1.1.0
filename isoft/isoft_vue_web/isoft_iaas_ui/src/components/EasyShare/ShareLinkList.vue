@@ -9,12 +9,14 @@
           <div style="border-bottom: 1px solid #e6e6e6;padding: 20px;height: 62px;">
             <Row>
               <Col span="4" style="text-align: center;font-size: 20px;color: #333;">
-                <span v-if="share_type==='all'">全部分类</span>
-                <span v-else>{{share_type}}</span>
+                <span v-if="search_type==='_all'">全部分类</span>
+                <span v-else-if="search_type==='_hot'">热门分享</span>
+                <span v-else-if="search_type==='_personal'">我的分享</span>
+                <span v-else>{{search_type}}</span>
               </Col>
-              <Col span="3" offset="8" style="text-align: center;"><a href="javascript:;" @click="filterToggle('all')">全部分类</a></Col>
-              <Col span="3" style="text-align: center;"><a href="javascript:;" @click="filterToggle('hot')">热门分享</a></Col>
-              <Col span="3" style="text-align: center;"><a href="javascript:;" @click="filterToggle('my')">我的分享</a></Col>
+              <Col span="3" offset="8" style="text-align: center;"><a href="javascript:;" @click="chooseItem('_all')">全部分类</a></Col>
+              <Col span="3" style="text-align: center;"><a href="javascript:;" @click="chooseItem('_hot')">热门分享</a></Col>
+              <Col span="3" style="text-align: center;"><a href="javascript:;" @click="chooseItem('_personal')">我的分享</a></Col>
               <Col span="3" style="text-align: center;"><ShareLinkAdd/></Col>
             </Row>
           </div>
@@ -66,24 +68,19 @@
         total:1,
         // 每页记录数
         offset:10,
-        share_type:'all',
+        search_type:'_all',
       }
     },
     methods:{
-      filterToggle:function(filter){
-        if(filter == "all"){
-          this.chooseItem("all");
-        }
-      },
       chooseItem:function(item_name){
-        if(this.share_type != item_name){
-          this.share_type = item_name;
+        if(this.search_type != item_name){
+          this.search_type = item_name;
           this.current_page = 1;
           this.refreshShareLinkList();
         }
       },
       refreshShareLinkList:async function () {
-        const result = await FilterShareLinkList(this.offset, this.current_page, this.share_type);
+        const result = await FilterShareLinkList(this.offset, this.current_page, this.search_type);
         if(result.status == "SUCCESS"){
           this.shareLinks = result.shareLinks;
           this.total = result.paginator.totalcount;
