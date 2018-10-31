@@ -13,8 +13,8 @@
                 <span v-else>{{share_type}}</span>
               </Col>
               <Col span="3" offset="8" style="text-align: center;"><a href="javascript:;" @click="filterToggle('all')">全部分类</a></Col>
-              <Col span="3" style="text-align: center;"><a href="javascript:;" @click="filterToggle('all')">最新分享</a></Col>
-              <Col span="3" style="text-align: center;"><a href="javascript:;" @click="filterToggle('all')">我的分享</a></Col>
+              <Col span="3" style="text-align: center;"><a href="javascript:;" @click="filterToggle('hot')">热门分享</a></Col>
+              <Col span="3" style="text-align: center;"><a href="javascript:;" @click="filterToggle('my')">我的分享</a></Col>
               <Col span="3" style="text-align: center;"><ShareLinkAdd/></Col>
             </Row>
           </div>
