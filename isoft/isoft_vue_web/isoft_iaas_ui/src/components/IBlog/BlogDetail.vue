@@ -11,8 +11,7 @@
         <Col span="3">编辑次数 0</Col>
       </Row>
     </div>
-
-    <ShowMarkdown :content="blog.content"/>
+    <ShowMarkdown v-if="blog.content" :content="blog.content"/>
   </div>
 </template>
 
