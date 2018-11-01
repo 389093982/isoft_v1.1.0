@@ -12,6 +12,7 @@ type ShareLink struct {
 	ShareDesc		string	  `json:"share_desc"`		 // 分享描述
 	Author          string    `json:"author"`            // 作者
 	LinkHref        string    `json:"link_href"`         // 分享链接
+	Content			string	  `json:"content" orm:"type(text)"`			 // 内容
 	CreatedBy       string    `json:"created_by"`        // 创建人
 	CreatedTime     time.Time `json:"created_time"`      // 创建时间
 	LastUpdatedBy   string    `json:"last_updated_by"`   // 修改人

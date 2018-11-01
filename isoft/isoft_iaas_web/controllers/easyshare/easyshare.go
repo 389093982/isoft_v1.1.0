@@ -33,12 +33,14 @@ func (this *ShareLinkController) AddNewShareLink() {
 	share_type := this.GetString("share_type")
 	share_desc := this.GetString("share_desc")
 	link_href := this.GetString("link_href")
+	content := this.GetString("content")
 	userName := this.GetSession("UserName").(string)
 	shareLink := easyshare.ShareLink{
 		ShareType:       share_type,
 		ShareDesc: 		 share_desc,
 		Author:          userName,
 		LinkHref:        link_href,
+		Content: 		 content,
 		CreatedBy:       userName,
 		CreatedTime:     time.Now(),
 		LastUpdatedBy:   userName,

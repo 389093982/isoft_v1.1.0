@@ -17,7 +17,7 @@
               <Col span="3" offset="8" style="text-align: center;"><a href="javascript:;" @click="chooseItem('_all')">全部分类</a></Col>
               <Col span="3" style="text-align: center;"><a href="javascript:;" @click="chooseItem('_hot')">热门分享</a></Col>
               <Col span="3" style="text-align: center;"><a href="javascript:;" @click="chooseItem('_personal')">我的分享</a></Col>
-              <Col span="3" style="text-align: center;"><ShareLinkAdd/></Col>
+              <Col span="3" style="text-align: center;"><router-link to="/easyshare/add">新增</router-link></Col>
             </Row>
           </div>
           <div style="padding-top: 20px;">
@@ -26,7 +26,7 @@
                 <Avatar size="small" src="https://i.loli.net/2017/08/21/599a521472424.jpg" />
               </router-link>
               <Tag><a @click="chooseItem(shareLink.share_type)">{{shareLink.share_type}}</a></Tag>
-              <a href="shareLink.link_href">{{shareLink.link_href}}</a>
+              <a @click="$router.push({path: '/easyshare/detail', query: {id: shareLink.id}})">{{shareLink.link_href}}</a>
               <span style="float: right;font-size: 12px;"><Time :time="shareLink.last_updated_time"/></span>
               <Divider />
             </div>
@@ -53,12 +53,11 @@
 
 <script>
   import {FilterShareLinkList} from "../../api"
-  import ShareLinkAdd from "./ShareLinkAdd.vue"
   import HotShareLinkItem from "./HotShareLinkItem.vue"
 
   export default {
     name: "ShareLinkList",
-    components:{ShareLinkAdd,HotShareLinkItem},
+    components:{HotShareLinkItem},
     data(){
       return {
         shareLinks:[],

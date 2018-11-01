@@ -21,7 +21,7 @@ type Blog struct {
 	ShortDesc		string	  `json:"short_desc"`	// 简短描述
 	KeyWords        string    `json:"key_words"` // 搜索关键词
 	Catalog         *Catalog  `json:"catalog" orm:"rel(fk)"`
-	Content         string    `json:"content" orm:"type(text)"`
+	Content         string    `json:"content" orm:"type(text)"`					// string - 设置 type(text) 时	longtext
 	BlogStatus      int8      `json:"blog_status"` // 0:未发布 1:已发布
 	Views           int64     `json:"views"`       // 观看次数
 	Edits           int64     `json:"edits"`       // 编辑次数
