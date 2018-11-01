@@ -11,36 +11,18 @@
         <Col span="3">编辑次数 0</Col>
       </Row>
     </div>
-    <div class="markdown" v-html="compiledMarkdown"></div>
+
+    <ShowMarkdown :content="blog.content"/>
   </div>
 </template>
 
 <script>
   import {ShowBlogDetail} from "../../api"
-
-  let marked = require('marked');
-  let hljs = require('highlight.js');
-  import 'highlight.js/styles/default.css';
-  marked.setOptions({
-    renderer: new marked.Renderer(),
-    gfm: true,
-    tables: true,
-    breaks: false,
-    pedantic: false,
-    sanitize: false,
-    smartLists: true,
-    smartypants: false,
-    highlight: function (code, lang) {
-      if (lang && hljs.getLanguage(lang)) {
-        return hljs.highlight(lang, code, true).value;
-      } else {
-        return hljs.highlightAuto(code).value;
-      }
-    }
-  });
+  import ShowMarkdown from "../Common/Common/ShowMarkdown.vue"
 
   export default {
     name: "BlogDetail",
+    components:{ShowMarkdown},
     data(){
       return {
         blog: null,
@@ -54,14 +36,6 @@
         }
       }
     },
-    computed:{
-      compiledMarkdown () {
-        let detail = this.blog.content;
-        return marked(detail || '', {
-          sanitize: true
-        });
-      }
-    },
     mounted:function () {
       this.refreshBlogDetail();
     }
@@ -69,5 +43,4 @@
 </script>
 
 <style scoped>
-  @import "../../assets/css/vue-markdown2.css";
 </style>
