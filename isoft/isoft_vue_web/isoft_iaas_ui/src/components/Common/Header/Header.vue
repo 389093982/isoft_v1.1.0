@@ -26,6 +26,7 @@
             <MenuGroup title="友情链接">
               <MenuItem name="1-9"><router-link to="/ifile/ifile">心声社区</router-link></MenuItem>
               <MenuItem name="1-10"><router-link to="/ifile/ifile">论坛</router-link></MenuItem>
+              <MenuItem name="1-11"><router-link to="/easyshare/list">社区天地</router-link></MenuItem>
             </MenuGroup>
           </Submenu>
           <MenuItem name="2">
@@ -51,7 +52,6 @@
               <MenuItem name="4-1" @click.native="cancelUser">注销</MenuItem>
               <MenuItem name="4-2" @click.native="cancelUser">切换账号</MenuItem>
               <MenuItem name="4-3"><router-link to="/user/manage">个人中心</router-link></MenuItem>
-              <MenuItem name="4-3"><router-link to="/easyshare/list">易分享</router-link></MenuItem>
             </MenuGroup>
           </Submenu>
         </div>

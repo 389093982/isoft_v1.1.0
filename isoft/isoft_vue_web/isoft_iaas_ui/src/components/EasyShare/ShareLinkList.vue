@@ -26,7 +26,12 @@
                 <Avatar size="small" src="https://i.loli.net/2017/08/21/599a521472424.jpg" />
               </router-link>
               <Tag><a @click="chooseItem(shareLink.share_type)">{{shareLink.share_type}}</a></Tag>
-              <a @click="$router.push({path: '/easyshare/detail', query: {id: shareLink.id}})">{{shareLink.link_href}}</a>
+              <a @click="$router.push({path: '/easyshare/detail', query: {id: shareLink.id}})">{{shareLink.share_desc}}</a>
+              <div style="font-size: 12px;">
+                <router-link :to="{path:'/iblog/author',query:{author:shareLink.author}}">{{shareLink.author}}</router-link>
+                发布于:<Time :time="shareLink.created_time" style="color:red;"/>&nbsp;
+                更新于:<Time :time="shareLink.last_updated_time" style="color:red;"/>&nbsp;
+              </div>
               <span style="float: right;font-size: 12px;"><Time :time="shareLink.last_updated_time"/></span>
               <Divider />
             </div>
