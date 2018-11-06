@@ -19,7 +19,7 @@
         <li v-for="(sub_configuration,index) in currentConfiguration.sub_configurations"
             style="height: 32px;line-height: 32px;margin: 0 4px 5px;text-align: center;color: #333;float: left;display: inline;">
           <a href="javascript:;" style="color: #333;display: block;height: inherit;padding: 0 8px;"
-             @click="submit(sub_configuration.configuration_value)">
+             @click="chooseCourseType(currentConfiguration.configuration_value, sub_configuration.configuration_value)">
             {{sub_configuration.configuration_value}}
           </a>
         </li>
@@ -42,8 +42,8 @@
       ...mapState(['hotCourseTypeConfigurations']),
     },
     methods: {
-      submit:function (data) {
-        this.$emit("submitFunc", data);
+      chooseCourseType:function (course_type, course_sub_type) {
+        this.$emit("chooseCourseType", course_type, course_sub_type);
       },
       getCurrentConfiguration:function () {
         if(this.currentConfiguration == undefined){

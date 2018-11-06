@@ -1,7 +1,7 @@
 <template>
   <div>
     <Row>
-      <Col span="12">
+      <Col span="16">
         <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="100">
           <FormItem label="课程名称" prop="course_name">
             <Input v-model="formValidate.course_name" placeholder="Enter course name..."/>
@@ -9,7 +9,7 @@
           <FormItem label="课程类型" prop="course_type">
             <Row>
               <Col span="19"><Input v-model="formValidate.course_type" placeholder="Enter course type..."></Input></Col>
-              <Col span="5"><ChooseHotCourseType/></Col>
+              <Col span="5"><ChooseHotCourseType @chooseCourseType="chooseCourseType"/></Col>
             </Row>
           </FormItem>
           <FormItem label="课程子类型" prop="course_sub_type">
@@ -24,7 +24,7 @@
           </FormItem>
         </Form>
       </Col>
-      <Col span="12">
+      <Col span="8">
         课程发布规范说明：AAAA
       </Col>
     </Row>
@@ -82,6 +82,10 @@
       },
       handleReset (name) {
         this.$refs[name].resetFields();
+      },
+      chooseCourseType:function (course_type, course_sub_type) {
+        this.formValidate.course_type = course_type;
+        this.formValidate.course_sub_type = course_sub_type;
       }
     }
   }

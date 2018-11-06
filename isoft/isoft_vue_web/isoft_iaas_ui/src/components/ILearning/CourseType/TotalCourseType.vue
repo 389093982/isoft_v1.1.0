@@ -15,7 +15,7 @@
         <li v-for="sub_course_type in sub_course_types"
             style="height: 32px;line-height: 32px;margin: 0 4px 5px;text-align: center;color: #333;float: left;display: inline;">
           <a href="javascript:;" style="color: #333;display: block;height: inherit;padding: 0 8px;"
-             @click="submit(sub_course_type)">
+             @click="chooseCourseType(current_course_type, sub_course_type)">
             {{sub_course_type}}
           </a>
         </li>
@@ -32,6 +32,7 @@
     data(){
       return {
         course_types:[],
+        current_course_type:'',
         sub_course_types:[],
       }
     },
@@ -46,11 +47,12 @@
       loadSubCourseType:async function(course_type){
         const result = await GetAllCourseSubType(course_type);
         if(result.status=="SUCCESS"){
+          this.current_course_type = course_type;
           this.sub_course_types = result.sub_course_types;
         }
       },
-      submit:function (data) {
-        this.$emit("submitFunc", data);
+      chooseCourseType:function (course_type, course_sub_type) {
+        this.$emit("chooseCourseType", course_type, course_sub_type);
       }
     },
     mounted:function () {

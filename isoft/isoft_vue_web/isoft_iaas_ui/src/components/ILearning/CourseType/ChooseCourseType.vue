@@ -18,9 +18,8 @@
           </a>
         </div>
         <div>
-          <HotCourseType2/>
-          <HotCourseType v-show="showCourseType===true" @submitFunc="searchFunc"/>
-          <TotalCourseType v-show="showCourseType===false" @submitFunc="searchFunc"/>
+          <HotCourseType v-show="showCourseType===true" @chooseCourseType="chooseCourseType"/>
+          <TotalCourseType v-show="showCourseType===false" @chooseCourseType="chooseCourseType"/>
         </div>
       </div>
 
@@ -48,11 +47,11 @@
       }
     },
     methods: {
-      searchFunc:function (data) {
+      chooseCourseType:function (course_type, course_sub_type) {
         // params是路由的一部分
         // query是拼接在url后面的参数
         // 由于动态路由也是传递params的,所以在 this.$router.push() 方法中path不能和params一起使用,否则params将无效.需要用name来指定页面
-        this.$router.push({ path: '/ilearning/course_search', query: { search: data }});
+        this.$router.push({ path: '/ilearning/course_search', query: { search: course_sub_type }});
       },
       toggle:function (data) {
         alert(data);

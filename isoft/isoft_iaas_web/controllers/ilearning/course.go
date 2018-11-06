@@ -5,8 +5,10 @@ import (
 	"github.com/astaxie/beego/utils/pagination"
 	"github.com/satori/go.uuid"
 	"isoft/isoft/common/pageutil"
+	"isoft/isoft_iaas_web/models/common"
 	"isoft/isoft_iaas_web/models/ilearning"
 	"path"
+	"strconv"
 	"strings"
 	"time"
 )
@@ -76,6 +78,14 @@ func (this *CourseController) ShowCourseDetail() {
 	flag2 := ilearning.IsFavorite(user_name, id, "course_praise")
 	this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "course": &course,
 		"cVideos": &cVideos, "course_collect": flag1, "course_parise": flag2}
+	common.AddHistory(&common.History{
+		HistoryName:"show_course_detail",
+		HistoryValue:strconv.Itoa(id),
+		CreatedBy:user_name,
+		CreatedTime:time.Now(),
+		LastUpdatedBy :user_name,
+		LastUpdatedTime:time.Now(),
+	})
 	this.ServeJSON()
 }
 

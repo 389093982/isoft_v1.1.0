@@ -1,6 +1,6 @@
 <template>
   <span>
-    <a href="javascript:;" @click="showCourseType = true"><Icon type="md-book" />&nbsp;选择推荐分类</a>
+    <a href="javascript:;" @click="showCourseType = true">&nbsp;选择推荐分类</a>
     <Modal
       v-model="showCourseType"
       title="热门课程分类"
@@ -10,7 +10,7 @@
       :mask-closable="false">
       <div style="height: 450px;">
         <Scroll height="450">
-          <HotCourseType/>
+          <HotCourseType @chooseCourseType="chooseCourseType"/>
         </Scroll>
       </div>
     </Modal>
@@ -28,6 +28,12 @@
         showCourseType:false,
       }
     },
+    methods:{
+      chooseCourseType:function (course_type, course_sub_type) {
+        this.$emit("chooseCourseType", course_type, course_sub_type);
+        this.showCourseType = false;
+      }
+    }
   }
 </script>
 
