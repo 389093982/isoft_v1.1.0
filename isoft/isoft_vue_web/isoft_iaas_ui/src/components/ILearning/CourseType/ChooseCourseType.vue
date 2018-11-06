@@ -18,6 +18,7 @@
           </a>
         </div>
         <div>
+          <HotCourseType2/>
           <HotCourseType v-show="showCourseType===true" @submitFunc="searchFunc"/>
           <TotalCourseType v-show="showCourseType===false" @submitFunc="searchFunc"/>
         </div>
