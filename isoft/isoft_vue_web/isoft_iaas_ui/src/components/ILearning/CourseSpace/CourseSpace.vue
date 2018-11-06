@@ -17,7 +17,7 @@
       </Col>
       <Col span="18">
         <div style="padding: 5px;background: #f8f8f9;margin-left: 10px;">
-          <div style="padding: 10px;background: #FFFFFF;">
+          <div style="padding: 10px;background: #FFFFFF;min-height: 500px;">
             <router-view/>
           </div>
         </div>
