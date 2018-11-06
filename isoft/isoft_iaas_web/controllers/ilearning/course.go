@@ -78,9 +78,11 @@ func (this *CourseController) ShowCourseDetail() {
 	flag2 := ilearning.IsFavorite(user_name, id, "course_praise")
 	this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "course": &course,
 		"cVideos": &cVideos, "course_collect": flag1, "course_parise": flag2}
-	common.AddHistory(&common.History{
-		HistoryName:"show_course_detail",
+	common.InsertOrUpdateHistory(&common.History{
+		HistoryName:"show_course_history",
 		HistoryValue:strconv.Itoa(id),
+		HistoryDesc:course.CourseName,
+		HistoryLink:strconv.Itoa(course.Id),
 		CreatedBy:user_name,
 		CreatedTime:time.Now(),
 		LastUpdatedBy :user_name,

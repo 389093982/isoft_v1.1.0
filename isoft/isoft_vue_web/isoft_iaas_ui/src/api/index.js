@@ -85,3 +85,5 @@ export const FilterShareLinkList = (offset,current_page,search_type) => ajax(BAS
 
 // 新增共享链接
 export const AddNewShareLink = (share_type,share_desc,link_href,content) => ajax(BASE_URL+'/easyshare/addNewShareLink',{share_type,share_desc,link_href,content},'GET');
+
+export const ShowCourseHistory = (offset,current_page) => ajax(BASE_URL+"/common/showCourseHistory", {offset,current_page},'GET')

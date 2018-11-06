@@ -47,6 +47,9 @@
       }
     },
     methods: {
+      searchFunc:function (data) {
+        this.$router.push({ path: '/ilearning/course_search', query: { search: data }});
+      },
       chooseCourseType:function (course_type, course_sub_type) {
         // params是路由的一部分
         // query是拼接在url后面的参数

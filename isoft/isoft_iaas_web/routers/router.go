@@ -5,6 +5,7 @@ import (
 	"github.com/astaxie/beego/plugins/cors"
 	"isoft/isoft_iaas_web/controllers"
 	"isoft/isoft_iaas_web/controllers/cms"
+	"isoft/isoft_iaas_web/controllers/common"
 	"isoft/isoft_iaas_web/controllers/easyshare"
 	"isoft/isoft_iaas_web/controllers/iblog"
 	"isoft/isoft_iaas_web/controllers/ifile"
@@ -28,6 +29,11 @@ func init() {
 	initILearningRouter()
 	initCMSRouter()
 	initEasyShareRouter()
+	initCommonRouter()
+}
+
+func initCommonRouter()  {
+	beego.Router("/api/common/showCourseHistory", &common.HistoryController{}, "get,post:ShowCourseHistory")
 }
 
 func initEasyShareRouter() {

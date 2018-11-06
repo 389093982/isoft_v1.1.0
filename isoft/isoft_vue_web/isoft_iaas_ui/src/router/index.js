@@ -10,6 +10,7 @@ import ILearning from '../components/ILearning/ILearning.vue'
 import ILearningIndex from '../components/ILearning/Index.vue'
 import CourseSpace from '../components/ILearning/CourseSpace/CourseSpace.vue'
 import NewCourse from '../components/ILearning/CourseSpace/NewCourse.vue'
+import RecentlyViewed from '../components/ILearning/CourseSpace/RecentlyViewed.vue'
 import MyCourseList from '../components/ILearning/CourseSpace/MyCourseList.vue'
 import CourseDetail from '../components/ILearning/Course/CourseDetail.vue'
 import VideoPay from '../components/ILearning/Course/VideoPay.vue'
@@ -78,6 +79,7 @@ export const ILearningRouter = {
         children: [
           {path: 'newCourse',component: NewCourse,},
           {path: 'myCourseList',component: MyCourseList,},
+          {path: 'RecentlyViewed',component: RecentlyViewed,},
         ]
       },
       {
