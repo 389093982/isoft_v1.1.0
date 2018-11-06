@@ -30,7 +30,6 @@
 
 <script>
   import {mapState} from 'vuex'
-  import {QueryAllConfigurations} from "../../../api"
 
   export default {
     name: "HotCourseType",

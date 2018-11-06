@@ -1,3 +1,29 @@
+// 热门课程分类
+const hot_course_type=[
+  {"course_type":"Java视频","sub_course_type":["Java基础","JavaSE"]},
+  {"course_type":"Python视频","sub_course_type":["Python基础","Python入门"]},
+  {"course_type":"Golang视频","sub_course_type":["Golang基础","Golang入门"]},
+  {"course_type":"Golang视频","sub_course_type":["Golang基础","Golang入门"]},
+  {"course_type":"Golang视频","sub_course_type":["Golang基础","Golang入门"]},
+  {"course_type":"Golang视频","sub_course_type":["Golang基础","Golang入门"]},
+  {"course_type":"Golang视频","sub_course_type":["Golang基础","Golang入门"]},
+  {"course_type":"Golang视频","sub_course_type":["Golang基础","Golang入门"]},
+  {"course_type":"Golang视频","sub_course_type":["Golang基础","Golang入门"]},
+  {"course_type":"Golang视频","sub_course_type":["Golang基础","Golang入门"]},
+  {"course_type":"Golang视频","sub_course_type":["Golang基础","Golang入门"]},
+  {"course_type":"Golang视频","sub_course_type":["Golang基础","Golang入门"]},
+  {"course_type":"Golang视频","sub_course_type":["Golang基础","Golang入门"]},
+  {"course_type":"Golang视频","sub_course_type":["Golang基础","Golang入门"]},
+  {"course_type":"Golang视频","sub_course_type":["Golang基础","Golang入门"]},
+  {"course_type":"Golang视频","sub_course_type":["Golang基础","Golang入门"]},
+  {"course_type":"Golang视频","sub_course_type":["Golang基础","Golang入门"]},
+  {"course_type":"Golang视频","sub_course_type":["Golang基础","Golang入门"]},
+  {"course_type":"Golang视频","sub_course_type":["Golang基础","Golang入门"]},
+  {"course_type":"Golang视频","sub_course_type":["Golang基础","Golang入门"]},
+  {"course_type":"Golang视频","sub_course_type":["Golang基础","Golang入门"]},
+  {"course_type":"Golang视频","sub_course_type":["Golang基础","Golang入门"]},
+  {"course_type":"Golang视频","sub_course_type":["Golang基础","Golang入门"]},
+];
 
 // 热门分享类型
 const hot_share_type=[
@@ -64,5 +90,6 @@ const hot_share_type=[
 ];
 
 export default {
+  hot_course_type,
   hot_share_type,
 }

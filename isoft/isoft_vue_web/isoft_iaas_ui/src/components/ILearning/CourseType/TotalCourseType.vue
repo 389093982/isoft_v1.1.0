@@ -1,20 +1,20 @@
 <template>
   <div>
-     <div style="float: left;">课程大类：</div>
-      <ul style="overflow:hidden;border-bottom: 2px solid #edf1f2;">
-        <li v-for="course_type in course_types" style="list-style:none;float: left;">
-          <a href="javascript:;" style="margin:5px;padding-left:15px;padding-right:15px;font-size: 14px;
-             display: inline-block;color: #fff;background: rgb(34,195,0);"
+    <span style="height: 32px;line-height: 32px;margin-bottom: 5px;color: #000;float: left !important;">课程大类：</span>
+    <ul style="overflow:hidden;">
+        <li v-for="course_type in course_types"
+            style="height: 32px;line-height: 32px;margin: 0 4px 5px;text-align: center;color: #333;float: left;display: inline;">
+          <a href="javascript:;" style="color: #333;display: block;height: inherit;padding: 0 8px;"
              @click="loadSubCourseType(course_type)">
             <span>{{course_type}}</span>
           </a>
         </li>
       </ul>
-      <div style="float: left;">详细分类：</div>
-      <ul style="overflow:hidden;">
-        <li v-for="sub_course_type in sub_course_types" style="list-style:none;float: left;">
-          <a href="javascript:;" style="margin:5px;padding-left:15px;padding-right:15px;font-size: 14px;
-             display: inline-block;color: #fff;background: rgb(255,98,37);"
+    <span style="height: 32px;line-height: 32px;margin-bottom: 5px;color: #000;float: left !important;">详细分类：</span>
+    <ul style="overflow:hidden;">
+        <li v-for="sub_course_type in sub_course_types"
+            style="height: 32px;line-height: 32px;margin: 0 4px 5px;text-align: center;color: #333;float: left;display: inline;">
+          <a href="javascript:;" style="color: #333;display: block;height: inherit;padding: 0 8px;"
              @click="submit(sub_course_type)">
             {{sub_course_type}}
           </a>
