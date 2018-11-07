@@ -3,7 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="61c01151-84f0-4bfd-a227-5c1f0b5a424d" name="Default" comment="导航栏优化">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/Common/Header/NavMenu.vue" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/Common/Header/NavMenu.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/Common/Header/Header.vue" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/Common/Header/Header.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/Common/Header/NavMenu.vue" beforeDir="false" />
     </list>
     <ignored path="isoft_deploy_web/static/uploadfile/" />
     <ignored path="../.idea/inspectionProfiles/profiles_settings.xml" />
@@ -85,7 +86,7 @@
           <entry key="sh" value="61" />
           <entry key="ts" value="5" />
           <entry key="txt" value="39" />
-          <entry key="vue" value="705" />
+          <entry key="vue" value="706" />
           <entry key="xml" value="5" />
         </counts>
       </usages-collector>
@@ -101,7 +102,7 @@
           <entry key="PLAIN_TEXT" value="327" />
           <entry key="RNG Compact" value="1" />
           <entry key="TypeScript" value="5" />
-          <entry key="Vue.js" value="692" />
+          <entry key="Vue.js" value="693" />
           <entry key="XML" value="5" />
           <entry key="x86 Plan9 Assembly" value="7" />
         </counts>
@@ -115,7 +116,7 @@
           <entry key="js" value="3818" />
           <entry key="sh" value="1652" />
           <entry key="txt" value="823" />
-          <entry key="vue" value="28995" />
+          <entry key="vue" value="29074" />
           <entry key="xml" value="47" />
         </counts>
       </usages-collector>
@@ -125,7 +126,7 @@
           <entry key="Go" value="35107" />
           <entry key="JavaScript" value="3818" />
           <entry key="PLAIN_TEXT" value="3014" />
-          <entry key="Vue.js" value="28888" />
+          <entry key="Vue.js" value="28967" />
           <entry key="XML" value="47" />
         </counts>
       </usages-collector>
@@ -141,22 +142,13 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/Common/Header/Header.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="7" selection-start-line="7" selection-end-line="7" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/Common/Header/NavMenu.vue">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="4" column="12" lean-forward="true" selection-start-line="4" selection-start-column="12" selection-end-line="4" selection-end-column="12" />
+            <state relative-caret-position="1071">
+              <caret line="63" column="29" selection-start-line="63" selection-start-column="29" selection-end-line="63" selection-end-column="29" />
               <folding>
-                <element signature="e#6426#6472#0" expanded="true" />
+                <element signature="e#2736#2782#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -329,8 +321,8 @@
         <option value="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/ILearning/CourseSpace/RecentlyViewed.vue" />
         <option value="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/Common/Header/Nav.vue" />
         <option value="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/Common/Header/NavMenuItem.vue" />
-        <option value="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/Common/Header/Header.vue" />
         <option value="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/Common/Header/NavMenu.vue" />
+        <option value="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/Common/Header/Header.vue" />
       </list>
     </option>
   </component>
@@ -849,7 +841,7 @@
     </layout>
     <layout-to-restore>
       <window_info id="Favorites" order="0" sideWeight="0.71631205" side_tool="true" weight="0.24171382" />
-      <window_info content_ui="combo" id="Project" order="1" sideWeight="0.28241563" visible="true" weight="0.36701697" />
+      <window_info active="true" content_ui="combo" id="Project" order="1" sideWeight="0.28241563" visible="true" weight="0.36701697" />
       <window_info id="Structure" order="2" sideWeight="0.7175844" side_tool="true" weight="0.33629748" />
       <window_info anchor="bottom" id="TypeScript" order="0" weight="0.32978722" />
       <window_info anchor="bottom" id="Messages" order="1" weight="0.55376345" />
@@ -974,11 +966,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_ui/src/components/Service/ServiceAdd.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1745" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_ui/src/components/Service/ServiceList.vue">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -1324,19 +1311,29 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/Common/Header/Header.vue">
+    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/Common/Header/NavMenu.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" selection-start-line="7" selection-end-line="7" />
+        <state relative-caret-position="-320">
+          <caret line="161" column="13" selection-start-line="161" selection-start-column="13" selection-end-line="161" selection-end-column="13" />
+          <folding>
+            <element signature="e#6426#6472#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/Common/Header/NavMenu.vue">
+    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_ui/node_modules/iview/src/components/menu/submenu.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="12" lean-forward="true" selection-start-line="4" selection-start-column="12" selection-end-line="4" selection-end-column="12" />
+        <state relative-caret-position="425">
+          <caret line="30" column="8" selection-start-line="30" selection-start-column="8" selection-end-line="30" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/Common/Header/Header.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1071">
+          <caret line="63" column="29" selection-start-line="63" selection-start-column="29" selection-end-line="63" selection-end-column="29" />
           <folding>
-            <element signature="e#6426#6472#0" expanded="true" />
+            <element signature="e#2736#2782#0" expanded="true" />
           </folding>
         </state>
       </provider>
