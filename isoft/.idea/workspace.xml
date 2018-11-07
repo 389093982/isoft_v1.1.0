@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="61c01151-84f0-4bfd-a227-5c1f0b5a424d" name="Default" comment="代码优化">
-      <change afterPath="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/Common/Header/NavMenu.vue" afterDir="false" />
+    <list default="true" id="61c01151-84f0-4bfd-a227-5c1f0b5a424d" name="Default" comment="导航栏优化">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/Common/Header/Header.vue" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/Common/Header/Header.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/Common/Header/NavMenu.vue" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/Common/Header/NavMenu.vue" afterDir="false" />
     </list>
     <ignored path="isoft_deploy_web/static/uploadfile/" />
     <ignored path="../.idea/inspectionProfiles/profiles_settings.xml" />
@@ -115,8 +114,8 @@
           <entry key="ini" value="211" />
           <entry key="js" value="3818" />
           <entry key="sh" value="1652" />
-          <entry key="txt" value="818" />
-          <entry key="vue" value="28977" />
+          <entry key="txt" value="823" />
+          <entry key="vue" value="28995" />
           <entry key="xml" value="47" />
         </counts>
       </usages-collector>
@@ -125,8 +124,8 @@
           <entry key="CSS" value="33" />
           <entry key="Go" value="35107" />
           <entry key="JavaScript" value="3818" />
-          <entry key="PLAIN_TEXT" value="3009" />
-          <entry key="Vue.js" value="28870" />
+          <entry key="PLAIN_TEXT" value="3014" />
+          <entry key="Vue.js" value="28888" />
           <entry key="XML" value="47" />
         </counts>
       </usages-collector>
@@ -142,7 +141,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/Common/Header/Header.vue">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="119">
@@ -151,11 +150,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/Common/Header/NavMenu.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
-              <caret line="2" selection-start-line="2" selection-end-line="2" />
+            <state relative-caret-position="68">
+              <caret line="4" column="12" lean-forward="true" selection-start-line="4" selection-start-column="12" selection-end-line="4" selection-end-column="12" />
               <folding>
                 <element signature="e#6426#6472#0" expanded="true" />
               </folding>
@@ -330,8 +329,8 @@
         <option value="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/ILearning/CourseSpace/RecentlyViewed.vue" />
         <option value="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/Common/Header/Nav.vue" />
         <option value="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/Common/Header/NavMenuItem.vue" />
-        <option value="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/Common/Header/NavMenu.vue" />
         <option value="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/Common/Header/Header.vue" />
+        <option value="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/Common/Header/NavMenu.vue" />
       </list>
     </option>
   </component>
@@ -901,7 +900,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="心跳检测迁移至数据库" />
     <MESSAGE value="心跳检测和元数据查询功能转移至mysql" />
     <MESSAGE value="代码全部整改成HTTP服务" />
     <MESSAGE value="支持图片视频播放" />
@@ -926,7 +924,8 @@
     <MESSAGE value="markdown样式优化" />
     <MESSAGE value="全局静态数据功能" />
     <MESSAGE value="代码优化" />
-    <option name="LAST_COMMIT_MESSAGE" value="代码优化" />
+    <MESSAGE value="导航栏优化" />
+    <option name="LAST_COMMIT_MESSAGE" value="导航栏优化" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
@@ -1325,20 +1324,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/Common/Header/NavMenu.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" selection-start-line="2" selection-end-line="2" />
-          <folding>
-            <element signature="e#6426#6472#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/Common/Header/Header.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
           <caret line="7" selection-start-line="7" selection-end-line="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/Common/Header/NavMenu.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="12" lean-forward="true" selection-start-line="4" selection-start-column="12" selection-end-line="4" selection-end-column="12" />
+          <folding>
+            <element signature="e#6426#6472#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

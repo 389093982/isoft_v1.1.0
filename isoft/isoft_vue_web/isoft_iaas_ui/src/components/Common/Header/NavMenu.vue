@@ -58,7 +58,7 @@
                   综合设置
                 </div>
                 <div class="nav_li_r">
-                  <a href="http://zq.sc.chinaz.com/?pc/?filter=0-17-0-0-3" title="更多"class="orange">更多>></a>
+                  <a href="http://zq.sc.chinaz.com/?pc/?filter=0-17-0-0-3" title="更多" class="orange">更多>></a>
                 </div>
               </div>
             </div>
@@ -73,7 +73,8 @@
                   配置项管理
                 </div>
                 <div class="nav_li_r">
-                  <router-link to="/ilearning/configuration">查看配置项</router-link>┊<a href="http://sc.chinaz.com/?web/" title="更多"class="orange">更多>></a>
+                  <router-link to="/ilearning/configuration">查看配置项</router-link>┊
+                  <a href="http://sc.chinaz.com/?web/" title="更多"class="orange">更多>></a>
                 </div>
               </div>
             </div>
