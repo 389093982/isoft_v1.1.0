@@ -56,8 +56,13 @@
       </Col>
       <!-- 推荐系统 -->
       <Col span="8">
-        <Recommand />
-        <CommunicationGroup/>
+        <div style="border: 1px #dbdbdb solid;margin-left: 5px;margin-bottom: 5px;">
+          <HotRecommend showMode="list"/>
+        </div>
+        <div>
+          <Recommand />
+          <CommunicationGroup/>
+        </div>
       </Col>
     </Row>
   </div>
@@ -69,10 +74,11 @@
   import Recommand from "./Recommand.vue"
   import CourseComment from "../Comment/CourseComment.vue"
   import CommunicationGroup from "../Site/CommunicationGroup.vue"
+  import HotRecommend from "./HotRecommend.vue"
 
   export default {
     name: "CourseDetail",
-    components:{CourseComment,Recommand,CommunicationGroup},
+    components:{CourseComment,Recommand,CommunicationGroup,HotRecommend},
     data(){
       return {
         // 当前课程
