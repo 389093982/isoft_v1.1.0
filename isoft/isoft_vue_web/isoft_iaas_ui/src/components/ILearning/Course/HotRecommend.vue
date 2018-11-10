@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- 列表形式显示 -->
-    <div v-if="showMode=='list'">
+    <div v-if="showMode=='list'" style="border: 1px #dbdbdb solid;margin-left: 5px;margin-bottom: 5px;">
       <Card title="热门课程推荐" icon="ios-options" :padding="0" shadow style="width: 100%;">
         <CellGroup>
           <Cell v-for="course in courses" :title="course.course_name" :to="{path:'/ilearning/course_detail',query:{course_id:course.id}}">

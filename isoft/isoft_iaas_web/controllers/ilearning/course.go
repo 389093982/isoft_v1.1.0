@@ -203,8 +203,8 @@ func (this *CourseController) SearchCourseList() {
 }
 
 func (this *CourseController) GetMyCourseList() {
-	CourseAuthor := this.Ctx.Input.Session("UserName").(string)
-	this.SearchCourseListPaginator(map[string]string{"CourseAuthor": CourseAuthor})
+	userName := this.GetString("userName", this.Ctx.Input.Session("UserName").(string))
+	this.SearchCourseListPaginator(map[string]string{"CourseAuthor": userName})
 }
 
 func (this *CourseController) NewCourse() {

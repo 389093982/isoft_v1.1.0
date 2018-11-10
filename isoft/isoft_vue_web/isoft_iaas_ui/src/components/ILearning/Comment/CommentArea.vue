@@ -87,6 +87,9 @@
     },
     mounted:function () {
       this.refreshCommentReply('all');
+    },
+    watch:{
+      "comment_id": "refreshCommentReply"      // 如果 comment_id 有变化,会再次执行该方法
     }
   }
 </script>

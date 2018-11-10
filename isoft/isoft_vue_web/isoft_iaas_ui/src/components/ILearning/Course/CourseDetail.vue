@@ -54,15 +54,13 @@
         <!-- 课程评论 -->
         <CourseComment :course="course" style="margin-top: 50px;"/>
       </Col>
-      <!-- 推荐系统 -->
+
       <Col span="8">
-        <div style="border: 1px #dbdbdb solid;margin-left: 5px;margin-bottom: 5px;">
-          <HotRecommend showMode="list"/>
-        </div>
-        <div>
-          <Recommand />
-          <CommunicationGroup/>
-        </div>
+        <UserDetail :userName="course.course_author"/>
+        <HotRecommend showMode="list"/>
+        <!-- 推荐系统 -->
+        <Recommand />
+        <CommunicationGroup/>
       </Col>
     </Row>
   </div>
@@ -75,10 +73,11 @@
   import CourseComment from "../Comment/CourseComment.vue"
   import CommunicationGroup from "../Site/CommunicationGroup.vue"
   import HotRecommend from "./HotRecommend.vue"
+  import UserDetail from "../../User/UserDetail.vue"
 
   export default {
     name: "CourseDetail",
-    components:{CourseComment,Recommand,CommunicationGroup,HotRecommend},
+    components:{CourseComment,Recommand,CommunicationGroup,HotRecommend,UserDetail},
     data(){
       return {
         // 当前课程
@@ -92,7 +91,8 @@
       }
     },
     methods:{
-      refreshCourseDetail:async function(course_id){
+      refreshCourseDetail:async function(){
+        const course_id = this.$route.query.course_id;
         const result = await ShowCourseDetail(course_id);
         if(result.status=="SUCCESS"){
           this.course = result.course;
@@ -104,12 +104,15 @@
       toggle_favorite:async function (favorite_id, favorite_type) {
         const result = await ToggleFavorite(favorite_id, favorite_type);
         if(result.status=="SUCCESS"){
-          this.refreshCourseDetail(this.$route.query.course_id);
+          this.refreshCourseDetail();
         }
       }
     },
     mounted:function () {
       this.refreshCourseDetail(this.$route.query.course_id);
+    },
+    watch:{
+      "$route.params": "refreshCourseDetail"      // 如果 $route.params 有变化,会再次执行该方法
     }
   }
 </script>
