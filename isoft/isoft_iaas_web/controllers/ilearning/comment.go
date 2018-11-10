@@ -2,6 +2,7 @@ package ilearning
 
 import (
 	"github.com/astaxie/beego"
+	"github.com/astaxie/beego/orm"
 	"isoft/isoft_iaas_web/models/ilearning"
 	"time"
 )
@@ -18,7 +19,7 @@ func (this *CommentController) FilterCommentReply() {
 	// 获取父评论 id
 	parent_id, _ := this.GetInt("parent_id")
 	comment_replys, err := ilearning.FilterCommentReply(comment_id, theme_type, parent_id, reply_comment_type)
-	if err == nil {
+	if err == nil || err == orm.ErrNoRows {
 		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "comment_replys": comment_replys}
 	} else {
 		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "msg": err.Error()}

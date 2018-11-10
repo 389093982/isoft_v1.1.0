@@ -15,10 +15,18 @@
                   </Tag>
                 </Col>
                 <Col span="8">
-                  <Tag color="warning">{{course.course_type}}</Tag>
+                  <Tag color="warning">
+                    <router-link :to="{ path: '/ilearning/course_search', query: { search: course.course_type }}">
+                      {{course.course_type}}
+                    </router-link>
+                  </Tag>
                 </Col>
                 <Col span="8">
-                  <Tag color="purple">{{course.course_sub_type}}</Tag>
+                  <Tag color="purple">
+                    <router-link :to="{ path: '/ilearning/course_search', query: { search: course.course_sub_type }}">
+                      {{course.course_sub_type}}
+                    </router-link>
+                  </Tag>
                 </Col>
               </Row>
             </li>

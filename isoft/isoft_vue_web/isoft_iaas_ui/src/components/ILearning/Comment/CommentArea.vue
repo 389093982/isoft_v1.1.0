@@ -32,7 +32,6 @@
       <!-- 递归,子评论区域 -->
       <CommentArea v-if="comment_reply.sub_reply_amount > 0"
          :parent_id="comment_reply.id" :comment_id="comment_id" :theme_type="theme_type"/>
-
     </div>
 
     <!-- 评论表单 -->
@@ -44,7 +43,6 @@
       <CommentForm v-if="showCommentForm" :parent_id="_parent_id" :comment_id="comment_id" :theme_type="theme_type"
         :refer_user_name="_refer_user_name" @refreshCommentReply="refreshCommentReply"/>
     </Modal>
-
   </div>
 </template>
 
