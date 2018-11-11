@@ -6,10 +6,7 @@
       <ul style="overflow:hidden;">
         <li v-for="(configuration,index) in hotCourseTypeConfigurations"
             style="height: 32px;line-height: 32px;margin: 0 4px 5px;text-align: center;color: #333;float: left;display: inline;">
-          <a href="javascript:;" style="color: #333;display: block;height: inherit;padding: 0 8px;"
-             @click="currentConfiguration=configuration">
-            <span>{{configuration.configuration_value}}</span>
-          </a>
+          <BeautifulLink @onclick="currentConfiguration=configuration">{{configuration.configuration_value}}</BeautifulLink>
         </li>
       </ul>
     </div>
@@ -18,10 +15,9 @@
       <ul style="overflow:hidden;" v-if="getCurrentConfiguration() && currentConfiguration">
         <li v-for="(sub_configuration,index) in currentConfiguration.sub_configurations"
             style="height: 32px;line-height: 32px;margin: 0 4px 5px;text-align: center;color: #333;float: left;display: inline;">
-          <a href="javascript:;" style="color: #333;display: block;height: inherit;padding: 0 8px;"
-             @click="chooseCourseType(currentConfiguration.configuration_value, sub_configuration.configuration_value)">
+          <BeautifulLink @onclick="chooseCourseType(currentConfiguration.configuration_value, sub_configuration.configuration_value)">
             {{sub_configuration.configuration_value}}
-          </a>
+          </BeautifulLink>
         </li>
       </ul>
     </div>
@@ -30,9 +26,11 @@
 
 <script>
   import {mapState} from 'vuex'
+  import BeautifulLink from "../../Common/link/BeautifulLink.vue"
 
   export default {
     name: "HotCourseType",
+    components:{BeautifulLink},
     data(){
       return {
         currentConfiguration:undefined,
