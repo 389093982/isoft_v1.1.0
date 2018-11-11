@@ -4,8 +4,6 @@
       <div class="top">返回顶端</div>
     </BackTop>
 
-
-
     <Row>
       <Col span="4" style="padding: 50px;">
         <VerticalList :showRightBorder="true" title="新手帮助">
