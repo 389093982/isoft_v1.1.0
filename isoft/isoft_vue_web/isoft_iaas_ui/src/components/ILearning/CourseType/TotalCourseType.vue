@@ -4,20 +4,14 @@
     <ul style="overflow:hidden;">
         <li v-for="course_type in course_types"
             style="height: 32px;line-height: 32px;margin: 0 4px 5px;text-align: center;color: #333;float: left;display: inline;">
-          <a href="javascript:;" style="color: #333;display: block;height: inherit;padding: 0 8px;"
-             @click="loadSubCourseType(course_type)">
-            <span>{{course_type}}</span>
-          </a>
+          <BeautifulLink @onclick="loadSubCourseType(course_type)">{{course_type}}</BeautifulLink>
         </li>
       </ul>
     <span style="height: 32px;line-height: 32px;margin-bottom: 5px;color: #000;float: left !important;">详细分类：</span>
     <ul style="overflow:hidden;">
         <li v-for="sub_course_type in sub_course_types"
             style="height: 32px;line-height: 32px;margin: 0 4px 5px;text-align: center;color: #333;float: left;display: inline;">
-          <a href="javascript:;" style="color: #333;display: block;height: inherit;padding: 0 8px;"
-             @click="chooseCourseType(current_course_type, sub_course_type)">
-            {{sub_course_type}}
-          </a>
+          <BeautifulLink @onclick="chooseCourseType(current_course_type, sub_course_type)">{{sub_course_type}}</BeautifulLink>
         </li>
       </ul>
   </div>
@@ -26,9 +20,11 @@
 <script>
   import {GetAllCourseType} from "../../../api"
   import {GetAllCourseSubType} from "../../../api"
+  import BeautifulLink from "../../Common/link/BeautifulLink.vue"
 
   export default {
     name: "TotalCourseType",
+    components:{BeautifulLink},
     data(){
       return {
         course_types:[],
