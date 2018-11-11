@@ -4,59 +4,61 @@
       <div class="top">返回顶端</div>
     </BackTop>
 
+
+
     <Row>
       <Col span="4" style="padding: 50px;">
-        <dl>
-          <dt style="font-size: 15px;font-weight: bold;height: 26px;line-height: 26px;">新手帮助</dt>
-          <dd><a href="javascript:;">新手引导</a></dd>
-          <dd><a href="javascript:;">视频发布流程</a></dd>
-          <dd><a href="javascript:;">账号注册</a></dd>
-        </dl>
+        <VerticalList :showRightBorder="true" title="新手帮助">
+          <VerticalListItem>新手引导</VerticalListItem>
+          <VerticalListItem>视频发布流程</VerticalListItem>
+          <VerticalListItem>账号注册</VerticalListItem>
+        </VerticalList>
       </Col>
       <Col span="4" style="padding: 50px;">
-        <dl>
-          <dt style="font-size: 15px;font-weight: bold;height: 26px;line-height: 26px;">安全中心</dt>
-          <dd><a href="javascript:;">公司简介</a></dd>
-          <dd><a href="javascript:;">站点地图</a></dd>
-        </dl>
+        <VerticalList :showRightBorder="true" title="安全中心">
+          <VerticalListItem>公司简介</VerticalListItem>
+          <VerticalListItem>站点地图</VerticalListItem>
+        </VerticalList>
       </Col>
       <Col span="4" style="padding: 50px;">
-        <dl>
-          <dt style="font-size: 15px;font-weight: bold;height: 26px;line-height: 26px;">安全中心</dt>
-          <dd><a href="javascript:;">公司简介</a></dd>
-          <dd><a href="javascript:;">站点地图</a></dd>
-        </dl>
+        <VerticalList :showRightBorder="true" title="安全中心">
+          <VerticalListItem>公司简介</VerticalListItem>
+          <VerticalListItem>站点地图</VerticalListItem>
+        </VerticalList>
       </Col>
       <Col span="4" style="padding: 50px;">
-        <dl>
-          <dt style="font-size: 15px;font-weight: bold;height: 26px;line-height: 26px;">安全中心</dt>
-          <dd><a href="javascript:;">关于我们</a></dd>
-          <dd><a href="javascript:;">联系我们</a></dd>
-          <dd><a href="javascript:;">人才招聘</a></dd>
-          <dd><a href="javascript:;">商家入驻</a></dd>
-          <dd><a href="javascript:;">广告服务</a></dd>
-          <dd><a href="javascript:;">友情链接</a></dd>
-          <dd><a href="javascript:;">Isoft论坛</a></dd>
-        </dl>
+        <VerticalList :showRightBorder="true" title="安全中心">
+          <VerticalListItem>关于我们</VerticalListItem>
+          <VerticalListItem>联系我们</VerticalListItem>
+          <VerticalListItem>人才招聘</VerticalListItem>
+          <VerticalListItem>商家入驻</VerticalListItem>
+          <VerticalListItem>广告服务</VerticalListItem>
+          <VerticalListItem>友情链接</VerticalListItem>
+          <VerticalListItem>Isoft论坛</VerticalListItem>
+        </VerticalList>
       </Col>
       <Col span="8" style="padding: 50px;">
-        <p style="font-size: 24px!important;padding: 0;">13590331603</p>
-        <p style="line-height: 24px;">24小时客服热线(投诉或意见)</p>
-        <p>
-          <a href="javascript:;">在线客服</a>
-        </p>
-        <p>
-          <a href="javascript:;">我要举报</a>
-        </p>
+        <VerticalList title="客服中心">
+          <VerticalListItem>在线客服</VerticalListItem>
+          <VerticalListItem>我要举报</VerticalListItem>
+          <VerticalListItem>提出意见</VerticalListItem>
+        </VerticalList>
       </Col>
     </Row>
 
-    <p style="margin: 40px;">Copyright © 2017-2018 Isoft 版权所有 All Rights Reserved.</p>
+    <Row style="text-align: center;">
+      <p style="margin: 40px;">Copyright © 2017-2018 Isoft 版权所有 All Rights Reserved.</p>
+    </Row>
   </div>
 </template>
 
 <script>
+  import VerticalList from "../list/VerticalList.vue"
+  import VerticalListItem from "../list/VerticalListItem";
+
   export default {
+    name: "Footer",
+    components:{VerticalListItem, VerticalList,VerticalListItem},
     methods: {
 
     }
@@ -72,15 +74,4 @@
     border-radius: 2px;
   #footer
     background-color #ffffff
-    dl
-      border-right: solid 1px #ddd
-    dt,dd
-      margin-top: 5px
-    a
-      font-size: 14px
-      color #666
-      text-decoration none
-    a:hover
-      color red
-      text-decoration none
 </style>
