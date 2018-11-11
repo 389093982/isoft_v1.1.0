@@ -57,6 +57,7 @@
 
       <Col span="8">
         <UserDetail :userName="course.course_author"/>
+        <HotUser/>
         <HotRecommend showMode="list"/>
         <!-- 推荐系统 -->
         <Recommand />
@@ -74,10 +75,11 @@
   import CommunicationGroup from "../Site/CommunicationGroup.vue"
   import HotRecommend from "./HotRecommend.vue"
   import UserDetail from "../../User/UserDetail.vue"
+  import HotUser from "../../User/HotUser.vue"
 
   export default {
     name: "CourseDetail",
-    components:{CourseComment,Recommand,CommunicationGroup,HotRecommend,UserDetail},
+    components:{CourseComment,Recommand,CommunicationGroup,HotRecommend,UserDetail,HotUser},
     data(){
       return {
         // 当前课程

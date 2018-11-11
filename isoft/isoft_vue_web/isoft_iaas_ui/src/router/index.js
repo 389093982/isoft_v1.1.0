@@ -113,7 +113,7 @@ export default new Router({
     ShareLinkListRouter,
     {
       path: '/',
-      redirect: '/ifile/ifile'
+      redirect: '/ilearning/index'
     }
   ]
 })
