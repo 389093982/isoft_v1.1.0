@@ -39,6 +39,7 @@ func initCommonRouter()  {
 func initShareRouter() {
 	beego.Router("/api/share/filterShareList", &share.ShareController{}, "get,post:FilterShareList")
 	beego.Router("/api/share/addNewShare", &share.ShareController{}, "get,post:AddNewShare")
+	beego.Router("/api/share/showShareDetail", &share.ShareController{}, "get,post:ShowShareDetail")
 }
 
 func initCMSRouter() {

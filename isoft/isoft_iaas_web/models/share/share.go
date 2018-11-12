@@ -12,6 +12,7 @@ type Share struct {
 	Author          string    `json:"author"`            // 作者
 	LinkHref        string    `json:"link_href"`         // 分享链接
 	Content			string	  `json:"content" orm:"type(text)"`			 // 内容
+	Views           int64     `json:"views"`       		 // 观看次数
 	CreatedBy       string    `json:"created_by"`        // 创建人
 	CreatedTime     time.Time `json:"created_time"`      // 创建时间
 	LastUpdatedBy   string    `json:"last_updated_by"`   // 修改人
@@ -41,4 +42,31 @@ func AddNewShare(share *Share) (int64, error) {
 	o := orm.NewOrm()
 	id, err := o.Insert(share)
 	return id, err
+}
+
+func QueryShareById(share_id int64) (share Share, err error) {
+	o := orm.NewOrm()
+	err = o.QueryTable("share").Filter("id", share_id).One(&share)
+	return
+}
+
+// 更新浏览次数
+func UpdateShareViews(share_id int64) (err error) {
+	share, err := QueryShareById(share_id)
+	if err != nil {
+		return
+	}
+	share.Views++
+	_, err = InsertOrUpdateShare(&share)
+	return
+}
+
+func InsertOrUpdateShare(share *Share) (id int64, err error) {
+	o := orm.NewOrm()
+	if share.Id > 0 {
+		id, err = o.Update(share)
+	} else {
+		id, err = o.Insert(share)
+	}
+	return
 }

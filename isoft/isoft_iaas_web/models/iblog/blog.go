@@ -79,7 +79,7 @@ func PublishBlogById(blog_id int64) (err error) {
 	return
 }
 
-// 更新博客浏览次数
+// 更新浏览次数
 func UpdateBlogViews(blog_id int64) (err error) {
 	blog, err := QueryBlogById(blog_id)
 	if err != nil {

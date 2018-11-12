@@ -83,6 +83,9 @@ export const FilterConfigurations = (search,offset,current_page) => ajax(BASE_UR
 // 获取Share 信息
 export const FilterShareList = (offset,current_page,search_type) => ajax(BASE_URL+'/share/filterShareList',{offset,current_page,search_type},'GET');
 
+// 根据 blog_id 查询 blog 详细信息
+export const ShowShareDetail = (share_id) => ajax(BASE_URL+'/share/showShareDetail',{share_id},'GET');
+
 // 新增共享链接
 export const AddNewShare = (share_type,share_desc,link_href,content) => ajax(BASE_URL+'/share/addNewShare',{share_type,share_desc,link_href,content},'GET');
 

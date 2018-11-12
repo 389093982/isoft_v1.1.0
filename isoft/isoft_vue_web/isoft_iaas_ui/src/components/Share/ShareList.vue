@@ -26,7 +26,7 @@
                 <Avatar size="small" src="https://i.loli.net/2017/08/21/599a521472424.jpg" />
               </router-link>
               <Tag><a @click="chooseItem(share.share_type)">{{share.share_type}}</a></Tag>
-              <a @click="$router.push({path: '/share/detail', query: {id: share.id}})">{{share.share_desc}}</a>
+              <a @click="$router.push({path: '/share/detail', query: {share_id: share.id}})">{{share.share_desc}}</a>
               <div style="font-size: 12px;">
                 <router-link :to="{path:'/iblog/author',query:{author:share.author}}">{{share.author}}</router-link>
                 发布于:<Time :time="share.created_time" style="color:red;"/>&nbsp;

@@ -12,6 +12,20 @@ type ShareController struct {
 	beego.Controller
 }
 
+func (this *ShareController) ShowShareDetail() {
+	share_id, err := this.GetInt64("share_id")
+	if err == nil {
+		share.UpdateShareViews(share_id)
+		share, err := share.QueryShareById(share_id)
+		if err == nil {
+			this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "share": &share}
+		}
+	} else {
+		this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
+	}
+	this.ServeJSON()
+}
+
 func (this *ShareController) FilterShareList() {
 	offset, _ := this.GetInt("offset", 10)            // 每页记录数
 	current_page, _ := this.GetInt("current_page", 1) // 当前页
