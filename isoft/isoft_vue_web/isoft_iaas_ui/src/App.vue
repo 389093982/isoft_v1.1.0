@@ -15,7 +15,6 @@
 </template>
 
 <script>
-  import {mapActions} from 'vuex'
 
   import Header from './components/Common/Header/Header.vue'
   import Footer from './components/Common/Footer/Footer.vue'
@@ -25,13 +24,6 @@
     components: {
       Header,
       Footer
-    },
-    mounted () {
-      // this.$store.dispatch('getHotCourseTypeConfigurations')
-      this.getHotCourseTypeConfigurations()
-    },
-    methods: {
-      ...mapActions(['getHotCourseTypeConfigurations'])
     },
   }
 </script>
