@@ -1,7 +1,7 @@
 <template>
   <div>
     <Row>
-      <Col span="16">
+      <Col span="16" style="border-right: 1px solid #d5d5d5;padding:20px;">
         <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="100">
           <FormItem label="课程名称" prop="course_name">
             <Input v-model="formValidate.course_name" placeholder="Enter course name..."/>
@@ -24,7 +24,7 @@
           </FormItem>
         </Form>
       </Col>
-      <Col span="8">
+      <Col span="8" style="padding: 20px;">
         课程发布规范说明：AAAA
       </Col>
     </Row>
