@@ -5,7 +5,7 @@
      <li v-for="searchblog in searchblogs" style="list-style:none;padding: 10px 10px;background: #fff;border-bottom: 1px solid #f4f4f4;">
        <!-- 使用v-bind动态绑定id传递给目标路径 -->
        <router-link :to="{path:'/iblog/blog_detail',query:{blog_id:searchblog.id}}">
-         <h3>{{searchblog.blog_title}}</h3>
+         <h5>{{searchblog.blog_title}}</h5>
        </router-link>
        <p style="margin-bottom: 4px;font-size: 14px;color: #8a8a8a;line-height: 24px;">
          {{searchblog.short_desc | filterLimitFunc}}
