@@ -17,7 +17,7 @@
               <Col span="3" offset="8" style="text-align: center;"><a href="javascript:;" @click="chooseItem('_all')">全部分类</a></Col>
               <Col span="3" style="text-align: center;"><a href="javascript:;" @click="chooseItem('_hot')">热门分享</a></Col>
               <Col span="3" style="text-align: center;"><a href="javascript:;" @click="chooseItem('_personal')">我的分享</a></Col>
-              <Col span="3" style="text-align: center;"><router-link to="/easyshare/add">新增</router-link></Col>
+              <Col span="3" style="text-align: center;"><router-link to="/share/add">新增</router-link></Col>
             </Row>
           </div>
           <div style="padding-top: 20px;">
@@ -26,7 +26,7 @@
                 <Avatar size="small" src="https://i.loli.net/2017/08/21/599a521472424.jpg" />
               </router-link>
               <Tag><a @click="chooseItem(shareLink.share_type)">{{shareLink.share_type}}</a></Tag>
-              <a @click="$router.push({path: '/easyshare/detail', query: {id: shareLink.id}})">{{shareLink.share_desc}}</a>
+              <a @click="$router.push({path: '/share/detail', query: {id: shareLink.id}})">{{shareLink.share_desc}}</a>
               <div style="font-size: 12px;">
                 <router-link :to="{path:'/iblog/author',query:{author:shareLink.author}}">{{shareLink.author}}</router-link>
                 发布于:<Time :time="shareLink.created_time" style="color:red;"/>&nbsp;

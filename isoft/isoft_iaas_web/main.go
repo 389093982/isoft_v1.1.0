@@ -11,7 +11,7 @@ import (
 	"isoft/isoft/sso"
 	"isoft/isoft_iaas_web/models/cms"
 	"isoft/isoft_iaas_web/models/common"
-	"isoft/isoft_iaas_web/models/easyshare"
+	"isoft/isoft_iaas_web/models/share"
 	"isoft/isoft_iaas_web/models/iblog"
 	"isoft/isoft_iaas_web/models/ifile"
 	"isoft/isoft_iaas_web/models/ilearning"
@@ -95,7 +95,7 @@ func registerModel() {
 
 	orm.RegisterModel(new(cms.Configuration))
 
-	orm.RegisterModel(new(easyshare.ShareLink))
+	orm.RegisterModel(new(share.ShareLink))
 
 	orm.RegisterModel(new(common.History))
 }

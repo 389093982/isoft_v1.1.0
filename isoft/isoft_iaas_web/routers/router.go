@@ -6,7 +6,7 @@ import (
 	"isoft/isoft_iaas_web/controllers"
 	"isoft/isoft_iaas_web/controllers/cms"
 	"isoft/isoft_iaas_web/controllers/common"
-	"isoft/isoft_iaas_web/controllers/easyshare"
+	"isoft/isoft_iaas_web/controllers/share"
 	"isoft/isoft_iaas_web/controllers/iblog"
 	"isoft/isoft_iaas_web/controllers/ifile"
 	"isoft/isoft_iaas_web/controllers/ilearning"
@@ -28,7 +28,7 @@ func init() {
 	initIBlogRouter()
 	initILearningRouter()
 	initCMSRouter()
-	initEasyShareRouter()
+	initShareRouter()
 	initCommonRouter()
 }
 
@@ -36,9 +36,9 @@ func initCommonRouter()  {
 	beego.Router("/api/common/showCourseHistory", &common.HistoryController{}, "get,post:ShowCourseHistory")
 }
 
-func initEasyShareRouter() {
-	beego.Router("/api/easyshare/filterShareLinkList", &easyshare.ShareLinkController{}, "get,post:FilterShareLinkList")
-	beego.Router("/api/easyshare/addNewShareLink", &easyshare.ShareLinkController{}, "get,post:AddNewShareLink")
+func initShareRouter() {
+	beego.Router("/api/share/filterShareLinkList", &share.ShareLinkController{}, "get,post:FilterShareLinkList")
+	beego.Router("/api/share/addNewShareLink", &share.ShareLinkController{}, "get,post:AddNewShareLink")
 }
 
 func initCMSRouter() {

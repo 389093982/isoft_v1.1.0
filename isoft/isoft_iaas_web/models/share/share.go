@@ -1,4 +1,4 @@
-package easyshare
+package share
 
 import (
 	"github.com/astaxie/beego/orm"

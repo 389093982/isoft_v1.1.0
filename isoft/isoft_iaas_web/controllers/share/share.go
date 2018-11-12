@@ -1,10 +1,10 @@
-package easyshare
+package share
 
 import (
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/utils/pagination"
 	"isoft/isoft/common/pageutil"
-	"isoft/isoft_iaas_web/models/easyshare"
+	"isoft/isoft_iaas_web/models/share"
 	"time"
 )
 
@@ -17,7 +17,7 @@ func (this *ShareLinkController) FilterShareLinkList() {
 	current_page, _ := this.GetInt("current_page", 1) // 当前页
 	search_type := this.GetString("search_type")
 	userName := this.GetSession("UserName").(string)
-	shareLinks, count, err := easyshare.FilterShareLinkList(map[string]string{"search_type":search_type}, current_page, offset, userName)
+	shareLinks, count, err := share.FilterShareLinkList(map[string]string{"search_type": search_type}, current_page, offset, userName)
 	paginator := pagination.SetPaginator(this.Ctx, offset, count)
 	//初始化
 	if err != nil {
@@ -35,7 +35,7 @@ func (this *ShareLinkController) AddNewShareLink() {
 	link_href := this.GetString("link_href")
 	content := this.GetString("content")
 	userName := this.GetSession("UserName").(string)
-	shareLink := easyshare.ShareLink{
+	shareLink := share.ShareLink{
 		ShareType:       share_type,
 		ShareDesc: 		 share_desc,
 		Author:          userName,
@@ -46,7 +46,7 @@ func (this *ShareLinkController) AddNewShareLink() {
 		LastUpdatedBy:   userName,
 		LastUpdatedTime: time.Now(),
 	}
-	_, err := easyshare.AddNewShareLink(&shareLink)
+	_, err := share.AddNewShareLink(&shareLink)
 	//初始化
 	if err != nil {
 		this.Data["json"] = &map[string]interface{}{"status": "ERROR"}

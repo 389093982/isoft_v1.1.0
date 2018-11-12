@@ -16,10 +16,10 @@ import CourseDetail from '../components/ILearning/Course/CourseDetail.vue'
 import VideoPay from '../components/ILearning/Course/VideoPay.vue'
 import Configuration from '../components/CMS/Configuration.vue'
 import CourseSearch from "../components/ILearning/Course/CourseSearch.vue"
-import ShareLinkIndex from "../components/EasyShare/ShareLinkIndex.vue"
-import ShareLinkAdd from "../components/EasyShare/ShareLinkAdd.vue"
-import ShareLinkList from "../components/EasyShare/ShareLinkList.vue"
-import ShareLinkDetail from "../components/EasyShare/ShareLinkDetail.vue"
+import ShareLinkIndex from "../components/Share/ShareLinkIndex.vue"
+import ShareLinkAdd from "../components/Share/ShareLinkAdd.vue"
+import ShareLinkList from "../components/Share/ShareLinkList.vue"
+import ShareLinkDetail from "../components/Share/ShareLinkDetail.vue"
 
 Vue.use(Router);
 
@@ -53,7 +53,7 @@ export const IFileRouter = {
 };
 
 export const ShareLinkListRouter = {
-  path: '/easyshare',
+  path: '/share',
   component: ShareLinkIndex,
   children: [
     {path: 'add',component: ShareLinkAdd,},
