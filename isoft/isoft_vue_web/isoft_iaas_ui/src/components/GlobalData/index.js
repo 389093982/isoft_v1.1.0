@@ -1,16 +1,13 @@
 // 热门课程分类
 const hot_course_types=[
-  {"course_type":"Java视频","sub_course_types":["Java基础","JavaSE"]},
-  {"course_type":"Python视频","sub_course_types":["Python基础","Python入门"]},
-  {"course_type":"Golang视频1","sub_course_types":["Golang基础","Golang入门"]},
-  {"course_type":"Golang视频2","sub_course_types":["Golang基础","Golang入门"]},
-  {"course_type":"Golang视频3","sub_course_types":["Golang基础","Golang入门"]},
-  {"course_type":"Golang视频4","sub_course_types":["Golang基础","Golang入门"]},
-  {"course_type":"Golang视频5","sub_course_types":["Golang基础","Golang入门"]},
-  {"course_type":"Golang视频6","sub_course_types":["Golang基础","Golang入门"]},
-  {"course_type":"Golang视频7","sub_course_types":["Golang基础","Golang入门"]},
-  {"course_type":"Golang视频8","sub_course_types":["Golang基础","Golang入门"]},
-  {"course_type":"Golang视频9","sub_course_types":["Golang基础","Golang入门"]},
+  {"course_type":"Java视频","sub_course_types":["Java基础","JavaSE","教程1","教程2","教程3","教程4","教程5","教程6","教程7","Java基础","JavaSE","教程1","教程2","教程3","教程4","教程5","教程6","教程7"]},
+  {"course_type":"Python视频","sub_course_types":["Python基础","Python入门","Java基础","JavaSE","教程1","教程2","教程3","教程4","教程5","教程6","教程7","Java基础","JavaSE","教程1","教程2","教程3","教程4","教程5","教程6","教程7"]},
+  {"course_type":"Golang视频","sub_course_types":["Golang基础","Golang入门","Java基础","JavaSE","教程1","教程2","教程3","教程4","教程5","教程6","教程7","Java基础","JavaSE","教程1","教程2","教程3","教程4","教程5","教程6","教程7"]},
+  {"course_type":"HTML教程","sub_course_types":["Golang基础","Golang入门","Java基础","JavaSE","教程1","教程2","教程3","教程4","教程5","教程6","教程7","Java基础","JavaSE","教程1","教程2","教程3","教程4","教程5","教程6","教程7"]},
+  {"course_type":"前端教程","sub_course_types":["Golang基础","Golang入门","Java基础","JavaSE","教程1","教程2","教程3","教程4","教程5","教程6","教程7","Java基础","JavaSE","教程1","教程2","教程3","教程4","教程5","教程6","教程7"]},
+  {"course_type":"后端教程","sub_course_types":["Java基础","JavaSE","教程1","教程2","教程3","教程4","教程5","教程6","教程7","Java基础","JavaSE","教程1","教程2","教程3","教程4","教程5","教程6","教程7","Golang基础","Golang入门"]},
+  {"course_type":"数据库教程","sub_course_types":["Golang基础","Java基础","JavaSE","教程1","教程2","教程3","教程4","教程5","教程6","教程7","Java基础","JavaSE","教程1","教程2","教程3","教程4","教程5","教程6","教程7","Golang入门"]},
+  {"course_type":"测试教程","sub_course_types":["Golang基础","Golang入门","Java基础","JavaSE","教程1","教程2","教程3","教程4","教程5","教程6","教程7","Java基础","JavaSE","教程1","教程2","教程3","教程4","教程5","教程6","教程7","Java基础","JavaSE","教程1","教程2","教程3","教程4","教程5","教程6","教程7","Java基础","JavaSE","教程1","教程2","教程3","教程4","教程5","教程6","教程7"]},
 ];
 
 // 热门分享类型
