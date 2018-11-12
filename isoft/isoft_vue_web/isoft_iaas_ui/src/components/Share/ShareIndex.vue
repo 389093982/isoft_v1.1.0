@@ -5,11 +5,11 @@
 </template>
 
 <script>
-  import HotShareLinkItem from "./HotShareLinkItem.vue"
+  import HotShareItem from "./HotShareItem.vue"
 
   export default {
-    name: "ShareLinkIndex",
-    components:{HotShareLinkItem},
+    name: "ShareIndex",
+    components:{HotShareItem},
   }
 </script>
 

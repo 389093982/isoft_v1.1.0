@@ -28,7 +28,7 @@
 
 <script>
   export default {
-    name: "HotShareLinkItem",
+    name: "HotShareItem",
     data(){
       return {
         // 热门分享类型

@@ -47,10 +47,10 @@
 </template>
 
 <script>
-  import {AddNewShareLink} from "../../api"
+  import {AddNewShare} from "../../api"
 
   export default {
-    name: "ShareLinkAdd",
+    name: "ShareAdd",
     data(){
       return {
         toolbars: {
@@ -104,7 +104,7 @@
         var _this = this;
         this.$refs[name].validate(async (valid) => {
           if (valid) {
-            const result = await AddNewShareLink(_this.formValidate.share_type, _this.formValidate.share_desc, _this.formValidate.link_href,_this.formValidate.content);
+            const result = await AddNewShare(_this.formValidate.share_type, _this.formValidate.share_desc, _this.formValidate.link_href,_this.formValidate.content);
             if(result.status == "SUCCESS"){
               _this.$Message.success('提交成功!');
               _this.$router.go(0);     // 页面刷新,等价于 location.reload()

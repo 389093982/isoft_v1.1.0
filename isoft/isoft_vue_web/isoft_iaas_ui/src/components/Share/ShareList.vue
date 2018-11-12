@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- 热门分类 -->
-    <HotShareLinkItem @chooseItem="chooseItem"/>
+    <HotShareItem @chooseItem="chooseItem"/>
 
     <div style="margin: 0 15px;background-color: #fff;border: 1px solid #e6e6e6;border-radius: 4px;">
       <Row>
@@ -21,18 +21,18 @@
             </Row>
           </div>
           <div style="padding-top: 20px;">
-            <div v-for="shareLink in shareLinks" style="padding: 0 20px 0 20px;">
+            <div v-for="share in shares" style="padding: 0 20px 0 20px;">
               <router-link to="">
                 <Avatar size="small" src="https://i.loli.net/2017/08/21/599a521472424.jpg" />
               </router-link>
-              <Tag><a @click="chooseItem(shareLink.share_type)">{{shareLink.share_type}}</a></Tag>
-              <a @click="$router.push({path: '/share/detail', query: {id: shareLink.id}})">{{shareLink.share_desc}}</a>
+              <Tag><a @click="chooseItem(share.share_type)">{{share.share_type}}</a></Tag>
+              <a @click="$router.push({path: '/share/detail', query: {id: share.id}})">{{share.share_desc}}</a>
               <div style="font-size: 12px;">
-                <router-link :to="{path:'/iblog/author',query:{author:shareLink.author}}">{{shareLink.author}}</router-link>
-                发布于:<Time :time="shareLink.created_time" style="color:red;"/>&nbsp;
-                更新于:<Time :time="shareLink.last_updated_time" style="color:red;"/>&nbsp;
+                <router-link :to="{path:'/iblog/author',query:{author:share.author}}">{{share.author}}</router-link>
+                发布于:<Time :time="share.created_time" style="color:red;"/>&nbsp;
+                更新于:<Time :time="share.last_updated_time" style="color:red;"/>&nbsp;
               </div>
-              <span style="float: right;font-size: 12px;"><Time :time="shareLink.last_updated_time"/></span>
+              <span style="float: right;font-size: 12px;"><Time :time="share.last_updated_time"/></span>
               <Divider />
             </div>
             <Page :total="total" :page-size="offset" show-total show-sizer :styles="{'text-align': 'right','margin-top': '10px'}"
@@ -57,15 +57,15 @@
 </template>
 
 <script>
-  import {FilterShareLinkList} from "../../api"
-  import HotShareLinkItem from "./HotShareLinkItem.vue"
+  import {FilterShareList} from "../../api"
+  import HotShareItem from "./HotShareItem.vue"
 
   export default {
-    name: "ShareLinkList",
-    components:{HotShareLinkItem},
+    name: "ShareList",
+    components:{HotShareItem},
     data(){
       return {
-        shareLinks:[],
+        shares:[],
         // 当前页
         current_page:1,
         // 总页数
@@ -80,27 +80,27 @@
         if(this.search_type != item_name){
           this.search_type = item_name;
           this.current_page = 1;
-          this.refreshShareLinkList();
+          this.refreshShareList();
         }
       },
-      refreshShareLinkList:async function () {
-        const result = await FilterShareLinkList(this.offset, this.current_page, this.search_type);
+      refreshShareList:async function () {
+        const result = await FilterShareList(this.offset, this.current_page, this.search_type);
         if(result.status == "SUCCESS"){
-          this.shareLinks = result.shareLinks;
+          this.shares = result.shares;
           this.total = result.paginator.totalcount;
         }
       },
       handleChange(page){
         this.current_page = page;
-        this.refreshShareLinkList();
+        this.refreshShareList();
       },
       handlePageSizeChange(pageSize){
         this.offset = pageSize;
-        this.refreshShareLinkList();
+        this.refreshShareList();
       },
     },
     mounted(){
-      this.refreshShareLinkList();
+      this.refreshShareList();
     }
   }
 </script>

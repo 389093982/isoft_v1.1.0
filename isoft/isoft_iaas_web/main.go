@@ -95,7 +95,7 @@ func registerModel() {
 
 	orm.RegisterModel(new(cms.Configuration))
 
-	orm.RegisterModel(new(share.ShareLink))
+	orm.RegisterModel(new(share.Share))
 
 	orm.RegisterModel(new(common.History))
 }

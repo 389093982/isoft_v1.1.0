@@ -16,10 +16,10 @@ import CourseDetail from '../components/ILearning/Course/CourseDetail.vue'
 import VideoPay from '../components/ILearning/Course/VideoPay.vue'
 import Configuration from '../components/CMS/Configuration.vue'
 import CourseSearch from "../components/ILearning/Course/CourseSearch.vue"
-import ShareLinkIndex from "../components/Share/ShareLinkIndex.vue"
-import ShareLinkAdd from "../components/Share/ShareLinkAdd.vue"
-import ShareLinkList from "../components/Share/ShareLinkList.vue"
-import ShareLinkDetail from "../components/Share/ShareLinkDetail.vue"
+import ShareIndex from "../components/Share/ShareIndex.vue"
+import ShareAdd from "../components/Share/ShareAdd.vue"
+import ShareList from "../components/Share/ShareList.vue"
+import ShareDetail from "../components/Share/ShareDetail.vue"
 
 Vue.use(Router);
 
@@ -52,13 +52,13 @@ export const IFileRouter = {
     component: IFile
 };
 
-export const ShareLinkListRouter = {
+export const ShareListRouter = {
   path: '/share',
-  component: ShareLinkIndex,
+  component: ShareIndex,
   children: [
-    {path: 'add',component: ShareLinkAdd,},
-    {path: 'list',component: ShareLinkList,},
-    {path: 'detail',component: ShareLinkDetail,},
+    {path: 'add',component: ShareAdd,},
+    {path: 'list',component: ShareList,},
+    {path: 'detail',component: ShareDetail,},
   ]
 };
 
@@ -110,7 +110,7 @@ export default new Router({
     IBlogRouter,
     IFileRouter,
     ILearningRouter,
-    ShareLinkListRouter,
+    ShareListRouter,
     {
       path: '/',
       redirect: '/ilearning/index'

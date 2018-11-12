@@ -8,34 +8,34 @@ import (
 	"time"
 )
 
-type ShareLinkController struct {
+type ShareController struct {
 	beego.Controller
 }
 
-func (this *ShareLinkController) FilterShareLinkList() {
+func (this *ShareController) FilterShareList() {
 	offset, _ := this.GetInt("offset", 10)            // 每页记录数
 	current_page, _ := this.GetInt("current_page", 1) // 当前页
 	search_type := this.GetString("search_type")
 	userName := this.GetSession("UserName").(string)
-	shareLinks, count, err := share.FilterShareLinkList(map[string]string{"search_type": search_type}, current_page, offset, userName)
+	shares, count, err := share.FilterShareList(map[string]string{"search_type": search_type}, current_page, offset, userName)
 	paginator := pagination.SetPaginator(this.Ctx, offset, count)
 	//初始化
 	if err != nil {
 		this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
 	} else {
 		paginatorMap := pageutil.Paginator(paginator.Page(), paginator.PerPageNums, paginator.Nums())
-		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "shareLinks": &shareLinks, "paginator": &paginatorMap}
+		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "shares": &shares, "paginator": &paginatorMap}
 	}
 	this.ServeJSON()
 }
 
-func (this *ShareLinkController) AddNewShareLink() {
+func (this *ShareController) AddNewShare() {
 	share_type := this.GetString("share_type")
 	share_desc := this.GetString("share_desc")
 	link_href := this.GetString("link_href")
 	content := this.GetString("content")
 	userName := this.GetSession("UserName").(string)
-	shareLink := share.ShareLink{
+	newShare := share.Share{
 		ShareType:       share_type,
 		ShareDesc: 		 share_desc,
 		Author:          userName,
@@ -46,7 +46,7 @@ func (this *ShareLinkController) AddNewShareLink() {
 		LastUpdatedBy:   userName,
 		LastUpdatedTime: time.Now(),
 	}
-	_, err := share.AddNewShareLink(&shareLink)
+	_, err := share.AddNewShare(&newShare)
 	//初始化
 	if err != nil {
 		this.Data["json"] = &map[string]interface{}{"status": "ERROR"}

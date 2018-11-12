@@ -5,8 +5,7 @@ import (
 	"time"
 )
 
-// 共享链接模型类
-type ShareLink struct {
+type Share struct {
 	Id              int       `json:"id"`
 	ShareType       string    `json:"share_type"`        // 分享类型
 	ShareDesc		string	  `json:"share_desc"`		 // 分享描述
@@ -19,9 +18,9 @@ type ShareLink struct {
 	LastUpdatedTime time.Time `json:"last_updated_time"` // 修改时间
 }
 
-func FilterShareLinkList(condArr map[string]string, page int, offset int, userName string) (shareLink []ShareLink, counts int64, err error) {
+func FilterShareList(condArr map[string]string, page int, offset int, userName string) (share []Share, counts int64, err error) {
 	o := orm.NewOrm()
-	qs := o.QueryTable("share_link")
+	qs := o.QueryTable("share")
 	if search_type, ok := condArr["search_type"]; ok {
 		if search_type == "_hot"{
 
@@ -34,12 +33,12 @@ func FilterShareLinkList(condArr map[string]string, page int, offset int, userNa
 	qs = qs.OrderBy("-last_updated_time")
 	counts, _ = qs.Count()
 	qs = qs.Limit(offset, (page-1)*offset)
-	qs.All(&shareLink)
+	qs.All(&share)
 	return
 }
 
-func AddNewShareLink(shareLink *ShareLink) (int64, error) {
+func AddNewShare(share *Share) (int64, error) {
 	o := orm.NewOrm()
-	id, err := o.Insert(shareLink)
+	id, err := o.Insert(share)
 	return id, err
 }
