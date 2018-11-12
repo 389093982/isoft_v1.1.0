@@ -1,14 +1,16 @@
 <template>
-  <div>
-    AAA
+  <div v-if="share">
+    <ShowMarkdown v-if="share.content" :content="share.content"/>
   </div>
 </template>
 
 <script>
   import {ShowShareDetail} from "../../api"
+  import ShowMarkdown from "../Common/Common/ShowMarkdown.vue"
 
   export default {
     name: "ShareDetail",
+    components:{ShowMarkdown},
     data(){
       return {
         share:null,
