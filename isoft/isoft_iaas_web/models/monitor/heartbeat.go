@@ -8,7 +8,7 @@ import (
 type HeartBeat2 struct {
 	Id              int64     `json:"id"`
 	Addr            string    `json:"addr"` 				// 请求地址
-	StatusCode 		int64	  `json:"status_code"`			// 请求返回的状态码
+	StatusCode 		int	  	  `json:"status_code"`			// 请求返回的状态码
 	CreatedBy       string    `json:"created_by"`
 	CreatedTime     time.Time `json:"created_time"`
 	LastUpdatedBy   string    `json:"last_updated_by"`
@@ -18,11 +18,17 @@ type HeartBeat2 struct {
 type HeartBeatDetail struct {
 	Id              int64     `json:"id"`
 	Addr            string    `json:"addr"` 				// 请求地址
-	StatusCode 		int64	  `json:"status_code"`			// 请求返回的状态码
+	StatusCode 		int	  `json:"status_code"`			// 请求返回的状态码
 	CreatedBy       string    `json:"created_by"`
 	CreatedTime     time.Time `json:"created_time"`
 	LastUpdatedBy   string    `json:"last_updated_by"`
 	LastUpdatedTime time.Time `json:"last_updated_time"`
+}
+
+func InsertHeartBeatDetail(heartBeatDetail *HeartBeatDetail) (id int64, err error) {
+	o := orm.NewOrm()
+	id, err = o.Insert(heartBeatDetail)
+	return
 }
 
 // 插入或者更新心跳信息
@@ -57,5 +63,12 @@ func FilterPageHeartBeat(condArr map[string]interface{}, current_page, page_size
 	qs := o.QueryTable("heart_beat2")
 	counts, _ = qs.Count()
 	_, err = qs.Limit(page_size, (current_page-1)*page_size).All(&heartBeat)
+	return
+}
+
+func GetAllHeartBeat() (heartBeat []HeartBeat2, err error) {
+	o := orm.NewOrm()
+	qs := o.QueryTable("heart_beat2")
+	_, err = qs.All(&heartBeat)
 	return
 }

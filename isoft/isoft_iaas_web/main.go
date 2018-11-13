@@ -11,12 +11,13 @@ import (
 	"isoft/isoft/sso"
 	"isoft/isoft_iaas_web/models/cms"
 	"isoft/isoft_iaas_web/models/common"
-	"isoft/isoft_iaas_web/models/monitor"
-	"isoft/isoft_iaas_web/models/share"
 	"isoft/isoft_iaas_web/models/iblog"
 	"isoft/isoft_iaas_web/models/ifile"
 	"isoft/isoft_iaas_web/models/ilearning"
+	"isoft/isoft_iaas_web/models/monitor"
+	"isoft/isoft_iaas_web/models/share"
 	_ "isoft/isoft_iaas_web/routers"
+	"isoft/isoft_iaas_web/task"
 	"net/url"
 	"os"
 )
@@ -101,6 +102,7 @@ func registerModel() {
 	orm.RegisterModel(new(common.History))
 
 	orm.RegisterModel(new(monitor.HeartBeat2))
+	orm.RegisterModel(new(monitor.HeartBeatDetail))
 }
 
 // 自动建表
@@ -118,6 +120,9 @@ func main() {
 	// 登录过滤器,以 /api 开头的请求为 ajax 请求,需要返回 401 状态码,否则为非 ajax 请求,需要跳往登录页面
 	beego.InsertFilter("/api/*", beego.BeforeExec, sso.LoginFilterWithStatusCode)
 	beego.InsertFilter(`/(^(?!api).*)`, beego.BeforeExec, sso.LoginFilterWithRedirect)
+
+	// 开启定时任务
+	task.StartCronTask()
 
 	beego.Run()
 }
