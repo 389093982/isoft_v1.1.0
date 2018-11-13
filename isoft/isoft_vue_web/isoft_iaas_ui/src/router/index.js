@@ -20,6 +20,7 @@ import ShareIndex from "../components/Share/ShareIndex.vue"
 import ShareAdd from "../components/Share/ShareAdd.vue"
 import ShareList from "../components/Share/ShareList.vue"
 import ShareDetail from "../components/Share/ShareDetail.vue"
+import HeartBeat from "../components/Monitor/HeartBeat.vue"
 
 Vue.use(Router);
 
@@ -46,6 +47,11 @@ export const IBlogRouter = {
       },
     ]
 };
+
+export const MonitorRouter ={
+  path: '/monitor/filterPageHeartBeat',
+  component: HeartBeat
+}
 
 export const IFileRouter = {
     path: '/ifile/ifile',
@@ -111,6 +117,7 @@ export default new Router({
     IFileRouter,
     ILearningRouter,
     ShareListRouter,
+    MonitorRouter,
     {
       path: '/',
       redirect: '/ilearning/index'

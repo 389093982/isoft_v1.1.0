@@ -36,7 +36,8 @@
             内容管理
           </template>
           <MenuGroup title="配置项管理">
-            <MenuItem name="3-1" @click.native="$router.push({path: '/ilearning/configuration'})">查看配置项</MenuItem>
+            <MenuItem name="3-1"><router-link to="/ilearning/configuration">查看配置项</router-link></MenuItem>
+            <MenuItem name="3-1"><router-link to="/monitor/filterPageHeartBeat">应用监听</router-link></MenuItem>
           </MenuGroup>
         </Submenu>
         <Submenu name="4">

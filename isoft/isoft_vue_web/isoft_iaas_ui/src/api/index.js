@@ -89,4 +89,10 @@ export const ShowShareDetail = (share_id) => ajax(BASE_URL+'/share/showShareDeta
 // 新增共享链接
 export const AddNewShare = (share_type,share_desc,link_href,content) => ajax(BASE_URL+'/share/addNewShare',{share_type,share_desc,link_href,content},'GET');
 
-export const ShowCourseHistory = (offset,current_page) => ajax(BASE_URL+"/common/showCourseHistory", {offset,current_page},'GET')
+export const ShowCourseHistory = (offset,current_page) => ajax(BASE_URL+"/common/showCourseHistory", {offset,current_page},'GET');
+
+// 注册应用心跳检测项
+export const RegisterHeartBeat = (addr) => ajax(BASE_URL+"/monitor/registerHeartBeat", {addr},'GET');
+
+// 分页获取应用心跳检测项
+export const FilterPageHeartBeat = (offset,current_page) => ajax(BASE_URL+"/monitor/filterPageHeartBeat", {offset,current_page},'GET');

@@ -11,6 +11,7 @@ import (
 	"isoft/isoft/sso"
 	"isoft/isoft_iaas_web/models/cms"
 	"isoft/isoft_iaas_web/models/common"
+	"isoft/isoft_iaas_web/models/monitor"
 	"isoft/isoft_iaas_web/models/share"
 	"isoft/isoft_iaas_web/models/iblog"
 	"isoft/isoft_iaas_web/models/ifile"
@@ -98,6 +99,8 @@ func registerModel() {
 	orm.RegisterModel(new(share.Share))
 
 	orm.RegisterModel(new(common.History))
+
+	orm.RegisterModel(new(monitor.HeartBeat2))
 }
 
 // 自动建表
