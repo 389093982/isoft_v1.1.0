@@ -12,7 +12,6 @@ import (
 	"isoft/isoft_iaas_web/models/cms"
 	"isoft/isoft_iaas_web/models/common"
 	"isoft/isoft_iaas_web/models/iblog"
-	"isoft/isoft_iaas_web/models/ifile"
 	"isoft/isoft_iaas_web/models/ilearning"
 	"isoft/isoft_iaas_web/models/monitor"
 	"isoft/isoft_iaas_web/models/share"
@@ -82,9 +81,6 @@ func initDB() {
 }
 
 func registerModel() {
-	orm.RegisterModel(new(ifile.HeartBeat))
-	orm.RegisterModel(new(ifile.MetaData))
-
 	orm.RegisterModel(new(iblog.Catalog))
 	orm.RegisterModel(new(iblog.Blog))
 

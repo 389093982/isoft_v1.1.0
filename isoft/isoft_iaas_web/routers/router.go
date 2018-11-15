@@ -9,7 +9,6 @@ import (
 	"isoft/isoft_iaas_web/controllers/monitor"
 	"isoft/isoft_iaas_web/controllers/share"
 	"isoft/isoft_iaas_web/controllers/iblog"
-	"isoft/isoft_iaas_web/controllers/ifile"
 	"isoft/isoft_iaas_web/controllers/ilearning"
 	"isoft/isoft_iaas_web/controllers/sso"
 )
@@ -25,7 +24,6 @@ func init() {
 
 	beego.Router("/", &controllers.MainController{})
 	beego.Router("/api/auth/redirectToLogin/", &sso.AuthController{}, "get,post:RedirectToLogin")
-	initIFileRouter()
 	initIBlogRouter()
 	initILearningRouter()
 	initCMSRouter()
@@ -72,28 +70,6 @@ func initILearningRouter() {
 	beego.Router("/api/ilearning/filterCommentTheme", &ilearning.CommentController{}, "get,post:FilterCommentTheme")
 	beego.Router("/api/ilearning/addCommentReply", &ilearning.CommentController{}, "get,post:AddCommentReply")
 	beego.Router("/api/ilearning/filterCommentReply", &ilearning.CommentController{}, "get,post:FilterCommentReply")
-}
-
-func initIFileRouter() {
-	beego.Router("/api/ifile/fileUpload/", &ifile.IFileController{}, "post:FileUpload")
-	beego.Router("/api/ifile/fileUpload2/", &ifile.IFileController{}, "post:FileUpload2")
-	beego.Router("/api/ifile/locateShards/", &ifile.IFileController{}, "post:LocateShards")
-	beego.Router("/api/ifile/fileDownload/", &ifile.IFileController{}, "get:FileDownload")
-	beego.Router("/api/ifile/fileDownload/", &ifile.IFileController{}, "get:FileDownload")
-
-	beego.Router("/api/heartbeat/sendHeartBeat/", &ifile.HeartBeatController{}, "post:SendHeartBeat")
-	beego.Router("/api/heartbeat/queryAllAliveHeartBeat/", &ifile.HeartBeatController{}, "get:QueryAllAliveHeartBeat")
-
-	beego.Router("/api/metadata/searchLatestVersion/", &ifile.MetadataController{}, "post:SearchLatestVersion")
-	beego.Router("/api/metadata/getMetadata/", &ifile.MetadataController{}, "post:GetMetadata")
-	beego.Router("/api/metadata/putMetadata/", &ifile.MetadataController{}, "post:PutMetadata")
-	beego.Router("/api/metadata/addVersion/", &ifile.MetadataController{}, "post:AddVersion")
-	beego.Router("/api/metadata/searchAllVersions/", &ifile.MetadataController{}, "post:SearchAllVersions")
-	beego.Router("/api/metadata/delMetadata/", &ifile.MetadataController{}, "post:DelMetadata")
-	beego.Router("/api/metadata/hasHash/", &ifile.MetadataController{}, "post:HasHash")
-	beego.Router("/api/metadata/searchHashSize/", &ifile.MetadataController{}, "post:SearchHashSize")
-	beego.Router("/api/metadata/searchVersionStatus/", &ifile.MetadataController{}, "post:SearchVersionStatus")
-	beego.Router("/api/metadata/filterPageMetadatas/", &ifile.MetadataController{}, "post:FilterPageMetadatas")
 }
 
 func initIBlogRouter() {
