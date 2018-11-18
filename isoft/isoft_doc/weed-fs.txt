@@ -1,0 +1,2 @@
+curl http://193.112.162.61:9333/dir/assign
+curl -F file=@D:\淘宝美工高手PS教程60集\01.photoshopCS6的界面介绍\01.photoshopCS6的界面介绍.mp4 http://193.112.162.61:9080/2,042e6db2a7

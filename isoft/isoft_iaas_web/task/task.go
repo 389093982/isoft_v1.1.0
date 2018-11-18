@@ -7,7 +7,7 @@ import (
 	"net/http"
 )
 
-func StartCronTask()  {
+func StartCronTask() {
 	heartBeatTask := toolbox.NewTask("heartBeatTask", "0 * * * * *", HeartBeatTask)
 	err := heartBeatTask.Run()
 	if err != nil {
@@ -19,26 +19,26 @@ func StartCronTask()  {
 
 func HeartBeatTask() error {
 	heartBeats, err := monitor.GetAllHeartBeat()
-	if err != nil{
+	if err != nil {
 		return err
 	}
-	for _,heartBeat := range heartBeats{
+	for _, heartBeat := range heartBeats {
 		var statusCode int
 		resp, err := http.Get(heartBeat.Addr)
 		if err != nil {
 			statusCode = -1
-		}else{
+		} else {
 			statusCode = resp.StatusCode
 		}
 		heartBeat.StatusCode = statusCode
 		monitor.InsertOrUpdateHeartBeat(&heartBeat)
 		heartBeatDetail := &monitor.HeartBeatDetail{
-			Addr:heartBeat.Addr,
-			StatusCode:heartBeat.StatusCode,
-			CreatedBy:heartBeat.CreatedBy,
-			CreatedTime:heartBeat.CreatedTime,
-			LastUpdatedBy:heartBeat.LastUpdatedBy,
-			LastUpdatedTime:heartBeat.LastUpdatedTime,
+			Addr:            heartBeat.Addr,
+			StatusCode:      heartBeat.StatusCode,
+			CreatedBy:       heartBeat.CreatedBy,
+			CreatedTime:     heartBeat.CreatedTime,
+			LastUpdatedBy:   heartBeat.LastUpdatedBy,
+			LastUpdatedTime: heartBeat.LastUpdatedTime,
 		}
 		monitor.InsertHeartBeatDetail(heartBeatDetail)
 	}

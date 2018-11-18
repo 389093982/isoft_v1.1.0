@@ -18,13 +18,13 @@ type Blog struct {
 	Id              int64     `json:"id"`
 	Author          string    `json:"author"` // 博客作者
 	BlogTitle       string    `json:"blog_title"`
-	ShortDesc		string	  `json:"short_desc"`	// 简短描述
-	KeyWords        string    `json:"key_words"` // 搜索关键词
+	ShortDesc       string    `json:"short_desc"` // 简短描述
+	KeyWords        string    `json:"key_words"`  // 搜索关键词
 	Catalog         *Catalog  `json:"catalog" orm:"rel(fk)"`
-	Content         string    `json:"content" orm:"type(text)"`					// string - 设置 type(text) 时	longtext
-	BlogStatus      int8      `json:"blog_status"` // 0:未发布 1:已发布
-	Views           int64     `json:"views"`       // 观看次数
-	Edits           int64     `json:"edits"`       // 编辑次数
+	Content         string    `json:"content" orm:"type(text)"` // string - 设置 type(text) 时	longtext
+	BlogStatus      int8      `json:"blog_status"`              // 0:未发布 1:已发布
+	Views           int64     `json:"views"`                    // 观看次数
+	Edits           int64     `json:"edits"`                    // 编辑次数
 	CreatedBy       string    `json:"created_by"`
 	CreatedTime     time.Time `json:"created_time" orm:"auto_now_add;type(datetime)"`
 	LastUpdatedBy   string    `json:"last_updated_by"`

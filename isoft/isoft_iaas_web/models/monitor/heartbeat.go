@@ -7,8 +7,8 @@ import (
 
 type HeartBeat2 struct {
 	Id              int64     `json:"id"`
-	Addr            string    `json:"addr"` 				// 请求地址
-	StatusCode 		int	  	  `json:"status_code"`			// 请求返回的状态码
+	Addr            string    `json:"addr"`        // 请求地址
+	StatusCode      int       `json:"status_code"` // 请求返回的状态码
 	CreatedBy       string    `json:"created_by"`
 	CreatedTime     time.Time `json:"created_time"`
 	LastUpdatedBy   string    `json:"last_updated_by"`
@@ -17,8 +17,8 @@ type HeartBeat2 struct {
 
 type HeartBeatDetail struct {
 	Id              int64     `json:"id"`
-	Addr            string    `json:"addr"` 				// 请求地址
-	StatusCode 		int	  `json:"status_code"`			// 请求返回的状态码
+	Addr            string    `json:"addr"`        // 请求地址
+	StatusCode      int       `json:"status_code"` // 请求返回的状态码
 	CreatedBy       string    `json:"created_by"`
 	CreatedTime     time.Time `json:"created_time"`
 	LastUpdatedBy   string    `json:"last_updated_by"`

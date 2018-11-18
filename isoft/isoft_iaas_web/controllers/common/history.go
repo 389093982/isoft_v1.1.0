@@ -11,11 +11,11 @@ type HistoryController struct {
 	beego.Controller
 }
 
-func (this *HistoryController) ShowCourseHistory()  {
+func (this *HistoryController) ShowCourseHistory() {
 	offset, _ := this.GetInt("offset", 10)            // 每页记录数
 	current_page, _ := this.GetInt("current_page", 1) // 当前页
 	user_name := this.Ctx.Input.Session("UserName").(string)
-	historys, count, err := common.FilterHistoryByName("show_course_history",current_page,offset,user_name)
+	historys, count, err := common.FilterHistoryByName("show_course_history", current_page, offset, user_name)
 	//初始化
 	if err != nil {
 		this.Data["json"] = &map[string]interface{}{"status": "ERROR"}

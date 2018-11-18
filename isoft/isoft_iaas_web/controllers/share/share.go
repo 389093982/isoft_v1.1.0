@@ -51,10 +51,10 @@ func (this *ShareController) AddNewShare() {
 	userName := this.GetSession("UserName").(string)
 	newShare := share.Share{
 		ShareType:       share_type,
-		ShareDesc: 		 share_desc,
+		ShareDesc:       share_desc,
 		Author:          userName,
 		LinkHref:        link_href,
-		Content: 		 content,
+		Content:         content,
 		CreatedBy:       userName,
 		CreatedTime:     time.Now(),
 		LastUpdatedBy:   userName,

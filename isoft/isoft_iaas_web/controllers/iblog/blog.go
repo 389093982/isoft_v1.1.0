@@ -94,7 +94,7 @@ func (this *BlogController) PostEdit() {
 		blog = iblog.Blog{
 			Author:          user_name,
 			BlogTitle:       blog_title,
-			ShortDesc: 		 short_desc,
+			ShortDesc:       short_desc,
 			KeyWords:        key_words,
 			Catalog:         &catalog,
 			Content:         content,

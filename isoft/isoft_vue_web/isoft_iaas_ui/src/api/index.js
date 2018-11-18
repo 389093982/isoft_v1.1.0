@@ -7,12 +7,6 @@ import store from "../store"
 
 const BASE_URL = '/api'
 
-// 查询所有的元数据信息
-export const FilterPageMetadatas = (name,current_page,offset) => ajax(BASE_URL+'/metadata/filterPageMetadatas/',{name,current_page,offset},'POST');
-
-// 分片定位请求
-export const LocateShards = (hash) => ajax(BASE_URL+'/ifile/locateShards/',{hash},'POST');
-
 // 编辑或者新增博客分类
 export const CatalogEdit = (catalog_name, catalog_desc) => ajax(BASE_URL+'/catalog/edit',{catalog_name, catalog_desc},'POST');
 

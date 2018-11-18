@@ -30,7 +30,7 @@ func (this *HeartBeatController) RegisterHeartBeat() {
 	this.ServeJSON()
 }
 
-func (this *HeartBeatController) FilterPageHeartBeat()  {
+func (this *HeartBeatController) FilterPageHeartBeat() {
 	page_size, _ := this.GetInt("page_size", 10)      // 每页记录数
 	current_page, _ := this.GetInt("current_page", 1) // 当前页
 

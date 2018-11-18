@@ -6,10 +6,11 @@ import (
 	"isoft/isoft_iaas_web/controllers"
 	"isoft/isoft_iaas_web/controllers/cms"
 	"isoft/isoft_iaas_web/controllers/common"
+	"isoft/isoft_iaas_web/controllers/iblog"
+	"isoft/isoft_iaas_web/controllers/ifile"
+	"isoft/isoft_iaas_web/controllers/ilearning"
 	"isoft/isoft_iaas_web/controllers/monitor"
 	"isoft/isoft_iaas_web/controllers/share"
-	"isoft/isoft_iaas_web/controllers/iblog"
-	"isoft/isoft_iaas_web/controllers/ilearning"
 	"isoft/isoft_iaas_web/controllers/sso"
 )
 
@@ -30,14 +31,19 @@ func init() {
 	initShareRouter()
 	initCommonRouter()
 	initMonitorRouter()
+	initIFileRouter()
 }
 
-func initMonitorRouter()  {
+func initIFileRouter() {
+	beego.Router("/api/ifile/fileUpload", &ifile.IFileController{}, "get,post:FileUpload")
+}
+
+func initMonitorRouter() {
 	beego.Router("/api/monitor/registerHeartBeat", &monitor.HeartBeatController{}, "get,post:RegisterHeartBeat")
 	beego.Router("/api/monitor/filterPageHeartBeat", &monitor.HeartBeatController{}, "get,post:FilterPageHeartBeat")
 }
 
-func initCommonRouter()  {
+func initCommonRouter() {
 	beego.Router("/api/common/showCourseHistory", &common.HistoryController{}, "get,post:ShowCourseHistory")
 }
 

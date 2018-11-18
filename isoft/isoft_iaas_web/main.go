@@ -12,6 +12,7 @@ import (
 	"isoft/isoft_iaas_web/models/cms"
 	"isoft/isoft_iaas_web/models/common"
 	"isoft/isoft_iaas_web/models/iblog"
+	"isoft/isoft_iaas_web/models/ifile"
 	"isoft/isoft_iaas_web/models/ilearning"
 	"isoft/isoft_iaas_web/models/monitor"
 	"isoft/isoft_iaas_web/models/share"
@@ -90,6 +91,8 @@ func registerModel() {
 	orm.RegisterModel(new(ilearning.CommentTheme))
 	orm.RegisterModel(new(ilearning.CommentReply))
 	orm.RegisterModel(new(ilearning.Note))
+
+	orm.RegisterModel(new(ifile.IFile))
 
 	orm.RegisterModel(new(cms.Configuration))
 
