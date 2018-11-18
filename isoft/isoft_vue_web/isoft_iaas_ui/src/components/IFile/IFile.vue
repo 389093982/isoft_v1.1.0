@@ -17,7 +17,7 @@
       v-model="showImgModel"
       title="显示图片"
       :mask-closable="false">
-      <img :src="showImageSrc" alt="smile" />
+      <img :src="showImageSrc" alt="smile" style="width: 130px;height: 150px;"/>
     </Modal>
 
     <Modal
@@ -167,7 +167,6 @@
       },
       playVideo(index){
         const url = this.ifiles[index]['url'];
-        alert(url);
         this.$refs.video.src = url;
         this.playVideoModel = true;
       },
