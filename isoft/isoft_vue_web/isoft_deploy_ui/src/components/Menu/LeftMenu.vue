@@ -33,15 +33,6 @@
         <router-link to="/service/list?service_type=api">api应用部署</router-link>
       </MenuItem>
     </Submenu>
-    <Submenu name="4">
-      <template slot="title">
-        <Icon type="ios-analytics"></Icon>
-        系统监控
-      </template>
-      <MenuItem name="4-1">
-        <router-link to="/monitor/list">系统心跳检测</router-link>
-      </MenuItem>
-    </Submenu>
   </Menu>
 </template>
 

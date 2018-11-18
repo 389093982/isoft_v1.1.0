@@ -27,7 +27,7 @@ export const ConnectTest = (env_id) =>
 
 // 同步测试
 export const SyncDeployHome = (env_id) =>
-  ajax(BASE_URL+'/env/sync_deploy_home/',{env_id},'POST')
+  ajax(BASE_URL+'/env/syncDeployHome/',{env_id},'POST')
 
 // 编辑服务接口
 export const ServiceEdit = (env_ids,service_name,service_type,package_name,run_mode,service_port,mysql_root_pwd) =>
@@ -54,8 +54,7 @@ export const ConfigList = (current_page,page_size) =>
 
 // 同步测试
 export const SyncConfigFile = (env_id, configFile_id) =>
-  ajax(BASE_URL+'/config/sync_config_file/',{env_id, configFile_id},'POST')
+  ajax(BASE_URL+'/config/syncConfigFile/',{env_id, configFile_id},'POST')
 
-export const FilterPageMonitorHeartBeat = (current_page,page_size) =>
-  ajax(BASE_URL+'/monitor/filterPageMonitorHeartBeat',{current_page,page_size},'POST')
+
 

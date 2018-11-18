@@ -112,13 +112,18 @@ func SFTPDirectoryRenameCopy(user, password, host string, port int, localDirecto
 	}
 	defer sshClient.Close()
 	defer sftpClient.Close()
-	filepaths, _, err := fileutil.GetAllFile(localDirectoryPath, true)
+	filepaths, _, err := fileutil.GetAllFile(localDirectoryPath, false)
 	if err != nil {
 		return err
 	}
-	for _, filepath := range filepaths {
-		if fileutil.IsFile(filepath) {
-			err = sftpClientFileCopy(sftpClient, filepath, remoteDir)
+	for _, fpath := range filepaths {
+		if fileutil.IsFile(fpath) {
+			err = sftpClientFileCopy(sftpClient, fpath, remoteDir)
+			if err != nil {
+				return err
+			}
+		}else{
+			err = SFTPDirectoryRenameCopy(user, password, host, port, fpath, remoteDir+"/"+filepath.Base(fpath))
 			if err != nil {
 				return err
 			}

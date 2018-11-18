@@ -11,11 +11,12 @@ import (
 )
 
 var (
-	SFTP_SRC_DIR, SFTP_TARGET_DEPLOY_HOME string
+	SFTP_SRC_DIR, SFTP_LOCAL_DEPLOY_HOME, SFTP_TARGET_DEPLOY_HOME string
 )
 
 func init() {
 	SFTP_SRC_DIR = beego.AppConfig.String("sftp.src.dir")
+	SFTP_LOCAL_DEPLOY_HOME = beego.AppConfig.String("sftp.local.deploy_home.default")
 	SFTP_TARGET_DEPLOY_HOME = beego.AppConfig.String("sftp.target.deploy_home.default")
 }
 
@@ -80,6 +81,7 @@ func SyncDeployHome(envInfo *models.EnvInfo) error {
 	// 远程机器 deploy_home
 	remoteDeployHome := GetRemoteDeployHomePath(envInfo)
 	// 拷贝脚本目录
+	//return sftputil.SFTPDirectoryRenameCopy(envInfo.EnvAccount, envInfo.EnvPasswd, envInfo.EnvIp, 22, SFTP_LOCAL_DEPLOY_HOME, remoteDeployHome)
 	return sftputil.SFTPDirectoryCopy(envInfo.EnvAccount, envInfo.EnvPasswd, envInfo.EnvIp, 22, filepath.Join(SFTP_SRC_DIR, "shell"), remoteDeployHome)
 }
 

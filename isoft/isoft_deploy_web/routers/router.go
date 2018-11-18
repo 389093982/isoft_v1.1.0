@@ -13,7 +13,7 @@ func init() {
 	beego.Router("/api/env/all", &controllers.EnvController{}, "post:All")
 	beego.Router("/api/env/list", &controllers.EnvController{}, "post:List")
 	beego.Router("/api/env/connect_test", &controllers.EnvController{}, "post:ConnectonTest")
-	beego.Router("/api/env/sync_deploy_home", &controllers.EnvController{}, "post:SyncDeployHome")
+	beego.Router("/api/env/syncDeployHome", &controllers.EnvController{}, "post:SyncDeployHome")
 
 	beego.Router("/api/service/getServiceTrackingLogDetail", &controllers.ServiceController{}, "post:GetServiceTrackingLogDetail")
 	beego.Router("/api/service/list", &controllers.ServiceController{}, "post:List")
@@ -27,8 +27,5 @@ func init() {
 	beego.Router("/api/config/list", &controllers.ConfigController{}, "post:List")
 	beego.Router("/api/config/fileDownload", &controllers.ConfigController{}, "get:FileDownload")
 	beego.Router("/api/config/fileUpload", &controllers.ConfigController{}, "post:FileUpload")
-	beego.Router("/api/config/sync_config_file", &controllers.ConfigController{}, "post:SyncConfigFile")
-
-	beego.Router("/api/monitor/sendMonitorHeartBeat", &controllers.MonitorHeartBeatController{}, "post:SendMonitorHeartBeat")
-	beego.Router("/api/monitor/filterPageMonitorHeartBeat", &controllers.MonitorHeartBeatController{}, "post:FilterPageMonitorHeartBeat")
+	beego.Router("/api/config/syncConfigFile", &controllers.ConfigController{}, "post:SyncConfigFile")
 }

@@ -79,7 +79,6 @@ func registerModel() {
 	orm.RegisterModel(new(models.ServiceInfo))
 	orm.RegisterModel(new(models.TrackingTask))
 	orm.RegisterModel(new(models.TrackingLog))
-	orm.RegisterModel(new(models.MonitorHeartBeat))
 }
 
 // 自动建表
