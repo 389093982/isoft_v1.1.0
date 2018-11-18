@@ -1,6 +1,7 @@
 package weedfsutil
 
 import (
+	"bufio"
 	"encoding/json"
 	"fmt"
 	"github.com/pkg/errors"
@@ -52,7 +53,8 @@ func SaveFile(masterAddress string, file multipart.File) (weedFsInfo WeedFsInfo,
 	if err != nil {
 		return
 	}
-	req, err := http.NewRequest("PUT", fmt.Sprintf("http://%s/%s", weedFsInfo.PublicUrl, weedFsInfo.Fid), file)
+	bReader := bufio.NewReader(file)
+	req, err := http.NewRequest("PUT", fmt.Sprintf("http://%s/%s", weedFsInfo.PublicUrl, weedFsInfo.Fid), bReader)
 	if err != nil {
 		return
 	}
