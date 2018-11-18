@@ -36,6 +36,7 @@ func init() {
 
 func initIFileRouter() {
 	beego.Router("/api/ifile/fileUpload", &ifile.IFileController{}, "get,post:FileUpload")
+	beego.Router("/api/ifile/filterPageIFiles", &ifile.IFileController{}, "get,post:FilterPageIFiles")
 }
 
 func initMonitorRouter() {

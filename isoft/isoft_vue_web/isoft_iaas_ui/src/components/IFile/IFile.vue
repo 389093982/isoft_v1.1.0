@@ -2,25 +2,16 @@
   <div>
     <Row style="margin-bottom: 10px;">
       <Col span="12">
-        <IFileUpload @refreshTable="refreshMetaDataList" action="/api/ifile/fileUpload/" uploadLabel="上传到文件服务器"/>
+        <IFileUpload @refreshTable="refreshIFileList" action="/api/ifile/fileUpload/" uploadLabel="上传到文件服务器"/>
       </Col>
       <Col span="12">
         <Input v-model="search_name" search enter-button placeholder="搜索对象名称" @on-search="input_search"/>
       </Col>
     </Row>
 
-    <Table :columns="columns1" :data="metadatas" size="small" height="450"></Table>
+    <Table :columns="columns1" :data="ifiles" size="small" height="450"></Table>
     <Page :total="total" :page-size="offset" show-total show-sizer :styles="{'text-align': 'center','margin-top': '10px'}"
           @on-change="handleChange" @on-page-size-change="handlePageSizeChange"/>
-
-    <Modal
-      v-model="showShardsModel"
-      title="对象分片信息"
-      :mask-closable="false">
-      <p v-for="(key,value) in shards">
-        存储物理机器地址:{{key}}  -  分片id:{{value}}
-      </p>
-    </Modal>
 
     <Modal
       v-model="showImgModel"
@@ -43,8 +34,7 @@
 
 <script>
   import IFileUpload from "./IFileUpload.vue"
-  import {FilterPageMetadatas} from '../../api'
-  import {LocateShards} from '../../api'
+  import {FilterPageIFiles} from '../../api'
 
   export default {
     name: "IFile",
@@ -57,8 +47,6 @@
         playVideoSrc:'',
         // 显示对象分片信息对话框
         showShardsModel:false,
-        // 对象分片信息
-        shards:[],
         // 搜索的对象名称
         search_name : "",
         // 当前页
@@ -67,55 +55,40 @@
         total:1,
         // 每页记录数
         offset:10,
-        // 元数据信息
-        metadatas: [],
+        // 文件元素将清单
+        ifiles: [],
         columns1 : [
           {
-            title: 'name',
-            key: 'name',
-            width:300
+            title: 'fid',
+            key: 'fid',
+            width:150
           },
           {
-            title: 'version',
-            key: 'version',
+            title: 'file_name',
+            key: 'file_name',
+            width:200
+          },
+          {
+            title: 'file_size',
+            key: 'file_size',
             width:100
           },
           {
-            title: 'size',
-            key: 'size',
-            width:100
+            title: 'url',
+            key: 'url',
+            width:270,
           },
           {
-            title: 'hash',
-            key: 'hash',
-            width:380,
-          },
-          {
-            title: 'app_name',
-            key: 'app_name',
-            width:100,
+            title: 'created_time',
+            key: 'created_time',
+            width:200,
           },
           {
             title: '操作',
             key: 'operate',
-            width:400,
+            width:300,
             render: (h, params) => {
               return h('div', [
-                h('Button', {
-                  props: {
-                    type: 'success',
-                    size: 'small'
-                  },
-                  style: {
-                    marginRight: '5px',
-                  },
-                  on: {
-                    click: () => {
-                      // 分片定位
-                      this.locateShards(params.index);
-                    }
-                  }
-                }, '分片查询'),
                 h('Button', {
                   props: {
                     type: 'error',
@@ -165,55 +138,42 @@
       }
     },
     methods:{
-      async refreshMetaDataList(){
-        const data = await FilterPageMetadatas(this.search_name, this.current_page, this.offset);
+      async refreshIFileList(){
+        const data = await FilterPageIFiles(this.search_name, this.offset, this.current_page);
         if(data.status == "SUCCESS"){
-          this.metadatas = data.metadatas;
+          this.ifiles = data.ifiles;
           this.total = data.paginator.totalcount;
         }
       },
       handleChange(page){
         this.current_page = page;
-        this.refreshMetaDataList();
+        this.refreshIFileList();
       },
       handlePageSizeChange(pageSize){
         this.offset = pageSize;
-        this.refreshMetaDataList();
+        this.refreshIFileList();
       },
       input_search(){
-        this.refreshMetaDataList();
-      },
-      async locateShards(index){
-        const hash = this.metadatas[index]['hash'];
-        const data = await LocateShards(hash);
-        if(data.status=="SUCCESS"){
-          this.shards = data.shards;
-          this.showShardsModel = true;
-        }
+        this.refreshIFileList();
       },
       fileDownload(index){
-        const name = this.metadatas[index]['name'];
-        const version = this.metadatas[index]['version'];
-        const app_name = this.metadatas[index]['app_name'];
-        window.location='/api/ifile/fileDownload/?name=' + name + "&version=" + version + "&app_name=" + app_name;
+        const url = this.ifiles[index]['url'];
+        window.location=url;
       },
       showImg(index){
-        const name = this.metadatas[index]['name'];
-        const version = this.metadatas[index]['version'];
-        const hash = this.metadatas[index]['hash'];
-        this.showImageSrc = "http://127.0.0.1:10001/download/" + hash  + ".mp4";
+        const url = this.ifiles[index]['url'];
+        this.showImageSrc = url;
         this.showImgModel = true;
       },
       playVideo(index){
-        const name = this.metadatas[index]['name'];
-        const version = this.metadatas[index]['version'];
-        const hash = this.metadatas[index]['hash'];
-        this.$refs.video.src = "http://127.0.0.1:10001/download/" + hash  + ".mp4";
+        const url = this.ifiles[index]['url'];
+        alert(url);
+        this.$refs.video.src = url;
         this.playVideoModel = true;
       },
     },
     mounted:function(){
-      this.refreshMetaDataList();
+      this.refreshIFileList();
     },
   }
 </script>

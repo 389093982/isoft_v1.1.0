@@ -19,7 +19,6 @@
           </MenuGroup>
           <MenuGroup title="云存储">
             <MenuItem name="1-7"><router-link to="/ifile/ifile">IFile 文件存储</router-link></MenuItem>
-            <MenuItem name="1-8"><router-link to="/ifile/ifile">IFile 对象存储</router-link></MenuItem>
           </MenuGroup>
           <MenuGroup title="友情链接">
             <MenuItem name="1-9"><router-link to="/ifile/ifile">心声社区</router-link></MenuItem>

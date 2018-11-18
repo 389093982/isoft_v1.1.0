@@ -74,9 +74,6 @@ export const QueryAllConfigurations = (configuration_name) => ajax(BASE_URL+'/cm
 // 分页查询配置项信息
 export const FilterConfigurations = (search,offset,current_page) => ajax(BASE_URL+'/cms/filterConfigurations',{search, offset,current_page},'GET');
 
-// 获取Share 信息
-export const FilterShareList = (offset,current_page,search_type) => ajax(BASE_URL+'/share/filterShareList',{offset,current_page,search_type},'GET');
-
 // 根据 blog_id 查询 blog 详细信息
 export const ShowShareDetail = (share_id) => ajax(BASE_URL+'/share/showShareDetail',{share_id},'GET');
 
@@ -90,3 +87,6 @@ export const RegisterHeartBeat = (addr) => ajax(BASE_URL+"/monitor/registerHeart
 
 // 分页获取应用心跳检测项
 export const FilterPageHeartBeat = (offset,current_page) => ajax(BASE_URL+"/monitor/filterPageHeartBeat", {offset,current_page},'GET');
+
+// 分页获取 ifile 清单
+export const FilterPageIFiles = (search_name,offset,current_page) => ajax(BASE_URL+"/ifile/filterPageIFiles", {search_name,offset,current_page},'GET');
