@@ -83,7 +83,7 @@
           this.refreshShareList();
         }
       },
-      refreshShareList:async function () {
+      refreshShareList: async function () {
         const result = await FilterShareList(this.offset, this.current_page, this.search_type);
         if(result.status == "SUCCESS"){
           this.shares = result.shares;
