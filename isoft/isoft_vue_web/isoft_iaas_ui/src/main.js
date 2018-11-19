@@ -29,7 +29,14 @@ Vue.use(mavonEditor)
 Vue.config.productionTip = false
 
 // 登录判断
-router.beforeEach(async (to, from, next) => {
+router.beforeEach((to, from, next) => {
+  /* 路由发生变化修改页面title */
+  if (to.meta.title) {
+    document.title = to.meta.title;
+  }else{
+    document.title = "iaas统一管理平台";
+  }
+
   // LoadingBar 加载进度条
   iView.LoadingBar.start();
 
