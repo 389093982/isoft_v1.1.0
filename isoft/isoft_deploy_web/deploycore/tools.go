@@ -1,4 +1,4 @@
-package deploy_core
+package deploycore
 
 import "strings"
 

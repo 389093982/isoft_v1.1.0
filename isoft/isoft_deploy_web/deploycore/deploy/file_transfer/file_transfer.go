@@ -4,7 +4,7 @@ import (
 	"github.com/astaxie/beego"
 	"isoft/isoft/common/fileutil"
 	"isoft/isoft/common/sftputil"
-	"isoft/isoft_deploy_web/deploy_core"
+	"isoft/isoft_deploy_web/deploycore"
 	"isoft/isoft_deploy_web/models"
 	"path/filepath"
 	"strconv"
@@ -54,7 +54,7 @@ type FileTransferCreator struct {
 func (this *FileTransferCreator) PrepareFileTransfer() []*FileTransfer {
 	fileTransfers := make([]*FileTransfer, 0)
 	// 添加当前 ServiceInfo 所特有的文件传输列表
-	_operate_type := deploy_core.GetRealCommandType(this.ServiceInfo.ServiceType, this.OperateType)
+	_operate_type := deploycore.GetRealCommandType(this.ServiceInfo.ServiceType, this.OperateType)
 	switch _operate_type {
 	case "beego_deploy":
 		return BeegoDeployFileTransfer(this.ServiceInfo)

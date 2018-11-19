@@ -7,7 +7,7 @@ import (
 	"github.com/astaxie/beego/utils/pagination"
 	"isoft/isoft/common/pageutil"
 	"isoft/isoft/common/sshutil"
-	"isoft/isoft_deploy_web/deploy_core/deploy/file_transfer"
+	"isoft/isoft_deploy_web/deploycore/deploy/file_transfer"
 	"isoft/isoft_deploy_web/models"
 	"time"
 )

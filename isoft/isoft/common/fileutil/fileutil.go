@@ -33,14 +33,14 @@ func CopyDir(sourceDir string, destDir string) error {
 			// 是目录同时是子目录则进行目录拷贝
 			if f.IsDir() {
 				if sourceDir != path {
-					err = CopyDir(path, strings.Replace(path, sourceDir, destDir, -1))
+					err = CopyDir(path, strings.Replace(ChangeToLinuxSeparator(path), ChangeToLinuxSeparator(sourceDir), ChangeToLinuxSeparator(destDir), -1))
 					if err != nil {
 						return err
 					}
 				}
 			} else {
 				// 是文件则进行文件拷贝
-				err = CopyFile(path, strings.Replace(path, sourceDir, destDir, -1))
+				err = CopyFile(path, strings.Replace(ChangeToLinuxSeparator(path), ChangeToLinuxSeparator(sourceDir), ChangeToLinuxSeparator(destDir), -1))
 			}
 		}
 		return nil

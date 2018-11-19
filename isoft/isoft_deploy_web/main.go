@@ -8,6 +8,7 @@ import (
 	_ "github.com/go-sql-driver/mysql" // _ 的作用,并不需要把整个包都导入进来,仅仅是是希望它执行init()函数而已
 	"isoft/isoft/common/apppath"
 	"isoft/isoft/common/fileutil"
+	"isoft/isoft_deploy_web/deploycore/prework"
 	"isoft/isoft_deploy_web/models"
 	_ "isoft/isoft_deploy_web/routers"
 	"net/url"
@@ -93,5 +94,7 @@ func createTable() {
 }
 
 func main() {
+	prework.RunPreWork()
+
 	beego.Run()
 }

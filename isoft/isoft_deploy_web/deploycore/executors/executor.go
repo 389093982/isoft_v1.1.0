@@ -2,7 +2,7 @@ package executors
 
 import (
 	"isoft/isoft/common/stringutil"
-	"isoft/isoft_deploy_web/deploy_core/deploy/file_transfer"
+	"isoft/isoft_deploy_web/deploycore/deploy/file_transfer"
 	"isoft/isoft_deploy_web/models"
 )
 

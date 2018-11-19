@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"github.com/astaxie/beego/logs"
 	"isoft/isoft/common/sshutil"
-	"isoft/isoft_deploy_web/deploy_core/constant"
-	"isoft/isoft_deploy_web/deploy_core/deploy"
+	"isoft/isoft_deploy_web/deploycore/constant"
+	"isoft/isoft_deploy_web/deploycore/deploy"
 	"isoft/isoft_deploy_web/models"
 	"strings"
 )

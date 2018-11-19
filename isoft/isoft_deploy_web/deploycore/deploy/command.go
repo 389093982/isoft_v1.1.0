@@ -2,9 +2,9 @@ package deploy
 
 import (
 	"isoft/isoft/common/fileutil"
-	"isoft/isoft_deploy_web/deploy_core"
-	"isoft/isoft_deploy_web/deploy_core/constant"
-	"isoft/isoft_deploy_web/deploy_core/deploy/file_transfer"
+	"isoft/isoft_deploy_web/deploycore"
+	"isoft/isoft_deploy_web/deploycore/constant"
+	"isoft/isoft_deploy_web/deploycore/deploy/file_transfer"
 	"isoft/isoft_deploy_web/models"
 	"path/filepath"
 	"strings"
@@ -42,7 +42,7 @@ func PrepareCommand(serviceInfo *models.ServiceInfo, operate_type, extra_params 
 		return "", err
 	}
 	// 当前脚本命令
-	command := PrepareSimpleCommand(serviceInfo.EnvInfo, deploy_core.GetRealCommandType(serviceInfo.ServiceType, operate_type), args)
+	command := PrepareSimpleCommand(serviceInfo.EnvInfo, deploycore.GetRealCommandType(serviceInfo.ServiceType, operate_type), args)
 	// 获取 next 操作类型对应的脚本命令
 	if getNextOperateType(operate_type) != "" {
 		nextCommand, err := PrepareCommand(serviceInfo, getNextOperateType(operate_type), extra_params)
@@ -66,7 +66,7 @@ func PrepareSimpleCommand(envInfo *models.EnvInfo, command_type string, args str
 // 准备 shell 命令相关参数
 func PrepareArgs(serviceInfo *models.ServiceInfo, operate_type, extra_params string) (string, error) {
 	resolver := &CommandArgs{}
-	argslices, err := resolver.GetCommandArgs(serviceInfo, deploy_core.GetRealCommandType(serviceInfo.ServiceType, operate_type), extra_params)
+	argslices, err := resolver.GetCommandArgs(serviceInfo, deploycore.GetRealCommandType(serviceInfo.ServiceType, operate_type), extra_params)
 
 	if err != nil {
 		return "", err

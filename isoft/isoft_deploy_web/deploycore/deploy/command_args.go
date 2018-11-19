@@ -2,7 +2,7 @@ package deploy
 
 import (
 	"errors"
-	"isoft/isoft_deploy_web/deploy_core/deploy/file_transfer"
+	"isoft/isoft_deploy_web/deploycore/deploy/file_transfer"
 	"isoft/isoft_deploy_web/models"
 	"strconv"
 	"strings"
