@@ -7,7 +7,6 @@ import (
 	"isoft/isoft_deploy_web/deploycore"
 	"isoft/isoft_deploy_web/models"
 	"path/filepath"
-	"strconv"
 )
 
 var (
@@ -85,9 +84,3 @@ func SyncDeployHome(envInfo *models.EnvInfo) error {
 	return sftputil.SFTPDirectoryCopy(envInfo.EnvAccount, envInfo.EnvPasswd, envInfo.EnvIp, 22, filepath.Join(SFTP_SRC_DIR, "shell"), remoteDeployHome)
 }
 
-// 同步本地 configFile 到目标机器
-func SyncConfigFile(envInfo *models.EnvInfo, configFile *models.ConfigFile) error {
-	savepath := SFTP_SRC_DIR + "/static/uploadfile/configfile/" + strconv.FormatInt(configFile.Id, 10)
-	// 拷贝脚本目录
-	return sftputil.SFTPDirectoryRenameCopy(envInfo.EnvAccount, envInfo.EnvPasswd, envInfo.EnvIp, 22, savepath, configFile.EnvValue)
-}

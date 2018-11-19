@@ -45,16 +45,6 @@ export const QueryLastDeployStatus = (service_id) =>
 export const GetServiceTrackingLogDetail = (service_id) =>
   ajax(BASE_URL+'/service/getServiceTrackingLogDetail/',{service_id},'POST')
 
-export const ConfigEdit = (env_ids, env_property, env_value) =>
-  ajax(BASE_URL+'/config/edit/',{env_ids, env_property, env_value},'POST')
-
-// 分页显示配置信息
-export const ConfigList = (current_page,page_size) =>
-  ajax(BASE_URL+'/config/list/',{current_page,page_size},'POST')
-
-// 同步测试
-export const SyncConfigFile = (env_id, configFile_id) =>
-  ajax(BASE_URL+'/config/syncConfigFile/',{env_id, configFile_id},'POST')
 
 
 
