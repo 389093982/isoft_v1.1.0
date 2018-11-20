@@ -31,8 +31,6 @@ func (this *IFileController) FilterPageIFiles()  {
 }
 
 func (this *IFileController) FileUpload() {
-	this.SaveToFile()
-
 	defer func() {
 		if err := recover(); err != nil {
 			this.Data["json"] = &map[string]string{"status": "ERROR", "errorMsg": fmt.Sprint(err)}
