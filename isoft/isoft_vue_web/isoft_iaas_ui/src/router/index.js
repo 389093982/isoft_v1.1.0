@@ -112,6 +112,8 @@ export const ILearningRouter = {
 
 
 export default new Router({
+  // History 模式,去除vue项目中的 #
+  mode: 'history',
   routes: [
     IBlogRouter,
     IFileRouter,
