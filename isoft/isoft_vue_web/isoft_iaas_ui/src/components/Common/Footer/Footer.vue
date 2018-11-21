@@ -5,6 +5,10 @@
     </BackTop>
 
     <Row>
+      <FrindLink/>
+    </Row>
+
+    <Row>
       <Col span="4" style="padding: 50px;">
         <VerticalList :showRightBorder="true" title="新手帮助">
           <VerticalListItem>新手引导</VerticalListItem>
@@ -51,12 +55,13 @@
 </template>
 
 <script>
-  import VerticalList from "../list/VerticalList.vue"
-  import VerticalListItem from "../list/VerticalListItem";
+  import VerticalList from "../list/VerticalList"
+  import VerticalListItem from "../list/VerticalListItem"
+  import FrindLink from "./FrindLink"
 
   export default {
     name: "Footer",
-    components:{VerticalListItem, VerticalList,VerticalListItem},
+    components:{VerticalListItem, VerticalList,VerticalListItem, FrindLink},
     methods: {
 
     }

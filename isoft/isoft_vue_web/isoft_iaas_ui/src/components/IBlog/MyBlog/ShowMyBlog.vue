@@ -8,8 +8,8 @@
 </template>
 
 <script>
-  import MyCatalogList from "./MyCatalogList.vue"
-  import MyBlogList from "./MyBlogList.vue"
+  import MyCatalogList from "./MyCatalogList"
+  import MyBlogList from "./MyBlogList"
   import {GetMyCatalogs} from "../../../api/index"
   import {GetMyBlogs} from "../../../api/index"
 

@@ -25,7 +25,7 @@
 </template>
 
 <script>
-  import BeautifulLink from "../../Common/link/BeautifulLink.vue"
+  import BeautifulLink from "../../Common/link/BeautifulLink"
 
   export default {
     name: "HotCourseType",

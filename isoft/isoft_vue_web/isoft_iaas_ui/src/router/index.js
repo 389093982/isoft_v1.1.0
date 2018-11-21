@@ -15,12 +15,12 @@ import MyCourseList from '../components/ILearning/CourseSpace/MyCourseList.vue'
 import CourseDetail from '../components/ILearning/Course/CourseDetail.vue'
 import VideoPay from '../components/ILearning/Course/VideoPay.vue'
 import Configuration from '../components/CMS/Configuration.vue'
-import CourseSearch from "../components/ILearning/Course/CourseSearch.vue"
-import ShareIndex from "../components/Share/ShareIndex.vue"
-import ShareAdd from "../components/Share/ShareAdd.vue"
-import ShareList from "../components/Share/ShareList.vue"
-import ShareDetail from "../components/Share/ShareDetail.vue"
-import HeartBeat from "../components/Monitor/HeartBeat.vue"
+import CourseSearch from "../components/ILearning/Course/CourseSearch"
+import ShareIndex from "../components/Share/ShareIndex"
+import ShareAdd from "../components/Share/ShareAdd"
+import ShareList from "../components/Share/ShareList"
+import ShareDetail from "../components/Share/ShareDetail"
+import HeartBeat from "../components/Monitor/HeartBeat"
 
 Vue.use(Router);
 

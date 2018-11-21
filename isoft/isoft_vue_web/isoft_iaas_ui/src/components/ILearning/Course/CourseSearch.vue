@@ -39,7 +39,7 @@
 
 <script>
   import {SearchCourseList} from "../../../api"
-  import SiteDashBoard from "../Site/SiteDashBoard.vue"
+  import SiteDashBoard from "../Site/SiteDashBoard"
 
   export default {
     name: "CourseSearch",

@@ -70,12 +70,12 @@
 <script>
   import {ShowCourseDetail} from "../../../api"
   import {ToggleFavorite} from "../../../api"
-  import Recommand from "./Recommand.vue"
-  import CourseComment from "../Comment/CourseComment.vue"
-  import CommunicationGroup from "../Site/CommunicationGroup.vue"
-  import HotRecommend from "./HotRecommend.vue"
-  import UserDetail from "../../User/UserDetail.vue"
-  import HotUser from "../../User/HotUser.vue"
+  import Recommand from "./Recommand"
+  import CourseComment from "../Comment/CourseComment"
+  import CommunicationGroup from "../Site/CommunicationGroup"
+  import HotRecommend from "./HotRecommend"
+  import UserDetail from "../../User/UserDetail"
+  import HotUser from "../../User/HotUser"
 
   export default {
     name: "CourseDetail",

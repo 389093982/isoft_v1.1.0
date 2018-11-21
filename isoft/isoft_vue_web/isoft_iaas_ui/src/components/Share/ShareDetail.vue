@@ -6,7 +6,7 @@
 
 <script>
   import {ShowShareDetail} from "../../api"
-  import ShowMarkdown from "../Common/Common/ShowMarkdown.vue"
+  import ShowMarkdown from "../Common/Common/ShowMarkdown"
 
   export default {
     name: "ShareDetail",

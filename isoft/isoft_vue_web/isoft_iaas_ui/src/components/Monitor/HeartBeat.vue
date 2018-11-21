@@ -10,7 +10,7 @@
 
 <script>
   import {FilterPageHeartBeat} from "../../api"
-  import AddHeartBeat from "./AddHeartBeat.vue"
+  import AddHeartBeat from "./AddHeartBeat"
 
   export default {
     name: "HeartBeat",

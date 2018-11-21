@@ -35,9 +35,9 @@
 </template>
 
 <script>
-  import HotCourseType from "./HotCourseType.vue"
-  import TotalCourseType from "./TotalCourseType.vue"
-  import Search from "../../Common/search/Search.vue"
+  import HotCourseType from "./HotCourseType"
+  import TotalCourseType from "./TotalCourseType"
+  import Search from "../../Common/search/Search"
 
   export default {
     name: "ChooseCourseType",

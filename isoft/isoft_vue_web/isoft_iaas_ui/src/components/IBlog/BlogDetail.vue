@@ -17,7 +17,7 @@
 
 <script>
   import {ShowBlogDetail} from "../../api"
-  import ShowMarkdown from "../Common/Common/ShowMarkdown.vue"
+  import ShowMarkdown from "../Common/Common/ShowMarkdown"
 
   export default {
     name: "BlogDetail",

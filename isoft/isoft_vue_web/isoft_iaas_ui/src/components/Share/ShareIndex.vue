@@ -5,7 +5,7 @@
 </template>
 
 <script>
-  import HotShareItem from "./HotShareItem.vue"
+  import HotShareItem from "./HotShareItem"
 
   export default {
     name: "ShareIndex",

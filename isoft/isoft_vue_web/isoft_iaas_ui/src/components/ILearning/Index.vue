@@ -17,12 +17,12 @@
 </template>
 
 <script>
-  import ChooseCourseType from "./CourseType/ChooseCourseType.vue"
-  import HotRecommend from "./Course/HotRecommend.vue"
-  import NewsNotice from "./Course/NewsNotice.vue"
-  import HotIssue from "./Course/HotIssue.vue"
-  import SiteGuide from "./Site/SiteGuide.vue"
-  import HotCommunity from "./Community/HotCommunity.vue"
+  import ChooseCourseType from "./CourseType/ChooseCourseType"
+  import HotRecommend from "./Course/HotRecommend"
+  import NewsNotice from "./Course/NewsNotice"
+  import HotIssue from "./Course/HotIssue"
+  import SiteGuide from "./Site/SiteGuide"
+  import HotCommunity from "./Community/HotCommunity"
 
   export default {
     name: "Index",

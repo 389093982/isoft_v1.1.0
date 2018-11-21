@@ -31,8 +31,8 @@
 
 <script>
   import {FilterCommentTheme} from "../../../api/index"
-  import CommentArea from "./CommentArea.vue"
-  import CommentForm from "./CommentForm.vue"
+  import CommentArea from "./CommentArea"
+  import CommentForm from "./CommentForm"
 
   export default {
     name: "CourseComment",

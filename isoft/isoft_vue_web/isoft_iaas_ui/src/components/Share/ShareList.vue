@@ -43,11 +43,13 @@
           <Row>
             <Col span="8"><h6 style="color: #333;font-weight: 500;">热门分享</h6></Col>
             <Col span="4" offset="12"><a href="javascript:;">更多></a></Col>
+            <TopNShare/>
             <Divider />
           </Row>
           <Row>
             <Col span="8"><h6 style="color: #333;font-weight: 500;">热门用户</h6></Col>
             <Col span="4" offset="12"><a href="javascript:;">更多></a></Col>
+            <TopNUser/>
             <Divider />
           </Row>
         </Col>
@@ -58,11 +60,13 @@
 
 <script>
   import {FilterShareList} from "../../api"
-  import HotShareItem from "./HotShareItem.vue"
+  import HotShareItem from "./HotShareItem"
+  import TopNShare from "./TopNShare"
+  import TopNUser from "./TopNUser"
 
   export default {
     name: "ShareList",
-    components:{HotShareItem},
+    components:{HotShareItem,TopNShare,TopNUser},
     data(){
       return {
         shares:[],

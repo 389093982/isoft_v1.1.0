@@ -39,8 +39,8 @@
 <script>
   import {GetMyCourseList} from "../../../api"
   import {EndUpdate} from "../../../api"
-  import ChangeCourseImg from "../Course/ChangeCourseImg.vue"
-  import UploadVideo from "../Course/UploadVideo.vue"
+  import ChangeCourseImg from "../Course/ChangeCourseImg"
+  import UploadVideo from "../Course/UploadVideo"
   import {getCookie} from "../../../tools"
 
   export default {

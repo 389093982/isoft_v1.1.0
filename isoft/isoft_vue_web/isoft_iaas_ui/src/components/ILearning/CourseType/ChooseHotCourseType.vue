@@ -18,7 +18,7 @@
 </template>
 
 <script>
-  import HotCourseType from "./HotCourseType.vue"
+  import HotCourseType from "./HotCourseType"
 
   export default {
     name: "ChooseHotCourseType",

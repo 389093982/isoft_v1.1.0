@@ -33,7 +33,7 @@
 </template>
 
 <script>
-  import IFileUpload from "./IFileUpload.vue"
+  import IFileUpload from "./IFileUpload"
   import {FilterPageIFiles} from '../../api'
 
   export default {

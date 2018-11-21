@@ -33,7 +33,7 @@
 
 <script>
   import {NewCourse} from "../../../api"
-  import ChooseHotCourseType from "../CourseType/ChooseHotCourseType.vue"
+  import ChooseHotCourseType from "../CourseType/ChooseHotCourseType"
 
   export default {
     name: "NewCourse",

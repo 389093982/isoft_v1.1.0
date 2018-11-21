@@ -20,7 +20,7 @@
 <script>
   import {GetAllCourseType} from "../../../api"
   import {GetAllCourseSubType} from "../../../api"
-  import BeautifulLink from "../../Common/link/BeautifulLink.vue"
+  import BeautifulLink from "../../Common/link/BeautifulLink"
 
   export default {
     name: "TotalCourseType",

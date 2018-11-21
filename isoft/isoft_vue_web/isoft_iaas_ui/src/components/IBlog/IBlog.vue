@@ -14,7 +14,7 @@
 </template>
 
 <script>
-  import ShowMyBlog from "./MyBlog/ShowMyBlog.vue"
+  import ShowMyBlog from "./MyBlog/ShowMyBlog"
 
   export default {
     name: "IBlog",
