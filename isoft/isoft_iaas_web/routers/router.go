@@ -55,9 +55,10 @@ func initShareRouter() {
 }
 
 func initCMSRouter() {
-	beego.Router("/api/cms/queryAllConfigurations", &cms.ConfigurationController{}, "get,post:QueryAllConfigurations")
-	beego.Router("/api/cms/addConfiguration", &cms.ConfigurationController{}, "get,post:AddConfiguration")
-	beego.Router("/api/cms/filterConfigurations", &cms.ConfigurationController{}, "get,post:FilterConfigurations")
+	beego.Router("/api/cms/queryAllConfigurations", &cms.CMSController{}, "get,post:QueryAllConfigurations")
+	beego.Router("/api/cms/addConfiguration", &cms.CMSController{}, "get,post:AddConfiguration")
+	beego.Router("/api/cms/filterConfigurations", &cms.CMSController{}, "get,post:FilterConfigurations")
+	beego.Router("/api/cms/queryRandomFrinkLink", &cms.CMSController{}, "get,post:QueryRandomFrinkLink")
 }
 
 func initILearningRouter() {

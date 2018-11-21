@@ -8,11 +8,11 @@ import (
 	"time"
 )
 
-type ConfigurationController struct {
+type CMSController struct {
 	beego.Controller
 }
 
-func (this *ConfigurationController) FilterConfigurations() {
+func (this *CMSController) FilterConfigurations() {
 	condArr := make(map[string]string)
 	offset, _ := this.GetInt("offset", 10)            // 每页记录数
 	current_page, _ := this.GetInt("current_page", 1) // 当前页
@@ -31,7 +31,7 @@ func (this *ConfigurationController) FilterConfigurations() {
 	this.ServeJSON()
 }
 
-func (this *ConfigurationController) QueryAllConfigurations() {
+func (this *CMSController) QueryAllConfigurations() {
 	configuration_name := this.GetString("configuration_name")
 	configurations, err := cms.QueryAllConfigurations(configuration_name, 0)
 	if err != nil {
@@ -42,7 +42,7 @@ func (this *ConfigurationController) QueryAllConfigurations() {
 	this.ServeJSON()
 }
 
-func (this *ConfigurationController) AddConfiguration() {
+func (this *CMSController) AddConfiguration() {
 	user_name := this.Ctx.Input.Session("UserName").(string)
 	parent_id, _ := this.GetInt64("parent_id", 0)
 	configuration_name := this.GetString("configuration_name")
@@ -61,6 +61,16 @@ func (this *ConfigurationController) AddConfiguration() {
 		this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
 	} else {
 		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
+	}
+	this.ServeJSON()
+}
+
+func (this *CMSController) QueryRandomFrinkLink()  {
+	frind_links, err := cms.QueryRandomFrinkLink()
+	if err != nil {
+		this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
+	} else {
+		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "frind_links": &frind_links}
 	}
 	this.ServeJSON()
 }

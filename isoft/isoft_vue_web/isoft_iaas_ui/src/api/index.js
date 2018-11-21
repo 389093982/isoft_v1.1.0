@@ -74,6 +74,9 @@ export const QueryAllConfigurations = (configuration_name) => ajax(BASE_URL+'/cm
 // 分页查询配置项信息
 export const FilterConfigurations = (search,offset,current_page) => ajax(BASE_URL+'/cms/filterConfigurations',{search, offset,current_page},'GET');
 
+// 获取随机数量的友情链接地址
+export const QueryRandomFrinkLink = () => ajax(BASE_URL+'/cms/queryRandomFrinkLink',{},'GET');
+
 // 根据 blog_id 查询 blog 详细信息
 export const ShowShareDetail = (share_id) => ajax(BASE_URL+'/share/showShareDetail',{share_id},'GET');
 
