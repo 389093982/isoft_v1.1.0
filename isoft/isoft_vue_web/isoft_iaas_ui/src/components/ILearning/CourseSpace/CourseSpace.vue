@@ -5,13 +5,9 @@
         <Card title="我的课程空间" icon="ios-options" :padding="0" shadow>
           <CellGroup>
             <Cell title="我要开课" to="/ilearning/course_space/newCourse"/>
-            <Cell title="我的课程" to="/ilearning/course_space/myCourseList">
-              <Badge :count="10" slot="extra" />
-            </Cell>
+            <Cell title="我的课程" to="/ilearning/course_space/myCourseList"/>
             <Cell title="最近浏览" to="/ilearning/course_space/recentlyViewed"/>
-            <Cell title="我要收藏" to="/components/button" >
-              <Badge :count="10" slot="extra" />
-            </Cell>
+            <Cell title="我的收藏" to="/components/button"/>
           </CellGroup>
         </Card>
       </Col>

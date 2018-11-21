@@ -10,6 +10,14 @@ import (
 	"time"
 )
 
+var (
+	WEEDFS_URL string
+)
+
+func init()  {
+	WEEDFS_URL = beego.AppConfig.String("weedfs_url")
+}
+
 type IFileController struct {
 	beego.Controller
 }
@@ -42,7 +50,7 @@ func (this *IFileController) FileUpload() {
 	if err != nil {
 		panic(err)
 	}
-	weedFsInfo, err := weedfsutil.SaveFile("193.112.162.61:9333", f)
+	weedFsInfo, err := weedfsutil.SaveFile(WEEDFS_URL, f)
 	if err != nil {
 		panic(err)
 	}

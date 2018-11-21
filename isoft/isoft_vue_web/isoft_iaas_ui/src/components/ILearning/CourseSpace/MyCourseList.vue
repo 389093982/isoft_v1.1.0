@@ -41,6 +41,7 @@
   import {EndUpdate} from "../../../api"
   import ChangeCourseImg from "../Course/ChangeCourseImg.vue"
   import UploadVideo from "../Course/UploadVideo.vue"
+  import {getCookie} from "../../../tools"
 
   export default {
     name: "MyCourseList",
@@ -53,7 +54,8 @@
     },
     methods:{
       refreshMyCourseList:async function () {
-        const result = await GetMyCourseList();
+        var userName = getCookie("userName");
+        const result = await GetMyCourseList(userName);
         if(result.status=="SUCCESS"){
           this.myCourses = result.courses;
         }

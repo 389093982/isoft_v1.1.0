@@ -64,19 +64,18 @@
     },
     methods:{
       handleSubmit (name) {
-        var _this = this;
         this.$refs[name].validate(async (valid) => {
           if (valid) {
-            const result = await NewCourse(_this.formValidate.course_name,
-              _this.formValidate.course_type, _this.formValidate.course_sub_type, _this.formValidate.course_short_desc);
+            const result = await NewCourse(this.formValidate.course_name,
+              this.formValidate.course_type, this.formValidate.course_sub_type, this.formValidate.course_short_desc);
             if(result.status == "SUCCESS"){
-              _this.$Message.success('提交成功!');
-              _this.$router.go(0);     // 页面刷新,等价于 location.reload()
+              this.$Message.success('提交成功!');
+              this.$router.push({path: "/ilearning/course_space/myCourseList"});
             }else{
-              _this.$Message.error('提交失败!');
+              this.$Message.error('提交失败!');
             }
           } else {
-            _this.$Message.error('验证失败!');
+            this.$Message.error('验证失败!');
           }
         })
       },
