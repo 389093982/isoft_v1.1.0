@@ -1,14 +1,17 @@
 package cms
 
-import "github.com/astaxie/beego/orm"
+import (
+	"github.com/astaxie/beego/orm"
+	"strings"
+)
 
 func FilterConfigurations(condArr map[string]string, page int, offset int) (configurations []Configuration, counts int64, err error) {
 	o := orm.NewOrm()
 	qs := o.QueryTable("configuration")
 	var cond = orm.NewCondition()
-	if _, ok := condArr["search"]; ok {
+	if search, ok := condArr["search"]; ok && strings.TrimSpace(search) != "" {
 		subCond := orm.NewCondition()
-		subCond = cond.And("configuration_name__contains", condArr["search"]).Or("configuration_value__contains", condArr["search"])
+		subCond = cond.And("configuration_name__contains", search).Or("configuration_value__contains", search)
 		cond = cond.AndCond(subCond)
 	}
 	qs = qs.SetCond(cond)
@@ -38,8 +41,30 @@ func AddConfiguration(configuration *Configuration) (id int64, err error) {
 	return
 }
 
-func QueryRandomFrinkLink() (frindLinks []*FrindLink, err error) {
+func QueryRandomFrinkLink() (friendLinks []*FriendLink, err error) {
 	o := orm.NewOrm()
-	_, err = o.Raw("SELECT link_name,link_addr FROM FRIND_LINK ORDER BY RAND() limit 50").QueryRows(&frindLinks)
+	_, err = o.Raw("SELECT link_name,link_addr FROM FRIEND_LINK ORDER BY RAND() limit 50").QueryRows(&friendLinks)
+	return
+}
+
+func FilterFriendLinks(condArr map[string]string, page int, offset int) (friendLinks []FriendLink, counts int64, err error) {
+	o := orm.NewOrm()
+	qs := o.QueryTable("friend_link")
+	var cond = orm.NewCondition()
+	if search, ok := condArr["search"]; ok && strings.TrimSpace(search) != "" {
+		subCond := orm.NewCondition()
+		subCond = cond.And("link_name__contains", search).Or("link_addr__contains", search)
+		cond = cond.AndCond(subCond)
+	}
+	qs = qs.SetCond(cond)
+	counts, _ = qs.Count()
+	qs = qs.Limit(offset, (page-1)*offset)
+	qs.All(&friendLinks)
+	return
+}
+
+func AddFriendLink(friendLink *FriendLink) (id int64, err error) {
+	o := orm.NewOrm()
+	id, err = o.Insert(friendLink)
 	return
 }

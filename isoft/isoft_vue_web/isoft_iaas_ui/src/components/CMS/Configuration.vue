@@ -107,19 +107,18 @@
         }
       },
       handleSubmit (name) {
-        var _this = this;
         this.$refs[name].validate(async (valid) => {
           if (valid) {
-            const result = await AddConfiguration(_this.formValidate.parent_id,
-              _this.formValidate.configuration_name, _this.formValidate.configuration_value);
+            const result = await AddConfiguration(this.formValidate.parent_id,
+              this.formValidate.configuration_name, this.formValidate.configuration_value);
             if(result.status == "SUCCESS"){
               this.showAddConfiguration = false;
-              _this.refreshConfigurations();
+              this.refreshConfigurations();
             }else{
-              _this.$Message.error('提交失败!');
+              this.$Message.error('提交失败!');
             }
           } else {
-            _this.$Message.error('验证失败!');
+            this.$Message.error('验证失败!');
           }
         })
       },

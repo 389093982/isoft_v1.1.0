@@ -74,3 +74,43 @@ func (this *CMSController) QueryRandomFrinkLink()  {
 	}
 	this.ServeJSON()
 }
+
+func (this *CMSController) FilterFriendLinks() {
+	condArr := make(map[string]string)
+	offset, _ := this.GetInt("offset", 10)            // 每页记录数
+	current_page, _ := this.GetInt("current_page", 1) // 当前页
+	search := this.GetString("search")
+	if search != "" {
+		condArr["search"] = search
+	}
+	friendLinks, count, err := cms.FilterFriendLinks(condArr, current_page, offset)
+	paginator := pagination.SetPaginator(this.Ctx, offset, count)
+	if err != nil {
+		this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
+	} else {
+		paginatorMap := pageutil.Paginator(paginator.Page(), paginator.PerPageNums, paginator.Nums())
+		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "friendLinks": &friendLinks, "paginator": &paginatorMap}
+	}
+	this.ServeJSON()
+}
+
+func (this *CMSController) AddFriendLink() {
+	user_name := this.Ctx.Input.Session("UserName").(string)
+	link_name := this.GetString("link_name")
+	link_addr := this.GetString("link_addr")
+	friendLink := &cms.FriendLink{
+		LinkName:  link_name,
+		LinkAddr: link_addr,
+		CreatedBy:          user_name,
+		CreatedTime:        time.Now(),
+		LastUpdatedBy:      user_name,
+		LastUpdatedTime:    time.Now(),
+	}
+	_, err := cms.AddFriendLink(friendLink)
+	if err != nil {
+		this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
+	} else {
+		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
+	}
+	this.ServeJSON()
+}

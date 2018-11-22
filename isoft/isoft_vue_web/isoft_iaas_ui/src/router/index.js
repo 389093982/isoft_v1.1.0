@@ -21,6 +21,7 @@ import ShareAdd from "../components/Share/ShareAdd"
 import ShareList from "../components/Share/ShareList"
 import ShareDetail from "../components/Share/ShareDetail"
 import HeartBeat from "../components/Monitor/HeartBeat"
+import FriendLinkList from "../components/CMS/FriendLinkList"
 
 Vue.use(Router);
 
@@ -70,45 +71,53 @@ export const ShareListRouter = {
 
 
 export const ILearningRouter = {
-    path: '/ilearning',
-    component: ILearning,
-    // 二级路由的配置
-    children: [
-      {
-        path: 'index',
-        component: ILearningIndex,
-      },
-      {
-        path: 'course_space',
-        component: CourseSpace,
-        redirect: '/ilearning/course_space/newCourse',
-        children: [
-          {path: 'newCourse',component: NewCourse,},
-          {path: 'myCourseList',component: MyCourseList,},
-          {path: 'RecentlyViewed',component: RecentlyViewed,},
-        ]
-      },
-      {
-        path: 'course_detail',
-        component: CourseDetail,
-      },
-      {
-        path: 'video_play',
-        component: VideoPay,
-      },
-      {
-        path: 'configuration',
-        component: Configuration,
-      },
-      {
-        // this.$router.push({ name: 'xxx'});
-        // this.$router.push({ path: 'xxx'});
-        name:'course_search',
-        path: 'course_search',
-        component: CourseSearch,
-      },
-    ]
-  };
+  path: '/ilearning',
+  component: ILearning,
+  // 二级路由的配置
+  children: [
+    {
+      path: 'index',
+      component: ILearningIndex,
+    },
+    {
+      path: 'course_space',
+      component: CourseSpace,
+      redirect: '/ilearning/course_space/newCourse',
+      children: [
+        {path: 'newCourse',component: NewCourse,},
+        {path: 'myCourseList',component: MyCourseList,},
+        {path: 'RecentlyViewed',component: RecentlyViewed,},
+      ]
+    },
+    {
+      path: 'course_detail',
+      component: CourseDetail,
+    },
+    {
+      path: 'video_play',
+      component: VideoPay,
+    },
+    {
+      path: 'configuration',
+      component: Configuration,
+    },
+    {
+      // this.$router.push({ name: 'xxx'});
+      // this.$router.push({ path: 'xxx'});
+      name:'course_search',
+      path: 'course_search',
+      component: CourseSearch,
+    },
+  ]
+};
+
+export const CMSRouter = {
+  path: '/cms',
+  component: ShareIndex,
+  children: [
+    {path: 'friendLinkList',component: FriendLinkList},
+  ]
+};
 
 
 export default new Router({
@@ -120,6 +129,7 @@ export default new Router({
     ILearningRouter,
     ShareListRouter,
     MonitorRouter,
+    CMSRouter,
     {
       path: '/',
       redirect: '/ilearning/index'
