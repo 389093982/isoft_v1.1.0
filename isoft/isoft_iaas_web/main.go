@@ -95,7 +95,7 @@ func registerModel() {
 	orm.RegisterModel(new(ifile.IFile))
 
 	orm.RegisterModel(new(cms.Configuration))
-	orm.RegisterModel(new(cms.FriendLink))
+	orm.RegisterModel(new(cms.CommonLink))
 
 	orm.RegisterModel(new(share.Share))
 

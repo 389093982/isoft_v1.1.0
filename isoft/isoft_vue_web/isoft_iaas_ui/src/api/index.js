@@ -78,10 +78,10 @@ export const FilterConfigurations = (search,offset,current_page) => ajax(BASE_UR
 export const QueryRandomFrinkLink = () => ajax(BASE_URL+'/cms/queryRandomFrinkLink',{},'GET');
 
 // 分页查询友情链接地址
-export const FilterFriendLinks = (offset,current_page,search) => ajax(BASE_URL+'/cms/filterFriendLinks',{offset,current_page,search},'GET');
+export const FilterCommonLinks = (offset,current_page,search) => ajax(BASE_URL+'/cms/filterCommonLinks',{offset,current_page,search},'GET');
 
 // 添加友情链接地址
-export const AddFriendLink = (link_name, link_addr) => ajax(BASE_URL+'/cms/addFriendLink',{link_name, link_addr},'GET');
+export const AddCommonLink = (link_name, link_addr) => ajax(BASE_URL+'/cms/addCommonLink',{link_name, link_addr},'GET');
 
 // 根据 blog_id 查询 blog 详细信息
 export const ShowShareDetail = (share_id) => ajax(BASE_URL+'/share/showShareDetail',{share_id},'GET');

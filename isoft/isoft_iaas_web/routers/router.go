@@ -59,8 +59,8 @@ func initCMSRouter() {
 	beego.Router("/api/cms/addConfiguration", &cms.CMSController{}, "get,post:AddConfiguration")
 	beego.Router("/api/cms/filterConfigurations", &cms.CMSController{}, "get,post:FilterConfigurations")
 	beego.Router("/api/cms/queryRandomFrinkLink", &cms.CMSController{}, "get,post:QueryRandomFrinkLink")
-	beego.Router("/api/cms/filterFriendLinks", &cms.CMSController{}, "get,post:FilterFriendLinks")
-	beego.Router("/api/cms/addFriendLink", &cms.CMSController{}, "get,post:AddFriendLink")
+	beego.Router("/api/cms/filterCommonLinks", &cms.CMSController{}, "get,post:FilterCommonLinks")
+	beego.Router("/api/cms/addCommonLink", &cms.CMSController{}, "get,post:AddCommonLink")
 }
 
 func initILearningRouter() {

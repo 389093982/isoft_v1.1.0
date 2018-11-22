@@ -2,13 +2,13 @@
   <div>
     <Row style="margin-bottom: 10px;">
       <Col span="12">
-        <Button type="success" @click="showAddFriendLink = true">新增</Button>
+        <Button type="success" @click="showAddCommonLink = true">新增</Button>
       </Col>
-      <Col span="12"><Input v-model="search" search enter-button placeholder="Enter something..." @on-search="refreshFilterFriendLinks"/></Col>
+      <Col span="12"><Input v-model="search" search enter-button placeholder="Enter something..." @on-search="refreshFilterCommonLinks"/></Col>
     </Row>
 
     <Modal
-      v-model="showAddFriendLink"
+      v-model="showAddCommonLink"
       width="500"
       title="新增链接地址"
       :mask-closable="false">
@@ -28,22 +28,22 @@
     </Modal>
 
 
-    <Table :columns="columns1" :data="friendLinks" size="small" height="450"></Table>
+    <Table :columns="columns1" :data="commonLinks" size="small" height="450"></Table>
     <Page :total="total" :page-size="offset" show-total show-sizer :styles="{'text-align': 'center','margin-top': '10px'}"
           @on-change="handleChange" @on-page-size-change="handlePageSizeChange"/>
   </div>
 </template>
 
 <script>
-  import {FilterFriendLinks} from "../../api"
-  import {AddFriendLink} from "../../api"
+  import {FilterCommonLinks} from "../../api"
+  import {AddCommonLink} from "../../api"
 
   export default {
     name: "FriendLinkList",
     data(){
       return {
-        showAddFriendLink:false,
-        friendLinks:[],
+        showAddCommonLink:false,
+        commonLinks:[],
         // 当前页
         current_page:1,
         // 总页数
@@ -80,21 +80,21 @@
       }
     },
     methods:{
-      async refreshFilterFriendLinks(){
-        const result = await FilterFriendLinks(this.offset,this.current_page,this.search);
+      async refreshFilterCommonLinks(){
+        const result = await FilterCommonLinks(this.offset,this.current_page,this.search);
         if(result.status == "SUCCESS"){
           this.total = result.paginator.totalcount;
-          this.friendLinks = result.friendLinks;
+          this.commonLinks = result.commonLinks;
         }
       },
       handleSubmit (name) {
         this.$refs[name].validate(async (valid) => {
           if (valid) {
-            const result = await AddFriendLink(this.formValidate.link_name, this.formValidate.link_addr);
+            const result = await AddCommonLink(this.formValidate.link_name, this.formValidate.link_addr);
             if(result.status == "SUCCESS"){
               this.showAddConfiguration = false;
-              this.refreshFilterFriendLinks();
-              this.showAddFriendLink = false;
+              this.refreshFilterCommonLinks();
+              this.showAddCommonLink = false;
             }else{
               this.$Message.error('提交失败!');
             }
@@ -108,15 +108,15 @@
       },
       handleChange(page){
         this.current_page = page;
-        this.refreshFilterFriendLinks();
+        this.refreshFilterCommonLinks();
       },
       handlePageSizeChange(pageSize){
         this.offset = pageSize;
-        this.refreshFilterFriendLinks();
+        this.refreshFilterCommonLinks();
       },
     },
     mounted:function () {
-      this.refreshFilterFriendLinks();
+      this.refreshFilterCommonLinks();
     }
   }
 </script>

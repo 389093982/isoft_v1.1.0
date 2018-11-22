@@ -16,7 +16,7 @@ type Configuration struct {
 }
 
 // 友情链接
-type FriendLink struct {
+type CommonLink struct {
 	Id                 int64            `json:"id"`
 	LinkName 		   string			`json:"link_name"`
 	LinkAddr		   string			`json:"link_addr"`
