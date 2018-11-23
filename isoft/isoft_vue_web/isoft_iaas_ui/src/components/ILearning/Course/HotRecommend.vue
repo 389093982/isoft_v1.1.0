@@ -33,6 +33,7 @@
 <script>
   import {GetHotCourseRecommend} from "../../../api"
 
+
   export default {
     name: "HotRecommend",
     props:{

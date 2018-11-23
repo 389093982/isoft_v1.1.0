@@ -11,6 +11,9 @@
         <HotIssue/>
       </Col>
     </Row>
+
+    <!-- 热门开源项目 -->
+    <HotProject/>
     <SiteGuide/>
     <HotCommunity/>
   </div>
@@ -23,10 +26,11 @@
   import HotIssue from "./Course/HotIssue"
   import SiteGuide from "./Site/SiteGuide"
   import HotCommunity from "./Community/HotCommunity"
+  import HotProject from "./Hot/HotProject"
 
   export default {
     name: "Index",
-    components:{ChooseCourseType,HotRecommend,NewsNotice,HotIssue,SiteGuide,HotCommunity},
+    components:{ChooseCourseType,HotRecommend,NewsNotice,HotIssue,SiteGuide,HotCommunity,HotProject},
   }
 </script>
 
