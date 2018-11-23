@@ -1,6 +1,7 @@
 package cms
 
 import (
+	"fmt"
 	"github.com/astaxie/beego/orm"
 	"strings"
 )
@@ -41,9 +42,9 @@ func AddConfiguration(configuration *Configuration) (id int64, err error) {
 	return
 }
 
-func QueryRandomFrinkLink() (commonLinks []*CommonLink, err error) {
+func QueryRandomCommonLink(link_type string) (commonLinks []*CommonLink, err error) {
 	o := orm.NewOrm()
-	_, err = o.Raw("SELECT link_name,link_addr FROM COMMON_LINK ORDER BY RAND() limit 50").QueryRows(&commonLinks)
+	_, err = o.Raw(fmt.Sprintf("SELECT link_name,link_addr FROM COMMON_LINK WHERE link_type = '%s' ORDER BY RAND() limit 50", link_type)).QueryRows(&commonLinks)
 	return
 }
 

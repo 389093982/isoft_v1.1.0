@@ -65,12 +65,13 @@ func (this *CMSController) AddConfiguration() {
 	this.ServeJSON()
 }
 
-func (this *CMSController) QueryRandomFrinkLink()  {
-	frind_links, err := cms.QueryRandomFrinkLink()
+func (this *CMSController) QueryRandomCommonLink()  {
+	link_type := this.GetString("link_type")
+	common_links, err := cms.QueryRandomCommonLink(link_type)
 	if err != nil {
 		this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
 	} else {
-		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "frind_links": &frind_links}
+		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "common_links": &common_links}
 	}
 	this.ServeJSON()
 }

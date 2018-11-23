@@ -15,10 +15,6 @@ type Configuration struct {
 	Status             int              `json:"status"` // 状态 -1 表示失效
 }
 
-
-const COMMON_LINK_TYPE_FRIEND_LINK  = "friend_link"
-const COMMON_LINK_TYPE_HOT_PROJECT = "hot_project"
-
 // 友情链接
 type CommonLink struct {
 	Id                 int64            `json:"id"`

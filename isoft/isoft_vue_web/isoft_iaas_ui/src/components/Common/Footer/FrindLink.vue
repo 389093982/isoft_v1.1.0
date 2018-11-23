@@ -9,7 +9,7 @@
 </template>
 
 <script>
-  import {QueryRandomFrinkLink} from "../../../api"
+  import {QueryRandomCommonLink} from "../../../api"
 
   export default {
     name: "FrindLink",
@@ -20,9 +20,9 @@
     },
     methods:{
       async refreshRandomFrinkLink (){
-        const data = await QueryRandomFrinkLink();
+        const data = await QueryRandomCommonLink("friend_link");
         if(data.status == "SUCCESS"){
-          this.frindLinks = data.frind_links;
+          this.frindLinks = data.common_links;
         }
       }
     },
