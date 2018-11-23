@@ -37,7 +37,7 @@
           <MenuGroup title="配置项管理">
             <MenuItem name="3-1"><router-link to="/ilearning/configuration">查看配置项</router-link></MenuItem>
             <MenuItem name="3-1"><router-link to="/monitor/filterPageHeartBeat">应用监听</router-link></MenuItem>
-            <MenuItem name="3-1"><router-link to="/cms/friendLinkList">友情链接</router-link></MenuItem>
+            <MenuItem name="3-1"><router-link to="/cms/commonLinkList">友情链接</router-link></MenuItem>
           </MenuGroup>
         </Submenu>
         <Submenu name="4">

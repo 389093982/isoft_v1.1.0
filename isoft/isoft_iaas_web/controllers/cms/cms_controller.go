@@ -94,13 +94,16 @@ func (this *CMSController) FilterCommonLinks() {
 	this.ServeJSON()
 }
 
+// 增加通用连接地址
 func (this *CMSController) AddCommonLink() {
 	user_name := this.Ctx.Input.Session("UserName").(string)
+	link_type := this.GetString("link_type")
 	link_name := this.GetString("link_name")
 	link_addr := this.GetString("link_addr")
 	commonLink := &cms.CommonLink{
-		LinkName:  link_name,
-		LinkAddr: link_addr,
+		LinkType:			link_type,
+		LinkName:  			link_name,
+		LinkAddr: 			link_addr,
 		CreatedBy:          user_name,
 		CreatedTime:        time.Now(),
 		LastUpdatedBy:      user_name,

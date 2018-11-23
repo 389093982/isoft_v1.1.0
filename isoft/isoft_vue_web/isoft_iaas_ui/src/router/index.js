@@ -1,27 +1,27 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import IFile from '../components/IFile/IFile.vue'
-import IBlog from '../components/IBlog/IBlog.vue'
-import BlogList from '../components/IBlog/BlogList.vue'
-import CatalogAdd from '../components/IBlog/CatalogAdd.vue'
-import BlogAdd from '../components/IBlog/BlogAdd.vue'
-import BlogDetail from '../components/IBlog/BlogDetail.vue'
-import ILearning from '../components/ILearning/ILearning.vue'
-import ILearningIndex from '../components/ILearning/Index.vue'
-import CourseSpace from '../components/ILearning/CourseSpace/CourseSpace.vue'
-import NewCourse from '../components/ILearning/CourseSpace/NewCourse.vue'
-import RecentlyViewed from '../components/ILearning/CourseSpace/RecentlyViewed.vue'
-import MyCourseList from '../components/ILearning/CourseSpace/MyCourseList.vue'
-import CourseDetail from '../components/ILearning/Course/CourseDetail.vue'
-import VideoPay from '../components/ILearning/Course/VideoPay.vue'
-import Configuration from '../components/CMS/Configuration.vue'
+import IFile from '../components/IFile/IFile'
+import IBlog from '../components/IBlog/IBlog'
+import BlogList from '../components/IBlog/BlogList'
+import CatalogAdd from '../components/IBlog/CatalogAdd'
+import BlogAdd from '../components/IBlog/BlogAdd'
+import BlogDetail from '../components/IBlog/BlogDetail'
+import ILearning from '../components/ILearning/ILearning'
+import ILearningIndex from '../components/ILearning/Index'
+import CourseSpace from '../components/ILearning/CourseSpace/CourseSpace'
+import NewCourse from '../components/ILearning/CourseSpace/NewCourse'
+import RecentlyViewed from '../components/ILearning/CourseSpace/RecentlyViewed'
+import MyCourseList from '../components/ILearning/CourseSpace/MyCourseList'
+import CourseDetail from '../components/ILearning/Course/CourseDetail'
+import VideoPay from '../components/ILearning/Course/VideoPay'
+import Configuration from '../components/CMS/Configuration'
 import CourseSearch from "../components/ILearning/Course/CourseSearch"
 import ShareIndex from "../components/Share/ShareIndex"
 import ShareAdd from "../components/Share/ShareAdd"
 import ShareList from "../components/Share/ShareList"
 import ShareDetail from "../components/Share/ShareDetail"
 import HeartBeat from "../components/Monitor/HeartBeat"
-import FriendLinkList from "../components/CMS/FriendLinkList"
+import CommonLinkList from "../components/CMS/CommonLinkList"
 
 Vue.use(Router);
 
@@ -115,7 +115,7 @@ export const CMSRouter = {
   path: '/cms',
   component: ShareIndex,
   children: [
-    {path: 'friendLinkList',component: FriendLinkList},
+    {path: 'commonLinkList',component: CommonLinkList},
   ]
 };
 

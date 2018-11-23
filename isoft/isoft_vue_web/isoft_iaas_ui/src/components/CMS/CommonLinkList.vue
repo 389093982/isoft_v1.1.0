@@ -11,9 +11,15 @@
       v-model="showAddCommonLink"
       width="500"
       title="新增链接地址"
+      footer-hide="true"
       :mask-closable="false">
       <!-- 表单正文 -->
       <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="100">
+        <FormItem label="链接类型" prop="link_type">
+          <Select v-model="formValidate.link_type">
+            <Option v-for="item in link_type_list" :value="item.value" :key="item.value">{{ item.label }}</Option>
+          </Select>
+        </FormItem>
         <FormItem label="链接名称" prop="link_name">
           <Input v-model="formValidate.link_name" placeholder="请输入链接名称"></Input>
         </FormItem>
@@ -39,7 +45,7 @@
   import {AddCommonLink} from "../../api"
 
   export default {
-    name: "FriendLinkList",
+    name: "CommonLinkList",
     data(){
       return {
         showAddCommonLink:false,
@@ -51,10 +57,15 @@
         // 每页记录数
         offset:10,
         search:"",
+        link_type_list:[{value: 'friend_link',label: 'friend_link 友情链接'},{value: 'hot_project',label: 'hot_project 热门项目'}],
         columns1: [
           {
             title: 'id',
             key: 'id'
+          },
+          {
+            title: '链接类型',
+            key: 'link_type'
           },
           {
             title: '链接名称',
@@ -66,10 +77,14 @@
           }
         ],
         formValidate: {
+          link_type: '',
           link_name: '',
           link_addr: '',
         },
         ruleValidate: {
+          link_type: [
+            { required: true, message: '链接类型不能为空', trigger: 'blur' }
+          ],
           link_name: [
             { required: true, message: '链接名称不能为空', trigger: 'blur' }
           ],
@@ -90,7 +105,7 @@
       handleSubmit (name) {
         this.$refs[name].validate(async (valid) => {
           if (valid) {
-            const result = await AddCommonLink(this.formValidate.link_name, this.formValidate.link_addr);
+            const result = await AddCommonLink(this.formValidate.link_type, this.formValidate.link_name, this.formValidate.link_addr);
             if(result.status == "SUCCESS"){
               this.showAddConfiguration = false;
               this.refreshFilterCommonLinks();
