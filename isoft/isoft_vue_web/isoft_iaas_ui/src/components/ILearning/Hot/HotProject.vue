@@ -1,11 +1,12 @@
 <template>
-  <div>
-    <div>
+  <div style="margin: 20px;margin-top: 30px;">
+    <div style="border-bottom: 2px solid #d9d9d9;">
       <h6 class="hot_project_dd" title="热门开源项目">热门开源项目</h6>
     </div>
     <Row :gutter="50">
-      <Col span="8" style="margin-top: 20px;" v-for="hot_project in hot_projects">
-        {{hot_project.link_name}} <BeautifulButtonLink msg="点击了解详情" floatstyle="right" :hrefaddr="hot_project.link_addr"/>
+      <Col span="8" style="margin-top: 12px;" v-for="hot_project in hot_projects">
+        <span style="font-size: 14px;">{{hot_project.link_name}}</span>
+        <BeautifulButtonLink msg="点击了解详情" floatstyle="right" :hrefaddr="hot_project.link_addr"/>
       </Col>
     </Row>
   </div>
@@ -40,10 +41,10 @@
 
 <style scoped>
   .hot_project_dd{
-    width: 293px;
-    height: 43px;
-    font-size: 20px;
-    line-height: 43px;
+    width: 200px;
+    height: 35px;
+    font-size: 18px;
+    line-height: 35px;
     text-align: center;
     background: #3b80db;
     color: #fff;
@@ -52,15 +53,5 @@
     margin: 0;
     padding: 0;
     font-family: "微软雅黑";
-  }
-  .hot_project_dd:after {
-    content: "";
-    display: block;
-    width: 880px;
-    height: 2px;
-    background: #d9d9d9;
-    left: 293px;
-    bottom: 0px;
-    position: absolute;
   }
 </style>
