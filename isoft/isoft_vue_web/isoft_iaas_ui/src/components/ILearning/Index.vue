@@ -14,9 +14,6 @@
 
     <!-- 热门开源项目 -->
     <HotProject/>
-    <HotProject/>
-    <HotProject/>
-
     <SiteGuide/>
     <HotCommunity/>
   </div>
