@@ -11,17 +11,17 @@
         <Col span="3">编辑次数 0</Col>
       </Row>
     </div>
-    <ShowMarkdown v-if="blog.content" :content="blog.content"/>
+    <IShowMarkdown v-if="blog.content" :content="blog.content"/>
   </div>
 </template>
 
 <script>
   import {ShowBlogDetail} from "../../api"
-  import ShowMarkdown from "../Common/markdown/ShowMarkdown"
+  import IShowMarkdown from "../Common/markdown/IShowMarkdown"
 
   export default {
     name: "BlogDetail",
-    components:{ShowMarkdown},
+    components:{IShowMarkdown},
     data(){
       return {
         blog: null,

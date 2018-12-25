@@ -1,16 +1,16 @@
 <template>
   <div v-if="share">
-    <ShowMarkdown v-if="share.content" :content="share.content"/>
+    <IShowMarkdown v-if="share.content" :content="share.content"/>
   </div>
 </template>
 
 <script>
   import {ShowShareDetail} from "../../api"
-  import ShowMarkdown from "../Common/markdown/ShowMarkdown"
+  import IShowMarkdown from "../Common/markdown/IShowMarkdown"
 
   export default {
     name: "ShareDetail",
-    components:{ShowMarkdown},
+    components:{IShowMarkdown},
     data(){
       return {
         share:null,

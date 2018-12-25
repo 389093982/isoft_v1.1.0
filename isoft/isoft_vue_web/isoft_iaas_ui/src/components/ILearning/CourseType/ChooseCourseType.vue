@@ -1,7 +1,7 @@
 <template>
   <div>
     <div style="margin-bottom: 10px;">
-      <Search @submitFunc="searchFunc"/>
+      <ISearch @submitFunc="searchFunc"/>
      </div>
 
     <div style="border: solid 1px #d9d9d9;">
@@ -37,11 +37,11 @@
 <script>
   import HotCourseType from "./HotCourseType"
   import TotalCourseType from "./TotalCourseType"
-  import Search from "../../Common/search/Search"
+  import ISearch from "../../Common/search/ISearch"
 
   export default {
     name: "ChooseCourseType",
-    components:{Search,HotCourseType,TotalCourseType},
+    components:{ISearch,HotCourseType,TotalCourseType},
     data(){
       return {
         showCourseType:true,

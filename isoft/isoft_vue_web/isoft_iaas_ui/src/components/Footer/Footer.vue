@@ -10,41 +10,41 @@
 
     <Row>
       <Col span="4" style="padding: 50px;">
-        <VerticalList :showRightBorder="true" title="新手帮助">
-          <VerticalListItem>新手引导</VerticalListItem>
-          <VerticalListItem>视频发布流程</VerticalListItem>
-          <VerticalListItem>账号注册</VerticalListItem>
-        </VerticalList>
+        <IVerticalList :showRightBorder="true" title="新手帮助">
+          <IVerticalListItem>新手引导</IVerticalListItem>
+          <IVerticalListItem>视频发布流程</IVerticalListItem>
+          <IVerticalListItem>账号注册</IVerticalListItem>
+        </IVerticalList>
       </Col>
       <Col span="4" style="padding: 50px;">
-        <VerticalList :showRightBorder="true" title="安全中心">
-          <VerticalListItem>公司简介</VerticalListItem>
-          <VerticalListItem>站点地图</VerticalListItem>
-        </VerticalList>
+        <IVerticalList :showRightBorder="true" title="安全中心">
+          <IVerticalListItem>公司简介</IVerticalListItem>
+          <IVerticalListItem>站点地图</IVerticalListItem>
+        </IVerticalList>
       </Col>
       <Col span="4" style="padding: 50px;">
-        <VerticalList :showRightBorder="true" title="安全中心">
-          <VerticalListItem>公司简介</VerticalListItem>
-          <VerticalListItem>站点地图</VerticalListItem>
-        </VerticalList>
+        <IVerticalList :showRightBorder="true" title="安全中心">
+          <IVerticalListItem>公司简介</IVerticalListItem>
+          <IVerticalListItem>站点地图</IVerticalListItem>
+        </IVerticalList>
       </Col>
       <Col span="4" style="padding: 50px;">
-        <VerticalList :showRightBorder="true" title="安全中心">
-          <VerticalListItem>关于我们</VerticalListItem>
-          <VerticalListItem>联系我们</VerticalListItem>
-          <VerticalListItem>人才招聘</VerticalListItem>
-          <VerticalListItem>商家入驻</VerticalListItem>
-          <VerticalListItem>广告服务</VerticalListItem>
-          <VerticalListItem>友情链接</VerticalListItem>
-          <VerticalListItem>Isoft论坛</VerticalListItem>
-        </VerticalList>
+        <IVerticalList :showRightBorder="true" title="安全中心">
+          <IVerticalListItem>关于我们</IVerticalListItem>
+          <IVerticalListItem>联系我们</IVerticalListItem>
+          <IVerticalListItem>人才招聘</IVerticalListItem>
+          <IVerticalListItem>商家入驻</IVerticalListItem>
+          <IVerticalListItem>广告服务</IVerticalListItem>
+          <IVerticalListItem>友情链接</IVerticalListItem>
+          <IVerticalListItem>Isoft论坛</IVerticalListItem>
+        </IVerticalList>
       </Col>
       <Col span="8" style="padding: 50px;">
-        <VerticalList title="客服中心">
-          <VerticalListItem>在线客服</VerticalListItem>
-          <VerticalListItem>我要举报</VerticalListItem>
-          <VerticalListItem>提出意见</VerticalListItem>
-        </VerticalList>
+        <IVerticalList title="客服中心">
+          <IVerticalListItem>在线客服</IVerticalListItem>
+          <IVerticalListItem>我要举报</IVerticalListItem>
+          <IVerticalListItem>提出意见</IVerticalListItem>
+        </IVerticalList>
       </Col>
     </Row>
 
@@ -55,13 +55,13 @@
 </template>
 
 <script>
-  import VerticalList from "../Common/list/VerticalList"
-  import VerticalListItem from "../Common/list/VerticalListItem"
+  import IVerticalList from "../Common/list/IVerticalList"
+  import IVerticalListItem from "../Common/list/IVerticalListItem"
   import FrindLink from "./FrindLink"
 
   export default {
     name: "Footer",
-    components:{VerticalListItem, VerticalList,VerticalListItem, FrindLink},
+    components:{IVerticalList,IVerticalListItem, FrindLink},
     methods: {
 
     }

@@ -6,19 +6,19 @@
     <Row :gutter="50">
       <Col span="8" style="margin-top: 12px;" v-for="hot_project in hot_projects">
         <span style="font-size: 14px;">{{hot_project.link_name}}</span>
-        <BeautifulButtonLink msg="点击了解详情" floatstyle="right" :hrefaddr="hot_project.link_addr"/>
+        <IBeautifulButtonLink msg="点击了解详情" floatstyle="right" :hrefaddr="hot_project.link_addr"/>
       </Col>
     </Row>
   </div>
 </template>
 
 <script>
-  import BeautifulButtonLink from "../../Common/link/BeautifulButtonLink"
+  import IBeautifulButtonLink from "../../Common/link/IBeautifulButtonLink"
   import {QueryRandomCommonLink} from "../../../api"
 
   export default {
     name: "HotProject",
-    components:{BeautifulButtonLink},
+    components:{IBeautifulButtonLink},
     data(){
       return {
         hot_projects:[],
