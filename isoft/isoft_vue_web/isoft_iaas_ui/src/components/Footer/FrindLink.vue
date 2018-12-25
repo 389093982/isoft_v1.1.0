@@ -9,7 +9,7 @@
 </template>
 
 <script>
-  import {QueryRandomCommonLink} from "../../../api"
+  import {QueryRandomCommonLink} from "../../api/index"
 
   export default {
     name: "FrindLink",

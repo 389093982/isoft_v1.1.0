@@ -17,7 +17,7 @@
 
 <script>
   import {ShowBlogDetail} from "../../api"
-  import ShowMarkdown from "../Common/Common/ShowMarkdown"
+  import ShowMarkdown from "../Common/markdown/ShowMarkdown"
 
   export default {
     name: "BlogDetail",

@@ -55,8 +55,8 @@
 </template>
 
 <script>
-  import VerticalList from "../list/VerticalList"
-  import VerticalListItem from "../list/VerticalListItem"
+  import VerticalList from "../Common/list/VerticalList"
+  import VerticalListItem from "../Common/list/VerticalListItem"
   import FrindLink from "./FrindLink"
 
   export default {

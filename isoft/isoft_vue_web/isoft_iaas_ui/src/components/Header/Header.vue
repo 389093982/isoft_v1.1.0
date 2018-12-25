@@ -57,8 +57,8 @@
 </template>
 
 <script>
-  import {getCookie} from '../../../tools/index'
-  import {delCookie} from '../../../tools/index'
+  import {getCookie} from '../../tools/index'
+  import {delCookie} from '../../tools/index'
 
   export default {
     name: "Header",
