@@ -1,8 +1,10 @@
 <template>
-  <span><a target="_blank" :style="styles" :href="hrefaddr">{{msg}}</a></span>
+  <span><a target="_blank" :style="styles" :href="hrefaddr" :floatstyle="floatstyle">{{msg}}</a></span>
 </template>
 
 <script>
+  import {oneOf} from "../../../tools/index"
+
   export default {
     name: "BeautifulButtonLink",
     props: {
@@ -12,6 +14,9 @@
       },
       floatstyle: {
         type: String,
+        validator:function (value) {
+          return oneOf(value, ['none', 'left', 'right']);
+        },
         default: 'none'
       },
       marginrightstype: {
