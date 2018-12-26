@@ -9,6 +9,7 @@
       <Col span="6">
         <NewsNotice/>
         <HotIssue/>
+        <ToolBox/>
       </Col>
     </Row>
 
@@ -27,10 +28,11 @@
   import SiteGuide from "./Site/SiteGuide"
   import HotCommunity from "./Community/HotCommunity"
   import HotProject from "./Hot/HotProject"
+  import ToolBox from "../CMS/ToolBox"
 
   export default {
     name: "Index",
-    components:{ChooseCourseType,HotRecommend,NewsNotice,HotIssue,SiteGuide,HotCommunity,HotProject},
+    components:{ChooseCourseType,HotRecommend,NewsNotice,HotIssue,SiteGuide,HotCommunity,HotProject,ToolBox},
   }
 </script>
 
