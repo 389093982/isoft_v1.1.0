@@ -1,7 +1,6 @@
 <template>
-  <IBeautifulDiv>
-    <div class="title">工具盒</div>
-    <div class="content">
+  <IBeautifulCard title="工具盒">
+    <div slot="content">
       <ul>
         <li v-for="tool in tools" class="li">
           <i class="icon" :style="{background:'url(' + tool.icon + ') 0 0 no-repeat'}"></i>
@@ -10,15 +9,15 @@
       </ul>
       <div style="clear: both;"></div>
     </div>
-  </IBeautifulDiv>
+  </IBeautifulCard>
 </template>
 
 <script>
-  import IBeautifulDiv from "../Common/div/IBeautifulDiv"
+  import IBeautifulCard from "../Common/card/IBeautifulCard"
 
   export default {
     name: "ToolBox",
-    components:{IBeautifulDiv},
+    components:{IBeautifulCard},
     data(){
       return {
         tools:[
@@ -114,14 +113,6 @@
 </script>
 
 <style scoped>
- .title {
-    height: 50px;
-    line-height: 50px;
-    padding-left: 15px;
-    font-size: 18px;
-    border-bottom: 1px solid #eee;
-    text-align: left;
- }
  .li {
    list-style: none;
    float: left;
