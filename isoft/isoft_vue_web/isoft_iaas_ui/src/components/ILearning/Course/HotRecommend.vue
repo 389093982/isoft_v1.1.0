@@ -12,12 +12,10 @@
       </Card>
     </div>
     <!-- 图标形式显示 -->
-    <div v-else style="background-color: #f6f6f6;height: 38px;border-bottom: 1px solid #ccc;">
-      <p style="margin-left: 20px;line-height: 38px;">热门课程推荐</p>
-      <div style="background: #ffffff;padding: 20px;padding-top: 5px;">
-        <ul>
-          <li v-for="course in courses" style="float: left;padding: 10px 9px 0;width: 140px;height: 125px;overflow: hidden;
-          text-align: center;position: relative;">
+    <IBeautifulCard v-else title="热门课程推荐">
+      <div slot="content" style="min-height:850px;padding: 20px;">
+        <ul class="clear">
+          <li v-for="course in courses">
             <router-link :to="{path:'/ilearning/course_detail',query:{course_id:course.id}}">
               <img v-if="course.small_image" :src="course.small_image" height="90px" width="120px"/>
               <img v-else src="../../../assets/default.png" height="90px" width="120px"/>
@@ -26,16 +24,18 @@
           </li>
         </ul>
       </div>
-    </div>
+    </IBeautifulCard>
   </div>
 </template>
 
 <script>
+  import IBeautifulCard from "../../Common/card/IBeautifulCard"
   import {GetHotCourseRecommend} from "../../../api"
 
 
   export default {
     name: "HotRecommend",
+    components:{IBeautifulCard},
     props:{
       // 显示方式,支持 detail 和 list
       showMode: {
@@ -63,8 +63,20 @@
 </script>
 
 <style scoped>
+  /* 引入公共样式库 */
+  @import "../../../../static/css/common.css";
+
   a{
     color: black;
+  }
+  li{
+    float: left;
+    padding: 10px 9px 0;
+    width: 140px;
+    height: 125px;
+    overflow: hidden;
+    text-align: center;
+    position: relative;
   }
   li:hover{
     background-color: #f4f4f4;

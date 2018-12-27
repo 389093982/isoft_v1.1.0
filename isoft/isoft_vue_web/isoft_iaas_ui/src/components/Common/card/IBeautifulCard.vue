@@ -32,7 +32,7 @@
 <style scoped>
  .box_bg {
    background-color: #eee;
-   padding: 6px;
+   padding: 4px;
  }
  .box_area {
    background-color: #ffffff;

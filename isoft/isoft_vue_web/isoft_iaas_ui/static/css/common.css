@@ -1,0 +1,10 @@
+/* 清除浮动只需要添加 class=clear 即可 */
+.clear::after {
+  content:"";
+  clear:both;
+  display:block;
+}
+
+.bgcolor {
+  background: #eee;
+}

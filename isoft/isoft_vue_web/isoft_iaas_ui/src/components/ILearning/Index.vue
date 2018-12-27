@@ -1,8 +1,8 @@
 <template>
   <div style="background: #FFFFFF;padding: 10px;box-shadow: 2px 2px 1px #888888;">
     <ChooseCourseType/>
-    <Row style="border: 1px solid #ccc;border-radius: 4px;margin-bottom: 20px;height: 800px;margin: 20px auto;">
-      <Col span="18" style="border-right: 1px solid #ccc;height: 800px;display: block;">
+    <Row class="bgcolor" style="margin-bottom: 20px;margin: 20px auto;padding: 3px;">
+      <Col span="18">
         <!-- 热门推荐区域 -->
         <HotRecommend/>
       </Col>
@@ -37,5 +37,7 @@
 </script>
 
 <style scoped>
+  /* 引入公共样式库 */
+  @import "../../../static/css/common.css";
 
 </style>
