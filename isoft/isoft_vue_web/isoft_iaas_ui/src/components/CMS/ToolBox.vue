@@ -23,22 +23,22 @@
         tools:[
           {
             "icon":"https://as.zbjimg.com/rake-component/fe-employer/fe-zbj-quickservice-res/0.0.8/images/qs-icons.png",
-            "label":"商标查询",
+            "label":"精品课程",
             "href":"https://www.baidu.com"
           },
           {
             "icon":"https://as.zbjimg.com/rake-component/fe-employer/fe-zbj-quickservice-res/0.0.8/images/qs-icons.png",
-            "label":"商标查询",
+            "label":"共享空间",
             "href":"https://www.baidu.com"
           },
           {
             "icon":"https://as.zbjimg.com/rake-component/fe-employer/fe-zbj-quickservice-res/0.0.8/images/qs-icons.png",
-            "label":"商标查询",
+            "label":"博客天地",
             "href":"https://www.baidu.com"
           },
           {
             "icon":"https://as.zbjimg.com/rake-component/fe-employer/fe-zbj-quickservice-res/0.0.8/images/qs-icons.png",
-            "label":"商标查询",
+            "label":"后台管理",
             "href":"https://www.baidu.com"
           },
           {
