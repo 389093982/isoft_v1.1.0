@@ -1,51 +1,62 @@
 <template>
   <div>
-    <div style="background-color: #f6f6f6;height: 38px;border-bottom: solid 1px #d9d9d9;">
-      <p style="float: left;line-height: 38px;margin-left: 20px;">热门问题</p>
-      <a href="javascript:;" style="float: right;line-height: 38px;margin-right: 20px;color: red;">
-        <img src="../../../assets/images/common/question.jpg"/>
-      </a>
-    </div>
-    <div style="background: #ffffff;font-size: 14px;padding-bottom: 10px;">
-      <ul style="padding-left: 0em;">
-        <li style="padding: 10px 15px 0 15px;list-style: none;">
-          <span style="float:right;color: #999;">02-21</span>
-          <a href="#" target="_blank" style="color: #f55e13!important;">
-            Java泛型是什么? <img src="../../../assets/news.gif">
-          </a>
-        </li>
-        <li style="padding: 10px 15px 0 15px;list-style: none;">
-          <span style="float:right;color: #999;">02-21</span>
-          <a href="#" target="_blank" style="color: #f55e13!important;">
-            Java反射是什么? <img src="../../../assets/news.gif">
-          </a>
-        </li>
-        <li style="padding: 10px 15px 0 15px;list-style: none;">
-          <span style="float:right;color: #999;">02-21</span>
-          <a href="#" target="_blank">
-            Python难不难学?
-          </a>
-        </li>
-        <li style="padding: 10px 15px 0 15px;list-style: none;">
-          <span style="float:right;color: #999;">02-21</span>
-          <a href="#" target="_blank">
-            Go语言有发展前途么?
-          </a>
-        </li>
-        <li style="padding: 10px 15px 0 15px;list-style: none;">
-          <span style="float:right;color: #999;">02-21</span>
-          <a href="#" target="_blank">
-            如何快速赚取积分?
-          </a>
-        </li>
-      </ul>
-    </div>
+    <IBeautifulCard title="热门问题">
+      <div slot="content">
+        <ul style="padding-left: 0em;">
+          <li v-for="hot_issue in hot_issues">
+            <span style="float:right;color: #999;">{{hot_issue.issue_time}}</span>
+            <a :href="hot_issue.issue_link" target="_blank" :style="{'color':hot_issue.issue_new == true ? '#f55e13!important':'none'}">
+              {{hot_issue.issue_title}} <img v-if="hot_issue.issue_new == true" src="../../../assets/news.gif">
+            </a>
+          </li>
+        </ul>
+      </div>
+    </IBeautifulCard>
   </div>
 </template>
 
 <script>
+  import IBeautifulCard from "../../Common/card/IBeautifulCard"
+
   export default {
-    name: "HotIssue"
+    name: "HotIssue",
+    components:{IBeautifulCard},
+    data(){
+      return {
+        hot_issues:[
+          {
+            "issue_title":"Java泛型是什么?",
+            "issue_link":"https://www.baidu.com",
+            "issue_time":"02-21",
+            "issue_new":true
+          },
+          {
+            "issue_title":"Java反射是什么?",
+            "issue_link":"https://www.baidu.com",
+            "issue_time":"02-21",
+            "issue_new":true
+          },
+          {
+            "issue_title":"Python难不难学?",
+            "issue_link":"https://www.baidu.com",
+            "issue_time":"02-21",
+            "issue_new":true
+          },
+          {
+            "issue_title":"Go语言有发展前途么?",
+            "issue_link":"https://www.baidu.com",
+            "issue_time":"02-21",
+            "issue_new":false
+          },
+          {
+            "issue_title":"如何快速赚取积分?",
+            "issue_link":"https://www.baidu.com",
+            "issue_time":"02-21",
+            "issue_new":false
+          }
+        ]
+      }
+    }
   }
 </script>
 
@@ -55,5 +66,9 @@
  }
  a:hover{
    color: red;
+ }
+ li {
+   padding: 10px 15px 0 15px;
+   list-style: none;
  }
 </style>
