@@ -2,7 +2,15 @@
   <div class="box_bg">
     <div class="box_area">
       <slot name="header">
-        <div class="title">{{title}}</div>
+        <div class="title">
+          <span style="float: left;">
+            <slot name="header_left">{{title}}</slot>
+          </span>
+          <span style="float: right;">
+            <slot name="header_right"></slot>
+          </span>
+
+        </div>
       </slot>
       <slot name="content"></slot>
     </div>
@@ -33,6 +41,7 @@
    height: 50px;
    line-height: 50px;
    padding-left: 15px;
+   padding-right: 15px;
    font-size: 18px;
    border-bottom: 1px solid #eee;
    text-align: left;

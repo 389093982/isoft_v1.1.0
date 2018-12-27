@@ -1,18 +1,19 @@
 <template>
-  <div>
-    <IBeautifulCard title="热门问题">
-      <div slot="content">
-        <ul style="padding-left: 0em;">
-          <li v-for="hot_issue in hot_issues">
-            <span style="float:right;color: #999;">{{hot_issue.issue_time}}</span>
-            <a :href="hot_issue.issue_link" target="_blank" :style="{'color':hot_issue.issue_new == true ? '#f55e13!important':'none'}">
-              {{hot_issue.issue_title}} <img v-if="hot_issue.issue_new == true" src="../../../assets/news.gif">
-            </a>
-          </li>
-        </ul>
-      </div>
-    </IBeautifulCard>
-  </div>
+  <IBeautifulCard title="热门问题">
+    <ul slot="content" style="padding-left: 0em;">
+      <li v-for="hot_issue in hot_issues">
+        <span style="float:right;color: #999;">{{hot_issue.issue_time}}</span>
+        <a :href="hot_issue.issue_link" target="_blank" :style="{'color':hot_issue.issue_new == true ? '#f55e13!important':'none'}">
+          {{hot_issue.issue_title}} <img v-if="hot_issue.issue_new == true" src="../../../assets/news.gif">
+        </a>
+      </li>
+    </ul>
+    <span slot="header_right">
+      <a href="javascript:;">
+        <img src="../../../assets/images/common/more.jpg"/>
+      </a>
+    </span>
+  </IBeautifulCard>
 </template>
 
 <script>
