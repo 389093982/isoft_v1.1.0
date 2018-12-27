@@ -69,7 +69,8 @@
     color: red;
   }
   li {
-    padding: 10px 15px 0 15px;
+    padding: 3px 15px 0 15px;
     list-style: none;
+    font-size: 14px;
   }
 </style>
