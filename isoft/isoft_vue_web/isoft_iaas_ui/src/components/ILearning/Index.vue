@@ -1,7 +1,7 @@
 <template>
   <div style="background: #FFFFFF;padding: 10px;box-shadow: 2px 2px 1px #888888;">
     <ChooseCourseType/>
-    <Row class="bgcolor" style="margin-bottom: 20px;margin: 20px auto;padding: 3px;">
+    <Row class="bgcolor" style="margin-bottom: 20px;margin: 10px auto;padding: 3px;">
       <Col span="18">
         <!-- 热门推荐区域 -->
         <HotRecommend/>
