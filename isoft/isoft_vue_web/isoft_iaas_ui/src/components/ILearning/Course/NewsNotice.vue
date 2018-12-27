@@ -1,46 +1,64 @@
 <template>
-  <div style="border-bottom: solid 1px #d9d9d9;">
-    <div style="background-color: #f6f6f6;height: 38px;border-bottom: solid 1px #d9d9d9;">
-      <p style="float: left;line-height: 38px;margin-left: 20px;">新闻公告</p>
-      <a href="javascript:;" style="float: right;line-height: 38px;margin-right: 20px;color: red;">
+  <IBeautifulCard title="新闻公告">
+    <ul slot="content" style="padding-left: 0em;">
+      <li v-for="notice in notices">
+        <span style="float:right;color: #999;">{{notice.news_time}}</span>
+        <a :href="notice.news_link" target="_blank" :style="{'color':notice.news_new == true ? '#f55e13!important':'none'}">
+          {{notice.news_title}} <img v-if="notice.news_new == true" src="../../../assets/news.gif">
+        </a>
+      </li>
+    </ul>
+    <span slot="header_right">
+      <a href="javascript:;">
         <img src="../../../assets/images/common/more.jpg"/>
       </a>
-    </div>
-    <div style="background: #ffffff;font-size: 14px;padding-bottom: 10px;">
-      <ul style="padding-left: 0em;">
-        <li style="padding: 10px 15px 0 15px;list-style: none;">
-          <span style="float:right;color: #999;">02-21</span>
-          <a href="#" target="_blank" style="color: #f55e13!important;">
-            2018年起会员积分调整 <img src="../../../assets/news.gif">
-          </a>
-        </li>
-        <li style="padding: 10px 15px 0 15px;list-style: none;">
-          <span style="float:right;color: #999;">02-21</span>
-          <a href="#" target="_blank" style="color: #f55e13!important;">
-            2018年起会员积分调整 <img src="../../../assets/news.gif">
-          </a>
-        </li>
-        <li style="padding: 10px 15px 0 15px;list-style: none;">
-          <span style="float:right;color: #999;">02-21</span>
-          <a href="#" target="_blank">
-            2018年起会员积分调整
-          </a>
-        </li>
-        <li style="padding: 10px 15px 0 15px;list-style: none;">
-          <span style="float:right;color: #999;">02-21</span>
-          <a href="#" target="_blank">
-            2018年起会员积分调整
-          </a>
-        </li>
-      </ul>
-    </div>
-  </div>
+    </span>
+  </IBeautifulCard>
 </template>
 
 <script>
-    export default {
-        name: "NewsNotice"
+  import IBeautifulCard from "../../Common/card/IBeautifulCard"
+
+  export default {
+    name: "NewsNotice",
+    components:{IBeautifulCard},
+    data(){
+      return {
+        notices:[
+          {
+            "news_title":"2018年起会员积分调整",
+            "news_link":"https://www.baidu.com",
+            "news_time":"02-21",
+            "news_new":true
+          },
+          {
+            "news_title":"Java泛型是什么?",
+            "news_link":"https://www.baidu.com",
+            "news_time":"02-21",
+            "news_new":false
+          },
+          {
+            "news_title":"2018年起会员积分调整",
+            "news_link":"https://www.baidu.com",
+            "news_time":"02-21",
+            "news_new":true
+          },
+          {
+            "news_title":"Java泛型是什么?",
+            "news_link":"https://www.baidu.com",
+            "news_time":"02-21",
+            "news_new":false
+          },
+          {
+            "news_title":"2018年起会员积分调整",
+            "news_link":"https://www.baidu.com",
+            "news_time":"02-21",
+            "news_new":true
+          }
+        ]
+      }
     }
+  }
 </script>
 
 <style scoped>
@@ -49,5 +67,9 @@
   }
   a:hover{
     color: red;
+  }
+  li {
+    padding: 10px 15px 0 15px;
+    list-style: none;
   }
 </style>
