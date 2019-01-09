@@ -20,6 +20,8 @@
     <HotProject/>
     <SiteGuide/>
     <HotCommunity/>
+    <HotUser/>
+    <IBeautifulTabLink/>
   </div>
 </template>
 
@@ -33,10 +35,12 @@
   import HotProject from "./Hot/HotProject"
   import ToolBox from "../CMS/ToolBox"
   import HotLanguage from "./Hot/HotLanguage"
+  import HotUser from "../User/HotUser"
+  import IBeautifulTabLink from "../Common/link/IBeautifulTabLink"
 
   export default {
     name: "Index",
-    components:{ChooseCourseType,HotRecommend,NewsNotice,HotIssue,SiteGuide,HotCommunity,HotProject,ToolBox,HotLanguage},
+    components:{ChooseCourseType,HotRecommend,NewsNotice,HotIssue,SiteGuide,HotCommunity,HotProject,ToolBox,HotLanguage,HotUser,IBeautifulTabLink},
   }
 </script>
 
