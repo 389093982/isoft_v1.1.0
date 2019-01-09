@@ -10,14 +10,7 @@
       </div>
       <div class="cont" :class="index == current_index ? 'active' : ''" v-for="(itemData, index) in pData.pItemData">
         <ul>
-          <li v-for="item in itemData.items">
-            <a :href="item.item_link">
-              <div class="cont_main">
-                <h3 class="title">{{item.item_label}}</h3>
-                <p class="desc">{{item.item_desc}}</p>
-              </div>
-            </a>
-          </li>
+          <IBeautifulHoverBox v-for="item in itemData.items" :item="item"/>
         </ul>
       </div>
     </div>
@@ -25,8 +18,11 @@
 </template>
 
 <script>
+  import IBeautifulHoverBox from "./IBeautifulHoverBox"
+
   export default {
     name: "IBeautifulTabLink",
+    components:{IBeautifulHoverBox},
     data(){
       return {
         current_index : 0,
@@ -213,59 +209,4 @@
     display: block;
   }
 
-  .price .cont ul li {
-    width: 280px;
-    float: left;
-    margin: 0 10px;
-    box-sizing: border-box;
-  }
-
-  .price .cont ul li:nth-child(4n) {
-    margin-right: 0px!important;
-  }
-
-  .price .cont ul li a {
-    display: block;
-    border: 1px solid #E5E5E5;
-    background-color: #fff;
-    margin-top: 20px;
-    padding: 13px 20px 15px;
-  }
-
-  .price .cont ul li a:hover {
-    box-shadow: 0 3px 7px 0 rgba(0, 0, 0, .1);
-    border-color: rgba(229, 229, 229, .73);
-  }
-
-  .price .cont ul li a:hover .cont_main h3.title {
-    color: #00a4ff;
-  }
-
-  .price .cont ul li a .cont_main {
-    display: table-cell;
-    vertical-align: top;
-  }
-
-  .price .cont ul li a .cont_main h3.title {
-    font-size: 18px;
-    font-weight: 400;
-    color: #333;
-    line-height: 32px;
-    white-space: nowrap;
-    overflow: hidden;
-    display: block;
-    text-overflow: ellipsis;
-  }
-
-  .price .cont ul li a .cont_main p.desc {
-    font-size: 14px;
-    line-height: 1.5;
-    color: #666;
-    height: 42px;
-    margin-top: -2px;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-    overflow: hidden;
-  }
 </style>
