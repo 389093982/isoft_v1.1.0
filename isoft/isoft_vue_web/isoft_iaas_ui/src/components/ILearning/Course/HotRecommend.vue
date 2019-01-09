@@ -73,7 +73,7 @@
     float: left;
     padding: 10px 9px 0;
     width: 140px;
-    height: 125px;
+    height: 135px;
     overflow: hidden;
     text-align: center;
     position: relative;
