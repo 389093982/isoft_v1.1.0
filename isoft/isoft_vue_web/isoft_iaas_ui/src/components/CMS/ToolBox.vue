@@ -23,12 +23,12 @@
         tools:[
           {
             "icon":"https://as.zbjimg.com/rake-component/fe-employer/fe-zbj-quickservice-res/0.0.8/images/qs-icons.png",
-            "label":"精品课程",
-            "href":"https://www.baidu.com"
+            "label":"博客中心",
+            "href":"/iblog/blog_list"
           },
           {
             "icon":"https://as.zbjimg.com/rake-component/fe-employer/fe-zbj-quickservice-res/0.0.8/images/qs-icons.png",
-            "label":"共享空间",
+            "label":"心声社区",
             "href":"https://www.baidu.com"
           },
           {
@@ -39,61 +39,6 @@
           {
             "icon":"https://as.zbjimg.com/rake-component/fe-employer/fe-zbj-quickservice-res/0.0.8/images/qs-icons.png",
             "label":"后台管理",
-            "href":"https://www.baidu.com"
-          },
-          {
-            "icon":"https://as.zbjimg.com/rake-component/fe-employer/fe-zbj-quickservice-res/0.0.8/images/qs-icons.png",
-            "label":"商标查询",
-            "href":"https://www.baidu.com"
-          },
-          {
-            "icon":"https://as.zbjimg.com/rake-component/fe-employer/fe-zbj-quickservice-res/0.0.8/images/qs-icons.png",
-            "label":"商标查询",
-            "href":"https://www.baidu.com"
-          },
-          {
-            "icon":"https://as.zbjimg.com/rake-component/fe-employer/fe-zbj-quickservice-res/0.0.8/images/qs-icons.png",
-            "label":"商标查询",
-            "href":"https://www.baidu.com"
-          },
-          {
-            "icon":"https://as.zbjimg.com/rake-component/fe-employer/fe-zbj-quickservice-res/0.0.8/images/qs-icons.png",
-            "label":"商标查询",
-            "href":"https://www.baidu.com"
-          },
-          {
-            "icon":"https://as.zbjimg.com/rake-component/fe-employer/fe-zbj-quickservice-res/0.0.8/images/qs-icons.png",
-            "label":"商标查询",
-            "href":"https://www.baidu.com"
-          },
-          {
-            "icon":"https://as.zbjimg.com/rake-component/fe-employer/fe-zbj-quickservice-res/0.0.8/images/qs-icons.png",
-            "label":"商标查询",
-            "href":"https://www.baidu.com"
-          },
-          {
-            "icon":"https://as.zbjimg.com/rake-component/fe-employer/fe-zbj-quickservice-res/0.0.8/images/qs-icons.png",
-            "label":"商标查询",
-            "href":"https://www.baidu.com"
-          },
-          {
-            "icon":"https://as.zbjimg.com/rake-component/fe-employer/fe-zbj-quickservice-res/0.0.8/images/qs-icons.png",
-            "label":"商标查询",
-            "href":"https://www.baidu.com"
-          },
-          {
-            "icon":"https://as.zbjimg.com/rake-component/fe-employer/fe-zbj-quickservice-res/0.0.8/images/qs-icons.png",
-            "label":"商标查询",
-            "href":"https://www.baidu.com"
-          },
-          {
-            "icon":"https://as.zbjimg.com/rake-component/fe-employer/fe-zbj-quickservice-res/0.0.8/images/qs-icons.png",
-            "label":"商标查询",
-            "href":"https://www.baidu.com"
-          },
-          {
-            "icon":"https://as.zbjimg.com/rake-component/fe-employer/fe-zbj-quickservice-res/0.0.8/images/qs-icons.png",
-            "label":"商标查询",
             "href":"https://www.baidu.com"
           },
           {

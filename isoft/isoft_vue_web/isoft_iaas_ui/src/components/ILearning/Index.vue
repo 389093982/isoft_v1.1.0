@@ -8,9 +8,9 @@
         <HotRecommend/>
       </Col>
       <Col span="6">
+        <ToolBox/>
         <NewsNotice/>
         <HotIssue/>
-        <ToolBox/>
       </Col>
     </Row>
 
