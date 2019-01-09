@@ -3,8 +3,10 @@
     <div slot="content">
       <ul>
         <li v-for="tool in tools" class="li">
-          <i class="icon" :style="{background:'url(' + tool.icon + ') 0 0 no-repeat'}"></i>
-          <p class="label">{{tool.label}}</p>
+          <a :href="tool.href" target="_blank">
+            <i class="icon" :style="{background:'url(' + tool.icon + ') 0 0 no-repeat'}"></i>
+            <p class="label">{{tool.label}}</p>
+          </a>
         </li>
       </ul>
       <div style="clear: both;"></div>
