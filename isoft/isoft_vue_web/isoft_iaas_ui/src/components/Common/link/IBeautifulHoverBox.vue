@@ -35,7 +35,8 @@
     display: block;
     border: 1px solid #E5E5E5;
     background-color: #fff;
-    margin-top: 20px;
+    margin-top: 2px;
+    margin-bottom: 10px;
     padding: 13px 20px 15px;
   }
 
