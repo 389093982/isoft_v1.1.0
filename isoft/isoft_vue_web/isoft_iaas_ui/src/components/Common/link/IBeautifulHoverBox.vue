@@ -1,17 +1,22 @@
 <template>
 <li>
-  <a :href="item.item_link">
-    <div class="cont_main">
-      <h3 class="title">{{item.item_label}}</h3>
-      <p class="desc">{{item.item_desc}}</p>
-    </div>
-  </a>
+  <IBeautifulHoverShadow>
+    <a :href="item.item_link">
+      <div class="cont_main">
+        <h3 class="title">{{item.item_label}}</h3>
+        <p class="desc">{{item.item_desc}}</p>
+      </div>
+    </a>
+  </IBeautifulHoverShadow>
 </li>
 </template>
 
 <script>
+  import IBeautifulHoverShadow from "./IBeautifulHoverShadow"
+
   export default {
     name: "IBeautifulHoverBox",
+    components:{IBeautifulHoverShadow},
     props:{
       item:{
         type: Object,
@@ -29,20 +34,6 @@
     float: left;
     margin: 0 10px;
     box-sizing: border-box;
-  }
-
-  ul li a {
-    display: block;
-    border: 1px solid #E5E5E5;
-    background-color: #fff;
-    margin-top: 2px;
-    margin-bottom: 10px;
-    padding: 13px 20px 15px;
-  }
-
-  li a:hover {
-    box-shadow: 0 3px 7px 0 rgba(0, 0, 0, .1);
-    border-color: rgba(229, 229, 229, .73);
   }
 
   li a:hover .cont_main h3.title {

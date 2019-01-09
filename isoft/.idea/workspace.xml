@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="61c01151-84f0-4bfd-a227-5c1f0b5a424d" name="Default" comment="代码优化" />
+    <list default="true" id="61c01151-84f0-4bfd-a227-5c1f0b5a424d" name="Default" comment="代码优化">
+      <change afterPath="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/Common/link/IBeautifulHoverShadow.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/Common/link/IBeautifulHoverBox.vue" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/Common/link/IBeautifulHoverBox.vue" afterDir="false" />
+    </list>
     <ignored path="isoft_deploy_web/static/uploadfile/" />
     <ignored path="../.idea/inspectionProfiles/profiles_settings.xml" />
     <ignored path="isoft_deploy_web/static/uploadfile/apiServer1/apiServer" />
@@ -86,7 +90,7 @@
           <entry key="svg" value="1" />
           <entry key="ts" value="8" />
           <entry key="txt" value="45" />
-          <entry key="vue" value="979" />
+          <entry key="vue" value="980" />
           <entry key="vue_bak" value="1" />
           <entry key="xml" value="6" />
         </counts>
@@ -104,7 +108,7 @@
           <entry key="RNG Compact" value="2" />
           <entry key="SVG" value="1" />
           <entry key="TypeScript" value="8" />
-          <entry key="Vue.js" value="966" />
+          <entry key="Vue.js" value="967" />
           <entry key="XML" value="6" />
           <entry key="x86 Plan9 Assembly" value="7" />
         </counts>
@@ -118,7 +122,7 @@
           <entry key="js" value="4321" />
           <entry key="sh" value="1652" />
           <entry key="txt" value="890" />
-          <entry key="vue" value="38622" />
+          <entry key="vue" value="38689" />
           <entry key="xml" value="48" />
         </counts>
       </usages-collector>
@@ -128,7 +132,7 @@
           <entry key="Go" value="39745" />
           <entry key="JavaScript" value="4321" />
           <entry key="PLAIN_TEXT" value="3145" />
-          <entry key="Vue.js" value="38515" />
+          <entry key="Vue.js" value="38582" />
           <entry key="XML" value="48" />
         </counts>
       </usages-collector>
@@ -156,8 +160,17 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/Common/link/IBeautifulHoverBox.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="322">
-              <caret line="42" column="4" selection-start-line="42" selection-start-column="4" selection-end-line="42" selection-end-column="6" />
+            <state relative-caret-position="360">
+              <caret line="51" column="22" lean-forward="true" selection-start-line="51" selection-start-column="22" selection-end-line="51" selection-end-column="22" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/Common/link/IBeautifulHoverShadow.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="238">
+              <caret line="14" column="17" lean-forward="true" selection-start-line="14" selection-start-column="17" selection-end-line="14" selection-end-column="17" />
             </state>
           </provider>
         </entry>
@@ -281,7 +294,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/ILearning/Course/CourseDetail.vue" />
         <option value="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/ILearning/Course/CourseSearch.vue" />
         <option value="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/ILearning/CourseSpace/MyCourseList.vue" />
         <option value="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/ILearning/CourseSpace/NewCourse.vue" />
@@ -331,6 +343,7 @@
         <option value="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/main.js" />
         <option value="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/Common/link/IBeautifulTabLink.vue" />
         <option value="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/Common/link/IBeautifulHoverBoxShadow.vue" />
+        <option value="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/Common/link/IBeautifulHoverShadow.vue" />
         <option value="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/Common/link/IBeautifulHoverBox.vue" />
       </list>
     </option>
@@ -856,13 +869,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/isoft_iaas_web/main.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="27">
-          <caret line="94" column="39" lean-forward="true" selection-start-line="94" selection-start-column="39" selection-end-line="94" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/CMS/Configuration.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1802">
@@ -1220,10 +1226,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/Common/link/IBeautifulHoverShadow.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="14" column="17" lean-forward="true" selection-start-line="14" selection-start-column="17" selection-end-line="14" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/Common/link/IBeautifulHoverBox.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="322">
-          <caret line="42" column="4" selection-start-line="42" selection-start-column="4" selection-end-line="42" selection-end-column="6" />
+        <state relative-caret-position="360">
+          <caret line="51" column="22" lean-forward="true" selection-start-line="51" selection-start-column="22" selection-end-line="51" selection-end-column="22" />
         </state>
       </provider>
     </entry>
