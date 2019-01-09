@@ -4,10 +4,11 @@
       <h2>{{pData.title}}</h2>
       <div class="category">
         <ul>
-          <li :class="index == 0 ? 'active' : ''" v-for="(itemData, index) in pData.pItemData">{{itemData.itemTitle}}</li>
+          <li :class="index == current_index ? 'active' : ''" v-for="(itemData, index) in pData.pItemData"
+            @click="current_index = index">{{itemData.itemTitle}}</li>
         </ul>
       </div>
-      <div class="cont" :class="index == 0 ? 'active' : ''" v-for="(itemData, index) in pData.pItemData">
+      <div class="cont" :class="index == current_index ? 'active' : ''" v-for="(itemData, index) in pData.pItemData">
         <ul>
           <li v-for="item in itemData.items">
             <a :href="item.item_link">
@@ -26,6 +27,11 @@
 <script>
   export default {
     name: "IBeautifulTabLink",
+    data(){
+      return {
+        current_index : 0,
+      }
+    },
     props: {
       // 带有默认值的对象
       pData: {
@@ -101,18 +107,8 @@
       },
     },
     methods:{
-      bindPrevNextEvent:function () {
-        //选项卡切换
-        $('.category ul li').click(function(){
-          var indexC = $(this).index();
-          $(this).addClass('active').siblings().removeClass('active');
-          $('.cont').eq(indexC).addClass('active').siblings().removeClass('active');
-        })
-      }
+
     },
-    mounted(){
-      this.bindPrevNextEvent();
-    }
   }
 </script>
 
