@@ -35,7 +35,7 @@
           },
           {
             "icon":"https://as.zbjimg.com/rake-component/fe-employer/fe-zbj-quickservice-res/0.0.8/images/qs-icons.png",
-            "label":"博客天地",
+            "label":"招聘空间",
             "href":"https://www.baidu.com"
           },
           {

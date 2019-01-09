@@ -14,8 +14,8 @@
       </Col>
     </Row>
 
-    <IBeautifulListLink/>
-
+    <!-- 热门编程语言 -->
+    <HotLanguage/>
     <!-- 热门开源项目 -->
     <HotProject/>
     <SiteGuide/>
@@ -32,11 +32,11 @@
   import HotCommunity from "./Community/HotCommunity"
   import HotProject from "./Hot/HotProject"
   import ToolBox from "../CMS/ToolBox"
-  import IBeautifulListLink from "../Common/link/IBeautifulListLink"
+  import HotLanguage from "./Hot/HotLanguage"
 
   export default {
     name: "Index",
-    components:{ChooseCourseType,HotRecommend,NewsNotice,HotIssue,SiteGuide,HotCommunity,HotProject,ToolBox,IBeautifulListLink},
+    components:{ChooseCourseType,HotRecommend,NewsNotice,HotIssue,SiteGuide,HotCommunity,HotProject,ToolBox,HotLanguage},
   }
 </script>
 
