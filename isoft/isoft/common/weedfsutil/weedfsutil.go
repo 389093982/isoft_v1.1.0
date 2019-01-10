@@ -34,7 +34,7 @@ func getWeedFsInfo(masterAddress string) (weedFsInfo WeedFsInfo, err error) {
 	if err != nil {
 		return
 	}
-	if response.StatusCode != 200{
+	if response.StatusCode != 200 {
 		return weedFsInfo, errors.New(fmt.Sprintf("getWeedFsInfo error with %d, %s", response.StatusCode, string(body)))
 	}
 	// 格式 {"fid":"1,0a42e9808d","url":"127.0.0.1:9080","publicUrl":"127.0.0.1:9080","count":1}
@@ -68,5 +68,3 @@ func SaveFile(masterAddress string, file multipart.File) (weedFsInfo WeedFsInfo,
 	}
 	return
 }
-
-

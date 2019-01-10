@@ -122,7 +122,7 @@ func SFTPDirectoryRenameCopy(user, password, host string, port int, localDirecto
 			if err != nil {
 				return err
 			}
-		}else{
+		} else {
 			err = SFTPDirectoryRenameCopy(user, password, host, port, fpath, remoteDir+"/"+filepath.Base(fpath))
 			if err != nil {
 				return err

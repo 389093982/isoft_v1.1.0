@@ -17,12 +17,12 @@ type Configuration struct {
 
 // 友情链接
 type CommonLink struct {
-	Id                 int64            `json:"id"`
-	LinkType		   string			`json:"link_type"`				   	// 链接类型
-	LinkName 		   string			`json:"link_name"`					// 链接名称
-	LinkAddr		   string			`json:"link_addr"`					// 链接地址
-	CreatedBy          string           `json:"created_by"`
-	CreatedTime        time.Time        `json:"created_time"`
-	LastUpdatedBy      string           `json:"last_updated_by"`
-	LastUpdatedTime    time.Time        `json:"last_updated_time"`
+	Id              int64     `json:"id"`
+	LinkType        string    `json:"link_type"` // 链接类型
+	LinkName        string    `json:"link_name"` // 链接名称
+	LinkAddr        string    `json:"link_addr"` // 链接地址
+	CreatedBy       string    `json:"created_by"`
+	CreatedTime     time.Time `json:"created_time"`
+	LastUpdatedBy   string    `json:"last_updated_by"`
+	LastUpdatedTime time.Time `json:"last_updated_time"`
 }

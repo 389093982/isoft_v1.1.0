@@ -83,4 +83,3 @@ func SyncDeployHome(envInfo *models.EnvInfo) error {
 	//return sftputil.SFTPDirectoryRenameCopy(envInfo.EnvAccount, envInfo.EnvPasswd, envInfo.EnvIp, 22, SFTP_LOCAL_DEPLOY_HOME, remoteDeployHome)
 	return sftputil.SFTPDirectoryCopy(envInfo.EnvAccount, envInfo.EnvPasswd, envInfo.EnvIp, 22, filepath.Join(SFTP_SRC_DIR, "shell"), remoteDeployHome)
 }
-

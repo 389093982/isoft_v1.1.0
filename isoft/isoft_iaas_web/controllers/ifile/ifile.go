@@ -14,7 +14,7 @@ var (
 	WEEDFS_URL string
 )
 
-func init()  {
+func init() {
 	WEEDFS_URL = beego.AppConfig.String("weedfs_url")
 }
 
@@ -22,7 +22,7 @@ type IFileController struct {
 	beego.Controller
 }
 
-func (this *IFileController) FilterPageIFiles()  {
+func (this *IFileController) FilterPageIFiles() {
 	offset, _ := this.GetInt("offset", 10)            // 每页记录数
 	current_page, _ := this.GetInt("current_page", 1) // 当前页
 	search_name := this.GetString("search_name")

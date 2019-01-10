@@ -65,7 +65,7 @@ func (this *CMSController) AddConfiguration() {
 	this.ServeJSON()
 }
 
-func (this *CMSController) QueryRandomCommonLink()  {
+func (this *CMSController) QueryRandomCommonLink() {
 	link_type := this.GetString("link_type")
 	common_links, err := cms.QueryRandomCommonLink(link_type)
 	if err != nil {
@@ -102,13 +102,13 @@ func (this *CMSController) AddCommonLink() {
 	link_name := this.GetString("link_name")
 	link_addr := this.GetString("link_addr")
 	commonLink := &cms.CommonLink{
-		LinkType:			link_type,
-		LinkName:  			link_name,
-		LinkAddr: 			link_addr,
-		CreatedBy:          user_name,
-		CreatedTime:        time.Now(),
-		LastUpdatedBy:      user_name,
-		LastUpdatedTime:    time.Now(),
+		LinkType:        link_type,
+		LinkName:        link_name,
+		LinkAddr:        link_addr,
+		CreatedBy:       user_name,
+		CreatedTime:     time.Now(),
+		LastUpdatedBy:   user_name,
+		LastUpdatedTime: time.Now(),
 	}
 	_, err := cms.AddCommonLink(commonLink)
 	if err != nil {

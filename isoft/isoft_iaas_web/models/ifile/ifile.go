@@ -31,7 +31,7 @@ func InsertOrUpdateIFile(ifile *IFile) (id int64, err error) {
 func FilterIFileList(condArr map[string]string, page int, offset int) (ifiles []IFile, counts int64, err error) {
 	o := orm.NewOrm()
 	qs := o.QueryTable("i_file")
-	if search_name, ok := condArr["search_name"]; ok && strings.TrimSpace(search_name) != ""{
+	if search_name, ok := condArr["search_name"]; ok && strings.TrimSpace(search_name) != "" {
 		qs = qs.Filter("file_name", search_name)
 	}
 	qs = qs.OrderBy("-last_updated_time")

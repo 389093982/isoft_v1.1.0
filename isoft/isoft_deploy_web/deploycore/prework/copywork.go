@@ -19,29 +19,29 @@ func init() {
 }
 
 // 拷贝项目内部的 shell 文件夹到 deploy_home 中去
-func runCopyShellWork()  {
+func runCopyShellWork() {
 	// 先进行清理
 	cleanDeployHomeShell()
 	// 再进行拷贝
 	copyShellToDeployHome()
 }
 
-func copyShellToDeployHome()  {
-	err := fileutil.CopyDir(fileutil.ChangeToLinuxSeparator(filepath.Join(SFTP_SRC_DIR,"shell")),
-		fileutil.ChangeToLinuxSeparator(filepath.Join(SFTP_LOCAL_DEPLOY_HOME,"shell")))
+func copyShellToDeployHome() {
+	err := fileutil.CopyDir(fileutil.ChangeToLinuxSeparator(filepath.Join(SFTP_SRC_DIR, "shell")),
+		fileutil.ChangeToLinuxSeparator(filepath.Join(SFTP_LOCAL_DEPLOY_HOME, "shell")))
 
-	if err != nil{
+	if err != nil {
 		fmt.Println(fmt.Sprintf("execute copyShellToDeployHome error, %s", err.Error()))
-	}else{
+	} else {
 		fmt.Println("execute copyShellToDeployHome successful...")
 	}
 }
 
-func cleanDeployHomeShell()  {
-	err := os.RemoveAll(fileutil.ChangeToLinuxSeparator(filepath.Join(SFTP_LOCAL_DEPLOY_HOME,"shell")))
-	if err != nil{
+func cleanDeployHomeShell() {
+	err := os.RemoveAll(fileutil.ChangeToLinuxSeparator(filepath.Join(SFTP_LOCAL_DEPLOY_HOME, "shell")))
+	if err != nil {
 		fmt.Println(fmt.Sprintf("execute cleanDeployHomeShell error, %s", err.Error()))
-	}else{
+	} else {
 		fmt.Println("execute cleanDeployHomeShell successful...")
 	}
 }
