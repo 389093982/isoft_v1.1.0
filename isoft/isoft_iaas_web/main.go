@@ -81,11 +81,11 @@ func initDB() {
 	if beego.AppConfig.String("runmode") == "dev" {
 		orm.Debug = true
 	}
+	registerModel()
 
 	if RunSyncdbMode == "FLYWAY"{
 		flyway.MigrateToDB(dsn, "./conf/migrations/migrations.sql")
 	}else{
-		registerModel()
 		createTable()
 	}
 }
