@@ -8,6 +8,7 @@ import (
 	_ "github.com/go-sql-driver/mysql" // _ 的作用,并不需要把整个包都导入进来,仅仅是是希望它执行init()函数而已
 	"isoft/isoft/common/apppath"
 	"isoft/isoft/common/fileutil"
+	"isoft/isoft/common/flyway"
 	"isoft/isoft/sso"
 	"isoft/isoft_iaas_web/models/cms"
 	"isoft/isoft_iaas_web/models/common"
@@ -21,6 +22,11 @@ import (
 	"net/url"
 	"os"
 )
+
+// 数据库连接串
+var dsn string
+// 数据库同步模式,支持 FLYWAY 和 AUTO
+const RunSyncdbMode = "FLYWAY"
 
 func init() {
 	initLog()
@@ -61,7 +67,7 @@ func initDB() {
 	dbpass := beego.AppConfig.String("db.pass")
 	timezone := beego.AppConfig.String("db.timezone")
 
-	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?allowNativePasswords=true&charset=utf8", dbuser, dbpass, dbhost, dbport, dbname)
+	dsn = fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?allowNativePasswords=true&charset=utf8", dbuser, dbpass, dbhost, dbport, dbname)
 
 	if timezone != "" {
 		dsn = dsn + "&loc=" + url.QueryEscape(timezone)
@@ -76,9 +82,12 @@ func initDB() {
 		orm.Debug = true
 	}
 
-	registerModel()
-
-	createTable() // 开启自动建表
+	if RunSyncdbMode == "FLYWAY"{
+		flyway.MigrateToDB(dsn, "./conf/migrations/migrations.sql")
+	}else{
+		registerModel()
+		createTable()
+	}
 }
 
 func registerModel() {

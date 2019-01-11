@@ -51,10 +51,10 @@ func (this *FlyWay) InitFlyWayVersionTable()  {
 	this.ExecSQL(versionTable)
 }
 
-func (this *FlyWay) ExecSQL(sql string)  {
+func (this *FlyWay) ExecSQL(sql string, args ...interface{})  {
 	stmt, err := this.db.Prepare(sql)
 	checkError(err)
-	_, err = stmt.Exec()
+	_, err = stmt.Exec(args...)
 	checkError(err)
 }
 
@@ -70,9 +70,8 @@ func (this *FlyWay) CheckCompareAndExecute()  {
 func (this *FlyWay) Execute(migrations []*Migration)  {
 	for _, migration := range migrations{
 		this.ExecSQL(migration.sql)
-		writeVersionRecord := fmt.Sprintf(
-			`INSERT INTO flyway_version(HASH,SQL_DETAIL,CREATED_TIME) VALUES ('%s','%s',NOW());`,migration.hash,migration.sql)
-		this.ExecSQL(writeVersionRecord)
+		writeVersionRecord := `INSERT INTO flyway_version(HASH,SQL_DETAIL,CREATED_TIME) VALUES (?,?,NOW());`
+		this.ExecSQL(writeVersionRecord,migration.hash,migration.sql)
 	}
 }
 
@@ -125,13 +124,39 @@ func (this *FlyWay) ReadAllFileMigrations(MigrateFilePath string) []*Migration {
 	checkError(err)
 	migrationStrArr := strings.Split(string(bytes), "\n")
 	var migrations []*Migration
-	for _,migrationStr := range migrationStrArr{
-		migrationStr = strings.TrimSpace(migrationStr)
-		// 空行或者注释行不算在内
-		if migrationStr == "" || strings.HasPrefix(migrationStr, "--") || strings.HasPrefix(migrationStr, "/*"){
-			continue
-		}
-		migrations = append(migrations, &Migration{sql:migrationStr,hash:hashutil.CalculateHashWithString(migrationStr)})
+	// 获取调整后的 sql 切片
+	_migrationStrArr := this.getAdjustMigrationStrArr(migrationStrArr)
+	for _, _migrationStr := range _migrationStrArr {
+		migrations = append(migrations, &Migration{sql: _migrationStr, hash: hashutil.CalculateHashWithString(_migrationStr)})
 	}
 	return migrations
+}
+
+// 获取调整后的 sql 切片
+func (this *FlyWay) getAdjustMigrationStrArr(migrationStrArr []string) []string {
+	_migrationStrArr := make([]string,0,10)
+	for _, migrationStr := range migrationStrArr {
+		migrationStr = strings.TrimSpace(migrationStr)
+		// 空行或者注释行不算在内
+		if migrationStr == "" || strings.HasPrefix(migrationStr, "--") || strings.HasPrefix(migrationStr, "/*") {
+			continue
+		}
+		if HasSqlPrefix(migrationStr) {
+			_migrationStrArr = append(_migrationStrArr, migrationStr)
+		} else {
+			// 多行则进行拼接,换行接着保留
+			_migrationStrArr[len(_migrationStrArr)-1] = _migrationStrArr[len(_migrationStrArr)-1] + "\n" + migrationStr
+		}
+	}
+	return _migrationStrArr
+}
+
+func HasSqlPrefix(sql string) bool {
+	prefixArr := []string{"SELECT","UPDATE","DELETE","INSERT","CREATE","ALTER"}
+	for _,prefix := range prefixArr{
+		if strings.HasPrefix(strings.ToUpper(sql), prefix){
+			return true
+		}
+	}
+	return false
 }
