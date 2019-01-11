@@ -17,7 +17,7 @@
               <Col span="3" offset="8" style="text-align: center;"><a href="javascript:;" @click="chooseItem('_all')">全部分类</a></Col>
               <Col span="3" style="text-align: center;"><a href="javascript:;" @click="chooseItem('_hot')">热门分享</a></Col>
               <Col span="3" style="text-align: center;"><a href="javascript:;" @click="chooseItem('_personal')">我的分享</a></Col>
-              <Col span="3" style="text-align: center;"><router-link to="/share/add">新增</router-link></Col>
+              <Col span="3" style="text-align: center;"><router-link to="/share/add">我也要发布</router-link></Col>
             </Row>
           </div>
           <div style="padding-top: 20px;">

@@ -107,7 +107,7 @@
             const result = await AddNewShare(_this.formValidate.share_type, _this.formValidate.share_desc, _this.formValidate.link_href,_this.formValidate.content);
             if(result.status == "SUCCESS"){
               _this.$Message.success('提交成功!');
-              _this.$router.go(0);     // 页面刷新,等价于 location.reload()
+              _this.$router.push({ path: '/share/list'})
             }else{
               _this.$Message.error('提交失败!');
             }
