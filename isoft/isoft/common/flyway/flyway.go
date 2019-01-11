@@ -9,9 +9,15 @@ import (
 	"strings"
 )
 
+func MigrateToDB(dsn string, MigrateFilePath string)  {
+	flyway := &FlyWay{Dsn:dsn,MigrateFilePath:MigrateFilePath}
+	flyway.Migrate()
+}
+
+
 type FlyWay struct {
 	Dsn string						// dsn 连接串
-	MigrationLocation string		// 迁移文件路径
+	MigrateFilePath string		// 迁移文件路径
 	db *sql.DB
 }
 
@@ -25,7 +31,7 @@ func checkError(err error)  {
 func (this *FlyWay) Migrate() {
 	this.InitDataSourceConn()
 	this.InitFlyWayVersionTable()
-	this.CheckAndCompare()
+	this.CheckCompareAndExecute()
 	defer this.db.Close()
 }
 
@@ -53,8 +59,8 @@ func (this *FlyWay) ExecSQL(sql string)  {
 }
 
 // 检查迁移文件格式是否正确,并且和 DB 里面的执行记录进行对比
-func (this *FlyWay) CheckAndCompare()  {
-	migrationsFile := this.ReadAllFileMigrations(this.MigrationLocation)
+func (this *FlyWay) CheckCompareAndExecute()  {
+	migrationsFile := this.ReadAllFileMigrations(this.MigrateFilePath)
 	migrationsBD := this.ReadAllDBMigrations()
 	writeMigrations := this.Compare(migrationsFile,migrationsBD)
 	this.Execute(writeMigrations)
@@ -111,11 +117,11 @@ func (this *FlyWay) ReadAllDBMigrations() []*Migration {
 	return migrations
 }
 
-func (this *FlyWay) ReadAllFileMigrations(migrationLocation string) []*Migration {
-	if migrationLocation == ""{
-		panic("empty migrationLocation file...")
+func (this *FlyWay) ReadAllFileMigrations(MigrateFilePath string) []*Migration {
+	if MigrateFilePath == ""{
+		panic("empty MigrateFilePath file...")
 	}
-	bytes, err := ioutil.ReadFile(migrationLocation)
+	bytes, err := ioutil.ReadFile(MigrateFilePath)
 	checkError(err)
 	migrationStrArr := strings.Split(string(bytes), "\n")
 	var migrations []*Migration
