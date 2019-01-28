@@ -6,7 +6,6 @@ import BlogList from '../components/IBlog/BlogList'
 import CatalogAdd from '../components/IBlog/CatalogAdd'
 import BlogAdd from '../components/IBlog/BlogAdd'
 import BlogDetail from '../components/IBlog/BlogDetail'
-import ILearning from '../components/ILearning/ILearning'
 import ILearningIndex from '../components/ILearning/Index'
 import CourseSpace from '../components/ILearning/CourseSpace/CourseSpace'
 import NewCourse from '../components/ILearning/CourseSpace/NewCourse'
@@ -16,20 +15,27 @@ import CourseDetail from '../components/ILearning/Course/CourseDetail'
 import VideoPay from '../components/ILearning/Course/VideoPay'
 import Configuration from '../components/CMS/Configuration'
 import CourseSearch from "../components/ILearning/Course/CourseSearch"
-import ShareIndex from "../components/Share/ShareIndex"
 import ShareAdd from "../components/Share/ShareAdd"
 import ShareList from "../components/Share/ShareList"
 import ShareDetail from "../components/Share/ShareDetail"
 import HeartBeat from "../components/Monitor/HeartBeat"
 import CommonLinkList from "../components/CMS/CommonLinkList"
+import Login from "../components/SSO/Login"
+import Regist from "../components/SSO/Regist"
+import SSO from "../components/SSO/SSO"
+import ILayout from "../components/ILayout"
 
 Vue.use(Router);
 
 export const IBlogRouter = {
     path: '/iblog',
-    component: IBlog,
+    component: ILayout,
     // 二级路由的配置
     children: [
+      {
+        path: 'blog_index',
+        component: IBlog
+      },
       {
         path: 'catalog_add',
         component: CatalogAdd
@@ -50,18 +56,24 @@ export const IBlogRouter = {
 };
 
 export const MonitorRouter ={
-  path: '/monitor/filterPageHeartBeat',
-  component: HeartBeat
-}
+  path: '/monitor',
+  component: ILayout,
+  children: [
+    {path: 'filterPageHeartBeat',component: HeartBeat,},
+  ]
+};
 
 export const IFileRouter = {
-    path: '/ifile/ifile',
-    component: IFile
+  path: '/ifile',
+  component: ILayout,
+  children: [
+    {path: 'ifile',component: IFile,},
+  ]
 };
 
 export const ShareListRouter = {
   path: '/share',
-  component: ShareIndex,
+  component: ILayout,
   children: [
     {path: 'add',component: ShareAdd,},
     {path: 'list',component: ShareList,},
@@ -72,7 +84,7 @@ export const ShareListRouter = {
 
 export const ILearningRouter = {
   path: '/ilearning',
-  component: ILearning,
+  component: ILayout,
   // 二级路由的配置
   children: [
     {
@@ -113,16 +125,26 @@ export const ILearningRouter = {
 
 export const CMSRouter = {
   path: '/cms',
-  component: ShareIndex,
+  component: ILayout,
   children: [
     {path: 'commonLinkList',component: CommonLinkList},
   ]
 };
 
+export const ISSOReouter = {
+  path: '/sso',
+  component: SSO,
+  children: [
+    {path: 'login',component: Login},
+    {path: 'regist',component: Regist},
+  ]
+}
+
 export default new Router({
   // History 模式,去除vue项目中的 #
   mode: 'history',
   routes: [
+    ISSOReouter,
     IBlogRouter,
     IFileRouter,
     ILearningRouter,

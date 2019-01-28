@@ -1,30 +1,13 @@
 <template>
   <div id="app">
-    <Layout :style="{minHeight: '550px'}">
-      <Header>
-        <Header/>
-      </Header>
-      <Content :style="{padding: '18px', minHeight: '550px', background: '#f5f6f7', lineHeight: '24px', fontSize: '14px'}">
-        <router-view/>
-      </Content>
-      <Footer>
-        <Footer/>
-      </Footer>
-    </Layout>
+    <router-view/>
   </div>
 </template>
 
 <script>
-
-  import Header from './components/Header/Header'
-  import Footer from './components/Footer/Footer'
-
   export default {
     name: 'App',
-    components: {
-      Header,
-      Footer
-    },
+    components: {},
   }
 </script>
 
