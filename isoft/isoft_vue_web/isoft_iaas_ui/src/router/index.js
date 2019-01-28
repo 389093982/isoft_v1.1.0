@@ -22,8 +22,8 @@ import HeartBeat from "../components/Monitor/HeartBeat"
 import CommonLinkList from "../components/CMS/CommonLinkList"
 import Login from "../components/SSO/Login"
 import Regist from "../components/SSO/Regist"
-import SSO from "../components/SSO/SSO"
-import ILayout from "../components/ILayout"
+import ISSOLayout from "../components/ILayout/ISSOLayout"
+import ILayout from "../components/ILayout/ILayout"
 
 Vue.use(Router);
 
@@ -133,7 +133,7 @@ export const CMSRouter = {
 
 export const ISSOReouter = {
   path: '/sso',
-  component: SSO,
+  component: ISSOLayout,
   children: [
     {path: 'login',component: Login},
     {path: 'regist',component: Regist},
