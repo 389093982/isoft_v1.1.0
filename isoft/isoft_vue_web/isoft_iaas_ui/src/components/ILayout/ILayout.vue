@@ -20,7 +20,7 @@
   import Footer from '../Footer/Footer'
 
   export default {
-    name: 'ISSOLayout',
+    name: 'ILayout',
     components: {
       Header,
       Footer
