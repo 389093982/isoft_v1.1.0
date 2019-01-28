@@ -32,7 +32,9 @@
                 发布于:<Time :time="share.created_time" style="color:red;"/>&nbsp;
                 更新于:<Time :time="share.last_updated_time" style="color:red;"/>&nbsp;
               </div>
-              <span style="float: right;font-size: 12px;"><Time :time="share.last_updated_time"/></span>
+              <span style="float: right;font-size: 12px;">
+                <Time :time="share.last_updated_time"/>
+                <router-link to="/share/add">我也要发布</router-link></span>
               <Divider />
             </div>
             <Page :total="total" :page-size="offset" show-total show-sizer :styles="{'text-align': 'right','margin-top': '10px'}"
