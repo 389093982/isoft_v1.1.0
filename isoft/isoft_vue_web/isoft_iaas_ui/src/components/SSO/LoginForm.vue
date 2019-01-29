@@ -41,7 +41,7 @@
             this.$router.push({ path: '/sso/appRegist'});
           }else{
             // 跳往需要跳转的页面,并设置cookie
-            window.location.href = "http://www.baidu.com";
+            window.location.href = result.redirectUrl;
           }
         }else{
           this.showError = true;

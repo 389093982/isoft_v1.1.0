@@ -31,10 +31,10 @@ func (this *LoginController) PostLogin()  {
 	passwd := this.Input().Get("passwd")
 	if IsAdminUser(username) { // 是管理面账号
 		loginSuccess, loginStatus, _ := AdminUserLogin(origin, username, this.Ctx.Input.IP(), referer)
-		this.Data["json"] = &map[string]interface{}{"loginSuccess": loginSuccess, "loginStatus":loginStatus}
+		this.Data["json"] = &map[string]interface{}{"loginSuccess": loginSuccess, "loginStatus":loginStatus, "redirectUrl": GetRedirectUrl(referer)}
 	} else {
 		loginSuccess, loginStatus, _ := CommonUserLogin(referer, origin, username, passwd, this.Ctx.Input.IP())
-		this.Data["json"] = &map[string]interface{}{"loginSuccess": loginSuccess, "loginStatus":loginStatus}
+		this.Data["json"] = &map[string]interface{}{"loginSuccess": loginSuccess, "loginStatus":loginStatus, "redirectUrl": GetRedirectUrl(referer)}
 	}
 	this.ServeJSON()
 }
@@ -91,9 +91,20 @@ func ErrorAccountLogin(username string, ip string, origin string, referer string
 	return false, loginLog.LoginStatus, errors.New(fmt.Sprintf("login error:%s",loginLog.LoginStatus))
 }
 
+func GetRedirectUrl(referer string) string {
+	referers := strings.Split(referer, "/sso/login?redirectUrl=")
+	if len(referers) == 2{
+		// 进行编解码
+		if _redirectUrl, err := url.QueryUnescape(referers[1]); err == nil{
+			return _redirectUrl
+		}
+	}
+	return ""
+}
+
 func CommonUserLogin(referer string, origin string, username string, passwd string, ip string) (loginSuccess bool, loginStatus string, err error) {
 	referers := strings.Split(referer, "/sso/login?redirectUrl=")
-	if CheckOrigin(origin) && len(referers) == 2 && CheckOrigin(referers[0]) && IsValidRedirectUrl(referers[1]) {
+	if CheckOrigin(origin) && len(referers) == 2 && CheckOrigin(referers[0]) && IsValidRedirectUrl(GetRedirectUrl(referer)) {
 		user, err := sso.QueryUser(username, passwd)
 		if err == nil && &user != nil {
 			return SuccessedLogin(username, ip, origin, referer, user, referers)
@@ -134,9 +145,6 @@ func SuccessedLogin(username string, ip string, origin string, referer string, u
 }
 
 func IsValidRedirectUrl(redirectUrl string) bool {
-	if _redirectUrl, err := url.QueryUnescape(redirectUrl); err == nil{
-		redirectUrl = _redirectUrl
-	}
 	if redirectUrl != "" && IsHttpProtocol(redirectUrl) {
 		// 截取协议名称
 		arr := strings.Split(redirectUrl, "//")
