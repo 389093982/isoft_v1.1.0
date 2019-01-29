@@ -26,28 +26,28 @@ Vue.use(mavonEditor)
 
 Vue.config.productionTip = false
 
-// 登录判断
-router.beforeEach((to, from, next) => {
-  /* 路由发生变化修改页面title */
-  if (to.meta.title) {
-    document.title = to.meta.title;
-  }else{
-    document.title = "iaas统一管理平台";
-  }
-
-  // LoadingBar 加载进度条
-  iView.LoadingBar.start();
-
-  var userName = getCookie("userName");
-  var isLogin = getCookie("isLogin");
-  var token = getCookie("token");
-  if(checkEmpty(userName) || checkEmpty(isLogin) || checkEmpty(token) || isLogin != "isLogin"){
-    // 跳往登录页面
-    window.location.href = "/api/auth/redirectToLogin/?redirectUrl=" + window.location.href;
-  }else{
-    next();
-  }
-});
+// // 登录判断
+// router.beforeEach((to, from, next) => {
+//   /* 路由发生变化修改页面title */
+//   if (to.meta.title) {
+//     document.title = to.meta.title;
+//   }else{
+//     document.title = "iaas统一管理平台";
+//   }
+//
+//   // LoadingBar 加载进度条
+//   iView.LoadingBar.start();
+//
+//   var userName = getCookie("userName");
+//   var isLogin = getCookie("isLogin");
+//   var token = getCookie("token");
+//   if(checkEmpty(userName) || checkEmpty(isLogin) || checkEmpty(token) || isLogin != "isLogin"){
+//     // 跳往登录页面
+//     window.location.href = "/api/auth/redirectToLogin/?redirectUrl=" + window.location.href;
+//   }else{
+//     next();
+//   }
+// });
 
 router.afterEach(route => {
   // LoadingBar 加载进度条
