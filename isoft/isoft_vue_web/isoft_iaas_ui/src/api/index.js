@@ -106,3 +106,11 @@ export const FilterPageIFiles = (search_name,offset,current_page) => ajax(BASE_U
 
 // 登录
 export const Login = (username,passwd) => ajax(BASE_URL+"/sso/user/login", {username,passwd},'POST');
+
+// 系统注册分页查询
+export const AppRegisterList = (offset,current_page,search) => ajax(BASE_URL+"/sso/app/appRegisterList", {offset,current_page,search},'POST');
+
+// 添加系统注册
+export const AddAppRegister = (app_address) => ajax(BASE_URL+"/sso/app/addAppRegister", {app_address},'POST');
+
+
