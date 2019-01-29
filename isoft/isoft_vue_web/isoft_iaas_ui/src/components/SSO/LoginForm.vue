@@ -36,7 +36,13 @@
         var passwd = $("input[name='passwd']").val();
         var result = await Login(username, passwd);
         if(result.loginSuccess == true){
-          alert("登录成功!");
+          if(result.loginStatus == "adminLogin"){
+            alert("登录成功!");
+            this.$router.push({ path: '/sso/appRegist'});
+          }else{
+            // 跳往需要跳转的页面,并设置cookie
+            window.location.href = "http://www.baidu.com";
+          }
         }else{
           this.showError = true;
           this.errorMsg = result.loginStatus;

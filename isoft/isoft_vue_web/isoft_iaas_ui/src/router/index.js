@@ -22,6 +22,7 @@ import HeartBeat from "../components/Monitor/HeartBeat"
 import CommonLinkList from "../components/CMS/CommonLinkList"
 import Login from "../components/SSO/Login"
 import Regist from "../components/SSO/Regist"
+import AppRegist from "../components/SSO/AppRegist"
 import ISSOLayout from "../components/ILayout/ISSOLayout"
 import ILayout from "../components/ILayout/ILayout"
 
@@ -137,6 +138,7 @@ export const ISSOReouter = {
   children: [
     {path: 'login',component: Login},
     {path: 'regist',component: Regist},
+    {path: 'appRegist',component: AppRegist},
   ]
 }
 

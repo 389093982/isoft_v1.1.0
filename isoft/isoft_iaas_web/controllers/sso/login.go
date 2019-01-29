@@ -6,6 +6,7 @@ import (
 	"github.com/astaxie/beego/logs"
 	"github.com/pkg/errors"
 	"isoft/isoft_iaas_web/models/sso"
+	"net/url"
 	"strings"
 	"time"
 )
@@ -91,7 +92,7 @@ func ErrorAccountLogin(username string, ip string, origin string, referer string
 }
 
 func CommonUserLogin(referer string, origin string, username string, passwd string, ip string) (loginSuccess bool, loginStatus string, err error) {
-	referers := strings.Split(referer, "/user/login?redirectUrl=")
+	referers := strings.Split(referer, "/sso/login?redirectUrl=")
 	if CheckOrigin(origin) && len(referers) == 2 && CheckOrigin(referers[0]) && IsValidRedirectUrl(referers[1]) {
 		user, err := sso.QueryUser(username, passwd)
 		if err == nil && &user != nil {
@@ -133,6 +134,9 @@ func SuccessedLogin(username string, ip string, origin string, referer string, u
 }
 
 func IsValidRedirectUrl(redirectUrl string) bool {
+	if _redirectUrl, err := url.QueryUnescape(redirectUrl); err == nil{
+		redirectUrl = _redirectUrl
+	}
 	if redirectUrl != "" && IsHttpProtocol(redirectUrl) {
 		// 截取协议名称
 		arr := strings.Split(redirectUrl, "//")
@@ -147,7 +151,7 @@ func IsValidRedirectUrl(redirectUrl string) bool {
 }
 
 func IsHttpProtocol(url string) bool {
-	if strings.HasPrefix(url, "http") || strings.HasPrefix(url, "https") {
+	if strings.HasPrefix(url, "http://") || strings.HasPrefix(url, "https://") {
 		return true
 	}
 	return false
