@@ -32,6 +32,7 @@ func init() {
 	initCommonRouter()
 	initMonitorRouter()
 	initIFileRouter()
+	initISSORouter()
 }
 
 func initIFileRouter() {
@@ -94,4 +95,8 @@ func initIBlogRouter() {
 	beego.Router("/api/blog/search", &iblog.BlogController{}, "get:Search")
 	beego.Router("/api/blog/publish", &iblog.BlogController{}, "post:PostPublish")
 	beego.Router("/api/blog/showBlogDetail", &iblog.BlogController{}, "get:ShowBlogDetail")
+}
+
+func initISSORouter()  {
+	beego.Router("/api/sso/user/login", &sso.LoginController{}, "post:PostLogin")
 }

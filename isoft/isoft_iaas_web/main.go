@@ -9,7 +9,6 @@ import (
 	"isoft/isoft/common/apppath"
 	"isoft/isoft/common/fileutil"
 	"isoft/isoft/common/flyway"
-	"isoft/isoft/sso"
 	"isoft/isoft_iaas_web/models/cms"
 	"isoft/isoft_iaas_web/models/common"
 	"isoft/isoft_iaas_web/models/iblog"
@@ -17,6 +16,7 @@ import (
 	"isoft/isoft_iaas_web/models/ilearning"
 	"isoft/isoft_iaas_web/models/monitor"
 	"isoft/isoft_iaas_web/models/share"
+	"isoft/isoft_iaas_web/models/sso"
 	_ "isoft/isoft_iaas_web/routers"
 	"isoft/isoft_iaas_web/task"
 	"net/url"
@@ -26,7 +26,7 @@ import (
 // 数据库连接串
 var dsn string
 // 数据库同步模式,支持 FLYWAY 和 AUTO
-const RunSyncdbMode = "FLYWAY"
+const RunSyncdbMode = "AUTO"
 
 func init() {
 	initLog()
@@ -112,6 +112,11 @@ func registerModel() {
 
 	orm.RegisterModel(new(monitor.HeartBeat2))
 	orm.RegisterModel(new(monitor.HeartBeatDetail))
+
+	orm.RegisterModel(new(sso.User))
+	orm.RegisterModel(new(sso.AppRegister))
+	orm.RegisterModel(new(sso.LoginRecord))
+	orm.RegisterModel(new(sso.UserToken))
 }
 
 // 自动建表
@@ -127,8 +132,8 @@ func createTable() {
 
 func main() {
 	// 登录过滤器,以 /api 开头的请求为 ajax 请求,需要返回 401 状态码,否则为非 ajax 请求,需要跳往登录页面
-	beego.InsertFilter("/api/*", beego.BeforeExec, sso.LoginFilterWithStatusCode)
-	beego.InsertFilter(`/(^(?!api).*)`, beego.BeforeExec, sso.LoginFilterWithRedirect)
+	// beego.InsertFilter("/api/*", beego.BeforeExec, sso.LoginFilterWithStatusCode)
+	// beego.InsertFilter(`/(^(?!api).*)`, beego.BeforeExec, sso.LoginFilterWithRedirect)
 
 	// 开启定时任务
 	task.StartCronTask()

@@ -103,3 +103,6 @@ export const FilterPageHeartBeat = (offset,current_page) => ajax(BASE_URL+"/moni
 
 // 分页获取 ifile 清单
 export const FilterPageIFiles = (search_name,offset,current_page) => ajax(BASE_URL+"/ifile/filterPageIFiles", {search_name,offset,current_page},'GET');
+
+// 登录
+export const Login = (username,passwd) => ajax(BASE_URL+"/sso/user/login", {username,passwd},'POST');
