@@ -27,7 +27,11 @@ export const checkEmpty = function checkEmpty(checkStr){
 };
 
 // 跨域设置 cookie
-function setCookie (c_name,value,expiredays,domain){
+export function setCookie (c_name,value,expiredays,domain){
+  if(checkContainsInString(domain, "localhost")){
+    // instead for localhost you should use false
+    domain = false
+  }
   var exdate = new Date();
   exdate.setDate(exdate.getDate() + expiredays);
   //判断是否需要跨域存储
@@ -50,5 +54,5 @@ export function oneOf (value, validList) {
 }
 
 export function checkContainsInString(str, subStr) {
-  return str.indexOf(subStr) > 0
+  return str.indexOf(subStr) != -1
 }

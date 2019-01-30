@@ -37,12 +37,14 @@
         var passwd = $("input[name='passwd']").val();
         var result = await Login(username, passwd);
         if(result.loginSuccess == true){
-          if(result.loginStatus == "adminLogin"){
+          alert(result.tokenString);
+          alert(result.domain);
+          setCookie("token",result.tokenString,365,result.domain);
+          setCookie("userName",username,365,result.domain);
+          setCookie("isLogin","isLogin",365,result.domain);
+          if(result.adminLogin == "adminLogin"){
             this.$router.push({ path: '/sso/loginRecord'});
           }else{
-            setCookie("token",result.tokenString,1,result.domain);
-            setCookie("userName",username,1,result.domain);
-            setCookie("isLogin","isLogin",1,result.domain);
             // 跳往需要跳转的页面,并设置cookie
             window.location.href = result.redirectUrl;
           }

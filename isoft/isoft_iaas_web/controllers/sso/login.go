@@ -57,8 +57,8 @@ func (this *LoginController) PostLogin()  {
 			"loginSuccess": loginSuccess,
 			"loginStatus":loginStatus,
 			"tokenString":tokenString,
-			"redirectUrl": GetRedirectUrl(referer),
-			"domain":getDomain(GetRedirectUrl(referer)),
+			"domain":getDomain(GetRedirectUrl(origin)),		 // 管理员登录设置 domain 为 sso 所在站点,不需要指定 redirectUrl
+			"adminLogin":"adminLogin",
 		}
 	} else {
 		loginSuccess, loginStatus, tokenString, _ := CommonUserLogin(referer, origin, username, passwd, this.Ctx.Input.IP())
@@ -88,10 +88,13 @@ func IsAdminUser(user_name string) bool {
 }
 
 func AdminUserLogin(referer, origin, username, passwd, ip string) (loginSuccess bool, loginStatus, tokenString string, err error){
-	if CheckOrigin(origin) { // 非跨站点
-		// loginStatus 设置为 adminLogin,用来跳往管理界面
-		loginSuccess, loginStatus, tokenString, err = CommonUserLogin(referer,origin,username,passwd,ip)
-		return loginSuccess, "adminLogin", tokenString,nil
+	if CheckOrigin(origin) { // 非跨站点,不许校验 referer
+		user, err := sso.QueryUser(username, passwd)
+		if err == nil && &user != nil {
+			return SuccessedLogin(username, ip, origin, referer, user)
+		} else {
+			return ErrorAccountLogin(username, ip, origin, referer)
+		}
 	} else {
 		return ErrorAuthorizedLogin(username, origin, ip, referer)
 	}
@@ -138,7 +141,8 @@ func GetRedirectUrl(referer string) string {
 	if len(referers) == 2{
 		return GetUnescapeString(referers[1])
 	}
-	return ""
+	// 不含 redirectURL 场景
+	return GetUnescapeString(referers[0])
 }
 
 // 进行编解码
@@ -154,7 +158,7 @@ func CommonUserLogin(referer string, origin string, username string, passwd stri
 	if CheckOrigin(origin) && len(referers) == 2 && CheckOrigin(referers[0]) && IsValidRedirectUrl(GetRedirectUrl(referer)) {
 		user, err := sso.QueryUser(username, passwd)
 		if err == nil && &user != nil {
-			return SuccessedLogin(username, ip, origin, referer, user, referers)
+			return SuccessedLogin(username, ip, origin, referer, user)
 		} else {
 			return ErrorAccountLogin(username, ip, origin, referer)
 		}
@@ -163,7 +167,7 @@ func CommonUserLogin(referer string, origin string, username string, passwd stri
 	}
 }
 
-func SuccessedLogin(username string, ip string, origin string, referer string, user sso.User, referers []string) (loginSuccess bool, loginStatus, tokenString string, err error){
+func SuccessedLogin(username string, ip string, origin string, referer string, user sso.User) (loginSuccess bool, loginStatus, tokenString string, err error){
 	var loginLog sso.LoginRecord
 	loginLog.UserName = username
 	loginLog.LoginIp = ip
