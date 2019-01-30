@@ -1,13 +1,131 @@
 <template>
-  <div>Register...</div>
+  <div>
+    <div id="header">
+      <div class="login-link" id="login_link" style="position: absolute;top: 25px;right: 100px;">
+        <span style="font-size: 15px;font-weight: inherit;">已有账号,前去<a href="/user/login/">登录</a></span>
+      </div>
+    </div>
+    <div id="nav">
+    </div>
+    <div id="content" style="width: 100%;">
+      <div id="section">
+        <div style="margin:80px;margin-left:200px;margin-right: 200px;">
+          <div id="regist_header" style="height: 60px;line-height: 60px;text-align: center;font-size: 16px;color: #000;">用户注册</div>
+          <div style="margin-top:20px;">
+            <input class="focus" name="username" placeholder="请输入用户名" type="text" style="width: 100%;height: 40px;" required/>
+            <span class="_username_error" style="font-size: 12px;color:red;float: right;display: none;">*用户名已存在！</span>
+          </div>
+          <div style="margin-top:20px;">
+            <input type="password" style="display:none">
+            <input class="focus" name="passwd" placeholder="请输入密码" type="password" style="width: 100%;height: 40px;" autocomplete="new-password" required/>
+            <span class="_password_error" style="font-size: 12px;color:red;float: right;display: none;">*密码复杂度太低！</span>
+          </div>
+          <Row style="margin-top:10px;">
+            <Col span="12">
+              <input type="checkbox" value="proxy" v-model="proxy_checked"/> <label>阅读并接受</label><a href="#">《Isoft用户协议》</a>
+            </Col>
+            <Col span="12">
+              <span v-show="!proxy_checked" id="user_proxy">必须同意用户协议才能注册账号</span>
+            </Col>
+          </Row>
+          <input type="submit" value="注册" id="submit" @click="regist">
+        </div>
+      </div>
+      <aside id="asideright">
+        <div style="margin: 80px;background: #ebfffc;height: 300px;padding:20px;">
+          <h3 style="background: url('../../assets/sso/phone.png') left center no-repeat;">
+            <span style="padding-left: 30px;">账号特权</span>
+          </h3>
+          <hr>
+          <div style="font-size: 12px;font-family: Tahoma, Helvetica, 'Microsoft Yahei', 微软雅黑, Arial, STHeiti;">
+            <p style="line-height: 30px;">初次注册账号送30小时免费学习时间</p>
+            <p style="line-height: 30px;">初次注册账号送3000积分</p>
+            <p style="line-height: 30px;">初次注册账号送云笔记使用特权</p>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <LoginFooter/>
+  </div>
 </template>
 
 <script>
-    export default {
-        name: "Regist"
+  import LoginFooter from "./LoginFooter"
+
+  export default {
+    name: "Regist",
+    components:{LoginFooter},
+    data(){
+      return {
+        // 用户协议是否同意
+        proxy_checked:"",
+      }
+    },
+    methods:{
+      regist:function () {
+        var username = $("input[name='username']").val();
+        var passwd = $("input[name='passwd']").val();
+        var proxy = $("input[name='proxy']:checked").val();
+        if(!proxy){
+          alert(username);
+          alert(passwd);
+        }
+      }
     }
+  }
 </script>
 
 <style scoped>
-
+  #header {
+    background-color: rgb(255, 255, 255);
+    text-align:center;
+    height:70px;
+    padding:5px;
+  }
+  #nav {
+    height: 20px;
+    display: block;
+    width:100%;
+    background: linear-gradient(red, blue);
+    opacity:0.1;
+  }
+  #section {
+    width: 60%;
+    float:left;
+    height: 450px;
+  }
+  #asideright{
+    width:40%;
+    float: left;
+    height: 450px;
+  }
+  a:hover {
+    color: #E4393C;
+    text-decoration: underline;
+  }
+  .focus:focus {
+    background-color: #ffffff;
+    border-color: #2c5bff;
+  }
+  #user_proxy{
+    font-size: 12px;
+    color:red;
+    float: right;
+  }
+  #submit{
+    background-color: #3f89ec;
+    width: 100%;
+    height: 40px;
+    margin-top:30px;
+    margin-bottom:20px;
+    display: block;
+    line-height: 40px;
+    font-size: 16px;
+    font-weight: 800;
+    cursor: pointer;
+    color: #fff;
+    background: #3f89ec;
+    border: 0;
+  }
 </style>

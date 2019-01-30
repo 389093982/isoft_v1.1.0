@@ -14,7 +14,7 @@
     </div>
     <div id="login_footer">
       <router-link :to="{path:'/sso/user/friendLogin'}" style="float: left;color: #2e82ff;">友情登录</router-link>
-      <router-link :to="{path:'/sso/user/regist'}" style="float: right;color: #2e82ff;">立即注册</router-link>
+      <router-link :to="{path:'/sso/regist'}" style="float: right;color: #2e82ff;">立即注册</router-link>
     </div>
   </div>
 </template>
