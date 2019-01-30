@@ -34,3 +34,7 @@ export function oneOf (value, validList) {
   }
   return false;
 }
+
+export function checkContainsInString(str, subStr) {
+  return str.indexOf(subStr) > 0
+}
