@@ -114,4 +114,4 @@ export const AppRegisterList = (offset,current_page,search) => ajax(BASE_URL+"/s
 export const AddAppRegister = (app_address) => ajax(BASE_URL+"/sso/app/addAppRegister", {app_address},'POST');
 
 // 登录记录分页查询
-export const LoginRecordList = (offset,current_page,search) => ajax(BASE_URL+"/api/sso/user/loginRecordList", {offset,current_page,search},'POST');
+export const LoginRecordList = (offset,current_page,search) => ajax(BASE_URL+"/sso/user/loginRecordList", {offset,current_page,search},'POST');

@@ -33,7 +33,7 @@ func QueryLoginRecord(condArr map[string]string, page int, offset int) (loginRec
 	if _, ok := condArr["search"]; ok {
 		subCond := orm.NewCondition()
 		subCond = cond.And("login_ip__contains", condArr["search"]).
-			Or("origin", condArr["search"]).Or("refer", condArr["search"])
+			Or("origin", condArr["search"]).Or("referer", condArr["search"])
 		cond = cond.AndCond(subCond)
 	}
 
