@@ -23,6 +23,7 @@ import (
 	"isoft/isoft_iaas_web/task"
 	"net/url"
 	"os"
+	"strings"
 )
 
 // 数据库连接串
@@ -93,32 +94,37 @@ func initDB() {
 }
 
 func registerModel() {
-	orm.RegisterModel(new(iblog.Catalog))
-	orm.RegisterModel(new(iblog.Blog))
+	// ilearning 模块
+	if strings.Contains(beego.AppConfig.String("open.moudles"), "ilearning"){
+		orm.RegisterModel(new(iblog.Catalog))
+		orm.RegisterModel(new(iblog.Blog))
 
-	orm.RegisterModel(new(ilearning.Course))
-	orm.RegisterModel(new(ilearning.CourseVideo))
-	orm.RegisterModel(new(ilearning.Favorite))
-	orm.RegisterModel(new(ilearning.CommentTheme))
-	orm.RegisterModel(new(ilearning.CommentReply))
-	orm.RegisterModel(new(ilearning.Note))
+		orm.RegisterModel(new(ilearning.Course))
+		orm.RegisterModel(new(ilearning.CourseVideo))
+		orm.RegisterModel(new(ilearning.Favorite))
+		orm.RegisterModel(new(ilearning.CommentTheme))
+		orm.RegisterModel(new(ilearning.CommentReply))
+		orm.RegisterModel(new(ilearning.Note))
 
-	orm.RegisterModel(new(ifile.IFile))
+		orm.RegisterModel(new(ifile.IFile))
 
-	orm.RegisterModel(new(cms.Configuration))
-	orm.RegisterModel(new(cms.CommonLink))
+		orm.RegisterModel(new(cms.Configuration))
+		orm.RegisterModel(new(cms.CommonLink))
 
-	orm.RegisterModel(new(share.Share))
+		orm.RegisterModel(new(share.Share))
 
-	orm.RegisterModel(new(common.History))
+		orm.RegisterModel(new(common.History))
 
-	orm.RegisterModel(new(monitor.HeartBeat2))
-	orm.RegisterModel(new(monitor.HeartBeatDetail))
-
-	orm.RegisterModel(new(sso.User))
-	orm.RegisterModel(new(sso.AppRegister))
-	orm.RegisterModel(new(sso.LoginRecord))
-	orm.RegisterModel(new(sso.UserToken))
+		orm.RegisterModel(new(monitor.HeartBeat2))
+		orm.RegisterModel(new(monitor.HeartBeatDetail))
+	}
+	// sso 模块
+	if strings.Contains(beego.AppConfig.String("open.moudles"), "sso"){
+		orm.RegisterModel(new(sso.User))
+		orm.RegisterModel(new(sso.AppRegister))
+		orm.RegisterModel(new(sso.LoginRecord))
+		orm.RegisterModel(new(sso.UserToken))
+	}
 }
 
 // 自动建表
@@ -149,7 +155,7 @@ func ssoFilterFunc(ctx *context.Context) {
 	filter.LoginWhiteList = &[]string{"/api/sso/user/login","/api/sso/user/regist","/api/sso/user/checkOrInValidateTokenString"}
 	filter.LoginUrl = ctx.Input.URL()
 	filter.Ctx = ctx
-	filter.SsoAddress = "http://localhost:8086"
+	filter.SsoAddress = beego.AppConfig.String("isoft.sso.web.addr")
 	filter.ErrorFunc = func() {
 		filter.Ctx.ResponseWriter.WriteHeader(401)
 	}

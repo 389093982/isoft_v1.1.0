@@ -12,6 +12,7 @@ import (
 	"isoft/isoft_iaas_web/controllers/monitor"
 	"isoft/isoft_iaas_web/controllers/share"
 	"isoft/isoft_iaas_web/controllers/sso"
+	"strings"
 )
 
 func init() {
@@ -25,14 +26,21 @@ func init() {
 
 	beego.Router("/", &controllers.MainController{})
 	beego.Router("/api/auth/redirectToLogin/", &sso.AuthController{}, "get,post:RedirectToLogin")
-	initIBlogRouter()
-	initILearningRouter()
-	initCMSRouter()
-	initShareRouter()
-	initCommonRouter()
-	initMonitorRouter()
-	initIFileRouter()
-	initISSORouter()
+
+	// ilearning 模块
+	if strings.Contains(beego.AppConfig.String("open.moudles"), "ilearning"){
+		initIBlogRouter()
+		initILearningRouter()
+		initCMSRouter()
+		initShareRouter()
+		initCommonRouter()
+		initMonitorRouter()
+		initIFileRouter()
+	}
+	// sso 模块
+	if strings.Contains(beego.AppConfig.String("open.moudles"), "sso"){
+		initISSORouter()
+	}
 }
 
 func initIFileRouter() {
