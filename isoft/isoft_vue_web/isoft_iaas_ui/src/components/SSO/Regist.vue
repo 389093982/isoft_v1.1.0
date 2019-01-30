@@ -16,13 +16,13 @@
           </div>
           <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80">
             <FormItem label="用户名" prop="username">
-              <Input v-model="formValidate.username" placeholder="请输入用户名"></Input>
+              <Input v-model.trim="formValidate.username" placeholder="请输入用户名"></Input>
             </FormItem>
             <FormItem label="密码" prop="passwd">
-              <Input v-model="formValidate.passwd" type="password" placeholder="请输入密码"></Input>
+              <Input v-model.trim="formValidate.passwd" type="password" placeholder="请输入密码"></Input>
             </FormItem>
             <FormItem label="确认密码" prop="repasswd">
-              <Input v-model="formValidate.repasswd" type="password" placeholder="请输入确认密码"></Input>
+              <Input v-model.trim="formValidate.repasswd" type="password" placeholder="请输入确认密码"></Input>
             </FormItem>
             <FormItem label="用户协议" prop="proxy">
               <CheckboxGroup v-model="formValidate.proxy">
@@ -59,26 +59,26 @@
 <script>
   import LoginFooter from "./LoginFooter"
   import {Regist} from "../../api"
+  import {validateUserName} from "../../tools"
+  import {validatePasswd} from "../../tools"
 
   export default {
     name: "Regist",
     components:{LoginFooter},
     data(){
-      const validateUserName = (rule, value, callback) => {
-        var uPattern = /^[a-zA-Z]([-_a-zA-Z0-9]{5,19})+$/;
+      const _validateUserName = (rule, value, callback) => {
         if (value === '') {
           callback(new Error('用户名不能为空!'));
-        } else if (!uPattern.test(value)) {
+        } else if (!validateUserName(value)) {
           callback(new Error('6至20位，以字母开头，字母，数字，减号，下划线!'));
         } else {
           callback();
         }
       };
-      const validatePasswd = (rule, value, callback) => {
-        var pPattern = /^.*(?=.{6,})(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*? ]).*$/;
+      const _validatePasswd = (rule, value, callback) => {
         if (value === '') {
           callback(new Error('密码不能为空!'));
-        } else if (!pPattern.test(value)) {
+        } else if (!validatePasswd(value)) {
           callback(new Error('最少6位，至少1个大小写字母，数字和特殊字符!'));
         } else {
           callback();
@@ -103,10 +103,10 @@
         },
         ruleValidate: {
           username: [
-            { validator: validateUserName, trigger: 'blur' }
+            { validator: _validateUserName, trigger: 'blur' }
           ],
           passwd: [
-            { validator: validatePasswd, trigger: 'blur' },
+            { validator: _validatePasswd, trigger: 'blur' },
           ],
           repasswd: [        // 确认密码校验 validatePassCheck
             { validator: validatePassCheck, trigger: 'blur' }
