@@ -60,7 +60,7 @@ func ErrorAuthorizedLogin(username string, origin string, ip string, referer str
 	loginLog.UserName = username
 	loginLog.LoginIp = ip
 	loginLog.Origin = origin
-	loginLog.Referer = referer
+	loginLog.Referer = GetUnescapeString(referer)
 	if !CheckOrigin(origin) {
 		loginLog.LoginStatus = "origin_error"
 	} else {
@@ -80,7 +80,7 @@ func ErrorAccountLogin(username string, ip string, origin string, referer string
 	loginLog.UserName = username
 	loginLog.LoginIp = ip
 	loginLog.Origin = origin
-	loginLog.Referer = referer
+	loginLog.Referer = GetUnescapeString(referer)
 	loginLog.LoginStatus = "account_error"
 	loginLog.LoginResult = "FAILED"
 	loginLog.CreatedBy = "SYSTEM"
@@ -94,12 +94,17 @@ func ErrorAccountLogin(username string, ip string, origin string, referer string
 func GetRedirectUrl(referer string) string {
 	referers := strings.Split(referer, "/sso/login?redirectUrl=")
 	if len(referers) == 2{
-		// 进行编解码
-		if _redirectUrl, err := url.QueryUnescape(referers[1]); err == nil{
-			return _redirectUrl
-		}
+		return GetUnescapeString(referers[1])
 	}
 	return ""
+}
+
+// 进行编解码
+func GetUnescapeString(s string) string {
+	if _s, err := url.QueryUnescape(s); err == nil{
+		return _s
+	}
+	return s
 }
 
 func CommonUserLogin(referer string, origin string, username string, passwd string, ip string) (loginSuccess bool, loginStatus string, err error) {
@@ -121,7 +126,7 @@ func SuccessedLogin(username string, ip string, origin string, referer string, u
 	loginLog.UserName = username
 	loginLog.LoginIp = ip
 	loginLog.Origin = origin
-	loginLog.Referer = referer
+	loginLog.Referer = GetUnescapeString(referer)
 	loginLog.LoginStatus = "success"
 	loginLog.LoginResult = "SUCCESS"
 	loginLog.CreatedBy = "SYSTEM"
