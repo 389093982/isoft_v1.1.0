@@ -10,7 +10,10 @@
     <div id="content" style="width: 100%;">
       <div id="section">
         <div style="margin:80px;margin-left:200px;margin-right: 200px;">
-          <div id="regist_header" style="height: 60px;line-height: 60px;text-align: center;font-size: 16px;color: #000;">用户注册</div>
+          <div style="text-align: center;padding-left: 50px;">
+            <span style="height: 60px;line-height: 60px;font-size: 16px;color: #000;">用户注册</span>
+            <span><a href="javascript:;">已有账号,前去登录</a></span>
+          </div>
           <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80">
             <FormItem label="用户名" prop="username">
               <Input v-model="formValidate.username" placeholder="请输入用户名"></Input>
