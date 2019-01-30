@@ -71,7 +71,9 @@
     },
     methods:{
       cancelUser() {
+        delCookie("token");
         delCookie("userName");
+        delCookie("isLogin");
         this.loginUserName = "";
         window.location.href = LoginAddr + "?redirectUrl=" + window.location.href;
       }
