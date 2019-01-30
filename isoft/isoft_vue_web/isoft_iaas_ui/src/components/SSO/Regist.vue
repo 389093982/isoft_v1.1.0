@@ -34,10 +34,6 @@
             <FormItem>
               <input value="注册" id="submit" @click="handleSubmit('formValidate')">
             </FormItem>
-            <!-- 错误提示信息 -->
-            <FormItem v-if="errorMsg">
-              <span style="font-size: 12px;color:red;">{{errorMsg}}</span>
-            </FormItem>
           </Form>
         </div>
       </div>
@@ -68,8 +64,37 @@
     name: "Regist",
     components:{LoginFooter},
     data(){
+      const validateUserName = (rule, value, callback) => {
+        var uPattern = /^[a-zA-Z]([-_a-zA-Z0-9]{5,19})+$/;
+        if (value === '') {
+          callback(new Error('用户名不能为空!'));
+        } else if (!uPattern.test(value)) {
+          callback(new Error('6至20位，以字母开头，字母，数字，减号，下划线!'));
+        } else {
+          callback();
+        }
+      };
+      const validatePasswd = (rule, value, callback) => {
+        var pPattern = /^.*(?=.{6,})(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*? ]).*$/;
+        if (value === '') {
+          callback(new Error('密码不能为空!'));
+        } else if (!pPattern.test(value)) {
+          callback(new Error('最少6位，至少1个大小写字母，数字和特殊字符!'));
+        } else {
+          callback();
+        }
+      };
+      // 确认密码校验 validatePassCheck
+      const validatePassCheck = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('请输入密码进行确认!'));
+        } else if (value !== this.formValidate.passwd) {
+          callback(new Error('两次输入密码不一致!'));
+        } else {
+          callback();
+        }
+      };
       return {
-        errorMsg:"",
         formValidate: {
           username: '',
           passwd: '',
@@ -78,16 +103,16 @@
         },
         ruleValidate: {
           username: [
-            { required: true, message: 'The username cannot be empty', trigger: 'blur' }
+            { validator: validateUserName, trigger: 'blur' }
           ],
           passwd: [
-            { required: true, message: 'The passwd cannot be empty', trigger: 'blur' },
+            { validator: validatePasswd, trigger: 'blur' },
           ],
-          repasswd: [
-            { required: true, message: 'The repasswd cannot be empty', trigger: 'blur' }
+          repasswd: [        // 确认密码校验 validatePassCheck
+            { validator: validatePassCheck, trigger: 'blur' }
           ],
           proxy: [
-            { required: true, type: 'array', min: 1, message: '用户协议必须同意', trigger: 'change' },
+            { required: true, type: 'array', min: 1, message: '用户协议必须同意!', trigger: 'change' },
           ],
         }
       }
@@ -96,12 +121,8 @@
       handleSubmit: function (name) {
         this.$refs[name].validate(async (valid) => {
           if (valid) {
-            if(this.formValidate.passwd != this.formValidate.repasswd){
-              this.errorMsg = "密码和确认密码不一致!";
-            }else{
-              // 校验通过则进行注册
-              this.regist();
-            }
+            // 校验通过则进行注册
+            this.regist();
           } else {
             this.$Message.error('注册信息校验失败!');
           }
@@ -112,14 +133,12 @@
         var passwd = this.formValidate.passwd;
         const result = await Regist(username,passwd);
         if(result.status=="SUCCESS"){
-          // 错误信息初始置空
-          this.errorMsg = "";
           this.$Message.success('注册成功!');
         }else{
           if(result.errorMsg == "regist_exist"){
-            this.errorMsg = "该用户已经被注册!";
+            this.$Message.error("该用户已经被注册!");
           }else if(result.errorMsg == "regist_failed"){
-            this.errorMsg = "注册失败,请联系管理员获取账号!";
+            this.$Message.error("注册失败,请联系管理员获取账号!");
           }
         }
       }
