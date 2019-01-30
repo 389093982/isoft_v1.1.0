@@ -37,8 +37,7 @@
         var result = await Login(username, passwd);
         if(result.loginSuccess == true){
           if(result.loginStatus == "adminLogin"){
-            alert("登录成功!");
-            this.$router.push({ path: '/sso/appRegist'});
+            this.$router.push({ path: '/sso/loginRecord'});
           }else{
             // 跳往需要跳转的页面,并设置cookie
             window.location.href = result.redirectUrl;
