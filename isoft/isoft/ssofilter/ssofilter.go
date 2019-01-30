@@ -51,7 +51,9 @@ func (this *LoginFilter) Filter()  {
 
 func (this *LoginFilter) checkWhiteList() bool {
 	for _,url := range *this.LoginWhiteList{
-		return url == this.LoginUrl
+		if(url == this.LoginUrl){
+			return true
+		}
 	}
 	return false
 }
