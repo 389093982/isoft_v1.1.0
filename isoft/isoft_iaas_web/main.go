@@ -146,10 +146,10 @@ func main() {
 
 func ssoFilterFunc(ctx *context.Context) {
 	filter := new(ssofilter.LoginFilter)
-	filter.LoginWhiteList = &[]string{"/api/sso/user/login","/api/sso/user/regist"}
+	filter.LoginWhiteList = &[]string{"/api/sso/user/login","/api/sso/user/regist","/api/sso/user/checkOrInValidateTokenString"}
 	filter.LoginUrl = ctx.Input.URL()
 	filter.Ctx = ctx
-	filter.SsoAddress = "http://localhost:6002"
+	filter.SsoAddress = "http://localhost:8086"
 	filter.ErrorFunc = func() {
 		filter.Ctx.ResponseWriter.WriteHeader(401)
 	}

@@ -69,7 +69,7 @@ func (this *LoginFilter) getTokenString() string {
 
 // 验证 token,不通过时注销 token
 func (this *LoginFilter) checkOrInValidateTokenString() bool {
-	resp, err := http.Get(this.SsoAddress + "/user/checkOrInValidateTokenString?tokenString=" + this.getTokenString() + "&operateType=check")
+	resp, err := http.Get(this.SsoAddress + "/api/sso/user/checkOrInValidateTokenString?tokenString=" + this.getTokenString() + "&operateType=check")
 	if err != nil {
 		return false
 	}
