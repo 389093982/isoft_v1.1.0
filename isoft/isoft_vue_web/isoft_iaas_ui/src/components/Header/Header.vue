@@ -59,6 +59,7 @@
 <script>
   import {getCookie} from '../../tools/index'
   import {delCookie} from '../../tools/index'
+  import {LoginAddr} from "../../api"
 
   export default {
     name: "Header",
@@ -72,7 +73,7 @@
       cancelUser() {
         delCookie("userName");
         this.loginUserName = "";
-        window.location.href = "/api/auth/redirectToLogin/?redirectUrl=" + window.location.href;
+        window.location.href = LoginAddr + "?redirectUrl=" + window.location.href;
       }
     },
     mounted:function(){

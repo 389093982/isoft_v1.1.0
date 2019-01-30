@@ -87,7 +87,14 @@ func initDB() {
 	registerModel()
 
 	if RunSyncdbMode == "FLYWAY"{
-		flyway.MigrateToDB(dsn, "./conf/migrations/migrations.sql")
+		// ilearning 模块
+		if strings.Contains(beego.AppConfig.String("open.moudles"), "ilearning"){
+			flyway.MigrateToDB(dsn, "./conf/migrations/migrations.sql")
+		}
+		// sso 模块
+		if strings.Contains(beego.AppConfig.String("open.moudles"), "sso"){
+			flyway.MigrateToDB(dsn, "./conf/migrations/sso_migrations.sql")
+		}
 	}else{
 		createTable()
 	}
