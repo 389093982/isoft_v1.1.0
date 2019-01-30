@@ -18,7 +18,7 @@ axios.interceptors.response.use(
     if (error.response) {
       switch (error.response.status) {
         case 401:
-          window.location.href = "/api/auth/redirectToLogin/?redirectUrl=" + window.location.href;
+          window.location.href = "/sso/login/?redirectUrl=" + window.location.href;
       }
     }
     return Promise.reject(error.response.data)   // 返回接口返回的错误信息

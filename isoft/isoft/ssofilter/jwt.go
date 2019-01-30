@@ -1,4 +1,4 @@
-package sso
+package ssofilter
 
 import (
 	"github.com/dgrijalva/jwt-go"

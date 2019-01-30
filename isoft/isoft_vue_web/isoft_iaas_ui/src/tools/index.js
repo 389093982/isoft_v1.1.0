@@ -1,3 +1,4 @@
+// 获取 cookie 值
 export const getCookie = function getCookie(c_name) {
   if (document.cookie.length > 0) {
     var c_start = document.cookie.indexOf(c_name + "=");
@@ -24,6 +25,19 @@ export const checkEmpty = function checkEmpty(checkStr){
   }
   return false;
 };
+
+// 跨域设置 cookie
+function setCookie (c_name,value,expiredays,domain){
+  var exdate = new Date();
+  exdate.setDate(exdate.getDate() + expiredays);
+  //判断是否需要跨域存储
+  if (domain) {
+    // egg：path=/;domain=xueersi.com";
+    document.cookie = c_name+ "=" +escape(value)+((expiredays==null) ? "" : ";expires="+exdate.toGMTString())+";path=/;domain=" + domain;
+  } else {
+    document.cookie = c_name+ "=" +escape(value)+((expiredays==null) ? "" : ";expires="+exdate.toGMTString())+";path=/";
+  }
+}
 
 // 判断值 value 是否是列表 validList 中
 export function oneOf (value, validList) {

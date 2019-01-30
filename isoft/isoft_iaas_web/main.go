@@ -3,12 +3,14 @@ package main
 import (
 	"fmt"
 	"github.com/astaxie/beego"
+	"github.com/astaxie/beego/context"
 	"github.com/astaxie/beego/logs"
 	"github.com/astaxie/beego/orm"
 	_ "github.com/go-sql-driver/mysql" // _ 的作用,并不需要把整个包都导入进来,仅仅是是希望它执行init()函数而已
 	"isoft/isoft/common/apppath"
 	"isoft/isoft/common/fileutil"
 	"isoft/isoft/common/flyway"
+	"isoft/isoft/ssofilter"
 	"isoft/isoft_iaas_web/models/cms"
 	"isoft/isoft_iaas_web/models/common"
 	"isoft/isoft_iaas_web/models/iblog"
@@ -132,11 +134,24 @@ func createTable() {
 
 func main() {
 	// 登录过滤器,以 /api 开头的请求为 ajax 请求,需要返回 401 状态码,否则为非 ajax 请求,需要跳往登录页面
-	// beego.InsertFilter("/api/*", beego.BeforeExec, sso.LoginFilterWithStatusCode)
-	// beego.InsertFilter(`/(^(?!api).*)`, beego.BeforeExec, sso.LoginFilterWithRedirect)
+	//beego.InsertFilter("/api/*", beego.BeforeExec, ssofilter.LoginFilterWithStatusCode)
+	//beego.InsertFilter(`/(^(?!api).*)`, beego.BeforeExec, ssofilter.LoginFilterWithRedirect)
+	beego.InsertFilter("/api/*", beego.BeforeExec, ssoFilterFunc)
 
 	// 开启定时任务
 	task.StartCronTask()
 
 	beego.Run()
+}
+
+func ssoFilterFunc(ctx *context.Context) {
+	filter := new(ssofilter.LoginFilter)
+	filter.LoginWhiteList = &[]string{"/api/sso/user/login","/api/sso/user/regist"}
+	filter.LoginUrl = ctx.Input.URL()
+	filter.Ctx = ctx
+	filter.SsoAddress = "http://localhost:6002"
+	filter.ErrorFunc = func() {
+		filter.Ctx.ResponseWriter.WriteHeader(401)
+	}
+	filter.Filter()
 }

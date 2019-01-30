@@ -1,11 +1,9 @@
-package sso
+package ssofilter
 
 import (
-	"encoding/json"
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/context"
 	"github.com/astaxie/beego/session"
-	"io/ioutil"
 	"net/http"
 	"strconv"
 	"strings"
@@ -48,16 +46,7 @@ type LoginManager struct {
 	ctx *context.Context
 }
 
-// 从 cookie 中或者 header 中获取 token
-func (this *LoginManager) GetTokenString() string {
-	var tokenString string
-	if strings.TrimSpace(this.ctx.GetCookie("token")) != "" {
-		tokenString = this.ctx.GetCookie("token")
-	} else if strings.TrimSpace(this.ctx.Request.Header.Get("token")) != "" {
-		tokenString = this.ctx.Request.Header.Get("token")
-	}
-	return tokenString
-}
+
 
 func (this *LoginManager) IsWhiteUrl() bool {
 	if _, ok := loginWhiteList[this.ctx.Input.URL()]; ok {
@@ -88,37 +77,9 @@ func (this *LoginManager) ResponseWithRedirect() {
 	this.RedirectToLogin("")
 }
 
-func (this *LoginManager) ResetUserName(username string) {
-	if this.ctx.Input.CruSession == nil {
-		// 从未访问过是没有 session 的,需要重新创建
-		this.ctx.Input.CruSession, _ = globalSessions.SessionStart(this.ctx.ResponseWriter, this.ctx.Request)
-		this.ctx.Input.CruSession.Set("userName", username)
-		this.ctx.Input.CruSession.Set("UserName", username)
-	} else {
-		// 登录信息认证通过
-		this.ctx.Input.CruSession.Set("userName", username)
-		this.ctx.Input.CruSession.Set("UserName", username)
-	}
-}
 
-func (this *LoginManager) CheckOrInValidateTokenString() bool {
-	resp, err := http.Get(isoft_sso_url + "/user/checkOrInValidateTokenString?tokenString=" + this.GetTokenString() + "&operateType=check")
-	if err != nil {
-		return false
-	}
-	defer resp.Body.Close()
-	body, err := ioutil.ReadAll(resp.Body)
-	if err == nil {
-		jsonStr := string(body)
-		var jsonMap map[string]string
-		json.Unmarshal([]byte(jsonStr), &jsonMap)
-		if jsonMap["status"] == "SUCCESS" {
-			this.ResetUserName(jsonMap["username"])
-			return true
-		}
-	}
-	return false
-}
+
+
 
 func (this *LoginManager) RedirectToLogin(defaultRedirectUrl string) {
 	scheme := this.ctx.Input.Scheme()

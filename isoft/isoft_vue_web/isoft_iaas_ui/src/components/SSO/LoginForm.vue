@@ -21,6 +21,7 @@
 
 <script>
   import {Login} from "../../api"
+  import {setCookie} from "../../tools"
 
   export default {
     name: "LoginForm",
@@ -39,6 +40,9 @@
           if(result.loginStatus == "adminLogin"){
             this.$router.push({ path: '/sso/loginRecord'});
           }else{
+            setCookie("token",result.tokenString,1,result.domain);
+            setCookie("userName",username,1,result.domain);
+            setCookie("isLogin","isLogin",1,result.domain);
             // 跳往需要跳转的页面,并设置cookie
             window.location.href = result.redirectUrl;
           }
