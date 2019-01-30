@@ -38,6 +38,15 @@ func SaveUser(user User) error {
 	return nil
 }
 
+func CheckUserRegist(username string) bool {
+	o := orm.NewOrm()
+	count, _ := o.QueryTable("user").Filter("user_name", username).Count()
+	if count > 0{
+		return true
+	}
+	return false
+}
+
 func QueryUser(username, passwd string) (user User, err error) {
 	o := orm.NewOrm()
 	err = o.QueryTable("user").Filter("user_name", username).Filter("pass_wd", passwd).One(&user)

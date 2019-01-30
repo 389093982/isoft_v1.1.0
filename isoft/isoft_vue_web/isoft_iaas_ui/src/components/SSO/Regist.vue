@@ -11,24 +11,31 @@
       <div id="section">
         <div style="margin:80px;margin-left:200px;margin-right: 200px;">
           <div id="regist_header" style="height: 60px;line-height: 60px;text-align: center;font-size: 16px;color: #000;">用户注册</div>
-          <div style="margin-top:20px;">
-            <input class="focus" name="username" placeholder="请输入用户名" type="text" style="width: 100%;height: 40px;" required/>
-            <span class="_username_error" style="font-size: 12px;color:red;float: right;display: none;">*用户名已存在！</span>
-          </div>
-          <div style="margin-top:20px;">
-            <input type="password" style="display:none">
-            <input class="focus" name="passwd" placeholder="请输入密码" type="password" style="width: 100%;height: 40px;" autocomplete="new-password" required/>
-            <span class="_password_error" style="font-size: 12px;color:red;float: right;display: none;">*密码复杂度太低！</span>
-          </div>
-          <Row style="margin-top:10px;">
-            <Col span="12">
-              <input type="checkbox" value="proxy" v-model="proxy_checked"/> <label>阅读并接受</label><a href="#">《Isoft用户协议》</a>
-            </Col>
-            <Col span="12">
-              <span v-show="!proxy_checked" id="user_proxy">必须同意用户协议才能注册账号</span>
-            </Col>
-          </Row>
-          <input type="submit" value="注册" id="submit" @click="regist">
+          <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80">
+            <FormItem label="用户名" prop="username">
+              <Input v-model="formValidate.username" placeholder="请输入用户名"></Input>
+            </FormItem>
+            <FormItem label="密码" prop="passwd">
+              <Input v-model="formValidate.passwd" type="password" placeholder="请输入密码"></Input>
+            </FormItem>
+            <FormItem label="确认密码" prop="repasswd">
+              <Input v-model="formValidate.repasswd" type="password" placeholder="请输入确认密码"></Input>
+            </FormItem>
+            <FormItem label="用户协议" prop="proxy">
+              <CheckboxGroup v-model="formValidate.proxy">
+                <Checkbox label="用户协议">
+                  <label>阅读并接受</label><a href="#">《Isoft用户协议》</a>
+                </Checkbox>
+              </CheckboxGroup>
+            </FormItem>
+            <FormItem>
+              <input value="注册" id="submit" @click="handleSubmit('formValidate')">
+            </FormItem>
+            <!-- 错误提示信息 -->
+            <FormItem v-if="errorMsg">
+              <span style="font-size: 12px;color:red;">{{errorMsg}}</span>
+            </FormItem>
+          </Form>
         </div>
       </div>
       <aside id="asideright">
@@ -52,24 +59,65 @@
 
 <script>
   import LoginFooter from "./LoginFooter"
+  import {Regist} from "../../api"
 
   export default {
     name: "Regist",
     components:{LoginFooter},
     data(){
       return {
-        // 用户协议是否同意
-        proxy_checked:"",
+        errorMsg:"",
+        formValidate: {
+          username: '',
+          passwd: '',
+          repasswd: '',
+          proxy:[],
+        },
+        ruleValidate: {
+          username: [
+            { required: true, message: 'The username cannot be empty', trigger: 'blur' }
+          ],
+          passwd: [
+            { required: true, message: 'The passwd cannot be empty', trigger: 'blur' },
+          ],
+          repasswd: [
+            { required: true, message: 'The repasswd cannot be empty', trigger: 'blur' }
+          ],
+          proxy: [
+            { required: true, type: 'array', min: 1, message: '用户协议必须同意', trigger: 'change' },
+          ],
+        }
       }
     },
     methods:{
-      regist:function () {
-        var username = $("input[name='username']").val();
-        var passwd = $("input[name='passwd']").val();
-        var proxy = $("input[name='proxy']:checked").val();
-        if(!proxy){
-          alert(username);
-          alert(passwd);
+      handleSubmit: function (name) {
+        this.$refs[name].validate(async (valid) => {
+          if (valid) {
+            if(this.formValidate.passwd != this.formValidate.repasswd){
+              this.errorMsg = "密码和确认密码不一致!";
+            }else{
+              // 校验通过则进行注册
+              this.regist();
+            }
+          } else {
+            this.$Message.error('注册信息校验失败!');
+          }
+        })
+      },
+      regist:async function () {
+        var username = this.formValidate.username;
+        var passwd = this.formValidate.passwd;
+        const result = await Regist(username,passwd);
+        if(result.status=="SUCCESS"){
+          // 错误信息初始置空
+          this.errorMsg = "";
+          this.$Message.success('注册成功!');
+        }else{
+          if(result.errorMsg == "regist_exist"){
+            this.errorMsg = "该用户已经被注册!";
+          }else if(result.errorMsg == "regist_failed"){
+            this.errorMsg = "注册失败,请联系管理员获取账号!";
+          }
         }
       }
     }
@@ -114,11 +162,8 @@
     float: right;
   }
   #submit{
-    background-color: #3f89ec;
     width: 100%;
     height: 40px;
-    margin-top:30px;
-    margin-bottom:20px;
     display: block;
     line-height: 40px;
     font-size: 16px;
@@ -127,5 +172,6 @@
     color: #fff;
     background: #3f89ec;
     border: 0;
+    text-align: center;
   }
 </style>

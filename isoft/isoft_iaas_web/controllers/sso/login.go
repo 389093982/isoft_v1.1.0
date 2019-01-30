@@ -21,6 +21,24 @@ func init() {
 	origin_list = beego.AppConfig.String("origin_list")
 }
 
+func (this *LoginController) PostRegist() {
+	var user sso.User
+	user.UserName = this.Input().Get("username")
+	user.PassWd = this.Input().Get("passwd")
+	user.CreatedBy = "SYSTEM"
+	user.CreatedTime = time.Now()
+	user.LastUpdatedBy = "SYSTEM"
+	user.LastUpdatedTime = time.Now()
+	if sso.CheckUserRegist(user.UserName){
+		this.Data["json"] = &map[string]interface{}{"status": "ERROR","errorMsg":"regist_exist"}
+	}else if err := sso.SaveUser(user); err == nil{
+		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
+	}else {
+		this.Data["json"] = &map[string]interface{}{"status": "ERROR","errorMsg":"regist_failed"}
+	}
+	this.ServeJSON()
+}
+
 func (this *LoginController) CheckOrInValidateTokenString() {
 	this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
 	tokenString := this.GetString("tokenString")

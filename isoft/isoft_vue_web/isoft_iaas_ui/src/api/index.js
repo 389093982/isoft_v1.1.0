@@ -104,8 +104,11 @@ export const FilterPageHeartBeat = (offset,current_page) => ajax(BASE_URL+"/moni
 // 分页获取 ifile 清单
 export const FilterPageIFiles = (search_name,offset,current_page) => ajax(BASE_URL+"/ifile/filterPageIFiles", {search_name,offset,current_page},'GET');
 
-// 登录
+// 登录接口
 export const Login = (username,passwd) => ajax(BASE_URL+"/sso/user/login", {username,passwd},'POST');
+
+// 注册接口
+export const Regist = (username,passwd) => ajax(BASE_URL+"/sso/user/regist", {username,passwd},'POST');
 
 // 系统注册分页查询
 export const AppRegisterList = (offset,current_page,search) => ajax(BASE_URL+"/sso/app/appRegisterList", {offset,current_page,search},'POST');
