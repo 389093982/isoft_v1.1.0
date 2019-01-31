@@ -9,6 +9,7 @@ import (
 	"isoft/isoft_iaas_web/controllers/iblog"
 	"isoft/isoft_iaas_web/controllers/ifile"
 	"isoft/isoft_iaas_web/controllers/ilearning"
+	"isoft/isoft_iaas_web/controllers/iquartz"
 	"isoft/isoft_iaas_web/controllers/monitor"
 	"isoft/isoft_iaas_web/controllers/share"
 	"isoft/isoft_iaas_web/controllers/sso"
@@ -25,7 +26,9 @@ func init() {
 	}))
 
 	beego.Router("/", &controllers.MainController{})
-	beego.Router("/api/auth/redirectToLogin/", &sso.AuthController{}, "get,post:RedirectToLogin")
+
+	beego.Router("/api/iquartz/addQuartz", &iquartz.QuartzController{}, "post:AddQuartz")
+	beego.Router("/api/iquartz/filterPageQuartz", &iquartz.QuartzController{}, "post:FilterPageQuartz")
 
 	// ilearning 模块
 	if strings.Contains(beego.AppConfig.String("open.moudles"), "ilearning"){

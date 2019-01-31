@@ -16,6 +16,7 @@ import (
 	"isoft/isoft_iaas_web/models/iblog"
 	"isoft/isoft_iaas_web/models/ifile"
 	"isoft/isoft_iaas_web/models/ilearning"
+	"isoft/isoft_iaas_web/models/iquartz"
 	"isoft/isoft_iaas_web/models/monitor"
 	"isoft/isoft_iaas_web/models/share"
 	"isoft/isoft_iaas_web/models/sso"
@@ -132,6 +133,8 @@ func registerModel() {
 		orm.RegisterModel(new(sso.LoginRecord))
 		orm.RegisterModel(new(sso.UserToken))
 	}
+
+	orm.RegisterModel(new(iquartz.CronMeta))
 }
 
 // 自动建表

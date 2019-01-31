@@ -26,6 +26,7 @@ import AppRegist from "../components/SSO/AppRegist"
 import LoginRecord from "../components/SSO/LoginRecord"
 import ISSOLayout from "../components/ILayout/ISSOLayout"
 import ILayout from "../components/ILayout/ILayout"
+import QuartzList from "../components/IQuartz/QuartzList"
 
 Vue.use(Router);
 
@@ -133,6 +134,14 @@ export const CMSRouter = {
   ]
 };
 
+export const IQuartzRouter = {
+  path: '/quartz',
+  component: ILayout,
+  children: [
+    {path: 'quartzList',component: QuartzList},
+  ]
+};
+
 export const ISSOReouter = {
   path: '/sso',
   component: ISSOLayout,
@@ -142,12 +151,13 @@ export const ISSOReouter = {
     {path: 'appRegist',component: AppRegist},
     {path: 'loginRecord',component: LoginRecord},
   ]
-}
+};
 
 export default new Router({
   // History 模式,去除vue项目中的 #
   mode: 'history',
   routes: [
+    IQuartzRouter,
     ISSOReouter,
     IBlogRouter,
     IFileRouter,
