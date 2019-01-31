@@ -119,7 +119,8 @@ export const AddAppRegister = (app_address) => ajax(BASE_URL+"/sso/app/addAppReg
 // 登录记录分页查询
 export const LoginRecordList = (offset,current_page,search) => ajax(BASE_URL+"/sso/user/loginRecordList", {offset,current_page,search},'POST');
 
-
+// 定时任务分页查询
+export const QuartzList = (offset,current_page,search) => ajax(BASE_URL+"/iquartz/filterPageQuartz", {offset,current_page,search},'POST');
 
 // 跨模块使用,模块化部署时需要使用 nginx 代理
 export const LoginAddr = "/sso/login/";

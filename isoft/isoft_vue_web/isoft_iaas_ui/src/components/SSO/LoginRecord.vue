@@ -3,7 +3,7 @@
     <div style="margin: 10px;">
       <Row type="flex" justify="end" class="code-row-bg" style="margin-bottom: 5px;">
         <Col span="10">
-          <Input v-model="search" placeholder="请输入您要搜索的系统注册地址"/>
+          <Input v-model="search" placeholder="搜索..."/>
         </Col>
         <Col span="2">
           <Button type="success" @click="searchRecord">搜索</Button>
