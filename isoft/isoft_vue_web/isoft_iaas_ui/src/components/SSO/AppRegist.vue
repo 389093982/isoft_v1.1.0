@@ -2,23 +2,10 @@
   <LeftMenu>
     <div style="margin: 10px;">
       <ISimpleLeftRightRow>
-        <Button slot="left" type="success" @click="showFormModal = true">新增</Button>
-        <ISimpleSearch slot="right" @handleSimpleSearch="handleSearch"/>
-      </ISimpleLeftRightRow>
-
-      <Table :columns="columns1" :data="appRegisters" size="small"></Table>
-      <Page :total="total" :page-size="offset" show-total show-sizer :styles="{'text-align': 'center','margin-top': '10px'}"
-            @on-change="handleChange" @on-page-size-change="handlePageSizeChange"/>
-
-      <!-- 表单添加系统注册信息 -->
-      <Modal
-        v-model="showFormModal"
-        width="850"
-        title="新增/编辑系统地址信息"
-        :footer-hide="true"
-        :mask-closable="false">
-        <div>
-          <!-- 表单正文 -->
+        <!-- left 插槽部分 -->
+        <!-- 按钮触发模态框 -->
+        <IBtnTriggerModal slot="left" btn-text="新增" modal-title="新增/编辑系统地址信息">
+          <!-- 表单添加系统注册信息 -->
           <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80">
             <Row>
               <Col span="12">
@@ -32,8 +19,14 @@
               </Col>
             </Row>
           </Form>
-        </div>
-      </Modal>
+        </IBtnTriggerModal>
+        <!-- right 插槽部分 -->
+        <ISimpleSearch slot="right" @handleSimpleSearch="handleSearch"/>
+      </ISimpleLeftRightRow>
+
+      <Table :columns="columns1" :data="appRegisters" size="small"></Table>
+      <Page :total="total" :page-size="offset" show-total show-sizer :styles="{'text-align': 'center','margin-top': '10px'}"
+            @on-change="handleChange" @on-page-size-change="handlePageSizeChange"/>
     </div>
   </LeftMenu>
 </template>
@@ -42,12 +35,13 @@
   import {AppRegisterList} from "../../api"
   import {AddAppRegister} from "../../api"
   import LeftMenu from "./LeftMenu"
+  import IBtnTriggerModal from "../Common/modal/IBtnTriggerModal"
   import ISimpleLeftRightRow from "../Common/layout/ISimpleLeftRightRow"
   import ISimpleSearch from "../Common/search/ISimpleSearch"
 
   export default {
     name: "AppRegist",
-    components: {LeftMenu,ISimpleLeftRightRow,ISimpleSearch},
+    components: {LeftMenu,ISimpleLeftRightRow,ISimpleSearch,IBtnTriggerModal},
     data(){
       return {
         // 当前页
