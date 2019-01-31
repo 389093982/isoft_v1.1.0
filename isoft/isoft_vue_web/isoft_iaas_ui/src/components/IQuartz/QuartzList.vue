@@ -1,13 +1,6 @@
 <template>
   <div style="margin: 10px;">
-    <Row type="flex" justify="end" class="code-row-bg" style="margin-bottom: 5px;">
-      <Col span="10">
-        <Input v-model="search" placeholder="搜索..."/>
-      </Col>
-      <Col span="2">
-        <Button type="success" @click="searchRecord">搜索</Button>
-      </Col>
-    </Row>
+    <ISimpleSearch @handleSimpleSearch="handleSearch"/>
 
     <Table :columns="columns1" :data="quartzs" size="small"></Table>
     <Page :total="total" :page-size="offset" show-total show-sizer :styles="{'text-align': 'center','margin-top': '10px'}"
@@ -17,9 +10,11 @@
 
 <script>
   import {QuartzList} from "../../api"
+  import ISimpleSearch from "../../components/Common/search/ISimpleSearch"
 
   export default {
     name: "QuartzList",
+    components:{ISimpleSearch},
     data(){
       return {
         // 当前页
@@ -82,9 +77,10 @@
         this.offset = pageSize;
         this.refreshQuartzList();
       },
-      searchRecord(){
+      handleSearch(data){
         this.offset = 10;
         this.current_page = 1;
+        this.search = data;
         this.refreshQuartzList();
       }
     },

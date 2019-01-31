@@ -3,11 +3,8 @@
     <div style="margin: 10px;">
       <Row style="margin-bottom: 5px;">
         <Col span="12"><Button type="success" @click="showFormModal = true">新增</Button></Col>
-        <Col span="10">
-          <Input v-model="search" placeholder="请输入您要搜索的系统注册地址"/>
-        </Col>
-        <Col span="2">
-          <Button type="success" @click="searchApp">搜索</Button>
+        <Col span="12">
+          <ISimpleSearch @handleSimpleSearch="handleSearch"/>
         </Col>
       </Row>
 
@@ -46,11 +43,12 @@
 <script>
   import {AppRegisterList} from "../../api"
   import {AddAppRegister} from "../../api"
-  import LeftMenu from "./LeftMenu";
+  import LeftMenu from "./LeftMenu"
+  import ISimpleSearch from "../Common/search/ISimpleSearch"
 
   export default {
     name: "AppRegist",
-    components: {LeftMenu},
+    components: {LeftMenu,ISimpleSearch},
     data(){
       return {
         // 当前页
@@ -136,9 +134,10 @@
       handleReset (name) {
         this.$refs[name].resetFields();
       },
-      searchApp(){
+      handleSearch(data){
         this.offset = 10;
         this.current_page = 1;
+        this.search = data;
         this.refreshAppRegistList();
       }
     },

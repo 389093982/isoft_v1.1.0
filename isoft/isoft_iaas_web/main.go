@@ -149,9 +149,6 @@ func createTable() {
 }
 
 func main() {
-	// 登录过滤器,以 /api 开头的请求为 ajax 请求,需要返回 401 状态码,否则为非 ajax 请求,需要跳往登录页面
-	//beego.InsertFilter("/api/*", beego.BeforeExec, ssofilter.LoginFilterWithStatusCode)
-	//beego.InsertFilter(`/(^(?!api).*)`, beego.BeforeExec, ssofilter.LoginFilterWithRedirect)
 	beego.InsertFilter("/api/*", beego.BeforeExec, ssoFilterFunc)
 
 	// 开启定时任务
