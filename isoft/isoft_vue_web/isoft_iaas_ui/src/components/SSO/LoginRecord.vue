@@ -1,7 +1,9 @@
 <template>
   <LeftMenu>
     <div style="margin: 10px;">
-      <ISimpleSearch @handleSimpleSearch="handleSearch"/>
+      <ISimpleLeftRightRow>
+        <ISimpleSearch slot="right" @handleSimpleSearch="handleSearch"/>
+      </ISimpleLeftRightRow>
 
       <Table :columns="columns1" :data="loginRecords" size="small"></Table>
       <Page :total="total" :page-size="offset" show-total show-sizer :styles="{'text-align': 'center','margin-top': '10px'}"
@@ -13,11 +15,12 @@
 <script>
   import {LoginRecordList} from "../../api"
   import LeftMenu from "./LeftMenu"
-  import ISimpleSearch from "../../components/Common/search/ISimpleSearch"
+  import ISimpleLeftRightRow from "../Common/layout/ISimpleLeftRightRow"
+  import ISimpleSearch from "../Common/search/ISimpleSearch"
 
   export default {
     name: "LoginRecord",
-    components: {LeftMenu,ISimpleSearch},
+    components: {LeftMenu,ISimpleLeftRightRow,ISimpleSearch},
     data(){
       return {
         // 当前页

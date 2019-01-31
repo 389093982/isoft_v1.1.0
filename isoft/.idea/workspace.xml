@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="61c01151-84f0-4bfd-a227-5c1f0b5a424d" name="Default" comment="代码优化">
-      <change afterPath="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/Common/search/ISimpleSearch.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/Common/layout/ISimpleLeftRightRow.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_iaas_web/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_iaas_web/main.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/IQuartz/QuartzList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/IQuartz/QuartzList.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/SSO/AppRegist.vue" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/SSO/AppRegist.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/SSO/LoginRecord.vue" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/SSO/LoginRecord.vue" afterDir="false" />
@@ -98,7 +97,7 @@
           <entry key="svg" value="1" />
           <entry key="ts" value="11" />
           <entry key="txt" value="61" />
-          <entry key="vue" value="1068" />
+          <entry key="vue" value="1071" />
           <entry key="vue_bak" value="1" />
           <entry key="xml" value="6" />
         </counts>
@@ -117,7 +116,7 @@
           <entry key="SQL" value="6" />
           <entry key="SVG" value="1" />
           <entry key="TypeScript" value="11" />
-          <entry key="Vue.js" value="1055" />
+          <entry key="Vue.js" value="1058" />
           <entry key="XML" value="6" />
           <entry key="x86 Plan9 Assembly" value="8" />
         </counts>
@@ -132,7 +131,7 @@
           <entry key="sh" value="1652" />
           <entry key="sql" value="113" />
           <entry key="txt" value="890" />
-          <entry key="vue" value="43495" />
+          <entry key="vue" value="43800" />
           <entry key="xml" value="48" />
         </counts>
       </usages-collector>
@@ -143,7 +142,7 @@
           <entry key="JavaScript" value="5452" />
           <entry key="PLAIN_TEXT" value="3226" />
           <entry key="SQL" value="141" />
-          <entry key="Vue.js" value="43388" />
+          <entry key="Vue.js" value="43693" />
           <entry key="XML" value="48" />
         </counts>
       </usages-collector>
@@ -167,8 +166,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/IQuartz/QuartzList.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1360">
-              <caret line="80" selection-start-line="80" selection-end-line="80" />
+            <state relative-caret-position="187">
+              <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#template#0;n#!!top" expanded="true" />
                 <element signature="e#632#668#0" expanded="true" />
@@ -190,27 +189,6 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_ui/src/components/Service/ServiceAdd.vue">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="371">
-              <caret line="26" column="23" lean-forward="true" selection-start-line="26" selection-start-column="23" selection-end-line="26" selection-end-column="23" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_ui/src/components/Service/ServiceList.vue">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="1" column="12" lean-forward="true" selection-start-line="1" selection-start-column="12" selection-end-line="1" selection-end-column="12" />
-              <folding>
-                <element signature="n#style#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/Common/search/ISimpleSearch.vue">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="323">
@@ -225,8 +203,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/SSO/LoginRecord.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="294">
-              <caret line="83" column="27" selection-start-line="83" selection-start-column="27" selection-end-line="83" selection-end-column="27" />
+            <state relative-caret-position="51">
+              <caret line="3" selection-start-line="3" selection-end-line="5" selection-end-column="28" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#LeftMenu#0;n#template#0;n#!!top" expanded="true" />
                 <element signature="e#690#731#0" expanded="true" />
@@ -240,18 +218,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="241">
               <caret line="160" column="40" lean-forward="true" selection-start-line="160" selection-start-column="40" selection-end-line="160" selection-end-column="40" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_ui/src/components/Service/MysqlInit.vue">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="414">
-              <caret line="72" selection-start-line="72" selection-end-line="72" selection-end-column="46" />
-              <folding>
-                <element signature="n#style#0;n#Button#1;n#FormItem#3;n#Form#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -271,11 +237,24 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/SSO/AppRegist.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
-              <caret line="19" column="27" lean-forward="true" selection-start-line="19" selection-start-column="27" selection-end-line="19" selection-end-column="27" />
+            <state relative-caret-position="306">
+              <caret line="18" column="31" lean-forward="true" selection-start-line="18" selection-start-column="31" selection-end-line="18" selection-end-column="31" />
               <folding>
-                <element signature="n#style#0;n#Row#0;n#div#0;n#LeftMenu#0;n#template#0;n#!!top" expanded="true" />
-                <element signature="e#1665#1706#0" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#LeftMenu#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="e#1693#1734#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/Common/layout/ISimpleLeftRightRow.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="221">
+              <caret line="13" column="8" lean-forward="true" selection-start-line="13" selection-start-column="8" selection-end-line="13" selection-end-column="8" />
+              <folding>
+                <element signature="n#style#0;n#div#0;n#slot#0;n#Col#0;n#Row#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#slot#0;n#Col#1;n#Row#0;n#template#0;n#!!top" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -400,9 +379,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/isoft/common/flyway/flyway.go" />
-        <option value="$PROJECT_DIR$/isoft_iaas_web/conf/migrations/a.sql" />
-        <option value="$PROJECT_DIR$/isoft_iaas_web/conf/migrations/migrations.sql" />
         <option value="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/Share/ShareAdd.vue" />
         <option value="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/Share/ShareList.vue" />
         <option value="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/SSO/login.vue" />
@@ -447,9 +423,12 @@
         <option value="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/api/index.js" />
         <option value="$PROJECT_DIR$/isoft_iaas_web/controllers/iquartz/iquartz.go" />
         <option value="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/Common/search/ISimpleSearch.vue" />
-        <option value="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/IQuartz/QuartzList.vue" />
-        <option value="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/SSO/LoginRecord.vue" />
         <option value="$PROJECT_DIR$/isoft_iaas_web/main.go" />
+        <option value="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/Common/layout/ISimpleRowLayout.vue" />
+        <option value="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/Common/layout/ISimpleRow.vue" />
+        <option value="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/IQuartz/QuartzList.vue" />
+        <option value="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/Common/layout/ISimpleLeftRightRow.vue" />
+        <option value="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/SSO/LoginRecord.vue" />
         <option value="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/SSO/AppRegist.vue" />
       </list>
     </option>
@@ -621,7 +600,7 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="components" type="462c0819:PsiDirectoryNode" />
               <item name="Common" type="462c0819:PsiDirectoryNode" />
-              <item name="search" type="462c0819:PsiDirectoryNode" />
+              <item name="layout" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="isoft" type="b2602c69:ProjectViewProjectNode" />
@@ -875,7 +854,7 @@
     <editor active="true" />
     <layout>
       <window_info id="Favorites" order="0" sideWeight="0.7193606" side_tool="true" weight="0.40339532" />
-      <window_info active="true" content_ui="combo" id="Project" order="1" sideWeight="0.28063944" visible="true" weight="0.22231205" />
+      <window_info content_ui="combo" id="Project" order="1" sideWeight="0.28063944" weight="0.32012933" />
       <window_info id="Structure" order="2" sideWeight="0.7175844" side_tool="true" weight="0.33629748" />
       <window_info anchor="bottom" id="TypeScript" order="0" weight="0.3285968" />
       <window_info anchor="bottom" id="Messages" order="1" weight="0.55376345" />
@@ -897,6 +876,30 @@
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="3" weight="0.25" />
       <window_info anchor="right" id="Coverage" order="4" side_tool="true" weight="0.32983023" />
     </layout>
+    <layout-to-restore>
+      <window_info id="Favorites" order="0" sideWeight="0.7193606" side_tool="true" weight="0.40339532" />
+      <window_info active="true" content_ui="combo" id="Project" order="1" sideWeight="0.28063944" visible="true" weight="0.32012933" />
+      <window_info id="Structure" order="2" sideWeight="0.7175844" side_tool="true" weight="0.33629748" />
+      <window_info anchor="bottom" id="TypeScript" order="0" weight="0.3285968" />
+      <window_info anchor="bottom" id="Messages" order="1" weight="0.55376345" />
+      <window_info anchor="bottom" id="Database Changes" order="2" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Terminal" order="3" sideWeight="0.4890865" weight="0.47957373" />
+      <window_info anchor="bottom" id="Event Log" order="4" sideWeight="0.5109135" side_tool="true" weight="0.47957373" />
+      <window_info anchor="bottom" id="Version Control" order="5" weight="0.6749556" />
+      <window_info anchor="bottom" id="Message" order="6" />
+      <window_info anchor="bottom" id="Find" order="7" weight="0.79040855" />
+      <window_info anchor="bottom" id="Run" order="8" sideWeight="0.4890865" weight="0.23623446" />
+      <window_info anchor="bottom" id="Debug" order="9" sideWeight="0.49393696" weight="0.3534636" />
+      <window_info anchor="bottom" id="Cvs" order="10" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="11" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="12" weight="0.3285968" />
+      <window_info anchor="bottom" id="Thumbnails" order="13" weight="0.3285968" />
+      <window_info anchor="right" id="Database" order="0" side_tool="true" weight="0.18755053" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="1" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="2" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="3" weight="0.25" />
+      <window_info anchor="right" id="Coverage" order="4" side_tool="true" weight="0.32983023" />
+    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -1026,17 +1029,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/isoft_sso_web/views/admin/loginrecord_list.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-278" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_sso_web/views/common/footer.html">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_sso_web/views/common/header.html">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/isoft_sso_web/views/403.html">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -1311,34 +1303,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/IQuartz/QuartzList.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1360">
-          <caret line="80" selection-start-line="80" selection-end-line="80" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="e#632#668#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_deploy_ui/node_modules/iview/src/components/form/form-item.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-726">
           <caret line="21" lean-forward="true" selection-start-line="21" selection-end-line="21" />
           <folding>
             <element signature="e#561#606#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/SSO/LoginRecord.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="294">
-          <caret line="83" column="27" selection-start-line="83" selection-start-column="27" selection-end-line="83" selection-end-column="27" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#LeftMenu#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="e#690#731#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1360,13 +1330,60 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/Common/layout/ISimpleRow.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" selection-start-line="1" selection-end-line="5" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/node_modules/iview/src/components/grid/col.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" column="19" selection-start-line="9" selection-start-column="19" selection-end-line="9" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/Common/layout/ISimpleLeftRightRow.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="13" column="8" lean-forward="true" selection-start-line="13" selection-start-column="8" selection-end-line="13" selection-end-column="8" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#slot#0;n#Col#0;n#Row#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#slot#0;n#Col#1;n#Row#0;n#template#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/IQuartz/QuartzList.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="e#632#668#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/SSO/LoginRecord.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" selection-start-line="3" selection-end-line="5" selection-end-column="28" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#LeftMenu#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="e#690#731#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/SSO/AppRegist.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="19" column="27" lean-forward="true" selection-start-line="19" selection-start-column="27" selection-end-line="19" selection-end-column="27" />
+        <state relative-caret-position="306">
+          <caret line="18" column="31" lean-forward="true" selection-start-line="18" selection-start-column="31" selection-end-line="18" selection-end-column="31" />
           <folding>
-            <element signature="n#style#0;n#Row#0;n#div#0;n#LeftMenu#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="e#1665#1706#0" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#LeftMenu#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="e#1693#1734#0" expanded="true" />
           </folding>
         </state>
       </provider>

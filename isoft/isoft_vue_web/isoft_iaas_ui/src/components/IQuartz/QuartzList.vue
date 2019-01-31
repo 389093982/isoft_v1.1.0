@@ -1,6 +1,8 @@
 <template>
   <div style="margin: 10px;">
-    <ISimpleSearch @handleSimpleSearch="handleSearch"/>
+    <ISimpleLeftRightRow>
+      <ISimpleSearch slot="right" @handleSimpleSearch="handleSearch"/>
+    </ISimpleLeftRightRow>
 
     <Table :columns="columns1" :data="quartzs" size="small"></Table>
     <Page :total="total" :page-size="offset" show-total show-sizer :styles="{'text-align': 'center','margin-top': '10px'}"
@@ -10,11 +12,12 @@
 
 <script>
   import {QuartzList} from "../../api"
-  import ISimpleSearch from "../../components/Common/search/ISimpleSearch"
+  import ISimpleLeftRightRow from "../Common/layout/ISimpleLeftRightRow"
+  import ISimpleSearch from "../Common/search/ISimpleSearch"
 
   export default {
     name: "QuartzList",
-    components:{ISimpleSearch},
+    components:{ISimpleLeftRightRow,ISimpleSearch},
     data(){
       return {
         // 当前页

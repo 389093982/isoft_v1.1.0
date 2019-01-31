@@ -1,12 +1,10 @@
 <template>
   <LeftMenu>
     <div style="margin: 10px;">
-      <Row style="margin-bottom: 5px;">
-        <Col span="12"><Button type="success" @click="showFormModal = true">新增</Button></Col>
-        <Col span="12">
-          <ISimpleSearch @handleSimpleSearch="handleSearch"/>
-        </Col>
-      </Row>
+      <ISimpleLeftRightRow>
+        <Button slot="left" type="success" @click="showFormModal = true">新增</Button>
+        <ISimpleSearch slot="right" @handleSimpleSearch="handleSearch"/>
+      </ISimpleLeftRightRow>
 
       <Table :columns="columns1" :data="appRegisters" size="small"></Table>
       <Page :total="total" :page-size="offset" show-total show-sizer :styles="{'text-align': 'center','margin-top': '10px'}"
@@ -44,11 +42,12 @@
   import {AppRegisterList} from "../../api"
   import {AddAppRegister} from "../../api"
   import LeftMenu from "./LeftMenu"
+  import ISimpleLeftRightRow from "../Common/layout/ISimpleLeftRightRow"
   import ISimpleSearch from "../Common/search/ISimpleSearch"
 
   export default {
     name: "AppRegist",
-    components: {LeftMenu,ISimpleSearch},
+    components: {LeftMenu,ISimpleLeftRightRow,ISimpleSearch},
     data(){
       return {
         // 当前页
