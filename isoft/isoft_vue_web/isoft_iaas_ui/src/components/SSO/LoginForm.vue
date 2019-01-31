@@ -41,7 +41,7 @@
           setCookie("userName",username,365,result.domain);
           setCookie("isLogin","isLogin",365,result.domain);
           if(result.adminLogin == "adminLogin"){
-            this.$router.push({ path: '/sso/loginRecord'});
+            this.$router.push({ path: '/sso'});
           }else{
             // 跳往需要跳转的页面,并设置cookie
             window.location.href = result.redirectUrl;

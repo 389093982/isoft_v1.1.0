@@ -10,7 +10,7 @@
       </Col>
     </Row>
 
-    <Table :columns="columns1" :data="appRegisters" size="small" height="450"></Table>
+    <Table :columns="columns1" :data="appRegisters" size="small"></Table>
     <Page :total="total" :page-size="offset" show-total show-sizer :styles="{'text-align': 'center','margin-top': '10px'}"
           @on-change="handleChange" @on-page-size-change="handlePageSizeChange"/>
 
@@ -71,22 +71,22 @@
           {
             title: '注册地址',
             key: 'app_address',
-            width:250
+            width:300
           },
           {
             title: '创建人',
             key: 'created_by',
-            width:250
+            width:120
           },
           {
             title: '创建时间',
             key: 'created_time',
-            width:250
+            width:200
           },
           {
             title: '修改人',
             key: 'last_updated_by',
-            width:250
+            width:120
           },
           {
             title: '修改时间',

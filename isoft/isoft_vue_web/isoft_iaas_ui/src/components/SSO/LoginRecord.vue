@@ -9,7 +9,7 @@
       </Col>
     </Row>
 
-    <Table :columns="columns1" :data="loginRecords" size="small" height="450"></Table>
+    <Table :columns="columns1" :data="loginRecords" size="small"></Table>
     <Page :total="total" :page-size="offset" show-total show-sizer :styles="{'text-align': 'center','margin-top': '10px'}"
           @on-change="handleChange" @on-page-size-change="handlePageSizeChange"/>
   </div>
@@ -35,27 +35,27 @@
           {
             title: 'origin',
             key: 'origin',
-            width:250
+            width:200
           },
           {
             title: 'referer',
             key: 'referer',
-            width:450
+            width:400
           },
           {
             title: '登录ip',
             key: 'login_ip',
-            width:100
+            width:80
           },
           {
             title: '登录用户',
             key: 'user_name',
-            width:100
+            width:80
           },
           {
             title: '登录状态',
             key: 'login_status',
-            width:100
+            width:80
           },
           {
             title: '登录时间',
