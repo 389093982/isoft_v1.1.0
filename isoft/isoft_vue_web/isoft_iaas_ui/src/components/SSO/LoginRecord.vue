@@ -1,25 +1,29 @@
 <template>
-  <div style="margin: 10px;">
-    <Row type="flex" justify="end" class="code-row-bg" style="margin-bottom: 5px;">
-      <Col span="10">
-        <Input v-model="search" placeholder="请输入您要搜索的系统注册地址"/>
-      </Col>
-      <Col span="2">
-        <Button type="success" @click="searchRecord">搜索</Button>
-      </Col>
-    </Row>
+  <LeftMenu>
+    <div style="margin: 10px;">
+      <Row type="flex" justify="end" class="code-row-bg" style="margin-bottom: 5px;">
+        <Col span="10">
+          <Input v-model="search" placeholder="请输入您要搜索的系统注册地址"/>
+        </Col>
+        <Col span="2">
+          <Button type="success" @click="searchRecord">搜索</Button>
+        </Col>
+      </Row>
 
-    <Table :columns="columns1" :data="loginRecords" size="small"></Table>
-    <Page :total="total" :page-size="offset" show-total show-sizer :styles="{'text-align': 'center','margin-top': '10px'}"
-          @on-change="handleChange" @on-page-size-change="handlePageSizeChange"/>
-  </div>
+      <Table :columns="columns1" :data="loginRecords" size="small"></Table>
+      <Page :total="total" :page-size="offset" show-total show-sizer :styles="{'text-align': 'center','margin-top': '10px'}"
+            @on-change="handleChange" @on-page-size-change="handlePageSizeChange"/>
+    </div>
+  </LeftMenu>
 </template>
 
 <script>
   import {LoginRecordList} from "../../api"
+  import LeftMenu from "./LeftMenu";
 
   export default {
     name: "LoginRecord",
+    components: {LeftMenu},
     data(){
       return {
         // 当前页

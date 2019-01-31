@@ -1,52 +1,56 @@
 <template>
-  <div style="margin: 10px;">
-    <Row style="margin-bottom: 5px;">
-      <Col span="12"><Button type="success" @click="showFormModal = true">新增</Button></Col>
-      <Col span="10">
-        <Input v-model="search" placeholder="请输入您要搜索的系统注册地址"/>
-      </Col>
-      <Col span="2">
-        <Button type="success" @click="searchApp">搜索</Button>
-      </Col>
-    </Row>
+  <LeftMenu>
+    <div style="margin: 10px;">
+      <Row style="margin-bottom: 5px;">
+        <Col span="12"><Button type="success" @click="showFormModal = true">新增</Button></Col>
+        <Col span="10">
+          <Input v-model="search" placeholder="请输入您要搜索的系统注册地址"/>
+        </Col>
+        <Col span="2">
+          <Button type="success" @click="searchApp">搜索</Button>
+        </Col>
+      </Row>
 
-    <Table :columns="columns1" :data="appRegisters" size="small"></Table>
-    <Page :total="total" :page-size="offset" show-total show-sizer :styles="{'text-align': 'center','margin-top': '10px'}"
-          @on-change="handleChange" @on-page-size-change="handlePageSizeChange"/>
+      <Table :columns="columns1" :data="appRegisters" size="small"></Table>
+      <Page :total="total" :page-size="offset" show-total show-sizer :styles="{'text-align': 'center','margin-top': '10px'}"
+            @on-change="handleChange" @on-page-size-change="handlePageSizeChange"/>
 
-    <!-- 表单添加系统注册信息 -->
-    <Modal
-      v-model="showFormModal"
-      width="850"
-      title="新增/编辑系统地址信息"
-      :footer-hide="true"
-      :mask-closable="false">
-      <div>
-        <!-- 表单正文 -->
-        <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80">
-          <Row>
-            <Col span="12">
-              <FormItem label="系统注册地址" prop="app_address">
-                <Input v-model="formValidate.app_address" placeholder="请输入系统注册地址"></Input>
-              </FormItem>
-            </Col>
-            <Col span="12">
-              <Button type="success" @click="handleSubmit('formValidate')" style="margin-right: 8px">Submit</Button>
-              <Button type="warning" @click="handleReset('formValidate')" style="margin-right: 8px">Reset</Button>
-            </Col>
-          </Row>
-        </Form>
-      </div>
-    </Modal>
-  </div>
+      <!-- 表单添加系统注册信息 -->
+      <Modal
+        v-model="showFormModal"
+        width="850"
+        title="新增/编辑系统地址信息"
+        :footer-hide="true"
+        :mask-closable="false">
+        <div>
+          <!-- 表单正文 -->
+          <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80">
+            <Row>
+              <Col span="12">
+                <FormItem label="系统注册地址" prop="app_address">
+                  <Input v-model="formValidate.app_address" placeholder="请输入系统注册地址"></Input>
+                </FormItem>
+              </Col>
+              <Col span="12">
+                <Button type="success" @click="handleSubmit('formValidate')" style="margin-right: 8px">Submit</Button>
+                <Button type="warning" @click="handleReset('formValidate')" style="margin-right: 8px">Reset</Button>
+              </Col>
+            </Row>
+          </Form>
+        </div>
+      </Modal>
+    </div>
+  </LeftMenu>
 </template>
 
 <script>
   import {AppRegisterList} from "../../api"
   import {AddAppRegister} from "../../api"
+  import LeftMenu from "./LeftMenu";
 
   export default {
     name: "AppRegist",
+    components: {LeftMenu},
     data(){
       return {
         // 当前页
