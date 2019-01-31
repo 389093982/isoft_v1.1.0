@@ -1,4 +1,4 @@
-package util
+package aesutil
 
 import (
 	"bytes"
