@@ -38,7 +38,7 @@
       }
     },
     methods:{
-      // 阴藏 modal
+      // 隐藏 modal
       hideModal:function () {
         this.showFormModal = false;
       }
