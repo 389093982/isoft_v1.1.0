@@ -1,16 +1,16 @@
 # github.com/astaxie/beego v1.10.1
-github.com/astaxie/beego
 github.com/astaxie/beego/context
 github.com/astaxie/beego/session
+github.com/astaxie/beego
 github.com/astaxie/beego/logs
 github.com/astaxie/beego/orm
 github.com/astaxie/beego/utils/pagination
 github.com/astaxie/beego/plugins/cors
+github.com/astaxie/beego/toolbox
+github.com/astaxie/beego/utils
 github.com/astaxie/beego/config
 github.com/astaxie/beego/context/param
 github.com/astaxie/beego/grace
-github.com/astaxie/beego/toolbox
-github.com/astaxie/beego/utils
 # github.com/dgrijalva/jwt-go v3.2.0+incompatible
 github.com/dgrijalva/jwt-go
 # github.com/go-sql-driver/mysql v1.4.0
@@ -19,14 +19,8 @@ github.com/go-sql-driver/mysql
 github.com/gopherjs/gopherjs/js
 # github.com/jtolds/gls v4.2.1+incompatible
 github.com/jtolds/gls
-# github.com/klauspost/cpuid v0.0.0-20180405133222-e7e905edc00e
-github.com/klauspost/cpuid
-# github.com/klauspost/reedsolomon v0.0.0-20180704173009-925cb01d6510
-github.com/klauspost/reedsolomon
 # github.com/kr/fs v0.1.0
 github.com/kr/fs
-# github.com/larspensjo/config v0.0.0-20160228172812-b6db95dc6321
-github.com/larspensjo/config
 # github.com/lestrrat/go-file-rotatelogs v0.0.0-20180223000712-d3151e2a480f
 github.com/lestrrat/go-file-rotatelogs
 # github.com/lestrrat/go-strftime v0.0.0-20180220042222-ba3bf9c1d042
@@ -37,6 +31,8 @@ github.com/pkg/errors
 github.com/pkg/sftp
 # github.com/rifflock/lfshook v0.0.0-20180313183424-62f5e0662816
 github.com/rifflock/lfshook
+# github.com/robfig/cron v0.0.0-20180505203441-b41be1df6967
+github.com/robfig/cron
 # github.com/satori/go.uuid v1.2.0
 github.com/satori/go.uuid
 # github.com/sirupsen/logrus v1.0.6

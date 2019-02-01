@@ -153,6 +153,8 @@ func main() {
 
 	// 开启定时任务
 	task.StartCronTask()
+	// 执行 iquartz 组件初始化任务
+	task.StartIQuartzInitialTask()
 
 	beego.Run()
 }
