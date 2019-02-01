@@ -1,52 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="61c01151-84f0-4bfd-a227-5c1f0b5a424d" name="Default" comment="代码优化">
-      <change afterPath="$PROJECT_DIR$/isoft_iaas_web/task/iquartz.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_iaas_web/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_iaas_web/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_iaas_web/models/iquartz/iquartz.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_iaas_web/models/iquartz/iquartz.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/klauspost/cpuid/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/klauspost/cpuid/.travis.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/klauspost/cpuid/CONTRIBUTING.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/klauspost/cpuid/LICENSE" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/klauspost/cpuid/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/klauspost/cpuid/cpuid.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/klauspost/cpuid/cpuid_386.s" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/klauspost/cpuid/cpuid_amd64.s" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/klauspost/cpuid/detect_intel.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/klauspost/cpuid/detect_ref.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/klauspost/cpuid/generate.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/klauspost/cpuid/private-gen.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/klauspost/reedsolomon/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/klauspost/reedsolomon/.travis.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/klauspost/reedsolomon/LICENSE" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/klauspost/reedsolomon/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/klauspost/reedsolomon/appveyor.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/klauspost/reedsolomon/galois.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/klauspost/reedsolomon/galois_amd64.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/klauspost/reedsolomon/galois_amd64.s" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/klauspost/reedsolomon/galois_arm64.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/klauspost/reedsolomon/galois_arm64.s" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/klauspost/reedsolomon/galois_noasm.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/klauspost/reedsolomon/gentables.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/klauspost/reedsolomon/inversion_tree.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/klauspost/reedsolomon/matrix.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/klauspost/reedsolomon/options.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/klauspost/reedsolomon/reedsolomon.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/klauspost/reedsolomon/streaming.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/larspensjo/config/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/larspensjo/config/config.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/larspensjo/config/error.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/larspensjo/config/option.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/larspensjo/config/read.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/larspensjo/config/section.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/larspensjo/config/type.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/github.com/larspensjo/config/write.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/modules.txt" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/modules.txt" afterDir="false" />
-    </list>
+    <list default="true" id="61c01151-84f0-4bfd-a227-5c1f0b5a424d" name="Default" comment="代码优化" />
     <ignored path="isoft_deploy_web/static/uploadfile/" />
     <ignored path="../.idea/inspectionProfiles/profiles_settings.xml" />
     <ignored path="isoft_deploy_web/static/uploadfile/apiServer1/apiServer" />
@@ -689,7 +644,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Favorites" order="0" sideWeight="0.7193606" side_tool="true" weight="0.40339532" />
       <window_info content_ui="combo" id="Project" order="1" sideWeight="0.28063944" visible="true" weight="0.3678254" />
