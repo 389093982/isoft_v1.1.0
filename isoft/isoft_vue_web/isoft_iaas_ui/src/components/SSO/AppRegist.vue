@@ -33,6 +33,7 @@
 </template>
 
 <script>
+  import {formatDate} from "../../tools"
   import {AppRegisterList} from "../../api"
   import {AddAppRegister} from "../../api"
   import LeftMenu from "./LeftMenu"
@@ -76,7 +77,12 @@
           {
             title: '创建时间',
             key: 'created_time',
-            width:200
+            width:200,
+            render: (h,params)=>{
+              return h('div',
+                formatDate(new Date(params.row.created_time),'yyyy-MM-dd hh:mm')
+              )
+            }
           },
           {
             title: '修改人',
@@ -86,6 +92,11 @@
           {
             title: '修改时间',
             key: 'last_updated_time',
+            render: (h,params)=>{
+              return h('div',
+                formatDate(new Date(params.row.last_updated_time),'yyyy-MM-dd hh:mm')
+              )
+            }
           },
         ],
       }

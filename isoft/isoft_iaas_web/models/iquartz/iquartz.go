@@ -11,13 +11,6 @@ type CronMeta struct {
 	TaskName        string    	`json:"task_name"`    // 任务名称
 	TaskType        string    	`json:"task_type"` 	// 任务类型
 	TaskId	        string    	`json:"task_id"` 		// 任务唯一性 id
-	Second			string 		`json:"second"`
-	Minute			string 		`json:"minute"`
-	Hour			string 		`json:"hour"`
-	Day				string 		`json:"day"`
-	Month			string 		`json:"month"`
-	DayOfWeek		string 		`json:"day_of_week"`
-	Year			string 		`json:"year"`
 	CronStr			string 		`json:"cron_str"`
 	CreatedBy       string    	`json:"created_by"`
 	CreatedTime     time.Time 	`json:"created_time" orm:"auto_now_add;type(datetime)"`

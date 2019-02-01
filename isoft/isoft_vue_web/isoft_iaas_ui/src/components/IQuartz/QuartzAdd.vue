@@ -3,7 +3,7 @@
   <!-- ref 的作用是为了在其它地方方便的获取到当前子组件 -->
   <ISimpleBtnTriggerModal ref="triggerModal" btn-text="新增" modal-title="新增调度指令" :modal-width="600">
     <!-- 表单信息 -->
-    <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80">
+    <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="100">
       <FormItem label="任务名称" prop="task_name">
         <Input v-model="formValidate.task_name" placeholder="请输入任务名称"></Input>
       </FormItem>

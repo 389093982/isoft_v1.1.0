@@ -14,6 +14,7 @@
 </template>
 
 <script>
+  import {formatDate} from "../../tools"
   import {QuartzList} from "../../api"
   import ISimpleLeftRightRow from "../Common/layout/ISimpleLeftRightRow"
   import ISimpleSearch from "../Common/search/ISimpleSearch"
@@ -57,6 +58,11 @@
           {
             title: 'created_time',
             key: 'created_time',
+            render: (h,params)=>{
+              return h('div',
+                formatDate(new Date(params.row.created_time),'yyyy-MM-dd hh:mm')
+              )
+            }
           },
           {
             title: 'last_updated_by',
@@ -64,7 +70,12 @@
           },
           {
             title: 'last_updated_time',
-            key: 'last_updated_time'
+            key: 'last_updated_time',
+            render: (h,params)=>{
+              return h('div',
+                formatDate(new Date(params.row.last_updated_time),'yyyy-MM-dd hh:mm')
+              )
+            }
           }
         ],
       }

@@ -13,6 +13,7 @@
 </template>
 
 <script>
+  import {formatDate} from "../../tools"
   import {LoginRecordList} from "../../api"
   import LeftMenu from "./LeftMenu"
   import ISimpleLeftRightRow from "../Common/layout/ISimpleLeftRightRow"
@@ -36,7 +37,7 @@
           {
             title: 'origin',
             key: 'origin',
-            width:200
+            width:180
           },
           {
             title: 'referer',
@@ -46,21 +47,26 @@
           {
             title: '登录ip',
             key: 'login_ip',
-            width:80
+            width:100
           },
           {
             title: '登录用户',
             key: 'user_name',
-            width:80
+            width:100
           },
           {
             title: '登录状态',
             key: 'login_status',
-            width:80
+            width:100
           },
           {
             title: '登录时间',
             key: 'created_time',
+            render: (h,params)=>{
+              return h('div',
+                formatDate(new Date(params.row.created_time),'yyyy-MM-dd hh:mm')
+              )
+            }
           },
         ],
       }
