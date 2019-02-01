@@ -5,7 +5,7 @@
         <!-- left 插槽部分 -->
         <!-- 按钮触发模态框 -->
         <!-- ref 的作用是为了在其它地方方便的获取到当前子组件 -->
-        <ISimpleBtnTriggerModal ref="triggerModal" slot="left" btn-text="新增" modal-title="新增/编辑系统地址信息" :modal-width="600">
+        <ISimpleBtnTriggerModal ref="triggerModal" slot="left" btn-text="新增" modal-title="新增系统地址信息" :modal-width="600">
           <!-- 表单添加系统注册信息 -->
           <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80">
             <Row :gutter="6">
@@ -54,7 +54,6 @@
         // 搜索条件
         search:"",
         appRegisters: [],
-        showFormModal:false,
         formValidate: {
           app_address: '',
         },
@@ -108,22 +107,19 @@
         this.refreshAppRegistList();
       },
       handleSubmit (name) {
-        var _this = this;
         this.$refs[name].validate(async (valid) => {
           if (valid) {
-            const result = await AddAppRegister(_this.formValidate.app_address);
+            const result = await AddAppRegister(this.formValidate.app_address);
             if(result.status == "SUCCESS"){
-              _this.$Message.success('提交成功!');
+              this.$Message.success('提交成功!');
               // 调用子组件隐藏 modal (this.refs.xxx.子组件定义的方法())
-              _this.$refs.triggerModal.hideModal();
-              // 关闭模态对话框
-              _this.showFormModal = false;
-              _this.refreshAppRegistList();
+              this.$refs.triggerModal.hideModal();
+              this.refreshAppRegistList();
             }else{
-              _this.$Message.error('提交失败!');
+              this.$Message.error('提交失败!');
             }
           } else {
-            _this.$Message.error('验证失败!');
+            this.$Message.error('验证失败!');
           }
         })
       },

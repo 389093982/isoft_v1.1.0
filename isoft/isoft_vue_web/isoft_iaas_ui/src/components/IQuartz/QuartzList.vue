@@ -1,6 +1,9 @@
 <template>
   <div style="margin: 10px;">
     <ISimpleLeftRightRow>
+      <!-- left 插槽部分 -->
+      <QuartzAdd slot="left" @handleSuccess="refreshQuartzList"/>
+      <!-- right 插槽部分 -->
       <ISimpleSearch slot="right" @handleSimpleSearch="handleSearch"/>
     </ISimpleLeftRightRow>
 
@@ -14,10 +17,11 @@
   import {QuartzList} from "../../api"
   import ISimpleLeftRightRow from "../Common/layout/ISimpleLeftRightRow"
   import ISimpleSearch from "../Common/search/ISimpleSearch"
+  import QuartzAdd from "./QuartzAdd"
 
   export default {
     name: "QuartzList",
-    components:{ISimpleLeftRightRow,ISimpleSearch},
+    components:{ISimpleLeftRightRow,ISimpleSearch,QuartzAdd},
     data(){
       return {
         // 当前页

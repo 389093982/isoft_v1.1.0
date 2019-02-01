@@ -122,5 +122,8 @@ export const LoginRecordList = (offset,current_page,search) => ajax(BASE_URL+"/s
 // 定时任务分页查询
 export const QuartzList = (offset,current_page,search) => ajax(BASE_URL+"/iquartz/filterPageQuartz", {offset,current_page,search},'POST');
 
+// 添加 quartz 记录
+export const AddQuartz = (task_name,task_type,task_id,cron_str) => ajax(BASE_URL+"/iquartz/addQuartz", {task_name,task_type,task_id,cron_str},'POST');
+
 // 跨模块使用,模块化部署时需要使用 nginx 代理
 export const LoginAddr = "/sso/login/";
