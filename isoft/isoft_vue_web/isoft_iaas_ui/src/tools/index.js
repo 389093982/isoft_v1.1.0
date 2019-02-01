@@ -1,3 +1,5 @@
+import cronValidate from "./cron"
+
 // 获取 cookie 值
 export const getCookie = function getCookie(c_name) {
   if (document.cookie.length > 0) {
@@ -90,5 +92,7 @@ export function formatDate (date, fmt) {
       fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? (o[k]) : (('00' + o[k]).substr(('' + o[k]).length)));
     }
   }
-  return fmt
+  return fmt;
 }
+
+export const validateCron = (cron) => cronValidate(cron);

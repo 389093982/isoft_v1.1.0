@@ -5,16 +5,16 @@
     <!-- 表单信息 -->
     <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="100">
       <FormItem label="任务名称" prop="task_name">
-        <Input v-model="formValidate.task_name" placeholder="请输入任务名称"></Input>
+        <Input v-model.trim="formValidate.task_name" placeholder="请输入任务名称"></Input>
       </FormItem>
       <FormItem label="任务类型" prop="task_type">
-        <Input v-model="formValidate.task_type" placeholder="请输入任务类型"></Input>
+        <Input v-model.trim="formValidate.task_type" placeholder="请输入任务类型"></Input>
       </FormItem>
       <FormItem label="任务ID" prop="task_id">
-        <Input v-model="formValidate.task_id" placeholder="请输入任务ID"></Input>
+        <Input v-model.trim="formValidate.task_id" placeholder="请输入任务ID"></Input>
       </FormItem>
       <FormItem label="cron 表达式" prop="cron_str">
-        <Input v-model="formValidate.cron_str" placeholder="请输入 cron 表达式"></Input>
+        <Input v-model.trim="formValidate.cron_str" placeholder="请输入 cron 表达式"></Input>
       </FormItem>
       <FormItem>
         <Button type="success" @click="handleSubmit('formValidate')" style="margin-right: 6px">Submit</Button>
@@ -27,11 +27,21 @@
 <script>
   import ISimpleBtnTriggerModal from "../Common/modal/ISimpleBtnTriggerModal"
   import {AddQuartz} from "../../api"
+  import {validateCron} from "../../tools"
 
   export default {
     name: "QuartzAdd",
     components:{ISimpleBtnTriggerModal},
     data(){
+      const _validateCron = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('cron表达式不能为空!'));
+        } else if (!validateCron(value)) {
+          callback(new Error('cron表达式格式错误!'));
+        } else {
+          callback();
+        }
+      };
       return {
         formValidate: {
           task_name: '',
@@ -41,16 +51,16 @@
         },
         ruleValidate: {
           task_name: [
-            { required: true, message: '任务名称不能为空', trigger: 'blur' }
+            { required: true, message: '任务名称不能为空!', trigger: 'blur' }
           ],
           task_type: [
-            { required: true, message: '任务类型不能为空', trigger: 'blur' }
+            { required: true, message: '任务类型不能为空!', trigger: 'blur' }
           ],
           task_id: [
-            { required: true, message: '任务 ID 不能为空', trigger: 'blur' }
+            { required: true, message: '任务 ID 不能为空!', trigger: 'blur' }
           ],
           cron_str: [
-            { required: true, message: 'cron 表达式不能为空', trigger: 'blur' }
+            { validator: _validateCron, trigger: 'blur' }
           ]
         },
       }
