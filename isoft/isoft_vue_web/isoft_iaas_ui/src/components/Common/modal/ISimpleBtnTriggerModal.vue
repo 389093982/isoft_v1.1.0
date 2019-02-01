@@ -4,7 +4,7 @@
 
     <Modal
       v-model="showFormModal"
-      width="850"
+      :width="modalWidth"
       :title="modalTitle"
       :footer-hide="true"
       :mask-closable="false">
@@ -17,7 +17,7 @@
 
 <script>
   export default {
-    name: "IBtnTriggerModal",
+    name: "ISimpleBtnTriggerModal",
     props: {
       btnText: {
         type: String,
@@ -27,10 +27,20 @@
         type: String,
         default: "模态框标题"
       },
+      modalWidth: {
+        type: Number,
+        default: 800
+      },
     },
     data(){
       return {
         showFormModal:false,
+      }
+    },
+    methods:{
+      // 阴藏 modal
+      hideModal:function () {
+        this.showMode = false;
       }
     }
   }

@@ -85,7 +85,7 @@
         }
       };
       // 确认密码校验 validatePassCheck
-      const validatePassCheck = (rule, value, callback) => {
+      const validatePassCheck = (rule, value, callback) =>  {
         if (value === '') {
           callback(new Error('请输入密码进行确认!'));
         } else if (value !== this.formValidate.passwd) {

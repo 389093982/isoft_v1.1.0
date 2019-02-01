@@ -4,22 +4,23 @@
       <ISimpleLeftRightRow>
         <!-- left 插槽部分 -->
         <!-- 按钮触发模态框 -->
-        <IBtnTriggerModal slot="left" btn-text="新增" modal-title="新增/编辑系统地址信息">
+        <!-- ref 的作用是为了在其它地方方便的获取到当前子组件 -->
+        <ISimpleBtnTriggerModal ref="triggerModal" slot="left" btn-text="新增" modal-title="新增/编辑系统地址信息" :modal-width="600">
           <!-- 表单添加系统注册信息 -->
           <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80">
-            <Row>
+            <Row :gutter="6">
               <Col span="12">
-                <FormItem label="系统注册地址" prop="app_address">
+                <FormItem label="注册地址" prop="app_address">
                   <Input v-model="formValidate.app_address" placeholder="请输入系统注册地址"></Input>
                 </FormItem>
               </Col>
               <Col span="12">
-                <Button type="success" @click="handleSubmit('formValidate')" style="margin-right: 8px">Submit</Button>
-                <Button type="warning" @click="handleReset('formValidate')" style="margin-right: 8px">Reset</Button>
+                <Button type="success" @click="handleSubmit('formValidate')" style="margin-right: 6px">Submit</Button>
+                <Button type="warning" @click="handleReset('formValidate')" style="margin-right: 6px">Reset</Button>
               </Col>
             </Row>
           </Form>
-        </IBtnTriggerModal>
+        </ISimpleBtnTriggerModal>
         <!-- right 插槽部分 -->
         <ISimpleSearch slot="right" @handleSimpleSearch="handleSearch"/>
       </ISimpleLeftRightRow>
@@ -35,13 +36,13 @@
   import {AppRegisterList} from "../../api"
   import {AddAppRegister} from "../../api"
   import LeftMenu from "./LeftMenu"
-  import IBtnTriggerModal from "../Common/modal/IBtnTriggerModal"
+  import ISimpleBtnTriggerModal from "../Common/modal/ISimpleBtnTriggerModal"
   import ISimpleLeftRightRow from "../Common/layout/ISimpleLeftRightRow"
   import ISimpleSearch from "../Common/search/ISimpleSearch"
 
   export default {
     name: "AppRegist",
-    components: {LeftMenu,ISimpleLeftRightRow,ISimpleSearch,IBtnTriggerModal},
+    components: {LeftMenu,ISimpleLeftRightRow,ISimpleSearch,ISimpleBtnTriggerModal},
     data(){
       return {
         // 当前页
@@ -113,6 +114,8 @@
             const result = await AddAppRegister(_this.formValidate.app_address);
             if(result.status == "SUCCESS"){
               _this.$Message.success('提交成功!');
+              // 调用子组件隐藏 modal (this.refs.xxx.子组件定义的方法())
+              this.refs.triggerModal.hideModal();
               // 关闭模态对话框
               _this.showFormModal = false;
               _this.refreshAppRegistList();
