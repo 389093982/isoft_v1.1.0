@@ -17,6 +17,7 @@ import (
 	"isoft/isoft_iaas_web/models/ifile"
 	"isoft/isoft_iaas_web/models/ilearning"
 	"isoft/isoft_iaas_web/models/iquartz"
+	"isoft/isoft_iaas_web/models/iresource"
 	"isoft/isoft_iaas_web/models/monitor"
 	"isoft/isoft_iaas_web/models/share"
 	"isoft/isoft_iaas_web/models/sso"
@@ -135,6 +136,7 @@ func registerModel() {
 	}
 
 	orm.RegisterModel(new(iquartz.CronMeta))
+	orm.RegisterModel(new(iresource.Resource))
 }
 
 // 自动建表
