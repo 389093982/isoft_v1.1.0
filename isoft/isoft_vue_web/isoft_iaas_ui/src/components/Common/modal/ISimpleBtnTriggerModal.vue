@@ -40,7 +40,7 @@
     methods:{
       // 阴藏 modal
       hideModal:function () {
-        this.showMode = false;
+        this.showFormModal = false;
       }
     }
   }

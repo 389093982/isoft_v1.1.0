@@ -115,7 +115,7 @@
             if(result.status == "SUCCESS"){
               _this.$Message.success('提交成功!');
               // 调用子组件隐藏 modal (this.refs.xxx.子组件定义的方法())
-              this.refs.triggerModal.hideModal();
+              _this.$refs.triggerModal.hideModal();
               // 关闭模态对话框
               _this.showFormModal = false;
               _this.refreshAppRegistList();
