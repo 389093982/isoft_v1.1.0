@@ -80,6 +80,7 @@
         const result = await ResourceList(this.offset,this.current_page,this.search);
         if(result.status=="SUCCESS"){
           this.resources = result.resources;
+          this.total = result.paginator.totalcount;
         }
       },
       handleChange(page){

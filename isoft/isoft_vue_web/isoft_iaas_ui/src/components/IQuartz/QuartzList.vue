@@ -85,6 +85,7 @@
         const result = await QuartzList(this.offset,this.current_page,this.search);
         if(result.status=="SUCCESS"){
           this.quartzs = result.quartzs;
+          this.total = result.paginator.totalcount;
         }
       },
       handleChange(page){

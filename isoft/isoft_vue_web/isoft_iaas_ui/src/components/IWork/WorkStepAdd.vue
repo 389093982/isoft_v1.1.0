@@ -1,11 +1,84 @@
 <template>
-    
+  <!-- 按钮触发模态框 -->
+  <!-- ref 的作用是为了在其它地方方便的获取到当前子组件 -->
+  <ISimpleBtnTriggerModal ref="triggerModal" btn-text="新增" modal-title="新增 workstep" :modal-width="600">
+    <!-- 表单信息 -->
+    <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="140">
+      <FormItem label="work_id" prop="work_id">
+        <Input v-model.trim="formValidate.work_id" placeholder="请输入 work_id"></Input>
+      </FormItem>
+      <FormItem label="work_step_id" prop="work_step_id">
+        <Input v-model.trim="formValidate.work_step_id" placeholder="请输入 work_step_id"></Input>
+      </FormItem>
+      <FormItem label="work_step_input" prop="work_step_input">
+        <Input v-model.trim="formValidate.work_step_input" placeholder="请输入 work_step_input"></Input>
+      </FormItem>
+      <FormItem label="work_step_output" prop="work_step_output">
+        <Input v-model.trim="formValidate.work_step_output" placeholder="请输入 work_step_output"></Input>
+      </FormItem>
+      <FormItem>
+        <Button type="success" @click="handleSubmit('formValidate')" style="margin-right: 6px">Submit</Button>
+        <Button type="warning" @click="handleReset('formValidate')" style="margin-right: 6px">Reset</Button>
+      </FormItem>
+    </Form>
+  </ISimpleBtnTriggerModal>
 </template>
 
 <script>
-    export default {
-        name: "WorkStepAdd"
+  import ISimpleBtnTriggerModal from "../Common/modal/ISimpleBtnTriggerModal"
+  import {AddWorkStep} from "../../api"
+
+  export default {
+    name: "WorkStepAdd",
+    components:{ISimpleBtnTriggerModal},
+    data(){
+      return {
+        formValidate: {
+          work_id: '',
+          work_step_id: '',
+          work_step_input: '',
+          work_step_output: '',
+        },
+        ruleValidate: {
+          work_id: [
+            { required: true, message: 'work_id 不能为空!', trigger: 'blur' }
+          ],
+          work_step_id: [
+            { required: true, message: 'work_step_id 不能为空!', trigger: 'blur' }
+          ],
+          work_step_input: [
+            { required: true, message: 'work_step_input 不能为空!', trigger: 'blur' }
+          ],
+          work_step_output: [
+            { required: true, message: 'work_step_output 不能为空!', trigger: 'blur' }
+          ],
+        },
+      }
+    },
+    methods:{
+      handleSubmit (name) {
+        this.$refs[name].validate(async (valid) => {
+          if (valid) {
+            const result = await AddWorkStep(this.formValidate.work_id,
+              this.formValidate.work_step_id,this.formValidate.work_step_input,
+              this.formValidate.work_step_output);
+            if(result.status == "SUCCESS"){
+              this.$Message.success('提交成功!');
+              // 调用子组件隐藏 modal (this.refs.xxx.子组件定义的方法())
+              this.$refs.triggerModal.hideModal();
+              // 通知父组件添加成功
+              this.$emit('handleSuccess');
+            }else{
+              this.$Message.error('提交失败!');
+            }
+          }
+        })
+      },
+      handleReset (name) {
+        this.$refs[name].resetFields();
+      },
     }
+  }
 </script>
 
 <style scoped>

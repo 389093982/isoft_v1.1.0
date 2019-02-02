@@ -1,5 +1,10 @@
 <template>
   <div style="margin: 10px;">
+    <ISimpleLeftRightRow>
+      <!-- left 插槽部分 -->
+      <WorkStepAdd slot="left" @handleSuccess="refreshWorkStepList"/>
+    </ISimpleLeftRightRow>
+
     <Table :columns="columns1" :data="worksteps" size="small"></Table>
     <Page :total="total" :page-size="offset" show-total show-sizer :styles="{'text-align': 'center','margin-top': '10px'}"
           @on-change="handleChange" @on-page-size-change="handlePageSizeChange"/>
@@ -9,9 +14,12 @@
 <script>
   import {formatDate} from "../../tools"
   import {WorkStepList} from "../../api"
+  import WorkStepAdd from "./WorkStepAdd"
+  import ISimpleLeftRightRow from "../Common/layout/ISimpleLeftRightRow"
 
   export default {
     name: "WorkStepList",
+    components:{WorkStepAdd,ISimpleLeftRightRow},
     data(){
       return {
         // 当前页
@@ -59,6 +67,7 @@
         const result = await WorkStepList(this.offset,this.current_page);
         if(result.status=="SUCCESS"){
           this.worksteps = result.worksteps;
+          this.total = result.paginator.totalcount;
         }
       },
       handleChange(page){
