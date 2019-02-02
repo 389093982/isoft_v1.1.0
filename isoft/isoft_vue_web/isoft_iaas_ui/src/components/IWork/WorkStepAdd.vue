@@ -5,7 +5,7 @@
     <!-- 表单信息 -->
     <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="140">
       <FormItem label="work_id" prop="work_id">
-        <Input v-model.trim="formValidate.work_id" placeholder="请输入 work_id"></Input>
+        <Input v-model.trim="formValidate.work_id" disabled placeholder="请输入 work_id"></Input>
       </FormItem>
       <FormItem label="work_step_id" prop="work_step_id">
         <Input v-model.trim="formValidate.work_step_id" :maxlength="5" placeholder="请输入 work_step_id" number></Input>
@@ -31,10 +31,16 @@
   export default {
     name: "WorkStepAdd",
     components:{ISimpleBtnTriggerModal},
+    props: {
+      workId: {
+        type: Number,
+        default: -1
+      },
+    },
     data(){
       return {
         formValidate: {
-          work_id: '',
+          work_id: this.workId,
           work_step_id: 0,
           work_step_input: '',
           work_step_output: '',

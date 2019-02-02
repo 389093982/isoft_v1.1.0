@@ -1,8 +1,11 @@
 <template>
   <div style="margin: 10px;">
+
+
     <ISimpleLeftRightRow>
       <!-- left 插槽部分 -->
-      <WorkStepAdd slot="left" @handleSuccess="refreshWorkStepList"/>
+      <WorkStepAdd slot="left" v-if="$route.query.work_id" :work-id="$route.query.work_id" @handleSuccess="refreshWorkStepList"/>
+      <h4 slot="right" v-if="$route.query.work_name">当前流程为：{{$route.query.work_name}}</h4>
     </ISimpleLeftRightRow>
 
     <Table :columns="columns1" :data="worksteps" size="small"></Table>
