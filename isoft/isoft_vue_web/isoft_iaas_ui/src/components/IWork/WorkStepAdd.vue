@@ -8,7 +8,7 @@
         <Input v-model.trim="formValidate.work_id" placeholder="请输入 work_id"></Input>
       </FormItem>
       <FormItem label="work_step_id" prop="work_step_id">
-        <Input v-model.trim="formValidate.work_step_id" placeholder="请输入 work_step_id"></Input>
+        <Input v-model.trim="formValidate.work_step_id" :maxlength="5" placeholder="请输入 work_step_id" number></Input>
       </FormItem>
       <FormItem label="work_step_input" prop="work_step_input">
         <Input v-model.trim="formValidate.work_step_input" placeholder="请输入 work_step_input"></Input>
@@ -35,7 +35,7 @@
       return {
         formValidate: {
           work_id: '',
-          work_step_id: '',
+          work_step_id: 0,
           work_step_input: '',
           work_step_output: '',
         },
@@ -44,7 +44,7 @@
             { required: true, message: 'work_id 不能为空!', trigger: 'blur' }
           ],
           work_step_id: [
-            { required: true, message: 'work_step_id 不能为空!', trigger: 'blur' }
+            { required: true, type: 'number', message: 'work_step_id 必须为数字且不能为空!', trigger: 'blur' },
           ],
           work_step_input: [
             { required: true, message: 'work_step_input 不能为空!', trigger: 'blur' }
