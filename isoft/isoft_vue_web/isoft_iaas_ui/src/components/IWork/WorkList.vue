@@ -16,6 +16,7 @@
 <script>
   import {formatDate} from "../../tools"
   import {WorkList} from "../../api"
+  import {DeleteWorkById} from "../../api"
   import ISimpleLeftRightRow from "../Common/layout/ISimpleLeftRightRow"
   import ISimpleSearch from "../Common/search/ISimpleSearch"
   import WorkAdd from "./WorkAdd"
@@ -64,6 +65,25 @@
                 formatDate(new Date(params.row.last_updated_time),'yyyy-MM-dd hh:mm')
               )
             }
+          },
+          {
+            title: '操作',
+            key: 'operate',
+            render: (h, params) => {
+              return h('div', [
+                h('Button', {
+                  props: {
+                    type: 'success',
+                    size: 'small'
+                  },
+                  on: {
+                    click: () => {
+                      this.deleteWorkById(this.works[params.index]['id']);
+                    }
+                  }
+                }, '删除'),
+              ]);
+            }
           }
         ],
       }
@@ -89,6 +109,12 @@
         this.current_page = 1;
         this.search = data;
         this.refreshWorkList();
+      },
+      deleteWorkById:async function(id){
+        const result = await DeleteWorkById(id);
+        if(result.status=="SUCCESS"){
+          this.refreshWorkList();
+        }
       }
     },
     mounted: function () {
