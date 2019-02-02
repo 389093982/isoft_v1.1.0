@@ -44,3 +44,9 @@ func QueryWorkStep(condArr map[string]string, page int, offset int) (steps []Wor
 	qs.All(&steps)
 	return
 }
+
+func DeleteWorkStepById(id int64) error {
+	o := orm.NewOrm()
+	_, err := o.QueryTable("work_step").Filter("id", id).Delete()
+	return err
+}

@@ -137,6 +137,10 @@ export const WorkStepList = (offset,current_page) => ajax(BASE_URL+"/iwork/filte
 // 添加 workstep 记录
 export const AddWorkStep = (work_id,work_step_id,work_step_input,work_step_output) => ajax(BASE_URL+"/iwork/addWorkStep", {work_id,work_step_id,work_step_input,work_step_output},'POST');
 
+// 删除 workstep 记录
+export const DeleteWorkStepById = (id) => ajax(BASE_URL+"/iwork/deleteWorkStepById", {id},'POST');
+
+
 
 // 跨模块使用,模块化部署时需要使用 nginx 代理
 export const LoginAddr = "/sso/login/";

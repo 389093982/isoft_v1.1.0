@@ -44,3 +44,13 @@ func (this *WorkController) FilterPageWorkStep()  {
 	}
 	this.ServeJSON()
 }
+
+func (this *WorkController) DeleteWorkStepById()  {
+	id,_ := this.GetInt64("id")
+	if err := iwork.DeleteWorkStepById(id); err == nil{
+		this.Data["json"] = &map[string]interface{}{"status":"SUCCESS"}
+	}else{
+		this.Data["json"] = &map[string]interface{}{"status":"ERROR"}
+	}
+	this.ServeJSON()
+}

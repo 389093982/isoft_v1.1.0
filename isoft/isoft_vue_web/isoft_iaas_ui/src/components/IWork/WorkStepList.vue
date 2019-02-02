@@ -14,6 +14,7 @@
 <script>
   import {formatDate} from "../../tools"
   import {WorkStepList} from "../../api"
+  import {DeleteWorkStepById} from "../../api"
   import WorkStepAdd from "./WorkStepAdd"
   import ISimpleLeftRightRow from "../Common/layout/ISimpleLeftRightRow"
 
@@ -58,6 +59,25 @@
                 formatDate(new Date(params.row.last_updated_time),'yyyy-MM-dd hh:mm')
               )
             }
+          },
+          {
+            title: '操作',
+            key: 'operate',
+            render: (h, params) => {
+              return h('div', [
+                h('Button', {
+                  props: {
+                    type: 'success',
+                    size: 'small'
+                  },
+                  on: {
+                    click: () => {
+                      this.deleteWorkStepById(this.worksteps[params.index]['id']);
+                    }
+                  }
+                }, '删除'),
+              ]);
+            }
           }
         ],
       }
@@ -78,6 +98,12 @@
         this.offset = pageSize;
         this.refreshWorkStepList();
       },
+      deleteWorkStepById:async function(id){
+        const result = await DeleteWorkStepById(id);
+        if(result.status=="SUCCESS"){
+          this.refreshWorkStepList();
+        }
+      }
     },
     mounted: function () {
       this.refreshWorkStepList();
