@@ -17,7 +17,7 @@ type Work struct {
 type WorkStep struct {
 	Id              int64     	`json:"id"`
 	WorkId      	string    	`json:"work_id"`
-	WorkStepId      string    	`json:"work_step_id"`
+	WorkStepId      int8    	`json:"work_step_id"`
 	WorkStepInput   string    	`json:"work_step_input"`
 	WorkStepOutput	string    	`json:"work_step_output"`
 	CreatedBy       string    	`json:"created_by"`
@@ -38,7 +38,7 @@ func InsertOrUpdateWorkStep(step *WorkStep) (id int64, err error) {
 
 func QueryWorkStep(condArr map[string]string, page int, offset int) (steps []WorkStep, counts int64, err error) {
 	o := orm.NewOrm()
-	qs := o.QueryTable("work_step")
+	qs := o.QueryTable("work_step").OrderBy("work_step_id")
 	counts, _ = qs.Count()
 	qs = qs.Limit(offset, (page-1)*offset)
 	qs.All(&steps)

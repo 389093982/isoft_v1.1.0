@@ -14,10 +14,10 @@ type WorkController struct {
 
 func (this *WorkController) AddWorkStep()  {
 	var step iwork.WorkStep
-	step.WorkId = this.Input().Get("work_id")
-	step.WorkStepId = this.Input().Get("work_step_id")
-	step.WorkStepInput = this.Input().Get("work_step_input")
-	step.WorkStepOutput = this.Input().Get("work_step_output")
+	step.WorkId = this.GetString("work_id")
+	step.WorkStepId,_ = this.GetInt8("work_step_id", -1)
+	step.WorkStepInput = this.GetString("work_step_input")
+	step.WorkStepOutput = this.GetString("work_step_output")
 	step.CreatedBy = "SYSTEM"
 	step.CreatedTime = time.Now()
 	step.LastUpdatedBy = "SYSTEM"
