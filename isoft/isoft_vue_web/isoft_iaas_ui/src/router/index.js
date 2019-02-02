@@ -28,6 +28,7 @@ import ISSOLayout from "../components/ILayout/ISSOLayout"
 import ILayout from "../components/ILayout/ILayout"
 import QuartzList from "../components/IQuartz/QuartzList"
 import ResourceList from "../components/IResource/ResourceList"
+import WorkList from "../components/IWork/WorkList"
 import WorkStepList from "../components/IWork/WorkStepList"
 
 Vue.use(Router);
@@ -148,6 +149,7 @@ export const IWorkRouter = {
   path: '/iwork',
   component: ILayout,
   children: [
+    {path: 'workList',component: WorkList},
     {path: 'workstepList',component: WorkStepList},
   ]
 };

@@ -131,6 +131,15 @@ export const ResourceList = (offset,current_page,search) => ajax(BASE_URL+"/ires
 // 添加 resource 记录
 export const AddResource = (resource_name,resource_type,resource_url,resource_username,resource_password,env_name) => ajax(BASE_URL+"/iresource/addResource", {resource_name,resource_type,resource_url,resource_username,resource_password,env_name},'POST');
 
+// work 分页查询
+export const WorkList = (offset,current_page,search) => ajax(BASE_URL+"/iwork/filterPageWork", {offset,current_page,search},'POST');
+
+// 添加 work 记录
+export const AddWork = (work_name) => ajax(BASE_URL+"/iwork/addWork", {work_name},'POST');
+
+// 删除 work 记录
+export const DeleteWorkById = (id) => ajax(BASE_URL+"/iwork/deleteWorkById", {id},'POST');
+
 // workstep 分页查询
 export const WorkStepList = (offset,current_page) => ajax(BASE_URL+"/iwork/filterPageWorkStep", {offset,current_page},'POST');
 
@@ -139,8 +148,6 @@ export const AddWorkStep = (work_id,work_step_id,work_step_input,work_step_outpu
 
 // 删除 workstep 记录
 export const DeleteWorkStepById = (id) => ajax(BASE_URL+"/iwork/deleteWorkStepById", {id},'POST');
-
-
 
 // 跨模块使用,模块化部署时需要使用 nginx 代理
 export const LoginAddr = "/sso/login/";
