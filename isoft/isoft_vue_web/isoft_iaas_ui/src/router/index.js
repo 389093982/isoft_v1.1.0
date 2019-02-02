@@ -28,6 +28,7 @@ import ISSOLayout from "../components/ILayout/ISSOLayout"
 import ILayout from "../components/ILayout/ILayout"
 import QuartzList from "../components/IQuartz/QuartzList"
 import ResourceList from "../components/IResource/ResourceList"
+import WorkStepList from "../components/IWork/WorkStepList"
 
 Vue.use(Router);
 
@@ -143,6 +144,14 @@ export const IQuartzRouter = {
   ]
 };
 
+export const IWorkRouter = {
+  path: '/iwork',
+  component: ILayout,
+  children: [
+    {path: 'workstepList',component: WorkStepList},
+  ]
+};
+
 export const IResourceRouter = {
   path: '/resource',
   component: ILayout,
@@ -166,6 +175,7 @@ export default new Router({
   // History 模式,去除vue项目中的 #
   mode: 'history',
   routes: [
+    IWorkRouter,
     IResourceRouter,
     IQuartzRouter,
     ISSOReouter,

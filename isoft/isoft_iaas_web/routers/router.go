@@ -11,6 +11,7 @@ import (
 	"isoft/isoft_iaas_web/controllers/ilearning"
 	"isoft/isoft_iaas_web/controllers/iquartz"
 	"isoft/isoft_iaas_web/controllers/iresource"
+	"isoft/isoft_iaas_web/controllers/iwork"
 	"isoft/isoft_iaas_web/controllers/monitor"
 	"isoft/isoft_iaas_web/controllers/share"
 	"isoft/isoft_iaas_web/controllers/sso"
@@ -32,6 +33,8 @@ func init() {
 	beego.Router("/api/iquartz/filterPageQuartz", &iquartz.QuartzController{}, "post:FilterPageQuartz")
 	beego.Router("/api/iresource/addResource", &iresource.ResourceController{}, "post:AddResource")
 	beego.Router("/api/iresource/filterPageResource", &iresource.ResourceController{}, "post:FilterPageResource")
+	beego.Router("/api/iwork/filterPageWorkStep", &iwork.WorkController{}, "post:FilterPageWorkStep")
+	beego.Router("/api/iresource/addWorkStep", &iwork.WorkController{}, "post:AddWorkStep")
 
 	// ilearning 模块
 	if strings.Contains(beego.AppConfig.String("open.moudles"), "ilearning"){

@@ -131,5 +131,9 @@ export const ResourceList = (offset,current_page,search) => ajax(BASE_URL+"/ires
 // 添加 resource 记录
 export const AddResource = (resource_name,resource_type,resource_url,resource_username,resource_password,env_name) => ajax(BASE_URL+"/iresource/addResource", {resource_name,resource_type,resource_url,resource_username,resource_password,env_name},'POST');
 
+// workstep 分页查询
+export const WorkStepList = (offset,current_page) => ajax(BASE_URL+"/iwork/filterPageWorkStep", {offset,current_page},'POST');
+
+
 // 跨模块使用,模块化部署时需要使用 nginx 代理
 export const LoginAddr = "/sso/login/";
