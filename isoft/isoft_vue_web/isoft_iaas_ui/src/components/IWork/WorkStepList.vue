@@ -84,7 +84,7 @@
     },
     methods:{
       refreshWorkStepList:async function () {
-        const result = await WorkStepList(this.offset,this.current_page);
+        const result = await WorkStepList(this.$route.query.work_id, this.offset,this.current_page);
         if(result.status=="SUCCESS"){
           this.worksteps = result.worksteps;
           this.total = result.paginator.totalcount;

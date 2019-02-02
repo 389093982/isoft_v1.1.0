@@ -71,7 +71,11 @@ func InsertOrUpdateWorkStep(step *WorkStep) (id int64, err error) {
 
 func QueryWorkStep(condArr map[string]string, page int, offset int) (steps []WorkStep, counts int64, err error) {
 	o := orm.NewOrm()
-	qs := o.QueryTable("work_step").OrderBy("work_step_id")
+	qs := o.QueryTable("work_step")
+	if work_id, ok := condArr["work_id"]; ok {
+		qs = qs.Filter("work_id", work_id)
+	}
+	qs = qs.OrderBy("work_step_id")
 	counts, _ = qs.Count()
 	qs = qs.Limit(offset, (page-1)*offset)
 	qs.All(&steps)

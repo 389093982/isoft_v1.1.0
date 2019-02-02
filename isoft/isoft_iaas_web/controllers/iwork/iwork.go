@@ -78,6 +78,7 @@ func (this *WorkController) FilterPageWorkStep()  {
 	condArr := make(map[string]string)
 	offset, _ := this.GetInt("offset", 10)            // 每页记录数
 	current_page, _ := this.GetInt("current_page", 1) // 当前页
+	condArr["work_id"] = this.GetString("work_id")
 	worksteps, count, err := iwork.QueryWorkStep(condArr, current_page, offset)
 	paginator := pagination.SetPaginator(this.Ctx, offset, count)
 	if err == nil {

@@ -76,12 +76,29 @@
                     type: 'success',
                     size: 'small'
                   },
+                  style: {
+                    marginRight: '5px',
+                  },
                   on: {
                     click: () => {
                       this.deleteWorkById(this.works[params.index]['id']);
                     }
                   }
                 }, '删除'),
+                h('Button', {
+                  props: {
+                    type: 'error',
+                    size: 'small'
+                  },
+                  style: {
+                    marginRight: '5px',
+                  },
+                  on: {
+                    click: () => {
+                      this.editWork(this.works[params.index]['id'], this.works[params.index]['work_name']);
+                    }
+                  }
+                }, '编辑步骤'),
               ]);
             }
           }
@@ -115,6 +132,9 @@
         if(result.status=="SUCCESS"){
           this.refreshWorkList();
         }
+      },
+      editWork:function (id, work_name) {
+        this.$router.push({ path: '/iwork/workstepList', query: { work_id: id, work_name: work_name }});
       }
     },
     mounted: function () {
