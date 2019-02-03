@@ -1,7 +1,7 @@
 <template>
   <!-- 按钮触发模态框 -->
   <!-- ref 的作用是为了在其它地方方便的获取到当前子组件 -->
-  <ISimpleBtnTriggerModal ref="triggerModal" btn-text="新增" modal-title="新增 workstep" :modal-width="600">
+  <ISimpleBtnTriggerModal ref="triggerModal" btn-text="新增/查看/编辑" modal-title="新增 workstep" :modal-width="600">
     <!-- 表单信息 -->
     <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="140">
       <FormItem label="work_id" prop="work_id">
