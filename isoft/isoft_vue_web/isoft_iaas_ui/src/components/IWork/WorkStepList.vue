@@ -4,7 +4,7 @@
 
     <ISimpleLeftRightRow style="margin-bottom: 10px;">
       <!-- left 插槽部分 -->
-      <WorkStepAdd slot="left" v-if="$route.query.work_id" :work-id="$route.query.work_id" @handleSuccess="refreshWorkStepList"/>
+      <WorkStepAdd slot="left" v-if="$route.query.work_id" :work-id="_workId" @handleSuccess="refreshWorkStepList"/>
       <Button slot="right" type="success" @click="renderSourceXml" style="float: right;">View Source XML</Button>
     </ISimpleLeftRightRow>
 
@@ -51,11 +51,11 @@
             key: 'work_step_type',
           },
           {
-            title: 'work_step_input',
+            title: 'input',
             key: 'work_step_input',
           },
           {
-            title: 'work_step_output',
+            title: 'output',
             key: 'work_step_output',
           },
           {
@@ -80,6 +80,9 @@
                   props: {
                     type: 'success',
                     size: 'small'
+                  },
+                  style: {
+                    marginRight: '5px',
                   },
                   on: {
                     click: () => {
@@ -122,6 +125,11 @@
     mounted: function () {
       this.refreshWorkStepList();
     },
+    computed:{
+      _workId:function () {
+        return parseInt(this.$route.query.work_id);
+      }
+    }
   }
 </script>
 

@@ -14,7 +14,9 @@
         <Input v-model.trim="formValidate.work_step_name" placeholder="请输入 work_step_name"></Input>
       </FormItem>
       <FormItem label="work_step_type" prop="work_step_type">
-        <Input v-model.trim="formValidate.work_step_type" placeholder="请输入 work_step_type"></Input>
+        <Select v-model="formValidate.work_step_type" placeholder="请选择 work_step_type">
+          <Option :value="default_work_step_type" v-for="default_work_step_type in default_work_step_types">{{default_work_step_type}}</Option>
+        </Select>
       </FormItem>
       <FormItem label="work_step_input" prop="work_step_input">
         <Input v-model.trim="formValidate.work_step_input" placeholder="请输入 work_step_input"></Input>
@@ -45,6 +47,7 @@
     },
     data(){
       return {
+        default_work_step_types:["work_start","work_end","sql_query","sql_insert"],
         formValidate: {
           work_id: this.workId,
           work_step_id: 0,
@@ -54,9 +57,6 @@
           work_step_output: '',
         },
         ruleValidate: {
-          work_id: [
-            { required: true, message: 'work_id 不能为空!', trigger: 'blur' }
-          ],
           work_step_id: [
             { required: true, type: 'number', message: 'work_step_id 必须为数字且不能为空!', trigger: 'blur' },
           ],
