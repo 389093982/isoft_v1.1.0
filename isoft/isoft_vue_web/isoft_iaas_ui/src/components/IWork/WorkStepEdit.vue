@@ -1,14 +1,21 @@
 <template>
   <!-- 按钮触发模态框 -->
   <!-- ref 的作用是为了在其它地方方便的获取到当前子组件 -->
-  <ISimpleBtnTriggerModal ref="triggerModal" btn-text="新增/查看/编辑" modal-title="新增 workstep" :modal-width="600">
+  <ISimpleBtnTriggerModal ref="triggerModal" btn-text="新增/查看/编辑" modal-title="新增/查看/编辑 workstep" :modal-width="1000">
     <!-- 表单信息 -->
     <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="140">
       <FormItem label="work_id" prop="work_id">
         <Input v-model.trim="formValidate.work_id" disabled placeholder="请输入 work_id"></Input>
       </FormItem>
       <FormItem label="work_step_id" prop="work_step_id">
-        <Input v-model.trim="formValidate.work_step_id" :maxlength="5" placeholder="请输入 work_step_id" number></Input>
+        <Row>
+          <Col span="22">
+            <Input v-model.trim="formValidate.work_step_id" :maxlength="5" placeholder="请输入 work_step_id" number></Input>
+          </Col>
+          <Col span="2" style="text-align: right;">
+            <Button type="success" @click="loadWorkStepInfo" style="margin-right: 6px">加载</Button>
+          </Col>
+        </Row>
       </FormItem>
       <FormItem label="work_step_name" prop="work_step_name">
         <Input v-model.trim="formValidate.work_step_name" placeholder="请输入 work_step_name"></Input>
@@ -35,9 +42,10 @@
 <script>
   import ISimpleBtnTriggerModal from "../Common/modal/ISimpleBtnTriggerModal"
   import {AddWorkStep} from "../../api"
+  import {LoadWorkStepInfo} from "../../api"
 
   export default {
-    name: "WorkStepAdd",
+    name: "WorkStepEdit",
     components:{ISimpleBtnTriggerModal},
     props: {
       workId: {
@@ -93,6 +101,15 @@
             }
           }
         })
+      },
+      loadWorkStepInfo:async function(){
+        const result = await LoadWorkStepInfo(this.formValidate.work_id,this.formValidate.work_step_id);
+        if(result.status == "SUCCESS"){
+          this.formValidate.work_step_name = result.step.work_step_name;
+          this.formValidate.work_step_type = result.step.work_step_type;
+          this.formValidate.work_step_input = result.step.work_step_input;
+          this.formValidate.work_step_output = result.step.work_step_output;
+        }
       },
       handleReset (name) {
         this.$refs[name].resetFields();

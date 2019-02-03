@@ -101,3 +101,14 @@ func (this *WorkController) DeleteWorkStepById()  {
 	}
 	this.ServeJSON()
 }
+
+func (this *WorkController) LoadWorkStepInfo()  {
+	work_id := this.GetString("work_id")
+	work_step_id,_ := this.GetInt8("work_step_id")
+	if step, err := iwork.LoadWorkStepInfo(work_id, work_step_id); err == nil{
+		this.Data["json"] = &map[string]interface{}{"status":"SUCCESS", "step":step}
+	}else{
+		this.Data["json"] = &map[string]interface{}{"status":"ERROR"}
+	}
+	this.ServeJSON()
+}

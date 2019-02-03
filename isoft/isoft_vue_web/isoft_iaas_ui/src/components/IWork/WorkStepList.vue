@@ -4,7 +4,7 @@
 
     <ISimpleLeftRightRow style="margin-bottom: 10px;">
       <!-- left 插槽部分 -->
-      <WorkStepAdd slot="left" v-if="$route.query.work_id" :work-id="_workId" @handleSuccess="refreshWorkStepList"/>
+      <WorkStepEdit slot="left" v-if="$route.query.work_id" :work-id="_workId" @handleSuccess="refreshWorkStepList"/>
       <Button slot="right" type="success" @click="renderSourceXml" style="float: right;">View Source XML</Button>
     </ISimpleLeftRightRow>
 
@@ -18,12 +18,12 @@
   import {formatDate} from "../../tools"
   import {WorkStepList} from "../../api"
   import {DeleteWorkStepById} from "../../api"
-  import WorkStepAdd from "./WorkStepAdd"
+  import WorkStepEdit from "./WorkStepEdit"
   import ISimpleLeftRightRow from "../Common/layout/ISimpleLeftRightRow"
 
   export default {
     name: "WorkStepList",
-    components:{WorkStepAdd,ISimpleLeftRightRow},
+    components:{WorkStepEdit,ISimpleLeftRightRow},
     data(){
       return {
         // 当前页

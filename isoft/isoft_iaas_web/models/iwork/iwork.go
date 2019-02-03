@@ -84,6 +84,12 @@ func QueryWorkStep(condArr map[string]string, page int, offset int) (steps []Wor
 	return
 }
 
+func LoadWorkStepInfo(work_id string, work_step_id int8) (step WorkStep, err error) {
+	o := orm.NewOrm()
+	err = o.QueryTable("work_step").Filter("work_id",work_id).Filter("work_step_id",work_step_id).One(&step)
+	return
+}
+
 func DeleteWorkStepById(id int64) error {
 	o := orm.NewOrm()
 	_, err := o.QueryTable("work_step").Filter("id", id).Delete()

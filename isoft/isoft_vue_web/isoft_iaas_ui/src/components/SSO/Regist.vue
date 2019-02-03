@@ -61,10 +61,11 @@
   import {Regist} from "../../api"
   import {validateUserName} from "../../tools"
   import {validatePasswd} from "../../tools"
+  import ISimpleSearch from "../Common/search/ISimpleSearch"
 
   export default {
     name: "Regist",
-    components:{LoginFooter},
+    components:{LoginFooter,ISimpleSearch},
     data(){
       const _validateUserName = (rule, value, callback) => {
         if (value === '') {
@@ -141,7 +142,7 @@
             this.$Message.error("注册失败,请联系管理员获取账号!");
           }
         }
-      }
+      },
     }
   }
 </script>

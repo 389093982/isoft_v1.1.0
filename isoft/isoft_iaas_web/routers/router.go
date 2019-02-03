@@ -39,6 +39,7 @@ func init() {
 	beego.Router("/api/iwork/filterPageWorkStep", &iwork.WorkController{}, "post:FilterPageWorkStep")
 	beego.Router("/api/iwork/addWorkStep", &iwork.WorkController{}, "post:AddWorkStep")
 	beego.Router("/api/iwork/deleteWorkStepById", &iwork.WorkController{}, "post:DeleteWorkStepById")
+	beego.Router("/api/iwork/loadWorkStepInfo", &iwork.WorkController{}, "post:LoadWorkStepInfo")
 
 	// ilearning 模块
 	if strings.Contains(beego.AppConfig.String("open.moudles"), "ilearning"){
