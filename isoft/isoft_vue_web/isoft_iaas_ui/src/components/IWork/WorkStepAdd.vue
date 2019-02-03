@@ -13,6 +13,9 @@
       <FormItem label="work_step_name" prop="work_step_name">
         <Input v-model.trim="formValidate.work_step_name" placeholder="请输入 work_step_name"></Input>
       </FormItem>
+      <FormItem label="work_step_type" prop="work_step_type">
+        <Input v-model.trim="formValidate.work_step_type" placeholder="请输入 work_step_type"></Input>
+      </FormItem>
       <FormItem label="work_step_input" prop="work_step_input">
         <Input v-model.trim="formValidate.work_step_input" placeholder="请输入 work_step_input"></Input>
       </FormItem>
@@ -46,6 +49,7 @@
           work_id: this.workId,
           work_step_id: 0,
           work_step_name: '',
+          work_step_type: '',
           work_step_input: '',
           work_step_output: '',
         },
@@ -58,6 +62,9 @@
           ],
           work_step_name: [
             { required: true, message: 'work_step_name 不能为空!', trigger: 'blur' }
+          ],
+          work_step_type: [
+            { required: true, message: 'work_step_type 不能为空!', trigger: 'blur' }
           ],
           work_step_input: [
             { required: true, message: 'work_step_input 不能为空!', trigger: 'blur' }
@@ -73,7 +80,7 @@
         this.$refs[name].validate(async (valid) => {
           if (valid) {
             const result = await AddWorkStep(this.formValidate.work_id,
-              this.formValidate.work_step_id,this.formValidate.work_step_name,
+              this.formValidate.work_step_id,this.formValidate.work_step_name,this.formValidate.work_step_type,
               this.formValidate.work_step_input,this.formValidate.work_step_output);
             if(result.status == "SUCCESS"){
               this.$Message.success('提交成功!');

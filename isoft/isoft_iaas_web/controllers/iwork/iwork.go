@@ -62,6 +62,7 @@ func (this *WorkController) AddWorkStep()  {
 	step.WorkStepId,_ = this.GetInt8("work_step_id", -1)
 	step.WorkStepInput = this.GetString("work_step_input")
 	step.WorkStepName = this.GetString("work_step_name")
+	step.WorkStepType = this.GetString("work_step_type")
 	step.WorkStepOutput = this.GetString("work_step_output")
 	step.CreatedBy = "SYSTEM"
 	step.CreatedTime = time.Now()

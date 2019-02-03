@@ -1,11 +1,11 @@
 <template>
   <div style="margin: 10px;">
+    <h4 v-if="$route.query.work_name" style="text-align: center;">当前流程为：{{$route.query.work_name}}</h4>
 
-
-    <ISimpleLeftRightRow>
+    <ISimpleLeftRightRow style="margin-bottom: 10px;">
       <!-- left 插槽部分 -->
       <WorkStepAdd slot="left" v-if="$route.query.work_id" :work-id="$route.query.work_id" @handleSuccess="refreshWorkStepList"/>
-      <h4 slot="right" v-if="$route.query.work_name">当前流程为：{{$route.query.work_name}}</h4>
+      <Button slot="right" type="success" @click="renderSourceXml" style="float: right;">View Source XML</Button>
     </ISimpleLeftRightRow>
 
     <Table :columns="columns1" :data="worksteps" size="small"></Table>
@@ -45,6 +45,10 @@
           {
             title: 'work_step_name',
             key: 'work_step_name',
+          },
+          {
+            title: 'work_step_type',
+            key: 'work_step_type',
           },
           {
             title: 'work_step_input',
@@ -110,6 +114,9 @@
         if(result.status=="SUCCESS"){
           this.refreshWorkStepList();
         }
+      },
+      renderSourceXml:function () {
+        alert(11111);
       }
     },
     mounted: function () {

@@ -20,6 +20,7 @@ type WorkStep struct {
 	WorkId      	string    	`json:"work_id"`
 	WorkStepId      int8    	`json:"work_step_id"`
 	WorkStepName    string    	`json:"work_step_name"`
+	WorkStepType    string    	`json:"work_step_type"`
 	WorkStepInput   string    	`json:"work_step_input"`
 	WorkStepOutput	string    	`json:"work_step_output"`
 	CreatedBy       string    	`json:"created_by"`
