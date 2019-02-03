@@ -43,6 +43,10 @@
             key: 'work_step_id',
           },
           {
+            title: 'work_step_name',
+            key: 'work_step_name',
+          },
+          {
             title: 'work_step_input',
             key: 'work_step_input',
           },

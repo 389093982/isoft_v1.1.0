@@ -144,7 +144,7 @@ export const DeleteWorkById = (id) => ajax(BASE_URL+"/iwork/deleteWorkById", {id
 export const WorkStepList = (work_id,offset,current_page) => ajax(BASE_URL+"/iwork/filterPageWorkStep", {work_id,offset,current_page},'POST');
 
 // 添加 workstep 记录
-export const AddWorkStep = (work_id,work_step_id,work_step_input,work_step_output) => ajax(BASE_URL+"/iwork/addWorkStep", {work_id,work_step_id,work_step_input,work_step_output},'POST');
+export const AddWorkStep = (work_id,work_step_id,work_step_name,work_step_input,work_step_output) => ajax(BASE_URL+"/iwork/addWorkStep", {work_id,work_step_id,work_step_name,work_step_input,work_step_output},'POST');
 
 // 删除 workstep 记录
 export const DeleteWorkStepById = (id) => ajax(BASE_URL+"/iwork/deleteWorkStepById", {id},'POST');

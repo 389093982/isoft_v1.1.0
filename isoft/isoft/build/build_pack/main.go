@@ -13,7 +13,7 @@ func main() {
 	defer os.Setenv("GOOS", GOOS)
 
 	packApps := pack.ReadPackApp("./pack.xml")
-	err := pack.StartAllPackTask(&packApps, "s")
+	err := pack.StartAllPackTask(&packApps, "")
 	if err != nil {
 		log.Println(err)
 	}

@@ -2,11 +2,6 @@
 <packapps>
     <packapp>
         <packType>beego</packType>
-        <appName>isoft_sso_web</appName>
-        <apppath>src\isoft\isoft_sso_web</apppath>
-    </packapp>
-    <packapp>
-        <packType>beego</packType>
         <appName>isoft_iaas_web</appName>
         <apppath>src\isoft\isoft_iaas_web</apppath>
     </packapp>
@@ -14,18 +9,6 @@
         <packType>beego</packType>
         <appName>isoft_deploy_web</appName>
         <apppath>src\isoft\isoft_deploy_web</apppath>
-    </packapp>
-    <packapp>
-        <packType>common</packType>
-        <appName>apiServer</appName>
-        <apppath>src\isoft\isoft_storage\apiServer</apppath>
-        <packArgs>apiServer.go</packArgs>
-    </packapp>
-    <packapp>
-        <packType>common</packType>
-        <appName>dataServer</appName>
-        <apppath>src\isoft\isoft_storage\dataServer</apppath>
-        <packArgs>dataServer.go</packArgs>
     </packapp>
     <packapp>
         <packType>vue</packType>

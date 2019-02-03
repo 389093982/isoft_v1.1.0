@@ -10,6 +10,9 @@
       <FormItem label="work_step_id" prop="work_step_id">
         <Input v-model.trim="formValidate.work_step_id" :maxlength="5" placeholder="请输入 work_step_id" number></Input>
       </FormItem>
+      <FormItem label="work_step_name" prop="work_step_name">
+        <Input v-model.trim="formValidate.work_step_name" placeholder="请输入 work_step_name"></Input>
+      </FormItem>
       <FormItem label="work_step_input" prop="work_step_input">
         <Input v-model.trim="formValidate.work_step_input" placeholder="请输入 work_step_input"></Input>
       </FormItem>
@@ -42,6 +45,7 @@
         formValidate: {
           work_id: this.workId,
           work_step_id: 0,
+          work_step_name: '',
           work_step_input: '',
           work_step_output: '',
         },
@@ -51,6 +55,9 @@
           ],
           work_step_id: [
             { required: true, type: 'number', message: 'work_step_id 必须为数字且不能为空!', trigger: 'blur' },
+          ],
+          work_step_name: [
+            { required: true, message: 'work_step_name 不能为空!', trigger: 'blur' }
           ],
           work_step_input: [
             { required: true, message: 'work_step_input 不能为空!', trigger: 'blur' }
@@ -66,8 +73,8 @@
         this.$refs[name].validate(async (valid) => {
           if (valid) {
             const result = await AddWorkStep(this.formValidate.work_id,
-              this.formValidate.work_step_id,this.formValidate.work_step_input,
-              this.formValidate.work_step_output);
+              this.formValidate.work_step_id,this.formValidate.work_step_name,
+              this.formValidate.work_step_input,this.formValidate.work_step_output);
             if(result.status == "SUCCESS"){
               this.$Message.success('提交成功!');
               // 调用子组件隐藏 modal (this.refs.xxx.子组件定义的方法())
