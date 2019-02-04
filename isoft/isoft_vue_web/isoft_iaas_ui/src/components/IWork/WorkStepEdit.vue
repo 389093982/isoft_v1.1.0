@@ -8,12 +8,12 @@
         <Input v-model.trim="formValidate.work_id" disabled placeholder="请输入 work_id"></Input>
       </FormItem>
       <FormItem label="work_step_id" prop="work_step_id">
-        <Row>
-          <Col span="22">
+        <Row :gutter="1">
+          <Col span="16">
             <Input v-model.trim="formValidate.work_step_id" :maxlength="5" placeholder="请输入 work_step_id" number></Input>
           </Col>
-          <Col span="2" style="text-align: right;">
-            <Button type="success" @click="loadWorkStepInfo" style="margin-right: 6px">加载</Button>
+          <Col span="6">
+            <Button type="success" @click="loadWorkStepInfo">加载并编辑指定步骤 ID</Button>
           </Col>
         </Row>
       </FormItem>
@@ -109,6 +109,10 @@
           this.formValidate.work_step_type = result.step.work_step_type;
           this.formValidate.work_step_input = result.step.work_step_input;
           this.formValidate.work_step_output = result.step.work_step_output;
+        }else{
+          // 加载失败
+          this.$Message.error('错误的步骤ID,数据加载失败!数据已失效!');
+          this.handleReset('formValidate');
         }
       },
       handleReset (name) {

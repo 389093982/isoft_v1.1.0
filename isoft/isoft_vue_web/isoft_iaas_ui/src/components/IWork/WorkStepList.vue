@@ -18,6 +18,7 @@
   import {formatDate} from "../../tools"
   import {WorkStepList} from "../../api"
   import {DeleteWorkStepById} from "../../api"
+  import {ChangeWorkStepOrder} from "../../api"
   import WorkStepEdit from "./WorkStepEdit"
   import ISimpleLeftRightRow from "../Common/layout/ISimpleLeftRightRow"
 
@@ -41,6 +42,38 @@
           {
             title: 'work_step_id',
             key: 'work_step_id',
+            render: (h,params)=>{
+              return h('div', [
+                  h('span', params.row.work_step_id),
+                  h('Icon', {
+                    props: {
+                      type: 'md-arrow-round-up',
+                    },
+                    style: {
+                      marginLeft: '5px',
+                    },
+                    on: {
+                      click: () => {
+                        this.changeWorkStepOrder(this.worksteps[params.index]['work_step_id'], "up");
+                      }
+                    }
+                  }),
+                  h('Icon', {
+                    props: {
+                      type: 'md-arrow-round-down',
+                    },
+                    style: {
+                      marginLeft: '5px',
+                    },
+                    on: {
+                      click: () => {
+                        this.changeWorkStepOrder(this.worksteps[params.index]['work_step_id'], "down");
+                      }
+                    }
+                  }),
+                ]
+              )
+            }
           },
           {
             title: 'work_step_name',
@@ -115,6 +148,12 @@
       deleteWorkStepById:async function(id){
         const result = await DeleteWorkStepById(id);
         if(result.status=="SUCCESS"){
+          this.refreshWorkStepList();
+        }
+      },
+      changeWorkStepOrder:async function(work_step_id, type){
+        const result = await ChangeWorkStepOrder(this.$route.query.work_id, work_step_id, type);
+        if(result.status == "SUCCESS"){
           this.refreshWorkStepList();
         }
       },

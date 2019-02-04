@@ -152,5 +152,12 @@ export const LoadWorkStepInfo = (work_id,work_step_id) => ajax(BASE_URL+"/iwork/
 // 删除 workstep 记录
 export const DeleteWorkStepById = (id) => ajax(BASE_URL+"/iwork/deleteWorkStepById", {id},'POST');
 
+// 交换 workstep 顺序
+export const ChangeWorkStepOrder = (work_id,work_step_id,type) => ajax(BASE_URL+"/iwork/changeWorkStepOrder", {work_id,work_step_id,type},'POST');
+
+
+// 查询所有的 workstep 信息
+export const GetAllWorkStepInfo = (work_id) => ajax(BASE_URL+"/iwork/getAllWorkStepInfo", {work_id},'POST');
+
 // 跨模块使用,模块化部署时需要使用 nginx 代理
 export const LoginAddr = "/sso/login/";
