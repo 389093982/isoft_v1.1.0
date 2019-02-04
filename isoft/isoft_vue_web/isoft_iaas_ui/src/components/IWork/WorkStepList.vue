@@ -4,7 +4,10 @@
 
     <ISimpleLeftRightRow style="margin-bottom: 10px;">
       <!-- left 插槽部分 -->
-      <WorkStepEdit slot="left" v-if="$route.query.work_id" :work-id="_workId" @handleSuccess="refreshWorkStepList"/>
+      <span slot="left">
+        <Button type="success" @click="addWorkStep">新增</Button>
+        <WorkStepEdit v-if="$route.query.work_id" :work-id="_workId" @handleSuccess="refreshWorkStepList"/>
+      </span>
       <Button slot="right" type="success" @click="renderSourceXml" style="float: right;">View Source XML</Button>
     </ISimpleLeftRightRow>
 
@@ -19,6 +22,7 @@
   import {WorkStepList} from "../../api"
   import {DeleteWorkStepById} from "../../api"
   import {ChangeWorkStepOrder} from "../../api"
+  import {AddWorkStep} from "../../api"
   import WorkStepEdit from "./WorkStepEdit"
   import ISimpleLeftRightRow from "../Common/layout/ISimpleLeftRightRow"
 
@@ -159,6 +163,12 @@
       },
       renderSourceXml:function () {
         alert(11111);
+      },
+      addWorkStep:async function () {
+        const result = await AddWorkStep(this.$route.query.work_id);
+        if(result.status == "SUCCESS"){
+          this.refreshWorkStepList();
+        }
       }
     },
     mounted: function () {

@@ -71,6 +71,18 @@ func InsertOrUpdateWorkStep(step *WorkStep) (id int64, err error) {
 	return
 }
 
+func GetNextWorkStepId(work_id string) int8 {
+	steps, _ := GetAllWorkStepInfo(work_id)
+	for index:=1; index<=len(steps)+1; index++{
+		o := orm.NewOrm()
+		if exist := o.QueryTable("work_step").Filter("work_id",work_id).Filter("work_step_id", index).Exist(); !exist{
+			return int8(index)
+		}
+	}
+	// 默认返回 1
+	return 1
+}
+
 func QueryWorkStep(condArr map[string]string, page int, offset int) (steps []WorkStep, counts int64, err error) {
 	o := orm.NewOrm()
 	qs := o.QueryTable("work_step")
