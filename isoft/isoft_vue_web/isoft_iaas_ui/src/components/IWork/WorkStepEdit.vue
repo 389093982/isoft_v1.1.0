@@ -10,7 +10,9 @@
       <FormItem label="work_step_id" prop="work_step_id">
         <Row :gutter="1">
           <Col span="16">
-            <Input v-model.trim="formValidate.work_step_id" :maxlength="5" placeholder="请输入 work_step_id" number></Input>
+            <Select v-model="formValidate.work_step_id" placeholder="请选择 work_step_id">
+              <Option v-for="_step in all_steps" :value="_step.work_step_id">{{_step.work_step_id}}</Option>
+            </Select>
           </Col>
           <Col span="6">
             <Button type="success" @click="loadWorkStepInfo">加载并编辑指定步骤 ID</Button>
@@ -41,8 +43,9 @@
 
 <script>
   import ISimpleBtnTriggerModal from "../Common/modal/ISimpleBtnTriggerModal"
-  import {AddWorkStep} from "../../api"
+  import {EditWorkStep} from "../../api"
   import {LoadWorkStepInfo} from "../../api"
+  import {GetAllWorkStepInfo} from "../../api"
 
   export default {
     name: "WorkStepEdit",
@@ -55,6 +58,7 @@
     },
     data(){
       return {
+        all_steps:[],
         default_work_step_types:["work_start","work_end","sql_query","sql_insert"],
         formValidate: {
           work_id: this.workId,
@@ -87,7 +91,7 @@
       handleSubmit (name) {
         this.$refs[name].validate(async (valid) => {
           if (valid) {
-            const result = await AddWorkStep(this.formValidate.work_id,
+            const result = await EditWorkStep(this.formValidate.work_id,
               this.formValidate.work_step_id,this.formValidate.work_step_name,this.formValidate.work_step_type,
               this.formValidate.work_step_input,this.formValidate.work_step_output);
             if(result.status == "SUCCESS"){
@@ -115,9 +119,18 @@
           this.handleReset('formValidate');
         }
       },
+      refreshAllWorkStepsInfo:async function(){
+        const result = await GetAllWorkStepInfo(this.formValidate.work_id);
+        if(result.status == "SUCCESS"){
+          this.all_steps = result.steps;
+        }
+      },
       handleReset (name) {
         this.$refs[name].resetFields();
       },
+    },
+    mounted:function () {
+      this.refreshAllWorkStepsInfo();
     }
   }
 </script>

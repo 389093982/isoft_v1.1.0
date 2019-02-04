@@ -38,6 +38,7 @@ func init() {
 	beego.Router("/api/iwork/deleteWorkById", &iwork.WorkController{}, "post:DeleteWorkById")
 	beego.Router("/api/iwork/filterPageWorkStep", &iwork.WorkController{}, "post:FilterPageWorkStep")
 	beego.Router("/api/iwork/addWorkStep", &iwork.WorkController{}, "post:AddWorkStep")
+	beego.Router("/api/iwork/editWorkStep", &iwork.WorkController{}, "post:EditWorkStep")
 	beego.Router("/api/iwork/deleteWorkStepById", &iwork.WorkController{}, "post:DeleteWorkStepById")
 	beego.Router("/api/iwork/loadWorkStepInfo", &iwork.WorkController{}, "post:LoadWorkStepInfo")
 	beego.Router("/api/iwork/getAllWorkStepInfo", &iwork.WorkController{}, "post:GetAllWorkStepInfo")

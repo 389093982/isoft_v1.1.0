@@ -6,7 +6,7 @@
       <!-- left 插槽部分 -->
       <span slot="left">
         <Button type="success" @click="addWorkStep">新增</Button>
-        <WorkStepEdit v-if="$route.query.work_id" :work-id="_workId" @handleSuccess="refreshWorkStepList"/>
+        <WorkStepEdit ref="workStepEdit" v-if="$route.query.work_id" :work-id="_workId" @handleSuccess="refreshWorkStepList"/>
       </span>
       <Button slot="right" type="success" @click="renderSourceXml" style="float: right;">View Source XML</Button>
     </ISimpleLeftRightRow>
@@ -139,6 +139,8 @@
         if(result.status=="SUCCESS"){
           this.worksteps = result.worksteps;
           this.total = result.paginator.totalcount;
+          // 子组件同步刷新
+          this.$refs.workStepEdit.refreshAllWorkStepsInfo();
         }
       },
       handleChange(page){

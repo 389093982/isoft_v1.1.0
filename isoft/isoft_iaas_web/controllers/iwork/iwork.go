@@ -75,21 +75,21 @@ func (this *WorkController) AddWorkStep()  {
 
 
 func (this *WorkController) EditWorkStep()  {
-	var step iwork.WorkStep
-	step.WorkId = this.GetString("work_id")
-	step.WorkStepId,_ = this.GetInt8("work_step_id", -1)
-	step.WorkStepInput = this.GetString("work_step_input")
-	step.WorkStepName = this.GetString("work_step_name")
-	step.WorkStepType = this.GetString("work_step_type")
-	step.WorkStepOutput = this.GetString("work_step_output")
-	step.CreatedBy = "SYSTEM"
-	step.CreatedTime = time.Now()
-	step.LastUpdatedBy = "SYSTEM"
-	step.LastUpdatedTime = time.Now()
-	if _, err := iwork.InsertOrUpdateWorkStep(&step);err == nil{
-		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
-	}else{
-		this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
+	work_id := this.GetString("work_id")
+	work_step_id,_ := this.GetInt64("work_step_id", -1)
+	this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
+	if step, err := iwork.GetOneWorkStep(work_id, work_step_id); err == nil{
+		step.WorkStepInput = this.GetString("work_step_input")
+		step.WorkStepName = this.GetString("work_step_name")
+		step.WorkStepType = this.GetString("work_step_type")
+		step.WorkStepOutput = this.GetString("work_step_output")
+		step.CreatedBy = "SYSTEM"
+		step.CreatedTime = time.Now()
+		step.LastUpdatedBy = "SYSTEM"
+		step.LastUpdatedTime = time.Now()
+		if _, err := iwork.InsertOrUpdateWorkStep(&step);err == nil{
+			this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
+		}
 	}
 	this.ServeJSON()
 }
