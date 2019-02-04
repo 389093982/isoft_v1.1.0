@@ -2,48 +2,50 @@
   <!-- 按钮触发模态框 -->
   <!-- ref 的作用是为了在其它地方方便的获取到当前子组件 -->
   <ISimpleBtnTriggerModal ref="triggerModal" btn-text="查看/编辑" modal-title="新增/查看/编辑 workstep" :modal-width="1000">
-    <!-- 表单信息 -->
-    <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="140">
-      <FormItem label="work_id" prop="work_id">
-        <Input v-model.trim="formValidate.work_id" disabled placeholder="请输入 work_id"></Input>
-      </FormItem>
-      <FormItem label="work_step_id" prop="work_step_id">
-        <Row :gutter="1">
-          <Col span="16">
-            <Select v-model="formValidate.work_step_id" placeholder="请选择 work_step_id">
-              <Option v-for="_step in all_steps" :value="_step.work_step_id">{{_step.work_step_id}}</Option>
-            </Select>
+    <Scroll height="500">
+      <!-- 表单信息 -->
+      <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="140">
+        <FormItem label="work_id" prop="work_id">
+          <Input v-model.trim="formValidate.work_id" disabled placeholder="请输入 work_id"></Input>
+        </FormItem>
+        <FormItem label="work_step_id" prop="work_step_id">
+          <Row :gutter="1">
+            <Col span="16">
+              <Select v-model="formValidate.work_step_id" placeholder="请选择 work_step_id">
+                <Option v-for="_step in all_steps" :value="_step.work_step_id">{{_step.work_step_id}}</Option>
+              </Select>
+            </Col>
+            <Col span="6">
+              <Button type="success" @click="loadWorkStepInfo">加载并编辑指定步骤 ID</Button>
+            </Col>
+          </Row>
+        </FormItem>
+        <FormItem label="work_step_name" prop="work_step_name">
+          <Input v-model.trim="formValidate.work_step_name" placeholder="请输入 work_step_name"></Input>
+        </FormItem>
+        <FormItem label="work_step_type" prop="work_step_type">
+          <Select v-model="formValidate.work_step_type" placeholder="请选择 work_step_type">
+            <Option :value="default_work_step_type" v-for="default_work_step_type in default_work_step_types">{{default_work_step_type}}</Option>
+          </Select>
+        </FormItem>
+        <Row>
+          <Col span="12">
+            <FormItem label="work_step_input" prop="work_step_input">
+              <Input v-model.trim="formValidate.work_step_input" placeholder="请输入 work_step_input"></Input>
+            </FormItem>
           </Col>
-          <Col span="6">
-            <Button type="success" @click="loadWorkStepInfo">加载并编辑指定步骤 ID</Button>
+          <Col span="12">
+            <FormItem label="work_step_output" prop="work_step_output">
+              <Input v-model.trim="formValidate.work_step_output" placeholder="请输入 work_step_output"></Input>
+            </FormItem>
           </Col>
         </Row>
-      </FormItem>
-      <FormItem label="work_step_name" prop="work_step_name">
-        <Input v-model.trim="formValidate.work_step_name" placeholder="请输入 work_step_name"></Input>
-      </FormItem>
-      <FormItem label="work_step_type" prop="work_step_type">
-        <Select v-model="formValidate.work_step_type" placeholder="请选择 work_step_type">
-          <Option :value="default_work_step_type" v-for="default_work_step_type in default_work_step_types">{{default_work_step_type}}</Option>
-        </Select>
-      </FormItem>
-      <Row>
-        <Col span="12">
-          <FormItem label="work_step_input" prop="work_step_input">
-            <Input v-model.trim="formValidate.work_step_input" placeholder="请输入 work_step_input"></Input>
-          </FormItem>
-        </Col>
-        <Col span="12">
-          <FormItem label="work_step_output" prop="work_step_output">
-            <Input v-model.trim="formValidate.work_step_output" placeholder="请输入 work_step_output"></Input>
-          </FormItem>
-        </Col>
-      </Row>
-      <FormItem>
-        <Button type="success" @click="handleSubmit('formValidate')" style="margin-right: 6px">Submit</Button>
-        <Button type="warning" @click="handleReset('formValidate')" style="margin-right: 6px">Reset</Button>
-      </FormItem>
-    </Form>
+        <FormItem>
+          <Button type="success" @click="handleSubmit('formValidate')" style="margin-right: 6px">Submit</Button>
+          <Button type="warning" @click="handleReset('formValidate')" style="margin-right: 6px">Reset</Button>
+        </FormItem>
+      </Form>
+    </Scroll>
   </ISimpleBtnTriggerModal>
 </template>
 
