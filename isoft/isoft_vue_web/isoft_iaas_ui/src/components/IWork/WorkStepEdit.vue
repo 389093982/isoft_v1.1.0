@@ -27,12 +27,18 @@
           <Option :value="default_work_step_type" v-for="default_work_step_type in default_work_step_types">{{default_work_step_type}}</Option>
         </Select>
       </FormItem>
-      <FormItem label="work_step_input" prop="work_step_input">
-        <Input v-model.trim="formValidate.work_step_input" placeholder="请输入 work_step_input"></Input>
-      </FormItem>
-      <FormItem label="work_step_output" prop="work_step_output">
-        <Input v-model.trim="formValidate.work_step_output" placeholder="请输入 work_step_output"></Input>
-      </FormItem>
+      <Row>
+        <Col span="12">
+          <FormItem label="work_step_input" prop="work_step_input">
+            <Input v-model.trim="formValidate.work_step_input" placeholder="请输入 work_step_input"></Input>
+          </FormItem>
+        </Col>
+        <Col span="12">
+          <FormItem label="work_step_output" prop="work_step_output">
+            <Input v-model.trim="formValidate.work_step_output" placeholder="请输入 work_step_output"></Input>
+          </FormItem>
+        </Col>
+      </Row>
       <FormItem>
         <Button type="success" @click="handleSubmit('formValidate')" style="margin-right: 6px">Submit</Button>
         <Button type="warning" @click="handleReset('formValidate')" style="margin-right: 6px">Reset</Button>
