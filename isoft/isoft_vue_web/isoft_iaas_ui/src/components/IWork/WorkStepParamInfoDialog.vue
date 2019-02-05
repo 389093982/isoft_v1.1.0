@@ -4,7 +4,8 @@
       width="800"
       title="查看/编辑 workstep"
       :footer-hide="true"
-      :mask-closable="false">
+      :mask-closable="false"
+      :styles="{top: '10px'}">
       <Scroll height="500">
         <!-- 表单信息 -->
         <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="140">
