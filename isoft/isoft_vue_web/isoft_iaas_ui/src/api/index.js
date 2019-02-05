@@ -146,6 +146,9 @@ export const WorkStepList = (work_id,offset,current_page) => ajax(BASE_URL+"/iwo
 // 添加 workstep 记录
 export const AddWorkStep = (work_id) => ajax(BASE_URL+"/iwork/addWorkStep", {work_id},'POST');
 
+// 编辑 workstep 基本信息
+export const EditWorkStepBaseInfo = (work_id,work_step_id,work_step_name,work_step_type) => ajax(BASE_URL+"/iwork/editWorkStep", {work_id,work_step_id,work_step_name,work_step_type},'POST');
+
 // 编辑 workstep 记录
 export const EditWorkStep = (work_id,work_step_id,work_step_name,work_step_type,work_step_input,work_step_output,paramDefinitionStr) => ajax(BASE_URL+"/iwork/editWorkStep", {work_id,work_step_id,work_step_name,work_step_type,work_step_input,work_step_output,paramDefinitionStr},'POST');
 

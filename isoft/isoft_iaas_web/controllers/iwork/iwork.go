@@ -77,6 +77,23 @@ func (this *WorkController) AddWorkStep()  {
 	this.ServeJSON()
 }
 
+func (this *WorkController) EditWorkStepBaseInfo() {
+	work_id := this.GetString("work_id")
+	work_step_id,_ := this.GetInt64("work_step_id", -1)
+	this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
+	if step, err := iwork.GetOneWorkStep(work_id, work_step_id); err == nil{
+		step.WorkStepName = this.GetString("work_step_name")
+		step.WorkStepType = this.GetString("work_step_type")
+		step.CreatedBy = "SYSTEM"
+		step.CreatedTime = time.Now()
+		step.LastUpdatedBy = "SYSTEM"
+		step.LastUpdatedTime = time.Now()
+		if _, err := iwork.InsertOrUpdateWorkStep(&step);err == nil{
+			this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
+		}
+	}
+	this.ServeJSON()
+}
 
 func (this *WorkController) EditWorkStep()  {
 	work_id := this.GetString("work_id")

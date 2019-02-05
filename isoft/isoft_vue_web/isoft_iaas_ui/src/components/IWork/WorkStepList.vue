@@ -4,12 +4,12 @@
 
     <ISimpleLeftRightRow style="margin-bottom: 10px;">
       <!-- left 插槽部分 -->
-      <span slot="left">
-        <Button type="success" @click="addWorkStep">新增</Button>
-        <WorkStepEdit ref="workStepEdit" v-if="$route.query.work_id" :work-id="_workId" @handleSuccess="refreshWorkStepList"/>
-      </span>
+      <Button slot="left" type="success" @click="addWorkStep">新增</Button>
       <Button slot="right" type="success" @click="renderSourceXml" style="float: right;">View Source XML</Button>
     </ISimpleLeftRightRow>
+
+    <WorkStepBaseInfoDialog ref="workStepBaseInfoDialog" @handleSuccess="refreshWorkStepList"/>
+    <WorkStepEdit ref="workStepEdit" v-if="$route.query.work_id" :work-id="_workId" @handleSuccess="refreshWorkStepList"/>
 
     <Table :columns="columns1" :data="worksteps" size="small"></Table>
     <Page :total="total" :page-size="offset" show-total show-sizer :styles="{'text-align': 'center','margin-top': '10px'}"
@@ -25,10 +25,11 @@
   import {AddWorkStep} from "../../api"
   import WorkStepEdit from "./WorkStepEdit"
   import ISimpleLeftRightRow from "../Common/layout/ISimpleLeftRightRow"
+  import WorkStepBaseInfoDialog from "./WorkStepBaseInfoDialog"
 
   export default {
     name: "WorkStepList",
-    components:{WorkStepEdit,ISimpleLeftRightRow},
+    components:{WorkStepEdit,ISimpleLeftRightRow,WorkStepBaseInfoDialog},
     data(){
       return {
         // 当前页
@@ -119,6 +120,20 @@
                     }
                   }
                 }, '删除'),
+                h('Button', {
+                  props: {
+                    type: 'error',
+                    size: 'small'
+                  },
+                  style: {
+                    marginRight: '5px',
+                  },
+                  on: {
+                    click: () => {
+                      this.$refs.workStepBaseInfoDialog.showWorkStepBaseInfoDialog(this._workId, this.worksteps[params.index]['work_step_id']);
+                    }
+                  }
+                }, '编辑'),
               ]);
             }
           }
@@ -171,7 +186,7 @@
     computed:{
       _workId:function () {
         return parseInt(this.$route.query.work_id);
-      }
+      },
     }
   }
 </script>
