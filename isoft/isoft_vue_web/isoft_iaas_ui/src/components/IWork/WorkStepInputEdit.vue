@@ -4,11 +4,11 @@
       <Row>
         <Col span="12">{{item.ParamName}}</Col>
         <Col span="12" style="text-align: right;">
-          <WorkStepInputEditDialog :input-label="item.ParamName" :input-text="item.ParamValue" @handleSubmit="editInputBinding"/>
+          <WorkStepInputEditDialog :input-label="item.ParamName" :input-text="item.ParamValue" @handleSubmit="refreshParamDefinitionItems"/>
         </Col>
       </Row>
       <Row>
-        <Input size="small" v-model="item.ParamValue" placeholder="small size" />
+        <Input size="small" v-model="item.ParamValue" readonly type="textarea" :rows="2" placeholder="small size"/>
       </Row>
     </Row>
   </span>
@@ -27,7 +27,8 @@
       }
     },
     methods:{
-      editInputBinding:function (label, text) {
+      // 强制刷新组件
+      refreshParamDefinitionItems:function (label, text) {
         for(var i=0; i<this.paramDefinitionItems.length; i++){
           var paramDefinitionItem = this.paramDefinitionItems[i];
           if(paramDefinitionItem.ParamName == label){
@@ -36,7 +37,7 @@
           }
         }
       }
-    }
+    },
   }
 </script>
 
