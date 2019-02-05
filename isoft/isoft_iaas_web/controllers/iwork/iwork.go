@@ -4,6 +4,7 @@ import (
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/utils/pagination"
 	"isoft/isoft/common/pageutil"
+	"isoft/isoft_iaas_web/core/iworkdata"
 	"isoft/isoft_iaas_web/models/iwork"
 	"time"
 )
@@ -123,8 +124,14 @@ func (this *WorkController) DeleteWorkStepById()  {
 func (this *WorkController) LoadWorkStepInfo()  {
 	work_id := this.GetString("work_id")
 	work_step_id,_ := this.GetInt8("work_step_id")
+	// 读取 work_step 信息
 	if step, err := iwork.LoadWorkStepInfo(work_id, work_step_id); err == nil{
-		this.Data["json"] = &map[string]interface{}{"status":"SUCCESS", "step":step}
+		// 获取当前 work_step 对应的 paramDefinition
+		helper := &iworkdata.IWorkStepHelper{WorkStep:&step}
+		paramDefinition := helper.GetDefaultParamDefinition()
+		// 返回结果
+		this.Data["json"] = &map[string]interface{}{"status":"SUCCESS", "step":step,
+			"paramDefinition":paramDefinition, "paramDefinitionXml":paramDefinition.RenderToXml()}
 	}else{
 		this.Data["json"] = &map[string]interface{}{"status":"ERROR"}
 	}

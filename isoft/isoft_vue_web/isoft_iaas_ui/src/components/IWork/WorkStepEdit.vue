@@ -30,13 +30,27 @@
         </FormItem>
         <Row>
           <Col span="12">
+            <Row style="text-align: right;margin-bottom: 2px;">
+              <Button type="success" size="small" @click="show_work_step_input='xml'">Xml</Button>
+              <Button type="success" size="small" style="margin-right: 2px" @click="show_work_step_input='edit'">Edit</Button>
+            </Row>
             <FormItem label="work_step_input" prop="work_step_input">
-              <Input v-model.trim="formValidate.work_step_input" placeholder="请输入 work_step_input"></Input>
+              <Input v-show="show_work_step_input=='xml'" v-model.trim="formValidate.work_step_input" type="textarea" :autosize="{minRows: 10,maxRows: 20}" placeholder="请输入 work_step_input"></Input>
+              <span v-show="show_work_step_input=='edit'">
+                <span v-for="item in paramDefinition.ParamDefinitionItems">
+                  {{item.ParamName}} --  {{item.ParamValue}}
+                </span>
+              </span>
             </FormItem>
           </Col>
           <Col span="12">
+            <Row style="text-align: right;margin-bottom: 2px;">
+              <Button type="success" size="small" @click="show_work_step_output='xml'">Xml</Button>
+              <Button type="success" size="small" style="margin-right: 2px" @click="show_work_step_output='edit'">Edit</Button>
+            </Row>
             <FormItem label="work_step_output" prop="work_step_output">
-              <Input v-model.trim="formValidate.work_step_output" placeholder="请输入 work_step_output"></Input>
+              <Input v-show="show_work_step_output=='xml'" v-model.trim="formValidate.work_step_output" type="textarea" :autosize="{minRows: 10,maxRows: 20}" placeholder="请输入 work_step_output"></Input>
+              <span v-show="show_work_step_output=='edit'">AAAAAAAAAAA</span>
             </FormItem>
           </Col>
         </Row>
@@ -66,6 +80,11 @@
     },
     data(){
       return {
+        paramDefinition:"",
+        paramDefinitionXml:"",
+        show_work_step_input:"xml",
+        show_work_step_output:"xml",
+        // 所有的步骤信息,主要用于下拉列表使用
         all_steps:[],
         default_work_step_types:["work_start","work_end","sql_query","sql_insert"],
         formValidate: {
@@ -121,6 +140,9 @@
           this.formValidate.work_step_type = result.step.work_step_type;
           this.formValidate.work_step_input = result.step.work_step_input;
           this.formValidate.work_step_output = result.step.work_step_output;
+          this.paramDefinition = result.paramDefinition;
+          this.paramDefinitionXml = result.paramDefinitionXml;
+          this.formValidate.work_step_input = result.paramDefinitionXml;
         }else{
           // 加载失败
           this.$Message.error('错误的步骤ID,数据加载失败!数据已失效!');
