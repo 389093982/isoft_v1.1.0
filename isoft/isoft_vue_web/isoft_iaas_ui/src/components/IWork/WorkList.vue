@@ -17,6 +17,7 @@
   import {formatDate} from "../../tools"
   import {WorkList} from "../../api"
   import {DeleteWorkById} from "../../api"
+  import {RunWork} from "../../api"
   import ISimpleLeftRightRow from "../Common/layout/ISimpleLeftRightRow"
   import ISimpleSearch from "../Common/search/ISimpleSearch"
   import WorkAdd from "./WorkAdd"
@@ -39,19 +40,6 @@
           {
             title: 'work_name',
             key: 'work_name',
-          },
-          {
-            title: 'created_by',
-            key: 'created_by',
-          },
-          {
-            title: 'created_time',
-            key: 'created_time',
-            render: (h,params)=>{
-              return h('div',
-                formatDate(new Date(params.row.created_time),'yyyy-MM-dd hh:mm')
-              )
-            }
           },
           {
             title: 'last_updated_by',
@@ -99,6 +87,20 @@
                     }
                   }
                 }, '编辑步骤'),
+                h('Button', {
+                  props: {
+                    type: 'success',
+                    size: 'small'
+                  },
+                  style: {
+                    marginRight: '5px',
+                  },
+                  on: {
+                    click: () => {
+                      this.runWork(this.works[params.index]['id']);
+                    }
+                  }
+                }, '运行流程'),
               ]);
             }
           }
@@ -135,6 +137,12 @@
       },
       editWork:function (id, work_name) {
         this.$router.push({ path: '/iwork/workstepList', query: { work_id: id, work_name: work_name }});
+      },
+      runWork:async function (work_id) {
+        const result = await RunWork(work_id);
+        if(result.status == "SUCCESS"){
+          this.$Message.success("运行任务已触发!");
+        }
       }
     },
     mounted: function () {

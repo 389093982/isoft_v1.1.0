@@ -44,6 +44,7 @@ func init() {
 	beego.Router("/api/iwork/loadWorkStepInfo", &iwork.WorkController{}, "post:LoadWorkStepInfo")
 	beego.Router("/api/iwork/getAllWorkStepInfo", &iwork.WorkController{}, "post:GetAllWorkStepInfo")
 	beego.Router("/api/iwork/changeWorkStepOrder", &iwork.WorkController{}, "post:ChangeWorkStepOrder")
+	beego.Router("/api/iwork/runWork", &iwork.WorkController{}, "post:RunWork")
 
 	// ilearning 模块
 	if strings.Contains(beego.AppConfig.String("open.moudles"), "ilearning"){

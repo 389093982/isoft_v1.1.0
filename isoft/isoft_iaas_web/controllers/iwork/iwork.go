@@ -16,6 +16,12 @@ type WorkController struct {
 	beego.Controller
 }
 
+func (this *WorkController) RunWork() {
+	//work_id := this.GetString("work_id")
+	this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
+	this.ServeJSON()
+}
+
 func (this *WorkController) AddWork()  {
 	var work iwork.Work
 	work.WorkName = this.GetString("work_name")

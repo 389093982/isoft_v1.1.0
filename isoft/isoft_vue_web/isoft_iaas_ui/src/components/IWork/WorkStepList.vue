@@ -5,7 +5,9 @@
     <ISimpleLeftRightRow style="margin-bottom: 10px;">
       <!-- left 插槽部分 -->
       <Button slot="left" type="success" @click="addWorkStep">新增</Button>
-      <Button slot="right" type="success" @click="renderSourceXml" style="float: right;">View Source XML</Button>
+      <div slot="right" style="text-align: right;">
+        <Button type="success" @click="renderSourceXml">View Source XML</Button>
+      </div>
     </ISimpleLeftRightRow>
 
     <WorkStepBaseInfoDialog ref="workStepBaseInfoDialog" @handleSuccess="refreshWorkStepList"/>
@@ -23,6 +25,7 @@
   import {DeleteWorkStepById} from "../../api"
   import {ChangeWorkStepOrder} from "../../api"
   import {AddWorkStep} from "../../api"
+  import {RunWork} from "../../api"
   import WorkStepParamInfoDialog from "./WorkStepParamInfoDialog"
   import ISimpleLeftRightRow from "../Common/layout/ISimpleLeftRightRow"
   import WorkStepBaseInfoDialog from "./WorkStepBaseInfoDialog"
@@ -190,7 +193,7 @@
         if(result.status == "SUCCESS"){
           this.refreshWorkStepList();
         }
-      }
+      },
     },
     mounted: function () {
       this.refreshWorkStepList();
