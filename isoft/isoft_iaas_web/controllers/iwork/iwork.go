@@ -2,11 +2,13 @@ package iwork
 
 import (
 	"encoding/json"
+	"encoding/xml"
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/utils/pagination"
 	"isoft/isoft/common/pageutil"
 	"isoft/isoft_iaas_web/core/iworkdata"
 	"isoft/isoft_iaas_web/models/iwork"
+	"strings"
 	"time"
 )
 
@@ -87,7 +89,7 @@ func (this *WorkController) EditWorkStep()  {
 		step.WorkStepInput = paramDefinition.RenderToXml()
 		step.WorkStepName = this.GetString("work_step_name")
 		step.WorkStepType = this.GetString("work_step_type")
-		step.WorkStepOutput = this.GetString("work_step_output")
+		step.WorkStepOutput = "test"
 		step.CreatedBy = "SYSTEM"
 		step.CreatedTime = time.Now()
 		step.LastUpdatedBy = "SYSTEM"
@@ -130,16 +132,26 @@ func (this *WorkController) LoadWorkStepInfo()  {
 	work_step_id,_ := this.GetInt8("work_step_id")
 	// 读取 work_step 信息
 	if step, err := iwork.LoadWorkStepInfo(work_id, work_step_id); err == nil{
-		// 获取当前 work_step 对应的 paramDefinition
-		helper := &iworkdata.IWorkStepHelper{WorkStep:&step}
-		paramDefinition := helper.GetDefaultParamDefinition()
 		// 返回结果
 		this.Data["json"] = &map[string]interface{}{"status":"SUCCESS", "step":step,
-			"paramDefinition":paramDefinition, "paramDefinitionXml":paramDefinition.RenderToXml()}
+			"paramDefinition":GetParamDefinition(&step), "paramDefinitionXml":GetParamDefinition(&step).RenderToXml()}
 	}else{
 		this.Data["json"] = &map[string]interface{}{"status":"ERROR"}
 	}
 	this.ServeJSON()
+}
+
+func GetParamDefinition(step *iwork.WorkStep) *iworkdata.ParamDefinition {
+	if strings.TrimSpace(step.WorkStepInput) != ""{
+		var paramDefinition *iworkdata.ParamDefinition
+		if err := xml.Unmarshal([]byte(step.WorkStepInput), &paramDefinition); err == nil{
+			return paramDefinition
+		}
+	}
+	// 获取当前 work_step 对应的 paramDefinition
+	helper := &iworkdata.IWorkStepHelper{WorkStep:step}
+	paramDefinition := helper.GetDefaultParamDefinition()
+	return paramDefinition
 }
 
 func (this *WorkController) GetAllWorkStepInfo() {

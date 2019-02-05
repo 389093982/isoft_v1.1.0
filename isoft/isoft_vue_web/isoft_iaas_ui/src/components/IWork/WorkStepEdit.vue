@@ -104,12 +104,6 @@
           work_step_type: [
             { required: true, message: 'work_step_type 不能为空!', trigger: 'blur' }
           ],
-          work_step_input: [
-            { required: true, message: 'work_step_input 不能为空!', trigger: 'blur' }
-          ],
-          work_step_output: [
-            { required: true, message: 'work_step_output 不能为空!', trigger: 'blur' }
-          ],
         },
       }
     },
@@ -119,8 +113,7 @@
           if (valid) {
             const paramDefinitionStr = JSON.stringify(this.paramDefinition);
             const result = await EditWorkStep(this.formValidate.work_id,
-              this.formValidate.work_step_id,this.formValidate.work_step_name,this.formValidate.work_step_type,
-              this.formValidate.work_step_input,this.formValidate.work_step_output, paramDefinitionStr);
+              this.formValidate.work_step_id,this.formValidate.work_step_name,this.formValidate.work_step_type,paramDefinitionStr);
             if(result.status == "SUCCESS"){
               this.$Message.success('提交成功!');
               // 调用子组件隐藏 modal (this.refs.xxx.子组件定义的方法())
