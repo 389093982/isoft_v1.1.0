@@ -1,6 +1,7 @@
 package iwork
 
 import (
+	"encoding/json"
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/utils/pagination"
 	"isoft/isoft/common/pageutil"
@@ -78,9 +79,12 @@ func (this *WorkController) AddWorkStep()  {
 func (this *WorkController) EditWorkStep()  {
 	work_id := this.GetString("work_id")
 	work_step_id,_ := this.GetInt64("work_step_id", -1)
+	paramDefinitionStr := this.GetString("paramDefinitionStr")
+	var paramDefinition iworkdata.ParamDefinition
+	json.Unmarshal([]byte(paramDefinitionStr), &paramDefinition)
 	this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
 	if step, err := iwork.GetOneWorkStep(work_id, work_step_id); err == nil{
-		step.WorkStepInput = this.GetString("work_step_input")
+		step.WorkStepInput = paramDefinition.RenderToXml()
 		step.WorkStepName = this.GetString("work_step_name")
 		step.WorkStepType = this.GetString("work_step_type")
 		step.WorkStepOutput = this.GetString("work_step_output")

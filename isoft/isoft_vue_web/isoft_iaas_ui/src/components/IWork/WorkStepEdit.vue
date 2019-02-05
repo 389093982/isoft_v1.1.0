@@ -117,9 +117,10 @@
       handleSubmit (name) {
         this.$refs[name].validate(async (valid) => {
           if (valid) {
+            const paramDefinitionStr = JSON.stringify(this.paramDefinition);
             const result = await EditWorkStep(this.formValidate.work_id,
               this.formValidate.work_step_id,this.formValidate.work_step_name,this.formValidate.work_step_type,
-              this.formValidate.work_step_input,this.formValidate.work_step_output);
+              this.formValidate.work_step_input,this.formValidate.work_step_output, paramDefinitionStr);
             if(result.status == "SUCCESS"){
               this.$Message.success('提交成功!');
               // 调用子组件隐藏 modal (this.refs.xxx.子组件定义的方法())

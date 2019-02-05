@@ -21,8 +21,8 @@ type WorkStep struct {
 	WorkStepId      int8    	`json:"work_step_id"`
 	WorkStepName    string    	`json:"work_step_name"`
 	WorkStepType    string    	`json:"work_step_type"`
-	WorkStepInput   string    	`json:"work_step_input"`
-	WorkStepOutput	string    	`json:"work_step_output"`
+	WorkStepInput   string    	`json:"work_step_input" orm:"type(text)"`
+	WorkStepOutput	string    	`json:"work_step_output" orm:"type(text)"`
 	CreatedBy       string    	`json:"created_by"`
 	CreatedTime     time.Time 	`json:"created_time" orm:"auto_now_add;type(datetime)"`
 	LastUpdatedBy   string    	`json:"last_updated_by"`
