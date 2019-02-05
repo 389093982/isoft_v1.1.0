@@ -8,15 +8,6 @@
       <Scroll height="500">
         <!-- 表单信息 -->
         <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="140">
-          <FormItem label="work_id" prop="work_id">
-            <Input v-model.trim="formValidate.work_id" readonly placeholder="请输入 work_id"></Input>
-          </FormItem>
-          <FormItem label="work_id" prop="work_id">
-            <Input v-model.trim="formValidate.work_id" readonly placeholder="请输入 work_id"></Input>
-          </FormItem>
-          <FormItem label="work_step_id" prop="work_step_id">
-            <Input v-model.trim="formValidate.work_step_id" readonly placeholder="请输入 work_step_id"></Input>
-          </FormItem>
           <FormItem label="work_step_name" prop="work_step_name">
             <Input v-model.trim="formValidate.work_step_name" readonly placeholder="请输入 work_step_name"></Input>
           </FormItem>
@@ -31,7 +22,7 @@
                     <Input v-model.trim="formValidate.work_step_input" type="textarea" :autosize="{minRows: 10,maxRows: 20}" placeholder="请输入 work_step_input"></Input>
                   </TabPane>
                   <TabPane label="edit">
-                    <WorkStepInputEdit :paramDefinitionItems="paramDefinition.ParamDefinitionItems"/>
+                    <WorkStepParamInputEdit :paramDefinitionItems="paramDefinition.ParamDefinitionItems"/>
                   </TabPane>
                 </Tabs>
               </FormItem>
@@ -59,13 +50,13 @@
 </template>
 
 <script>
-  import  WorkStepInputEdit from "./WorkStepInputEdit"
+  import  WorkStepParamInputEdit from "./WorkStepParamInputEdit"
   import {EditWorkStepParamInfo} from "../../api"
   import {LoadWorkStepInfo} from "../../api"
 
   export default {
-    name: "WorkStepEdit",
-    components:{WorkStepInputEdit},
+    name: "WorkStepParamInfoDialog",
+    components:{WorkStepParamInputEdit},
     props: {
       workId: {
         type: Number,
@@ -135,7 +126,7 @@
       handleReset (name) {
         this.$refs[name].resetFields();
       },
-      showWorkStepEdit:function (work_id, work_step_id) {
+      showWorkStepParamInfoDialog:function (work_id, work_step_id) {
         this.formValidate.work_id = work_id;
         this.formValidate.work_step_id = work_step_id;
         this.loadWorkStepInfo();

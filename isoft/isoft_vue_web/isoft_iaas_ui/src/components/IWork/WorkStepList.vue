@@ -9,7 +9,7 @@
     </ISimpleLeftRightRow>
 
     <WorkStepBaseInfoDialog ref="workStepBaseInfoDialog" @handleSuccess="refreshWorkStepList"/>
-    <WorkStepEdit ref="workStepEdit" @handleSuccess="refreshWorkStepList"/>
+    <WorkStepParamInfoDialog ref="workStepParamInfoDialog" @handleSuccess="refreshWorkStepList"/>
 
     <Table :columns="columns1" :data="worksteps" size="small"></Table>
     <Page :total="total" :page-size="offset" show-total show-sizer :styles="{'text-align': 'center','margin-top': '10px'}"
@@ -23,13 +23,13 @@
   import {DeleteWorkStepById} from "../../api"
   import {ChangeWorkStepOrder} from "../../api"
   import {AddWorkStep} from "../../api"
-  import WorkStepEdit from "./WorkStepEdit"
+  import WorkStepParamInfoDialog from "./WorkStepParamInfoDialog"
   import ISimpleLeftRightRow from "../Common/layout/ISimpleLeftRightRow"
   import WorkStepBaseInfoDialog from "./WorkStepBaseInfoDialog"
 
   export default {
     name: "WorkStepList",
-    components:{WorkStepEdit,ISimpleLeftRightRow,WorkStepBaseInfoDialog},
+    components:{WorkStepParamInfoDialog,ISimpleLeftRightRow,WorkStepBaseInfoDialog},
     data(){
       return {
         // 当前页
@@ -144,7 +144,7 @@
                   },
                   on: {
                     click: () => {
-                      this.$refs.workStepEdit.showWorkStepEdit(this._workId, this.worksteps[params.index]['work_step_id']);
+                      this.$refs.workStepParamInfoDialog.showWorkStepParamInfoDialog(this._workId, this.worksteps[params.index]['work_step_id']);
                     }
                   }
                 }, '参数'),

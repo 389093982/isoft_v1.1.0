@@ -4,7 +4,7 @@
       <Row>
         <Col span="12">{{item.ParamName}}</Col>
         <Col span="12" style="text-align: right;">
-          <WorkStepInputEditDialog :input-label="item.ParamName" :input-text="item.ParamValue" @handleSubmit="refreshParamDefinitionItems"/>
+          <WorkStepParamInputEditDialog :input-label="item.ParamName" :input-text="item.ParamValue" @handleSubmit="refreshParamDefinitionItems"/>
         </Col>
       </Row>
       <Row>
@@ -15,11 +15,11 @@
 </template>
 
 <script>
-  import WorkStepInputEditDialog from "./WorkStepInputEditDialog"
+  import WorkStepParamInputEditDialog from "./WorkStepParamInputEditDialog"
 
   export default {
-    name: "WorkStepInputEdit",
-    components:{WorkStepInputEditDialog},
+    name: "WorkStepParamInputEdit",
+    components:{WorkStepParamInputEditDialog},
     props:{
       paramDefinitionItems:{
         type: Array,

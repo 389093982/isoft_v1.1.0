@@ -16,7 +16,7 @@
   import ISimpleBtnTriggerModal from "../Common/modal/ISimpleBtnTriggerModal"
 
   export default {
-    name: "WorkStepInputEditDialog",
+    name: "WorkStepParamInputEditDialog",
     components:{ISimpleBtnTriggerModal},
     props: {
       inputLabel: {
