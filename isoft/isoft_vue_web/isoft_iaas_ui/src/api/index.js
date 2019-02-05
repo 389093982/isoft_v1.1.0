@@ -147,10 +147,10 @@ export const WorkStepList = (work_id,offset,current_page) => ajax(BASE_URL+"/iwo
 export const AddWorkStep = (work_id) => ajax(BASE_URL+"/iwork/addWorkStep", {work_id},'POST');
 
 // 编辑 workstep 基本信息
-export const EditWorkStepBaseInfo = (work_id,work_step_id,work_step_name,work_step_type) => ajax(BASE_URL+"/iwork/editWorkStep", {work_id,work_step_id,work_step_name,work_step_type},'POST');
+export const EditWorkStepBaseInfo = (work_id,work_step_id,work_step_name,work_step_type) => ajax(BASE_URL+"/iwork/editWorkStepBaseInfo", {work_id,work_step_id,work_step_name,work_step_type},'POST');
 
 // 编辑 workstep 记录
-export const EditWorkStep = (work_id,work_step_id,work_step_name,work_step_type,work_step_input,work_step_output,paramDefinitionStr) => ajax(BASE_URL+"/iwork/editWorkStep", {work_id,work_step_id,work_step_name,work_step_type,work_step_input,work_step_output,paramDefinitionStr},'POST');
+export const EditWorkStepParamInfo = (work_id,work_step_id,work_step_input,work_step_output,paramDefinitionStr) => ajax(BASE_URL+"/iwork/editWorkStepParamInfo", {work_id,work_step_id,work_step_input,work_step_output,paramDefinitionStr},'POST');
 
 // 加载 workstep 记录
 export const LoadWorkStepInfo = (work_id,work_step_id) => ajax(BASE_URL+"/iwork/loadWorkStepInfo", {work_id,work_step_id},'POST');

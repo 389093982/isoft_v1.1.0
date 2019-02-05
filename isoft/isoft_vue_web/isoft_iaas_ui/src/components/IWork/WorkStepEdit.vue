@@ -1,78 +1,71 @@
 <template>
-  <!-- 按钮触发模态框 -->
-  <!-- ref 的作用是为了在其它地方方便的获取到当前子组件 -->
-  <ISimpleBtnTriggerModal ref="triggerModal" btn-text="查看/编辑" modal-title="查看/编辑 workstep" :modal-width="1000">
-    <Scroll height="500">
-      <!-- 表单信息 -->
-      <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="140">
-        <FormItem label="work_id" prop="work_id">
-          <Input v-model.trim="formValidate.work_id" disabled placeholder="请输入 work_id"></Input>
-        </FormItem>
-        <FormItem label="work_step_id" prop="work_step_id">
-          <Row :gutter="1">
-            <Col span="16">
-              <Select v-model="formValidate.work_step_id" placeholder="请选择 work_step_id">
-                <Option v-for="_step in all_steps" :value="_step.work_step_id">{{_step.work_step_id}}</Option>
-              </Select>
+    <Modal
+      v-model="showFormModal"
+      width="800"
+      title="查看/编辑 workstep"
+      :footer-hide="true"
+      :mask-closable="false">
+      <Scroll height="500">
+        <!-- 表单信息 -->
+        <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="140">
+          <FormItem label="work_id" prop="work_id">
+            <Input v-model.trim="formValidate.work_id" readonly placeholder="请输入 work_id"></Input>
+          </FormItem>
+          <FormItem label="work_id" prop="work_id">
+            <Input v-model.trim="formValidate.work_id" readonly placeholder="请输入 work_id"></Input>
+          </FormItem>
+          <FormItem label="work_step_id" prop="work_step_id">
+            <Input v-model.trim="formValidate.work_step_id" readonly placeholder="请输入 work_step_id"></Input>
+          </FormItem>
+          <FormItem label="work_step_name" prop="work_step_name">
+            <Input v-model.trim="formValidate.work_step_name" readonly placeholder="请输入 work_step_name"></Input>
+          </FormItem>
+          <FormItem label="work_step_type" prop="work_step_type">
+            <Input v-model.trim="formValidate.work_step_type" readonly placeholder="请输入 work_step_type"></Input>
+          </FormItem>
+          <Row>
+            <Col span="12">
+              <FormItem label="work_step_input" prop="work_step_input">
+                <Tabs type="card" :animated="false">
+                  <TabPane label="Xml">
+                    <Input v-model.trim="formValidate.work_step_input" type="textarea" :autosize="{minRows: 10,maxRows: 20}" placeholder="请输入 work_step_input"></Input>
+                  </TabPane>
+                  <TabPane label="edit">
+                    <WorkStepInputEdit :paramDefinitionItems="paramDefinition.ParamDefinitionItems"/>
+                  </TabPane>
+                </Tabs>
+              </FormItem>
             </Col>
-            <Col span="6">
-              <Button type="success" @click="loadWorkStepInfo">加载并编辑指定步骤 ID</Button>
+            <Col span="12">
+              <FormItem label="work_step_output" prop="work_step_output">
+                <Tabs type="card" :animated="false">
+                  <TabPane label="Xml">
+                    <Input v-model.trim="formValidate.work_step_output" type="textarea" :autosize="{minRows: 10,maxRows: 20}" placeholder="请输入 work_step_output"></Input>
+                  </TabPane>
+                  <TabPane label="edit">
+                    <span>AAAAAAAAAAA</span>
+                  </TabPane>
+                </Tabs>
+              </FormItem>
             </Col>
           </Row>
-        </FormItem>
-        <FormItem label="work_step_name" prop="work_step_name">
-          <Input v-model.trim="formValidate.work_step_name" placeholder="请输入 work_step_name"></Input>
-        </FormItem>
-        <FormItem label="work_step_type" prop="work_step_type">
-          <Select v-model="formValidate.work_step_type" placeholder="请选择 work_step_type">
-            <Option :value="default_work_step_type" v-for="default_work_step_type in default_work_step_types">{{default_work_step_type}}</Option>
-          </Select>
-        </FormItem>
-        <Row>
-          <Col span="12">
-            <FormItem label="work_step_input" prop="work_step_input">
-              <Tabs type="card" :animated="false">
-                <TabPane label="Xml">
-                  <Input v-model.trim="formValidate.work_step_input" type="textarea" :autosize="{minRows: 10,maxRows: 20}" placeholder="请输入 work_step_input"></Input>
-                </TabPane>
-                <TabPane label="edit">
-                  <WorkStepInputEdit :paramDefinitionItems="paramDefinition.ParamDefinitionItems"/>
-                </TabPane>
-              </Tabs>
-            </FormItem>
-          </Col>
-          <Col span="12">
-            <FormItem label="work_step_output" prop="work_step_output">
-              <Tabs type="card" :animated="false">
-                <TabPane label="Xml">
-                  <Input v-model.trim="formValidate.work_step_output" type="textarea" :autosize="{minRows: 10,maxRows: 20}" placeholder="请输入 work_step_output"></Input>
-                </TabPane>
-                <TabPane label="edit">
-                  <span>AAAAAAAAAAA</span>
-                </TabPane>
-              </Tabs>
-            </FormItem>
-          </Col>
-        </Row>
-        <FormItem>
-          <Button type="success" @click="handleSubmit('formValidate')" style="margin-right: 6px">Submit</Button>
-          <Button type="warning" @click="handleReset('formValidate')" style="margin-right: 6px">Reset</Button>
-        </FormItem>
-      </Form>
-    </Scroll>
-  </ISimpleBtnTriggerModal>
+          <FormItem>
+            <Button type="success" @click="handleSubmit('formValidate')" style="margin-right: 6px">Submit</Button>
+            <Button type="warning" @click="handleReset('formValidate')" style="margin-right: 6px">Reset</Button>
+          </FormItem>
+        </Form>
+      </Scroll>
+    </Modal>
 </template>
 
 <script>
-  import ISimpleBtnTriggerModal from "../Common/modal/ISimpleBtnTriggerModal"
   import  WorkStepInputEdit from "./WorkStepInputEdit"
-  import {EditWorkStep} from "../../api"
+  import {EditWorkStepParamInfo} from "../../api"
   import {LoadWorkStepInfo} from "../../api"
-  import {GetAllWorkStepInfo} from "../../api"
 
   export default {
     name: "WorkStepEdit",
-    components:{ISimpleBtnTriggerModal,WorkStepInputEdit},
+    components:{WorkStepInputEdit},
     props: {
       workId: {
         type: Number,
@@ -81,10 +74,9 @@
     },
     data(){
       return {
+        showFormModal:false,
         paramDefinition:"",
         paramDefinitionXml:"",
-        // 所有的步骤信息,主要用于下拉列表使用
-        all_steps:[],
         default_work_step_types:["work_start","work_end","sql_query","sql_insert"],
         formValidate: {
           work_id: this.workId,
@@ -112,12 +104,10 @@
         this.$refs[name].validate(async (valid) => {
           if (valid) {
             const paramDefinitionStr = JSON.stringify(this.paramDefinition);
-            const result = await EditWorkStep(this.formValidate.work_id,
-              this.formValidate.work_step_id,this.formValidate.work_step_name,this.formValidate.work_step_type,paramDefinitionStr);
+            const result = await EditWorkStepParamInfo(this.formValidate.work_id, this.formValidate.work_step_id, paramDefinitionStr);
             if(result.status == "SUCCESS"){
               this.$Message.success('提交成功!');
-              // 调用子组件隐藏 modal (this.refs.xxx.子组件定义的方法())
-              this.$refs.triggerModal.hideModal();
+              this.showFormModal =false;
               // 通知父组件添加成功
               this.$emit('handleSuccess');
             }else{
@@ -142,19 +132,16 @@
           this.handleReset('formValidate');
         }
       },
-      refreshAllWorkStepsInfo:async function(){
-        const result = await GetAllWorkStepInfo(this.formValidate.work_id);
-        if(result.status == "SUCCESS"){
-          this.all_steps = result.steps;
-        }
-      },
       handleReset (name) {
         this.$refs[name].resetFields();
       },
+      showWorkStepEdit:function (work_id, work_step_id) {
+        this.formValidate.work_id = work_id;
+        this.formValidate.work_step_id = work_step_id;
+        this.loadWorkStepInfo();
+        this.showFormModal = true;
+      }
     },
-    mounted:function () {
-      this.refreshAllWorkStepsInfo();
-    }
   }
 </script>
 

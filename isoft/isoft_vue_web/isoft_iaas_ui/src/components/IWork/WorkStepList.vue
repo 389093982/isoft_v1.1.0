@@ -9,7 +9,7 @@
     </ISimpleLeftRightRow>
 
     <WorkStepBaseInfoDialog ref="workStepBaseInfoDialog" @handleSuccess="refreshWorkStepList"/>
-    <WorkStepEdit ref="workStepEdit" v-if="$route.query.work_id" :work-id="_workId" @handleSuccess="refreshWorkStepList"/>
+    <WorkStepEdit ref="workStepEdit" @handleSuccess="refreshWorkStepList"/>
 
     <Table :columns="columns1" :data="worksteps" size="small"></Table>
     <Page :total="total" :page-size="offset" show-total show-sizer :styles="{'text-align': 'center','margin-top': '10px'}"
@@ -134,6 +134,20 @@
                     }
                   }
                 }, '编辑'),
+                h('Button', {
+                  props: {
+                    type: 'info',
+                    size: 'small'
+                  },
+                  style: {
+                    marginRight: '5px',
+                  },
+                  on: {
+                    click: () => {
+                      this.$refs.workStepEdit.showWorkStepEdit(this._workId, this.worksteps[params.index]['work_step_id']);
+                    }
+                  }
+                }, '参数'),
               ]);
             }
           }
@@ -146,8 +160,6 @@
         if(result.status=="SUCCESS"){
           this.worksteps = result.worksteps;
           this.total = result.paginator.totalcount;
-          // 子组件同步刷新
-          this.$refs.workStepEdit.refreshAllWorkStepsInfo();
         }
       },
       handleChange(page){

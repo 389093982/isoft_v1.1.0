@@ -95,7 +95,7 @@ func (this *WorkController) EditWorkStepBaseInfo() {
 	this.ServeJSON()
 }
 
-func (this *WorkController) EditWorkStep()  {
+func (this *WorkController) EditWorkStepParamInfo()  {
 	work_id := this.GetString("work_id")
 	work_step_id,_ := this.GetInt64("work_step_id", -1)
 	paramDefinitionStr := this.GetString("paramDefinitionStr")
@@ -104,8 +104,6 @@ func (this *WorkController) EditWorkStep()  {
 	this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
 	if step, err := iwork.GetOneWorkStep(work_id, work_step_id); err == nil{
 		step.WorkStepInput = paramDefinition.RenderToXml()
-		step.WorkStepName = this.GetString("work_step_name")
-		step.WorkStepType = this.GetString("work_step_type")
 		step.WorkStepOutput = "test"
 		step.CreatedBy = "SYSTEM"
 		step.CreatedTime = time.Now()
