@@ -101,6 +101,20 @@
                     }
                   }
                 }, '运行流程'),
+                h('Button', {
+                  props: {
+                    type: 'error',
+                    size: 'small'
+                  },
+                  style: {
+                    marginRight: '5px',
+                  },
+                  on: {
+                    click: () => {
+                      this.$router.push({ path: '/iwork/runLog', query: { work_id: this.works[params.index]['id'] }});
+                    }
+                  }
+                }, '运行日志'),
               ]);
             }
           }
