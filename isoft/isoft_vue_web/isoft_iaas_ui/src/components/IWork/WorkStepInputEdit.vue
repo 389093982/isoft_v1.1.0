@@ -4,11 +4,11 @@
       <Row>
         <Col span="12">{{item.ParamName}}</Col>
         <Col span="12" style="text-align: right;">
-          <WorkStepInputEditDialog/>
+          <WorkStepInputEditDialog :input-label="item.ParamName" :input-text="item.ParamValue" @handleSubmit="editInputBinding"/>
         </Col>
       </Row>
       <Row>
-        <Input v-model="value3" size="small" placeholder="small size" />
+        <Input size="small" v-model="item.ParamValue" placeholder="small size" />
       </Row>
     </Row>
   </span>
@@ -24,6 +24,17 @@
       paramDefinitionItems:{
         type: Array,
         default: () => [],
+      }
+    },
+    methods:{
+      editInputBinding:function (label, text) {
+        for(var i=0; i<this.paramDefinitionItems.length; i++){
+          var paramDefinitionItem = this.paramDefinitionItems[i];
+          if(paramDefinitionItem.ParamName == label){
+            paramDefinitionItem.ParamValue = text;
+            this.$set(this.paramDefinitionItems, i, paramDefinitionItem);
+          }
+        }
       }
     }
   }
