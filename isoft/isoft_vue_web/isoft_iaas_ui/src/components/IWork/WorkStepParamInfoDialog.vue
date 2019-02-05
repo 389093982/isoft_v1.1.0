@@ -1,7 +1,7 @@
 <template>
     <Modal
       v-model="showFormModal"
-      width="800"
+      width="1000"
       title="查看/编辑 workstep"
       :footer-hide="true"
       :mask-closable="false"
