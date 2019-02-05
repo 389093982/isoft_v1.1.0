@@ -37,11 +37,7 @@
             <FormItem label="work_step_input" prop="work_step_input">
               <Input v-show="show_work_step_input=='xml'" v-model.trim="formValidate.work_step_input" type="textarea" :autosize="{minRows: 10,maxRows: 20}" placeholder="请输入 work_step_input"></Input>
               <span v-show="show_work_step_input=='edit'">
-                  <Row v-for="item in paramDefinition.ParamDefinitionItems">
-                    <Col span="4">{{item.ParamName}}</Col>
-                    <Col span="16"><Input v-model="value3" size="small" placeholder="small size" /></Col>
-                    <Col span="4">edit</Col>
-                  </Row>
+                <WorkStepInputEdit :paramDefinitionItems="paramDefinition.ParamDefinitionItems"/>
               </span>
             </FormItem>
           </Col>
@@ -67,13 +63,14 @@
 
 <script>
   import ISimpleBtnTriggerModal from "../Common/modal/ISimpleBtnTriggerModal"
+  import  WorkStepInputEdit from "./WorkStepInputEdit"
   import {EditWorkStep} from "../../api"
   import {LoadWorkStepInfo} from "../../api"
   import {GetAllWorkStepInfo} from "../../api"
 
   export default {
     name: "WorkStepEdit",
-    components:{ISimpleBtnTriggerModal},
+    components:{ISimpleBtnTriggerModal,WorkStepInputEdit},
     props: {
       workId: {
         type: Number,
