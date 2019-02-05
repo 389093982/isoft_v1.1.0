@@ -105,12 +105,12 @@ func (this *WorkController) EditWorkStepBaseInfo() {
 func (this *WorkController) EditWorkStepParamInfo()  {
 	work_id := this.GetString("work_id")
 	work_step_id,_ := this.GetInt64("work_step_id", -1)
-	paramDefinitionStr := this.GetString("paramDefinitionStr")
-	var paramDefinition iworkdata.ParamDefinition
-	json.Unmarshal([]byte(paramDefinitionStr), &paramDefinition)
+	paramSchemaStr := this.GetString("paramSchemaStr")
+	var paramSchema iworkdata.ParamSchema
+	json.Unmarshal([]byte(paramSchemaStr), &paramSchema)
 	this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
 	if step, err := iwork.GetOneWorkStep(work_id, work_step_id); err == nil{
-		step.WorkStepInput = paramDefinition.RenderToXml()
+		step.WorkStepInput = paramSchema.RenderToXml()
 		step.WorkStepOutput = "test"
 		step.CreatedBy = "SYSTEM"
 		step.CreatedTime = time.Now()
@@ -156,24 +156,24 @@ func (this *WorkController) LoadWorkStepInfo()  {
 	if step, err := iwork.LoadWorkStepInfo(work_id, work_step_id); err == nil{
 		// 返回结果
 		this.Data["json"] = &map[string]interface{}{"status":"SUCCESS", "step":step,
-			"paramDefinition":GetParamDefinition(&step), "paramDefinitionXml":GetParamDefinition(&step).RenderToXml()}
+			"paramSchema":GetParamSchema(&step), "paramSchemaXml":GetParamSchema(&step).RenderToXml()}
 	}else{
 		this.Data["json"] = &map[string]interface{}{"status":"ERROR"}
 	}
 	this.ServeJSON()
 }
 
-func GetParamDefinition(step *iwork.WorkStep) *iworkdata.ParamDefinition {
+func GetParamSchema(step *iwork.WorkStep) *iworkdata.ParamSchema {
 	if strings.TrimSpace(step.WorkStepInput) != ""{
-		var paramDefinition *iworkdata.ParamDefinition
-		if err := xml.Unmarshal([]byte(step.WorkStepInput), &paramDefinition); err == nil{
-			return paramDefinition
+		var paramSchema *iworkdata.ParamSchema
+		if err := xml.Unmarshal([]byte(step.WorkStepInput), &paramSchema); err == nil{
+			return paramSchema
 		}
 	}
-	// 获取当前 work_step 对应的 paramDefinition
+	// 获取当前 work_step 对应的 paramSchema
 	helper := &iworkdata.IWorkStepHelper{WorkStep:step}
-	paramDefinition := helper.GetDefaultParamDefinition()
-	return paramDefinition
+	paramSchema := helper.GetDefaultParamSchema()
+	return paramSchema
 }
 
 func (this *WorkController) GetAllWorkStepInfo() {

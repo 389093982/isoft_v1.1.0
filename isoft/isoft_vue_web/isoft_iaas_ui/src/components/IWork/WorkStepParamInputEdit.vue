@@ -1,10 +1,10 @@
 <template>
   <span>
-    <Row v-for="item in paramDefinitionItems">
+    <Row v-for="item in paramSchemaItems">
       <Row>
         <Col span="12">{{item.ParamName}}</Col>
         <Col span="12" style="text-align: right;">
-          <WorkStepParamInputEditDialog :input-label="item.ParamName" :input-text="item.ParamValue" @handleSubmit="refreshParamDefinitionItems"/>
+          <WorkStepParamInputEditDialog :input-label="item.ParamName" :input-text="item.ParamValue" @handleSubmit="refreshParamSchemaItems"/>
         </Col>
       </Row>
       <Row>
@@ -21,19 +21,19 @@
     name: "WorkStepParamInputEdit",
     components:{WorkStepParamInputEditDialog},
     props:{
-      paramDefinitionItems:{
+      paramSchemaItems:{
         type: Array,
         default: () => [],
       }
     },
     methods:{
       // 强制刷新组件
-      refreshParamDefinitionItems:function (label, text) {
-        for(var i=0; i<this.paramDefinitionItems.length; i++){
-          var paramDefinitionItem = this.paramDefinitionItems[i];
-          if(paramDefinitionItem.ParamName == label){
-            paramDefinitionItem.ParamValue = text;
-            this.$set(this.paramDefinitionItems, i, paramDefinitionItem);
+      refreshParamSchemaItems:function (label, text) {
+        for(var i=0; i<this.paramSchemaItems.length; i++){
+          var paramSchemaItem = this.paramSchemaItems[i];
+          if(paramSchemaItem.ParamName == label){
+            paramSchemaItem.ParamValue = text;
+            this.$set(this.paramSchemaItems, i, paramSchemaItem);
           }
         }
       }
