@@ -1,6 +1,6 @@
 <template>
   <span>
-    <Button type="success" @click="showFormModal = true">{{btnText}}</Button>
+    <Button type="success" :size="btnSize" @click="showFormModal = true">{{btnText}}</Button>
 
     <Modal
       v-model="showFormModal"
@@ -22,6 +22,10 @@
       btnText: {
         type: String,
         default: "按钮标题"
+      },
+      btnSize: {
+        type: String,
+        default: "default"    // large、small、default
       },
       modalTitle: {
         type: String,

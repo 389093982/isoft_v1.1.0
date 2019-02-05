@@ -1,16 +1,25 @@
 <template>
   <span>
     <Row v-for="item in paramDefinitionItems">
-      <Col span="4">{{item.ParamName}}</Col>
-      <Col span="16"><Input v-model="value3" size="small" placeholder="small size" /></Col>
-      <Col span="4">edit</Col>
+      <Row>
+        <Col span="12">{{item.ParamName}}</Col>
+        <Col span="12" style="text-align: right;">
+          <WorkStepInputEditDialog/>
+        </Col>
+      </Row>
+      <Row>
+        <Input v-model="value3" size="small" placeholder="small size" />
+      </Row>
     </Row>
   </span>
 </template>
 
 <script>
+  import WorkStepInputEditDialog from "./WorkStepInputEditDialog"
+
   export default {
     name: "WorkStepInputEdit",
+    components:{WorkStepInputEditDialog},
     props:{
       paramDefinitionItems:{
         type: Array,

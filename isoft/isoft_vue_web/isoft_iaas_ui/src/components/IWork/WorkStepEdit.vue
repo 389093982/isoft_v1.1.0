@@ -1,7 +1,7 @@
 <template>
   <!-- 按钮触发模态框 -->
   <!-- ref 的作用是为了在其它地方方便的获取到当前子组件 -->
-  <ISimpleBtnTriggerModal ref="triggerModal" btn-text="查看/编辑" modal-title="新增/查看/编辑 workstep" :modal-width="1000">
+  <ISimpleBtnTriggerModal ref="triggerModal" btn-text="查看/编辑" modal-title="查看/编辑 workstep" :modal-width="1000">
     <Scroll height="500">
       <!-- 表单信息 -->
       <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="140">
@@ -30,25 +30,27 @@
         </FormItem>
         <Row>
           <Col span="12">
-            <Row style="text-align: right;margin-bottom: 2px;">
-              <Button type="success" size="small" @click="show_work_step_input='xml'">Xml</Button>
-              <Button type="success" size="small" style="margin-right: 2px" @click="show_work_step_input='edit'">Edit</Button>
-            </Row>
             <FormItem label="work_step_input" prop="work_step_input">
-              <Input v-show="show_work_step_input=='xml'" v-model.trim="formValidate.work_step_input" type="textarea" :autosize="{minRows: 10,maxRows: 20}" placeholder="请输入 work_step_input"></Input>
-              <span v-show="show_work_step_input=='edit'">
-                <WorkStepInputEdit :paramDefinitionItems="paramDefinition.ParamDefinitionItems"/>
-              </span>
+              <Tabs type="card" :animated="false">
+                <TabPane label="Xml">
+                  <Input v-model.trim="formValidate.work_step_input" type="textarea" :autosize="{minRows: 10,maxRows: 20}" placeholder="请输入 work_step_input"></Input>
+                </TabPane>
+                <TabPane label="edit">
+                  <WorkStepInputEdit :paramDefinitionItems="paramDefinition.ParamDefinitionItems"/>
+                </TabPane>
+              </Tabs>
             </FormItem>
           </Col>
           <Col span="12">
-            <Row style="text-align: right;margin-bottom: 2px;">
-              <Button type="success" size="small" @click="show_work_step_output='xml'">Xml</Button>
-              <Button type="success" size="small" style="margin-right: 2px" @click="show_work_step_output='edit'">Edit</Button>
-            </Row>
             <FormItem label="work_step_output" prop="work_step_output">
-              <Input v-show="show_work_step_output=='xml'" v-model.trim="formValidate.work_step_output" type="textarea" :autosize="{minRows: 10,maxRows: 20}" placeholder="请输入 work_step_output"></Input>
-              <span v-show="show_work_step_output=='edit'">AAAAAAAAAAA</span>
+              <Tabs type="card" :animated="false">
+                <TabPane label="Xml">
+                  <Input v-model.trim="formValidate.work_step_output" type="textarea" :autosize="{minRows: 10,maxRows: 20}" placeholder="请输入 work_step_output"></Input>
+                </TabPane>
+                <TabPane label="edit">
+                  <span>AAAAAAAAAAA</span>
+                </TabPane>
+              </Tabs>
             </FormItem>
           </Col>
         </Row>
@@ -81,8 +83,6 @@
       return {
         paramDefinition:"",
         paramDefinitionXml:"",
-        show_work_step_input:"xml",
-        show_work_step_output:"xml",
         // 所有的步骤信息,主要用于下拉列表使用
         all_steps:[],
         default_work_step_types:["work_start","work_end","sql_query","sql_insert"],
