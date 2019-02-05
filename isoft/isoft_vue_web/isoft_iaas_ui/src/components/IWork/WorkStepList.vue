@@ -88,14 +88,6 @@
             key: 'work_step_type',
           },
           {
-            title: 'input',
-            key: 'work_step_input',
-          },
-          {
-            title: 'output',
-            key: 'work_step_output',
-          },
-          {
             title: 'last_updated_by',
             key: 'last_updated_by',
           },

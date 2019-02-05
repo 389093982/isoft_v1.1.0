@@ -37,9 +37,11 @@
             <FormItem label="work_step_input" prop="work_step_input">
               <Input v-show="show_work_step_input=='xml'" v-model.trim="formValidate.work_step_input" type="textarea" :autosize="{minRows: 10,maxRows: 20}" placeholder="请输入 work_step_input"></Input>
               <span v-show="show_work_step_input=='edit'">
-                <span v-for="item in paramDefinition.ParamDefinitionItems">
-                  {{item.ParamName}} --  {{item.ParamValue}}
-                </span>
+                  <Row v-for="item in paramDefinition.ParamDefinitionItems">
+                    <Col span="4">{{item.ParamName}}</Col>
+                    <Col span="16"><Input v-model="value3" size="small" placeholder="small size" /></Col>
+                    <Col span="4">edit</Col>
+                  </Row>
               </span>
             </FormItem>
           </Col>
