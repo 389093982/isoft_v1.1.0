@@ -42,7 +42,7 @@ func (this *IWorkStepHelper) GetDefaultParamOutputSchema() *ParamOutputSchema {
 	if schema := factory.GetDefaultParamOutputSchema(); schema != nil{
 		return schema
 	}
-	return nil
+	return &ParamOutputSchema{}
 }
 
 func (this *IWorkStepHelper) GetRuntimeParamOutputSchema() *ParamOutputSchema {
@@ -50,7 +50,7 @@ func (this *IWorkStepHelper) GetRuntimeParamOutputSchema() *ParamOutputSchema {
 	if schema := factory.GetRuntimeParamOutputSchema(); schema != nil{
 		return schema
 	}
-	return nil
+	return &ParamOutputSchema{}
 }
 
 type WorkStepTypeFactory struct {
