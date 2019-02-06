@@ -19,13 +19,13 @@
             <Col span="12">
               <FormItem label="work_step_input" prop="work_step_input">
                 <Tabs type="card" :animated="false">
-                  <TabPane label="edit">
+                  <TabPane label="edit" v-if="formValidate.work_step_type != 'work_start'">
                     <WorkStepParamInputEdit :paramInputSchemaItems="paramInputSchema.ParamInputSchemaItems"/>
                   </TabPane>
                   <TabPane label="Xml">
                     <Input v-model.trim="formValidate.work_step_input" type="textarea" :rows="10" placeholder="请输入 work_step_input"></Input>
                   </TabPane>
-                  <TabPane label="ParamMapping">
+                  <TabPane label="ParamMapping" v-if="formValidate.work_step_type != 'work_start' || formValidate.work_step_type != 'work_end'">
                     <ParamMapping :paramMappings="paramMappings"/>
                   </TabPane>
                 </Tabs>
@@ -107,7 +107,6 @@
       handleSubmit (name) {
         this.$refs[name].validate(async (valid) => {
           if (valid) {
-            alert(this.paramMappings.length);
             const paramInputSchemaStr = JSON.stringify(this.paramInputSchema);
             const paramMappingsStr = JSON.stringify(this.paramMappings);
             const result = await EditWorkStepParamInfo(this.formValidate.work_id, this.formValidate.work_step_id, paramInputSchemaStr, paramMappingsStr);
@@ -137,8 +136,7 @@
           this.paramOutputSchemaTreeNode = result.paramOutputSchemaTreeNode;
           this.formValidate.work_step_output = result.paramOutputSchemaXml;
           // 参数映射渲染
-          alert(result.paramMappings);
-          this.paramMappings = result.paramMappings;
+          this.paramMappings = result.paramMappings != null ? result.paramMappings : [];
 
         }else{
           // 加载失败

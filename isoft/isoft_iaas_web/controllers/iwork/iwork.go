@@ -8,6 +8,7 @@ import (
 	"isoft/isoft_iaas_web/core/iworkdata"
 	"isoft/isoft_iaas_web/core/iworkrun"
 	"isoft/isoft_iaas_web/models/iwork"
+	"strings"
 	"time"
 )
 
@@ -119,6 +120,23 @@ func (this *WorkController) EditWorkStepParamInfo() {
 	json.Unmarshal([]byte(paramInputSchemaStr), &paramInputSchema)
 	this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
 	if step, err := iwork.GetOneWorkStep(work_id, work_step_id); err == nil {
+		// paramMappings 只有起始和结束节点才有,而且起始和结束节点的 paramMappings 也是 paramInput 和 paramOutput
+		if strings.TrimSpace(paramMappingsStr) != ""{
+			var paramMappingsArr []string
+			json.Unmarshal([]byte(paramMappingsStr), &paramMappingsArr)
+			// 沿用旧值,添加新值,去除无效的值,即以 paramMapping 为准
+			items := []iworkdata.ParamInputSchemaItem{}
+			for _, paramMapping := range paramMappingsArr{
+				var oldValue string		// 旧值默认为空
+				for _, _item := range paramInputSchema.ParamInputSchemaItems{
+					if _item.ParamName == paramMapping{
+						oldValue = _item.ParamValue
+					}
+				}
+				items = append(items,iworkdata.ParamInputSchemaItem{ParamName:paramMapping, ParamValue:oldValue})
+			}
+			paramInputSchema.ParamInputSchemaItems = items
+		}
 		step.WorkStepInput = paramInputSchema.RenderToXml()
 		step.WorkStepParamMapping = paramMappingsStr
 		step.WorkStepOutput = "test"
@@ -164,8 +182,8 @@ func (this *WorkController) LoadWorkStepInfo() {
 	work_step_id, _ := this.GetInt8("work_step_id")
 	// 读取 work_step 信息
 	if step, err := iwork.LoadWorkStepInfo(work_id, work_step_id); err == nil {
-		var paramMappingsObj interface{}
-		json.Unmarshal([]byte(step.WorkStepParamMapping), &paramMappingsObj)
+		var paramMappingsArr []string
+		json.Unmarshal([]byte(step.WorkStepParamMapping), &paramMappingsArr)
 		// 返回结果
 		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "step": step,
 			"paramInputSchema":          iworkdata.GetParamInputSchema(&step),
@@ -173,7 +191,7 @@ func (this *WorkController) LoadWorkStepInfo() {
 			"paramOutputSchema":         iworkdata.GetParamOutputSchema(&step),
 			"paramOutputSchemaXml":      iworkdata.GetParamOutputSchema(&step).RenderToXml(),
 			"paramOutputSchemaTreeNode": iworkdata.GetParamOutputSchema(&step).RenderToTreeNodes(),
-			"paramMappings":			 paramMappingsObj,
+			"paramMappings":			 paramMappingsArr,
 		}
 	} else {
 		this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
