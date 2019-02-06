@@ -10,20 +10,20 @@ func (this *ParamResolver) ParseParamStrToMap() *map[string]interface{}{
 	return &map[string]interface{}{}
 }
 
-type ParamSchema struct {
-	XMLName     		xml.Name 				`xml:"paramSchema" json:"-"`
-	ParamSchemaItems []ParamSchemaItem	`xml:"paramSchemaItem"`
+type ParamInputSchema struct {
+	XMLName     		xml.Name 				`xml:"paramInputSchema" json:"-"`
+	ParamInputSchemaItems []ParamInputSchemaItem			`xml:"paramInputSchemaItem"`
 }
 
-func (this *ParamSchema) RenderToXml() string {
+func (this *ParamInputSchema) RenderToXml() string {
 	if bytes, err := xml.MarshalIndent(this,"", "\t"); err == nil{
 		return string(bytes)
 	}
 	return ""
 }
 
-type ParamSchemaItem struct {
-	XMLName    	xml.Name 	`xml:"paramSchemaItem" json:"-"`
+type ParamInputSchemaItem struct {
+	XMLName    	xml.Name 	`xml:"paramInputSchemaItem" json:"-"`
 	ParamName 	string		`xml:"paramName"`
 	ParamValue 	string		`xml:"paramValue"`
 }

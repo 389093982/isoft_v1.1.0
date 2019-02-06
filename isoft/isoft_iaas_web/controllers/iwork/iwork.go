@@ -7,6 +7,7 @@ import (
 	"github.com/astaxie/beego/utils/pagination"
 	"isoft/isoft/common/pageutil"
 	"isoft/isoft_iaas_web/core/iworkdata"
+	"isoft/isoft_iaas_web/core/iworkrun"
 	"isoft/isoft_iaas_web/models/iwork"
 	"strings"
 	"time"
@@ -17,7 +18,10 @@ type WorkController struct {
 }
 
 func (this *WorkController) RunWork() {
-	//work_id := this.GetString("work_id")
+	work_id := this.GetString("work_id")
+	work, _ := iwork.QueryWorkById(work_id)
+	steps,_ := iwork.GetAllWorkStepInfo(work_id)
+	go iworkrun.Run(work, steps)
 	this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
 	this.ServeJSON()
 }
@@ -111,12 +115,12 @@ func (this *WorkController) EditWorkStepBaseInfo() {
 func (this *WorkController) EditWorkStepParamInfo()  {
 	work_id := this.GetString("work_id")
 	work_step_id,_ := this.GetInt64("work_step_id", -1)
-	paramSchemaStr := this.GetString("paramSchemaStr")
-	var paramSchema iworkdata.ParamSchema
-	json.Unmarshal([]byte(paramSchemaStr), &paramSchema)
+	paramInputSchemaStr := this.GetString("paramInputSchemaStr")
+	var paramInputSchema iworkdata.ParamInputSchema
+	json.Unmarshal([]byte(paramInputSchemaStr), &paramInputSchema)
 	this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
 	if step, err := iwork.GetOneWorkStep(work_id, work_step_id); err == nil{
-		step.WorkStepInput = paramSchema.RenderToXml()
+		step.WorkStepInput = paramInputSchema.RenderToXml()
 		step.WorkStepOutput = "test"
 		step.CreatedBy = "SYSTEM"
 		step.CreatedTime = time.Now()
@@ -162,24 +166,24 @@ func (this *WorkController) LoadWorkStepInfo()  {
 	if step, err := iwork.LoadWorkStepInfo(work_id, work_step_id); err == nil{
 		// 返回结果
 		this.Data["json"] = &map[string]interface{}{"status":"SUCCESS", "step":step,
-			"paramSchema":GetParamSchema(&step), "paramSchemaXml":GetParamSchema(&step).RenderToXml()}
+			"paramInputSchema":GetParamInputSchema(&step), "paramInputSchemaXml":GetParamInputSchema(&step).RenderToXml()}
 	}else{
 		this.Data["json"] = &map[string]interface{}{"status":"ERROR"}
 	}
 	this.ServeJSON()
 }
 
-func GetParamSchema(step *iwork.WorkStep) *iworkdata.ParamSchema {
+func GetParamInputSchema(step *iwork.WorkStep) *iworkdata.ParamInputSchema {
 	if strings.TrimSpace(step.WorkStepInput) != ""{
-		var paramSchema *iworkdata.ParamSchema
-		if err := xml.Unmarshal([]byte(step.WorkStepInput), &paramSchema); err == nil{
-			return paramSchema
+		var paramInputSchema *iworkdata.ParamInputSchema
+		if err := xml.Unmarshal([]byte(step.WorkStepInput), &paramInputSchema); err == nil{
+			return paramInputSchema
 		}
 	}
-	// 获取当前 work_step 对应的 paramSchema
+	// 获取当前 work_step 对应的 paramInputSchema
 	helper := &iworkdata.IWorkStepHelper{WorkStep:step}
-	paramSchema := helper.GetDefaultParamSchema()
-	return paramSchema
+	paramInputSchema := helper.GetDefaultParamInputSchema()
+	return paramInputSchema
 }
 
 func (this *WorkController) GetAllWorkStepInfo() {

@@ -29,6 +29,12 @@ type WorkStep struct {
 	LastUpdatedTime time.Time 	`json:"last_updated_time"`
 }
 
+func QueryWorkById(work_id string) (work Work, err error) {
+	o := orm.NewOrm()
+	err = o.QueryTable("work").Filter("id", work_id).One(&work)
+	return
+}
+
 func InsertOrUpdateWork(work *Work) (id int64, err error) {
 	o := orm.NewOrm()
 	if work.Id > 0 {

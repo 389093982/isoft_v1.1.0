@@ -16,13 +16,13 @@ func (this *SQLQuery) Execute()  {
 	this.ExecuteWithParams()
 }
 
-func (this *SQLQuery) GetDefaultParamSchema() *ParamSchema {
+func (this *SQLQuery) GetDefaultParamInputSchema() *ParamInputSchema {
 	paramNames := []string{"sql","sql_binding?","db_conn"}
-	items := []ParamSchemaItem{}
+	items := []ParamInputSchemaItem{}
 	for _, paramName := range paramNames{
-		items = append(items, ParamSchemaItem{ParamName:paramName})
+		items = append(items, ParamInputSchemaItem{ParamName:paramName})
 	}
-	return &ParamSchema{ParamSchemaItems:items}
+	return &ParamInputSchema{ParamInputSchemaItems:items}
 }
 
 func (this *SQLQuery) ExecuteWithParams()  {

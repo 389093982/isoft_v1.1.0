@@ -23,7 +23,7 @@
                     <Input v-model.trim="formValidate.work_step_input" type="textarea" :autosize="{minRows: 10,maxRows: 20}" placeholder="请输入 work_step_input"></Input>
                   </TabPane>
                   <TabPane label="edit">
-                    <WorkStepParamInputEdit :paramSchemaItems="paramSchema.ParamSchemaItems"/>
+                    <WorkStepParamInputEdit :paramInputSchemaItems="paramInputSchema.ParamInputSchemaItems"/>
                   </TabPane>
                 </Tabs>
               </FormItem>
@@ -67,8 +67,8 @@
     data(){
       return {
         showFormModal:false,
-        paramSchema:"",
-        paramSchemaXml:"",
+        paramInputSchema:"",
+        paramInputSchemaXml:"",
         default_work_step_types:["work_start","work_end","sql_query","sql_insert"],
         formValidate: {
           work_id: this.workId,
@@ -95,8 +95,8 @@
       handleSubmit (name) {
         this.$refs[name].validate(async (valid) => {
           if (valid) {
-            const paramSchemaStr = JSON.stringify(this.paramSchema);
-            const result = await EditWorkStepParamInfo(this.formValidate.work_id, this.formValidate.work_step_id, paramSchemaStr);
+            const paramInputSchemaStr = JSON.stringify(this.paramInputSchema);
+            const result = await EditWorkStepParamInfo(this.formValidate.work_id, this.formValidate.work_step_id, paramInputSchemaStr);
             if(result.status == "SUCCESS"){
               this.$Message.success('提交成功!');
               this.showFormModal =false;
@@ -115,9 +115,9 @@
           this.formValidate.work_step_type = result.step.work_step_type;
           this.formValidate.work_step_input = result.step.work_step_input;
           this.formValidate.work_step_output = result.step.work_step_output;
-          this.paramSchema = result.paramSchema;
-          this.paramSchemaXml = result.paramSchemaXml;
-          this.formValidate.work_step_input = result.paramSchemaXml;
+          this.paramInputSchema = result.paramInputSchema;
+          this.paramInputSchemaXml = result.paramInputSchemaXml;
+          this.formValidate.work_step_input = result.paramInputSchemaXml;
         }else{
           // 加载失败
           this.$Message.error('错误的步骤ID,数据加载失败!数据已失效!');

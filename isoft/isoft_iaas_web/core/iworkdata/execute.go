@@ -29,9 +29,9 @@ func (this *IWorkStepHelper) Execute()  {
 	}
 }
 
-func (this *IWorkStepHelper) GetDefaultParamSchema() *ParamSchema {
+func (this *IWorkStepHelper) GetDefaultParamInputSchema() *ParamInputSchema {
 	factory := &WorkStepTypeFactory{Executor:this}
-	if schema := factory.GetDefaultParamSchema(); schema != nil{
+	if schema := factory.GetDefaultParamInputSchema(); schema != nil{
 		return schema
 	}
 	return nil
@@ -45,8 +45,8 @@ type Executable interface {
 	Execute()
 }
 
-type DefaultParamSchema interface {
-	GetDefaultParamSchema()
+type DefaultParamInputSchema interface {
+	GetDefaultParamInputSchema()
 }
 
 func (this *WorkStepTypeFactory) GetExecutor() Executable {
@@ -59,14 +59,14 @@ func (this *WorkStepTypeFactory) GetExecutor() Executable {
 	return nil
 }
 
-func (this *WorkStepTypeFactory) GetDefaultParamSchema() *ParamSchema {
+func (this *WorkStepTypeFactory) GetDefaultParamInputSchema() *ParamInputSchema {
 	switch strings.ToUpper(this.Executor.WorkStep.WorkStepType) {
 	case "SQL_INSERT":
 		helper := &SQLQuery{Executor:this.Executor}
-		return helper.GetDefaultParamSchema()
+		return helper.GetDefaultParamInputSchema()
 	case "SQL_QUERY":
 		helper := &SQLQuery{Executor:this.Executor}
-		return helper.GetDefaultParamSchema()
+		return helper.GetDefaultParamInputSchema()
 	}
 	return nil
 }
