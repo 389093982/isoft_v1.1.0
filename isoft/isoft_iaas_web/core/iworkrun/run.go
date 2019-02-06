@@ -2,9 +2,7 @@ package iworkrun
 
 import (
 	"database/sql"
-	"encoding/xml"
 	"fmt"
-	"github.com/pkg/errors"
 	"isoft/isoft_iaas_web/core/iworkcomponent/sqlutil"
 	"isoft/isoft_iaas_web/core/iworkdata"
 	"isoft/isoft_iaas_web/models/iwork"
@@ -29,29 +27,13 @@ func RunStep(work iwork.Work, step iwork.WorkStep)  {
 	}
 }
 
-func GetParamValue(step iwork.WorkStep, paramName string) string {
-	var paramInputSchema iworkdata.ParamInputSchema
-	if err := xml.Unmarshal([]byte(step.WorkStepInput), &paramInputSchema); err != nil{
-		panic(err)
-	}
-	for _, item := range paramInputSchema.ParamInputSchemaItems{
-		if item.ParamName == paramName{
-			// 非必须参数不得为空
-			if !strings.HasSuffix(item.ParamName, "?") && strings.TrimSpace(item.ParamValue) == ""{
-				panic(errors.New(fmt.Sprint("it is a mast parameter for %s", item.ParamName)))
-			}
-			return item.ParamValue
-		}
-	}
-	return ""
-}
 
 func SQLQueryRun(work iwork.Work, step iwork.WorkStep) {
-	db, err := sqlutil.GetConnForMysql("mysql", sqlutil.GetDataSourceName(GetParamValue(step,"db_conn")))
+	db, err := sqlutil.GetConnForMysql("mysql", sqlutil.GetDataSourceName(iworkdata.GetParamValue(step,"db_conn")))
 	if err != nil{
 		panic(err)
 	}
-	rows, err := db.Query(GetParamValue(step,"sql"))
+	rows, err := db.Query(iworkdata.GetParamValue(step,"sql"))
 	if err != nil{
 		panic(err)
 	}

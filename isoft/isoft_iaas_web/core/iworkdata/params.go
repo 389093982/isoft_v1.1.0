@@ -2,6 +2,8 @@ package iworkdata
 
 import (
 	"encoding/xml"
+	"errors"
+	"fmt"
 	"isoft/isoft_iaas_web/models/iwork"
 	"strings"
 )
@@ -26,6 +28,10 @@ func GetParamOutputSchema(step *iwork.WorkStep) *ParamOutputSchema {
 	// 获取当前 work_step 对应的 paramOutputSchema
 	helper := &IWorkStepHelper{WorkStep:step}
 	paramOutputSchema := helper.GetDefaultParamOutputSchema()
+	paramOutputSchema2 := helper.GetRuntimeParamOutputSchema()
+	// 合并
+	paramOutputSchema.ParamOutputSchemaItems =
+		append(paramOutputSchema.ParamOutputSchemaItems, paramOutputSchema2.ParamOutputSchemaItems...)
 	return paramOutputSchema
 }
 
@@ -42,4 +48,21 @@ func GetParamInputSchema(step *iwork.WorkStep) *ParamInputSchema {
 	helper := &IWorkStepHelper{WorkStep:step}
 	paramInputSchema := helper.GetDefaultParamInputSchema()
 	return paramInputSchema
+}
+
+func GetParamValue(step iwork.WorkStep, paramName string) string {
+	var paramInputSchema ParamInputSchema
+	if err := xml.Unmarshal([]byte(step.WorkStepInput), &paramInputSchema); err != nil{
+		panic(err)
+	}
+	for _, item := range paramInputSchema.ParamInputSchemaItems{
+		if item.ParamName == paramName{
+			// 非必须参数不得为空
+			if !strings.HasSuffix(item.ParamName, "?") && strings.TrimSpace(item.ParamValue) == ""{
+				panic(errors.New(fmt.Sprint("it is a mast parameter for %s", item.ParamName)))
+			}
+			return item.ParamValue
+		}
+	}
+	return ""
 }

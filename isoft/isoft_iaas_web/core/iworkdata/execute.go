@@ -45,6 +45,14 @@ func (this *IWorkStepHelper) GetDefaultParamOutputSchema() *ParamOutputSchema {
 	return nil
 }
 
+func (this *IWorkStepHelper) GetRuntimeParamOutputSchema() *ParamOutputSchema {
+	factory := &WorkStepTypeFactory{Executor:this}
+	if schema := factory.GetRuntimeParamOutputSchema(); schema != nil{
+		return schema
+	}
+	return nil
+}
+
 type WorkStepTypeFactory struct {
 	Executor *IWorkStepHelper
 }
@@ -83,6 +91,18 @@ func (this *WorkStepTypeFactory) GetDefaultParamOutputSchema() *ParamOutputSchem
 	case "SQL_QUERY":
 		helper := &SQLQuery{Executor:this.Executor}
 		return helper.GetDefaultParamOutputSchema()
+	}
+	return nil
+}
+
+func (this *WorkStepTypeFactory) GetRuntimeParamOutputSchema() *ParamOutputSchema {
+	switch strings.ToUpper(this.Executor.WorkStep.WorkStepType) {
+	case "SQL_INSERT":
+		helper := &SQLQuery{Executor:this.Executor}
+		return helper.GetRuntimeParamOutputSchema()
+	case "SQL_QUERY":
+		helper := &SQLQuery{Executor:this.Executor}
+		return helper.GetRuntimeParamOutputSchema()
 	}
 	return nil
 }
