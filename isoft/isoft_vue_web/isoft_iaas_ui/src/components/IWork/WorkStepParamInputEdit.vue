@@ -1,6 +1,6 @@
 <template>
   <span>
-    <Row v-for="item in paramInputSchemaItems">
+    <Row v-for="item in paramInputSchemaItems" style="margin-bottom: 10px;">
       <Row>
         <Col span="12">{{item.ParamName}}</Col>
         <Col span="12">
