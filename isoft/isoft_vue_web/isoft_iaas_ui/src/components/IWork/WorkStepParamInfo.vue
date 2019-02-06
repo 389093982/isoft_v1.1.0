@@ -25,6 +25,8 @@
                   <TabPane label="Xml">
                     <Input v-model.trim="formValidate.work_step_input" type="textarea" :rows="10" placeholder="请输入 work_step_input"></Input>
                   </TabPane>
+                  <TabPane label="ParamMapping">
+                  </TabPane>
                 </Tabs>
               </FormItem>
             </Col>

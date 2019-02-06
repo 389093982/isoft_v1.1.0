@@ -34,7 +34,7 @@ func (this *IWorkStepHelper) GetDefaultParamInputSchema() *ParamInputSchema {
 	if schema := factory.GetDefaultParamInputSchema(); schema != nil{
 		return schema
 	}
-	return nil
+	return &ParamInputSchema{}
 }
 
 func (this *IWorkStepHelper) GetDefaultParamOutputSchema() *ParamOutputSchema {

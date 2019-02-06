@@ -19,7 +19,7 @@
           title: this.paramOutputSchemaTreeNode.NodeName,
           expand: true,
         };
-        if(this.paramOutputSchemaTreeNode.NodeChildrens.length > 0){
+        if(this.paramOutputSchemaTreeNode.NodeChildrens != null && this.paramOutputSchemaTreeNode.NodeChildrens.length > 0){
           const arr = [];
           for(var i=0; i<this.paramOutputSchemaTreeNode.NodeChildrens.length; i++){
             arr.push({
