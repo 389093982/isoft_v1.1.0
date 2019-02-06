@@ -4,7 +4,8 @@
       <Row>
         <Col span="12">{{item.ParamName}}</Col>
         <Col span="12">
-          <WorkStepParamInputEditDialog :input-label="item.ParamName" :input-text="item.ParamValue" @handleSubmit="refreshParamInputSchemaItems"/>
+          <WorkStepParamInputEditDialog :input-label="item.ParamName" :input-text="item.ParamValue"
+                                        @handleSubmit="refreshParamInputSchemaItems"/>
         </Col>
       </Row>
       <Row>
@@ -24,7 +25,7 @@
       paramInputSchemaItems:{
         type: Array,
         default: () => [],
-      }
+      },
     },
     methods:{
       // 强制刷新组件
@@ -36,8 +37,17 @@
             this.$set(this.paramInputSchemaItems, i, paramInputSchemaItem);
           }
         }
+      },
+      update:function (work_id, work_step_id) {
+        this.work_id = work_id;
+        this.work_step_id = work_step_id;
       }
     },
+    computed:{
+      _workId:function () {
+        return parseInt(this.work_id);
+      },
+    }
   }
 </script>
 

@@ -20,7 +20,8 @@
               <FormItem label="work_step_input" prop="work_step_input">
                 <Tabs type="card" :animated="false">
                   <TabPane label="edit">
-                    <WorkStepParamInputEdit :paramInputSchemaItems="paramInputSchema.ParamInputSchemaItems"/>
+                    <WorkStepParamInputEdit ref="workStepParamInputEdit"
+                      :paramInputSchemaItems="paramInputSchema.ParamInputSchemaItems"/>
                   </TabPane>
                   <TabPane label="Xml">
                     <Input v-model.trim="formValidate.work_step_input" type="textarea" :rows="10" placeholder="请输入 work_step_input"></Input>
@@ -126,6 +127,8 @@
       loadWorkStepInfo:async function(){
         const result = await LoadWorkStepInfo(this.formValidate.work_id,this.formValidate.work_step_id);
         if(result.status == "SUCCESS"){
+          this.formValidate.work_id = result.step.work_id;
+          this.formValidate.work_step_id = result.step.work_step_id;
           this.formValidate.work_step_name = result.step.work_step_name;
           this.formValidate.work_step_type = result.step.work_step_type;
 
@@ -148,6 +151,8 @@
           this.formValidate.work_step_output = result.paramOutputSchemaXml;
           // 参数映射渲染
           this.paramMappings = result.paramMappings != null ? result.paramMappings : [];
+          // 通知子组件更新
+          this.$refs.workStepParamInputEdit.update(result.step.work_id, result.step.work_step_id);
           // 异步请求加载完成之后才显示模态对话框
           this.showFormModal = true;
         }else{
@@ -165,6 +170,11 @@
         this.loadWorkStepInfo();
       }
     },
+    computed:{
+      _workId:function () {
+        return parseInt(this.formValidate.work_id);
+      },
+    }
   }
 </script>
 

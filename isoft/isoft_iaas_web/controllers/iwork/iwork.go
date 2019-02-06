@@ -7,6 +7,7 @@ import (
 	"isoft/isoft/common/pageutil"
 	"isoft/isoft_iaas_web/core/iworkdata"
 	"isoft/isoft_iaas_web/core/iworkrun"
+	"isoft/isoft_iaas_web/models/iresource"
 	"isoft/isoft_iaas_web/models/iwork"
 	"strings"
 	"time"
@@ -190,7 +191,7 @@ func (this *WorkController) LoadWorkStepInfo() {
 			"paramInputSchemaXml":       iworkdata.GetParamInputSchema(&step).RenderToXml(),
 			"paramOutputSchema":         iworkdata.GetParamOutputSchema(&step),
 			"paramOutputSchemaXml":      iworkdata.GetParamOutputSchema(&step).RenderToXml(),
-			"paramOutputSchemaTreeNode": iworkdata.GetParamOutputSchema(&step).RenderToTreeNodes(),
+			"paramOutputSchemaTreeNode": iworkdata.GetParamOutputSchema(&step).RenderToTreeNodes("$NODE_NAME_OUTPUT"),
 			"paramMappings":			 paramMappingsArr,
 		}
 	} else {
@@ -234,4 +235,27 @@ func (this *WorkController) ChangeWorkStepOrder() {
 		}
 	}
 	this.ServeJSON()
+}
+
+func (this *WorkController) LoadPreNodeOutput()  {
+	//work_id := this.GetString("work_id")
+	//work_step_id, _ := this.GetInt64("work_step_id")
+	pos := LoadResourceInfo()
+	// 返回结果
+	this.Data["json"] = &map[string]interface{}{"status": "SUCCESS",
+		"preParamOutputSchemaTreeNode": pos.RenderToTreeNodes("$RESOURCE"),
+	}
+	this.ServeJSON()
+}
+
+func LoadResourceInfo() *iworkdata.ParamOutputSchema {
+	pos := &iworkdata.ParamOutputSchema{}
+	items := []*iworkdata.ParamOutputSchemaItem{}
+	resources := iresource.GetAllResource()
+	for _, resource := range resources{
+		items = append(items, &iworkdata.ParamOutputSchemaItem{
+			ParamName:resource.ResourceName,
+		})
+	}
+	return pos
 }

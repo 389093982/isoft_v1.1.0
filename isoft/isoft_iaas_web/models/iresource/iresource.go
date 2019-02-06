@@ -45,3 +45,9 @@ func QueryResource(condArr map[string]string, page int, offset int) (resources [
 	qs.All(&resources)
 	return
 }
+
+func GetAllResource() (resources []Resource) {
+	o := orm.NewOrm()
+	o.QueryTable("resource").All(&resources)
+	return
+}

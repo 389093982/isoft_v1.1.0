@@ -45,10 +45,10 @@ type TreeNode struct {
 	NodeChildrens []*TreeNode
 }
 
-func (this *ParamOutputSchema) RenderToTreeNodes() *TreeNode {
+func (this *ParamOutputSchema) RenderToTreeNodes(rootName string) *TreeNode {
 	topTreeNode := &TreeNode{
-		NodeName: "$NODE_NAME_OUTPUT",
-		NodeLink: "$NODE_NAME_OUTPUT",
+		NodeName: rootName,
+		NodeLink: rootName,
 	}
 	for _, item := range this.ParamOutputSchemaItems {
 		topTreeNode.NodeChildrens = append(topTreeNode.NodeChildrens, &TreeNode{
