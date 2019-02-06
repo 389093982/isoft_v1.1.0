@@ -1,5 +1,6 @@
 <template>
-  <ISimpleBtnTriggerModal ref="triggerModal" btn-text="查看/编辑" btn-size="small" modal-title="查看/编辑 workstep 参数" :modal-width="800">
+  <ISimpleBtnTriggerModal ref="triggerModal" btn-text="查看/编辑" btn-size="small" btn-folat="right"
+                          modal-title="查看/编辑 workstep 参数" :modal-width="800">
     <Row>
       <Col span="12">前置节点输出参数</Col>
       <Col span="12">{{inputLabel}}

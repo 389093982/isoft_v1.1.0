@@ -3,7 +3,7 @@
     <Row v-for="item in paramInputSchemaItems">
       <Row>
         <Col span="12">{{item.ParamName}}</Col>
-        <Col span="12" style="text-align: right;">
+        <Col span="12">
           <WorkStepParamInputEditDialog :input-label="item.ParamName" :input-text="item.ParamValue" @handleSubmit="refreshParamInputSchemaItems"/>
         </Col>
       </Row>
