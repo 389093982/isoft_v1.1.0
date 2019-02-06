@@ -23,7 +23,7 @@
                     <WorkStepParamInputEdit :paramInputSchemaItems="paramInputSchema.ParamInputSchemaItems"/>
                   </TabPane>
                   <TabPane label="Xml">
-                    <Input v-model.trim="formValidate.work_step_input" type="textarea" :autosize="{minRows: 10,maxRows: 20}" placeholder="请输入 work_step_input"></Input>
+                    <Input v-model.trim="formValidate.work_step_input" type="textarea" :rows="10" placeholder="请输入 work_step_input"></Input>
                   </TabPane>
                 </Tabs>
               </FormItem>
@@ -32,10 +32,10 @@
               <FormItem label="work_step_output" prop="work_step_output">
                 <Tabs type="card" :animated="false">
                   <TabPane label="Tree">
-                    <WorkStepParamOutputDisplay/>
+                    <WorkStepParamOutputDisplay v-if="paramOutputSchemaTreeNode" :paramOutputSchemaTreeNode="paramOutputSchemaTreeNode"/>
                   </TabPane>
                   <TabPane label="Xml">
-                    <Input v-model.trim="formValidate.work_step_output" type="textarea" :autosize="{minRows: 10,maxRows: 20}" placeholder="请输入 work_step_output"></Input>
+                    <Input v-model.trim="formValidate.work_step_output" type="textarea" :rows="10" placeholder="请输入 work_step_output"></Input>
                   </TabPane>
                 </Tabs>
               </FormItem>
@@ -72,6 +72,7 @@
         paramInputSchemaXml:"",
         paramOutputSchema:"",
         paramOutputSchemaXml:"",
+        paramOutputSchemaTreeNode:null,
         default_work_step_types:["work_start","work_end","sql_query","sql_insert"],
         formValidate: {
           work_id: this.workId,
@@ -123,6 +124,7 @@
           // 出参渲染
           this.paramOutputSchema = result.paramOutputSchema;
           this.paramOutputSchemaXml = result.paramOutputSchemaXml;
+          this.paramOutputSchemaTreeNode = result.paramOutputSchemaTreeNode;
           this.formValidate.work_step_output = result.paramOutputSchemaXml;
         }else{
           // 加载失败

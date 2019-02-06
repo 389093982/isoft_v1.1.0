@@ -37,3 +37,24 @@ func (this *ParamOutputSchema) RenderToXml() string {
 	}
 	return ""
 }
+
+// 输出参数转换成 TreeNode 用于树形结构展示
+type TreeNode struct {
+	NodeName string
+	NodeLink string
+	NodeChildrens []*TreeNode
+} 
+
+func (this *ParamOutputSchema) RenderToTreeNodes() *TreeNode {
+	topTreeNode := &TreeNode{
+		NodeName:"$NODE_NAME_OUTPUT",
+		NodeLink:"$NODE_NAME_OUTPUT",
+	}
+	for _, item := range this.ParamOutputSchemaItems{
+		topTreeNode.NodeChildrens = append(topTreeNode.NodeChildrens, &TreeNode{
+			NodeName:item.ParamName,
+			NodeLink:item.ParamName,
+		})
+	}
+	return topTreeNode
+}

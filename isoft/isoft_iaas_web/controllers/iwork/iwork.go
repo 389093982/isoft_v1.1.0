@@ -164,8 +164,11 @@ func (this *WorkController) LoadWorkStepInfo()  {
 	if step, err := iwork.LoadWorkStepInfo(work_id, work_step_id); err == nil{
 		// 返回结果
 		this.Data["json"] = &map[string]interface{}{"status":"SUCCESS", "step":step,
-			"paramInputSchema":iworkdata.GetParamInputSchema(&step), "paramInputSchemaXml":iworkdata.GetParamInputSchema(&step).RenderToXml(),
-			"paramOutputSchema":iworkdata.GetParamOutputSchema(&step), "paramOutputSchemaXml":iworkdata.GetParamOutputSchema(&step).RenderToXml(),
+			"paramInputSchema":iworkdata.GetParamInputSchema(&step),
+			"paramInputSchemaXml":iworkdata.GetParamInputSchema(&step).RenderToXml(),
+			"paramOutputSchema":iworkdata.GetParamOutputSchema(&step),
+			"paramOutputSchemaXml":iworkdata.GetParamOutputSchema(&step).RenderToXml(),
+			"paramOutputSchemaTreeNode":iworkdata.GetParamOutputSchema(&step).RenderToTreeNodes(),
 		}
 	}else{
 		this.Data["json"] = &map[string]interface{}{"status":"ERROR"}
