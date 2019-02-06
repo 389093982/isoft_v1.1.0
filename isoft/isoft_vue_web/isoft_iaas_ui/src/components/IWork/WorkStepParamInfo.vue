@@ -19,13 +19,13 @@
             <Col span="12">
               <FormItem label="work_step_input" prop="work_step_input">
                 <Tabs type="card" :animated="false">
-                  <TabPane label="edit" v-if="formValidate.work_step_type != 'work_start'">
+                  <TabPane label="edit">
                     <WorkStepParamInputEdit :paramInputSchemaItems="paramInputSchema.ParamInputSchemaItems"/>
                   </TabPane>
                   <TabPane label="Xml">
                     <Input v-model.trim="formValidate.work_step_input" type="textarea" :rows="10" placeholder="请输入 work_step_input"></Input>
                   </TabPane>
-                  <TabPane label="ParamMapping" v-if="formValidate.work_step_type != 'work_start' || formValidate.work_step_type != 'work_end'">
+                  <TabPane label="ParamMapping" v-if="showParamMapping">
                     <ParamMapping :paramMappings="paramMappings"/>
                   </TabPane>
                 </Tabs>
@@ -79,6 +79,8 @@
         paramOutputSchema:"",
         paramOutputSchemaXml:"",
         paramOutputSchemaTreeNode:null,
+        // 显示效果
+        showParamMapping:false,
         // 参数映射
         paramMappings:[],
         default_work_step_types:["work_start","work_end","sql_query","sql_insert"],
@@ -126,6 +128,15 @@
         if(result.status == "SUCCESS"){
           this.formValidate.work_step_name = result.step.work_step_name;
           this.formValidate.work_step_type = result.step.work_step_type;
+
+          if(result.step.work_step_type == "work_start"){
+            this.showParamMapping = true;
+          }else if(result.step.work_step_type == "work_end"){
+            this.showParamMapping = true;
+          }else{
+            this.showParamMapping = false;
+          }
+
           // 入参渲染
           this.paramInputSchema = result.paramInputSchema;
           this.paramInputSchemaXml = result.paramInputSchemaXml;
@@ -137,10 +148,11 @@
           this.formValidate.work_step_output = result.paramOutputSchemaXml;
           // 参数映射渲染
           this.paramMappings = result.paramMappings != null ? result.paramMappings : [];
-
+          // 异步请求加载完成之后才显示模态对话框
+          this.showFormModal = true;
         }else{
           // 加载失败
-          this.$Message.error('错误的步骤ID,数据加载失败!数据已失效!');
+          this.$Message.error('加载失败!');
           this.handleReset('formValidate');
         }
       },
@@ -151,7 +163,6 @@
         this.formValidate.work_id = work_id;
         this.formValidate.work_step_id = work_step_id;
         this.loadWorkStepInfo();
-        this.showFormModal = true;
       }
     },
   }

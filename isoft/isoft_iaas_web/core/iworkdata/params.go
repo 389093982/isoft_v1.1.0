@@ -2,8 +2,6 @@ package iworkdata
 
 import (
 	"encoding/xml"
-	"errors"
-	"fmt"
 	"isoft/isoft_iaas_web/models/iwork"
 	"strings"
 )
@@ -53,13 +51,14 @@ func GetParamInputSchema(step *iwork.WorkStep) *ParamInputSchema {
 func GetParamValue(step iwork.WorkStep, paramName string) string {
 	var paramInputSchema ParamInputSchema
 	if err := xml.Unmarshal([]byte(step.WorkStepInput), &paramInputSchema); err != nil {
-		panic(err)
+		return ""
 	}
 	for _, item := range paramInputSchema.ParamInputSchemaItems {
 		if item.ParamName == paramName {
 			// 非必须参数不得为空
 			if !strings.HasSuffix(item.ParamName, "?") && strings.TrimSpace(item.ParamValue) == "" {
-				panic(errors.New(fmt.Sprint("it is a mast parameter for %s", item.ParamName)))
+				//panic(errors.New(fmt.Sprint("it is a mast parameter for %s", item.ParamName)))
+				return ""
 			}
 			return item.ParamValue
 		}

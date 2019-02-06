@@ -121,7 +121,7 @@ func (this *WorkController) EditWorkStepParamInfo() {
 	this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
 	if step, err := iwork.GetOneWorkStep(work_id, work_step_id); err == nil {
 		// paramMappings 只有起始和结束节点才有,而且起始和结束节点的 paramMappings 也是 paramInput 和 paramOutput
-		if strings.TrimSpace(paramMappingsStr) != ""{
+		if strings.TrimSpace(paramMappingsStr) != "" && (step.WorkStepType == "work_start" || step.WorkStepType == "work_end"){
 			var paramMappingsArr []string
 			json.Unmarshal([]byte(paramMappingsStr), &paramMappingsArr)
 			// 沿用旧值,添加新值,去除无效的值,即以 paramMapping 为准
