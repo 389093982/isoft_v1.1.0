@@ -31,6 +31,7 @@ import (
 
 // 数据库连接串
 var dsn string
+
 // 数据库同步模式,支持 FLYWAY 和 AUTO
 const RunSyncdbMode = "AUTO"
 
@@ -89,23 +90,23 @@ func initDB() {
 	}
 	registerModel()
 
-	if RunSyncdbMode == "FLYWAY"{
+	if RunSyncdbMode == "FLYWAY" {
 		// ilearning 模块
-		if strings.Contains(beego.AppConfig.String("open.moudles"), "ilearning"){
+		if strings.Contains(beego.AppConfig.String("open.moudles"), "ilearning") {
 			flyway.MigrateToDB(dsn, "./conf/migrations/migrations.sql")
 		}
 		// sso 模块
-		if strings.Contains(beego.AppConfig.String("open.moudles"), "sso"){
+		if strings.Contains(beego.AppConfig.String("open.moudles"), "sso") {
 			flyway.MigrateToDB(dsn, "./conf/migrations/sso_migrations.sql")
 		}
-	}else{
+	} else {
 		createTable()
 	}
 }
 
 func registerModel() {
 	// ilearning 模块
-	if strings.Contains(beego.AppConfig.String("open.moudles"), "ilearning"){
+	if strings.Contains(beego.AppConfig.String("open.moudles"), "ilearning") {
 		orm.RegisterModel(new(iblog.Catalog))
 		orm.RegisterModel(new(iblog.Blog))
 
@@ -129,7 +130,7 @@ func registerModel() {
 		orm.RegisterModel(new(monitor.HeartBeatDetail))
 	}
 	// sso 模块
-	if strings.Contains(beego.AppConfig.String("open.moudles"), "sso"){
+	if strings.Contains(beego.AppConfig.String("open.moudles"), "sso") {
 		orm.RegisterModel(new(sso.User))
 		orm.RegisterModel(new(sso.AppRegister))
 		orm.RegisterModel(new(sso.LoginRecord))
@@ -166,7 +167,7 @@ func main() {
 
 func ssoFilterFunc(ctx *context.Context) {
 	filter := new(ssofilter.LoginFilter)
-	filter.LoginWhiteList = &[]string{"/api/sso/user/login","/api/sso/user/regist","/api/sso/user/checkOrInValidateTokenString"}
+	filter.LoginWhiteList = &[]string{"/api/sso/user/login", "/api/sso/user/regist", "/api/sso/user/checkOrInValidateTokenString"}
 	filter.LoginUrl = ctx.Input.URL()
 	filter.Ctx = ctx
 	filter.SsoAddress = beego.AppConfig.String("isoft.sso.web.addr")

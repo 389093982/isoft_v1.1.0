@@ -47,7 +47,7 @@ func init() {
 	beego.Router("/api/iwork/runWork", &iwork.WorkController{}, "post:RunWork")
 
 	// ilearning 模块
-	if strings.Contains(beego.AppConfig.String("open.moudles"), "ilearning"){
+	if strings.Contains(beego.AppConfig.String("open.moudles"), "ilearning") {
 		initIBlogRouter()
 		initILearningRouter()
 		initCMSRouter()
@@ -57,7 +57,7 @@ func init() {
 		initIFileRouter()
 	}
 	// sso 模块
-	if strings.Contains(beego.AppConfig.String("open.moudles"), "sso"){
+	if strings.Contains(beego.AppConfig.String("open.moudles"), "sso") {
 		initISSORouter()
 	}
 }
@@ -124,7 +124,7 @@ func initIBlogRouter() {
 	beego.Router("/api/blog/showBlogDetail", &iblog.BlogController{}, "get:ShowBlogDetail")
 }
 
-func initISSORouter()  {
+func initISSORouter() {
 	beego.Router("/api/sso/user/login", &sso.LoginController{}, "post:PostLogin")
 	beego.Router("/api/sso/user/regist", &sso.LoginController{}, "post:PostRegist")
 	beego.Router("/api/sso/app/appRegisterList", &sso.AppRegisterController{}, "post:AppRegisterList")

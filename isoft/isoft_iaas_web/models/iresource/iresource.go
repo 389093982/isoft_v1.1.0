@@ -7,17 +7,17 @@ import (
 )
 
 type Resource struct {
-	Id              	int64     	`json:"id"`
-	ResourceName    	string    	`json:"resource_name"`
-	ResourceType    	string    	`json:"resource_type"`
-	ResourceUrl	        string    	`json:"resource_url"`
-	ResourceUsername	string 		`json:"resource_username"`
-	ResourcePassword    string    	`json:"resource_password"`
-	EnvName       		string    	`json:"env_name"`
-	CreatedBy       	string    	`json:"created_by"`
-	CreatedTime     	time.Time 	`json:"created_time" orm:"auto_now_add;type(datetime)"`
-	LastUpdatedBy   	string    	`json:"last_updated_by"`
-	LastUpdatedTime 	time.Time 	`json:"last_updated_time"`
+	Id               int64     `json:"id"`
+	ResourceName     string    `json:"resource_name"`
+	ResourceType     string    `json:"resource_type"`
+	ResourceUrl      string    `json:"resource_url"`
+	ResourceUsername string    `json:"resource_username"`
+	ResourcePassword string    `json:"resource_password"`
+	EnvName          string    `json:"env_name"`
+	CreatedBy        string    `json:"created_by"`
+	CreatedTime      time.Time `json:"created_time" orm:"auto_now_add;type(datetime)"`
+	LastUpdatedBy    string    `json:"last_updated_by"`
+	LastUpdatedTime  time.Time `json:"last_updated_time"`
 }
 
 func InsertOrUpdateResource(resource *Resource) (id int64, err error) {

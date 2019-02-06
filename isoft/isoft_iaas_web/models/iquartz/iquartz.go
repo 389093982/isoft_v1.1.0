@@ -7,15 +7,15 @@ import (
 )
 
 type CronMeta struct {
-	Id              int64     	`json:"id"`
-	TaskName        string    	`json:"task_name"`    // 任务名称
-	TaskType        string    	`json:"task_type"` 	// 任务类型
-	TaskId	        string    	`json:"task_id"` 		// 任务唯一性 id
-	CronStr			string 		`json:"cron_str"`
-	CreatedBy       string    	`json:"created_by"`
-	CreatedTime     time.Time 	`json:"created_time" orm:"auto_now_add;type(datetime)"`
-	LastUpdatedBy   string    	`json:"last_updated_by"`
-	LastUpdatedTime time.Time 	`json:"last_updated_time"`
+	Id              int64     `json:"id"`
+	TaskName        string    `json:"task_name"` // 任务名称
+	TaskType        string    `json:"task_type"` // 任务类型
+	TaskId          string    `json:"task_id"`   // 任务唯一性 id
+	CronStr         string    `json:"cron_str"`
+	CreatedBy       string    `json:"created_by"`
+	CreatedTime     time.Time `json:"created_time" orm:"auto_now_add;type(datetime)"`
+	LastUpdatedBy   string    `json:"last_updated_by"`
+	LastUpdatedTime time.Time `json:"last_updated_time"`
 }
 
 func InsertOrUpdateCronMeta(meta *CronMeta) (id int64, err error) {

@@ -26,7 +26,7 @@
                     <Input v-model.trim="formValidate.work_step_input" type="textarea" :rows="10" placeholder="请输入 work_step_input"></Input>
                   </TabPane>
                   <TabPane label="ParamMapping">
-                    <ParamMapping/>
+                    <ParamMapping :paramMappings="paramMappings"/>
                   </TabPane>
                 </Tabs>
               </FormItem>
@@ -72,11 +72,15 @@
     data(){
       return {
         showFormModal:false,
+        // 输入参数
         paramInputSchema:"",
         paramInputSchemaXml:"",
+        // 输出参数
         paramOutputSchema:"",
         paramOutputSchemaXml:"",
         paramOutputSchemaTreeNode:null,
+        // 参数映射
+        paramMappings:[],
         default_work_step_types:["work_start","work_end","sql_query","sql_insert"],
         formValidate: {
           work_id: this.workId,
@@ -103,8 +107,10 @@
       handleSubmit (name) {
         this.$refs[name].validate(async (valid) => {
           if (valid) {
+            alert(this.paramMappings.length);
             const paramInputSchemaStr = JSON.stringify(this.paramInputSchema);
-            const result = await EditWorkStepParamInfo(this.formValidate.work_id, this.formValidate.work_step_id, paramInputSchemaStr);
+            const paramMappingsStr = JSON.stringify(this.paramMappings);
+            const result = await EditWorkStepParamInfo(this.formValidate.work_id, this.formValidate.work_step_id, paramInputSchemaStr, paramMappingsStr);
             if(result.status == "SUCCESS"){
               this.$Message.success('提交成功!');
               this.showFormModal =false;
@@ -130,6 +136,10 @@
           this.paramOutputSchemaXml = result.paramOutputSchemaXml;
           this.paramOutputSchemaTreeNode = result.paramOutputSchemaTreeNode;
           this.formValidate.work_step_output = result.paramOutputSchemaXml;
+          // 参数映射渲染
+          alert(result.paramMappings);
+          this.paramMappings = result.paramMappings;
+
         }else{
           // 加载失败
           this.$Message.error('错误的步骤ID,数据加载失败!数据已失效!');

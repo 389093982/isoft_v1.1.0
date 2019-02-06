@@ -6,20 +6,20 @@ import (
 	"isoft/isoft_iaas_web/models/iquartz"
 )
 
-func StartIQuartzInitialTask()  {
-	if metas, err := iquartz.GetAllCronMeta();err == nil{
+func StartIQuartzInitialTask() {
+	if metas, err := iquartz.GetAllCronMeta(); err == nil {
 		c := cron.New()
-		for _,meta := range metas{
-			c.AddJob(meta.CronStr, &IQuartzJob{meta:&meta})
+		for _, meta := range metas {
+			c.AddJob(meta.CronStr, &IQuartzJob{meta: &meta})
 		}
 		c.Start()
 	}
 }
 
-type IQuartzJob struct{
+type IQuartzJob struct {
 	meta *iquartz.CronMeta
 }
 
-func (this *IQuartzJob) Run()  {
+func (this *IQuartzJob) Run() {
 	fmt.Print(this.meta.CronStr)
 }

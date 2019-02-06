@@ -31,15 +31,15 @@ func init() {
 
 type LoginFilter struct {
 	LoginWhiteList *[]string
-	LoginUrl string
-	Ctx *context.Context
-	SsoAddress string
-	ErrorFunc func()
+	LoginUrl       string
+	Ctx            *context.Context
+	SsoAddress     string
+	ErrorFunc      func()
 }
 
-func (this *LoginFilter) Filter()  {
+func (this *LoginFilter) Filter() {
 	// 白名单直接跳过
-	if this.checkWhiteList(){
+	if this.checkWhiteList() {
 		return
 	}
 	// 从 cookie 中或者 header 中获取 token
@@ -50,8 +50,8 @@ func (this *LoginFilter) Filter()  {
 }
 
 func (this *LoginFilter) checkWhiteList() bool {
-	for _,url := range *this.LoginWhiteList{
-		if(url == this.LoginUrl){
+	for _, url := range *this.LoginWhiteList {
+		if url == this.LoginUrl {
 			return true
 		}
 	}

@@ -7,26 +7,27 @@ import (
 )
 
 type Work struct {
-	Id              int64     	`json:"id"`
-	WorkName		string    	`json:"work_name"`
-	CreatedBy       string    	`json:"created_by"`
-	CreatedTime     time.Time 	`json:"created_time" orm:"auto_now_add;type(datetime)"`
-	LastUpdatedBy   string    	`json:"last_updated_by"`
-	LastUpdatedTime time.Time 	`json:"last_updated_time"`
+	Id              int64     `json:"id"`
+	WorkName        string    `json:"work_name"`
+	CreatedBy       string    `json:"created_by"`
+	CreatedTime     time.Time `json:"created_time" orm:"auto_now_add;type(datetime)"`
+	LastUpdatedBy   string    `json:"last_updated_by"`
+	LastUpdatedTime time.Time `json:"last_updated_time"`
 }
 
 type WorkStep struct {
-	Id              int64     	`json:"id"`
-	WorkId      	string    	`json:"work_id"`
-	WorkStepId      int8    	`json:"work_step_id"`
-	WorkStepName    string    	`json:"work_step_name"`
-	WorkStepType    string    	`json:"work_step_type"`
-	WorkStepInput   string    	`json:"work_step_input" orm:"type(text)"`
-	WorkStepOutput	string    	`json:"work_step_output" orm:"type(text)"`
-	CreatedBy       string    	`json:"created_by"`
-	CreatedTime     time.Time 	`json:"created_time" orm:"auto_now_add;type(datetime)"`
-	LastUpdatedBy   string    	`json:"last_updated_by"`
-	LastUpdatedTime time.Time 	`json:"last_updated_time"`
+	Id                   int64     `json:"id"`
+	WorkId               string    `json:"work_id"`
+	WorkStepId           int8      `json:"work_step_id"`
+	WorkStepName         string    `json:"work_step_name"`
+	WorkStepType         string    `json:"work_step_type"`
+	WorkStepInput        string    `json:"work_step_input" orm:"type(text)"`
+	WorkStepOutput       string    `json:"work_step_output" orm:"type(text)"`
+	WorkStepParamMapping string    `json:"work_step_param_mapping" orm:"type(text)"`
+	CreatedBy            string    `json:"created_by"`
+	CreatedTime          time.Time `json:"created_time" orm:"auto_now_add;type(datetime)"`
+	LastUpdatedBy        string    `json:"last_updated_by"`
+	LastUpdatedTime      time.Time `json:"last_updated_time"`
 }
 
 func QueryWorkById(work_id string) (work Work, err error) {
@@ -79,9 +80,9 @@ func InsertOrUpdateWorkStep(step *WorkStep) (id int64, err error) {
 
 func GetNextWorkStepId(work_id string) int8 {
 	steps, _ := GetAllWorkStepInfo(work_id)
-	for index:=1; index<=len(steps)+1; index++{
+	for index := 1; index <= len(steps)+1; index++ {
 		o := orm.NewOrm()
-		if exist := o.QueryTable("work_step").Filter("work_id",work_id).Filter("work_step_id", index).Exist(); !exist{
+		if exist := o.QueryTable("work_step").Filter("work_id", work_id).Filter("work_step_id", index).Exist(); !exist {
 			return int8(index)
 		}
 	}
@@ -110,13 +111,13 @@ func GetOneWorkStep(work_id string, work_step_id int64) (step WorkStep, err erro
 
 func GetAllWorkStepInfo(work_id string) (steps []WorkStep, err error) {
 	o := orm.NewOrm()
-	_,err = o.QueryTable("work_step").Filter("work_id", work_id).OrderBy("work_step_id").All(&steps)
+	_, err = o.QueryTable("work_step").Filter("work_id", work_id).OrderBy("work_step_id").All(&steps)
 	return
 }
 
 func LoadWorkStepInfo(work_id string, work_step_id int8) (step WorkStep, err error) {
 	o := orm.NewOrm()
-	err = o.QueryTable("work_step").Filter("work_id",work_id).Filter("work_step_id",work_step_id).One(&step)
+	err = o.QueryTable("work_step").Filter("work_id", work_id).Filter("work_step_id", work_step_id).One(&step)
 	return
 }
 

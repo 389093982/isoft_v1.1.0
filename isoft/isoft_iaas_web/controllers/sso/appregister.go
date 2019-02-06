@@ -48,10 +48,10 @@ func (this *AppRegisterController) AppRegisterList() {
 	paginator := pagination.SetPaginator(this.Ctx, offset, count)
 
 	if err == nil {
-		this.Data["json"] = &map[string]interface{}{"status":"SUCCESS","appRegisters": appregisters,
+		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "appRegisters": appregisters,
 			"paginator": pageutil.Paginator(paginator.Page(), paginator.PerPageNums, paginator.Nums())}
-	}else{
-		this.Data["json"] = &map[string]interface{}{"status":"ERROR"}
+	} else {
+		this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
 	}
 	this.ServeJSON()
 }

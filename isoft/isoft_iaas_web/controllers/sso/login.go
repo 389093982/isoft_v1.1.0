@@ -29,12 +29,12 @@ func (this *LoginController) PostRegist() {
 	user.CreatedTime = time.Now()
 	user.LastUpdatedBy = "SYSTEM"
 	user.LastUpdatedTime = time.Now()
-	if sso.CheckUserRegist(user.UserName){
-		this.Data["json"] = &map[string]interface{}{"status": "ERROR","errorMsg":"regist_exist"}
-	}else if err := sso.SaveUser(user); err == nil{
+	if sso.CheckUserRegist(user.UserName) {
+		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": "regist_exist"}
+	} else if err := sso.SaveUser(user); err == nil {
 		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
-	}else {
-		this.Data["json"] = &map[string]interface{}{"status": "ERROR","errorMsg":"regist_failed"}
+	} else {
+		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": "regist_failed"}
 	}
 	this.ServeJSON()
 }
@@ -61,7 +61,7 @@ func (this *LoginController) CheckOrInValidateTokenString() {
 	this.ServeJSON()
 }
 
-func (this *LoginController) PostLogin()  {
+func (this *LoginController) PostLogin() {
 	// referer显示来源页面的完整地址,而origin显示来源页面的origin: protocal+host,不包含路径等信息,也就不会包含含有用户信息的敏感内容
 	// referer存在于所有请求,而origin只存在于post请求,随便在页面上点击一个链接将不会发送origin
 	// 因此origin较referer更安全,多用于防范CSRF攻击
@@ -73,26 +73,26 @@ func (this *LoginController) PostLogin()  {
 		loginSuccess, loginStatus, tokenString, _ := AdminUserLogin(referer, origin, username, passwd, this.Ctx.Input.IP())
 		this.Data["json"] = &map[string]interface{}{
 			"loginSuccess": loginSuccess,
-			"loginStatus":loginStatus,
-			"tokenString":tokenString,
-			"domain":getDomain(GetRedirectUrl(origin)),		 // 管理员登录设置 domain 为 sso 所在站点,不需要指定 redirectUrl
-			"adminLogin":"adminLogin",
+			"loginStatus":  loginStatus,
+			"tokenString":  tokenString,
+			"domain":       getDomain(GetRedirectUrl(origin)), // 管理员登录设置 domain 为 sso 所在站点,不需要指定 redirectUrl
+			"adminLogin":   "adminLogin",
 		}
 	} else {
 		loginSuccess, loginStatus, tokenString, _ := CommonUserLogin(referer, origin, username, passwd, this.Ctx.Input.IP())
 		this.Data["json"] = &map[string]interface{}{
 			"loginSuccess": loginSuccess,
-			"loginStatus":loginStatus,
-			"tokenString":tokenString,
-			"redirectUrl": GetRedirectUrl(referer),
-			"domain":getDomain(GetRedirectUrl(referer)),
+			"loginStatus":  loginStatus,
+			"tokenString":  tokenString,
+			"redirectUrl":  GetRedirectUrl(referer),
+			"domain":       getDomain(GetRedirectUrl(referer)),
 		}
 	}
 	this.ServeJSON()
 }
 
 func getDomain(url string) string {
-	if arr := strings.Split(url, "//"); len(arr) > 1{
+	if arr := strings.Split(url, "//"); len(arr) > 1 {
 		return strings.Split(arr[1], "/")[0]
 	}
 	return ""
@@ -105,7 +105,7 @@ func IsAdminUser(user_name string) bool {
 	return false
 }
 
-func AdminUserLogin(referer, origin, username, passwd, ip string) (loginSuccess bool, loginStatus, tokenString string, err error){
+func AdminUserLogin(referer, origin, username, passwd, ip string) (loginSuccess bool, loginStatus, tokenString string, err error) {
 	if CheckOrigin(origin) { // 非跨站点,不许校验 referer
 		user, err := sso.QueryUser(username, passwd)
 		if err == nil && &user != nil {
@@ -118,7 +118,7 @@ func AdminUserLogin(referer, origin, username, passwd, ip string) (loginSuccess 
 	}
 }
 
-func ErrorAuthorizedLogin(username string, origin string, ip string, referer string) (loginSuccess bool, loginStatus,tokenString string, err error){
+func ErrorAuthorizedLogin(username string, origin string, ip string, referer string) (loginSuccess bool, loginStatus, tokenString string, err error) {
 	var loginLog sso.LoginRecord
 	loginLog.UserName = username
 	loginLog.LoginIp = ip
@@ -135,10 +135,10 @@ func ErrorAuthorizedLogin(username string, origin string, ip string, referer str
 	loginLog.LastUpdatedBy = "SYSTEM"
 	loginLog.LastUpdatedTime = time.Now()
 	sso.AddLoginRecord(loginLog)
-	return false, loginLog.LoginStatus, "", errors.New(fmt.Sprintf("login error:%s",loginLog.LoginStatus))
+	return false, loginLog.LoginStatus, "", errors.New(fmt.Sprintf("login error:%s", loginLog.LoginStatus))
 }
 
-func ErrorAccountLogin(username string, ip string, origin string, referer string) (loginSuccess bool, loginStatus,tokenString string, err error){
+func ErrorAccountLogin(username string, ip string, origin string, referer string) (loginSuccess bool, loginStatus, tokenString string, err error) {
 	var loginLog sso.LoginRecord
 	loginLog.UserName = username
 	loginLog.LoginIp = ip
@@ -151,12 +151,12 @@ func ErrorAccountLogin(username string, ip string, origin string, referer string
 	loginLog.LastUpdatedBy = "SYSTEM"
 	loginLog.LastUpdatedTime = time.Now()
 	sso.AddLoginRecord(loginLog)
-	return false, loginLog.LoginStatus, "", errors.New(fmt.Sprintf("login error:%s",loginLog.LoginStatus))
+	return false, loginLog.LoginStatus, "", errors.New(fmt.Sprintf("login error:%s", loginLog.LoginStatus))
 }
 
 func GetRedirectUrl(referer string) string {
 	referers := strings.Split(referer, "/sso/login?redirectUrl=")
-	if len(referers) == 2{
+	if len(referers) == 2 {
 		return GetUnescapeString(referers[1])
 	}
 	// 不含 redirectURL 场景
@@ -165,7 +165,7 @@ func GetRedirectUrl(referer string) string {
 
 // 进行编解码
 func GetUnescapeString(s string) string {
-	if _s, err := url.QueryUnescape(s); err == nil{
+	if _s, err := url.QueryUnescape(s); err == nil {
 		return _s
 	}
 	return s
@@ -185,7 +185,7 @@ func CommonUserLogin(referer string, origin string, username string, passwd stri
 	}
 }
 
-func SuccessedLogin(username string, ip string, origin string, referer string, user sso.User) (loginSuccess bool, loginStatus, tokenString string, err error){
+func SuccessedLogin(username string, ip string, origin string, referer string, user sso.User) (loginSuccess bool, loginStatus, tokenString string, err error) {
 	var loginLog sso.LoginRecord
 	loginLog.UserName = username
 	loginLog.LoginIp = ip
@@ -250,4 +250,3 @@ func CheckOrigin(origin string) bool {
 	logs.Warn("origin error for %s", origin)
 	return false
 }
-

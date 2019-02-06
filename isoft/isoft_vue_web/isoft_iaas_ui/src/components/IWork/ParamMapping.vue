@@ -19,9 +19,10 @@
   export default {
     name: "ParamMapping",
     components:{ParamMappingAdd},
-    data(){
-      return {
-        paramMappings:[],
+    props:{
+      paramMappings:{
+        type:Array,
+        default:[],
       }
     },
     methods:{

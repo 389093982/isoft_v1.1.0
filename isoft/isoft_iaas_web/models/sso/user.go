@@ -41,7 +41,7 @@ func SaveUser(user User) error {
 func CheckUserRegist(username string) bool {
 	o := orm.NewOrm()
 	count, _ := o.QueryTable("user").Filter("user_name", username).Count()
-	if count > 0{
+	if count > 0 {
 		return true
 	}
 	return false
