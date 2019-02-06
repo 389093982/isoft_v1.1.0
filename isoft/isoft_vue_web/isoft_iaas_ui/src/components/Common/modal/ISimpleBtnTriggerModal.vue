@@ -2,11 +2,13 @@
   <span>
     <Button type="success" :size="btnSize" @click="showFormModal = true">{{btnText}}</Button>
 
+    <!-- 设置 transfer 属性为 false 后,保证好两个 Modal 的前后顺序,可以解决顺序问题 -->
     <Modal
       v-model="showFormModal"
       :width="modalWidth"
       :title="modalTitle"
       :footer-hide="true"
+      :transfer="false"
       :mask-closable="false">
       <div>
         <slot></slot>

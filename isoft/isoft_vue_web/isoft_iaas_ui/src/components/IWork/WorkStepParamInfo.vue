@@ -26,6 +26,7 @@
                     <Input v-model.trim="formValidate.work_step_input" type="textarea" :rows="10" placeholder="请输入 work_step_input"></Input>
                   </TabPane>
                   <TabPane label="ParamMapping">
+                    <ParamMapping/>
                   </TabPane>
                 </Tabs>
               </FormItem>
@@ -55,12 +56,13 @@
 <script>
   import  WorkStepParamInputEdit from "./WorkStepParamInputEdit"
   import WorkStepParamOutputDisplay from "./WorkStepParamOutputDisplay"
+  import ParamMapping from "./ParamMapping"
   import {EditWorkStepParamInfo} from "../../api"
   import {LoadWorkStepInfo} from "../../api"
 
   export default {
     name: "WorkStepParamInfo",
-    components:{WorkStepParamInputEdit,WorkStepParamOutputDisplay},
+    components:{WorkStepParamInputEdit,WorkStepParamOutputDisplay,ParamMapping},
     props: {
       workId: {
         type: Number,
