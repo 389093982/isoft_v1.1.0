@@ -36,7 +36,7 @@
   import {LoadWorkStepInfo} from "../../api"
 
   export default {
-    name: "WorkStepBaseInfoDialog",
+    name: "WorkStepBaseInfo",
     data(){
       return {
         showFormModal:false,
@@ -65,7 +65,7 @@
           this.formValidate.work_step_type = result.step.work_step_type;
         }
       },
-      showWorkStepBaseInfoDialog:function (work_id, work_step_id) {
+      showWorkStepBaseInfo:function (work_id, work_step_id) {
         this.formValidate.work_id = work_id;
         this.formValidate.work_step_id = work_step_id;
         this.loadWorkStepInfo();

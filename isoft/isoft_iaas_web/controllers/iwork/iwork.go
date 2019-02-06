@@ -2,14 +2,12 @@ package iwork
 
 import (
 	"encoding/json"
-	"encoding/xml"
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/utils/pagination"
 	"isoft/isoft/common/pageutil"
 	"isoft/isoft_iaas_web/core/iworkdata"
 	"isoft/isoft_iaas_web/core/iworkrun"
 	"isoft/isoft_iaas_web/models/iwork"
-	"strings"
 	"time"
 )
 
@@ -166,25 +164,16 @@ func (this *WorkController) LoadWorkStepInfo()  {
 	if step, err := iwork.LoadWorkStepInfo(work_id, work_step_id); err == nil{
 		// 返回结果
 		this.Data["json"] = &map[string]interface{}{"status":"SUCCESS", "step":step,
-			"paramInputSchema":GetParamInputSchema(&step), "paramInputSchemaXml":GetParamInputSchema(&step).RenderToXml()}
+			"paramInputSchema":iworkdata.GetParamInputSchema(&step), "paramInputSchemaXml":iworkdata.GetParamInputSchema(&step).RenderToXml(),
+			"paramOutputSchema":iworkdata.GetParamOutputSchema(&step), "paramOutputSchemaXml":iworkdata.GetParamOutputSchema(&step).RenderToXml(),
+		}
 	}else{
 		this.Data["json"] = &map[string]interface{}{"status":"ERROR"}
 	}
 	this.ServeJSON()
 }
 
-func GetParamInputSchema(step *iwork.WorkStep) *iworkdata.ParamInputSchema {
-	if strings.TrimSpace(step.WorkStepInput) != ""{
-		var paramInputSchema *iworkdata.ParamInputSchema
-		if err := xml.Unmarshal([]byte(step.WorkStepInput), &paramInputSchema); err == nil{
-			return paramInputSchema
-		}
-	}
-	// 获取当前 work_step 对应的 paramInputSchema
-	helper := &iworkdata.IWorkStepHelper{WorkStep:step}
-	paramInputSchema := helper.GetDefaultParamInputSchema()
-	return paramInputSchema
-}
+
 
 func (this *WorkController) GetAllWorkStepInfo() {
 	work_id := this.GetString("work_id")

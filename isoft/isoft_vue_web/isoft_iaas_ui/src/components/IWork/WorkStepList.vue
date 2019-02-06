@@ -10,8 +10,8 @@
       </div>
     </ISimpleLeftRightRow>
 
-    <WorkStepBaseInfoDialog ref="workStepBaseInfoDialog" @handleSuccess="refreshWorkStepList"/>
-    <WorkStepParamInfoDialog ref="workStepParamInfoDialog" @handleSuccess="refreshWorkStepList"/>
+    <WorkStepBaseInfo ref="workStepBaseInfo" @handleSuccess="refreshWorkStepList"/>
+    <WorkStepParamInfo ref="workStepParamInfo" @handleSuccess="refreshWorkStepList"/>
 
     <Table :columns="columns1" :data="worksteps" size="small"></Table>
     <Page :total="total" :page-size="offset" show-total show-sizer :styles="{'text-align': 'center','margin-top': '10px'}"
@@ -26,13 +26,13 @@
   import {ChangeWorkStepOrder} from "../../api"
   import {AddWorkStep} from "../../api"
   import {RunWork} from "../../api"
-  import WorkStepParamInfoDialog from "./WorkStepParamInfoDialog"
+  import WorkStepParamInfo from "./WorkStepParamInfo"
   import ISimpleLeftRightRow from "../Common/layout/ISimpleLeftRightRow"
-  import WorkStepBaseInfoDialog from "./WorkStepBaseInfoDialog"
+  import WorkStepBaseInfo from "./WorkStepBaseInfo"
 
   export default {
     name: "WorkStepList",
-    components:{WorkStepParamInfoDialog,ISimpleLeftRightRow,WorkStepBaseInfoDialog},
+    components:{WorkStepParamInfo,ISimpleLeftRightRow,WorkStepBaseInfo},
     data(){
       return {
         // 当前页
@@ -133,7 +133,7 @@
                   },
                   on: {
                     click: () => {
-                      this.$refs.workStepBaseInfoDialog.showWorkStepBaseInfoDialog(this._workId, this.worksteps[params.index]['work_step_id']);
+                      this.$refs.workStepBaseInfo.showWorkStepBaseInfo(this._workId, this.worksteps[params.index]['work_step_id']);
                     }
                   }
                 }, '编辑'),
@@ -147,7 +147,7 @@
                   },
                   on: {
                     click: () => {
-                      this.$refs.workStepParamInfoDialog.showWorkStepParamInfoDialog(this._workId, this.worksteps[params.index]['work_step_id']);
+                      this.$refs.workStepParamInfo.showWorkStepParamInfo(this._workId, this.worksteps[params.index]['work_step_id']);
                     }
                   }
                 }, '参数'),

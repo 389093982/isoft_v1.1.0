@@ -25,6 +25,16 @@ func (this *SQLQuery) GetDefaultParamInputSchema() *ParamInputSchema {
 	return &ParamInputSchema{ParamInputSchemaItems:items}
 }
 
+func (this *SQLQuery) GetDefaultParamOutputSchema() *ParamOutputSchema {
+	paramNames := []string{"sql","sql_binding?","db_conn"}
+	items := []ParamOutputSchemaItem{}
+	for _, paramName := range paramNames{
+		items = append(items, ParamOutputSchemaItem{ParamName:paramName})
+	}
+	return &ParamOutputSchema{ParamOutputSchemaItems:items}
+}
+
+
 func (this *SQLQuery) ExecuteWithParams()  {
 	
 }

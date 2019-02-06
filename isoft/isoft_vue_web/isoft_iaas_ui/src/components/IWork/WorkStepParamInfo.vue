@@ -19,11 +19,11 @@
             <Col span="12">
               <FormItem label="work_step_input" prop="work_step_input">
                 <Tabs type="card" :animated="false">
-                  <TabPane label="Xml">
-                    <Input v-model.trim="formValidate.work_step_input" type="textarea" :autosize="{minRows: 10,maxRows: 20}" placeholder="请输入 work_step_input"></Input>
-                  </TabPane>
                   <TabPane label="edit">
                     <WorkStepParamInputEdit :paramInputSchemaItems="paramInputSchema.ParamInputSchemaItems"/>
+                  </TabPane>
+                  <TabPane label="Xml">
+                    <Input v-model.trim="formValidate.work_step_input" type="textarea" :autosize="{minRows: 10,maxRows: 20}" placeholder="请输入 work_step_input"></Input>
                   </TabPane>
                 </Tabs>
               </FormItem>
@@ -31,11 +31,11 @@
             <Col span="12">
               <FormItem label="work_step_output" prop="work_step_output">
                 <Tabs type="card" :animated="false">
+                  <TabPane label="Tree">
+                    <WorkStepParamOutputDisplay/>
+                  </TabPane>
                   <TabPane label="Xml">
                     <Input v-model.trim="formValidate.work_step_output" type="textarea" :autosize="{minRows: 10,maxRows: 20}" placeholder="请输入 work_step_output"></Input>
-                  </TabPane>
-                  <TabPane label="edit">
-                    <span>AAAAAAAAAAA</span>
                   </TabPane>
                 </Tabs>
               </FormItem>
@@ -52,12 +52,13 @@
 
 <script>
   import  WorkStepParamInputEdit from "./WorkStepParamInputEdit"
+  import WorkStepParamOutputDisplay from "./WorkStepParamOutputDisplay"
   import {EditWorkStepParamInfo} from "../../api"
   import {LoadWorkStepInfo} from "../../api"
 
   export default {
-    name: "WorkStepParamInfoDialog",
-    components:{WorkStepParamInputEdit},
+    name: "WorkStepParamInfo",
+    components:{WorkStepParamInputEdit,WorkStepParamOutputDisplay},
     props: {
       workId: {
         type: Number,
@@ -69,6 +70,8 @@
         showFormModal:false,
         paramInputSchema:"",
         paramInputSchemaXml:"",
+        paramOutputSchema:"",
+        paramOutputSchemaXml:"",
         default_work_step_types:["work_start","work_end","sql_query","sql_insert"],
         formValidate: {
           work_id: this.workId,
@@ -113,11 +116,14 @@
         if(result.status == "SUCCESS"){
           this.formValidate.work_step_name = result.step.work_step_name;
           this.formValidate.work_step_type = result.step.work_step_type;
-          this.formValidate.work_step_input = result.step.work_step_input;
-          this.formValidate.work_step_output = result.step.work_step_output;
+          // 入参渲染
           this.paramInputSchema = result.paramInputSchema;
           this.paramInputSchemaXml = result.paramInputSchemaXml;
           this.formValidate.work_step_input = result.paramInputSchemaXml;
+          // 出参渲染
+          this.paramOutputSchema = result.paramOutputSchema;
+          this.paramOutputSchemaXml = result.paramOutputSchemaXml;
+          this.formValidate.work_step_output = result.paramOutputSchemaXml;
         }else{
           // 加载失败
           this.$Message.error('错误的步骤ID,数据加载失败!数据已失效!');
@@ -127,7 +133,7 @@
       handleReset (name) {
         this.$refs[name].resetFields();
       },
-      showWorkStepParamInfoDialog:function (work_id, work_step_id) {
+      showWorkStepParamInfo:function (work_id, work_step_id) {
         this.formValidate.work_id = work_id;
         this.formValidate.work_step_id = work_step_id;
         this.loadWorkStepInfo();
