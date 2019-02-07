@@ -1,6 +1,6 @@
 <template>
   <span>
-    <Button :style="{float:btnFolat}" type="success" :size="btnSize" @click="showFormModal = true">{{btnText}}</Button>
+    <Button :style="{float:btnFolat}" type="success" :size="btnSize" @click="btnClick">{{btnText}}</Button>
 
     <!-- 设置 transfer 属性为 false 后,保证好两个 Modal 的前后顺序,可以解决顺序问题 -->
     <Modal
@@ -51,6 +51,10 @@
       // 隐藏 modal
       hideModal:function () {
         this.showFormModal = false;
+      },
+      btnClick:function () {
+        this.showFormModal = true;
+        this.$emit("btnClick");
       }
     }
   }

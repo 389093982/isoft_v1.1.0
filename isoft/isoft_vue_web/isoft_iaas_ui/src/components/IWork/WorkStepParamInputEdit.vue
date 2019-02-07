@@ -5,7 +5,7 @@
         <Col span="12">{{item.ParamName}}</Col>
         <Col span="12">
           <WorkStepParamInputEditDialog :input-label="item.ParamName" :input-text="item.ParamValue"
-                                        @handleSubmit="refreshParamInputSchemaItems"/>
+           @handleSubmit="refreshParamInputSchemaItems"/>
         </Col>
       </Row>
       <Row>
@@ -38,16 +38,7 @@
           }
         }
       },
-      update:function (work_id, work_step_id) {
-        this.work_id = work_id;
-        this.work_step_id = work_step_id;
-      }
     },
-    computed:{
-      _workId:function () {
-        return parseInt(this.work_id);
-      },
-    }
   }
 </script>
 

@@ -1,0 +1,10 @@
+this.$store.commit('toShowLoginDialog', true);
+this.$store.dispatch('toShowLoginDialog',false);
+主要区别是:
+dispatch:含有异步操作,例如向后台提交数据,写法:this.$store.dispatch('mutations方法名',值)
+commit:同步操作,写法:this.$store.commit('mutations方法名',值)
+
+通过 mutation 间接更新 state 的多个方法的对象
+vuex.action 只能传递两个参数,一个state是自动添加的,一个payload,是用户自己传到.
+但是！如果你传了两个参数,你会发现第二个永远都是undefined.
+正确的操作,把多个参数打包为一个对象,放到payload里.
