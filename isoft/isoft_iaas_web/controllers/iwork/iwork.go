@@ -252,12 +252,23 @@ func (this *WorkController) ChangeWorkStepOrder() {
 }
 
 func (this *WorkController) LoadPreNodeOutput()  {
-	//work_id := this.GetString("work_id")
-	//work_step_id, _ := this.GetInt64("work_step_id")
+	work_id := this.GetString("work_id")
+	work_step_id, _ := this.GetInt64("work_step_id")
+
+	preParamOutputSchemaTreeNodeArr := []*iworkdata.TreeNode{}
+	// 加载 resource 参数
 	pos := LoadResourceInfo()
+	preParamOutputSchemaTreeNodeArr = append(preParamOutputSchemaTreeNodeArr, pos.RenderToTreeNodes("$RESOURCE"))
+	// 加载前置步骤输出
+	if steps, err := iwork.GetAllPreStepInfo(work_id, work_step_id); err == nil{
+		for _, step := range steps{
+			pos := iworkcomponent.GetCacheParamOutputSchema(&step)
+			preParamOutputSchemaTreeNodeArr = append(preParamOutputSchemaTreeNodeArr, pos.RenderToTreeNodes("$" + step.WorkStepName))
+		}
+	}
 	// 返回结果
 	this.Data["json"] = &map[string]interface{}{"status": "SUCCESS",
-		"preParamOutputSchemaTreeNode": pos.RenderToTreeNodes("$RESOURCE"),
+		"preParamOutputSchemaTreeNodeArr": preParamOutputSchemaTreeNodeArr,
 	}
 	this.ServeJSON()
 }

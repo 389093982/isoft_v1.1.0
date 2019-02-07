@@ -126,3 +126,10 @@ func DeleteWorkStepById(id int64) error {
 	_, err := o.QueryTable("work_step").Filter("id", id).Delete()
 	return err
 }
+
+func GetAllPreStepInfo(work_id string,work_step_id int64) (steps []WorkStep, err error) {
+	o := orm.NewOrm()
+	_, err = o.QueryTable("work_step").Filter("work_id", work_id).
+		Filter("work_step_id__lt",work_step_id).OrderBy("work_step_id").All(&steps)
+	return
+}

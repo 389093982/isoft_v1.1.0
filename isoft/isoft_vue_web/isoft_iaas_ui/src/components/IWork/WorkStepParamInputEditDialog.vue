@@ -42,7 +42,7 @@
     data(){
       return {
         inputTextData:this.inputText,
-        preParamOutputSchemaTreeNode:{},
+        preParamOutputSchemaTreeNodeArr:[],
       }
     },
     methods:{
@@ -53,7 +53,7 @@
       refreshPreNodeOutput:async function () {
         const result = await LoadPreNodeOutput(this.$store.state.current_work_id, this.$store.state.current_work_step_id);
         if(result.status == "SUCCESS"){
-          this.preParamOutputSchemaTreeNode = result.preParamOutputSchemaTreeNode;
+          this.preParamOutputSchemaTreeNodeArr = result.preParamOutputSchemaTreeNodeArr;
         }
       },
       appendDataWithPrefix:function(prefix, item){
@@ -85,22 +85,26 @@
     },
     computed:{
       data1:function () {
-        const result = {
-          title: this.preParamOutputSchemaTreeNode.NodeName,
-          expand: true,
-        };
-        if(this.preParamOutputSchemaTreeNode.NodeChildrens != null && this.preParamOutputSchemaTreeNode.NodeChildrens.length > 0){
-          const arr = [];
-          for(var i=0; i<this.preParamOutputSchemaTreeNode.NodeChildrens.length; i++){
-            arr.push({
-              title: this.preParamOutputSchemaTreeNode.NodeChildrens[i].NodeName,
-            });
+        // tree 对应的 arr
+        let resultArr = [];
+        for(var i=0; i<this.preParamOutputSchemaTreeNodeArr.length; i++){
+          let preParamOutputSchemaTreeNode = this.preParamOutputSchemaTreeNodeArr[i];
+          const result = {
+            title: preParamOutputSchemaTreeNode.NodeName,
+            expand: true,
+          };
+          if(preParamOutputSchemaTreeNode.NodeChildrens != null && preParamOutputSchemaTreeNode.NodeChildrens.length > 0){
+            const arr = [];
+            for(var j=0; j<preParamOutputSchemaTreeNode.NodeChildrens.length; j++){
+              arr.push({
+                title: preParamOutputSchemaTreeNode.NodeChildrens[j].NodeName,
+              });
+            }
+            result.children = arr;
           }
-          result.children = arr;
+          resultArr.push(result);
         }
-        return [
-          result,
-        ]
+        return resultArr;
       }
     }
   }
