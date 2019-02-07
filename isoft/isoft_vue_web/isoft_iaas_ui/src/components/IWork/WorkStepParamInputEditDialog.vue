@@ -2,16 +2,22 @@
   <ISimpleBtnTriggerModal ref="triggerModal" btn-text="查看/编辑" btn-size="small" btn-folat="right"
       modal-title="查看/编辑 workstep 参数" :modal-width="800" @btnClick="refreshPreNodeOutput">
     <Row>
-      <Col span="12">
-        前置节点输出参数
-        <Tree :data="data1" show-checkbox></Tree>
+      <Col span="11">
+        <h3>前置节点输出参数</h3>
+        <Tree :data="data1" show-checkbox ref="tree1"></Tree>
       </Col>
-      <Col span="12">{{inputLabel}}
+      <Col span="2" style="text-align: center;margin-top: 100px;">
+        <Button>
+          <Icon type="ios-arrow-forward" @click="appendData"></Icon>
+        </Button>
+      </Col>
+      <Col span="11">
+        <h3>{{inputLabel}}</h3>
         <Input v-model="inputTextData" type="textarea" :rows="10" placeholder="Enter something..." />
       </Col>
     </Row>
-    <Row style="text-align: center;margin-top: 10px;">
-      <Button type="success" @click="handleSubmit">Submit</Button>
+    <Row style="text-align: center;margin-top: 10px;" @click="handleSubmit">
+      <Button type="success">Submit</Button>
     </Row>
   </ISimpleBtnTriggerModal>
 </template>
@@ -48,6 +54,32 @@
         const result = await LoadPreNodeOutput(this.$store.state.current_work_id, this.$store.state.current_work_step_id);
         if(result.status == "SUCCESS"){
           this.preParamOutputSchemaTreeNode = result.preParamOutputSchemaTreeNode;
+        }
+      },
+      appendDataWithPrefix:function(prefix, item){
+        // 没有子节点
+        if(item.children == null){
+          if(item.indeterminate == false){
+            // 将数据添加到右侧
+            this.inputTextData = this.inputTextData + prefix + "\n";
+          }
+        }else{
+          // 有子节点
+          let items = item.children;
+          for(var i=0; i<items.length; i++){
+            let item = items[i];
+            this.appendDataWithPrefix(prefix + "." + item.title, item);
+          }
+        }
+      },
+      appendData:function () {
+        let items = this.$refs.tree1.getCheckedAndIndeterminateNodes();
+        for(var i=0; i<items.length; i++){
+          let item = items[i];
+          // 只统计以 $ 开头的数据
+          if(item.title.indexOf("$") != -1){
+            this.appendDataWithPrefix(item.title,item);
+          }
         }
       }
     },
