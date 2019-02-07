@@ -28,7 +28,7 @@ func RunStep(work iwork.Work, step iwork.WorkStep) {
 }
 
 func SQLQueryRun(work iwork.Work, step iwork.WorkStep) {
-	db, err := sqlutil.GetConnForMysql("mysql", sqlutil.GetDataSourceName(iworkdata.GetParamValue(step, "db_conn")))
+	db, err := sqlutil.GetConnForMysql("mysql", iworkdata.GetParamValue(step, "db_conn"))
 	if err != nil {
 		panic(err)
 	}

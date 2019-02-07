@@ -2,6 +2,8 @@ package iworkdata
 
 import (
 	"encoding/xml"
+	"isoft/isoft_iaas_web/core/iworkcomponent"
+	"isoft/isoft_iaas_web/models/iresource"
 	"isoft/isoft_iaas_web/models/iwork"
 	"strings"
 )
@@ -48,7 +50,18 @@ func GetParamInputSchema(step *iwork.WorkStep) *ParamInputSchema {
 	return paramInputSchema
 }
 
+// 获取参数值,支持获取动态参数
 func GetParamValue(step iwork.WorkStep, paramName string) string {
+	paramValueString := GetParamValueString(step, paramName)
+	if iworkcomponent.IsDynamicParam(paramValueString){
+		if strings.HasPrefix(paramValueString, "$RESOURCE."){
+			return iresource.GetResourceDataSourceNameString(strings.Replace(paramValueString, "$RESOURCE.", "", -1))
+		}
+	}
+	return paramValueString
+}
+
+func GetParamValueString(step iwork.WorkStep, paramName string) string {
 	var paramInputSchema ParamInputSchema
 	if err := xml.Unmarshal([]byte(step.WorkStepInput), &paramInputSchema); err != nil {
 		return ""
