@@ -16,8 +16,8 @@
         <Input v-model="inputTextData" type="textarea" :rows="10" placeholder="Enter something..." />
       </Col>
     </Row>
-    <Row style="text-align: center;margin-top: 10px;" @click="handleSubmit">
-      <Button type="success">Submit</Button>
+    <Row style="text-align: center;margin-top: 10px;">
+      <Button type="success" @click="handleSubmit">Submit</Button>
     </Row>
   </ISimpleBtnTriggerModal>
 </template>
