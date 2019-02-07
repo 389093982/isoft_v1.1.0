@@ -17,6 +17,20 @@ type WorkController struct {
 	beego.Controller
 }
 
+func (this *WorkController) BuildOutput()  {
+	work_id := this.GetString("work_id")
+	work_step_id, _ := this.GetInt8("work_step_id")
+	this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
+	// 读取 work_step 信息
+	if step, err := iwork.LoadWorkStepInfo(work_id, work_step_id); err == nil {
+		step.WorkStepOutput = iworkdata.GetRuntimeParamOutputSchema(&step).RenderToXml()
+		if _, err = iwork.InsertOrUpdateWorkStep(&step); err == nil{
+			this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
+		}
+	}
+	this.ServeJSON()
+}
+
 func (this *WorkController) RunWork() {
 	work_id := this.GetString("work_id")
 	work, _ := iwork.QueryWorkById(work_id)
@@ -187,11 +201,11 @@ func (this *WorkController) LoadWorkStepInfo() {
 		json.Unmarshal([]byte(step.WorkStepParamMapping), &paramMappingsArr)
 		// 返回结果
 		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "step": step,
-			"paramInputSchema":          iworkdata.GetParamInputSchema(&step),
-			"paramInputSchemaXml":       iworkdata.GetParamInputSchema(&step).RenderToXml(),
-			"paramOutputSchema":         iworkdata.GetParamOutputSchema(&step),
-			"paramOutputSchemaXml":      iworkdata.GetParamOutputSchema(&step).RenderToXml(),
-			"paramOutputSchemaTreeNode": iworkdata.GetParamOutputSchema(&step).RenderToTreeNodes("$NODE_NAME_OUTPUT"),
+			"paramInputSchema":          iworkdata.GetCacheParamInputSchema(&step),
+			"paramInputSchemaXml":       iworkdata.GetCacheParamInputSchema(&step).RenderToXml(),
+			"paramOutputSchema":         iworkdata.GetCacheParamOutputSchema(&step),
+			"paramOutputSchemaXml":      iworkdata.GetCacheParamOutputSchema(&step).RenderToXml(),
+			"paramOutputSchemaTreeNode": iworkdata.GetCacheParamOutputSchema(&step).RenderToTreeNodes("$NODE_NAME_OUTPUT"),
 			"paramMappings":			 paramMappingsArr,
 		}
 	} else {
@@ -260,3 +274,4 @@ func LoadResourceInfo() *iworkdata.ParamOutputSchema {
 	}
 	return pos
 }
+

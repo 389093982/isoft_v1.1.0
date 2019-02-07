@@ -16,8 +16,8 @@ func (this *ParamResolver) ParseParamStrToMap() *map[string]interface{} {
 	return &map[string]interface{}{}
 }
 
-// 获取出参 schema
-func GetParamOutputSchema(step *iwork.WorkStep) *ParamOutputSchema {
+// 获取缓存的出参 schema,即从 DB 中读取
+func GetCacheParamOutputSchema(step *iwork.WorkStep) *ParamOutputSchema {
 	// 从缓存(数据库字段)中获取
 	if strings.TrimSpace(step.WorkStepOutput) != "" {
 		var paramOutputSchema *ParamOutputSchema
@@ -25,6 +25,11 @@ func GetParamOutputSchema(step *iwork.WorkStep) *ParamOutputSchema {
 			return paramOutputSchema
 		}
 	}
+	return &ParamOutputSchema{}
+}
+
+// 获取出参 schema
+func GetRuntimeParamOutputSchema(step *iwork.WorkStep) *ParamOutputSchema {
 	// 获取当前 work_step 对应的 paramOutputSchema
 	helper := &IWorkStepHelper{WorkStep: step}
 	paramOutputSchema := helper.GetDefaultParamOutputSchema()
@@ -36,7 +41,7 @@ func GetParamOutputSchema(step *iwork.WorkStep) *ParamOutputSchema {
 }
 
 // 获取入参 schema
-func GetParamInputSchema(step *iwork.WorkStep) *ParamInputSchema {
+func GetCacheParamInputSchema(step *iwork.WorkStep) *ParamInputSchema {
 	// 从缓存(数据库字段)中获取
 	if strings.TrimSpace(step.WorkStepInput) != "" {
 		var paramInputSchema *ParamInputSchema
