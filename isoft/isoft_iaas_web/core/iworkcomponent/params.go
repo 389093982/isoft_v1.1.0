@@ -1,8 +1,8 @@
-package iworkdata
+package iworkcomponent
 
 import (
 	"encoding/xml"
-	"isoft/isoft_iaas_web/core/iworkcomponent"
+	"isoft/isoft_iaas_web/core/iworkdata"
 	"isoft/isoft_iaas_web/models/iresource"
 	"isoft/isoft_iaas_web/models/iwork"
 	"strings"
@@ -17,19 +17,19 @@ func (this *ParamResolver) ParseParamStrToMap() *map[string]interface{} {
 }
 
 // 获取缓存的出参 schema,即从 DB 中读取
-func GetCacheParamOutputSchema(step *iwork.WorkStep) *ParamOutputSchema {
+func GetCacheParamOutputSchema(step *iwork.WorkStep) *iworkdata.ParamOutputSchema {
 	// 从缓存(数据库字段)中获取
 	if strings.TrimSpace(step.WorkStepOutput) != "" {
-		var paramOutputSchema *ParamOutputSchema
+		var paramOutputSchema *iworkdata.ParamOutputSchema
 		if err := xml.Unmarshal([]byte(step.WorkStepOutput), &paramOutputSchema); err == nil {
 			return paramOutputSchema
 		}
 	}
-	return &ParamOutputSchema{}
+	return &iworkdata.ParamOutputSchema{}
 }
 
 // 获取出参 schema
-func GetRuntimeParamOutputSchema(step *iwork.WorkStep) *ParamOutputSchema {
+func GetRuntimeParamOutputSchema(step *iwork.WorkStep) *iworkdata.ParamOutputSchema {
 	// 获取当前 work_step 对应的 paramOutputSchema
 	helper := &IWorkStepHelper{WorkStep: step}
 	paramOutputSchema := helper.GetDefaultParamOutputSchema()
@@ -41,10 +41,10 @@ func GetRuntimeParamOutputSchema(step *iwork.WorkStep) *ParamOutputSchema {
 }
 
 // 获取入参 schema
-func GetCacheParamInputSchema(step *iwork.WorkStep) *ParamInputSchema {
+func GetCacheParamInputSchema(step *iwork.WorkStep) *iworkdata.ParamInputSchema {
 	// 从缓存(数据库字段)中获取
 	if strings.TrimSpace(step.WorkStepInput) != "" {
-		var paramInputSchema *ParamInputSchema
+		var paramInputSchema *iworkdata.ParamInputSchema
 		if err := xml.Unmarshal([]byte(step.WorkStepInput), &paramInputSchema); err == nil {
 			return paramInputSchema
 		}
@@ -58,7 +58,7 @@ func GetCacheParamInputSchema(step *iwork.WorkStep) *ParamInputSchema {
 // 获取参数值,支持获取动态参数
 func GetParamValue(step iwork.WorkStep, paramName string) string {
 	paramValueString := GetParamValueString(step, paramName)
-	if iworkcomponent.IsDynamicParam(paramValueString){
+	if IsDynamicParam(paramValueString){
 		if strings.HasPrefix(paramValueString, "$RESOURCE."){
 			return iresource.GetResourceDataSourceNameString(strings.Replace(paramValueString, "$RESOURCE.", "", -1))
 		}
@@ -67,7 +67,7 @@ func GetParamValue(step iwork.WorkStep, paramName string) string {
 }
 
 func GetParamValueString(step iwork.WorkStep, paramName string) string {
-	var paramInputSchema ParamInputSchema
+	var paramInputSchema iworkdata.ParamInputSchema
 	if err := xml.Unmarshal([]byte(step.WorkStepInput), &paramInputSchema); err != nil {
 		return ""
 	}
@@ -82,4 +82,9 @@ func GetParamValueString(step iwork.WorkStep, paramName string) string {
 		}
 	}
 	return ""
+}
+
+// 判断参数是否是动态参数
+func IsDynamicParam(param string) bool {
+	return strings.HasPrefix(param, "$")
 }

@@ -5,6 +5,7 @@ import (
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/utils/pagination"
 	"isoft/isoft/common/pageutil"
+	"isoft/isoft_iaas_web/core/iworkcomponent"
 	"isoft/isoft_iaas_web/core/iworkdata"
 	"isoft/isoft_iaas_web/core/iworkrun"
 	"isoft/isoft_iaas_web/models/iresource"
@@ -23,7 +24,7 @@ func (this *WorkController) BuildOutput()  {
 	this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
 	// 读取 work_step 信息
 	if step, err := iwork.LoadWorkStepInfo(work_id, work_step_id); err == nil {
-		step.WorkStepOutput = iworkdata.GetRuntimeParamOutputSchema(&step).RenderToXml()
+		step.WorkStepOutput = iworkcomponent.GetRuntimeParamOutputSchema(&step).RenderToXml()
 		if _, err = iwork.InsertOrUpdateWorkStep(&step); err == nil{
 			this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
 		}
@@ -154,7 +155,6 @@ func (this *WorkController) EditWorkStepParamInfo() {
 		}
 		step.WorkStepInput = paramInputSchema.RenderToXml()
 		step.WorkStepParamMapping = paramMappingsStr
-		step.WorkStepOutput = "test"
 		step.CreatedBy = "SYSTEM"
 		step.CreatedTime = time.Now()
 		step.LastUpdatedBy = "SYSTEM"
@@ -201,11 +201,11 @@ func (this *WorkController) LoadWorkStepInfo() {
 		json.Unmarshal([]byte(step.WorkStepParamMapping), &paramMappingsArr)
 		// 返回结果
 		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "step": step,
-			"paramInputSchema":          iworkdata.GetCacheParamInputSchema(&step),
-			"paramInputSchemaXml":       iworkdata.GetCacheParamInputSchema(&step).RenderToXml(),
-			"paramOutputSchema":         iworkdata.GetCacheParamOutputSchema(&step),
-			"paramOutputSchemaXml":      iworkdata.GetCacheParamOutputSchema(&step).RenderToXml(),
-			"paramOutputSchemaTreeNode": iworkdata.GetCacheParamOutputSchema(&step).RenderToTreeNodes("$NODE_NAME_OUTPUT"),
+			"paramInputSchema":          iworkcomponent.GetCacheParamInputSchema(&step),
+			"paramInputSchemaXml":       iworkcomponent.GetCacheParamInputSchema(&step).RenderToXml(),
+			"paramOutputSchema":         iworkcomponent.GetCacheParamOutputSchema(&step),
+			"paramOutputSchemaXml":      iworkcomponent.GetCacheParamOutputSchema(&step).RenderToXml(),
+			"paramOutputSchemaTreeNode": iworkcomponent.GetCacheParamOutputSchema(&step).RenderToTreeNodes("$NODE_NAME_OUTPUT"),
 			"paramMappings":			 paramMappingsArr,
 		}
 	} else {

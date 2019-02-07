@@ -3,8 +3,8 @@ package iworkrun
 import (
 	"database/sql"
 	"fmt"
+	"isoft/isoft_iaas_web/core/iworkcomponent"
 	"isoft/isoft_iaas_web/core/iworkcomponent/sqlutil"
-	"isoft/isoft_iaas_web/core/iworkdata"
 	"isoft/isoft_iaas_web/models/iwork"
 	"strings"
 )
@@ -28,11 +28,11 @@ func RunStep(work iwork.Work, step iwork.WorkStep) {
 }
 
 func SQLQueryRun(work iwork.Work, step iwork.WorkStep) {
-	db, err := sqlutil.GetConnForMysql("mysql", iworkdata.GetParamValue(step, "db_conn"))
+	db, err := sqlutil.GetConnForMysql("mysql", iworkcomponent.GetParamValue(step, "db_conn"))
 	if err != nil {
 		panic(err)
 	}
-	rows, err := db.Query(iworkdata.GetParamValue(step, "sql"))
+	rows, err := db.Query(iworkcomponent.GetParamValue(step, "sql"))
 	if err != nil {
 		panic(err)
 	}

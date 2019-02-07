@@ -1,6 +1,7 @@
-package iworkdata
+package iworkcomponent
 
 import (
+	"isoft/isoft_iaas_web/core/iworkdata"
 	"isoft/isoft_iaas_web/models/iwork"
 	"strings"
 )
@@ -29,28 +30,28 @@ func (this *IWorkStepHelper) Execute() {
 	}
 }
 
-func (this *IWorkStepHelper) GetDefaultParamInputSchema() *ParamInputSchema {
+func (this *IWorkStepHelper) GetDefaultParamInputSchema() *iworkdata.ParamInputSchema {
 	factory := &WorkStepTypeFactory{Executor: this}
 	if schema := factory.GetDefaultParamInputSchema(); schema != nil {
 		return schema
 	}
-	return &ParamInputSchema{}
+	return &iworkdata.ParamInputSchema{}
 }
 
-func (this *IWorkStepHelper) GetDefaultParamOutputSchema() *ParamOutputSchema {
+func (this *IWorkStepHelper) GetDefaultParamOutputSchema() *iworkdata.ParamOutputSchema {
 	factory := &WorkStepTypeFactory{Executor: this}
 	if schema := factory.GetDefaultParamOutputSchema(); schema != nil {
 		return schema
 	}
-	return &ParamOutputSchema{}
+	return &iworkdata.ParamOutputSchema{}
 }
 
-func (this *IWorkStepHelper) GetRuntimeParamOutputSchema() *ParamOutputSchema {
+func (this *IWorkStepHelper) GetRuntimeParamOutputSchema() *iworkdata.ParamOutputSchema {
 	factory := &WorkStepTypeFactory{Executor: this}
 	if schema := factory.GetRuntimeParamOutputSchema(); schema != nil {
 		return schema
 	}
-	return &ParamOutputSchema{}
+	return &iworkdata.ParamOutputSchema{}
 }
 
 type WorkStepTypeFactory struct {
@@ -66,43 +67,49 @@ func (this *WorkStepTypeFactory) GetExecutor() Executable {
 	case "SQL_INSERT":
 		return &SQLInsert{}
 	case "SQL_QUERY":
-		return &SQLQuery{Executor: this.Executor}
+		return &SQLQuery{WorkStep: this.Executor.WorkStep}
 	}
 	return nil
 }
 
-func (this *WorkStepTypeFactory) GetDefaultParamInputSchema() *ParamInputSchema {
+func (this *WorkStepTypeFactory) GetDefaultParamInputSchema() *iworkdata.ParamInputSchema {
 	switch strings.ToUpper(this.Executor.WorkStep.WorkStepType) {
 	case "SQL_INSERT":
-		helper := &SQLQuery{Executor: this.Executor}
+		helper := &SQLQuery{WorkStep: this.Executor.WorkStep}
 		return helper.GetDefaultParamInputSchema()
 	case "SQL_QUERY":
-		helper := &SQLQuery{Executor: this.Executor}
+		helper := &SQLQuery{WorkStep: this.Executor.WorkStep}
 		return helper.GetDefaultParamInputSchema()
 	}
 	return nil
 }
 
-func (this *WorkStepTypeFactory) GetDefaultParamOutputSchema() *ParamOutputSchema {
+func (this *WorkStepTypeFactory) GetDefaultParamOutputSchema() *iworkdata.ParamOutputSchema {
 	switch strings.ToUpper(this.Executor.WorkStep.WorkStepType) {
+	case "WORK_START":
+		node := &WorkStartNode{WorkStep: this.Executor.WorkStep}
+		return node.GetDefaultParamOutputSchema()
+	case "WORK_END":
+		node := &WorkEndNode{WorkStep: this.Executor.WorkStep}
+		return node.GetDefaultParamOutputSchema()
 	case "SQL_INSERT":
-		helper := &SQLQuery{Executor: this.Executor}
-		return helper.GetDefaultParamOutputSchema()
+		node := &SQLQuery{WorkStep: this.Executor.WorkStep}
+		return node.GetDefaultParamOutputSchema()
 	case "SQL_QUERY":
-		helper := &SQLQuery{Executor: this.Executor}
-		return helper.GetDefaultParamOutputSchema()
+		node := &SQLQuery{WorkStep: this.Executor.WorkStep}
+		return node.GetDefaultParamOutputSchema()
 	}
-	return nil
+	return &iworkdata.ParamOutputSchema{}
 }
 
-func (this *WorkStepTypeFactory) GetRuntimeParamOutputSchema() *ParamOutputSchema {
+func (this *WorkStepTypeFactory) GetRuntimeParamOutputSchema() *iworkdata.ParamOutputSchema {
 	switch strings.ToUpper(this.Executor.WorkStep.WorkStepType) {
 	case "SQL_INSERT":
-		helper := &SQLQuery{Executor: this.Executor}
-		return helper.GetRuntimeParamOutputSchema()
+		node := &SQLQuery{WorkStep: this.Executor.WorkStep}
+		return node.GetRuntimeParamOutputSchema()
 	case "SQL_QUERY":
-		helper := &SQLQuery{Executor: this.Executor}
-		return helper.GetRuntimeParamOutputSchema()
+		node := &SQLQuery{WorkStep: this.Executor.WorkStep}
+		return node.GetRuntimeParamOutputSchema()
 	}
-	return nil
+	return &iworkdata.ParamOutputSchema{}
 }
