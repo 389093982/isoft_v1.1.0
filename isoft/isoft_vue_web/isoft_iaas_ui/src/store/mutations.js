@@ -5,7 +5,8 @@ import Vue from 'vue'
 
 
 export default {
-  setCurrent:function (state, {current_work_id,current_work_step_id}) {
+  // 设置当前 work_id 和 work_step_id
+  SETCURRENT:function (state, {current_work_id,current_work_step_id}) {
     state.current_work_id=current_work_id;
     state.current_work_step_id=current_work_step_id;
   }

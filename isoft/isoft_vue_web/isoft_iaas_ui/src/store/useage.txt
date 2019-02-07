@@ -8,3 +8,17 @@ commit:同步操作,写法:this.$store.commit('mutations方法名',值)
 vuex.action 只能传递两个参数,一个state是自动添加的,一个payload,是用户自己传到.
 但是！如果你传了两个参数,你会发现第二个永远都是undefined.
 正确的操作,把多个参数打包为一个对象,放到payload里.
+
+在vue 中,只有mutation 才能改变state. mutation 类似事件,每一个mutation都有一个类型和一个处理函数,
+因为只有mutation 才能改变state, 所以处理函数自动会获得一个默认参数 state.所谓的类型其实就是名字,
+action去comit 一个mutation, 它要指定去commit哪个mutation, 所以mutation至少需要一个名字,commit mutation 之后,
+要做什么事情,那就需要给它指定一个处理函数, 类型(名字) + 处理函数就构成了mutation.现在store.js添加mutation
+Vue 建议我们mutation 类型用大写常量表示,修改一下,把mutation 类型改为大写
+action去commit mutations, 所以还要定义action.store.js 里面添加actions.
+action 和mutions 的定义方法是类似的,我们要dispatch 一个action, 所以actions 肯定有一个名字,
+dispatch action 之后它要做事情,就是commit mutation, 所以还要给它指定一个函数.因为要commit mutation ,
+所以 函数也会自动获得一个默认参数context,  它是一个store 实例,通过它可以获取到store 实例的属性和方法,
+如 context.state 就会获取到 state 属性, context.commit 就会执行commit命令.
+其实actions 还可以简写一下, 因为函数的参数是一个对象,函数中用的是对象中一个方法,我们可以通过对象的解构赋值直接获取到该方法
+现在就剩下dispatch action 了.什么时候dispatch action 呢? 只有当我们点击按钮的时候.给按钮添加click 事件,
+在click 事件处理函数的中dispatch action.

@@ -249,11 +249,12 @@ func (this *WorkController) LoadPreNodeOutput()  {
 }
 
 func LoadResourceInfo() *iworkdata.ParamOutputSchema {
-	pos := &iworkdata.ParamOutputSchema{}
-	items := []*iworkdata.ParamOutputSchemaItem{}
+	pos := &iworkdata.ParamOutputSchema{
+		ParamOutputSchemaItems:[]iworkdata.ParamOutputSchemaItem{},
+	}
 	resources := iresource.GetAllResource()
 	for _, resource := range resources{
-		items = append(items, &iworkdata.ParamOutputSchemaItem{
+		pos.ParamOutputSchemaItems = append(pos.ParamOutputSchemaItems, iworkdata.ParamOutputSchemaItem{
 			ParamName:resource.ResourceName,
 		})
 	}
