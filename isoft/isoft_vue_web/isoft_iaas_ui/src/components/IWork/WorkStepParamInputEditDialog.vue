@@ -85,26 +85,31 @@
     },
     computed:{
       data1:function () {
+        var appendChildrens = function (paramOutputSchemaTreeNode, node) {       // 父级节点对象、父级节点树元素
+          if(paramOutputSchemaTreeNode.NodeChildrens != null && paramOutputSchemaTreeNode.NodeChildrens.length > 0){
+            const arr = [];
+            for(var i=0; i<paramOutputSchemaTreeNode.NodeChildrens.length; i++) {
+              var childParamOutputSchemaTreeNode = paramOutputSchemaTreeNode.NodeChildrens[i];
+              var childNode = {title: childParamOutputSchemaTreeNode.NodeName,expand: true,};
+              // 递归操作
+              appendChildrens(childParamOutputSchemaTreeNode, childNode);
+              arr.push(childNode);
+            }
+            node.children = arr;
+          }
+        };
         // tree 对应的 arr
-        let resultArr = [];
+        let treeArr = [];
         for(var i=0; i<this.preParamOutputSchemaTreeNodeArr.length; i++){
           let preParamOutputSchemaTreeNode = this.preParamOutputSchemaTreeNodeArr[i];
-          const result = {
+          const topTreeNode = {
             title: preParamOutputSchemaTreeNode.NodeName,
             expand: true,
           };
-          if(preParamOutputSchemaTreeNode.NodeChildrens != null && preParamOutputSchemaTreeNode.NodeChildrens.length > 0){
-            const arr = [];
-            for(var j=0; j<preParamOutputSchemaTreeNode.NodeChildrens.length; j++){
-              arr.push({
-                title: preParamOutputSchemaTreeNode.NodeChildrens[j].NodeName,
-              });
-            }
-            result.children = arr;
-          }
-          resultArr.push(result);
+          appendChildrens(preParamOutputSchemaTreeNode,topTreeNode);
+          treeArr.push(topTreeNode);
         }
-        return resultArr;
+        return treeArr;
       }
     }
   }
