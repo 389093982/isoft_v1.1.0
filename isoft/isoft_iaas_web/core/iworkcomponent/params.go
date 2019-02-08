@@ -55,9 +55,16 @@ func GetCacheParamInputSchema(step *iwork.WorkStep) *iworkdata.ParamInputSchema 
 	return paramInputSchema
 }
 
+// 去除不合理的字符
+func removeUnsupportChars(paramName string) string {
+	paramName = strings.TrimSpace(paramName)
+	paramName = strings.Replace(paramName, "\n","",-1)
+	return paramName
+}
+
 // 获取参数值,支持获取动态参数
 func GetParamValue(step iwork.WorkStep, paramName string) string {
-	paramValueString := GetParamValueString(step, paramName)
+	paramValueString := removeUnsupportChars(GetParamValueString(step, removeUnsupportChars(paramName)))
 	if IsDynamicParam(paramValueString){
 		if strings.HasPrefix(paramValueString, "$RESOURCE."){
 			return iresource.GetResourceDataSourceNameString(strings.Replace(paramValueString, "$RESOURCE.", "", -1))
