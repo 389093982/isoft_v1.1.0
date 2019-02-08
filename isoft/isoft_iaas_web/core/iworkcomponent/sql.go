@@ -45,7 +45,10 @@ func (this *SQLQuery) GetRuntimeParamOutputSchema() *iworkdata.ParamOutputSchema
 		GetParamValue(*this.WorkStep, "db_conn"))
 	items := []iworkdata.ParamOutputSchemaItem{}
 	for _, paramName := range paramNames {
-		items = append(items, iworkdata.ParamOutputSchemaItem{ParamName: paramName})
+		items = append(items, iworkdata.ParamOutputSchemaItem{
+			ParentPath:"rows",
+			ParamName: paramName,
+		})
 	}
 	return &iworkdata.ParamOutputSchema{ParamOutputSchemaItems: items}
 }
