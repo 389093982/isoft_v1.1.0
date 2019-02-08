@@ -17,6 +17,7 @@ func (this *ResourceController) AddResource() {
 	resource.ResourceName = this.Input().Get("resource_name")
 	resource.ResourceType = this.Input().Get("resource_type")
 	resource.ResourceUrl = this.Input().Get("resource_url")
+	resource.ResourceDsn = this.Input().Get("resource_dsn")
 	resource.ResourceUsername = this.Input().Get("resource_username")
 	resource.ResourcePassword = this.Input().Get("resource_password")
 	resource.EnvName = this.Input().Get("env_name")

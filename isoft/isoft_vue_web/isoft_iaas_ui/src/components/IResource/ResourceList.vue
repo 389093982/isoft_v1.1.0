@@ -48,6 +48,10 @@
             key: 'resource_url',
           },
           {
+            title: 'resource_dsn',
+            key: 'resource_dsn',
+          },
+          {
             title: 'resource_username',
             key: 'resource_username',
           },
@@ -58,10 +62,6 @@
           {
             title: 'env_name',
             key: 'env_name',
-          },
-          {
-            title: 'last_updated_by',
-            key: 'last_updated_by',
           },
           {
             title: 'last_updated_time',

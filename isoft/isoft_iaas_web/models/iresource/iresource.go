@@ -11,6 +11,7 @@ type Resource struct {
 	ResourceName     string    `json:"resource_name"`
 	ResourceType     string    `json:"resource_type"`
 	ResourceUrl      string    `json:"resource_url"`
+	ResourceDsn      string    `json:"resource_dsn"`
 	ResourceUsername string    `json:"resource_username"`
 	ResourcePassword string    `json:"resource_password"`
 	EnvName          string    `json:"env_name"`
@@ -56,7 +57,7 @@ func GetResourceDataSourceNameString(resource_name string) string {
 	var resource Resource
 	o := orm.NewOrm()
 	if err := o.QueryTable("resource").Filter("resource_name",resource_name).One(&resource); err == nil{
-		return resource.ResourceUrl
+		return resource.ResourceDsn
 	}
 	return ""
 }
