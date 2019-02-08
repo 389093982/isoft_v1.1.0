@@ -28,9 +28,14 @@ func Run(work iwork.Work, steps []iwork.WorkStep) {
 			fmt.Print(err)
 		}
 	}()
+
+	iwork.InsertRunLogDetail(trackingId, fmt.Sprintf("start execute work:%s",work.WorkName))
 	for _, step := range steps {
+		iwork.InsertRunLogDetail(trackingId, fmt.Sprintf("start execute workstep:%s",step.WorkStepName))
 		RunStep(work, step)
+		iwork.InsertRunLogDetail(trackingId, fmt.Sprintf("end execute workstep:%s",step.WorkStepName))
 	}
+	iwork.InsertRunLogDetail(trackingId, fmt.Sprintf("end execute work:%s",work.WorkName))
 }
 
 func RunStep(work iwork.Work, step iwork.WorkStep) {
