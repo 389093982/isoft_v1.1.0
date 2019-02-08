@@ -141,6 +141,8 @@ func registerModel() {
 	orm.RegisterModel(new(iresource.Resource))
 	orm.RegisterModel(new(iwork.Work))
 	orm.RegisterModel(new(iwork.WorkStep))
+	orm.RegisterModel(new(iwork.RunLogRecord))
+	orm.RegisterModel(new(iwork.RunLogDetail))
 }
 
 // 自动建表
