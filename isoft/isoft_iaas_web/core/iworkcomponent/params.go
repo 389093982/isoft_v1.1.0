@@ -31,9 +31,9 @@ func GetCacheParamOutputSchema(step *iwork.WorkStep) *iworkdata.ParamOutputSchem
 // 获取出参 schema
 func GetRuntimeParamOutputSchema(step *iwork.WorkStep) *iworkdata.ParamOutputSchema {
 	// 获取当前 work_step 对应的 paramOutputSchema
-	helper := &IWorkStepHelper{WorkStep: step}
-	paramOutputSchema := helper.GetDefaultParamOutputSchema()
-	paramOutputSchema2 := helper.GetRuntimeParamOutputSchema()
+	factory := &WorkStepFactory{WorkStep: step}
+	paramOutputSchema := factory.GetDefaultParamOutputSchema()
+	paramOutputSchema2 := factory.GetRuntimeParamOutputSchema()
 	// 合并
 	paramOutputSchema.ParamOutputSchemaItems =
 		append(paramOutputSchema.ParamOutputSchemaItems, paramOutputSchema2.ParamOutputSchemaItems...)
@@ -50,8 +50,8 @@ func GetCacheParamInputSchema(step *iwork.WorkStep) *iworkdata.ParamInputSchema 
 		}
 	}
 	// 获取当前 work_step 对应的 paramInputSchema
-	helper := &IWorkStepHelper{WorkStep: step}
-	paramInputSchema := helper.GetDefaultParamInputSchema()
+	factory := &WorkStepFactory{WorkStep: step}
+	paramInputSchema := factory.GetDefaultParamInputSchema()
 	return paramInputSchema
 }
 

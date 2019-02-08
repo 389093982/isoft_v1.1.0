@@ -63,3 +63,29 @@ type SQLInsert struct {
 func (this *SQLInsert) Execute() {
 
 }
+
+
+//func SQLQueryRun(work iwork.Work, step iwork.WorkStep) {
+//	db, err := sqlutil.GetConnForMysql("mysql", iworkcomponent.GetParamValue(step, "db_conn"))
+//	if err != nil {
+//		panic(err)
+//	}
+//	rows, err := db.Query(iworkcomponent.GetParamValue(step, "sql"))
+//	if err != nil {
+//		panic(err)
+//	}
+//	defer rows.Close()
+//
+//	colNames, _ := rows.Columns()
+//	for rows.Next() {
+//		colValues := make([]sql.RawBytes, len(colNames))
+//		scanArgs := make([]interface{}, len(colValues))
+//		for i := range colValues {
+//			scanArgs[i] = &colValues[i]
+//		}
+//		rows.Scan(scanArgs...)
+//		for _, colValue := range colValues {
+//			fmt.Print(colValue)
+//		}
+//	}
+//}
