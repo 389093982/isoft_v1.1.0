@@ -9,12 +9,38 @@ type WorkStartNode struct {
 	WorkStep 		   *iwork.WorkStep
 }
 
-type WorkEndNode struct {
-	WorkStep 		   *iwork.WorkStep
+func (this *WorkStartNode) Execute() {
+
+}
+
+func (this *WorkStartNode) GetDefaultParamInputSchema() *iworkdata.ParamInputSchema {
+	return nil
+}
+
+func (this *WorkStartNode) GetRuntimeParamOutputSchema() *iworkdata.ParamOutputSchema {
+	return nil
 }
 
 func (this *WorkStartNode) GetDefaultParamOutputSchema() *iworkdata.ParamOutputSchema {
 	return transferParamInputSchemaToParamOutputSchema(this.WorkStep)
+}
+
+
+type WorkEndNode struct {
+	WorkStep 		   *iwork.WorkStep
+}
+
+
+func (this *WorkEndNode) Execute() {
+
+}
+
+func (this *WorkEndNode) GetDefaultParamInputSchema() *iworkdata.ParamInputSchema {
+	return nil
+}
+
+func (this *WorkEndNode) GetRuntimeParamOutputSchema() *iworkdata.ParamOutputSchema {
+	return nil
 }
 
 func (this *WorkEndNode) GetDefaultParamOutputSchema() *iworkdata.ParamOutputSchema {

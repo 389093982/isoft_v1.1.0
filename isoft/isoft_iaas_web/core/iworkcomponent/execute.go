@@ -1,6 +1,7 @@
 package iworkcomponent
 
 import (
+	"fmt"
 	"isoft/isoft_iaas_web/core/iworkdata"
 	"isoft/isoft_iaas_web/models/iwork"
 	"strings"
@@ -24,12 +25,16 @@ func (this *WorkStepFactory) Execute() {
 
 func (this *WorkStepFactory) getProxy() IStandardWorkStep {
 	switch strings.ToUpper(this.WorkStep.WorkStepType) {
+	case "WORK_START":
+		return &WorkStartNode{WorkStep: this.WorkStep}
+	case "WORK_END":
+		return &WorkEndNode{WorkStep: this.WorkStep}
 	case "SQL_INSERT":
-		return &SQLQuery{WorkStep: this.WorkStep}
+		return &SQLQueryNode{WorkStep: this.WorkStep}
 	case "SQL_QUERY":
-		return &SQLQuery{WorkStep: this.WorkStep}
+		return &SQLQueryNode{WorkStep: this.WorkStep}
 	}
-	return nil
+	panic(fmt.Sprintf("unsupport workStepType:%s",this.WorkStep.WorkStepType))
 }
 
 func (this *WorkStepFactory) GetDefaultParamInputSchema() *iworkdata.ParamInputSchema {

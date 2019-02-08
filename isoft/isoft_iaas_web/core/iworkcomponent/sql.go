@@ -6,13 +6,13 @@ import (
 	"isoft/isoft_iaas_web/models/iwork"
 )
 
-type SQLQuery struct {
+type SQLQueryNode struct {
 	WorkStep 		   *iwork.WorkStep
 	paramInputMap  *map[string]interface{}
 	paramOutputMap *map[string]interface{}
 }
 
-func (this *SQLQuery) Execute() {
+func (this *SQLQueryNode) Execute() {
 	workStepInput := this.WorkStep.WorkStepInput
 	workStepOutput := this.WorkStep.WorkStepOutput
 	inputResolver := &ParamResolver{ParamStr: workStepInput}
@@ -22,7 +22,7 @@ func (this *SQLQuery) Execute() {
 	this.ExecuteWithParams()
 }
 
-func (this *SQLQuery) GetDefaultParamInputSchema() *iworkdata.ParamInputSchema {
+func (this *SQLQueryNode) GetDefaultParamInputSchema() *iworkdata.ParamInputSchema {
 	paramNames := []string{"sql", "sql_binding?", "db_conn"}
 	items := []iworkdata.ParamInputSchemaItem{}
 	for _, paramName := range paramNames {
@@ -31,7 +31,7 @@ func (this *SQLQuery) GetDefaultParamInputSchema() *iworkdata.ParamInputSchema {
 	return &iworkdata.ParamInputSchema{ParamInputSchemaItems: items}
 }
 
-func (this *SQLQuery) GetDefaultParamOutputSchema() *iworkdata.ParamOutputSchema {
+func (this *SQLQueryNode) GetDefaultParamOutputSchema() *iworkdata.ParamOutputSchema {
 	paramNames := []string{"datacounts"}
 	items := []iworkdata.ParamOutputSchemaItem{}
 	for _, paramName := range paramNames {
@@ -40,7 +40,7 @@ func (this *SQLQuery) GetDefaultParamOutputSchema() *iworkdata.ParamOutputSchema
 	return &iworkdata.ParamOutputSchema{ParamOutputSchemaItems: items}
 }
 
-func (this *SQLQuery) GetRuntimeParamOutputSchema() *iworkdata.ParamOutputSchema {
+func (this *SQLQueryNode) GetRuntimeParamOutputSchema() *iworkdata.ParamOutputSchema {
 	paramNames := sqlutil.GetMetaDatas(GetParamValue(*this.WorkStep, "sql"),
 		GetParamValue(*this.WorkStep, "db_conn"))
 	items := []iworkdata.ParamOutputSchemaItem{}
@@ -53,7 +53,7 @@ func (this *SQLQuery) GetRuntimeParamOutputSchema() *iworkdata.ParamOutputSchema
 	return &iworkdata.ParamOutputSchema{ParamOutputSchemaItems: items}
 }
 
-func (this *SQLQuery) ExecuteWithParams() {
+func (this *SQLQueryNode) ExecuteWithParams() {
 
 }
 
@@ -65,7 +65,7 @@ func (this *SQLInsert) Execute() {
 }
 
 
-//func SQLQueryRun(work iwork.Work, step iwork.WorkStep) {
+//func SQLQueryNodeRun(work iwork.Work, step iwork.WorkStep) {
 //	db, err := sqlutil.GetConnForMysql("mysql", iworkcomponent.GetParamValue(step, "db_conn"))
 //	if err != nil {
 //		panic(err)
