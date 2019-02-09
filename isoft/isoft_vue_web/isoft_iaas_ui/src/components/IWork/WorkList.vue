@@ -111,7 +111,7 @@
                   },
                   on: {
                     click: () => {
-                      this.$router.push({ path: '/iwork/runLog', query: { work_id: this.works[params.index]['id'] }});
+                      this.$router.push({ path: '/iwork/runLogList', query: { work_id: this.works[params.index]['id'] }});
                     }
                   }
                 }, '运行日志'),

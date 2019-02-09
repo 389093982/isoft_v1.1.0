@@ -47,3 +47,19 @@ func InsertRunLogDetail(trackingId, detail string)  {
 		LastUpdatedTime:time.Now(),
 	})
 }
+
+func QueryRunLogRecord(work_id string, page int, offset int) (runLogRecords []RunLogRecord, counts int64, err error) {
+	work, _ := QueryWorkById(work_id)
+	o := orm.NewOrm()
+	qs := o.QueryTable("run_log_record").Filter("work_name",work.WorkName).OrderBy("-last_updated_time")
+	counts, _ = qs.Count()
+	qs = qs.Limit(offset, (page-1)*offset)
+	qs.All(&runLogRecords)
+	return
+}
+
+func GetLastRunLogDetail(tracking_id string) (runLogDetails []RunLogDetail, err error) {
+	o := orm.NewOrm()
+	_, err = o.QueryTable("run_log_detail").Filter("tracking_id",tracking_id).All(&runLogDetails)
+	return
+}

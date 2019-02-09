@@ -18,6 +18,32 @@ type WorkController struct {
 	beego.Controller
 }
 
+func (this *WorkController) GetLastRunLogDetail() {
+	tracking_id := this.GetString("tracking_id")
+	runLogDetails, err := iwork.GetLastRunLogDetail(tracking_id)
+	if err == nil {
+		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "runLogDetails": runLogDetails}
+	} else {
+		this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
+	}
+	this.ServeJSON()
+}
+
+func (this *WorkController) FilterPageLogRecord() {
+	work_id := this.GetString("work_id")
+	offset, _ := this.GetInt("offset", 10)            // 每页记录数
+	current_page, _ := this.GetInt("current_page", 1) // 当前页
+	runLogRecords, count, err := iwork.QueryRunLogRecord(work_id,current_page, offset)
+	paginator := pagination.SetPaginator(this.Ctx, offset, count)
+	if err == nil {
+		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "runLogRecords": runLogRecords,
+			"paginator": pageutil.Paginator(paginator.Page(), paginator.PerPageNums, paginator.Nums())}
+	} else {
+		this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
+	}
+	this.ServeJSON()
+}
+
 func (this *WorkController) BuildOutput()  {
 	work_id := this.GetString("work_id")
 	work_step_id, _ := this.GetInt8("work_step_id")

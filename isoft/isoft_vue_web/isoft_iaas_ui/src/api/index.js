@@ -174,5 +174,11 @@ export const ChangeWorkStepOrder = (work_id,work_step_id,type) => ajax(BASE_URL+
 // 查询所有的 workstep 信息
 export const GetAllWorkStepInfo = (work_id) => ajax(BASE_URL+"/iwork/getAllWorkStepInfo", {work_id},'POST');
 
+// 分页查询运行记录
+export const FilterPageLogRecord = (work_id,offset,current_page) => ajax(BASE_URL+"/iwork/filterPageLogRecord", {work_id,offset,current_page},'POST');
+
+// 获取最后一次运行日志详情
+export const GetLastRunLogDetail = (tracking_id) => ajax(BASE_URL+"/iwork/getLastRunLogDetail", {tracking_id},'POST');
+
 // 跨模块使用,模块化部署时需要使用 nginx 代理
 export const LoginAddr = "/sso/login/";
