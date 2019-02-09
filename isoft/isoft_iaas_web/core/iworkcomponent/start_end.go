@@ -3,10 +3,10 @@ package iworkcomponent
 import (
 	"isoft/isoft_iaas_web/core/iworkdata"
 	"isoft/isoft_iaas_web/models/iwork"
-	"strings"
 )
 
 type WorkStartNode struct {
+	BaseNode
 	WorkStep 		   *iwork.WorkStep
 }
 
@@ -19,12 +19,8 @@ func (this *WorkStartNode) Execute(trackingId string) {
 	}
 	// 获取数据中心
 	dataStore := iworkdata.GetDataSource(trackingId)
-	// 将执行结果存储到数据中心
-	paramOutputSchema := GetCacheParamOutputSchema(this.WorkStep)
-	for _,item := range paramOutputSchema.ParamOutputSchemaItems{
-		// 将数据数据存储到数据中心
-		dataStore.CacheData(this.WorkStep.WorkStepName, item.ParamName, tmpDataMap[item.ParamName])
-	}
+	// 提交输出数据至数据中心,此类数据能直接从 tmpDataMap 中获取,而不依赖于计算,只适用于 WORK_START、WORK_END 节点
+	this.SubmitParamOutputSchemaDataToDataStore(this.WorkStep, dataStore, tmpDataMap)
 }
 
 func (this *WorkStartNode) GetDefaultParamInputSchema() *iworkdata.ParamInputSchema {
@@ -41,37 +37,18 @@ func (this *WorkStartNode) GetDefaultParamOutputSchema() *iworkdata.ParamOutputS
 
 
 type WorkEndNode struct {
-	DataStore		   *iworkdata.DataStore
+	BaseNode
 	WorkStep 		   *iwork.WorkStep
 }
 
 
 func (this *WorkEndNode) Execute(trackingId string) {
-	// 获取数据中心
+	// 数据中心
 	dataStore := iworkdata.GetDataSource(trackingId)
-
-	// 存储节点中间数据
-	tmpDataMap := make(map[string]interface{})
-	paramInputSchema := GetCacheParamInputSchema(this.WorkStep)
-	for _, item := range paramInputSchema.ParamInputSchemaItems{
-		tmpDataMap[item.ParamName] = this.ParseParamVaule(item.ParamValue, dataStore)			// 输入数据存临时
-	}
-
-	// 将执行结果存储到数据中心
-	paramOutputSchema := GetCacheParamOutputSchema(this.WorkStep)
-	for _,item := range paramOutputSchema.ParamOutputSchemaItems{
-		// 将数据数据存储到数据中心
-		dataStore.CacheData(this.WorkStep.WorkStepName, item.ParamName, tmpDataMap[item.ParamName])
-	}
-}
-
-func (this *WorkEndNode) ParseParamVaule(paramVaule string, dataStore *iworkdata.DataStore) interface{} {
-	if strings.HasPrefix(paramVaule, "$"){
-		resolver := iworkdata.ParamVauleParser{ParamValue:paramVaule}
-		return dataStore.GetData(resolver.GetNodeNameFromParamValue(), resolver.GetParamNameFromParamValue())
-	}else{
-		return paramVaule
-	}
+	// 节点中间数据
+	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep,dataStore)
+	// 提交输出数据至数据中心,此类数据能直接从 tmpDataMap 中获取,而不依赖于计算,只适用于 WORK_START、WORK_END 节点
+	this.SubmitParamOutputSchemaDataToDataStore(this.WorkStep, dataStore, tmpDataMap)
 }
 
 func (this *WorkEndNode) GetDefaultParamInputSchema() *iworkdata.ParamInputSchema {

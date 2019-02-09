@@ -1,25 +1,32 @@
 package iworkcomponent
 
 import (
+	"fmt"
 	"isoft/isoft_iaas_web/core/iworkcomponent/sqlutil"
 	"isoft/isoft_iaas_web/core/iworkdata"
 	"isoft/isoft_iaas_web/models/iwork"
 )
 
 type SQLQueryNode struct {
-	WorkStep 		   *iwork.WorkStep
-	paramInputMap  *map[string]interface{}
-	paramOutputMap *map[string]interface{}
+	BaseNode
+	WorkStep 		    *iwork.WorkStep
 }
 
 func (this *SQLQueryNode) Execute(trackingId string) {
-	workStepInput := this.WorkStep.WorkStepInput
-	workStepOutput := this.WorkStep.WorkStepOutput
-	inputResolver := &ParamResolver{ParamStr: workStepInput}
-	this.paramInputMap = inputResolver.ParseParamStrToMap()
-	outputResolver := &ParamResolver{ParamStr: workStepOutput}
-	this.paramOutputMap = outputResolver.ParseParamStrToMap()
-	this.ExecuteWithParams()
+	// 数据中心
+	dataStore := iworkdata.GetDataSource(trackingId)
+	// 节点中间数据
+	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep,dataStore)
+	sql := tmpDataMap["sql"].(string) 				  // 等价于 iworkdata.GetStaticParamValue("sql",this.WorkStep)
+	dataSourceName := tmpDataMap["db_conn"].(string)  // 等价于 iworkdata.GetStaticParamValue("db_conn", this.WorkStep)
+	datacounts, rowDatas := sqlutil.ExcuteQuery(sql, dataSourceName)
+	// 将数据数据存储到数据中心
+	// 存储 datacounts
+	dataStore.CacheData(this.WorkStep.WorkStepName, fmt.Sprintf("$%s.datacounts", this.WorkStep.WorkStepName), datacounts)
+	for key,value := range rowDatas{
+		// 存储具体字段值
+		dataStore.CacheData(this.WorkStep.WorkStepName, fmt.Sprintf("$%s.%s", this.WorkStep.WorkStepName,key), value)
+	}
 }
 
 func (this *SQLQueryNode) GetDefaultParamInputSchema() *iworkdata.ParamInputSchema {
@@ -41,8 +48,9 @@ func (this *SQLQueryNode) GetDefaultParamOutputSchema() *iworkdata.ParamOutputSc
 }
 
 func (this *SQLQueryNode) GetRuntimeParamOutputSchema() *iworkdata.ParamOutputSchema {
-	paramNames := sqlutil.GetMetaDatas(GetParamValue(*this.WorkStep, "sql"),
-		GetParamValue(*this.WorkStep, "db_conn"))
+	sql := iworkdata.GetStaticParamValue("sql",this.WorkStep)
+	dataSourceName := iworkdata.GetStaticParamValue("db_conn", this.WorkStep)
+	paramNames := sqlutil.GetMetaDatas(sql, dataSourceName)
 	items := []iworkdata.ParamOutputSchemaItem{}
 	for _, paramName := range paramNames {
 		items = append(items, iworkdata.ParamOutputSchemaItem{
@@ -53,39 +61,3 @@ func (this *SQLQueryNode) GetRuntimeParamOutputSchema() *iworkdata.ParamOutputSc
 	return &iworkdata.ParamOutputSchema{ParamOutputSchemaItems: items}
 }
 
-func (this *SQLQueryNode) ExecuteWithParams() {
-
-}
-
-type SQLInsert struct {
-}
-
-func (this *SQLInsert) Execute() {
-
-}
-
-
-//func SQLQueryNodeRun(work iwork.Work, step iwork.WorkStep) {
-//	db, err := sqlutil.GetConnForMysql("mysql", iworkcomponent.GetParamValue(step, "db_conn"))
-//	if err != nil {
-//		panic(err)
-//	}
-//	rows, err := db.Query(iworkcomponent.GetParamValue(step, "sql"))
-//	if err != nil {
-//		panic(err)
-//	}
-//	defer rows.Close()
-//
-//	colNames, _ := rows.Columns()
-//	for rows.Next() {
-//		colValues := make([]sql.RawBytes, len(colNames))
-//		scanArgs := make([]interface{}, len(colValues))
-//		for i := range colValues {
-//			scanArgs[i] = &colValues[i]
-//		}
-//		rows.Scan(scanArgs...)
-//		for _, colValue := range colValues {
-//			fmt.Print(colValue)
-//		}
-//	}
-//}

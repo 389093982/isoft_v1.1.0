@@ -3,18 +3,9 @@ package iworkcomponent
 import (
 	"encoding/xml"
 	"isoft/isoft_iaas_web/core/iworkdata"
-	"isoft/isoft_iaas_web/models/iresource"
 	"isoft/isoft_iaas_web/models/iwork"
 	"strings"
 )
-
-type ParamResolver struct {
-	ParamStr string
-}
-
-func (this *ParamResolver) ParseParamStrToMap() *map[string]interface{} {
-	return &map[string]interface{}{}
-}
 
 // 获取缓存的出参 schema,即从 DB 中读取
 func GetCacheParamOutputSchema(step *iwork.WorkStep) *iworkdata.ParamOutputSchema {
@@ -55,43 +46,5 @@ func GetCacheParamInputSchema(step *iwork.WorkStep) *iworkdata.ParamInputSchema 
 	return paramInputSchema
 }
 
-// 去除不合理的字符
-func removeUnsupportChars(paramName string) string {
-	paramName = strings.TrimSpace(paramName)
-	paramName = strings.Replace(paramName, "\n","",-1)
-	return paramName
-}
 
-// 获取参数值,支持获取动态参数
-func GetParamValue(step iwork.WorkStep, paramName string) string {
-	paramValueString := removeUnsupportChars(GetParamValueString(step, removeUnsupportChars(paramName)))
-	if IsDynamicParam(paramValueString){
-		if strings.HasPrefix(paramValueString, "$RESOURCE."){
-			return iresource.GetResourceDataSourceNameString(strings.Replace(paramValueString, "$RESOURCE.", "", -1))
-		}
-	}
-	return paramValueString
-}
 
-func GetParamValueString(step iwork.WorkStep, paramName string) string {
-	var paramInputSchema iworkdata.ParamInputSchema
-	if err := xml.Unmarshal([]byte(step.WorkStepInput), &paramInputSchema); err != nil {
-		return ""
-	}
-	for _, item := range paramInputSchema.ParamInputSchemaItems {
-		if item.ParamName == paramName {
-			// 非必须参数不得为空
-			if !strings.HasSuffix(item.ParamName, "?") && strings.TrimSpace(item.ParamValue) == "" {
-				//panic(errors.New(fmt.Sprint("it is a mast parameter for %s", item.ParamName)))
-				return ""
-			}
-			return item.ParamValue
-		}
-	}
-	return ""
-}
-
-// 判断参数是否是动态参数
-func IsDynamicParam(param string) bool {
-	return strings.HasPrefix(param, "$")
-}
