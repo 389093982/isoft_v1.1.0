@@ -6,11 +6,14 @@ import (
 )
 
 type WorkStartNode struct {
+	DataStore		   *iworkdata.DataStore
 	WorkStep 		   *iwork.WorkStep
 }
 
 func (this *WorkStartNode) Execute() {
-
+	// 从数据中心获取输入数据
+	// 执行步骤
+	// 将执行结果存储到数据中心
 }
 
 func (this *WorkStartNode) GetDefaultParamInputSchema() *iworkdata.ParamInputSchema {
@@ -27,6 +30,7 @@ func (this *WorkStartNode) GetDefaultParamOutputSchema() *iworkdata.ParamOutputS
 
 
 type WorkEndNode struct {
+	DataStore		   *iworkdata.DataStore
 	WorkStep 		   *iwork.WorkStep
 }
 
