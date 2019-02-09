@@ -20,7 +20,7 @@
             const arr = [];
             for(var i=0; i<paramOutputSchemaTreeNode.NodeChildrens.length; i++) {
               var childParamOutputSchemaTreeNode = paramOutputSchemaTreeNode.NodeChildrens[i];
-              var childNode = {title: childParamOutputSchemaTreeNode.NodeName,expand: true,};
+              var childNode = {title: childParamOutputSchemaTreeNode.NodeName,expand: false,};
               // 递归操作
               appendChildrens(childParamOutputSchemaTreeNode, childNode);
               arr.push(childNode);
@@ -30,7 +30,7 @@
         };
         const topTreeNode = {
           title: this.paramOutputSchemaTreeNode.NodeName,
-          expand: true,
+          expand: false,
         };
         appendChildrens(this.paramOutputSchemaTreeNode, topTreeNode);
         return [
