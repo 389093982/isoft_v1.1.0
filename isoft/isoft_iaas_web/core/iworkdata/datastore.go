@@ -1,5 +1,10 @@
 package iworkdata
 
+import (
+	"fmt"
+	"isoft/isoft_iaas_web/models/iwork"
+)
+
 var datastores = make(map[string]*DataStore, 0)
 
 type DataNodeStore struct {
@@ -7,6 +12,7 @@ type DataNodeStore struct {
 } 
 
 type DataStore struct {
+	TrackingId	 string
 	nodeStoreMap map[string]*DataNodeStore
 }
 
@@ -21,6 +27,7 @@ func (this *DataStore) CacheData(nodeName, paramName string, paramValue interfac
 	// 存数据
 	dataNodeStore := this.nodeStoreMap[nodeName]
 	dataNodeStore.NodeOutputDataMap[paramName] = paramValue
+	iwork.InsertRunLogDetail(this.TrackingId, fmt.Sprintf("cache data:%s",paramValue))
 }
 
 // 从数据中心获取数据
@@ -31,6 +38,7 @@ func (this *DataStore) GetData(nodeName, paramName string) interface{} {
 // 注册数据中心
 func RegistDataStore(trackingId string) {
 	datastores[trackingId] = &DataStore{
+		TrackingId:trackingId,
 		nodeStoreMap:make(map[string]*DataNodeStore,5),
 	}
 }
