@@ -19,7 +19,7 @@ func (this *SQLQueryNode) Execute(trackingId string) {
 	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep,dataStore)
 	sql := tmpDataMap["sql"].(string) 				  // 等价于 iworkdata.GetStaticParamValue("sql",this.WorkStep)
 	dataSourceName := tmpDataMap["db_conn"].(string)  // 等价于 iworkdata.GetStaticParamValue("db_conn", this.WorkStep)
-	datacounts, rowDatas := sqlutil.ExcuteQuery(sql, dataSourceName)
+	datacounts, rowDatas := sqlutil.ExcuteQuery(sql,nil, dataSourceName)
 	// 将数据数据存储到数据中心
 	// 存储 datacounts
 	dataStore.CacheData(this.WorkStep.WorkStepName, fmt.Sprintf("$%s.datacounts", this.WorkStep.WorkStepName), datacounts)

@@ -24,14 +24,19 @@ func GetMetaDatas(sql, dataSourceName string) (colNames []string) {
 }
 
 
-func ExcuteQuery(sqlstring, dataSourceName string) (datacounts int64, rowDatas map[string]interface{}) {
+func ExcuteQuery(sqlstring string, sql_binding []interface{}, dataSourceName string) (datacounts int64, rowDatas map[string]interface{}) {
 	rowDatas = make(map[string]interface{},5)
 	db, err := GetConnForMysql("mysql", dataSourceName)
 	if err != nil {
 		panic(err)
 	}
 	defer db.Close()
-	rows, err := db.Query(sqlstring)
+	// 使用预编译 sql 防止 sql 注入
+	stmt, err := db.Prepare(sqlstring)
+	if err != nil {
+		panic(err)
+	}
+	rows, err := stmt.Query(sql_binding...)
 	if err != nil {
 		panic(err)
 	}
