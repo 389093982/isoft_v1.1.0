@@ -61,7 +61,7 @@
         if(item.children == null){
           if(item.indeterminate == false){
             // 将数据添加到右侧
-            this.inputTextData = this.inputTextData + prefix + "\n";
+            this.inputTextData = this.inputTextData + prefix + "  __sep__\n";
           }
         }else{
           // 有子节点

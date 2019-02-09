@@ -29,11 +29,39 @@ func (this *BaseNode) parseAndFillParamVauleWithNode(paramVaule string, dataStor
 
 // 解析 paramVaule 并从 dataStore 中获取实际值
 func (this *BaseNode) ParseAndFillParamVaule(paramVaule string, dataStore *iworkdata.DataStore) interface{} {
+	values := this.parseParamValueToMulti(paramVaule)
+	if len(values) == 1{
+		// 单值
+		return this.parseAndFillSingleParamVaule(values[0], dataStore)
+	}else{
+		// 多值
+		results := make([]interface{}, 5)
+		for _,value := range values{
+			result := this.parseAndFillSingleParamVaule(value, dataStore)
+			results = append(results, result)
+		}
+		return results
+	}
+}
+
+func (this *BaseNode) parseParamValueToMulti(paramVaule string) []string {
+	results := []string{}
+	vaules := strings.Split(paramVaule,"__sep__")
+	for _,value := range vaules{
+		if _value := this.removeUnsupportChars(value); strings.TrimSpace(_value) != ""{
+			results = append(results, strings.TrimSpace(_value))
+		}
+	}
+	return results
+}
+
+func (this *BaseNode) parseAndFillSingleParamVaule(paramVaule string, dataStore *iworkdata.DataStore) interface{} {
 	if strings.HasPrefix(strings.ToUpper(paramVaule), "$RESOURCE."){
 		return this.parseAndFillParamVauleWithResource(paramVaule)
 	}
 	return this.parseAndFillParamVauleWithNode(paramVaule, dataStore)
 }
+
 
 // 将 ParamInputSchema 填充数据并返回临时的数据中心 tmpDataMap
 func (this *BaseNode) FillParamInputSchemaDataToTmp(workStep *iwork.WorkStep,dataStore *iworkdata.DataStore) map[string]interface{} {
@@ -41,7 +69,7 @@ func (this *BaseNode) FillParamInputSchemaDataToTmp(workStep *iwork.WorkStep,dat
 	tmpDataMap := make(map[string]interface{})
 	paramInputSchema := GetCacheParamInputSchema(workStep)
 	for _, item := range paramInputSchema.ParamInputSchemaItems{
-		tmpDataMap[item.ParamName] = this.ParseAndFillParamVaule(this.removeUnsupportChars(item.ParamValue), dataStore)			// 输入数据存临时
+		tmpDataMap[item.ParamName] = this.ParseAndFillParamVaule(item.ParamValue, dataStore)			// 输入数据存临时
 	}
 	return tmpDataMap
 }
@@ -57,7 +85,12 @@ func (this *BaseNode) SubmitParamOutputSchemaDataToDataStore(workStep *iwork.Wor
 
 // 去除不合理的字符
 func (this *BaseNode) removeUnsupportChars(paramValue string) string {
+	// 先进行初次的 trim
 	paramValue = strings.TrimSpace(paramValue)
-	paramValue = strings.Replace(paramValue, "\n","",-1)
+	// 去除前后的 \n
+	paramValue = strings.TrimPrefix(paramValue, "\n")
+	paramValue = strings.TrimSuffix(paramValue, "\n")
+	// 再进行二次 trim
+	paramValue = strings.TrimSpace(paramValue)
 	return paramValue
 }
