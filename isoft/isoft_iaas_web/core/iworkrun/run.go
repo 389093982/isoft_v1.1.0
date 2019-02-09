@@ -23,23 +23,23 @@ func Run(work iwork.Work, steps []iwork.WorkStep) {
 
 	defer func() {
 		if err := recover(); err != nil {
-			fmt.Print(err)
+			iwork.InsertRunLogDetail(trackingId, fmt.Sprintf("internal error:%s",err))
 		}
 	}()
 	// 记录日志详细
 	iwork.InsertRunLogDetail(trackingId, fmt.Sprintf("start execute work:%s",work.WorkName))
+	// 申请数据中心存储中间数据
+	iworkdata.RegistDataStore(trackingId)
 	// 逐步执行步骤
 	for _, step := range steps {
 		iwork.InsertRunLogDetail(trackingId, fmt.Sprintf("start execute workstep:%s",step.WorkStepName))
-		// 申请数据中心存储中间数据
-		iworkdata.RegistDataStore(trackingId)
 		// 由工厂代为执行步骤
 		factory := &iworkcomponent.WorkStepFactory{WorkStep: &step}
-		factory.Execute()
-		// 注销数据中心
-		iworkdata.UnRegistDataStore(trackingId)
+		factory.Execute(trackingId)
 		iwork.InsertRunLogDetail(trackingId, fmt.Sprintf("end execute workstep:%s",step.WorkStepName))
 	}
+	// 注销数据中心
+	iworkdata.UnRegistDataStore(trackingId)
 	iwork.InsertRunLogDetail(trackingId, fmt.Sprintf("end execute work:%s",work.WorkName))
 }
 

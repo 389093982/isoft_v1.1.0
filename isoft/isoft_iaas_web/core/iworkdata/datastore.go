@@ -2,13 +2,37 @@ package iworkdata
 
 var datastores = make(map[string]*DataStore, 0)
 
-type DataStore struct {
+type DataNodeStore struct {
+	NodeOutputDataMap 		map[string]interface{}		// 当前节点的输出参数 map
+} 
 
+type DataStore struct {
+	nodeStoreMap map[string]*DataNodeStore
+}
+
+// 向数据中心缓存数据
+func (this *DataStore) CacheData(nodeName, paramName string, paramValue interface{})  {
+	// 为当前 nodeName 绑定 DataNodeStore 数据空间
+	if _,ok := this.nodeStoreMap[nodeName];!ok{
+		this.nodeStoreMap[nodeName] = &DataNodeStore{
+			NodeOutputDataMap:make(map[string]interface{},5),
+		}
+	}
+	// 存数据
+	dataNodeStore := this.nodeStoreMap[nodeName]
+	dataNodeStore.NodeOutputDataMap[paramName] = paramValue
+}
+
+// 从数据中心获取数据
+func (this *DataStore) GetData(nodeName, paramName string) interface{} {
+	return this.nodeStoreMap[nodeName].NodeOutputDataMap[paramName]
 }
 
 // 注册数据中心
 func RegistDataStore(trackingId string) {
-	datastores[trackingId] = &DataStore{}
+	datastores[trackingId] = &DataStore{
+		nodeStoreMap:make(map[string]*DataNodeStore,5),
+	}
 }
 
 // 注销数据中心

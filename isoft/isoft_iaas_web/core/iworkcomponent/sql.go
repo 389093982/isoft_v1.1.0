@@ -12,7 +12,7 @@ type SQLQueryNode struct {
 	paramOutputMap *map[string]interface{}
 }
 
-func (this *SQLQueryNode) Execute() {
+func (this *SQLQueryNode) Execute(trackingId string) {
 	workStepInput := this.WorkStep.WorkStepInput
 	workStepOutput := this.WorkStep.WorkStepOutput
 	inputResolver := &ParamResolver{ParamStr: workStepInput}

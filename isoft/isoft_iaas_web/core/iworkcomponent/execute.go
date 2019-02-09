@@ -13,14 +13,14 @@ type WorkStepFactory struct {
 }
 
 type IStandardWorkStep interface {
-	Execute()
+	Execute(trackingId string)
 	GetDefaultParamInputSchema() *iworkdata.ParamInputSchema
 	GetDefaultParamOutputSchema() *iworkdata.ParamOutputSchema
 	GetRuntimeParamOutputSchema() *iworkdata.ParamOutputSchema
 }
 
-func (this *WorkStepFactory) Execute() {
-	this.getProxy().Execute()
+func (this *WorkStepFactory) Execute(trackingId string) {
+	this.getProxy().Execute(trackingId)
 }
 
 func (this *WorkStepFactory) getProxy() IStandardWorkStep {
