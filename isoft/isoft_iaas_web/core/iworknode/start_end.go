@@ -25,11 +25,11 @@ func (this *WorkStartNode) Execute(trackingId string) {
 }
 
 func (this *WorkStartNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
-	return nil
+	return &schema.ParamInputSchema{}
 }
 
 func (this *WorkStartNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
-	return nil
+	return &schema.ParamOutputSchema{}
 }
 
 func (this *WorkStartNode) GetDefaultParamOutputSchema() *schema.ParamOutputSchema {
@@ -53,11 +53,11 @@ func (this *WorkEndNode) Execute(trackingId string) {
 }
 
 func (this *WorkEndNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
-	return nil
+	return &schema.ParamInputSchema{}
 }
 
 func (this *WorkEndNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
-	return nil
+	return &schema.ParamOutputSchema{}
 }
 
 func (this *WorkEndNode) GetDefaultParamOutputSchema() *schema.ParamOutputSchema {
