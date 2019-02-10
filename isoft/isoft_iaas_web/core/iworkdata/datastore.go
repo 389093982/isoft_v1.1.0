@@ -27,7 +27,7 @@ func (this *DataStore) CacheData(nodeName, paramName string, paramValue interfac
 	// 存数据
 	dataNodeStore := this.nodeStoreMap[nodeName]
 	dataNodeStore.NodeOutputDataMap[paramName] = paramValue
-	iwork.InsertRunLogDetail(this.TrackingId, fmt.Sprintf("cache data for %s:%s",paramName, paramValue))
+	iwork.InsertRunLogDetail(this.TrackingId, fmt.Sprintf("cache data for %s:%v",paramName, paramValue))
 }
 
 // 从数据中心获取数据
