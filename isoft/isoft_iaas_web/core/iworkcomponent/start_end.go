@@ -2,6 +2,7 @@ package iworkcomponent
 
 import (
 	"isoft/isoft_iaas_web/core/iworkdata"
+	"isoft/isoft_iaas_web/core/iworkdata/datastore"
 	"isoft/isoft_iaas_web/models/iwork"
 )
 
@@ -18,7 +19,7 @@ func (this *WorkStartNode) Execute(trackingId string) {
 		tmpDataMap[item.ParamName] = item.ParamValue			// 输入数据存临时
 	}
 	// 获取数据中心
-	dataStore := iworkdata.GetDataSource(trackingId)
+	dataStore := datastore.GetDataSource(trackingId)
 	// 提交输出数据至数据中心,此类数据能直接从 tmpDataMap 中获取,而不依赖于计算,只适用于 WORK_START、WORK_END 节点
 	this.SubmitParamOutputSchemaDataToDataStore(this.WorkStep, dataStore, tmpDataMap)
 }
@@ -44,7 +45,7 @@ type WorkEndNode struct {
 
 func (this *WorkEndNode) Execute(trackingId string) {
 	// 数据中心
-	dataStore := iworkdata.GetDataSource(trackingId)
+	dataStore := datastore.GetDataSource(trackingId)
 	// 节点中间数据
 	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep,dataStore)
 	// 提交输出数据至数据中心,此类数据能直接从 tmpDataMap 中获取,而不依赖于计算,只适用于 WORK_START、WORK_END 节点

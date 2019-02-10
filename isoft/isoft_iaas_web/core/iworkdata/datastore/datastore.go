@@ -1,4 +1,4 @@
-package iworkdata
+package datastore
 
 import (
 	"fmt"

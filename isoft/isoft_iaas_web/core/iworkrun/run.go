@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"isoft/isoft/common/stringutil"
 	"isoft/isoft_iaas_web/core/iworkcomponent"
-	"isoft/isoft_iaas_web/core/iworkdata"
+	"isoft/isoft_iaas_web/core/iworkdata/datastore"
 	"isoft/isoft_iaas_web/models/iwork"
 	"time"
 )
@@ -29,7 +29,7 @@ func Run(work iwork.Work, steps []iwork.WorkStep) {
 	// 记录日志详细
 	iwork.InsertRunLogDetail(trackingId, fmt.Sprintf("start execute work:%s",work.WorkName))
 	// 申请数据中心存储中间数据
-	iworkdata.RegistDataStore(trackingId)
+	datastore.RegistDataStore(trackingId)
 	// 逐步执行步骤
 	for _, step := range steps {
 		iwork.InsertRunLogDetail(trackingId, fmt.Sprintf("start execute workstep:%s",step.WorkStepName))
@@ -39,7 +39,7 @@ func Run(work iwork.Work, steps []iwork.WorkStep) {
 		iwork.InsertRunLogDetail(trackingId, fmt.Sprintf("end execute workstep:%s",step.WorkStepName))
 	}
 	// 注销数据中心
-	iworkdata.UnRegistDataStore(trackingId)
+	datastore.UnRegistDataStore(trackingId)
 	iwork.InsertRunLogDetail(trackingId, fmt.Sprintf("end execute work:%s",work.WorkName))
 }
 

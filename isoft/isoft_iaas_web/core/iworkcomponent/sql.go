@@ -3,6 +3,7 @@ package iworkcomponent
 import (
 	"fmt"
 	"isoft/isoft_iaas_web/core/iworkdata"
+	"isoft/isoft_iaas_web/core/iworkdata/datastore"
 	"isoft/isoft_iaas_web/core/iworkutil/sqlutil"
 	"isoft/isoft_iaas_web/models/iwork"
 )
@@ -14,7 +15,7 @@ type SQLQueryNode struct {
 
 func (this *SQLQueryNode) Execute(trackingId string) {
 	// 数据中心
-	dataStore := iworkdata.GetDataSource(trackingId)
+	dataStore := datastore.GetDataSource(trackingId)
 	// 节点中间数据
 	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep,dataStore)
 	sql := tmpDataMap["sql"].(string) 				  // 等价于 iworkdata.GetStaticParamValue("sql",this.WorkStep)
