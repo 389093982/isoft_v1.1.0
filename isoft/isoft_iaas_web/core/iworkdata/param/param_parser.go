@@ -1,4 +1,4 @@
-package iworknode
+package param
 
 import (
 	"encoding/xml"
