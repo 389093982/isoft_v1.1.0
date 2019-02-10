@@ -1,7 +1,6 @@
 package iworknode
 
 import (
-	"isoft/isoft_iaas_web/core/iworkdata"
 	"isoft/isoft_iaas_web/core/iworkdata/datastore"
 	"isoft/isoft_iaas_web/models/iresource"
 	"isoft/isoft_iaas_web/models/iwork"
@@ -21,7 +20,7 @@ func (this *BaseNode) parseAndFillParamVauleWithResource(paramVaule string) inte
 // paramValue 来源于前置节点
 func (this *BaseNode) parseAndFillParamVauleWithNode(paramVaule string, dataStore *datastore.DataStore) interface{} {
 	if strings.HasPrefix(paramVaule, "$"){
-		resolver := iworkdata.ParamVauleParser{ParamValue:paramVaule}
+		resolver := ParamVauleParser{ParamValue:paramVaule}
 		return dataStore.GetData(resolver.GetNodeNameFromParamValue(), resolver.GetParamNameFromParamValue())
 	}else{
 		return paramVaule

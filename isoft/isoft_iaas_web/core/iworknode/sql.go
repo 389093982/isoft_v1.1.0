@@ -2,7 +2,6 @@ package iworknode
 
 import (
 	"fmt"
-	"isoft/isoft_iaas_web/core/iworkdata"
 	"isoft/isoft_iaas_web/core/iworkdata/datastore"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
 	"isoft/isoft_iaas_web/core/iworkutil/sqlutil"
@@ -62,8 +61,8 @@ func (this *SQLQueryNode) GetDefaultParamOutputSchema() *schema.ParamOutputSchem
 }
 
 func (this *SQLQueryNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
-	sql := iworkdata.GetStaticParamValue("sql",this.WorkStep)
-	dataSourceName := iworkdata.GetStaticParamValue("db_conn", this.WorkStep)
+	sql := GetStaticParamValue("sql",this.WorkStep)
+	dataSourceName := GetStaticParamValue("db_conn", this.WorkStep)
 	paramNames := sqlutil.GetMetaDatas(sql, dataSourceName)
 	items := []schema.ParamOutputSchemaItem{}
 	for _, paramName := range paramNames {

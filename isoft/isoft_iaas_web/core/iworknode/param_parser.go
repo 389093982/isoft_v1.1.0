@@ -1,4 +1,4 @@
-package iworkdata
+package iworknode
 
 import (
 	"encoding/xml"
