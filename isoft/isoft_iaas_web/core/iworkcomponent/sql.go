@@ -2,8 +2,8 @@ package iworkcomponent
 
 import (
 	"fmt"
-	"isoft/isoft_iaas_web/core/iworkcomponent/sqlutil"
 	"isoft/isoft_iaas_web/core/iworkdata"
+	"isoft/isoft_iaas_web/core/iworkutil/sqlutil"
 	"isoft/isoft_iaas_web/models/iwork"
 )
 
