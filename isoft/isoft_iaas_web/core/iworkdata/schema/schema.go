@@ -1,4 +1,4 @@
-package iworkdata
+package schema
 
 import "encoding/xml"
 

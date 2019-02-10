@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"isoft/isoft_iaas_web/core/iworkdata"
 	"isoft/isoft_iaas_web/core/iworkdata/datastore"
+	"isoft/isoft_iaas_web/core/iworkdata/schema"
 	"isoft/isoft_iaas_web/core/iworkutil/sqlutil"
 	"isoft/isoft_iaas_web/models/iwork"
 )
@@ -42,35 +43,35 @@ func (this *SQLQueryNode) getSqlBinding(tmpDataMap map[string]interface{}) []int
 	return _sql_binding
 }
 
-func (this *SQLQueryNode) GetDefaultParamInputSchema() *iworkdata.ParamInputSchema {
+func (this *SQLQueryNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
 	paramNames := []string{"sql", "sql_binding?", "db_conn"}
-	items := []iworkdata.ParamInputSchemaItem{}
+	items := []schema.ParamInputSchemaItem{}
 	for _, paramName := range paramNames {
-		items = append(items, iworkdata.ParamInputSchemaItem{ParamName: paramName})
+		items = append(items, schema.ParamInputSchemaItem{ParamName: paramName})
 	}
-	return &iworkdata.ParamInputSchema{ParamInputSchemaItems: items}
+	return &schema.ParamInputSchema{ParamInputSchemaItems: items}
 }
 
-func (this *SQLQueryNode) GetDefaultParamOutputSchema() *iworkdata.ParamOutputSchema {
+func (this *SQLQueryNode) GetDefaultParamOutputSchema() *schema.ParamOutputSchema {
 	paramNames := []string{"datacounts"}
-	items := []iworkdata.ParamOutputSchemaItem{}
+	items := []schema.ParamOutputSchemaItem{}
 	for _, paramName := range paramNames {
-		items = append(items, iworkdata.ParamOutputSchemaItem{ParamName: paramName})
+		items = append(items, schema.ParamOutputSchemaItem{ParamName: paramName})
 	}
-	return &iworkdata.ParamOutputSchema{ParamOutputSchemaItems: items}
+	return &schema.ParamOutputSchema{ParamOutputSchemaItems: items}
 }
 
-func (this *SQLQueryNode) GetRuntimeParamOutputSchema() *iworkdata.ParamOutputSchema {
+func (this *SQLQueryNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
 	sql := iworkdata.GetStaticParamValue("sql",this.WorkStep)
 	dataSourceName := iworkdata.GetStaticParamValue("db_conn", this.WorkStep)
 	paramNames := sqlutil.GetMetaDatas(sql, dataSourceName)
-	items := []iworkdata.ParamOutputSchemaItem{}
+	items := []schema.ParamOutputSchemaItem{}
 	for _, paramName := range paramNames {
-		items = append(items, iworkdata.ParamOutputSchemaItem{
+		items = append(items, schema.ParamOutputSchemaItem{
 			ParentPath:"rows",
 			ParamName: paramName,
 		})
 	}
-	return &iworkdata.ParamOutputSchema{ParamOutputSchemaItems: items}
+	return &schema.ParamOutputSchema{ParamOutputSchemaItems: items}
 }
 

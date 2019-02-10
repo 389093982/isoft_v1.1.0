@@ -1,8 +1,8 @@
 package iworkcomponent
 
 import (
-	"isoft/isoft_iaas_web/core/iworkdata"
 	"isoft/isoft_iaas_web/core/iworkdata/datastore"
+	"isoft/isoft_iaas_web/core/iworkdata/schema"
 	"isoft/isoft_iaas_web/models/iwork"
 )
 
@@ -24,15 +24,15 @@ func (this *WorkStartNode) Execute(trackingId string) {
 	this.SubmitParamOutputSchemaDataToDataStore(this.WorkStep, dataStore, tmpDataMap)
 }
 
-func (this *WorkStartNode) GetDefaultParamInputSchema() *iworkdata.ParamInputSchema {
+func (this *WorkStartNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
 	return nil
 }
 
-func (this *WorkStartNode) GetRuntimeParamOutputSchema() *iworkdata.ParamOutputSchema {
+func (this *WorkStartNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
 	return nil
 }
 
-func (this *WorkStartNode) GetDefaultParamOutputSchema() *iworkdata.ParamOutputSchema {
+func (this *WorkStartNode) GetDefaultParamOutputSchema() *schema.ParamOutputSchema {
 	return transferParamInputSchemaToParamOutputSchema(this.WorkStep)
 }
 
@@ -52,24 +52,24 @@ func (this *WorkEndNode) Execute(trackingId string) {
 	this.SubmitParamOutputSchemaDataToDataStore(this.WorkStep, dataStore, tmpDataMap)
 }
 
-func (this *WorkEndNode) GetDefaultParamInputSchema() *iworkdata.ParamInputSchema {
+func (this *WorkEndNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
 	return nil
 }
 
-func (this *WorkEndNode) GetRuntimeParamOutputSchema() *iworkdata.ParamOutputSchema {
+func (this *WorkEndNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
 	return nil
 }
 
-func (this *WorkEndNode) GetDefaultParamOutputSchema() *iworkdata.ParamOutputSchema {
+func (this *WorkEndNode) GetDefaultParamOutputSchema() *schema.ParamOutputSchema {
 	return transferParamInputSchemaToParamOutputSchema(this.WorkStep)
 }
 
 // 输入转输出,适用于开始节点和结束节点
-func transferParamInputSchemaToParamOutputSchema(step *iwork.WorkStep) *iworkdata.ParamOutputSchema {
-	items := []iworkdata.ParamOutputSchemaItem{}
+func transferParamInputSchemaToParamOutputSchema(step *iwork.WorkStep) *schema.ParamOutputSchema {
+	items := []schema.ParamOutputSchemaItem{}
 	paramInputSchema := GetCacheParamInputSchema(step)
 	for _, paramInputSchemaItem := range paramInputSchema.ParamInputSchemaItems{
-		items = append(items, iworkdata.ParamOutputSchemaItem{ParamName: paramInputSchemaItem.ParamName})
+		items = append(items, schema.ParamOutputSchemaItem{ParamName: paramInputSchemaItem.ParamName})
 	}
-	return &iworkdata.ParamOutputSchema{ParamOutputSchemaItems: items}
+	return &schema.ParamOutputSchema{ParamOutputSchemaItems: items}
 }

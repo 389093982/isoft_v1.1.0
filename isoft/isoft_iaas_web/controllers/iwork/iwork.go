@@ -6,7 +6,7 @@ import (
 	"github.com/astaxie/beego/utils/pagination"
 	"isoft/isoft/common/pageutil"
 	"isoft/isoft_iaas_web/core/iworkcomponent"
-	"isoft/isoft_iaas_web/core/iworkdata"
+	"isoft/isoft_iaas_web/core/iworkdata/schema"
 	"isoft/isoft_iaas_web/core/iworkrun"
 	"isoft/isoft_iaas_web/models/iresource"
 	"isoft/isoft_iaas_web/models/iwork"
@@ -158,7 +158,7 @@ func (this *WorkController) EditWorkStepParamInfo() {
 	work_step_id, _ := this.GetInt64("work_step_id", -1)
 	paramInputSchemaStr := this.GetString("paramInputSchemaStr")
 	paramMappingsStr := this.GetString("paramMappingsStr")
-	var paramInputSchema iworkdata.ParamInputSchema
+	var paramInputSchema schema.ParamInputSchema
 	json.Unmarshal([]byte(paramInputSchemaStr), &paramInputSchema)
 	this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
 	if step, err := iwork.GetOneWorkStep(work_id, work_step_id); err == nil {
@@ -167,7 +167,7 @@ func (this *WorkController) EditWorkStepParamInfo() {
 			var paramMappingsArr []string
 			json.Unmarshal([]byte(paramMappingsStr), &paramMappingsArr)
 			// 沿用旧值,添加新值,去除无效的值,即以 paramMapping 为准
-			items := []iworkdata.ParamInputSchemaItem{}
+			items := []schema.ParamInputSchemaItem{}
 			for _, paramMapping := range paramMappingsArr{
 				var oldValue string		// 旧值默认为空
 				for _, _item := range paramInputSchema.ParamInputSchemaItems{
@@ -175,7 +175,7 @@ func (this *WorkController) EditWorkStepParamInfo() {
 						oldValue = _item.ParamValue
 					}
 				}
-				items = append(items,iworkdata.ParamInputSchemaItem{ParamName:paramMapping, ParamValue:oldValue})
+				items = append(items,schema.ParamInputSchemaItem{ParamName:paramMapping, ParamValue:oldValue})
 			}
 			paramInputSchema.ParamInputSchemaItems = items
 		}
@@ -281,7 +281,7 @@ func (this *WorkController) LoadPreNodeOutput()  {
 	work_id := this.GetString("work_id")
 	work_step_id, _ := this.GetInt64("work_step_id")
 
-	preParamOutputSchemaTreeNodeArr := []*iworkdata.TreeNode{}
+	preParamOutputSchemaTreeNodeArr := []*schema.TreeNode{}
 	// 加载 resource 参数
 	pos := LoadResourceInfo()
 	preParamOutputSchemaTreeNodeArr = append(preParamOutputSchemaTreeNodeArr, pos.RenderToTreeNodes("$RESOURCE"))
@@ -299,13 +299,13 @@ func (this *WorkController) LoadPreNodeOutput()  {
 	this.ServeJSON()
 }
 
-func LoadResourceInfo() *iworkdata.ParamOutputSchema {
-	pos := &iworkdata.ParamOutputSchema{
-		ParamOutputSchemaItems:[]iworkdata.ParamOutputSchemaItem{},
+func LoadResourceInfo() *schema.ParamOutputSchema {
+	pos := &schema.ParamOutputSchema{
+		ParamOutputSchemaItems:[]schema.ParamOutputSchemaItem{},
 	}
 	resources := iresource.GetAllResource()
 	for _, resource := range resources{
-		pos.ParamOutputSchemaItems = append(pos.ParamOutputSchemaItems, iworkdata.ParamOutputSchemaItem{
+		pos.ParamOutputSchemaItems = append(pos.ParamOutputSchemaItems, schema.ParamOutputSchemaItem{
 			ParamName:resource.ResourceName,
 		})
 	}

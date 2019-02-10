@@ -2,7 +2,7 @@ package iworkcomponent
 
 import (
 	"fmt"
-	"isoft/isoft_iaas_web/core/iworkdata"
+	"isoft/isoft_iaas_web/core/iworkdata/schema"
 	"isoft/isoft_iaas_web/models/iwork"
 	"strings"
 )
@@ -14,9 +14,9 @@ type WorkStepFactory struct {
 
 type IStandardWorkStep interface {
 	Execute(trackingId string)
-	GetDefaultParamInputSchema() *iworkdata.ParamInputSchema
-	GetDefaultParamOutputSchema() *iworkdata.ParamOutputSchema
-	GetRuntimeParamOutputSchema() *iworkdata.ParamOutputSchema
+	GetDefaultParamInputSchema() *schema.ParamInputSchema
+	GetDefaultParamOutputSchema() *schema.ParamOutputSchema
+	GetRuntimeParamOutputSchema() *schema.ParamOutputSchema
 }
 
 func (this *WorkStepFactory) Execute(trackingId string) {
@@ -37,23 +37,23 @@ func (this *WorkStepFactory) getProxy() IStandardWorkStep {
 	panic(fmt.Sprintf("unsupport workStepType:%s",this.WorkStep.WorkStepType))
 }
 
-func (this *WorkStepFactory) GetDefaultParamInputSchema() *iworkdata.ParamInputSchema {
+func (this *WorkStepFactory) GetDefaultParamInputSchema() *schema.ParamInputSchema {
 	if schema := this.getProxy().GetDefaultParamInputSchema(); schema != nil{
 		return schema
 	}
-	return &iworkdata.ParamInputSchema{}
+	return &schema.ParamInputSchema{}
 }
 
-func (this *WorkStepFactory) GetDefaultParamOutputSchema() *iworkdata.ParamOutputSchema {
+func (this *WorkStepFactory) GetDefaultParamOutputSchema() *schema.ParamOutputSchema {
 	if schema := this.getProxy().GetDefaultParamOutputSchema(); schema != nil{
 		return schema
 	}
-	return &iworkdata.ParamOutputSchema{}
+	return &schema.ParamOutputSchema{}
 }
 
-func (this *WorkStepFactory) GetRuntimeParamOutputSchema() *iworkdata.ParamOutputSchema {
+func (this *WorkStepFactory) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
 	if schema := this.getProxy().GetRuntimeParamOutputSchema(); schema != nil{
 		return schema
 	}
-	return &iworkdata.ParamOutputSchema{}
+	return &schema.ParamOutputSchema{}
 }
