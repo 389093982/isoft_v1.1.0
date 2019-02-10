@@ -3,8 +3,8 @@ package iworkrun
 import (
 	"fmt"
 	"isoft/isoft/common/stringutil"
-	"isoft/isoft_iaas_web/core/iworkcomponent"
 	"isoft/isoft_iaas_web/core/iworkdata/datastore"
+	"isoft/isoft_iaas_web/core/iworknode"
 	"isoft/isoft_iaas_web/models/iwork"
 	"time"
 )
@@ -34,7 +34,7 @@ func Run(work iwork.Work, steps []iwork.WorkStep) {
 	for _, step := range steps {
 		iwork.InsertRunLogDetail(trackingId, fmt.Sprintf("start execute workstep:%s",step.WorkStepName))
 		// 由工厂代为执行步骤
-		factory := &iworkcomponent.WorkStepFactory{WorkStep: &step}
+		factory := &iworknode.WorkStepFactory{WorkStep: &step}
 		factory.Execute(trackingId)
 		iwork.InsertRunLogDetail(trackingId, fmt.Sprintf("end execute workstep:%s",step.WorkStepName))
 	}

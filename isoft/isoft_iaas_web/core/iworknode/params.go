@@ -1,4 +1,4 @@
-package iworkcomponent
+package iworknode
 
 import (
 	"encoding/xml"

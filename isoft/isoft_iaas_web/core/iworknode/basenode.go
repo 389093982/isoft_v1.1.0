@@ -1,4 +1,4 @@
-package iworkcomponent
+package iworknode
 
 import (
 	"isoft/isoft_iaas_web/core/iworkdata"
