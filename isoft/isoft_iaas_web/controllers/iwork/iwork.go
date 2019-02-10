@@ -50,7 +50,7 @@ func (this *WorkController) BuildOutput()  {
 	this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
 	// 读取 work_step 信息
 	if step, err := iwork.LoadWorkStepInfo(work_id, work_step_id); err == nil {
-		step.WorkStepOutput = iworknode.GetRuntimeParamOutputSchema(&step).RenderToXml()
+		step.WorkStepOutput = schema.GetRuntimeParamOutputSchema(&iworknode.WorkStepFactory{WorkStep:&step}).RenderToXml()
 		if _, err = iwork.InsertOrUpdateWorkStep(&step); err == nil{
 			this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
 		}
@@ -227,11 +227,11 @@ func (this *WorkController) LoadWorkStepInfo() {
 		json.Unmarshal([]byte(step.WorkStepParamMapping), &paramMappingsArr)
 		// 返回结果
 		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "step": step,
-			"paramInputSchema":          iworknode.GetCacheParamInputSchema(&step),
-			"paramInputSchemaXml":       iworknode.GetCacheParamInputSchema(&step).RenderToXml(),
-			"paramOutputSchema":         iworknode.GetCacheParamOutputSchema(&step),
-			"paramOutputSchemaXml":      iworknode.GetCacheParamOutputSchema(&step).RenderToXml(),
-			"paramOutputSchemaTreeNode": iworknode.GetCacheParamOutputSchema(&step).RenderToTreeNodes("$NODE_NAME_OUTPUT"),
+			"paramInputSchema":          schema.GetCacheParamInputSchema(&step, &iworknode.WorkStepFactory{WorkStep:&step}),
+			"paramInputSchemaXml":       schema.GetCacheParamInputSchema(&step, &iworknode.WorkStepFactory{WorkStep:&step}).RenderToXml(),
+			"paramOutputSchema":         schema.GetCacheParamOutputSchema(&step),
+			"paramOutputSchemaXml":      schema.GetCacheParamOutputSchema(&step).RenderToXml(),
+			"paramOutputSchemaTreeNode": schema.GetCacheParamOutputSchema(&step).RenderToTreeNodes("$NODE_NAME_OUTPUT"),
 			"paramMappings":             paramMappingsArr,
 		}
 	} else {
@@ -288,7 +288,7 @@ func (this *WorkController) LoadPreNodeOutput()  {
 	// 加载前置步骤输出
 	if steps, err := iwork.GetAllPreStepInfo(work_id, work_step_id); err == nil{
 		for _, step := range steps{
-			pos := iworknode.GetCacheParamOutputSchema(&step)
+			pos := schema.GetCacheParamOutputSchema(&step)
 			preParamOutputSchemaTreeNodeArr = append(preParamOutputSchemaTreeNodeArr, pos.RenderToTreeNodes("$" + step.WorkStepName))
 		}
 	}

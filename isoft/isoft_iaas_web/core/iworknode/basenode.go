@@ -2,6 +2,7 @@ package iworknode
 
 import (
 	"isoft/isoft_iaas_web/core/iworkdata/datastore"
+	"isoft/isoft_iaas_web/core/iworkdata/schema"
 	"isoft/isoft_iaas_web/models/iresource"
 	"isoft/isoft_iaas_web/models/iwork"
 	"strings"
@@ -67,7 +68,7 @@ func (this *BaseNode) parseAndFillSingleParamVaule(paramVaule string, dataStore 
 func (this *BaseNode) FillParamInputSchemaDataToTmp(workStep *iwork.WorkStep,dataStore *datastore.DataStore) map[string]interface{} {
 	// 存储节点中间数据
 	tmpDataMap := make(map[string]interface{})
-	paramInputSchema := GetCacheParamInputSchema(workStep)
+	paramInputSchema := schema.GetCacheParamInputSchema(workStep, &WorkStepFactory{WorkStep:workStep})
 	for _, item := range paramInputSchema.ParamInputSchemaItems{
 		tmpDataMap[item.ParamName] = this.ParseAndFillParamVaule(item.ParamValue, dataStore)			// 输入数据存临时
 	}
@@ -76,7 +77,7 @@ func (this *BaseNode) FillParamInputSchemaDataToTmp(workStep *iwork.WorkStep,dat
 
 // 提交输出数据至数据中心,此类数据能直接从 tmpDataMap 中获取,而不依赖于计算,只适用于 WORK_START、WORK_END 节点
 func (this *BaseNode) SubmitParamOutputSchemaDataToDataStore(workStep *iwork.WorkStep,dataStore *datastore.DataStore, tmpDataMap map[string]interface{})  {
-	paramOutputSchema := GetCacheParamOutputSchema(workStep)
+	paramOutputSchema := schema.GetCacheParamOutputSchema(workStep)
 	for _,item := range paramOutputSchema.ParamOutputSchemaItems{
 		// 将数据数据存储到数据中心
 		dataStore.CacheData(workStep.WorkStepName, item.ParamName, tmpDataMap[item.ParamName])

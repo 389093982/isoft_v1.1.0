@@ -14,7 +14,7 @@ type WorkStartNode struct {
 func (this *WorkStartNode) Execute(trackingId string) {
 	// 存储节点中间数据
 	tmpDataMap := make(map[string]interface{})
-	paramInputSchema := GetCacheParamInputSchema(this.WorkStep)
+	paramInputSchema := schema.GetCacheParamInputSchema(this.WorkStep, &WorkStepFactory{WorkStep:this.WorkStep})
 	for _, item := range paramInputSchema.ParamInputSchemaItems{
 		tmpDataMap[item.ParamName] = item.ParamValue			// 输入数据存临时
 	}
@@ -67,7 +67,7 @@ func (this *WorkEndNode) GetDefaultParamOutputSchema() *schema.ParamOutputSchema
 // 输入转输出,适用于开始节点和结束节点
 func transferParamInputSchemaToParamOutputSchema(step *iwork.WorkStep) *schema.ParamOutputSchema {
 	items := []schema.ParamOutputSchemaItem{}
-	paramInputSchema := GetCacheParamInputSchema(step)
+	paramInputSchema := schema.GetCacheParamInputSchema(step, &WorkStepFactory{WorkStep:step})
 	for _, paramInputSchemaItem := range paramInputSchema.ParamInputSchemaItems{
 		items = append(items, schema.ParamOutputSchemaItem{ParamName: paramInputSchemaItem.ParamName})
 	}
