@@ -1,11 +1,13 @@
 package iworknode
 
 import (
+	"fmt"
 	"isoft/isoft_iaas_web/core/iworkdata/datastore"
 	"isoft/isoft_iaas_web/core/iworkdata/param"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
 	"isoft/isoft_iaas_web/models/iresource"
 	"isoft/isoft_iaas_web/models/iwork"
+	"strconv"
 	"strings"
 )
 
@@ -71,9 +73,38 @@ func (this *BaseNode) FillParamInputSchemaDataToTmp(workStep *iwork.WorkStep,dat
 	tmpDataMap := make(map[string]interface{})
 	paramInputSchema := schema.GetCacheParamInputSchema(workStep, &WorkStepFactory{WorkStep:workStep})
 	for _, item := range paramInputSchema.ParamInputSchemaItems{
-		tmpDataMap[item.ParamName] = this.ParseAndFillParamVaule(item.ParamValue, dataStore)			// 输入数据存临时
+		// 个性化重写操作
+		this.modifySqlBindingParamValueWithBatchNumber(&item, tmpDataMap)
+		tmpDataMap[item.ParamName] = this.ParseAndFillParamVaule(item.ParamValue, dataStore) // 输入数据存临时
 	}
 	return tmpDataMap
+}
+
+func (this *BaseNode) modifySqlBindingParamValueWithBatchNumber(item *schema.ParamInputSchemaItem, tmpDataMap map[string]interface{}) {
+	// 当前填充的字段为 sql_binding? 时,检测到批量操作数据大于 1
+	if item.ParamName == "sql_binding?" && GetBatchNumber(tmpDataMap) > 1 {
+		var newParamValue string
+		for i := 0; i < GetBatchNumber(tmpDataMap); i++ {
+			newParamValue += strings.Replace(item.ParamValue, ".rows.", fmt.Sprintf(".rows[%v].", i), -1)
+		}
+		item.ParamValue = newParamValue
+	}
+}
+
+// 从 tmpDataMap 获取 batch_number? 数据
+func GetBatchNumber(tmpDataMap map[string]interface{}) int {
+	if _, ok := tmpDataMap["batch_number?"]; !ok{
+		return 0
+	}
+	if batch_number,ok := tmpDataMap["batch_number?"].(int64); ok{
+		return int(batch_number)
+	}
+	if batch_number,ok := tmpDataMap["batch_number?"].(string); ok{
+		if _batch_number, err := strconv.Atoi(batch_number); err == nil{
+			return _batch_number
+		}
+	}
+	return 0
 }
 
 // 提交输出数据至数据中心,此类数据能直接从 tmpDataMap 中获取,而不依赖于计算,只适用于 WORK_START、WORK_END 节点

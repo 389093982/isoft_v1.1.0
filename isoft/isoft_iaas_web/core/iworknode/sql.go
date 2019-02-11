@@ -6,6 +6,7 @@ import (
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
 	"isoft/isoft_iaas_web/core/iworkutil/sqlutil"
 	"isoft/isoft_iaas_web/models/iwork"
+	"strings"
 )
 
 type SQLQueryNode struct {
@@ -32,17 +33,6 @@ func (this *SQLQueryNode) Execute(trackingId string) {
 	}
 }
 
-// 从 tmpDataMap 获取 sql_binding 数据
-func getSqlBinding(tmpDataMap map[string]interface{}) []interface{} {
-	_sql_binding := []interface{}{}
-	if sql_binding, ok := tmpDataMap["sql_binding?"].([]interface{}); ok {
-		_sql_binding = sql_binding
-	} else if sql_binding, ok := tmpDataMap["sql_binding?"].(interface{}); ok {
-		_sql_binding = append(_sql_binding, sql_binding)
-	}
-	return _sql_binding
-}
-
 func (this *SQLQueryNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
 	return schema.BuildParamInputSchemaWithSlice([]string{"sql", "sql_binding?", "db_conn"})
 }
@@ -65,7 +55,16 @@ func (this *SQLQueryNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchem
 	return &schema.ParamOutputSchema{ParamOutputSchemaItems: items}
 }
 
-
+// 从 tmpDataMap 获取 sql_binding 数据
+func getSqlBinding(tmpDataMap map[string]interface{}) []interface{} {
+	_sql_binding := []interface{}{}
+	if sql_binding, ok := tmpDataMap["sql_binding?"].([]interface{}); ok {
+		_sql_binding = sql_binding
+	} else if sql_binding, ok := tmpDataMap["sql_binding?"].(interface{}); ok {
+		_sql_binding = append(_sql_binding, sql_binding)
+	}
+	return _sql_binding
+}
 
 type SQLExecuteNode struct {
 	BaseNode
@@ -79,6 +78,8 @@ func (this *SQLExecuteNode) Execute(trackingId string) {
 	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep,dataStore)
 	sql := tmpDataMap["sql"].(string) 				  // 等价于 param.GetStaticParamValue("sql",this.WorkStep)
 	dataSourceName := tmpDataMap["db_conn"].(string)  // 等价于 param.GetStaticParamValue("db_conn", this.WorkStep)
+	// insert 语句且有批量操作时整改 sql 语句
+	sql = this.modifySqlInsertWithBatchNumber(tmpDataMap, sql)
 	// sql_binding 参数获取
 	_sql_binding := getSqlBinding(tmpDataMap)
 	affected := sqlutil.Execute(sql, _sql_binding, dataSourceName)
@@ -87,8 +88,29 @@ func (this *SQLExecuteNode) Execute(trackingId string) {
 	dataStore.CacheData(this.WorkStep.WorkStepName, "affected", affected)
 }
 
+func (this *SQLExecuteNode) modifySqlInsertWithBatchNumber(tmpDataMap map[string]interface{}, sql string) string {
+	_batch_number := GetBatchNumber(tmpDataMap)
+	if _batch_number > 1 && strings.HasPrefix(strings.ToUpper(strings.TrimSpace(sql)), "INSERT") {
+		// 最后一个左括号索引
+		index1 := strings.LastIndex(sql, "(")
+		// 最后一个右括号索引
+		index2 := strings.LastIndex(sql, ")")
+		// value 填充子句
+		valueSql := sql[index1:(index2+1)]
+		// newValueArr 等于 value 填充子句复制 _batch_number 份
+		newValueArr := make([]string, 0)
+		for i:=0; i<_batch_number; i++{
+			newValueArr = append(newValueArr, valueSql)
+		}
+		newValueSql := strings.Join(newValueArr, ",")
+		// 进行替换,相当于 () 替换成 (),(),(),()...
+		sql = strings.Replace(sql, valueSql, newValueSql,-1)
+	}
+	return sql
+}
+
 func (this *SQLExecuteNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
-	return schema.BuildParamInputSchemaWithSlice([]string{"sql", "sql_binding?", "db_conn"})
+	return schema.BuildParamInputSchemaWithSlice([]string{"batch_number?", "sql", "sql_binding?", "db_conn"})
 }
 
 func (this *SQLExecuteNode) GetDefaultParamOutputSchema() *schema.ParamOutputSchema {
@@ -98,3 +120,4 @@ func (this *SQLExecuteNode) GetDefaultParamOutputSchema() *schema.ParamOutputSch
 func (this *SQLExecuteNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
 	return &schema.ParamOutputSchema{}
 }
+
