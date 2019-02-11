@@ -19,11 +19,11 @@ func (this *SQLQueryNode) Execute(trackingId string) {
 	dataStore := datastore.GetDataSource(trackingId)
 	// 节点中间数据
 	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep,dataStore)
-	sql := tmpDataMap["sql"].(string) 				  // 等价于 iworkdata.GetStaticParamValue("sql",this.WorkStep)
-	dataSourceName := tmpDataMap["db_conn"].(string)  // 等价于 iworkdata.GetStaticParamValue("db_conn", this.WorkStep)
+	sql := tmpDataMap["sql"].(string) 				  // 等价于 param.GetStaticParamValue("sql",this.WorkStep)
+	dataSourceName := tmpDataMap["db_conn"].(string)  // 等价于 param.GetStaticParamValue("db_conn", this.WorkStep)
 	// sql_binding 参数获取
-	_sql_binding := this.getSqlBinding(tmpDataMap)
-	datacounts, rowDatas := sqlutil.ExcuteQuery(sql, _sql_binding, dataSourceName)
+	_sql_binding := getSqlBinding(tmpDataMap)
+	datacounts, rowDatas := sqlutil.Query(sql, _sql_binding, dataSourceName)
 	// 将数据数据存储到数据中心
 	// 存储 datacounts
 	dataStore.CacheData(this.WorkStep.WorkStepName, fmt.Sprintf("$%s.datacounts", this.WorkStep.WorkStepName), datacounts)
@@ -33,7 +33,8 @@ func (this *SQLQueryNode) Execute(trackingId string) {
 	}
 }
 
-func (this *SQLQueryNode) getSqlBinding(tmpDataMap map[string]interface{}) []interface{} {
+// 从 tmpDataMap 获取 sql_binding 数据
+func getSqlBinding(tmpDataMap map[string]interface{}) []interface{} {
 	_sql_binding := []interface{}{}
 	if sql_binding, ok := tmpDataMap["sql_binding?"].([]interface{}); ok {
 		_sql_binding = sql_binding
@@ -44,21 +45,11 @@ func (this *SQLQueryNode) getSqlBinding(tmpDataMap map[string]interface{}) []int
 }
 
 func (this *SQLQueryNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
-	paramNames := []string{"sql", "sql_binding?", "db_conn"}
-	items := []schema.ParamInputSchemaItem{}
-	for _, paramName := range paramNames {
-		items = append(items, schema.ParamInputSchemaItem{ParamName: paramName})
-	}
-	return &schema.ParamInputSchema{ParamInputSchemaItems: items}
+	return schema.BuildParamInputSchemaWithSlice([]string{"sql", "sql_binding?", "db_conn"})
 }
 
 func (this *SQLQueryNode) GetDefaultParamOutputSchema() *schema.ParamOutputSchema {
-	paramNames := []string{"datacounts"}
-	items := []schema.ParamOutputSchemaItem{}
-	for _, paramName := range paramNames {
-		items = append(items, schema.ParamOutputSchemaItem{ParamName: paramName})
-	}
-	return &schema.ParamOutputSchema{ParamOutputSchemaItems: items}
+	return schema.BuildParamOutputSchemaWithSlice([]string{"datacounts"})
 }
 
 func (this *SQLQueryNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
@@ -75,3 +66,36 @@ func (this *SQLQueryNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchem
 	return &schema.ParamOutputSchema{ParamOutputSchemaItems: items}
 }
 
+
+
+type SQLExecuteNode struct {
+	BaseNode
+	WorkStep 		    *iwork.WorkStep
+}
+
+func (this *SQLExecuteNode) Execute(trackingId string) {
+	// 数据中心
+	dataStore := datastore.GetDataSource(trackingId)
+	// 节点中间数据
+	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep,dataStore)
+	sql := tmpDataMap["sql"].(string) 				  // 等价于 param.GetStaticParamValue("sql",this.WorkStep)
+	dataSourceName := tmpDataMap["db_conn"].(string)  // 等价于 param.GetStaticParamValue("db_conn", this.WorkStep)
+	// sql_binding 参数获取
+	_sql_binding := getSqlBinding(tmpDataMap)
+	affected := sqlutil.Execute(sql, _sql_binding, dataSourceName)
+	// 将数据数据存储到数据中心
+	// 存储 affected
+	dataStore.CacheData(this.WorkStep.WorkStepName, fmt.Sprintf("$%s.affected", this.WorkStep.WorkStepName), affected)
+}
+
+func (this *SQLExecuteNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
+	return schema.BuildParamInputSchemaWithSlice([]string{"sql", "sql_binding?", "db_conn"})
+}
+
+func (this *SQLExecuteNode) GetDefaultParamOutputSchema() *schema.ParamOutputSchema {
+	return schema.BuildParamOutputSchemaWithSlice([]string{"affected"})
+}
+
+func (this *SQLExecuteNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
+	return &schema.ParamOutputSchema{}
+}

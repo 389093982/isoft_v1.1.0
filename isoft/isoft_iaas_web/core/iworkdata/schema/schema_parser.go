@@ -50,5 +50,20 @@ func GetCacheParamInputSchema(step *iwork.WorkStep, paramSchemaParser IParamSche
 	return paramInputSchema
 }
 
+// 根据传入的 paramNames 构建 ParamInputSchema 对象
+func BuildParamInputSchemaWithSlice(paramNames []string) *ParamInputSchema {
+	items := []ParamInputSchemaItem{}
+	for _, paramName := range paramNames {
+		items = append(items, ParamInputSchemaItem{ParamName: paramName})
+	}
+	return &ParamInputSchema{ParamInputSchemaItems: items}
+}
 
-
+// 根据传入的 paramNames 构建 ParamOutputSchema 对象
+func BuildParamOutputSchemaWithSlice(paramNames []string) *ParamOutputSchema {
+	items := []ParamOutputSchemaItem{}
+	for _, paramName := range paramNames {
+		items = append(items, ParamOutputSchemaItem{ParamName: paramName})
+	}
+	return &ParamOutputSchema{ParamOutputSchemaItems: items}
+}

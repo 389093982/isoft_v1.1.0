@@ -24,7 +24,7 @@ func GetMetaDatas(sql, dataSourceName string) (colNames []string) {
 }
 
 
-func ExcuteQuery(sqlstring string, sql_binding []interface{}, dataSourceName string) (datacounts int64, rowDatas map[string]interface{}) {
+func Query(sqlstring string, sql_binding []interface{}, dataSourceName string) (datacounts int64, rowDatas map[string]interface{}) {
 	rowDatas = make(map[string]interface{},5)
 	db, err := GetConnForMysql("mysql", dataSourceName)
 	if err != nil {
