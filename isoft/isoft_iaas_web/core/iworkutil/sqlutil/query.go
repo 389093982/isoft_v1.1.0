@@ -3,6 +3,7 @@ package sqlutil
 import (
 	"database/sql"
 	"fmt"
+	"reflect"
 )
 
 func GetMetaDatas(sql, dataSourceName string) (colNames []string) {
@@ -42,6 +43,7 @@ func Query(sqlstring string, sql_binding []interface{}, dataSourceName string) (
 	}
 	defer rows.Close()
 	colNames, _ := rows.Columns()
+	rows.ColumnTypes()
 	for rows.Next() {
 		// 存储一行中的每一列值
 		colValues := make([]sql.RawBytes, len(colNames))
@@ -52,7 +54,9 @@ func Query(sqlstring string, sql_binding []interface{}, dataSourceName string) (
 		rows.Scan(scanArgs...)
 		for index, colValue := range colValues {
 			name := fmt.Sprintf("rows[%d].%s", datacounts, colNames[index])
-			rowDatas[name] = colValue
+			// sql.RawBytes 转字符串
+			_colValue := reflect.ValueOf(colValue).Interface().(sql.RawBytes)
+			rowDatas[name] = string(_colValue)
 		}
 		// 数据量增加 1
 		datacounts ++
