@@ -20,5 +20,4 @@ func Execute(sqlstring string, sql_binding []interface{}, dataSourceName string)
 	}else{
 		panic(err)
 	}
-
 }

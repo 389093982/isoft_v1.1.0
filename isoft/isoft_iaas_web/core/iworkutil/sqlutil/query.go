@@ -57,8 +57,8 @@ func Query(sqlstring string, sql_binding []interface{}, dataSourceName string) (
 			// sql.RawBytes 转字符串
 			_colValue := reflect.ValueOf(colValue).Interface().(sql.RawBytes)
 			rowDatas[name] = string(_colValue)
-			// 索引为 0 的进行简写
-			if index == 0{
+			// 第一条记录进行简写,去除[0]标识
+			if datacounts == 0{
 				_name := fmt.Sprintf("rows.%s", colNames[index])
 				rowDatas[_name] = string(_colValue)
 			}
