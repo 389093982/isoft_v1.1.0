@@ -37,8 +37,8 @@ func (this *BaseNode) ParseAndFillParamVaule(paramVaule string, dataStore *datas
 		return this.parseAndFillSingleParamVaule(values[0], dataStore)
 	}else{
 		// 多值
-		results := make([]interface{}, 5)
-		for _,value := range values{
+		results := make([]interface{},0)
+			for _,value := range values{
 			result := this.parseAndFillSingleParamVaule(value, dataStore)
 			results = append(results, result)
 		}

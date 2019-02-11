@@ -1,7 +1,6 @@
 package iworknode
 
 import (
-	"fmt"
 	"isoft/isoft_iaas_web/core/iworkdata/datastore"
 	"isoft/isoft_iaas_web/core/iworkdata/param"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
@@ -26,10 +25,10 @@ func (this *SQLQueryNode) Execute(trackingId string) {
 	datacounts, rowDatas := sqlutil.Query(sql, _sql_binding, dataSourceName)
 	// 将数据数据存储到数据中心
 	// 存储 datacounts
-	dataStore.CacheData(this.WorkStep.WorkStepName, fmt.Sprintf("$%s.datacounts", this.WorkStep.WorkStepName), datacounts)
-	for key, value := range rowDatas {
+	dataStore.CacheData(this.WorkStep.WorkStepName,"datacounts", datacounts)
+	for paramName, paramValue := range rowDatas {
 		// 存储具体字段值
-		dataStore.CacheData(this.WorkStep.WorkStepName, fmt.Sprintf("$%s.%s", this.WorkStep.WorkStepName, key), value)
+		dataStore.CacheData(this.WorkStep.WorkStepName, paramName, paramValue)
 	}
 }
 
@@ -85,7 +84,7 @@ func (this *SQLExecuteNode) Execute(trackingId string) {
 	affected := sqlutil.Execute(sql, _sql_binding, dataSourceName)
 	// 将数据数据存储到数据中心
 	// 存储 affected
-	dataStore.CacheData(this.WorkStep.WorkStepName, fmt.Sprintf("$%s.affected", this.WorkStep.WorkStepName), affected)
+	dataStore.CacheData(this.WorkStep.WorkStepName, "affected", affected)
 }
 
 func (this *SQLExecuteNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
