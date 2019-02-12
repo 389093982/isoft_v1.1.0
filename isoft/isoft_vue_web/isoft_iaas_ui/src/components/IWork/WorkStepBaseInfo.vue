@@ -66,6 +66,8 @@
         }
       },
       showWorkStepBaseInfo:function (work_id, work_step_id) {
+        // 重置表单,清除缓存
+        this.$refs["formValidate"].resetFields();
         this.formValidate.work_id = work_id;
         this.formValidate.work_step_id = work_step_id;
         this.loadWorkStepInfo();
@@ -81,6 +83,8 @@
               this.showFormModal = false;
               // 通知父组件添加成功
               this.$emit('handleSuccess');
+              // 重置表单,清除缓存
+              this.$refs[name].resetFields();
             }else{
               this.$Message.error('提交失败!');
             }
@@ -89,7 +93,7 @@
       },
       handleReset (name) {
         this.$refs[name].resetFields();
-      },
+  },
     },
   }
 </script>
