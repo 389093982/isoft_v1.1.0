@@ -43,20 +43,6 @@ func (this *WorkController) FilterPageLogRecord() {
 	this.ServeJSON()
 }
 
-func (this *WorkController) BuildOutput()  {
-	work_id := this.GetString("work_id")
-	work_step_id, _ := this.GetInt8("work_step_id")
-	this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
-	// 读取 work_step 信息
-	if step, err := iwork.LoadWorkStepInfo(work_id, work_step_id); err == nil {
-		step.WorkStepOutput = schema.GetRuntimeParamOutputSchema(&iworknode.WorkStepFactory{WorkStep:&step}).RenderToXml()
-		if _, err = iwork.InsertOrUpdateWorkStep(&step); err == nil{
-			this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
-		}
-	}
-	this.ServeJSON()
-}
-
 func (this *WorkController) RunWork() {
 	work_id := this.GetString("work_id")
 	work, _ := iwork.QueryWorkById(work_id)
@@ -184,7 +170,7 @@ func (this *WorkController) DeleteWorkStepById() {
 
 func (this *WorkController) LoadWorkStepInfo() {
 	work_id := this.GetString("work_id")
-	work_step_id, _ := this.GetInt8("work_step_id")
+	work_step_id, _ := this.GetInt64("work_step_id")
 	// 读取 work_step 信息
 	if step, err := iwork.LoadWorkStepInfo(work_id, work_step_id); err == nil {
 		var paramMappingsArr []string

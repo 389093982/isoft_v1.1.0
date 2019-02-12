@@ -129,7 +129,7 @@ func GetAllWorkStepInfo(work_id string) (steps []WorkStep, err error) {
 	return
 }
 
-func LoadWorkStepInfo(work_id string, work_step_id int8) (step WorkStep, err error) {
+func LoadWorkStepInfo(work_id string, work_step_id int64) (step WorkStep, err error) {
 	o := orm.NewOrm()
 	err = o.QueryTable("work_step").Filter("work_id", work_id).Filter("work_step_id", work_step_id).One(&step)
 	return

@@ -161,10 +161,6 @@ export const LoadWorkStepInfo = (work_id,work_step_id) => ajax(BASE_URL+"/iwork/
 // 加载前置节点输出参数,包括全局参数
 export const LoadPreNodeOutput = (work_id,work_step_id) => ajax(BASE_URL+"/iwork/loadPreNodeOutput", {work_id,work_step_id},'POST');
 
-
-// 加载前置节点输出参数,包括全局参数
-export const BuildOutput = (work_id,work_step_id) => ajax(BASE_URL+"/iwork/buildOutput", {work_id,work_step_id},'POST');
-
 // 删除 workstep 记录
 export const DeleteWorkStepById = (id) => ajax(BASE_URL+"/iwork/deleteWorkStepById", {id},'POST');
 

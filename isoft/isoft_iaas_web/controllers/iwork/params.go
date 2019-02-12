@@ -9,6 +9,18 @@ import (
 	"time"
 )
 
+func BuildOutput(work_id string, work_step_id int64)  {
+	// 读取 work_step 信息
+	step, err := iwork.LoadWorkStepInfo(work_id, work_step_id)
+	if err != nil {
+		panic(err)
+	}
+	step.WorkStepOutput = schema.GetRuntimeParamOutputSchema(&iworknode.WorkStepFactory{WorkStep:&step}).RenderToXml()
+	if _, err = iwork.InsertOrUpdateWorkStep(&step); err != nil{
+		panic(err)
+	}
+}
+
 func (this *WorkController) EditWorkStepParamInfo() {
 	work_id := this.GetString("work_id")
 	work_step_id, _ := this.GetInt64("work_step_id", -1)
@@ -26,12 +38,14 @@ func (this *WorkController) EditWorkStepParamInfo() {
 		step.LastUpdatedTime = time.Now()
 		if _, err := iwork.InsertOrUpdateWorkStep(&step); err == nil {
 			this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
-		}
 
-		// 如果是 start 或者 end 类型的节点,则通知其做一些事后适配
-		NoticeWorkStartEndAdjust(work_id, work_step_id)
-		// 如果是 work_sub 类型的节点,则通知其做一些事后适配
-		NoticeWorkSubAdjust(work_id, work_step_id)
+			// 如果是 start 或者 end 类型的节点,则通知其做一些事后适配
+			NoticeWorkStartEndAdjust(work_id, work_step_id)
+			// 如果是 work_sub 类型的节点,则通知其做一些事后适配
+			NoticeWorkSubAdjust(work_id, work_step_id)
+			// 所有操作完成后自动构建输出
+			BuildOutput(work_id, work_step_id)
+		}
 	}
 	this.ServeJSON()
 }

@@ -46,15 +46,7 @@
           </Row>
           <FormItem>
             <Row>
-              <Col span="12">
                 <Button type="success" @click="handleSubmit('formValidate')">提交</Button>
-              </Col>
-              <Col span="12">
-                <ISimpleConfirmModal ref="buildOut" modal-title="提示" :modal-width="600" @handleSubmit="submitBuildOut">
-                  <h3>构建输出前请必须保存所有输入信息,否则构建可能不会生效！</h3>
-                </ISimpleConfirmModal>
-                <Button type="success" @click="buildOutput">构建输出</Button>
-              </Col>
             </Row>
           </FormItem>
         </Form>
@@ -69,7 +61,6 @@
   import ParamMapping from "./ParamMapping"
   import {EditWorkStepParamInfo} from "../../api"
   import {LoadWorkStepInfo} from "../../api"
-  import {BuildOutput} from "../../api"
 
   export default {
     name: "WorkStepParamInfo",
@@ -176,20 +167,6 @@
         this.formValidate.work_step_id = work_step_id;
         this.loadWorkStepInfo();
       },
-      buildOutput:function () {
-        // 先弹出构建确认对话框
-        this.$refs.buildOut.showModal();
-      },
-      submitBuildOut:async function () {
-        const result = await BuildOutput(this.formValidate.work_id,this.formValidate.work_step_id);
-        if(result.status == "SUCCESS"){
-          this.$Message.success('构建成功!');
-          // 隐藏对话框
-          this.showFormModal =false;
-        }else{
-          this.$Message.error('构建失败!');
-        }
-      }
     },
     computed:{
       _workId:function () {

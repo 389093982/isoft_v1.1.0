@@ -46,7 +46,6 @@ func init() {
 	beego.Router("/api/iwork/changeWorkStepOrder", &iwork.WorkController{}, "post:ChangeWorkStepOrder")
 	beego.Router("/api/iwork/runWork", &iwork.WorkController{}, "post:RunWork")
 	beego.Router("/api/iwork/loadPreNodeOutput", &iwork.WorkController{}, "post:LoadPreNodeOutput")
-	beego.Router("/api/iwork/buildOutput", &iwork.WorkController{}, "post:BuildOutput")
 	beego.Router("/api/iwork/filterPageLogRecord", &iwork.WorkController{}, "post:FilterPageLogRecord")
 	beego.Router("/api/iwork/getLastRunLogDetail", &iwork.WorkController{}, "post:GetLastRunLogDetail")
 
