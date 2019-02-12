@@ -18,10 +18,6 @@ func (this *WorkController) EditWorkStepParamInfo() {
 	json.Unmarshal([]byte(paramInputSchemaStr), &paramInputSchema)
 	this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
 	if step, err := iwork.GetOneWorkStep(work_id, work_step_id); err == nil {
-		// paramMappings 只有起始和结束节点才有,而且起始和结束节点的 paramMappings 也是 paramInput 和 paramOutput
-		if strings.TrimSpace(paramMappingsStr) != "" && (step.WorkStepType == "work_start" || step.WorkStepType == "work_end"){
-			adjustWorkStartEndNodeParamSchema(paramMappingsStr, paramInputSchema)
-		}
 		step.WorkStepInput = paramInputSchema.RenderToXml()
 		step.WorkStepParamMapping = paramMappingsStr
 		step.CreatedBy = "SYSTEM"
@@ -32,10 +28,21 @@ func (this *WorkController) EditWorkStepParamInfo() {
 			this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
 		}
 
+		// 如果是 start 或者 end 类型的节点,则通知其做一些事后适配
+		NoticeWorkStartEndAdjust(work_id, work_step_id)
 		// 如果是 work_sub 类型的节点,则通知其做一些事后适配
 		NoticeWorkSubAdjust(work_id, work_step_id)
 	}
 	this.ServeJSON()
+}
+
+// paramMappings 只有起始和结束节点才有,而且起始和结束节点的 paramMappings 也是 paramInput 和 paramOutput
+func NoticeWorkStartEndAdjust(work_id string, work_step_id int64) {
+	// 读取 step 记录
+	if step, err := iwork.GetOneWorkStep(work_id, work_step_id); err == nil &&
+			(step.WorkStepType == "work_start" || step.WorkStepType == "work_end"){
+		adjustWorkStartEndNodeParamSchema(step.WorkStepParamMapping, &step)
+	}
 }
 
 func NoticeWorkSubAdjust(work_id string, work_step_id int64) {
@@ -48,13 +55,13 @@ func NoticeWorkSubAdjust(work_id string, work_step_id int64) {
 				// 找到 work_sub 字段值
 				workSubName := getWorkSubNameFromParamValue(item.ParamValue)
 				adjustWorkSubNodeParamSchema(workSubName, *paramInputSchema, step)
-				//adjustWorkSubNodeParamSchema(item, paramInputSchema, step)
 			}
 		}
 	}
 }
 
-func adjustWorkStartEndNodeParamSchema(paramMappingsStr string, paramInputSchema schema.ParamInputSchema) {
+func adjustWorkStartEndNodeParamSchema(paramMappingsStr string, step *iwork.WorkStep) {
+	paramInputSchema := schema.GetCacheParamInputSchema(step, &iworknode.WorkStepFactory{WorkStep:step})
 	var paramMappingsArr []string
 	json.Unmarshal([]byte(paramMappingsStr), &paramMappingsArr)
 	// 沿用旧值,添加新值,去除无效的值,即以 paramMapping 为准
@@ -69,6 +76,8 @@ func adjustWorkStartEndNodeParamSchema(paramMappingsStr string, paramInputSchema
 		items = append(items, schema.ParamInputSchemaItem{ParamName: paramMapping, ParamValue: oldValue})
 	}
 	paramInputSchema.ParamInputSchemaItems = items
+	step.WorkStepInput = paramInputSchema.RenderToXml()
+	iwork.InsertOrUpdateWorkStep(step)
 }
 
 // 调整 work_sub 类型节点参数
