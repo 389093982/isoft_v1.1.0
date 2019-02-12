@@ -40,7 +40,7 @@
     data(){
       return {
         showFormModal:false,
-        default_work_step_types:["work_start","work_end","sql_query","sql_execute"],
+        default_work_step_types:["work_start","work_end","work_sub","sql_query","sql_execute"],
         formValidate: {
           work_id: -1,
           work_step_id: -1,
