@@ -12,7 +12,7 @@ type WorkSub struct {
 
 func (this *WorkSub) Execute(trackingId string) {}
 func (this *WorkSub) GetDefaultParamInputSchema() *schema.ParamInputSchema {
-	return schema.BuildParamInputSchemaWithSlice([]string{"sub_work"})
+	return schema.BuildParamInputSchemaWithSlice([]string{"work_sub"})
 }
 func (this *WorkSub) GetDefaultParamOutputSchema() *schema.ParamOutputSchema {
 	return &schema.ParamOutputSchema{}

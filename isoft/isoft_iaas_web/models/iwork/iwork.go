@@ -2,6 +2,7 @@ package iwork
 
 import (
 	"github.com/astaxie/beego/orm"
+	"strconv"
 	"strings"
 	"time"
 )
@@ -40,6 +41,12 @@ func GetAllWorkInfo() (works []Work) {
 func QueryWorkById(work_id string) (work Work, err error) {
 	o := orm.NewOrm()
 	err = o.QueryTable("work").Filter("id", work_id).One(&work)
+	return
+}
+
+func QueryWorkByName(work_name string) (work Work, err error) {
+	o := orm.NewOrm()
+	err = o.QueryTable("work").Filter("work_name", work_name).One(&work)
 	return
 }
 
@@ -134,9 +141,17 @@ func DeleteWorkStepById(id int64) error {
 	return err
 }
 
+// 获取前置节点信息
 func GetAllPreStepInfo(work_id string,work_step_id int64) (steps []WorkStep, err error) {
 	o := orm.NewOrm()
 	_, err = o.QueryTable("work_step").Filter("work_id", work_id).
 		Filter("work_step_id__lt",work_step_id).OrderBy("work_step_id").All(&steps)
+	return
+}
+
+func GetAllWorkStepByWorkName(work_name string) (steps []WorkStep, err error) {
+	if work, err := QueryWorkByName(work_name); err == nil{
+		steps, err = GetAllWorkStepInfo(strconv.FormatInt(work.Id, 10))
+	}
 	return
 }

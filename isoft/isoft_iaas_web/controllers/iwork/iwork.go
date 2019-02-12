@@ -10,7 +10,6 @@ import (
 	"isoft/isoft_iaas_web/core/iworkrun"
 	"isoft/isoft_iaas_web/models/iresource"
 	"isoft/isoft_iaas_web/models/iwork"
-	"strings"
 	"time"
 )
 
@@ -146,45 +145,6 @@ func (this *WorkController) EditWorkStepBaseInfo() {
 			step.WorkStepInput = ""
 			step.WorkStepOutput = ""
 		}
-		step.CreatedBy = "SYSTEM"
-		step.CreatedTime = time.Now()
-		step.LastUpdatedBy = "SYSTEM"
-		step.LastUpdatedTime = time.Now()
-		if _, err := iwork.InsertOrUpdateWorkStep(&step); err == nil {
-			this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
-		}
-	}
-	this.ServeJSON()
-}
-
-func (this *WorkController) EditWorkStepParamInfo() {
-	work_id := this.GetString("work_id")
-	work_step_id, _ := this.GetInt64("work_step_id", -1)
-	paramInputSchemaStr := this.GetString("paramInputSchemaStr")
-	paramMappingsStr := this.GetString("paramMappingsStr")
-	var paramInputSchema schema.ParamInputSchema
-	json.Unmarshal([]byte(paramInputSchemaStr), &paramInputSchema)
-	this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
-	if step, err := iwork.GetOneWorkStep(work_id, work_step_id); err == nil {
-		// paramMappings 只有起始和结束节点才有,而且起始和结束节点的 paramMappings 也是 paramInput 和 paramOutput
-		if strings.TrimSpace(paramMappingsStr) != "" && (step.WorkStepType == "work_start" || step.WorkStepType == "work_end"){
-			var paramMappingsArr []string
-			json.Unmarshal([]byte(paramMappingsStr), &paramMappingsArr)
-			// 沿用旧值,添加新值,去除无效的值,即以 paramMapping 为准
-			items := []schema.ParamInputSchemaItem{}
-			for _, paramMapping := range paramMappingsArr{
-				var oldValue string		// 旧值默认为空
-				for _, _item := range paramInputSchema.ParamInputSchemaItems{
-					if _item.ParamName == paramMapping{
-						oldValue = _item.ParamValue
-					}
-				}
-				items = append(items,schema.ParamInputSchemaItem{ParamName:paramMapping, ParamValue:oldValue})
-			}
-			paramInputSchema.ParamInputSchemaItems = items
-		}
-		step.WorkStepInput = paramInputSchema.RenderToXml()
-		step.WorkStepParamMapping = paramMappingsStr
 		step.CreatedBy = "SYSTEM"
 		step.CreatedTime = time.Now()
 		step.LastUpdatedBy = "SYSTEM"
