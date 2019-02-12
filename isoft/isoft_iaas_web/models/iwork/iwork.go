@@ -31,6 +31,12 @@ type WorkStep struct {
 	LastUpdatedTime      time.Time `json:"last_updated_time"`
 }
 
+func GetAllWorkInfo() (works []Work) {
+	o := orm.NewOrm()
+	o.QueryTable("work").OrderBy("id").All(&works)
+	return
+}
+
 func QueryWorkById(work_id string) (work Work, err error) {
 	o := orm.NewOrm()
 	err = o.QueryTable("work").Filter("id", work_id).One(&work)
