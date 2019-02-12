@@ -70,6 +70,7 @@ func (this *WorkController) RunWork() {
 func (this *WorkController) AddWork() {
 	var work iwork.Work
 	work.WorkName = this.GetString("work_name")
+	work.WorkDesc = this.GetString("work_desc")
 	work.CreatedBy = "SYSTEM"
 	work.CreatedTime = time.Now()
 	work.LastUpdatedBy = "SYSTEM"

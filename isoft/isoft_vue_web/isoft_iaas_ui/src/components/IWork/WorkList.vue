@@ -14,7 +14,6 @@
 </template>
 
 <script>
-  import {formatDate} from "../../tools"
   import {WorkList} from "../../api"
   import {DeleteWorkById} from "../../api"
   import {RunWork} from "../../api"
@@ -42,17 +41,8 @@
             key: 'work_name',
           },
           {
-            title: 'last_updated_by',
-            key: 'last_updated_by',
-          },
-          {
-            title: 'last_updated_time',
-            key: 'last_updated_time',
-            render: (h,params)=>{
-              return h('div',
-                formatDate(new Date(params.row.last_updated_time),'yyyy-MM-dd hh:mm')
-              )
-            }
+            title: 'work_desc',
+            key: 'work_desc',
           },
           {
             title: '操作',

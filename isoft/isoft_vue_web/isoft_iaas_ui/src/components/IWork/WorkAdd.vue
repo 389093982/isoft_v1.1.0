@@ -7,6 +7,9 @@
       <FormItem label="work_name" prop="work_name">
         <Input v-model.trim="formValidate.work_name" placeholder="请输入 work_name"></Input>
       </FormItem>
+      <FormItem label="work_desc" prop="work_desc">
+        <Input v-model.trim="formValidate.work_desc" type="textarea" :rows="4" placeholder="请输入 work_desc"></Input>
+      </FormItem>
       <FormItem>
         <Button type="success" @click="handleSubmit('formValidate')" style="margin-right: 6px">Submit</Button>
         <Button type="warning" @click="handleReset('formValidate')" style="margin-right: 6px">Reset</Button>
@@ -26,10 +29,14 @@
       return {
         formValidate: {
           work_name: '',
+          work_desc: '',
         },
         ruleValidate: {
           work_name: [
             { required: true, message: 'work_name 不能为空!', trigger: 'blur' }
+          ],
+          work_desc: [
+            { required: true, message: 'work_desc 不能为空!', trigger: 'blur' }
           ],
         },
       }
@@ -38,7 +45,7 @@
       handleSubmit (name) {
         this.$refs[name].validate(async (valid) => {
           if (valid) {
-            const result = await AddWork(this.formValidate.work_name);
+            const result = await AddWork(this.formValidate.work_name, this.formValidate.work_desc);
             if(result.status == "SUCCESS"){
               this.$Message.success('提交成功!');
               // 调用子组件隐藏 modal (this.refs.xxx.子组件定义的方法())

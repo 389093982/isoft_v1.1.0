@@ -135,7 +135,7 @@ export const AddResource = (resource_name,resource_type,resource_url,resource_ds
 export const WorkList = (offset,current_page,search) => ajax(BASE_URL+"/iwork/filterPageWork", {offset,current_page,search},'POST');
 
 // 添加 work 记录
-export const AddWork = (work_name) => ajax(BASE_URL+"/iwork/addWork", {work_name},'POST');
+export const AddWork = (work_name, work_desc) => ajax(BASE_URL+"/iwork/addWork", {work_name, work_desc},'POST');
 
 // 删除 work 记录
 export const DeleteWorkById = (id) => ajax(BASE_URL+"/iwork/deleteWorkById", {id},'POST');

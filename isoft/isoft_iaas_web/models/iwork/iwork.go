@@ -9,6 +9,7 @@ import (
 type Work struct {
 	Id              int64     `json:"id"`
 	WorkName        string    `json:"work_name"`
+	WorkDesc        string    `json:"work_desc" orm:"type(text)"`
 	CreatedBy       string    `json:"created_by"`
 	CreatedTime     time.Time `json:"created_time" orm:"auto_now_add;type(datetime)"`
 	LastUpdatedBy   string    `json:"last_updated_by"`
