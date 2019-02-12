@@ -20,16 +20,8 @@ func (this *WorkController) EditWorkStepParamInfo() {
 	if step, err := iwork.GetOneWorkStep(work_id, work_step_id); err == nil {
 		// paramMappings 只有起始和结束节点才有,而且起始和结束节点的 paramMappings 也是 paramInput 和 paramOutput
 		if strings.TrimSpace(paramMappingsStr) != "" && (step.WorkStepType == "work_start" || step.WorkStepType == "work_end"){
-			this.adjustWorkStartEndNodeParamSchema(paramMappingsStr, paramInputSchema)
+			adjustWorkStartEndNodeParamSchema(paramMappingsStr, paramInputSchema)
 		}
-		if strings.TrimSpace(paramMappingsStr) != "" && step.WorkStepType == "work_sub" {
-			for _, item := range paramInputSchema.ParamInputSchemaItems {
-				if item.ParamName == "work_sub" && strings.HasPrefix(item.ParamValue, "$WORK.") {
-					this.adjustWorkSubNodeParamSchema(item, paramInputSchema, step)
-				}
-			}
-		}
-
 		step.WorkStepInput = paramInputSchema.RenderToXml()
 		step.WorkStepParamMapping = paramMappingsStr
 		step.CreatedBy = "SYSTEM"
@@ -39,11 +31,30 @@ func (this *WorkController) EditWorkStepParamInfo() {
 		if _, err := iwork.InsertOrUpdateWorkStep(&step); err == nil {
 			this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
 		}
+
+		// 如果是 work_sub 类型的节点,则通知其做一些事后适配
+		NoticeWorkSubAdjust(work_id, work_step_id)
 	}
 	this.ServeJSON()
 }
 
-func (this *WorkController) adjustWorkStartEndNodeParamSchema(paramMappingsStr string, paramInputSchema schema.ParamInputSchema) {
+func NoticeWorkSubAdjust(work_id string, work_step_id int64) {
+	// 读取 step 记录
+	if step, err := iwork.GetOneWorkStep(work_id, work_step_id); err == nil && step.WorkStepType == "work_sub"{
+		// 从 db 中读取 paramInputSchema
+		paramInputSchema := schema.GetCacheParamInputSchema(&step, &iworknode.WorkStepFactory{WorkStep:&step})
+		for _, item := range paramInputSchema.ParamInputSchemaItems {
+			if item.ParamName == "work_sub" && strings.HasPrefix(item.ParamValue, "$WORK.") {
+				// 找到 work_sub 字段值
+				workSubName := getWorkSubNameFromParamValue(item.ParamValue)
+				adjustWorkSubNodeParamSchema(workSubName, *paramInputSchema, step)
+				//adjustWorkSubNodeParamSchema(item, paramInputSchema, step)
+			}
+		}
+	}
+}
+
+func adjustWorkStartEndNodeParamSchema(paramMappingsStr string, paramInputSchema schema.ParamInputSchema) {
 	var paramMappingsArr []string
 	json.Unmarshal([]byte(paramMappingsStr), &paramMappingsArr)
 	// 沿用旧值,添加新值,去除无效的值,即以 paramMapping 为准
@@ -61,41 +72,52 @@ func (this *WorkController) adjustWorkStartEndNodeParamSchema(paramMappingsStr s
 }
 
 // 调整 work_sub 类型节点参数
-func (this *WorkController) adjustWorkSubNodeParamSchema(item schema.ParamInputSchemaItem, paramInputSchema schema.ParamInputSchema, step iwork.WorkStep) {
-	value := strings.TrimSpace(item.ParamValue)
+func adjustWorkSubNodeParamSchema(workSubName string, paramInputSchema schema.ParamInputSchema, step iwork.WorkStep) {
+	subSteps, err := iwork.GetAllWorkStepByWorkName(workSubName)
+	if err != nil{
+		return
+	}
+	for _, subStep := range subSteps {
+		if strings.ToUpper(subStep.WorkStepType) == "WORK_START" {
+			adjustWorkSubNodeParamSchemaByUsingWorkStart(subStep, paramInputSchema, &step)
+		}
+		if strings.ToUpper(subStep.WorkStepType) == "WORK_END" {
+			adjustWorkSubNodeParamSchemaByUsingWorkEnd(subStep, &step)
+		}
+	}
+	iwork.InsertOrUpdateWorkStep(&step)
+}
+
+func adjustWorkSubNodeParamSchemaByUsingWorkEnd(subStep iwork.WorkStep, step *iwork.WorkStep) {
+	// 拷贝子节点输出
+	outputSchema := schema.GetCacheParamOutputSchema(&subStep)
+	step.WorkStepOutput = outputSchema.RenderToXml()
+}
+
+func adjustWorkSubNodeParamSchemaByUsingWorkStart(subStep iwork.WorkStep, paramInputSchema schema.ParamInputSchema, step *iwork.WorkStep) {
+	// 获取子流程 start 节点所有输出参数名
+	inputSchema := schema.GetCacheParamInputSchema(&subStep, &iworknode.WorkStepFactory{WorkStep: &subStep})
+	inputParamNames := GetInputSchemaNameArr(inputSchema)
+	items := []schema.ParamInputSchemaItem{}
+	for _, name := range inputParamNames {
+		// 存在则不添加且沿用旧值
+		if exist, paramValue := CheckAndGetParamValueByInputSchemaParamName(paramInputSchema.ParamInputSchemaItems, name); exist {
+			ModifyParamValue(paramInputSchema.ParamInputSchemaItems, name, paramValue)
+		} else {
+			items = append(items, schema.ParamInputSchemaItem{ParamName: name})
+		}
+	}
+	paramInputSchema.ParamInputSchemaItems = append(paramInputSchema.ParamInputSchemaItems, items...)
+	step.WorkStepInput = paramInputSchema.RenderToXml()
+}
+
+func getWorkSubNameFromParamValue(paramValue string) string {
+	value := strings.TrimSpace(paramValue)
 	value = strings.Replace(value, "$WORK.", "", -1)
 	value = strings.Replace(value, "__sep__", "", -1)
 	value = strings.Replace(value, "\n", "", -1)
 	value = strings.TrimSpace(value)
-	steps, err := iwork.GetAllWorkStepByWorkName(value)
-	if err == nil {
-		for _, _step := range steps {
-			if strings.ToUpper(_step.WorkStepType) == "WORK_START" {
-				inputSchema := schema.GetCacheParamInputSchema(&_step, &iworknode.WorkStepFactory{WorkStep: &_step})
-				inputParamNames := GetInputSchemaNameArr(inputSchema)
-				items := []schema.ParamInputSchemaItem{}
-				for _, name := range inputParamNames {
-					// 存在则不添加且沿用旧值
-					if exist, paramValue := CheckAndGetParamValueByInputSchemaParamName(paramInputSchema.ParamInputSchemaItems, name); exist {
-						ModifyParamValue(items, name, paramValue)
-					} else {
-						items = append(items, schema.ParamInputSchemaItem{ParamName: name})
-					}
-				}
-				paramInputSchema.ParamInputSchemaItems = append(paramInputSchema.ParamInputSchemaItems, items...)
-			}
-			if strings.ToUpper(_step.WorkStepType) == "WORK_END" {
-				outputSchema := schema.GetCacheParamOutputSchema(&_step)
-				outputParamNames := GetOutputSchemaNameArr(outputSchema)
-				items := []schema.ParamOutputSchemaItem{}
-				for _, name := range outputParamNames {
-					items = append(items, schema.ParamOutputSchemaItem{ParamName: name})
-				}
-				schema := schema.ParamOutputSchema{ParamOutputSchemaItems: items}
-				step.WorkStepOutput = schema.RenderToXml()
-			}
-		}
-	}
+	return value
 }
 
 func GetInputSchemaNameArr(schema *schema.ParamInputSchema) []string {
