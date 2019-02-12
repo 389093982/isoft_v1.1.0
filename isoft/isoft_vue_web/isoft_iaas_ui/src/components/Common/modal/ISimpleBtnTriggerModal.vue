@@ -52,6 +52,10 @@
       hideModal:function () {
         this.showFormModal = false;
       },
+      // 模拟触发点击事件
+      triggerClick:function(){
+        this.showFormModal = true;
+      },
       btnClick:function () {
         this.showFormModal = true;
         this.$emit("btnClick");

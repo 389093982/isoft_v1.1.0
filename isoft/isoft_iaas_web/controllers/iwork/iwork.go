@@ -67,8 +67,11 @@ func (this *WorkController) RunWork() {
 	this.ServeJSON()
 }
 
-func (this *WorkController) AddWork() {
+func (this *WorkController) EditWork() {
 	var work iwork.Work
+	if work_id, err := this.GetInt64("work_id"); err == nil && work_id > 0{
+		work.Id = work_id
+	}
 	work.WorkName = this.GetString("work_name")
 	work.WorkDesc = this.GetString("work_desc")
 	work.CreatedBy = "SYSTEM"

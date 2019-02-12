@@ -34,7 +34,7 @@ func init() {
 	beego.Router("/api/iresource/addResource", &iresource.ResourceController{}, "post:AddResource")
 	beego.Router("/api/iresource/filterPageResource", &iresource.ResourceController{}, "post:FilterPageResource")
 	beego.Router("/api/iwork/filterPageWork", &iwork.WorkController{}, "post:FilterPageWork")
-	beego.Router("/api/iwork/addWork", &iwork.WorkController{}, "post:AddWork")
+	beego.Router("/api/iwork/editWork", &iwork.WorkController{}, "post:EditWork")
 	beego.Router("/api/iwork/deleteWorkById", &iwork.WorkController{}, "post:DeleteWorkById")
 	beego.Router("/api/iwork/filterPageWorkStep", &iwork.WorkController{}, "post:FilterPageWorkStep")
 	beego.Router("/api/iwork/addWorkStep", &iwork.WorkController{}, "post:AddWorkStep")

@@ -2,7 +2,7 @@
   <div style="margin: 10px;">
     <ISimpleLeftRightRow>
       <!-- left 插槽部分 -->
-      <WorkAdd slot="left" @handleSuccess="refreshWorkList"/>
+      <WorkEdit ref="workEdit" slot="left" @handleSuccess="refreshWorkList"/>
       <!-- right 插槽部分 -->
       <ISimpleSearch slot="right" @handleSimpleSearch="handleSearch"/>
     </ISimpleLeftRightRow>
@@ -19,11 +19,11 @@
   import {RunWork} from "../../api"
   import ISimpleLeftRightRow from "../Common/layout/ISimpleLeftRightRow"
   import ISimpleSearch from "../Common/search/ISimpleSearch"
-  import WorkAdd from "./WorkAdd"
+  import WorkEdit from "./WorkEdit"
 
   export default {
     name: "WorkList",
-    components:{ISimpleLeftRightRow,ISimpleSearch,WorkAdd},
+    components:{ISimpleLeftRightRow,ISimpleSearch,WorkEdit},
     data(){
       return {
         // 当前页
@@ -49,6 +49,20 @@
             key: 'operate',
             render: (h, params) => {
               return h('div', [
+                h('Button', {
+                  props: {
+                    type: 'error',
+                    size: 'small'
+                  },
+                  style: {
+                    marginRight: '5px',
+                  },
+                  on: {
+                    click: () => {
+                      this.$refs.workEdit.triggerWorkEdit(this.works[params.index]);
+                    }
+                  }
+                }, '编辑'),
                 h('Button', {
                   props: {
                     type: 'success',

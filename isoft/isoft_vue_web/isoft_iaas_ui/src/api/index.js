@@ -134,8 +134,8 @@ export const AddResource = (resource_name,resource_type,resource_url,resource_ds
 // work 分页查询
 export const WorkList = (offset,current_page,search) => ajax(BASE_URL+"/iwork/filterPageWork", {offset,current_page,search},'POST');
 
-// 添加 work 记录
-export const AddWork = (work_name, work_desc) => ajax(BASE_URL+"/iwork/addWork", {work_name, work_desc},'POST');
+// 编辑 work 记录
+export const EditWork = (work_id, work_name, work_desc) => ajax(BASE_URL+"/iwork/editWork", {work_id, work_name, work_desc},'POST');
 
 // 删除 work 记录
 export const DeleteWorkById = (id) => ajax(BASE_URL+"/iwork/deleteWorkById", {id},'POST');

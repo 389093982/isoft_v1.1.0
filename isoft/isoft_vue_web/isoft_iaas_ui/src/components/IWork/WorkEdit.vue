@@ -1,7 +1,7 @@
 <template>
   <!-- 按钮触发模态框 -->
   <!-- ref 的作用是为了在其它地方方便的获取到当前子组件 -->
-  <ISimpleBtnTriggerModal ref="triggerModal" btn-text="新增" modal-title="新增 work" :modal-width="600">
+  <ISimpleBtnTriggerModal ref="triggerModal" btn-text="新增" modal-title="新增/编辑 work" :modal-width="600">
     <!-- 表单信息 -->
     <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="100">
       <FormItem label="work_name" prop="work_name">
@@ -20,14 +20,15 @@
 
 <script>
   import ISimpleBtnTriggerModal from "../Common/modal/ISimpleBtnTriggerModal"
-  import {AddWork} from "../../api"
+  import {EditWork} from "../../api"
 
   export default {
-    name: "WorkAdd",
+    name: "WorkEdit",
     components:{ISimpleBtnTriggerModal},
     data(){
       return {
         formValidate: {
+          work_id:-1,
           work_name: '',
           work_desc: '',
         },
@@ -42,16 +43,27 @@
       }
     },
     methods:{
+      triggerWorkEdit(work){
+        // 回显内容
+        this.formValidate.work_id = work.id;
+        this.formValidate.work_name = work.work_name;
+        this.formValidate.work_desc = work.work_desc;
+        // 显示模态对话框
+        this.$refs.triggerModal.triggerClick();
+      },
       handleSubmit (name) {
         this.$refs[name].validate(async (valid) => {
           if (valid) {
-            const result = await AddWork(this.formValidate.work_name, this.formValidate.work_desc);
+            const result = await EditWork(this.formValidate.work_id, this.formValidate.work_name, this.formValidate.work_desc);
             if(result.status == "SUCCESS"){
               this.$Message.success('提交成功!');
               // 调用子组件隐藏 modal (this.refs.xxx.子组件定义的方法())
               this.$refs.triggerModal.hideModal();
               // 通知父组件添加成功
               this.$emit('handleSuccess');
+              // 表单重置,以取消缓存
+              this.$refs[name].resetFields();
+              this.formValidate.work_id = -1;
             }else{
               this.$Message.error('提交失败!');
             }
