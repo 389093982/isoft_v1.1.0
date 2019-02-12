@@ -29,6 +29,8 @@ func (this *WorkStepFactory) getProxy() IStandardWorkStep {
 		return &WorkStartNode{WorkStep: this.WorkStep}
 	case "WORK_END":
 		return &WorkEndNode{WorkStep: this.WorkStep}
+	case "WORK_SUB":
+		return &WorkSub{WorkStep: this.WorkStep}
 	case "SQL_EXECUTE":
 		return &SQLExecuteNode{WorkStep: this.WorkStep}
 	case "SQL_QUERY":
