@@ -34,7 +34,7 @@ func Run(work iwork.Work, steps []iwork.WorkStep, dispatcher *entry.Dispatcher) 
 		}
 	}()
 	// 记录日志详细
-	iwork.InsertRunLogDetail(trackingId, fmt.Sprintf("start execute work:%s", work.WorkName))
+	iwork.InsertRunLogDetail(trackingId, fmt.Sprintf("~~~~~~~~~~start execute work:%s~~~~~~~~~~", work.WorkName))
 	// 申请数据中心存储中间数据
 	datastore.RegistDataStore(trackingId)
 	// 逐步执行步骤
@@ -47,5 +47,5 @@ func Run(work iwork.Work, steps []iwork.WorkStep, dispatcher *entry.Dispatcher) 
 	}
 	// 注销数据中心
 	datastore.UnRegistDataStore(trackingId)
-	iwork.InsertRunLogDetail(trackingId, fmt.Sprintf("end execute work:%s", work.WorkName))
+	iwork.InsertRunLogDetail(trackingId, fmt.Sprintf("~~~~~~~~~~end execute work:%s~~~~~~~~~~", work.WorkName))
 }
