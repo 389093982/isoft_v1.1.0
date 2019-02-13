@@ -68,12 +68,9 @@ func NoticeWorkSubAdjust(work_id string, work_step_id int64) {
 	if step, err := iwork.GetOneWorkStep(work_id, work_step_id); err == nil && step.WorkStepType == "work_sub" {
 		// 从 db 中读取 paramInputSchema
 		paramInputSchema := schema.GetCacheParamInputSchema(&step, &iworknode.WorkStepFactory{WorkStep: &step})
-		for _, item := range paramInputSchema.ParamInputSchemaItems {
-			if item.ParamName == "work_sub" && strings.HasPrefix(item.ParamValue, "$WORK.") {
-				// 找到 work_sub 字段值
-				workSubName := iworkutil.GetWorkSubNameFromParamValue(item.ParamValue)
-				adjustWorkSubNodeParamSchema(workSubName, *paramInputSchema, step)
-			}
+		workSubName := iworkutil.GetWorkSubNameForWorkSubNode(paramInputSchema)
+		if strings.TrimSpace(workSubName) != ""{
+			adjustWorkSubNodeParamSchema(workSubName, *paramInputSchema, step)
 		}
 	}
 }

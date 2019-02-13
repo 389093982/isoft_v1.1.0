@@ -1,6 +1,9 @@
 package iworknode
 
 import (
+	"github.com/pkg/errors"
+	"isoft/isoft_iaas_web/core/iworkdata/datastore"
+	"isoft/isoft_iaas_web/core/iworkdata/entry"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
 	"isoft/isoft_iaas_web/core/iworkutil"
 	"isoft/isoft_iaas_web/models/iwork"
@@ -10,22 +13,25 @@ import (
 type WorkSub struct {
 	BaseNode
 	WorkStep *iwork.WorkStep
-	RunFunc  func(work iwork.Work, steps []iwork.WorkStep, args ...interface{})
+	RunFunc  func(work iwork.Work, steps []iwork.WorkStep, dispatcher *entry.Dispatcher)
 }
 
 func (this *WorkSub) Execute(trackingId string) {
-	// 从 db 中读取 paramInputSchema
-	paramInputSchema := schema.GetCacheParamInputSchema(this.WorkStep, &WorkStepFactory{WorkStep: this.WorkStep})
-	for _, item := range paramInputSchema.ParamInputSchemaItems {
-		if item.ParamName == "work_sub" && strings.HasPrefix(item.ParamValue, "$WORK.") {
-			// 找到 work_sub 字段值
-			workSubName := iworkutil.GetWorkSubNameFromParamValue(item.ParamValue)
-			work, _ := iwork.QueryWorkByName(workSubName)
-			steps, _ := iwork.GetAllWorkStepByWorkName(workSubName)
-			// 运行子流程
-			this.RunFunc(work, steps, trackingId)
-		}
+	// 获取子流程流程名称
+	workSubName := iworkutil.GetWorkSubNameForWorkSubNode(
+		schema.GetCacheParamInputSchema(this.WorkStep, &WorkStepFactory{WorkStep:this.WorkStep}))
+	if strings.TrimSpace(workSubName) == ""{
+		panic(errors.New("invalid workSubName"))
 	}
+	// 数据中心
+	dataStore := datastore.GetDataSource(trackingId)
+	// 节点中间数据
+	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, dataStore)
+
+	// 运行子流程
+	work, _ := iwork.QueryWorkByName(workSubName)
+	steps, _ := iwork.GetAllWorkStepByWorkName(workSubName)
+	this.RunFunc(work, steps, &entry.Dispatcher{TrackingId:trackingId, TmpDataMap:tmpDataMap})
 }
 
 func (this *WorkSub) GetDefaultParamInputSchema() *schema.ParamInputSchema {

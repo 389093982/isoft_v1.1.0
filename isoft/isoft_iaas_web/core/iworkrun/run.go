@@ -4,18 +4,19 @@ import (
 	"fmt"
 	"isoft/isoft/common/stringutil"
 	"isoft/isoft_iaas_web/core/iworkdata/datastore"
+	"isoft/isoft_iaas_web/core/iworkdata/entry"
 	"isoft/isoft_iaas_web/core/iworknode"
 	"isoft/isoft_iaas_web/models/iwork"
 	"time"
 )
 
-// args 为父流程遗传下来的参数
-func Run(work iwork.Work, steps []iwork.WorkStep, args ...interface{}) {
+// dispatcher 为父流程遗传下来的参数
+func Run(work iwork.Work, steps []iwork.WorkStep, dispatcher *entry.Dispatcher) {
 	// 当前流程的 trackingId
 	trackingId := stringutil.RandomUUID()
-	if len(args) > 0{
+	if dispatcher != nil{
 		// 拼接父流程的 trackingId 信息,作为链式 trackingId
-		trackingId = fmt.Sprintf("%s.%s",args[0].(string), trackingId)
+		trackingId = fmt.Sprintf("%s.%s",dispatcher.TrackingId, trackingId)
 	}
 	// 记录日志
 	iwork.InsertRunLogRecord(&iwork.RunLogRecord{
@@ -40,7 +41,7 @@ func Run(work iwork.Work, steps []iwork.WorkStep, args ...interface{}) {
 	for _, step := range steps {
 		iwork.InsertRunLogDetail(trackingId, fmt.Sprintf("start execute workstep:%s", step.WorkStepName))
 		// 由工厂代为执行步骤
-		factory := &iworknode.WorkStepFactory{WorkStep: &step, RunFunc: Run}
+		factory := &iworknode.WorkStepFactory{WorkStep: &step, RunFunc: Run, Dispatcher:dispatcher}
 		factory.Execute(trackingId)
 		iwork.InsertRunLogDetail(trackingId, fmt.Sprintf("end execute workstep:%s", step.WorkStepName))
 	}

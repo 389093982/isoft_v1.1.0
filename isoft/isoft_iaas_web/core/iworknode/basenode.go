@@ -5,6 +5,7 @@ import (
 	"isoft/isoft_iaas_web/core/iworkdata/datastore"
 	"isoft/isoft_iaas_web/core/iworkdata/param"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
+	"isoft/isoft_iaas_web/core/iworkutil"
 	"isoft/isoft_iaas_web/models/iresource"
 	"isoft/isoft_iaas_web/models/iwork"
 	"strconv"
@@ -61,6 +62,8 @@ func (this *BaseNode) parseParamValueToMulti(paramVaule string) []string {
 func (this *BaseNode) parseAndFillSingleParamVaule(paramVaule string, dataStore *datastore.DataStore) interface{} {
 	if strings.HasPrefix(strings.ToUpper(paramVaule), "$RESOURCE.") {
 		return this.parseAndFillParamVauleWithResource(paramVaule)
+	}else if strings.HasPrefix(strings.ToUpper(paramVaule), "$WORK.") {
+		return iworkutil.GetWorkSubNameFromParamValue(paramVaule)
 	}
 	return this.parseAndFillParamVauleWithNode(paramVaule, dataStore)
 }

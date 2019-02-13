@@ -2,6 +2,7 @@ package iworknode
 
 import (
 	"isoft/isoft_iaas_web/core/iworkdata/datastore"
+	"isoft/isoft_iaas_web/core/iworkdata/entry"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
 	"isoft/isoft_iaas_web/models/iwork"
 )
@@ -9,14 +10,21 @@ import (
 type WorkStartNode struct {
 	BaseNode
 	WorkStep *iwork.WorkStep
+	Dispatcher *entry.Dispatcher
 }
 
 func (this *WorkStartNode) Execute(trackingId string) {
 	// 存储节点中间数据
 	tmpDataMap := make(map[string]interface{})
-	paramInputSchema := schema.GetCacheParamInputSchema(this.WorkStep, &WorkStepFactory{WorkStep: this.WorkStep})
-	for _, item := range paramInputSchema.ParamInputSchemaItems {
-		tmpDataMap[item.ParamName] = item.ParamValue // 输入数据存临时
+	if this.Dispatcher != nil{
+		// 从父流程中获取值,即从 Dispatcher 中获取值
+		tmpDataMap = this.Dispatcher.TmpDataMap
+	}else{
+		// 使用节点默认值
+		paramInputSchema := schema.GetCacheParamInputSchema(this.WorkStep, &WorkStepFactory{WorkStep: this.WorkStep})
+		for _, item := range paramInputSchema.ParamInputSchemaItems {
+			tmpDataMap[item.ParamName] = item.ParamValue // 输入数据存临时
+		}
 	}
 	// 获取数据中心
 	dataStore := datastore.GetDataSource(trackingId)

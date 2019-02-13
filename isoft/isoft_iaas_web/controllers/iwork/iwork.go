@@ -47,7 +47,7 @@ func (this *WorkController) RunWork() {
 	work_id := this.GetString("work_id")
 	work, _ := iwork.QueryWorkById(work_id)
 	steps, _ := iwork.GetAllWorkStepInfo(work_id)
-	go iworkrun.Run(work, steps)
+	go iworkrun.Run(work, steps, nil)
 	this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
 	this.ServeJSON()
 }

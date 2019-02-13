@@ -2,6 +2,7 @@ package iworknode
 
 import (
 	"fmt"
+	"isoft/isoft_iaas_web/core/iworkdata/entry"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
 	"isoft/isoft_iaas_web/models/iwork"
 	"strings"
@@ -11,7 +12,8 @@ type WorkStepFactory struct {
 	Work     iwork.Work
 	WorkStep *iwork.WorkStep
 	// 执行 Execute 方法时遇到子流程时的回调函数
-	RunFunc  func(work iwork.Work, steps []iwork.WorkStep, args ...interface{})
+	RunFunc  func(work iwork.Work, steps []iwork.WorkStep, dispatcher *entry.Dispatcher)
+	Dispatcher *entry.Dispatcher
 }
 
 type IStandardWorkStep interface {
@@ -28,7 +30,7 @@ func (this *WorkStepFactory) Execute(trackingId string) {
 func (this *WorkStepFactory) getProxy() IStandardWorkStep {
 	switch strings.ToUpper(this.WorkStep.WorkStepType) {
 	case "WORK_START":
-		return &WorkStartNode{WorkStep: this.WorkStep}
+		return &WorkStartNode{WorkStep: this.WorkStep, Dispatcher:this.Dispatcher}
 	case "WORK_END":
 		return &WorkEndNode{WorkStep: this.WorkStep}
 	case "WORK_SUB":
