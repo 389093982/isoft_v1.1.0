@@ -30,12 +30,11 @@ type IParamSchemaParser interface {
 
 // 获取出参 schema
 func GetRuntimeParamOutputSchema(paramSchemaParser IParamSchemaParser) *ParamOutputSchema {
-	paramOutputSchema := paramSchemaParser.GetDefaultParamOutputSchema()
-	paramOutputSchema2 := paramSchemaParser.GetRuntimeParamOutputSchema()
-	// 合并
-	paramOutputSchema.ParamOutputSchemaItems =
-		append(paramOutputSchema.ParamOutputSchemaItems, paramOutputSchema2.ParamOutputSchemaItems...)
-	return paramOutputSchema
+	return paramSchemaParser.GetRuntimeParamOutputSchema()
+}
+
+func GetDefaultParamOutputSchema(paramSchemaParser IParamSchemaParser) *ParamOutputSchema {
+	return paramSchemaParser.GetDefaultParamOutputSchema()
 }
 
 // 获取入参 schema

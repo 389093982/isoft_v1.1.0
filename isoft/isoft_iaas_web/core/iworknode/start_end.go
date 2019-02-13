@@ -59,7 +59,6 @@ func (this *WorkStartNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSche
 }
 
 func (this *WorkStartNode) GetDefaultParamOutputSchema() *schema.ParamOutputSchema {
-	//return transferParamInputSchemaToParamOutputSchema(this.WorkStep)
 	return &schema.ParamOutputSchema{}
 }
 

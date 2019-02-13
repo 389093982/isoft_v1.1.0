@@ -43,8 +43,11 @@ func BuildDynamicOutput(work_id string, work_step_id int64) {
 	if err != nil {
 		panic(err)
 	}
+	runtimeParamOutputSchema := schema.GetRuntimeParamOutputSchema(&iworknode.WorkStepFactory{WorkStep: &step})
+	defaultParamOutputSchema := schema.GetDefaultParamOutputSchema(&iworknode.WorkStepFactory{WorkStep: &step})
+	defaultParamOutputSchema.ParamOutputSchemaItems = append(defaultParamOutputSchema.ParamOutputSchemaItems, runtimeParamOutputSchema.ParamOutputSchemaItems...)
 	// 构建输出参数,使用全新值
-	step.WorkStepOutput = schema.GetRuntimeParamOutputSchema(&iworknode.WorkStepFactory{WorkStep: &step}).RenderToXml()
+	step.WorkStepOutput = defaultParamOutputSchema.RenderToXml()
 	if _, err = iwork.InsertOrUpdateWorkStep(&step); err != nil {
 		panic(err)
 	}
