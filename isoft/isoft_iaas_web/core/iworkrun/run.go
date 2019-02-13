@@ -11,11 +11,11 @@ import (
 
 // args 为父流程遗传下来的参数
 func Run(work iwork.Work, steps []iwork.WorkStep, args ...interface{}) {
-	var trackingId string
+	// 当前流程的 trackingId
+	trackingId := stringutil.RandomUUID()
 	if len(args) > 0{
-		trackingId = args[0].(string)			// 沿用父流程的 trackingId 信息
-	}else{
-		trackingId = stringutil.RandomUUID()
+		// 拼接父流程的 trackingId 信息,作为链式 trackingId
+		trackingId = fmt.Sprintf("%s.%s",args[0].(string), trackingId)
 	}
 	// 记录日志
 	iwork.InsertRunLogRecord(&iwork.RunLogRecord{
