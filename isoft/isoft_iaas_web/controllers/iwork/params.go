@@ -15,6 +15,9 @@ func BuildOutput(work_id string, work_step_id int64)  {
 	if err != nil {
 		panic(err)
 	}
+	if step.WorkStepType == "work_sub"{
+		return
+	}
 	step.WorkStepOutput = schema.GetRuntimeParamOutputSchema(&iworknode.WorkStepFactory{WorkStep:&step}).RenderToXml()
 	if _, err = iwork.InsertOrUpdateWorkStep(&step); err != nil{
 		panic(err)
