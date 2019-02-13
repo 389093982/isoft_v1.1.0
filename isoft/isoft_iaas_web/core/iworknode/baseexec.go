@@ -25,7 +25,11 @@ type IStandardWorkStep interface {
 }
 
 func (this *WorkStepFactory) Execute(trackingId string) {
-	this.getProxy().Execute(trackingId)
+	proxy := this.getProxy()
+	proxy.Execute(trackingId)
+	if endNode, ok := proxy.(*WorkEndNode); ok{
+		this.Receiver = endNode.Receiver
+	}
 }
 
 func (this *WorkStepFactory) getProxy() IStandardWorkStep {
