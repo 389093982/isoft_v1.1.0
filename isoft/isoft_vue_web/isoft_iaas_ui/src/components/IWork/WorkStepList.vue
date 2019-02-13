@@ -92,8 +92,8 @@
             key: 'work_step_type',
           },
           {
-            title: 'last_updated_by',
-            key: 'last_updated_by',
+            title: 'work_step_desc',
+            key: 'work_step_desc',
           },
           {
             title: 'last_updated_time',

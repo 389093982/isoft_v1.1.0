@@ -22,6 +22,9 @@
             <Option :value="default_work_step_type" v-for="default_work_step_type in default_work_step_types">{{default_work_step_type}}</Option>
           </Select>
         </FormItem>
+        <FormItem label="work_step_desc" prop="work_step_desc">
+          <Input v-model.trim="formValidate.work_step_desc" type="textarea" :rows="4" placeholder="请输入 work_step_desc"></Input>
+        </FormItem>
         <FormItem>
           <Button type="success" @click="handleSubmit('formValidate')" style="margin-right: 6px">Submit</Button>
           <Button type="warning" @click="handleReset('formValidate')" style="margin-right: 6px">Reset</Button>
@@ -45,6 +48,7 @@
           work_id: -1,
           work_step_id: -1,
           work_step_name: '',
+          work_step_desc: '',
           work_step_type: '',
         },
         ruleValidate: {
@@ -63,6 +67,7 @@
         if(result.status == "SUCCESS"){
           this.formValidate.work_step_name = result.step.work_step_name;
           this.formValidate.work_step_type = result.step.work_step_type;
+          this.formValidate.work_step_desc = result.step.work_step_desc;
         }
       },
       showWorkStepBaseInfo:function (work_id, work_step_id) {
@@ -76,8 +81,8 @@
       handleSubmit (name) {
         this.$refs[name].validate(async (valid) => {
           if (valid) {
-            const result = await EditWorkStepBaseInfo(this.formValidate.work_id,
-              this.formValidate.work_step_id,this.formValidate.work_step_name,this.formValidate.work_step_type);
+            const result = await EditWorkStepBaseInfo(this.formValidate.work_id, this.formValidate.work_step_id,
+                this.formValidate.work_step_name,this.formValidate.work_step_desc, this.formValidate.work_step_type);
             if(result.status == "SUCCESS"){
               this.$Message.success('提交成功!');
               this.showFormModal = false;

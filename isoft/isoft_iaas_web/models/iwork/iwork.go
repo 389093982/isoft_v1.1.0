@@ -22,6 +22,7 @@ type WorkStep struct {
 	WorkId               string    `json:"work_id"`
 	WorkStepId           int8      `json:"work_step_id"`
 	WorkStepName         string    `json:"work_step_name"`
+	WorkStepDesc        string    `json:"work_step_desc" orm:"type(text)"`
 	WorkStepType         string    `json:"work_step_type"`
 	WorkStepInput        string    `json:"work_step_input" orm:"type(text)"`
 	WorkStepOutput       string    `json:"work_step_output" orm:"type(text)"`
