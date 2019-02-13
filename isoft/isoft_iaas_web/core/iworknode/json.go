@@ -2,9 +2,12 @@ package iworknode
 
 import (
 	"encoding/json"
+	"fmt"
 	"isoft/isoft_iaas_web/core/iworkdata/datastore"
+	"isoft/isoft_iaas_web/core/iworkdata/param"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
 	"isoft/isoft_iaas_web/models/iwork"
+	"strings"
 )
 
 type JsonRenderNode struct {
@@ -45,6 +48,24 @@ type JsonParserNode struct {
 }
 
 func (this *JsonParserNode) Execute(trackingId string) {
+	// 数据中心
+	dataStore := datastore.GetDataSource(trackingId)
+	// 节点中间数据
+	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, dataStore)
+	json_str := tmpDataMap["json_str"].(string)
+	json_objects := []map[string]interface{}{}
+	err := json.Unmarshal([]byte(json_str), &json_objects)
+	if err == nil{
+		dataStore.CacheData(this.WorkStep.WorkStepName, "rows", json_objects)
+		for index, json_object := range json_objects{
+			for paramName,paramValue := range json_object{
+				dataStore.CacheData(this.WorkStep.WorkStepName, fmt.Sprintf("rows[%d].%s", index, paramName), paramValue)
+				if index == 0{
+					dataStore.CacheData(this.WorkStep.WorkStepName, fmt.Sprintf("rows.%s", paramName), paramValue)
+				}
+			}
+		}
+	}
 }
 
 func (this *JsonParserNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
@@ -56,5 +77,17 @@ func (this *JsonParserNode) GetDefaultParamOutputSchema() *schema.ParamOutputSch
 }
 
 func (this *JsonParserNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
-	return &schema.ParamOutputSchema{}
+	items := []schema.ParamOutputSchemaItem{}
+	if json_fields := param.GetStaticParamValue("json_fields", this.WorkStep); strings.TrimSpace(json_fields) != ""{
+		jsonArr := strings.Split(json_fields, ",")
+		for _, paramName := range jsonArr{
+			if _paramName := strings.TrimSpace(paramName); _paramName != ""{
+				items = append(items, schema.ParamOutputSchemaItem{
+					ParentPath: "rows",
+					ParamName:  _paramName,
+				})
+			}
+		}
+	}
+	return &schema.ParamOutputSchema{ParamOutputSchemaItems: items}
 }

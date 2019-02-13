@@ -39,7 +39,7 @@ func Run(work iwork.Work, steps []iwork.WorkStep, dispatcher *entry.Dispatcher) 
 	datastore.RegistDataStore(trackingId)
 	// 逐步执行步骤
 	for _, step := range steps {
-		iwork.InsertRunLogDetail(trackingId, fmt.Sprintf("start execute workstep:%s", step.WorkStepName))
+		iwork.InsertRunLogDetail(trackingId, fmt.Sprintf("start execute workstep: >> [[%s]]", step.WorkStepName))
 		// 由工厂代为执行步骤
 		factory := &iworknode.WorkStepFactory{WorkStep: &step, RunFunc: Run, Dispatcher:dispatcher}
 		factory.Execute(trackingId)
@@ -47,7 +47,7 @@ func Run(work iwork.Work, steps []iwork.WorkStep, dispatcher *entry.Dispatcher) 
 		if factory.Receiver != nil{
 			receiver = factory.Receiver
 		}
-		iwork.InsertRunLogDetail(trackingId, fmt.Sprintf("end execute workstep:%s", step.WorkStepName))
+		iwork.InsertRunLogDetail(trackingId, fmt.Sprintf("end execute workstep: >> [[%s]]", step.WorkStepName))
 	}
 	// 注销数据中心
 	datastore.UnRegistDataStore(trackingId)
