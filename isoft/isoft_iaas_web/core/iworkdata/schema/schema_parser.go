@@ -21,9 +21,11 @@ func GetCacheParamOutputSchema(step *iwork.WorkStep) *ParamOutputSchema {
 // 使用接口来解决循环依赖问题
 // 使用接口的好处是传入实现类,而不是引用实现类并创建实例（这样就解决了引用导致的循环依赖问题）
 type IParamSchemaParser interface {
+	GetDefaultParamInputSchema() *ParamInputSchema
+	GetRuntimeParamInputSchema() *ParamInputSchema
 	GetDefaultParamOutputSchema() *ParamOutputSchema
 	GetRuntimeParamOutputSchema() *ParamOutputSchema
-	GetDefaultParamInputSchema() *ParamInputSchema
+
 }
 
 // 获取出参 schema
@@ -48,6 +50,17 @@ func GetCacheParamInputSchema(step *iwork.WorkStep, paramSchemaParser IParamSche
 	// 获取当前 work_step 对应的 paramInputSchema
 	paramInputSchema := paramSchemaParser.GetDefaultParamInputSchema()
 	return paramInputSchema
+}
+
+// 获取默认入参 schema
+func GetDefaultParamInputSchema(paramSchemaParser IParamSchemaParser) *ParamInputSchema {
+	paramInputSchema := paramSchemaParser.GetDefaultParamInputSchema()
+	return paramInputSchema
+}
+
+// 获取入参 schema
+func GetRuntimeParamInputSchema(paramSchemaParser IParamSchemaParser) *ParamInputSchema {
+	return paramSchemaParser.GetRuntimeParamInputSchema()
 }
 
 // 根据传入的 paramNames 构建 ParamInputSchema 对象

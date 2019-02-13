@@ -39,6 +39,10 @@ func (this *SQLQueryNode) GetDefaultParamInputSchema() *schema.ParamInputSchema 
 	return schema.BuildParamInputSchemaWithSlice([]string{"metadata_sql?", "sql", "sql_binding?", "db_conn"})
 }
 
+func (this *SQLQueryNode) GetRuntimeParamInputSchema() *schema.ParamInputSchema {
+	return &schema.ParamInputSchema{}
+}
+
 func (this *SQLQueryNode) GetDefaultParamOutputSchema() *schema.ParamOutputSchema {
 	return schema.BuildParamOutputSchemaWithSlice([]string{"datacounts"})
 }
@@ -118,6 +122,10 @@ func (this *SQLExecuteNode) modifySqlInsertWithBatchNumber(tmpDataMap map[string
 
 func (this *SQLExecuteNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
 	return schema.BuildParamInputSchemaWithSlice([]string{"batch_number?", "sql", "sql_binding?", "db_conn"})
+}
+
+func (this *SQLExecuteNode) GetRuntimeParamInputSchema() *schema.ParamInputSchema {
+	return &schema.ParamInputSchema{}
 }
 
 func (this *SQLExecuteNode) GetDefaultParamOutputSchema() *schema.ParamOutputSchema {

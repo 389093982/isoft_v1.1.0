@@ -1,6 +1,7 @@
 package iworknode
 
 import (
+	"encoding/json"
 	"fmt"
 	"isoft/isoft_iaas_web/core/iworkdata/datastore"
 	"isoft/isoft_iaas_web/core/iworkdata/entry"
@@ -38,12 +39,28 @@ func (this *WorkStartNode) GetDefaultParamInputSchema() *schema.ParamInputSchema
 	return &schema.ParamInputSchema{}
 }
 
+func (this *WorkStartNode) GetRuntimeParamInputSchema() *schema.ParamInputSchema {
+	var paramMappingsArr []string
+	json.Unmarshal([]byte(this.WorkStep.WorkStepParamMapping), &paramMappingsArr)
+	items := []schema.ParamInputSchemaItem{}
+	for _, paramMapping := range paramMappingsArr {
+		items = append(items, schema.ParamInputSchemaItem{ParamName: paramMapping})
+	}
+	return &schema.ParamInputSchema{ParamInputSchemaItems:items}
+}
+
 func (this *WorkStartNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
-	return &schema.ParamOutputSchema{}
+	items := []schema.ParamOutputSchemaItem{}
+	inputSchema := schema.GetCacheParamInputSchema(this.WorkStep, &WorkStepFactory{WorkStep:this.WorkStep})
+	for _, item := range inputSchema.ParamInputSchemaItems{
+		items = append(items, schema.ParamOutputSchemaItem{ParamName:item.ParamName})
+	}
+	return &schema.ParamOutputSchema{ParamOutputSchemaItems:items}
 }
 
 func (this *WorkStartNode) GetDefaultParamOutputSchema() *schema.ParamOutputSchema {
-	return transferParamInputSchemaToParamOutputSchema(this.WorkStep)
+	//return transferParamInputSchemaToParamOutputSchema(this.WorkStep)
+	return &schema.ParamOutputSchema{}
 }
 
 type WorkEndNode struct {
@@ -67,20 +84,36 @@ func (this *WorkEndNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
 	return &schema.ParamInputSchema{}
 }
 
+func (this *WorkEndNode) GetRuntimeParamInputSchema() *schema.ParamInputSchema {
+	var paramMappingsArr []string
+	json.Unmarshal([]byte(this.WorkStep.WorkStepParamMapping), &paramMappingsArr)
+	items := []schema.ParamInputSchemaItem{}
+	for _, paramMapping := range paramMappingsArr {
+		items = append(items, schema.ParamInputSchemaItem{ParamName: paramMapping})
+	}
+	return &schema.ParamInputSchema{ParamInputSchemaItems:items}
+}
+
 func (this *WorkEndNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
-	return &schema.ParamOutputSchema{}
+	items := []schema.ParamOutputSchemaItem{}
+	inputSchema := schema.GetCacheParamInputSchema(this.WorkStep, &WorkStepFactory{WorkStep:this.WorkStep})
+	for _, item := range inputSchema.ParamInputSchemaItems{
+		items = append(items, schema.ParamOutputSchemaItem{ParamName:item.ParamName})
+	}
+	return &schema.ParamOutputSchema{ParamOutputSchemaItems:items}
 }
 
 func (this *WorkEndNode) GetDefaultParamOutputSchema() *schema.ParamOutputSchema {
-	return transferParamInputSchemaToParamOutputSchema(this.WorkStep)
+	//return transferParamInputSchemaToParamOutputSchema(this.WorkStep)
+	return &schema.ParamOutputSchema{}
 }
 
-// 输入转输出,适用于开始节点和结束节点
-func transferParamInputSchemaToParamOutputSchema(step *iwork.WorkStep) *schema.ParamOutputSchema {
-	items := []schema.ParamOutputSchemaItem{}
-	paramInputSchema := schema.GetCacheParamInputSchema(step, &WorkStepFactory{WorkStep: step})
-	for _, paramInputSchemaItem := range paramInputSchema.ParamInputSchemaItems {
-		items = append(items, schema.ParamOutputSchemaItem{ParamName: paramInputSchemaItem.ParamName})
-	}
-	return &schema.ParamOutputSchema{ParamOutputSchemaItems: items}
-}
+//// 输入转输出,适用于开始节点和结束节点
+//func transferParamInputSchemaToParamOutputSchema(step *iwork.WorkStep) *schema.ParamOutputSchema {
+//	items := []schema.ParamOutputSchemaItem{}
+//	paramInputSchema := schema.GetCacheParamInputSchema(step, &WorkStepFactory{WorkStep: step})
+//	for _, paramInputSchemaItem := range paramInputSchema.ParamInputSchemaItems {
+//		items = append(items, schema.ParamOutputSchemaItem{ParamName: paramInputSchemaItem.ParamName})
+//	}
+//	return &schema.ParamOutputSchema{ParamOutputSchemaItems: items}
+//}

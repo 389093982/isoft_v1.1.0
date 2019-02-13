@@ -41,9 +41,52 @@ func (this *WorkSub) Execute(trackingId string) {
 func (this *WorkSub) GetDefaultParamInputSchema() *schema.ParamInputSchema {
 	return schema.BuildParamInputSchemaWithSlice([]string{"work_sub"})
 }
+
+// 获取动态输入值
+func (this *WorkSub) GetRuntimeParamInputSchema() *schema.ParamInputSchema {
+	// 读取历史输入值
+	paramInputSchema := schema.GetCacheParamInputSchema(this.WorkStep, &WorkStepFactory{WorkStep:this.WorkStep})
+	// 从静态输入值中获取子流程名称
+	workSubName := iworkutil.GetWorkSubNameForWorkSubNode(paramInputSchema)
+	if strings.TrimSpace(workSubName) != ""{
+		// 获取子流程所有步骤
+		subSteps, err := iwork.GetAllWorkStepByWorkName(workSubName)
+		if err != nil {
+			panic(err)
+		}
+		for _, subStep := range subSteps {
+			// 找到子流程起始节点
+			if strings.ToUpper(subStep.WorkStepType) == "WORK_START" {
+				// 子流程起始节点输入参数
+				return schema.GetCacheParamInputSchema(&subStep, &WorkStepFactory{WorkStep: &subStep})
+			}
+		}
+	}
+	return &schema.ParamInputSchema{}
+}
+
 func (this *WorkSub) GetDefaultParamOutputSchema() *schema.ParamOutputSchema {
 	return &schema.ParamOutputSchema{}
 }
+
 func (this *WorkSub) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
+	// 读取静态输入值
+	paramInputSchema := schema.GetCacheParamInputSchema(this.WorkStep, &WorkStepFactory{WorkStep:this.WorkStep})
+	// 从静态输入值中获取子流程名称
+	workSubName := iworkutil.GetWorkSubNameForWorkSubNode(paramInputSchema)
+	if strings.TrimSpace(workSubName) != ""{
+		// 获取子流程所有步骤
+		subSteps, err := iwork.GetAllWorkStepByWorkName(workSubName)
+		if err != nil {
+			panic(err)
+		}
+		for _, subStep := range subSteps {
+			// 找到子流程结束节点
+			if strings.ToUpper(subStep.WorkStepType) == "WORK_END" {
+				// 子流程结束节点输出参数
+				return schema.GetCacheParamOutputSchema(&subStep)
+			}
+		}
+	}
 	return &schema.ParamOutputSchema{}
 }

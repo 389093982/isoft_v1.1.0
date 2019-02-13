@@ -32,6 +32,10 @@ func (this *JsonRenderNode) GetDefaultParamInputSchema() *schema.ParamInputSchem
 	return schema.BuildParamInputSchemaWithSlice([]string{"json_object"})
 }
 
+func (this *JsonRenderNode) GetRuntimeParamInputSchema() *schema.ParamInputSchema {
+	return &schema.ParamInputSchema{}
+}
+
 func (this *JsonRenderNode) GetDefaultParamOutputSchema() *schema.ParamOutputSchema {
 	return schema.BuildParamOutputSchemaWithSlice([]string{"json_str"})
 }
@@ -70,6 +74,10 @@ func (this *JsonParserNode) Execute(trackingId string) {
 
 func (this *JsonParserNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
 	return schema.BuildParamInputSchemaWithSlice([]string{"json_str","json_fields"})
+}
+
+func (this *JsonParserNode) GetRuntimeParamInputSchema() *schema.ParamInputSchema {
+	return &schema.ParamInputSchema{}
 }
 
 func (this *JsonParserNode) GetDefaultParamOutputSchema() *schema.ParamOutputSchema {

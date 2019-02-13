@@ -18,9 +18,15 @@ type WorkStepFactory struct {
 }
 
 type IStandardWorkStep interface {
+	// 节点执行的方法
 	Execute(trackingId string)
+	// 获取默认输入参数
 	GetDefaultParamInputSchema() *schema.ParamInputSchema
+	// 获取动态输入参数
+	GetRuntimeParamInputSchema() *schema.ParamInputSchema
+	// 获取默认输出参数
 	GetDefaultParamOutputSchema() *schema.ParamOutputSchema
+	// 获取动态输出参数
 	GetRuntimeParamOutputSchema() *schema.ParamOutputSchema
 }
 
@@ -54,6 +60,13 @@ func (this *WorkStepFactory) getProxy() IStandardWorkStep {
 
 func (this *WorkStepFactory) GetDefaultParamInputSchema() *schema.ParamInputSchema {
 	if schema := this.getProxy().GetDefaultParamInputSchema(); schema != nil {
+		return schema
+	}
+	return &schema.ParamInputSchema{}
+}
+
+func (this *WorkStepFactory) GetRuntimeParamInputSchema() *schema.ParamInputSchema {
+	if schema := this.getProxy().GetRuntimeParamInputSchema(); schema != nil {
 		return schema
 	}
 	return &schema.ParamInputSchema{}
