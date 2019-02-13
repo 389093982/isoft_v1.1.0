@@ -104,16 +104,5 @@ func (this *WorkEndNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema
 }
 
 func (this *WorkEndNode) GetDefaultParamOutputSchema() *schema.ParamOutputSchema {
-	//return transferParamInputSchemaToParamOutputSchema(this.WorkStep)
 	return &schema.ParamOutputSchema{}
 }
-
-//// 输入转输出,适用于开始节点和结束节点
-//func transferParamInputSchemaToParamOutputSchema(step *iwork.WorkStep) *schema.ParamOutputSchema {
-//	items := []schema.ParamOutputSchemaItem{}
-//	paramInputSchema := schema.GetCacheParamInputSchema(step, &WorkStepFactory{WorkStep: step})
-//	for _, paramInputSchemaItem := range paramInputSchema.ParamInputSchemaItems {
-//		items = append(items, schema.ParamOutputSchemaItem{ParamName: paramInputSchemaItem.ParamName})
-//	}
-//	return &schema.ParamOutputSchema{ParamOutputSchemaItems: items}
-//}
