@@ -74,7 +74,18 @@ const hot_share_type=[
   },
 ];
 
+const default_work_step_types=[
+  "work_start",
+  "work_end",
+  "work_sub",
+  "sql_query",
+  "sql_execute",
+  "json_render",
+  "json_parser"
+];
+
 export default {
   hot_course_types,
   hot_share_type,
+  default_work_step_types,
 }

@@ -85,7 +85,7 @@
         showParamMapping:false,
         // 参数映射
         paramMappings:[],
-        default_work_step_types:["work_start","work_end","sql_query","sql_insert"],
+        default_work_step_types: this.GLOBAL.default_work_step_types,
         formValidate: {
           work_id: this.workId,
           work_step_id: 0,

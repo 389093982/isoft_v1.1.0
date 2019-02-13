@@ -48,13 +48,13 @@ func (this *JsonParserNode) Execute(trackingId string) {
 }
 
 func (this *JsonParserNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
-	return nil
+	return schema.BuildParamInputSchemaWithSlice([]string{"json_str","json_fields"})
 }
 
 func (this *JsonParserNode) GetDefaultParamOutputSchema() *schema.ParamOutputSchema {
-	return nil
+	return &schema.ParamOutputSchema{}
 }
 
 func (this *JsonParserNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
-	return nil
+	return &schema.ParamOutputSchema{}
 }
