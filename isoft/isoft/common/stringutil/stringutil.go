@@ -12,4 +12,3 @@ func RandomUUID() string {
 func GetTypeOfInterface(v interface{}) string {
 	return reflect.TypeOf(v).String()
 }
-

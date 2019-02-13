@@ -32,7 +32,7 @@ func (this *WorkController) FilterPageLogRecord() {
 	work_id := this.GetString("work_id")
 	offset, _ := this.GetInt("offset", 10)            // 每页记录数
 	current_page, _ := this.GetInt("current_page", 1) // 当前页
-	runLogRecords, count, err := iwork.QueryRunLogRecord(work_id,current_page, offset)
+	runLogRecords, count, err := iwork.QueryRunLogRecord(work_id, current_page, offset)
 	paginator := pagination.SetPaginator(this.Ctx, offset, count)
 	if err == nil {
 		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "runLogRecords": runLogRecords,
@@ -54,7 +54,7 @@ func (this *WorkController) RunWork() {
 
 func (this *WorkController) EditWork() {
 	var work iwork.Work
-	if work_id, err := this.GetInt64("work_id"); err == nil && work_id > 0{
+	if work_id, err := this.GetInt64("work_id"); err == nil && work_id > 0 {
 		work.Id = work_id
 	}
 	work.WorkName = this.GetString("work_name")
@@ -177,8 +177,8 @@ func (this *WorkController) LoadWorkStepInfo() {
 		json.Unmarshal([]byte(step.WorkStepParamMapping), &paramMappingsArr)
 		// 返回结果
 		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "step": step,
-			"paramInputSchema":          schema.GetCacheParamInputSchema(&step, &iworknode.WorkStepFactory{WorkStep:&step}),
-			"paramInputSchemaXml":       schema.GetCacheParamInputSchema(&step, &iworknode.WorkStepFactory{WorkStep:&step}).RenderToXml(),
+			"paramInputSchema":          schema.GetCacheParamInputSchema(&step, &iworknode.WorkStepFactory{WorkStep: &step}),
+			"paramInputSchemaXml":       schema.GetCacheParamInputSchema(&step, &iworknode.WorkStepFactory{WorkStep: &step}).RenderToXml(),
 			"paramOutputSchema":         schema.GetCacheParamOutputSchema(&step),
 			"paramOutputSchemaXml":      schema.GetCacheParamOutputSchema(&step).RenderToXml(),
 			"paramOutputSchemaTreeNode": schema.GetCacheParamOutputSchema(&step).RenderToTreeNodes("$NODE_NAME_OUTPUT"),
@@ -227,7 +227,7 @@ func (this *WorkController) ChangeWorkStepOrder() {
 	this.ServeJSON()
 }
 
-func (this *WorkController) LoadPreNodeOutput()  {
+func (this *WorkController) LoadPreNodeOutput() {
 	work_id := this.GetString("work_id")
 	work_step_id, _ := this.GetInt64("work_step_id")
 
@@ -239,10 +239,10 @@ func (this *WorkController) LoadPreNodeOutput()  {
 	pos = LoadWorkInfo()
 	preParamOutputSchemaTreeNodeArr = append(preParamOutputSchemaTreeNodeArr, pos.RenderToTreeNodes("$WORK"))
 	// 加载前置步骤输出
-	if steps, err := iwork.GetAllPreStepInfo(work_id, work_step_id); err == nil{
-		for _, step := range steps{
+	if steps, err := iwork.GetAllPreStepInfo(work_id, work_step_id); err == nil {
+		for _, step := range steps {
 			pos := schema.GetCacheParamOutputSchema(&step)
-			preParamOutputSchemaTreeNodeArr = append(preParamOutputSchemaTreeNodeArr, pos.RenderToTreeNodes("$" + step.WorkStepName))
+			preParamOutputSchemaTreeNodeArr = append(preParamOutputSchemaTreeNodeArr, pos.RenderToTreeNodes("$"+step.WorkStepName))
 		}
 	}
 	// 返回结果
@@ -254,12 +254,12 @@ func (this *WorkController) LoadPreNodeOutput()  {
 
 func LoadResourceInfo() *schema.ParamOutputSchema {
 	pos := &schema.ParamOutputSchema{
-		ParamOutputSchemaItems:[]schema.ParamOutputSchemaItem{},
+		ParamOutputSchemaItems: []schema.ParamOutputSchemaItem{},
 	}
 	resources := iresource.GetAllResource()
-	for _, resource := range resources{
+	for _, resource := range resources {
 		pos.ParamOutputSchemaItems = append(pos.ParamOutputSchemaItems, schema.ParamOutputSchemaItem{
-			ParamName:resource.ResourceName,
+			ParamName: resource.ResourceName,
 		})
 	}
 	return pos
@@ -267,14 +267,13 @@ func LoadResourceInfo() *schema.ParamOutputSchema {
 
 func LoadWorkInfo() *schema.ParamOutputSchema {
 	pos := &schema.ParamOutputSchema{
-		ParamOutputSchemaItems:[]schema.ParamOutputSchemaItem{},
+		ParamOutputSchemaItems: []schema.ParamOutputSchemaItem{},
 	}
 	works := iwork.GetAllWorkInfo()
-	for _, work := range works{
+	for _, work := range works {
 		pos.ParamOutputSchemaItems = append(pos.ParamOutputSchemaItems, schema.ParamOutputSchemaItem{
-			ParamName:work.WorkName,
+			ParamName: work.WorkName,
 		})
 	}
 	return pos
 }
-

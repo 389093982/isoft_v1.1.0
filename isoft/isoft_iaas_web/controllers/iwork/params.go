@@ -4,22 +4,23 @@ import (
 	"encoding/json"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
 	"isoft/isoft_iaas_web/core/iworknode"
+	"isoft/isoft_iaas_web/core/iworkutil"
 	"isoft/isoft_iaas_web/models/iwork"
 	"strings"
 	"time"
 )
 
-func BuildOutput(work_id string, work_step_id int64)  {
+func BuildOutput(work_id string, work_step_id int64) {
 	// 读取 work_step 信息
 	step, err := iwork.LoadWorkStepInfo(work_id, work_step_id)
 	if err != nil {
 		panic(err)
 	}
-	if step.WorkStepType == "work_sub"{
+	if step.WorkStepType == "work_sub" {
 		return
 	}
-	step.WorkStepOutput = schema.GetRuntimeParamOutputSchema(&iworknode.WorkStepFactory{WorkStep:&step}).RenderToXml()
-	if _, err = iwork.InsertOrUpdateWorkStep(&step); err != nil{
+	step.WorkStepOutput = schema.GetRuntimeParamOutputSchema(&iworknode.WorkStepFactory{WorkStep: &step}).RenderToXml()
+	if _, err = iwork.InsertOrUpdateWorkStep(&step); err != nil {
 		panic(err)
 	}
 }
@@ -57,20 +58,20 @@ func (this *WorkController) EditWorkStepParamInfo() {
 func NoticeWorkStartEndAdjust(work_id string, work_step_id int64) {
 	// 读取 step 记录
 	if step, err := iwork.GetOneWorkStep(work_id, work_step_id); err == nil &&
-			(step.WorkStepType == "work_start" || step.WorkStepType == "work_end"){
+		(step.WorkStepType == "work_start" || step.WorkStepType == "work_end") {
 		adjustWorkStartEndNodeParamSchema(step.WorkStepParamMapping, &step)
 	}
 }
 
 func NoticeWorkSubAdjust(work_id string, work_step_id int64) {
 	// 读取 step 记录
-	if step, err := iwork.GetOneWorkStep(work_id, work_step_id); err == nil && step.WorkStepType == "work_sub"{
+	if step, err := iwork.GetOneWorkStep(work_id, work_step_id); err == nil && step.WorkStepType == "work_sub" {
 		// 从 db 中读取 paramInputSchema
-		paramInputSchema := schema.GetCacheParamInputSchema(&step, &iworknode.WorkStepFactory{WorkStep:&step})
+		paramInputSchema := schema.GetCacheParamInputSchema(&step, &iworknode.WorkStepFactory{WorkStep: &step})
 		for _, item := range paramInputSchema.ParamInputSchemaItems {
 			if item.ParamName == "work_sub" && strings.HasPrefix(item.ParamValue, "$WORK.") {
 				// 找到 work_sub 字段值
-				workSubName := getWorkSubNameFromParamValue(item.ParamValue)
+				workSubName := iworkutil.GetWorkSubNameFromParamValue(item.ParamValue)
 				adjustWorkSubNodeParamSchema(workSubName, *paramInputSchema, step)
 			}
 		}
@@ -78,7 +79,7 @@ func NoticeWorkSubAdjust(work_id string, work_step_id int64) {
 }
 
 func adjustWorkStartEndNodeParamSchema(paramMappingsStr string, step *iwork.WorkStep) {
-	paramInputSchema := schema.GetCacheParamInputSchema(step, &iworknode.WorkStepFactory{WorkStep:step})
+	paramInputSchema := schema.GetCacheParamInputSchema(step, &iworknode.WorkStepFactory{WorkStep: step})
 	var paramMappingsArr []string
 	json.Unmarshal([]byte(paramMappingsStr), &paramMappingsArr)
 	// 沿用旧值,添加新值,去除无效的值,即以 paramMapping 为准
@@ -100,7 +101,7 @@ func adjustWorkStartEndNodeParamSchema(paramMappingsStr string, step *iwork.Work
 // 调整 work_sub 类型节点参数
 func adjustWorkSubNodeParamSchema(workSubName string, paramInputSchema schema.ParamInputSchema, step iwork.WorkStep) {
 	subSteps, err := iwork.GetAllWorkStepByWorkName(workSubName)
-	if err != nil{
+	if err != nil {
 		return
 	}
 	for _, subStep := range subSteps {
@@ -137,52 +138,26 @@ func adjustWorkSubNodeParamSchemaByUsingWorkStart(subStep iwork.WorkStep, paramI
 	step.WorkStepInput = paramInputSchema.RenderToXml()
 }
 
-func getWorkSubNameFromParamValue(paramValue string) string {
-	value := strings.TrimSpace(paramValue)
-	value = strings.Replace(value, "$WORK.", "", -1)
-	value = strings.Replace(value, "__sep__", "", -1)
-	value = strings.Replace(value, "\n", "", -1)
-	value = strings.TrimSpace(value)
-	return value
-}
-
 func GetInputSchemaNameArr(schema *schema.ParamInputSchema) []string {
 	paramNameArr := []string{}
-	for _,item := range schema.ParamInputSchemaItems{
-		paramNameArr = append(paramNameArr, item.ParamName)
-	}
-	return paramNameArr
-}
-
-func GetOutputSchemaNameArr(schema *schema.ParamOutputSchema) []string {
-	paramNameArr := []string{}
-	for _,item := range schema.ParamOutputSchemaItems{
+	for _, item := range schema.ParamInputSchemaItems {
 		paramNameArr = append(paramNameArr, item.ParamName)
 	}
 	return paramNameArr
 }
 
 func CheckAndGetParamValueByInputSchemaParamName(items []schema.ParamInputSchemaItem, paramName string) (exist bool, paramValue string) {
-	for _,item := range items{
-		if item.ParamName == paramName{
-			return true, item.ParamValue
-		}
-	}
-	return false, ""
-}
-
-func CheckAndGetParamValueByOutputSchemaParamName(items []schema.ParamOutputSchemaItem, paramName string) (exist bool, paramValue string) {
-	for _,item := range items{
-		if item.ParamName == paramName{
-			return true, item.ParamValue
-		}
-	}
-	return false, ""
-}
-
-func ModifyParamValue(items []schema.ParamInputSchemaItem, paramName string, paramValue string)  {
 	for _, item := range items {
-		if item.ParamName == paramName{
+		if item.ParamName == paramName {
+			return true, item.ParamValue
+		}
+	}
+	return false, ""
+}
+
+func ModifyParamValue(items []schema.ParamInputSchemaItem, paramName string, paramValue string) {
+	for _, item := range items {
+		if item.ParamName == paramName {
 			item.ParamValue = paramValue
 		}
 	}

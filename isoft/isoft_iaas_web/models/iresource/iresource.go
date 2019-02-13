@@ -56,7 +56,7 @@ func GetAllResource() (resources []Resource) {
 func GetResourceDataSourceNameString(resource_name string) string {
 	var resource Resource
 	o := orm.NewOrm()
-	if err := o.QueryTable("resource").Filter("resource_name",resource_name).One(&resource); err == nil{
+	if err := o.QueryTable("resource").Filter("resource_name", resource_name).One(&resource); err == nil {
 		return resource.ResourceDsn
 	}
 	return ""

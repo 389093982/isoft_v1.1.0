@@ -15,9 +15,9 @@ func Execute(sqlstring string, sql_binding []interface{}, dataSourceName string)
 	if err != nil {
 		panic(err)
 	}
-	if affected, err := result.RowsAffected(); err == nil{
+	if affected, err := result.RowsAffected(); err == nil {
 		return affected
-	}else{
+	} else {
 		panic(err)
 	}
 }

@@ -11,22 +11,22 @@ import (
 
 type SQLQueryNode struct {
 	BaseNode
-	WorkStep 		    *iwork.WorkStep
+	WorkStep *iwork.WorkStep
 }
 
 func (this *SQLQueryNode) Execute(trackingId string) {
 	// 数据中心
 	dataStore := datastore.GetDataSource(trackingId)
 	// 节点中间数据
-	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep,dataStore)
-	sql := tmpDataMap["sql"].(string) 				  // 等价于 param.GetStaticParamValue("sql",this.WorkStep)
-	dataSourceName := tmpDataMap["db_conn"].(string)  // 等价于 param.GetStaticParamValue("db_conn", this.WorkStep)
+	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, dataStore)
+	sql := tmpDataMap["sql"].(string)                // 等价于 param.GetStaticParamValue("sql",this.WorkStep)
+	dataSourceName := tmpDataMap["db_conn"].(string) // 等价于 param.GetStaticParamValue("db_conn", this.WorkStep)
 	// sql_binding 参数获取
 	_sql_binding := getSqlBinding(tmpDataMap)
 	datacounts, rowDatas := sqlutil.Query(sql, _sql_binding, dataSourceName)
 	// 将数据数据存储到数据中心
 	// 存储 datacounts
-	dataStore.CacheData(this.WorkStep.WorkStepName,"datacounts", datacounts)
+	dataStore.CacheData(this.WorkStep.WorkStepName, "datacounts", datacounts)
 	for paramName, paramValue := range rowDatas {
 		// 存储具体字段值
 		dataStore.CacheData(this.WorkStep.WorkStepName, paramName, paramValue)
@@ -42,14 +42,14 @@ func (this *SQLQueryNode) GetDefaultParamOutputSchema() *schema.ParamOutputSchem
 }
 
 func (this *SQLQueryNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
-	sql := param.GetStaticParamValue("sql",this.WorkStep)
+	sql := param.GetStaticParamValue("sql", this.WorkStep)
 	dataSourceName := param.GetStaticParamValue("db_conn", this.WorkStep)
 	paramNames := sqlutil.GetMetaDatas(sql, dataSourceName)
 	items := []schema.ParamOutputSchemaItem{}
 	for _, paramName := range paramNames {
 		items = append(items, schema.ParamOutputSchemaItem{
-			ParentPath:"rows",
-			ParamName: paramName,
+			ParentPath: "rows",
+			ParamName:  paramName,
 		})
 	}
 	return &schema.ParamOutputSchema{ParamOutputSchemaItems: items}
@@ -68,16 +68,16 @@ func getSqlBinding(tmpDataMap map[string]interface{}) []interface{} {
 
 type SQLExecuteNode struct {
 	BaseNode
-	WorkStep 		    *iwork.WorkStep
+	WorkStep *iwork.WorkStep
 }
 
 func (this *SQLExecuteNode) Execute(trackingId string) {
 	// 数据中心
 	dataStore := datastore.GetDataSource(trackingId)
 	// 节点中间数据
-	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep,dataStore)
-	sql := tmpDataMap["sql"].(string) 				  // 等价于 param.GetStaticParamValue("sql",this.WorkStep)
-	dataSourceName := tmpDataMap["db_conn"].(string)  // 等价于 param.GetStaticParamValue("db_conn", this.WorkStep)
+	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, dataStore)
+	sql := tmpDataMap["sql"].(string)                // 等价于 param.GetStaticParamValue("sql",this.WorkStep)
+	dataSourceName := tmpDataMap["db_conn"].(string) // 等价于 param.GetStaticParamValue("db_conn", this.WorkStep)
 	// insert 语句且有批量操作时整改 sql 语句
 	sql = this.modifySqlInsertWithBatchNumber(tmpDataMap, sql)
 	// sql_binding 参数获取
@@ -96,15 +96,15 @@ func (this *SQLExecuteNode) modifySqlInsertWithBatchNumber(tmpDataMap map[string
 		// 最后一个右括号索引
 		index2 := strings.LastIndex(sql, ")")
 		// value 填充子句
-		valueSql := sql[index1:(index2+1)]
+		valueSql := sql[index1:(index2 + 1)]
 		// newValueArr 等于 value 填充子句复制 _batch_number 份
 		newValueArr := make([]string, 0)
-		for i:=0; i<_batch_number; i++{
+		for i := 0; i < _batch_number; i++ {
 			newValueArr = append(newValueArr, valueSql)
 		}
 		newValueSql := strings.Join(newValueArr, ",")
 		// 进行替换,相当于 () 替换成 (),(),(),()...
-		sql = strings.Replace(sql, valueSql, newValueSql,-1)
+		sql = strings.Replace(sql, valueSql, newValueSql, -1)
 	}
 	return sql
 }
@@ -120,4 +120,3 @@ func (this *SQLExecuteNode) GetDefaultParamOutputSchema() *schema.ParamOutputSch
 func (this *SQLExecuteNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
 	return &schema.ParamOutputSchema{}
 }
-

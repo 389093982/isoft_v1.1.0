@@ -10,6 +10,8 @@ import (
 type WorkStepFactory struct {
 	Work     iwork.Work
 	WorkStep *iwork.WorkStep
+	// 执行 Execute 方法时遇到子流程时的回调函数
+	RunFunc  func(work iwork.Work, steps []iwork.WorkStep)
 }
 
 type IStandardWorkStep interface {
@@ -30,31 +32,31 @@ func (this *WorkStepFactory) getProxy() IStandardWorkStep {
 	case "WORK_END":
 		return &WorkEndNode{WorkStep: this.WorkStep}
 	case "WORK_SUB":
-		return &WorkSub{WorkStep: this.WorkStep}
+		return &WorkSub{WorkStep: this.WorkStep, RunFunc: this.RunFunc}
 	case "SQL_EXECUTE":
 		return &SQLExecuteNode{WorkStep: this.WorkStep}
 	case "SQL_QUERY":
 		return &SQLQueryNode{WorkStep: this.WorkStep}
 	}
-	panic(fmt.Sprintf("unsupport workStepType:%s",this.WorkStep.WorkStepType))
+	panic(fmt.Sprintf("unsupport workStepType:%s", this.WorkStep.WorkStepType))
 }
 
 func (this *WorkStepFactory) GetDefaultParamInputSchema() *schema.ParamInputSchema {
-	if schema := this.getProxy().GetDefaultParamInputSchema(); schema != nil{
+	if schema := this.getProxy().GetDefaultParamInputSchema(); schema != nil {
 		return schema
 	}
 	return &schema.ParamInputSchema{}
 }
 
 func (this *WorkStepFactory) GetDefaultParamOutputSchema() *schema.ParamOutputSchema {
-	if schema := this.getProxy().GetDefaultParamOutputSchema(); schema != nil{
+	if schema := this.getProxy().GetDefaultParamOutputSchema(); schema != nil {
 		return schema
 	}
 	return &schema.ParamOutputSchema{}
 }
 
 func (this *WorkStepFactory) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
-	if schema := this.getProxy().GetRuntimeParamOutputSchema(); schema != nil{
+	if schema := this.getProxy().GetRuntimeParamOutputSchema(); schema != nil {
 		return schema
 	}
 	return &schema.ParamOutputSchema{}

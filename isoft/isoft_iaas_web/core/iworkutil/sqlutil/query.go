@@ -24,9 +24,8 @@ func GetMetaDatas(sql, dataSourceName string) (colNames []string) {
 	return colNames
 }
 
-
 func Query(sqlstring string, sql_binding []interface{}, dataSourceName string) (datacounts int64, rowDatas map[string]interface{}) {
-	rowDatas = make(map[string]interface{},5)
+	rowDatas = make(map[string]interface{}, 5)
 	db, err := GetConnForMysql("mysql", dataSourceName)
 	if err != nil {
 		panic(err)
@@ -58,13 +57,13 @@ func Query(sqlstring string, sql_binding []interface{}, dataSourceName string) (
 			_colValue := reflect.ValueOf(colValue).Interface().(sql.RawBytes)
 			rowDatas[name] = string(_colValue)
 			// 第一条记录进行简写,去除[0]标识
-			if datacounts == 0{
+			if datacounts == 0 {
 				_name := fmt.Sprintf("rows.%s", colNames[index])
 				rowDatas[_name] = string(_colValue)
 			}
 		}
 		// 数据量增加 1
-		datacounts ++
+		datacounts++
 	}
 	return
 }

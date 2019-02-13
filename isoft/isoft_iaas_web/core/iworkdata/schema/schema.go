@@ -21,10 +21,10 @@ func (this *ParamInputSchema) RenderToXml() string {
 }
 
 type ParamOutputSchemaItem struct {
-	XMLName     	 xml.Name `xml:"paramOutputSchemaItem" json:"-"`
-	ParentPath 		 string	  `xml:"parentPath"`
-	ParamName   	 string   `xml:"paramName"`
-	ParamValue  	 string   `xml:"paramValue"`
+	XMLName    xml.Name `xml:"paramOutputSchemaItem" json:"-"`
+	ParentPath string   `xml:"parentPath"`
+	ParamName  string   `xml:"paramName"`
+	ParamValue string   `xml:"paramValue"`
 }
 
 type ParamOutputSchema struct {
@@ -59,24 +59,24 @@ func (this *ParamOutputSchema) RenderToTreeNodes(rootName string) *TreeNode {
 }
 
 // 元素追加到树上面
-func (this *ParamOutputSchema) appendToTreeNodes(treeNode *TreeNode, item ParamOutputSchemaItem){
-	pTreeNode := this.createAndGetParentTreeNode(treeNode,item)
-	pTreeNode.NodeChildrens = append(pTreeNode.NodeChildrens, &TreeNode{NodeName:item.ParamName,NodeLink:item.ParamName})
+func (this *ParamOutputSchema) appendToTreeNodes(treeNode *TreeNode, item ParamOutputSchemaItem) {
+	pTreeNode := this.createAndGetParentTreeNode(treeNode, item)
+	pTreeNode.NodeChildrens = append(pTreeNode.NodeChildrens, &TreeNode{NodeName: item.ParamName, NodeLink: item.ParamName})
 }
 
 func (this *ParamOutputSchema) createAndGetParentTreeNode(treeNode *TreeNode, item ParamOutputSchemaItem) *TreeNode {
 	// 父级节点是根节点
-	if item.ParentPath == ""{
+	if item.ParentPath == "" {
 		return treeNode
 	}
 	// 父级节点不是根节点
-	for _,children := range treeNode.NodeChildrens{
-		if children.NodeName == item.ParentPath{
+	for _, children := range treeNode.NodeChildrens {
+		if children.NodeName == item.ParentPath {
 			return children
 		}
 	}
 	// 父级节点未曾创建过则重新创建
-	pTreeNode := &TreeNode{NodeName:item.ParentPath,NodeLink:item.ParentPath}
+	pTreeNode := &TreeNode{NodeName: item.ParentPath, NodeLink: item.ParentPath}
 	treeNode.NodeChildrens = append(treeNode.NodeChildrens, pTreeNode)
 	return pTreeNode
 }

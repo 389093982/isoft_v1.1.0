@@ -15,5 +15,3 @@ func GetConnForMysql(driverName, dataSourceName string) (db *sql.DB, err error) 
 	}
 	return db, err
 }
-
-

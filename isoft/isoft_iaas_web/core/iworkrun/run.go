@@ -13,34 +13,32 @@ func Run(work iwork.Work, steps []iwork.WorkStep) {
 	trackingId := stringutil.RandomUUID()
 	// 记录日志
 	iwork.InsertRunLogRecord(&iwork.RunLogRecord{
-		TrackingId:trackingId,
-		WorkName:work.WorkName,
-		CreatedBy:"SYSTEM",
-		CreatedTime:time.Now(),
-		LastUpdatedBy:"SYSTEM",
-		LastUpdatedTime:time.Now(),
+		TrackingId:      trackingId,
+		WorkName:        work.WorkName,
+		CreatedBy:       "SYSTEM",
+		CreatedTime:     time.Now(),
+		LastUpdatedBy:   "SYSTEM",
+		LastUpdatedTime: time.Now(),
 	})
 
 	defer func() {
 		if err := recover(); err != nil {
-			iwork.InsertRunLogDetail(trackingId, fmt.Sprintf("internal error:%s",err))
+			iwork.InsertRunLogDetail(trackingId, fmt.Sprintf("internal error:%s", err))
 		}
 	}()
 	// 记录日志详细
-	iwork.InsertRunLogDetail(trackingId, fmt.Sprintf("start execute work:%s",work.WorkName))
+	iwork.InsertRunLogDetail(trackingId, fmt.Sprintf("start execute work:%s", work.WorkName))
 	// 申请数据中心存储中间数据
 	datastore.RegistDataStore(trackingId)
 	// 逐步执行步骤
 	for _, step := range steps {
-		iwork.InsertRunLogDetail(trackingId, fmt.Sprintf("start execute workstep:%s",step.WorkStepName))
+		iwork.InsertRunLogDetail(trackingId, fmt.Sprintf("start execute workstep:%s", step.WorkStepName))
 		// 由工厂代为执行步骤
-		factory := &iworknode.WorkStepFactory{WorkStep: &step}
+		factory := &iworknode.WorkStepFactory{WorkStep: &step, RunFunc: Run}
 		factory.Execute(trackingId)
-		iwork.InsertRunLogDetail(trackingId, fmt.Sprintf("end execute workstep:%s",step.WorkStepName))
+		iwork.InsertRunLogDetail(trackingId, fmt.Sprintf("end execute workstep:%s", step.WorkStepName))
 	}
 	// 注销数据中心
 	datastore.UnRegistDataStore(trackingId)
-	iwork.InsertRunLogDetail(trackingId, fmt.Sprintf("end execute work:%s",work.WorkName))
+	iwork.InsertRunLogDetail(trackingId, fmt.Sprintf("end execute work:%s", work.WorkName))
 }
-
-

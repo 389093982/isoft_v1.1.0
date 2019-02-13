@@ -14,22 +14,22 @@ type ParamVauleParser struct {
 
 func (this *ParamVauleParser) CheckParamValueFormat() bool {
 	this.removeUnsupportChars()
-	if strings.HasPrefix(this.ParamValue, "$") && strings.Contains(this.ParamValue, "."){
+	if strings.HasPrefix(this.ParamValue, "$") && strings.Contains(this.ParamValue, ".") {
 		return true
 	}
 	return false
 }
 
 func (this *ParamVauleParser) GetNodeNameFromParamValue() string {
-	if this.CheckParamValueFormat(){
+	if this.CheckParamValueFormat() {
 		return this.ParamValue[1:strings.Index(this.ParamValue, ".")]
 	}
 	return this.ParamValue
 }
 
 func (this *ParamVauleParser) GetParamNameFromParamValue() string {
-	if this.CheckParamValueFormat(){
-		return this.ParamValue[strings.Index(this.ParamValue, ".") + 1:]
+	if this.CheckParamValueFormat() {
+		return this.ParamValue[strings.Index(this.ParamValue, ".")+1:]
 	}
 	return this.ParamValue
 }
@@ -37,22 +37,20 @@ func (this *ParamVauleParser) GetParamNameFromParamValue() string {
 // 去除不合理的字符
 func (this *ParamVauleParser) removeUnsupportChars() {
 	this.ParamValue = strings.TrimSpace(this.ParamValue)
-	this.ParamValue = strings.Replace(this.ParamValue, "\n","",-1)
+	this.ParamValue = strings.Replace(this.ParamValue, "\n", "", -1)
 }
 
 func (this *ParamVauleParser) GetStaticParamValue() string {
 	this.removeUnsupportChars()
-	if strings.HasPrefix(this.ParamValue, "$RESOURCE."){
+	if strings.HasPrefix(this.ParamValue, "$RESOURCE.") {
 		return iresource.GetResourceDataSourceNameString(strings.Replace(this.ParamValue, "$RESOURCE.", "", -1))
 	}
 	return this.ParamValue
 }
 
-
-
 type ParamNameParser struct {
 	ParamName string
-	Step 	  *iwork.WorkStep
+	Step      *iwork.WorkStep
 }
 
 // 根据 ParamName 获取相对值,真值可能需要 ParamVauleParser 处理一下
@@ -77,11 +75,11 @@ func (this *ParamNameParser) ParseAndGetRelativeParamValue() string {
 // 根据步骤和参数名称获取静态参数值
 func GetStaticParamValue(paramName string, step *iwork.WorkStep) string {
 	paramNameParser := &ParamNameParser{
-		ParamName:paramName,
-		Step:step,
+		ParamName: paramName,
+		Step:      step,
 	}
 	paramValueParser := &ParamVauleParser{
-		ParamValue:paramNameParser.ParseAndGetRelativeParamValue(),
+		ParamValue: paramNameParser.ParseAndGetRelativeParamValue(),
 	}
 	return paramValueParser.GetStaticParamValue()
 }
