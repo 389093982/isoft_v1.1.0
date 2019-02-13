@@ -9,11 +9,12 @@ import (
 )
 
 type WorkStepFactory struct {
-	Work     iwork.Work
-	WorkStep *iwork.WorkStep
+	Work     	iwork.Work
+	WorkStep 	*iwork.WorkStep
 	// 执行 Execute 方法时遇到子流程时的回调函数
-	RunFunc  func(work iwork.Work, steps []iwork.WorkStep, dispatcher *entry.Dispatcher)
-	Dispatcher *entry.Dispatcher
+	RunFunc  	func(work iwork.Work, steps []iwork.WorkStep, dispatcher *entry.Dispatcher) (receiver *entry.Receiver)
+	Dispatcher 	*entry.Dispatcher
+	Receiver   	*entry.Receiver				// 代理了 Receiver,值从 work_end 节点获取
 }
 
 type IStandardWorkStep interface {
@@ -32,7 +33,7 @@ func (this *WorkStepFactory) getProxy() IStandardWorkStep {
 	case "WORK_START":
 		return &WorkStartNode{WorkStep: this.WorkStep, Dispatcher:this.Dispatcher}
 	case "WORK_END":
-		return &WorkEndNode{WorkStep: this.WorkStep}
+		return &WorkEndNode{WorkStep: this.WorkStep, Receiver:this.Receiver}
 	case "WORK_SUB":
 		return &WorkSub{WorkStep: this.WorkStep, RunFunc: this.RunFunc}
 	case "SQL_EXECUTE":

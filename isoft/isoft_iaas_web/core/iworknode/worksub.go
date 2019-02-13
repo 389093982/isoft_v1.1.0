@@ -13,7 +13,7 @@ import (
 type WorkSub struct {
 	BaseNode
 	WorkStep *iwork.WorkStep
-	RunFunc  func(work iwork.Work, steps []iwork.WorkStep, dispatcher *entry.Dispatcher)
+	RunFunc  func(work iwork.Work, steps []iwork.WorkStep, dispatcher *entry.Dispatcher) (receiver *entry.Receiver)
 }
 
 func (this *WorkSub) Execute(trackingId string) {
@@ -31,7 +31,11 @@ func (this *WorkSub) Execute(trackingId string) {
 	// 运行子流程
 	work, _ := iwork.QueryWorkByName(workSubName)
 	steps, _ := iwork.GetAllWorkStepByWorkName(workSubName)
-	this.RunFunc(work, steps, &entry.Dispatcher{TrackingId:trackingId, TmpDataMap:tmpDataMap})
+	receiver := this.RunFunc(work, steps, &entry.Dispatcher{TrackingId:trackingId, TmpDataMap:tmpDataMap})
+	// 接收子流程数据存入 dataStore
+	for paramName, paramValue := range receiver.TmpDataMap{
+		dataStore.CacheData(this.WorkStep.WorkStepName, paramName, paramValue)
+	}
 }
 
 func (this *WorkSub) GetDefaultParamInputSchema() *schema.ParamInputSchema {

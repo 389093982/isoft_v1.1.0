@@ -11,7 +11,7 @@ import (
 )
 
 // dispatcher 为父流程遗传下来的参数
-func Run(work iwork.Work, steps []iwork.WorkStep, dispatcher *entry.Dispatcher) {
+func Run(work iwork.Work, steps []iwork.WorkStep, dispatcher *entry.Dispatcher) (receiver *entry.Receiver) {
 	// 当前流程的 trackingId
 	trackingId := stringutil.RandomUUID()
 	if dispatcher != nil{
@@ -43,9 +43,15 @@ func Run(work iwork.Work, steps []iwork.WorkStep, dispatcher *entry.Dispatcher) 
 		// 由工厂代为执行步骤
 		factory := &iworknode.WorkStepFactory{WorkStep: &step, RunFunc: Run, Dispatcher:dispatcher}
 		factory.Execute(trackingId)
+		// factory 节点如果代理的是 work_end 节点,则传递 Receiver 出去
+		if factory.Receiver != nil{
+			receiver = factory.Receiver
+		}
 		iwork.InsertRunLogDetail(trackingId, fmt.Sprintf("end execute workstep:%s", step.WorkStepName))
 	}
 	// 注销数据中心
 	datastore.UnRegistDataStore(trackingId)
 	iwork.InsertRunLogDetail(trackingId, fmt.Sprintf("~~~~~~~~~~end execute work:%s~~~~~~~~~~", work.WorkName))
+
+	return
 }
