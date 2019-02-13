@@ -9,8 +9,14 @@ import (
 	"time"
 )
 
-func Run(work iwork.Work, steps []iwork.WorkStep) {
-	trackingId := stringutil.RandomUUID()
+// args 为父流程遗传下来的参数
+func Run(work iwork.Work, steps []iwork.WorkStep, args ...interface{}) {
+	var trackingId string
+	if len(args) > 0{
+		trackingId = args[0].(string)			// 沿用父流程的 trackingId 信息
+	}else{
+		trackingId = stringutil.RandomUUID()
+	}
 	// 记录日志
 	iwork.InsertRunLogRecord(&iwork.RunLogRecord{
 		TrackingId:      trackingId,

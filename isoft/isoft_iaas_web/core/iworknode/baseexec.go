@@ -11,7 +11,7 @@ type WorkStepFactory struct {
 	Work     iwork.Work
 	WorkStep *iwork.WorkStep
 	// 执行 Execute 方法时遇到子流程时的回调函数
-	RunFunc  func(work iwork.Work, steps []iwork.WorkStep)
+	RunFunc  func(work iwork.Work, steps []iwork.WorkStep, args ...interface{})
 }
 
 type IStandardWorkStep interface {
