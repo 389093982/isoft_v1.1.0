@@ -14,7 +14,7 @@ import (
 func Run(work iwork.Work, steps []iwork.WorkStep, dispatcher *entry.Dispatcher) (receiver *entry.Receiver) {
 	// 当前流程的 trackingId
 	trackingId := stringutil.RandomUUID()
-	if dispatcher != nil{
+	if dispatcher != nil && dispatcher.TrackingId != ""{
 		// 拼接父流程的 trackingId 信息,作为链式 trackingId
 		trackingId = fmt.Sprintf("%s.%s",dispatcher.TrackingId, trackingId)
 	}
