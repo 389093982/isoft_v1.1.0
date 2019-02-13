@@ -71,7 +71,7 @@ func QueryWork(condArr map[string]string, page int, offset int) (works []Work, c
 	}
 	qs = qs.SetCond(cond)
 	counts, _ = qs.Count()
-	qs = qs.Limit(offset, (page-1)*offset)
+	qs = qs.OrderBy("-last_updated_time").Limit(offset, (page-1)*offset)
 	qs.All(&works)
 	return
 }
