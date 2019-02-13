@@ -34,7 +34,7 @@ func (this *SQLQueryNode) Execute(trackingId string) {
 }
 
 func (this *SQLQueryNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
-	return schema.BuildParamInputSchemaWithSlice([]string{"sql", "sql_binding?", "db_conn"})
+	return schema.BuildParamInputSchemaWithSlice([]string{"metadata_sql?", "sql", "sql_binding?", "db_conn"})
 }
 
 func (this *SQLQueryNode) GetDefaultParamOutputSchema() *schema.ParamOutputSchema {
@@ -42,9 +42,14 @@ func (this *SQLQueryNode) GetDefaultParamOutputSchema() *schema.ParamOutputSchem
 }
 
 func (this *SQLQueryNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
-	sql := param.GetStaticParamValue("sql", this.WorkStep)
+	var metadataSql string
+	if sql := param.GetStaticParamValue("metadata_sql?", this.WorkStep); strings.TrimSpace(sql) != ""{
+		metadataSql = sql
+	}else{
+		metadataSql = param.GetStaticParamValue("sql", this.WorkStep)
+	}
 	dataSourceName := param.GetStaticParamValue("db_conn", this.WorkStep)
-	paramNames := sqlutil.GetMetaDatas(sql, dataSourceName)
+	paramNames := sqlutil.GetMetaDatas(metadataSql, dataSourceName)
 	items := []schema.ParamOutputSchemaItem{}
 	for _, paramName := range paramNames {
 		items = append(items, schema.ParamOutputSchemaItem{
