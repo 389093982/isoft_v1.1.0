@@ -1,6 +1,7 @@
 package iworknode
 
 import (
+	"fmt"
 	"isoft/isoft_iaas_web/core/iworkdata/datastore"
 	"isoft/isoft_iaas_web/core/iworkdata/entry"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
@@ -23,6 +24,7 @@ func (this *WorkStartNode) Execute(trackingId string) {
 		// 使用节点默认值
 		paramInputSchema := schema.GetCacheParamInputSchema(this.WorkStep, &WorkStepFactory{WorkStep: this.WorkStep})
 		for _, item := range paramInputSchema.ParamInputSchemaItems {
+			iwork.InsertRunLogDetail(trackingId, fmt.Sprintf("fill param with default for %s:%s", item.ParamName, item.ParamValue))
 			tmpDataMap[item.ParamName] = item.ParamValue // 输入数据存临时
 		}
 	}
