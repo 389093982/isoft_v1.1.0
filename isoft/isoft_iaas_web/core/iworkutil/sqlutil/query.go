@@ -3,7 +3,6 @@ package sqlutil
 import (
 	"database/sql"
 	"fmt"
-	"reflect"
 )
 
 func GetMetaDatas(sql, dataSourceName string) (colNames []string) {
@@ -24,8 +23,8 @@ func GetMetaDatas(sql, dataSourceName string) (colNames []string) {
 	return colNames
 }
 
-func Query(sqlstring string, sql_binding []interface{}, dataSourceName string) (datacounts int64, rowDatas map[string]interface{}) {
-	rowDatas = make(map[string]interface{}, 5)
+func Query(sqlstring string, sql_binding []interface{}, dataSourceName string) (
+	datacounts int64, rowDetailDatas map[string]interface{}, rowDatas []map[string]interface{}) {
 	db, err := GetConnForMysql("mysql", dataSourceName)
 	if err != nil {
 		panic(err)
@@ -41,29 +40,44 @@ func Query(sqlstring string, sql_binding []interface{}, dataSourceName string) (
 		panic(err)
 	}
 	defer rows.Close()
+	datacounts,rowDetailDatas,rowDatas = parseRows(rows)
+	return
+}
+
+func parseRows(rows *sql.Rows) (datacounts int64, rowDetailDatas map[string]interface{}, rowDatas []map[string]interface{}){
+	// 含索引下标的数据
+	rowDetailDatas = map[string]interface{}{}
+	// 列名、列值组成的 map,多行数据使用数组存储
+	rowDatas = []map[string]interface{}{}
 	colNames, _ := rows.Columns()
-	rows.ColumnTypes()
 	for rows.Next() {
-		// 存储一行中的每一列值
-		colValues := make([]sql.RawBytes, len(colNames))
-		scanArgs := make([]interface{}, len(colValues))
-		for i := range colValues {
-			scanArgs[i] = &colValues[i]
-		}
-		rows.Scan(scanArgs...)
+		colValues := scanRowData(rows, len(colNames))
+
+		rowData := map[string]interface{}{}
 		for index, colValue := range colValues {
-			name := fmt.Sprintf("rows[%d].%s", datacounts, colNames[index])
+			rowData[colNames[index]] = string(colValue)
 			// sql.RawBytes 转字符串
-			_colValue := reflect.ValueOf(colValue).Interface().(sql.RawBytes)
-			rowDatas[name] = string(_colValue)
+			rowDetailDatas[fmt.Sprintf("rows[%d].%s", datacounts, colNames[index])] = string(colValue)
 			// 第一条记录进行简写,去除[0]标识
 			if datacounts == 0 {
 				_name := fmt.Sprintf("rows.%s", colNames[index])
-				rowDatas[_name] = string(_colValue)
+				rowDetailDatas[_name] = string(colValue)
 			}
 		}
+		rowDatas = append(rowDatas, rowData)
 		// 数据量增加 1
 		datacounts++
 	}
 	return
+}
+
+func scanRowData(rows *sql.Rows, colSize int) []sql.RawBytes {
+	// 存储一行中的每一列值
+	colValues := make([]sql.RawBytes, colSize)
+	scanArgs := make([]interface{}, len(colValues))
+	for i := range colValues {
+		scanArgs[i] = &colValues[i]
+	}
+	rows.Scan(scanArgs...)
+	return colValues
 }

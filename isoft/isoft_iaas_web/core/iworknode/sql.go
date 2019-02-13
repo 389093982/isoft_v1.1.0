@@ -23,14 +23,16 @@ func (this *SQLQueryNode) Execute(trackingId string) {
 	dataSourceName := tmpDataMap["db_conn"].(string) // 等价于 param.GetStaticParamValue("db_conn", this.WorkStep)
 	// sql_binding 参数获取
 	_sql_binding := getSqlBinding(tmpDataMap)
-	datacounts, rowDatas := sqlutil.Query(sql, _sql_binding, dataSourceName)
+	datacounts, rowDetailDatas,rowDatas := sqlutil.Query(sql, _sql_binding, dataSourceName)
 	// 将数据数据存储到数据中心
 	// 存储 datacounts
 	dataStore.CacheData(this.WorkStep.WorkStepName, "datacounts", datacounts)
-	for paramName, paramValue := range rowDatas {
+	for paramName, paramValue := range rowDetailDatas {
 		// 存储具体字段值
 		dataStore.CacheData(this.WorkStep.WorkStepName, paramName, paramValue)
 	}
+	// 数组对象整体存储在 rows 里面
+	dataStore.CacheData(this.WorkStep.WorkStepName, "rows", rowDatas)
 }
 
 func (this *SQLQueryNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
