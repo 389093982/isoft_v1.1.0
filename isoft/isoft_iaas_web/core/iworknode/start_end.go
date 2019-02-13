@@ -16,7 +16,7 @@ type WorkStartNode struct {
 func (this *WorkStartNode) Execute(trackingId string) {
 	// 存储节点中间数据
 	tmpDataMap := make(map[string]interface{})
-	if this.Dispatcher != nil{
+	if this.Dispatcher != nil && len(this.Dispatcher.TmpDataMap) > 0{
 		// 从父流程中获取值,即从 Dispatcher 中获取值
 		tmpDataMap = this.Dispatcher.TmpDataMap
 	}else{

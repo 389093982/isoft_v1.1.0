@@ -6,6 +6,7 @@ import (
 	"isoft/isoft_iaas_web/core/iworknode"
 	"isoft/isoft_iaas_web/core/iworkrun"
 	"isoft/isoft_iaas_web/models/iwork"
+	"strings"
 )
 
 // 示例地址: http://localhost:8086/api/iwork/httpservice/test_iblog_table_migrate?author0=admin1234567
@@ -37,7 +38,9 @@ func (this *WorkController) ParseParam(steps []iwork.WorkStep) map[string]interf
 		if step.WorkStepType == "work_start"{
 			inputSchema := schema.GetCacheParamInputSchema(&step, &iworknode.WorkStepFactory{WorkStep:&step})
 			for _, item := range inputSchema.ParamInputSchemaItems{
-				mapData[item.ParamName] = this.Input().Get(item.ParamName)
+				if paramValue := this.Input().Get(item.ParamName); strings.TrimSpace(paramValue) != ""{
+					mapData[item.ParamName] = paramValue
+				}
 			}
 		}
 	}
