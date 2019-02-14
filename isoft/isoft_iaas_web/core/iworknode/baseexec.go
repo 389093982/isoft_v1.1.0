@@ -55,6 +55,8 @@ func (this *WorkStepFactory) getProxy() IStandardWorkStep {
 	case "JSON_PARSER":
 		return &JsonParserNode{WorkStep: this.WorkStep}
 	case "HTTP_REQUEST":
+	case "MAPPER":
+		return &MapperNode{WorkStep: this.WorkStep}
 		return &HttpRequestNode{WorkStep: this.WorkStep}
 	}
 	panic(fmt.Sprintf("unsupport workStepType:%s", this.WorkStep.WorkStepType))

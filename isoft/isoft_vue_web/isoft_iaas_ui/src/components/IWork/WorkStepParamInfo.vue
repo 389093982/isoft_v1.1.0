@@ -61,6 +61,7 @@
   import ParamMapping from "./ParamMapping"
   import {EditWorkStepParamInfo} from "../../api"
   import {LoadWorkStepInfo} from "../../api"
+  import {oneOf} from "../../tools"
 
   export default {
     name: "WorkStepParamInfo",
@@ -133,9 +134,7 @@
           this.formValidate.work_step_name = result.step.work_step_name;
           this.formValidate.work_step_type = result.step.work_step_type;
 
-          if(result.step.work_step_type == "work_start"){
-            this.showParamMapping = true;
-          }else if(result.step.work_step_type == "work_end"){
+          if(oneOf(result.step.work_step_type, ["work_start","work_end","mapper"])){
             this.showParamMapping = true;
           }else{
             this.showParamMapping = false;

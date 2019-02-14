@@ -82,7 +82,8 @@ const default_work_step_types=[
   "sql_execute",
   "json_render",
   "json_parser",
-  "http_request"
+  "http_request",
+  "mapper",
 ];
 
 export default {
