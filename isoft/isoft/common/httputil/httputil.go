@@ -9,9 +9,9 @@ import (
 
 func GetParamReader(paramMap map[string]interface{}) *strings.Reader {
 	if paramMap == nil || len(paramMap) == 0 {
-		return nil
+		return strings.NewReader("")
 	}
-	var s []string = make([]string, 3)
+	s := make([]string, 0)
 	for k, v := range paramMap {
 		s = append(s, k+"="+v.(string))
 	}
