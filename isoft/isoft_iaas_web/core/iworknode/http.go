@@ -5,6 +5,7 @@ import (
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
 	"isoft/isoft_iaas_web/core/iworkutil/httputil"
 	"isoft/isoft_iaas_web/models/iwork"
+	"net/http"
 )
 
 type HttpRequestNode struct {
@@ -14,9 +15,9 @@ type HttpRequestNode struct {
 
 func (this *HttpRequestNode) Execute(trackingId string) {
 	// 数据中心
-	dataStore := datastore.GetDataSource(trackingId)
+	_dataStore := datastore.GetDataSource(trackingId)
 	// 节点中间数据
-	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, dataStore)
+	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, _dataStore)
 	var request_url, request_method string
 	if _request_url, ok := tmpDataMap["request_url"].(string); ok{
 		request_url = _request_url
@@ -25,8 +26,11 @@ func (this *HttpRequestNode) Execute(trackingId string) {
 		request_method = _request_method
 	}
 	paramMap := make(map[string]interface{})
-	response := httputil.DoHttpRequest(request_url, request_method, paramMap)
-	dataStore.CacheData(this.WorkStep.WorkStepName, "response_str", string(response))
+	response := httputil.DoHttpRequestWithParserFunc(request_url, request_method, paramMap, func(resp *http.Response) {
+		_dataStore.CacheData(this.WorkStep.WorkStepName, "StatusCode", resp.StatusCode)
+		_dataStore.CacheData(this.WorkStep.WorkStepName, "ContentType", resp.Header.Get("content-type"))
+	})
+	_dataStore.CacheData(this.WorkStep.WorkStepName, "response_str", string(response))
 }
 
 func (this *HttpRequestNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
@@ -38,7 +42,7 @@ func (this *HttpRequestNode) GetRuntimeParamInputSchema() *schema.ParamInputSche
 }
 
 func (this *HttpRequestNode) GetDefaultParamOutputSchema() *schema.ParamOutputSchema {
-	return schema.BuildParamOutputSchemaWithSlice([]string{"response_str"})
+	return schema.BuildParamOutputSchemaWithSlice([]string{"response_str", "StatusCode", "ContentType"})
 }
 
 func (this *HttpRequestNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {

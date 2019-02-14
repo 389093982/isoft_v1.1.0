@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-func DoHttpRequest(url string, method string, paramMap map[string]interface{}) (responsebody []byte) {
+func DoHttpRequestWithParserFunc(url string, method string, paramMap map[string]interface{}, parseFunc func(resp *http.Response)) (responsebody []byte) {
 	client := &http.Client{}
 	req, err := http.NewRequest(checkMethod(method), url, GetParamReader(paramMap))
 	if err != nil {
@@ -19,11 +19,16 @@ func DoHttpRequest(url string, method string, paramMap map[string]interface{}) (
 		panic(err)
 	}
 	defer resp.Body.Close()
+	parseFunc(resp)
 	responsebody, err = ioutil.ReadAll(resp.Body)
 	if err != nil {
 		panic(err)
 	}
 	return
+}
+
+func DoHttpRequest(url string, method string, paramMap map[string]interface{}) (responsebody []byte) {
+	return DoHttpRequestWithParserFunc(url, method, paramMap, func(resp *http.Response) {})
 }
 
 func GetParamReader(paramMap map[string]interface{}) *strings.Reader {
