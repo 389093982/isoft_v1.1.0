@@ -41,7 +41,7 @@
     },
     data(){
       return {
-        inputTextData:this.inputText,
+        inputTextData:"",
         preParamOutputSchemaTreeNodeArr:[],
       }
     },
@@ -51,6 +51,8 @@
         this.$refs.triggerModal.hideModal();
       },
       refreshPreNodeOutput:async function () {
+        // 文本输入框设置历史值
+        this.inputTextData = this.inputText;
         const result = await LoadPreNodeOutput(this.$store.state.current_work_id, this.$store.state.current_work_step_id);
         if(result.status == "SUCCESS"){
           this.preParamOutputSchemaTreeNodeArr = result.preParamOutputSchemaTreeNodeArr;
