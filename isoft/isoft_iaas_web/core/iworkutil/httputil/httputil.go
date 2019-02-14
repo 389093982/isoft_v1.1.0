@@ -7,13 +7,14 @@ import (
 	"strings"
 )
 
-func DoHttpRequestWithParserFunc(url string, method string, paramMap map[string]interface{}, parseFunc func(resp *http.Response)) (responsebody []byte) {
+func DoHttpRequestWithParserFunc(url string, method string, paramMap map[string]interface{},
+		headerMap map[string]interface{}, parseFunc func(resp *http.Response)) (responsebody []byte) {
 	client := &http.Client{}
 	req, err := http.NewRequest(checkMethod(method), url, GetParamReader(paramMap))
 	if err != nil {
 		panic(err)
 	}
-	req.Header.Set("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")
+	setHeaderParameter(req, headerMap)
 	resp, err := client.Do(req)
 	if err != nil {
 		panic(err)
@@ -27,8 +28,32 @@ func DoHttpRequestWithParserFunc(url string, method string, paramMap map[string]
 	return
 }
 
-func DoHttpRequest(url string, method string, paramMap map[string]interface{}) (responsebody []byte) {
-	return DoHttpRequestWithParserFunc(url, method, paramMap, func(resp *http.Response) {})
+func DoHttpRequest(url string, method string, paramMap map[string]interface{},
+	headerMap map[string]interface{}) (responsebody []byte) {
+	return DoHttpRequestWithParserFunc(url, method, paramMap, headerMap, func(resp *http.Response) {})
+}
+
+func setHeaderParameter(req *http.Request, headerMap map[string]interface{})  {
+	// 设置默认请求头
+	req.Header.Set("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")
+	// 添加或者覆盖默认请求头
+	for paramName, paramValue := range headerMap{
+		req.Header.Set(getStandardName(paramName), paramValue.(string))
+	}
+}
+
+func getStandardName(paramName string) string {
+	standardNames := []string{"Content-Type"}
+	for _,sn := range standardNames{
+		_sn := strings.Replace(sn,"-","",-1)
+		_sn = strings.ToUpper(_sn)
+		_paramName := strings.Replace(paramName,"-","",-1)
+		_paramName = strings.ToUpper(_paramName)
+		if _sn == _paramName{
+			return sn
+		}
+	}
+	return paramName
 }
 
 func GetParamReader(paramMap map[string]interface{}) *strings.Reader {
