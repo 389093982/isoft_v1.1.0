@@ -1,6 +1,7 @@
 package iworkutil
 
 import (
+	"encoding/base64"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
 	"strings"
 )
@@ -14,7 +15,6 @@ func GetWorkSubNameFromParamValue(paramValue string) string {
 	return value
 }
 
-
 func GetWorkSubNameForWorkSubNode(paramInputSchema *schema.ParamInputSchema) string {
 	for _, item := range paramInputSchema.ParamInputSchemaItems {
 		if item.ParamName == "work_sub" && strings.HasPrefix(item.ParamValue, "$WORK.") {
@@ -24,4 +24,15 @@ func GetWorkSubNameForWorkSubNode(paramInputSchema *schema.ParamInputSchema) str
 		}
 	}
 	return ""
+}
+
+func EncodeToBase64String(src []byte) string {
+	return base64.StdEncoding.EncodeToString(src)
+}
+
+func DecodeBase64String(encodeString string) (bytes []byte) {
+	if bytes, err := base64.StdEncoding.DecodeString(encodeString);err != nil {
+		return bytes
+	}
+	return
 }

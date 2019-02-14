@@ -5,6 +5,7 @@ import (
 	"github.com/pkg/errors"
 	"isoft/isoft_iaas_web/core/iworkdata/datastore"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
+	"isoft/isoft_iaas_web/core/iworkutil"
 	"isoft/isoft_iaas_web/core/iworkutil/httputil"
 	"isoft/isoft_iaas_web/models/iwork"
 	"net/http"
@@ -33,11 +34,12 @@ func (this *HttpRequestNode) Execute(trackingId string) {
 	paramMap := fillParamMapData(tmpDataMap, "request_params?")
 	headerMap := fillParamMapData(tmpDataMap, "request_headers?")
 
-	response := httputil.DoHttpRequestWithParserFunc(request_url, request_method, paramMap, headerMap, func(resp *http.Response) {
+	responsebytes := httputil.DoHttpRequestWithParserFunc(request_url, request_method, paramMap, headerMap, func(resp *http.Response) {
 		_dataStore.CacheData(this.WorkStep.WorkStepName, "StatusCode", resp.StatusCode)
 		_dataStore.CacheData(this.WorkStep.WorkStepName, "ContentType", resp.Header.Get("content-type"))
 	})
-	_dataStore.CacheData(this.WorkStep.WorkStepName, "response_str", string(response))
+	_dataStore.CacheData(this.WorkStep.WorkStepName, "response_str", string(responsebytes))
+	_dataStore.CacheData(this.WorkStep.WorkStepName, "base64res_str", iworkutil.EncodeToBase64String(responsebytes))
 }
 
 func (this *HttpRequestNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
@@ -49,7 +51,7 @@ func (this *HttpRequestNode) GetRuntimeParamInputSchema() *schema.ParamInputSche
 }
 
 func (this *HttpRequestNode) GetDefaultParamOutputSchema() *schema.ParamOutputSchema {
-	return schema.BuildParamOutputSchemaWithSlice([]string{"response_str", "StatusCode", "ContentType"})
+	return schema.BuildParamOutputSchemaWithSlice([]string{"response_str", "base64res_str", "StatusCode", "ContentType"})
 }
 
 func (this *HttpRequestNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
