@@ -84,6 +84,8 @@ const default_work_step_types=[
   "json_parser",
   "http_request",
   "mapper",
+  "file_read",
+  "file_write",
 ];
 
 export default {
