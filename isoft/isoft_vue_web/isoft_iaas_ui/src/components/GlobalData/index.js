@@ -86,7 +86,6 @@ const default_work_step_types=[
   "mapper",
   "file_read",
   "file_write",
-  "href_parser",
 ];
 
 export default {
