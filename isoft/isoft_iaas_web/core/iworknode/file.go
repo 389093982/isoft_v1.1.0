@@ -1,6 +1,7 @@
 package iworknode
 
 import (
+	"io/ioutil"
 	"isoft/isoft_iaas_web/core/iworkdata/datastore"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
 	"isoft/isoft_iaas_web/core/iworkutil/fileutil"
@@ -15,11 +16,21 @@ type FileReadNode struct {
 
 
 func (this *FileReadNode) Execute(trackingId string) {
-
+	// 数据中心
+	dataStore := datastore.GetDataSource(trackingId)
+	// 节点中间数据
+	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, dataStore)
+	file_path := tmpDataMap["file_path"].(string)
+	dataStore.CacheData(this.WorkStep.WorkStepName, "file_path", file_path)
+	if bytes, err := ioutil.ReadFile(file_path); err == nil{
+		dataStore.CacheData(this.WorkStep.WorkStepName, "data", string(bytes))
+	}else{
+		panic(err)
+	}
 }
 
 func (this *FileReadNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
-	return &schema.ParamInputSchema{}
+	return schema.BuildParamInputSchemaWithSlice([]string{"file_path"})
 }
 
 func (this *FileReadNode) GetRuntimeParamInputSchema() *schema.ParamInputSchema {
@@ -27,7 +38,7 @@ func (this *FileReadNode) GetRuntimeParamInputSchema() *schema.ParamInputSchema 
 }
 
 func (this *FileReadNode) GetDefaultParamOutputSchema() *schema.ParamOutputSchema {
-	return &schema.ParamOutputSchema{}
+	return schema.BuildParamOutputSchemaWithSlice([]string{"file_path", "data"})
 }
 
 func (this *FileReadNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
