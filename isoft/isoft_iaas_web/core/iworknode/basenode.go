@@ -6,6 +6,7 @@ import (
 	"isoft/isoft_iaas_web/core/iworkdata/param"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
 	"isoft/isoft_iaas_web/core/iworkutil"
+	"isoft/isoft_iaas_web/core/iworkutil/funcutil"
 	"isoft/isoft_iaas_web/models/iresource"
 	"isoft/isoft_iaas_web/models/iwork"
 	"strconv"
@@ -32,16 +33,16 @@ func (this *BaseNode) parseAndFillParamVauleWithNode(paramVaule string, dataStor
 }
 
 // 解析 paramVaule 并从 dataStore 中获取实际值
-func (this *BaseNode) ParseAndFillParamVaule(paramVaule string, dataStore *datastore.DataStore) interface{} {
+func (this *BaseNode) ParseAndGetParamVaule(paramVaule string, dataStore *datastore.DataStore) interface{} {
 	values := this.parseParamValueToMulti(paramVaule)
 	if len(values) == 1 {
 		// 单值
-		return this.parseAndFillSingleParamVaule(values[0], dataStore)
+		return this.parseAndGetSingleParamVaule(values[0], dataStore)
 	} else {
 		// 多值
 		results := make([]interface{}, 0)
 		for _, value := range values {
-			result := this.parseAndFillSingleParamVaule(value, dataStore)
+			result := this.parseAndGetSingleParamVaule(value, dataStore)
 			results = append(results, result)
 		}
 		return results
@@ -59,13 +60,48 @@ func (this *BaseNode) parseParamValueToMulti(paramVaule string) []string {
 	return results
 }
 
-func (this *BaseNode) parseAndFillSingleParamVaule(paramVaule string, dataStore *datastore.DataStore) interface{} {
+func (this *BaseNode) _parseAndGetSingleParamVaule(paramVaule string, dataStore *datastore.DataStore) interface{} {
+	paramVaule = funcutil.DncodeSpecialForParamVaule(paramVaule)
 	if strings.HasPrefix(strings.ToUpper(paramVaule), "$RESOURCE.") {
 		return this.parseAndFillParamVauleWithResource(paramVaule)
 	}else if strings.HasPrefix(strings.ToUpper(paramVaule), "$WORK.") {
 		return iworkutil.GetWorkSubNameFromParamValue(paramVaule)
 	}
 	return this.parseAndFillParamVauleWithNode(paramVaule, dataStore)
+}
+
+
+func (this *BaseNode) parseAndGetSingleParamVaule(paramVaule string, dataStore *datastore.DataStore) interface{} {
+	 // 对单个 paramVaule 进行特殊字符编码
+	paramVaule = funcutil.EncodeSpecialForParamVaule(paramVaule)
+	executors := funcutil.GetAllFuncExecutor(paramVaule)
+	if executors == nil || len(executors) == 0{
+		// 是直接参数,不需要函数进行特殊处理
+		return this._parseAndGetSingleParamVaule(paramVaule, dataStore)
+	}else{
+		historyFuncResultMap := make(map[string]interface{}, 0)
+		var lastFuncResult interface{}
+		// 按照顺序依次执行函数
+		for _, executor := range executors{
+			// executor 所有参数进行 trim 操作
+			funcutil.GetTrimFuncExecutor(executor)
+			args := make([]interface{}, 0)
+			// 函数参数替换成实际意义上的值
+			for _, arg := range executor.FuncArgs{
+				// 判断参数是否来源于 historyFuncResultMap
+				if _arg, ok := historyFuncResultMap[arg]; ok{
+					args = append(args, _arg)
+				}else{
+					args = append(args, this._parseAndGetSingleParamVaule(arg, dataStore))
+				}
+			}
+			// 执行函数并记录结果,供下一个函数执行使用
+			result := funcutil.CallFuncExecutor(executor, args...)
+			historyFuncResultMap[executor.FuncUUID] = result
+			lastFuncResult = result
+		}
+		return lastFuncResult
+	}
 }
 
 // 将 ParamInputSchema 填充数据并返回临时的数据中心 tmpDataMap
@@ -76,7 +112,7 @@ func (this *BaseNode) FillParamInputSchemaDataToTmp(workStep *iwork.WorkStep, da
 	for _, item := range paramInputSchema.ParamInputSchemaItems {
 		// 个性化重写操作
 		this.modifySqlBindingParamValueWithBatchNumber(&item, tmpDataMap)
-		tmpDataMap[item.ParamName] = this.ParseAndFillParamVaule(item.ParamValue, dataStore) // 输入数据存临时
+		tmpDataMap[item.ParamName] = this.ParseAndGetParamVaule(item.ParamValue, dataStore) // 输入数据存临时
 	}
 	return tmpDataMap
 }

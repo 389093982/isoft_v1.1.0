@@ -1,8 +1,8 @@
 <template>
   <ISimpleBtnTriggerModal ref="triggerModal" btn-text="查看/编辑" btn-size="small" btn-folat="right"
-      modal-title="查看/编辑 workstep 参数" :modal-width="800" @btnClick="refreshPreNodeOutput">
+      modal-title="查看/编辑 workstep 参数" :modal-width="950" @btnClick="refreshPreNodeOutput">
     <Row>
-      <Col span="11">
+      <Col span="8">
         <h3>前置节点输出参数</h3>
         <Tree :data="data1" show-checkbox ref="tree1"></Tree>
       </Col>
@@ -11,7 +11,7 @@
           <Icon type="ios-arrow-forward" @click="appendData"></Icon>
         </Button>
       </Col>
-      <Col span="11">
+      <Col span="14">
         <h3>{{inputLabel}}</h3>
         <Input v-model="inputTextData" type="textarea" :rows="10" placeholder="Enter something..." />
       </Col>
