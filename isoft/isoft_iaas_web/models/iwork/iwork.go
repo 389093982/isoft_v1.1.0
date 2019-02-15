@@ -20,7 +20,8 @@ type Work struct {
 type WorkStep struct {
 	Id                   int64     `json:"id"`
 	WorkId               string    `json:"work_id"`
-	WorkStepId           int8      `json:"work_step_id"`
+	WorkStepId           int64      `json:"work_step_id"`
+	WorkSubId			 int64		`json:"work_sub_id"`			// 子流程 id
 	WorkStepName         string    `json:"work_step_name"`
 	WorkStepDesc        string    `json:"work_step_desc" orm:"type(text)"`
 	WorkStepType         string    `json:"work_step_type"`
@@ -93,12 +94,12 @@ func InsertOrUpdateWorkStep(step *WorkStep) (id int64, err error) {
 	return
 }
 
-func GetNextWorkStepId(work_id string) int8 {
+func GetNextWorkStepId(work_id string) int64 {
 	steps, _ := GetAllWorkStepInfo(work_id)
 	for index := 1; index <= len(steps)+1; index++ {
 		o := orm.NewOrm()
 		if exist := o.QueryTable("work_step").Filter("work_id", work_id).Filter("work_step_id", index).Exist(); !exist {
-			return int8(index)
+			return int64(index)
 		}
 	}
 	// 默认返回 1

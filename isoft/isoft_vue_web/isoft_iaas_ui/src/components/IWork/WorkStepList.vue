@@ -16,6 +16,9 @@
     <Table :columns="columns1" :data="worksteps" size="small"></Table>
     <Page :total="total" :page-size="offset" show-total show-sizer :styles="{'text-align': 'center','margin-top': '10px'}"
           @on-change="handleChange" @on-page-size-change="handlePageSizeChange"/>
+
+    <!-- 相关流程清单 -->
+    <RelativeWork/>
   </div>
 </template>
 
@@ -25,14 +28,14 @@
   import {DeleteWorkStepById} from "../../api"
   import {ChangeWorkStepOrder} from "../../api"
   import {AddWorkStep} from "../../api"
-  import {RunWork} from "../../api"
   import WorkStepParamInfo from "./WorkStepParamInfo"
   import ISimpleLeftRightRow from "../Common/layout/ISimpleLeftRightRow"
   import WorkStepBaseInfo from "./WorkStepBaseInfo"
+  import RelativeWork from "./RelativeWork"
 
   export default {
     name: "WorkStepList",
-    components:{WorkStepParamInfo,ISimpleLeftRightRow,WorkStepBaseInfo},
+    components:{WorkStepParamInfo,ISimpleLeftRightRow,WorkStepBaseInfo,RelativeWork},
     data(){
       return {
         // 当前页

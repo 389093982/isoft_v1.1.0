@@ -2,6 +2,7 @@ package iwork
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/utils/pagination"
 	"isoft/isoft/common/pageutil"
@@ -10,6 +11,7 @@ import (
 	"isoft/isoft_iaas_web/core/iworkrun"
 	"isoft/isoft_iaas_web/models/iresource"
 	"isoft/isoft_iaas_web/models/iwork"
+	"strconv"
 	"time"
 )
 
@@ -54,7 +56,8 @@ func (this *WorkController) RunWork() {
 
 func (this *WorkController) EditWork() {
 	var work iwork.Work
-	if work_id, err := this.GetInt64("work_id"); err == nil && work_id > 0 {
+	work_id, err := this.GetInt64("work_id", -1)
+	if err == nil && work_id > 0 {
 		work.Id = work_id
 	}
 	work.WorkName = this.GetString("work_name")
@@ -64,11 +67,34 @@ func (this *WorkController) EditWork() {
 	work.LastUpdatedBy = "SYSTEM"
 	work.LastUpdatedTime = time.Now()
 	if _, err := iwork.InsertOrUpdateWork(&work); err == nil {
+		if work_id <= 0{
+			// 新增 work 场景,自动添加开始和结束节点
+			insertStartEndWorkStepNode(work.Id)
+		}
 		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
 	} else {
 		this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
 	}
 	this.ServeJSON()
+}
+
+func insertStartEndWorkStepNode(work_id int64) {
+	insertDefaultWorkStepNodeFunc := func(nodeName string) {
+		step := &iwork.WorkStep{
+			WorkId:          strconv.FormatInt(work_id, 10),
+			WorkStepId:      iwork.GetNextWorkStepId(strconv.FormatInt(work_id, 10)),
+			WorkStepName:    nodeName,
+			WorkStepDesc:    fmt.Sprintf("%s节点", nodeName),
+			WorkStepType:    fmt.Sprintf("work_%s", nodeName),
+			CreatedBy:       "SYSTEM",
+			CreatedTime:     time.Now(),
+			LastUpdatedBy:   "SYSTEM",
+			LastUpdatedTime: time.Now(),
+		}
+		iwork.InsertOrUpdateWorkStep(step)
+	}
+	insertDefaultWorkStepNodeFunc("start")
+	insertDefaultWorkStepNodeFunc("end")
 }
 
 func (this *WorkController) FilterPageWork() {
