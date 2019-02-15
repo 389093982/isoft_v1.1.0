@@ -65,15 +65,23 @@ func (this *FileWriteNode) Execute(trackingId string) {
 	// 节点中间数据
 	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, dataStore)
 	file_path := tmpDataMap["file_path"].(string)
-	data := tmpDataMap["data"].(string)
-	if err := fileutil.WriteFile(file_path, []byte(data), checkAppend(tmpDataMap)); err != nil{
-		panic(err)
+	// 写字符串
+	if data, ok := tmpDataMap["data?"].(string); ok{
+		if err := fileutil.WriteFile(file_path, []byte(data), checkAppend(tmpDataMap)); err != nil{
+			panic(err)
+		}
+	}
+	// 写字节数组
+	if bytes, ok := tmpDataMap["bytes?"].([]byte); ok{
+		if err := fileutil.WriteFile(file_path, bytes, checkAppend(tmpDataMap)); err != nil{
+			panic(err)
+		}
 	}
 	dataStore.CacheData(this.WorkStep.WorkStepName, "file_path", file_path)
 }
 
 func (this *FileWriteNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
-	return schema.BuildParamInputSchemaWithSlice([]string{"file_path", "data", "append?"})
+	return schema.BuildParamInputSchemaWithSlice([]string{"file_path", "data?", "bytes?", "append?"})
 }
 
 func (this *FileWriteNode) GetRuntimeParamInputSchema() *schema.ParamInputSchema {

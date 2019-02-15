@@ -39,6 +39,7 @@ func (this *HttpRequestNode) Execute(trackingId string) {
 		_dataStore.CacheData(this.WorkStep.WorkStepName, "ContentType", resp.Header.Get("content-type"))
 	})
 	_dataStore.CacheData(this.WorkStep.WorkStepName, "response_str", string(responsebytes))
+	_dataStore.CacheData(this.WorkStep.WorkStepName, "response_bytes", responsebytes)
 	_dataStore.CacheData(this.WorkStep.WorkStepName, "base64res_str", iworkutil.EncodeToBase64String(responsebytes))
 }
 
@@ -51,7 +52,7 @@ func (this *HttpRequestNode) GetRuntimeParamInputSchema() *schema.ParamInputSche
 }
 
 func (this *HttpRequestNode) GetDefaultParamOutputSchema() *schema.ParamOutputSchema {
-	return schema.BuildParamOutputSchemaWithSlice([]string{"response_str", "base64res_str", "StatusCode", "ContentType"})
+	return schema.BuildParamOutputSchemaWithSlice([]string{"response_str", "response_bytes", "base64res_str", "StatusCode", "ContentType"})
 }
 
 func (this *HttpRequestNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
