@@ -74,7 +74,7 @@ func (this *BaseNode) _parseAndGetSingleParamVaule(paramVaule string, dataStore 
 
 
 func (this *BaseNode) parseAndGetSingleParamVaule(paramVaule string, dataStore *datastore.DataStore) interface{} {
-	 // 对单个 paramVaule 进行特殊字符编码
+	// 对单个 paramVaule 进行特殊字符编码
 	paramVaule = funcutil.EncodeSpecialForParamVaule(paramVaule)
 	executors := funcutil.GetAllFuncExecutor(paramVaule)
 	if executors == nil || len(executors) == 0{
