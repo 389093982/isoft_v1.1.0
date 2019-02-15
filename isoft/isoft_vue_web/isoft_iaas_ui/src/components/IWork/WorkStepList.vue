@@ -32,6 +32,7 @@
   import ISimpleLeftRightRow from "../Common/layout/ISimpleLeftRightRow"
   import WorkStepBaseInfo from "./WorkStepBaseInfo"
   import RelativeWork from "./RelativeWork"
+  import {oneOf} from "../../tools"
 
   export default {
     name: "WorkStepList",
@@ -114,20 +115,6 @@
               return h('div', [
                 h('Button', {
                   props: {
-                    type: 'success',
-                    size: 'small'
-                  },
-                  style: {
-                    marginRight: '5px',
-                  },
-                  on: {
-                    click: () => {
-                      this.deleteWorkStepById(this.worksteps[params.index]['id']);
-                    }
-                  }
-                }, '删除'),
-                h('Button', {
-                  props: {
                     type: 'error',
                     size: 'small'
                   },
@@ -154,6 +141,21 @@
                     }
                   }
                 }, '参数'),
+                h('Button', {
+                  props: {
+                    type: 'success',
+                    size: 'small'
+                  },
+                  style: {
+                    marginRight: '5px',
+                    display: !oneOf(this.worksteps[params.index]['work_step_type'], ["work_start","work_end"])  ? undefined : 'none'
+                  },
+                  on: {
+                    click: () => {
+                      this.deleteWorkStepById(this.worksteps[params.index]['id']);
+                    }
+                  }
+                }, '删除'),
               ]);
             }
           }
