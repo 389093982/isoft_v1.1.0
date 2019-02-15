@@ -51,7 +51,9 @@ func (this *BaseNode) ParseAndGetParamVaule(paramVaule string, dataStore *datast
 
 func (this *BaseNode) parseParamValueToMulti(paramVaule string) []string {
 	results := []string{}
-	vaules := strings.Split(paramVaule, "__sep__")
+	// 对转义字符 \, \; \( \) 等进行编码
+	paramVaule = funcutil.EncodeSpecialForParamVaule(paramVaule)
+	vaules := strings.Split(paramVaule, ";")
 	for _, value := range vaules {
 		if _value := this.removeUnsupportChars(value); strings.TrimSpace(_value) != "" {
 			results = append(results, strings.TrimSpace(_value))

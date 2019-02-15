@@ -96,11 +96,12 @@ func CheckHasNearRightBracket(leftBracketIndex int, expression string) (bool, in
 	return false, -1
 }
 
-// 编码特殊字符
+// 编码特殊字符, // 对转义字符 \, \; \( \) 等进行编码
 func EncodeSpecialForParamVaule(paramVaule string) string{
 	paramVaule = strings.Replace(paramVaule, "\\(", "__leftBracket__", -1)
 	paramVaule = strings.Replace(paramVaule, "\\)", "__rightBracket__", -1)
 	paramVaule = strings.Replace(paramVaule, "\\,", "__comma__", -1)
+	paramVaule = strings.Replace(paramVaule, "\\;", "__semicolon__", -1)
 	return paramVaule
 }
 
@@ -109,6 +110,7 @@ func DncodeSpecialForParamVaule(paramVaule string) string {
 	paramVaule = strings.Replace(paramVaule, "__leftBracket__", "(",-1)
 	paramVaule = strings.Replace(paramVaule, "__rightBracket__", ")", -1)
 	paramVaule = strings.Replace(paramVaule, "__comma__", ",", -1)
+	paramVaule = strings.Replace(paramVaule, "__semicolon__", ";", -1)
 	return paramVaule
 }
 

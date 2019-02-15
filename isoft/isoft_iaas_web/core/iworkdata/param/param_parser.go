@@ -45,7 +45,7 @@ func (this *ParamVauleParser) GetStaticParamValue() string {
 	if strings.HasPrefix(this.ParamValue, "$RESOURCE.") {
 		resource_name := strings.TrimSpace(this.ParamValue)
 		resource_name = strings.Replace(resource_name, "$RESOURCE.", "", -1)
-		resource_name = strings.Replace(resource_name, "__sep__", "", -1)
+		resource_name = strings.Replace(resource_name, ";", "", -1)
 		resource_name = strings.TrimSpace(resource_name)
 		return iresource.GetResourceDataSourceNameString(resource_name)
 	}
