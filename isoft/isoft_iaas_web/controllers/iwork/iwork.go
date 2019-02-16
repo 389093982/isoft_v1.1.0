@@ -18,6 +18,17 @@ type WorkController struct {
 	beego.Controller
 }
 
+
+func (this *WorkController) DeleteEntity()  {
+	entity_id, _ := this.GetInt64("entity_id", -1)
+	if err := iwork.DeleteEntityById(entity_id); err == nil{
+		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
+	}else{
+		this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
+	}
+	this.ServeJSON()
+}
+
 func (this *WorkController) EditEntity()  {
 	var entity iwork.Entity
 	entity_id, err := this.GetInt64("entity_id", -1)

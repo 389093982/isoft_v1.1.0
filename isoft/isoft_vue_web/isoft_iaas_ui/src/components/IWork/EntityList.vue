@@ -26,6 +26,7 @@
   import ISimpleBtnTriggerModal from "../Common/modal/ISimpleBtnTriggerModal"
   import {FilterPageEntity} from "../../api"
   import {EditEntity} from "../../api"
+  import {DeleteEntity} from "../../api"
 
   export default {
     name: "EntityList",
@@ -63,6 +64,7 @@
                   },
                   on: {
                     click: () => {
+                      this.deleteEntity(this.entities[params.index]['id']);
                     }
                   }
                 }, '删除'),
@@ -102,6 +104,12 @@
       }
     },
     methods:{
+      deleteEntity: async function(entity_id){
+        const result = await DeleteEntity(entity_id);
+        if(result.status == "SUCCESS"){
+          this.refreshEntityList();
+        }
+      },
       refreshEntityList: async function () {
         const result = await FilterPageEntity(this.offset, this.current_page);
         if(result.status == "SUCCESS"){

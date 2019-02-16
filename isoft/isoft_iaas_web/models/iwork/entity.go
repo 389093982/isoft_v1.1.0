@@ -33,3 +33,9 @@ func InsertOrUpdateEntity(entity *Entity) (id int64, err error) {
 	}
 	return
 }
+
+func DeleteEntityById(entity_id int64) error {
+	o := orm.NewOrm()
+	_, err := o.QueryTable("entity").Filter("id", entity_id).Delete()
+	return err
+}
