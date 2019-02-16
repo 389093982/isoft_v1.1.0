@@ -167,11 +167,6 @@
         this.loadWorkStepInfo();
       },
     },
-    computed:{
-      _workId:function () {
-        return parseInt(this.formValidate.work_id);
-      },
-    }
   }
 </script>
 

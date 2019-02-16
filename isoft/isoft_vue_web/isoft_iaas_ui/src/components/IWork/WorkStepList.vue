@@ -123,7 +123,7 @@
                   },
                   on: {
                     click: () => {
-                      this.$refs.workStepBaseInfo.showWorkStepBaseInfo(this._workId, this.worksteps[params.index]['work_step_id']);
+                      this.$refs.workStepBaseInfo.showWorkStepBaseInfo(this.$route.query.work_id, this.worksteps[params.index]['work_step_id']);
                     }
                   }
                 }, '编辑'),
@@ -137,7 +137,7 @@
                   },
                   on: {
                     click: () => {
-                      this.$refs.workStepParamInfo.showWorkStepParamInfo(this._workId, this.worksteps[params.index]['work_step_id']);
+                      this.$refs.workStepParamInfo.showWorkStepParamInfo(this.$route.query.work_id, this.worksteps[params.index]['work_step_id']);
                     }
                   }
                 }, '参数'),
@@ -203,11 +203,6 @@
     mounted: function () {
       this.refreshWorkStepList();
     },
-    computed:{
-      _workId:function () {
-        return parseInt(this.$route.query.work_id);
-      },
-    }
   }
 </script>
 
