@@ -15,6 +15,7 @@
 
 <script>
   import ParamMappingAdd from "./ParamMappingAdd"
+  import {oneOf} from "../../tools"
 
   export default {
     name: "ParamMapping",
@@ -27,12 +28,9 @@
     },
     methods:{
       paramMappingAdd:function (data) {
-        for(var i=0; i< this.paramMappings.length; i++){
-          if(this.paramMappings[i] == data){
-            return;
-          }
+        if(!oneOf(data, this.paramMappings)){
+          this.paramMappings.push(data);
         }
-        this.paramMappings.push(data);
       },
       handleDelete:function (data) {
         for(var i=0; i< this.paramMappings.length; i++){
