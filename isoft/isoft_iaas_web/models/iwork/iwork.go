@@ -2,7 +2,6 @@ package iwork
 
 import (
 	"github.com/astaxie/beego/orm"
-	"strconv"
 	"strings"
 	"time"
 )
@@ -19,7 +18,7 @@ type Work struct {
 
 type WorkStep struct {
 	Id                   int64     `json:"id"`
-	WorkId               string    `json:"work_id"`
+	WorkId               int64    `json:"work_id"`
 	WorkStepId           int64     `json:"work_step_id"`
 	WorkSubId            int64     `json:"work_sub_id"` // 子流程 id
 	WorkStepName         string    `json:"work_step_name"`
@@ -40,7 +39,7 @@ func GetAllWorkInfo() (works []Work) {
 	return
 }
 
-func QueryWorkById(work_id string) (work Work, err error) {
+func QueryWorkById(work_id int64) (work Work, err error) {
 	o := orm.NewOrm()
 	err = o.QueryTable("work").Filter("id", work_id).One(&work)
 	return
@@ -94,7 +93,7 @@ func InsertOrUpdateWorkStep(step *WorkStep) (id int64, err error) {
 	return
 }
 
-func GetNextWorkStepId(work_id string) int64 {
+func GetNextWorkStepId(work_id int64) int64 {
 	steps, _ := GetAllWorkStepInfo(work_id)
 	for index := 1; index <= len(steps)+1; index++ {
 		o := orm.NewOrm()
@@ -125,7 +124,7 @@ func GetOneWorkStep(work_id string, work_step_id int64) (step WorkStep, err erro
 	return
 }
 
-func GetAllWorkStepInfo(work_id string) (steps []WorkStep, err error) {
+func GetAllWorkStepInfo(work_id int64) (steps []WorkStep, err error) {
 	o := orm.NewOrm()
 	_, err = o.QueryTable("work_step").Filter("work_id", work_id).OrderBy("work_step_id").All(&steps)
 	return
@@ -153,7 +152,7 @@ func GetAllPreStepInfo(work_id string, work_step_id int64) (steps []WorkStep, er
 
 func GetAllWorkStepByWorkName(work_name string) (steps []WorkStep, err error) {
 	if work, err := QueryWorkByName(work_name); err == nil {
-		steps, err = GetAllWorkStepInfo(strconv.FormatInt(work.Id, 10))
+		steps, err = GetAllWorkStepInfo(work.Id)
 	}
 	return
 }

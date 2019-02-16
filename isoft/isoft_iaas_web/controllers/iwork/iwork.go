@@ -11,7 +11,6 @@ import (
 	"isoft/isoft_iaas_web/core/iworkrun"
 	"isoft/isoft_iaas_web/models/iresource"
 	"isoft/isoft_iaas_web/models/iwork"
-	"strconv"
 	"time"
 )
 
@@ -31,7 +30,7 @@ func (this *WorkController) GetLastRunLogDetail() {
 }
 
 func (this *WorkController) FilterPageLogRecord() {
-	work_id := this.GetString("work_id")
+	work_id,_ := this.GetInt64("work_id")
 	offset, _ := this.GetInt("offset", 10)            // 每页记录数
 	current_page, _ := this.GetInt("current_page", 1) // 当前页
 	runLogRecords, count, err := iwork.QueryRunLogRecord(work_id, current_page, offset)
@@ -46,7 +45,7 @@ func (this *WorkController) FilterPageLogRecord() {
 }
 
 func (this *WorkController) RunWork() {
-	work_id := this.GetString("work_id")
+	work_id,_ := this.GetInt64("work_id")
 	work, _ := iwork.QueryWorkById(work_id)
 	steps, _ := iwork.GetAllWorkStepInfo(work_id)
 	go iworkrun.Run(work, steps, nil)
@@ -81,8 +80,8 @@ func (this *WorkController) EditWork() {
 func insertStartEndWorkStepNode(work_id int64) {
 	insertDefaultWorkStepNodeFunc := func(nodeName string) {
 		step := &iwork.WorkStep{
-			WorkId:          strconv.FormatInt(work_id, 10),
-			WorkStepId:      iwork.GetNextWorkStepId(strconv.FormatInt(work_id, 10)),
+			WorkId:          work_id,
+			WorkStepId:      iwork.GetNextWorkStepId(work_id),
 			WorkStepName:    nodeName,
 			WorkStepDesc:    fmt.Sprintf("%s节点", nodeName),
 			WorkStepType:    fmt.Sprintf("work_%s", nodeName),
@@ -126,7 +125,7 @@ func (this *WorkController) DeleteWorkById() {
 }
 
 func (this *WorkController) AddWorkStep() {
-	work_id := this.GetString("work_id")
+	work_id,_ := this.GetInt64("work_id")
 	step := &iwork.WorkStep{
 		WorkId:          work_id,
 		WorkStepId:      iwork.GetNextWorkStepId(work_id),
@@ -219,7 +218,7 @@ func (this *WorkController) LoadWorkStepInfo() {
 }
 
 func (this *WorkController) GetAllWorkStepInfo() {
-	work_id := this.GetString("work_id")
+	work_id,_ := this.GetInt64("work_id")
 	if steps, err := iwork.GetAllWorkStepInfo(work_id); err == nil {
 		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "steps": steps}
 	} else {
