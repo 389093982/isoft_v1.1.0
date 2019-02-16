@@ -14,8 +14,7 @@ import (
 )
 
 // 所有 node 的基类
-type BaseNode struct {
-}
+type BaseNode struct {}
 
 // paramValue 来源于 iresource 模块
 func (this *BaseNode) parseAndFillParamVauleWithResource(paramVaule string) interface{} {
@@ -32,8 +31,22 @@ func (this *BaseNode) parseAndFillParamVauleWithNode(paramVaule string, dataStor
 	}
 }
 
+// 判断是否需要跳过解析
+func checkSkipParse(paramName string) bool {
+	names := []string{"sql"}
+	for _,name := range names{
+		if name == paramName{
+			return true
+		}
+	}
+	return false
+}
+
 // 解析 paramVaule 并从 dataStore 中获取实际值
-func (this *BaseNode) ParseAndGetParamVaule(paramVaule string, dataStore *datastore.DataStore) interface{} {
+func (this *BaseNode) ParseAndGetParamVaule(paramName, paramVaule string, dataStore *datastore.DataStore) interface{} {
+	if checkSkipParse(paramName){
+		return paramVaule
+	}
 	values := this.parseParamValueToMulti(paramVaule)
 	if len(values) == 1 {
 		// 单值
@@ -113,7 +126,7 @@ func (this *BaseNode) FillParamInputSchemaDataToTmp(workStep *iwork.WorkStep, da
 	for _, item := range paramInputSchema.ParamInputSchemaItems {
 		// 个性化重写操作
 		this.modifySqlBindingParamValueWithBatchNumber(&item, tmpDataMap)
-		tmpDataMap[item.ParamName] = this.ParseAndGetParamVaule(item.ParamValue, dataStore) // 输入数据存临时
+		tmpDataMap[item.ParamName] = this.ParseAndGetParamVaule(item.ParamName, item.ParamValue, dataStore) // 输入数据存临时
 	}
 	return tmpDataMap
 }
