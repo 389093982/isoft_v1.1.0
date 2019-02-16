@@ -64,6 +64,8 @@ func (this *WorkStepFactory) getProxy() IStandardWorkStep {
 		return &FileWriteNode{WorkStep: this.WorkStep}
 	case "HREF_PARSER":
 		return &HrefParserNode{WorkStep: this.WorkStep}
+	case "ENTITY_PARSER":
+		return &EntityParserNode{WorkStep: this.WorkStep}
 	}
 	panic(fmt.Sprintf("unsupport workStepType:%s", this.WorkStep.WorkStepType))
 }
