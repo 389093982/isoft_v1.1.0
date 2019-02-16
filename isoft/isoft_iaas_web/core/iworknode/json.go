@@ -15,7 +15,6 @@ type JsonRenderNode struct {
 	WorkStep *iwork.WorkStep
 }
 
-
 func (this *JsonRenderNode) Execute(trackingId string) {
 	// 数据中心
 	dataStore := datastore.GetDataSource(trackingId)
@@ -23,7 +22,7 @@ func (this *JsonRenderNode) Execute(trackingId string) {
 	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, dataStore)
 	json_object := tmpDataMap["json_object"].([]map[string]interface{})
 	bytes, err := json.Marshal(json_object)
-	if err == nil{
+	if err == nil {
 		dataStore.CacheData(this.WorkStep.WorkStepName, "json_str", string(bytes))
 	}
 }
@@ -44,8 +43,6 @@ func (this *JsonRenderNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSch
 	return &schema.ParamOutputSchema{}
 }
 
-
-
 type JsonParserNode struct {
 	BaseNode
 	WorkStep *iwork.WorkStep
@@ -59,12 +56,12 @@ func (this *JsonParserNode) Execute(trackingId string) {
 	json_str := tmpDataMap["json_str"].(string)
 	json_objects := []map[string]interface{}{}
 	err := json.Unmarshal([]byte(json_str), &json_objects)
-	if err == nil{
+	if err == nil {
 		dataStore.CacheData(this.WorkStep.WorkStepName, "rows", json_objects)
-		for index, json_object := range json_objects{
-			for paramName,paramValue := range json_object{
+		for index, json_object := range json_objects {
+			for paramName, paramValue := range json_object {
 				dataStore.CacheData(this.WorkStep.WorkStepName, fmt.Sprintf("rows[%d].%s", index, paramName), paramValue)
-				if index == 0{
+				if index == 0 {
 					dataStore.CacheData(this.WorkStep.WorkStepName, fmt.Sprintf("rows.%s", paramName), paramValue)
 				}
 			}
@@ -73,7 +70,7 @@ func (this *JsonParserNode) Execute(trackingId string) {
 }
 
 func (this *JsonParserNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
-	return schema.BuildParamInputSchemaWithSlice([]string{"json_str","json_fields"})
+	return schema.BuildParamInputSchemaWithSlice([]string{"json_str", "json_fields"})
 }
 
 func (this *JsonParserNode) GetRuntimeParamInputSchema() *schema.ParamInputSchema {
@@ -86,10 +83,10 @@ func (this *JsonParserNode) GetDefaultParamOutputSchema() *schema.ParamOutputSch
 
 func (this *JsonParserNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
 	items := []schema.ParamOutputSchemaItem{}
-	if json_fields := param.GetStaticParamValue("json_fields", this.WorkStep); strings.TrimSpace(json_fields) != ""{
+	if json_fields := param.GetStaticParamValue("json_fields", this.WorkStep); strings.TrimSpace(json_fields) != "" {
 		jsonArr := strings.Split(json_fields, ",")
-		for _, paramName := range jsonArr{
-			if _paramName := strings.TrimSpace(paramName); _paramName != ""{
+		for _, paramName := range jsonArr {
+			if _paramName := strings.TrimSpace(paramName); _paramName != "" {
 				items = append(items, schema.ParamOutputSchemaItem{
 					ParentPath: "rows",
 					ParamName:  _paramName,

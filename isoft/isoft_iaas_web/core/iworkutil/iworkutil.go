@@ -31,7 +31,7 @@ func EncodeToBase64String(src []byte) string {
 }
 
 func DecodeBase64String(encodeString string) (bytes []byte) {
-	if bytes, err := base64.StdEncoding.DecodeString(encodeString);err != nil {
+	if bytes, err := base64.StdEncoding.DecodeString(encodeString); err != nil {
 		return bytes
 	}
 	return

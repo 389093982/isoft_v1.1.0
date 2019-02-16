@@ -52,4 +52,3 @@ func UnRegistDataStore(trackingId string) {
 func GetDataSource(trackingId string) *DataStore {
 	return datastores[trackingId]
 }
-

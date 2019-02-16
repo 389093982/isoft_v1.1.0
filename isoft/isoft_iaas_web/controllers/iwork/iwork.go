@@ -67,7 +67,7 @@ func (this *WorkController) EditWork() {
 	work.LastUpdatedBy = "SYSTEM"
 	work.LastUpdatedTime = time.Now()
 	if _, err := iwork.InsertOrUpdateWork(&work); err == nil {
-		if work_id <= 0{
+		if work_id <= 0 {
 			// 新增 work 场景,自动添加开始和结束节点
 			insertStartEndWorkStepNode(work.Id)
 		}

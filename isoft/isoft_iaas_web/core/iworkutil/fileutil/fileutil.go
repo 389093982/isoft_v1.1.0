@@ -21,7 +21,7 @@ func WriteFile(filename string, data []byte, append bool) error {
 			err = err1
 		}
 		return err
-	}else{
+	} else {
 		return ioutil.WriteFile(filename, data, 0666)
 	}
 }

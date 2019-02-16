@@ -8,7 +8,7 @@ func IworkStringsToUpper(args ...interface{}) interface{} {
 
 func IworkStringsJoin(args ...interface{}) interface{} {
 	sargs := make([]string, 0)
-	for _, arg := range args{
+	for _, arg := range args {
 		sargs = append(sargs, arg.(string))
 	}
 	return strings.Join(sargs, "")
@@ -16,8 +16,8 @@ func IworkStringsJoin(args ...interface{}) interface{} {
 
 func IworkStringsJoinWithSep(args ...interface{}) interface{} {
 	sargs := make([]string, 0)
-	for _, arg := range args{
+	for _, arg := range args {
 		sargs = append(sargs, arg.(string))
 	}
-	return strings.Join(sargs[:len(args) - 1], sargs[len(args)-1])
+	return strings.Join(sargs[:len(args)-1], sargs[len(args)-1])
 }

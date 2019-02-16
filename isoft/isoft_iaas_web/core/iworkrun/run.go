@@ -14,9 +14,9 @@ import (
 func Run(work iwork.Work, steps []iwork.WorkStep, dispatcher *entry.Dispatcher) (receiver *entry.Receiver) {
 	// 当前流程的 trackingId
 	trackingId := stringutil.RandomUUID()
-	if dispatcher != nil && dispatcher.TrackingId != ""{
+	if dispatcher != nil && dispatcher.TrackingId != "" {
 		// 拼接父流程的 trackingId 信息,作为链式 trackingId
-		trackingId = fmt.Sprintf("%s.%s",dispatcher.TrackingId, trackingId)
+		trackingId = fmt.Sprintf("%s.%s", dispatcher.TrackingId, trackingId)
 	}
 	// 记录日志
 	iwork.InsertRunLogRecord(&iwork.RunLogRecord{
@@ -41,10 +41,10 @@ func Run(work iwork.Work, steps []iwork.WorkStep, dispatcher *entry.Dispatcher) 
 	for _, step := range steps {
 		iwork.InsertRunLogDetail(trackingId, fmt.Sprintf("start execute workstep: >> [[%s]]", step.WorkStepName))
 		// 由工厂代为执行步骤
-		factory := &iworknode.WorkStepFactory{WorkStep: &step, RunFunc: Run, Dispatcher:dispatcher}
+		factory := &iworknode.WorkStepFactory{WorkStep: &step, RunFunc: Run, Dispatcher: dispatcher}
 		factory.Execute(trackingId)
 		// factory 节点如果代理的是 work_end 节点,则传递 Receiver 出去
-		if factory.Receiver != nil{
+		if factory.Receiver != nil {
 			receiver = factory.Receiver
 		}
 		iwork.InsertRunLogDetail(trackingId, fmt.Sprintf("end execute workstep: >> [[%s]]", step.WorkStepName))

@@ -25,10 +25,10 @@ func (this *HttpRequestNode) Execute(trackingId string) {
 
 	// 参数准备
 	var request_url, request_method string
-	if _request_url, ok := tmpDataMap["request_url"].(string); ok{
+	if _request_url, ok := tmpDataMap["request_url"].(string); ok {
 		request_url = _request_url
 	}
-	if _request_method, ok := tmpDataMap["request_method?"].(string); ok{
+	if _request_method, ok := tmpDataMap["request_method?"].(string); ok {
 		request_method = _request_method
 	}
 	paramMap := fillParamMapData(tmpDataMap, "request_params?")
@@ -62,12 +62,12 @@ func (this *HttpRequestNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSc
 func fillParamMapData(tmpDataMap map[string]interface{}, paramName string) map[string]interface{} {
 	paramMap := make(map[string]interface{})
 	if _paramName, ok := tmpDataMap[paramName].(string); ok {
-		if paramName, paramValue := checkParameter(_paramName); strings.TrimSpace(paramName) != ""{
+		if paramName, paramValue := checkParameter(_paramName); strings.TrimSpace(paramName) != "" {
 			paramMap[strings.TrimSpace(paramName)] = strings.TrimSpace(paramValue)
 		}
 	} else if _paramNames, ok := tmpDataMap[paramName].([]string); ok {
 		for _, _paramName := range _paramNames {
-			if paramName, paramValue := checkParameter(_paramName); strings.TrimSpace(paramName) != ""{
+			if paramName, paramValue := checkParameter(_paramName); strings.TrimSpace(paramName) != "" {
 				paramMap[strings.TrimSpace(paramName)] = strings.TrimSpace(paramValue)
 			}
 		}
@@ -77,7 +77,7 @@ func fillParamMapData(tmpDataMap map[string]interface{}, paramName string) map[s
 
 func checkParameter(s string) (paramName, paramValue string) {
 	s = strings.TrimSpace(s)
-	if !strings.Contains(s, "="){
+	if !strings.Contains(s, "=") {
 		panic(errors.New(fmt.Sprint("invalid parameter for %s", s)))
 	}
 	index := strings.Index(s, "=")

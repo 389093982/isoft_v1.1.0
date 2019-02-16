@@ -14,7 +14,6 @@ type FileReadNode struct {
 	WorkStep *iwork.WorkStep
 }
 
-
 func (this *FileReadNode) Execute(trackingId string) {
 	// 数据中心
 	dataStore := datastore.GetDataSource(trackingId)
@@ -22,9 +21,9 @@ func (this *FileReadNode) Execute(trackingId string) {
 	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, dataStore)
 	file_path := tmpDataMap["file_path"].(string)
 	dataStore.CacheData(this.WorkStep.WorkStepName, "file_path", file_path)
-	if bytes, err := ioutil.ReadFile(file_path); err == nil{
+	if bytes, err := ioutil.ReadFile(file_path); err == nil {
 		dataStore.CacheData(this.WorkStep.WorkStepName, "data", string(bytes))
-	}else{
+	} else {
 		panic(err)
 	}
 }
@@ -45,15 +44,13 @@ func (this *FileReadNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchem
 	return &schema.ParamOutputSchema{}
 }
 
-
-
 type FileWriteNode struct {
 	BaseNode
 	WorkStep *iwork.WorkStep
 }
 
 func checkAppend(tmpDataMap map[string]interface{}) bool {
-	if append,ok := tmpDataMap["append?"].(string); ok && strings.TrimSpace(append) != ""{
+	if append, ok := tmpDataMap["append?"].(string); ok && strings.TrimSpace(append) != "" {
 		return true
 	}
 	return false
@@ -66,14 +63,14 @@ func (this *FileWriteNode) Execute(trackingId string) {
 	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, dataStore)
 	file_path := tmpDataMap["file_path"].(string)
 	// 写字符串
-	if data, ok := tmpDataMap["data?"].(string); ok{
-		if err := fileutil.WriteFile(file_path, []byte(data), checkAppend(tmpDataMap)); err != nil{
+	if data, ok := tmpDataMap["data?"].(string); ok {
+		if err := fileutil.WriteFile(file_path, []byte(data), checkAppend(tmpDataMap)); err != nil {
 			panic(err)
 		}
 	}
 	// 写字节数组
-	if bytes, ok := tmpDataMap["bytes?"].([]byte); ok{
-		if err := fileutil.WriteFile(file_path, bytes, checkAppend(tmpDataMap)); err != nil{
+	if bytes, ok := tmpDataMap["bytes?"].([]byte); ok {
+		if err := fileutil.WriteFile(file_path, bytes, checkAppend(tmpDataMap)); err != nil {
 			panic(err)
 		}
 	}

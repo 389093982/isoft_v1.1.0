@@ -12,7 +12,6 @@ type MapperNode struct {
 	WorkStep *iwork.WorkStep
 }
 
-
 func (this *MapperNode) Execute(trackingId string) {
 	// 获取数据中心
 	dataStore := datastore.GetDataSource(trackingId)
@@ -29,11 +28,11 @@ func (this *MapperNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
 func (this *MapperNode) GetRuntimeParamInputSchema() *schema.ParamInputSchema {
 	var paramMappingsArr []string
 	json.Unmarshal([]byte(this.WorkStep.WorkStepParamMapping), &paramMappingsArr)
-	items := make([]schema.ParamInputSchemaItem,0)
+	items := make([]schema.ParamInputSchemaItem, 0)
 	for _, paramMapping := range paramMappingsArr {
 		items = append(items, schema.ParamInputSchemaItem{ParamName: paramMapping})
 	}
-	return &schema.ParamInputSchema{ParamInputSchemaItems:items}
+	return &schema.ParamInputSchema{ParamInputSchemaItems: items}
 }
 
 func (this *MapperNode) GetDefaultParamOutputSchema() *schema.ParamOutputSchema {
@@ -41,10 +40,10 @@ func (this *MapperNode) GetDefaultParamOutputSchema() *schema.ParamOutputSchema 
 }
 
 func (this *MapperNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
-	items := make([]schema.ParamOutputSchemaItem,0)
-	inputSchema := schema.GetCacheParamInputSchema(this.WorkStep, &WorkStepFactory{WorkStep:this.WorkStep})
-	for _, item := range inputSchema.ParamInputSchemaItems{
-		items = append(items, schema.ParamOutputSchemaItem{ParamName:item.ParamName})
+	items := make([]schema.ParamOutputSchemaItem, 0)
+	inputSchema := schema.GetCacheParamInputSchema(this.WorkStep, &WorkStepFactory{WorkStep: this.WorkStep})
+	for _, item := range inputSchema.ParamInputSchemaItems {
+		items = append(items, schema.ParamOutputSchemaItem{ParamName: item.ParamName})
 	}
-	return &schema.ParamOutputSchema{ParamOutputSchemaItems:items}
+	return &schema.ParamOutputSchema{ParamOutputSchemaItems: items}
 }

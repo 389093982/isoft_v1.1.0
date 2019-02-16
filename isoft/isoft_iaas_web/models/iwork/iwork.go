@@ -20,10 +20,10 @@ type Work struct {
 type WorkStep struct {
 	Id                   int64     `json:"id"`
 	WorkId               string    `json:"work_id"`
-	WorkStepId           int64      `json:"work_step_id"`
-	WorkSubId			 int64		`json:"work_sub_id"`			// 子流程 id
+	WorkStepId           int64     `json:"work_step_id"`
+	WorkSubId            int64     `json:"work_sub_id"` // 子流程 id
 	WorkStepName         string    `json:"work_step_name"`
-	WorkStepDesc        string    `json:"work_step_desc" orm:"type(text)"`
+	WorkStepDesc         string    `json:"work_step_desc" orm:"type(text)"`
 	WorkStepType         string    `json:"work_step_type"`
 	WorkStepInput        string    `json:"work_step_input" orm:"type(text)"`
 	WorkStepOutput       string    `json:"work_step_output" orm:"type(text)"`

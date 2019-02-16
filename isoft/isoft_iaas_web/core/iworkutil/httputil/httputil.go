@@ -8,7 +8,7 @@ import (
 )
 
 func DoHttpRequestWithParserFunc(url string, method string, paramMap map[string]interface{},
-		headerMap map[string]interface{}, parseFunc func(resp *http.Response)) (responsebody []byte) {
+	headerMap map[string]interface{}, parseFunc func(resp *http.Response)) (responsebody []byte) {
 	client := &http.Client{}
 	req, err := http.NewRequest(checkMethod(method), url, GetParamReader(paramMap))
 	if err != nil {
@@ -33,23 +33,23 @@ func DoHttpRequest(url string, method string, paramMap map[string]interface{},
 	return DoHttpRequestWithParserFunc(url, method, paramMap, headerMap, func(resp *http.Response) {})
 }
 
-func setHeaderParameter(req *http.Request, headerMap map[string]interface{})  {
+func setHeaderParameter(req *http.Request, headerMap map[string]interface{}) {
 	// 设置默认请求头
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")
 	// 添加或者覆盖默认请求头
-	for paramName, paramValue := range headerMap{
+	for paramName, paramValue := range headerMap {
 		req.Header.Set(getStandardName(paramName), paramValue.(string))
 	}
 }
 
 func getStandardName(paramName string) string {
 	standardNames := []string{"Content-Type"}
-	for _,sn := range standardNames{
-		_sn := strings.Replace(sn,"-","",-1)
+	for _, sn := range standardNames {
+		_sn := strings.Replace(sn, "-", "", -1)
 		_sn = strings.ToUpper(_sn)
-		_paramName := strings.Replace(paramName,"-","",-1)
+		_paramName := strings.Replace(paramName, "-", "", -1)
 		_paramName = strings.ToUpper(_paramName)
-		if _sn == _paramName{
+		if _sn == _paramName {
 			return sn
 		}
 	}
@@ -70,15 +70,14 @@ func GetParamReader(paramMap map[string]interface{}) *strings.Reader {
 
 func checkMethod(method string) string {
 	method = strings.TrimSpace(method)
-	if method == ""{
+	if method == "" {
 		return "GET"
 	}
-	defaultMethods := []string{"GET","POST","PUT","DELETE"}
-	for _, dm := range defaultMethods{
-		if strings.ToUpper(method) == dm{
+	defaultMethods := []string{"GET", "POST", "PUT", "DELETE"}
+	for _, dm := range defaultMethods {
+		if strings.ToUpper(method) == dm {
 			return dm
 		}
 	}
 	panic(fmt.Sprintf("unsupport method : %s", method))
 }
-

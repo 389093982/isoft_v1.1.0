@@ -31,7 +31,7 @@ func BuildDynamicInput(work_id string, work_step_id int64) {
 			newInputSchemaItems[index].ParamValue = paramValue
 		}
 	}
-	paramInputSchema := &schema.ParamInputSchema{ParamInputSchemaItems:newInputSchemaItems}
+	paramInputSchema := &schema.ParamInputSchema{ParamInputSchemaItems: newInputSchemaItems}
 	step.WorkStepInput = paramInputSchema.RenderToXml()
 	if _, err = iwork.InsertOrUpdateWorkStep(&step); err != nil {
 		panic(err)
@@ -55,18 +55,18 @@ func BuildDynamicOutput(work_id string, work_step_id int64) {
 	}
 }
 
-func checkAndCreateSubWork(work_name string)  {
-	if _, err := iwork.QueryWorkByName(work_name); err != nil{
+func checkAndCreateSubWork(work_name string) {
+	if _, err := iwork.QueryWorkByName(work_name); err != nil {
 		// 不存在 work 则直接创建
 		work := &iwork.Work{
-			WorkName : work_name,
-			WorkDesc : fmt.Sprintf("自动创建子流程:%s",work_name),
-			CreatedBy : "SYSTEM",
-			CreatedTime : time.Now(),
-			LastUpdatedBy : "SYSTEM",
-			LastUpdatedTime : time.Now(),
+			WorkName:        work_name,
+			WorkDesc:        fmt.Sprintf("自动创建子流程:%s", work_name),
+			CreatedBy:       "SYSTEM",
+			CreatedTime:     time.Now(),
+			LastUpdatedBy:   "SYSTEM",
+			LastUpdatedTime: time.Now(),
 		}
-		if _, err := iwork.InsertOrUpdateWork(work); err == nil{
+		if _, err := iwork.InsertOrUpdateWork(work); err == nil {
 			// 写入 DB 并自动创建开始和结束节点
 			insertStartEndWorkStepNode(work.Id)
 		}
@@ -79,20 +79,20 @@ func BuildAutoCreateSubWork(work_id string, work_step_id int64) {
 	if err != nil {
 		panic(err)
 	}
-	if step.WorkStepType != "work_sub"{
+	if step.WorkStepType != "work_sub" {
 		return
 	}
 	paramInputSchema := schema.GetCacheParamInputSchema(&step, &iworknode.WorkStepFactory{WorkStep: &step})
 	for index, item := range paramInputSchema.ParamInputSchemaItems {
 		if item.ParamName == "work_sub" {
 			paramValue := strings.TrimSpace(item.ParamValue)
-			if strings.HasPrefix(paramValue, "$WORK."){
+			if strings.HasPrefix(paramValue, "$WORK.") {
 				return
-			}else{
+			} else {
 				// 修改值并同步到数据库
 				paramInputSchema.ParamInputSchemaItems[index] = schema.ParamInputSchemaItem{
-					ParamName:item.ParamName,
-					ParamValue:strings.Join([]string{"$WORK.",paramValue},""),
+					ParamName:  item.ParamName,
+					ParamValue: strings.Join([]string{"$WORK.", paramValue}, ""),
 				}
 				step.WorkStepInput = paramInputSchema.RenderToXml()
 				// 自动创建子流程
@@ -146,4 +146,3 @@ func CheckAndGetParamValueByInputSchemaParamName(items []schema.ParamInputSchema
 	}
 	return false, ""
 }
-

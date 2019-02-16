@@ -17,8 +17,8 @@ func (this *HrefParserNode) Execute(trackingId string) {
 	dataStore := datastore.GetDataSource(trackingId)
 	// 节点中间数据
 	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, dataStore)
-	if url, ok := tmpDataMap["url"].(string); ok{
-		if hrefs := htmlutil.GetAllHref(url); len(hrefs) > 0{
+	if url, ok := tmpDataMap["url"].(string); ok {
+		if hrefs := htmlutil.GetAllHref(url); len(hrefs) > 0 {
 			dataStore.CacheData(this.WorkStep.WorkStepName, "hrefs", hrefs)
 		}
 	}

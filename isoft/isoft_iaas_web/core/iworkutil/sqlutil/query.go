@@ -40,11 +40,11 @@ func Query(sqlstring string, sql_binding []interface{}, dataSourceName string) (
 		panic(err)
 	}
 	defer rows.Close()
-	datacounts,rowDetailDatas,rowDatas = parseRows(rows)
+	datacounts, rowDetailDatas, rowDatas = parseRows(rows)
 	return
 }
 
-func parseRows(rows *sql.Rows) (datacounts int64, rowDetailDatas map[string]interface{}, rowDatas []map[string]interface{}){
+func parseRows(rows *sql.Rows) (datacounts int64, rowDetailDatas map[string]interface{}, rowDatas []map[string]interface{}) {
 	// 含索引下标的数据
 	rowDetailDatas = map[string]interface{}{}
 	// 列名、列值组成的 map,多行数据使用数组存储

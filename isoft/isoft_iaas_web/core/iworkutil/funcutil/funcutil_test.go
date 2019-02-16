@@ -9,10 +9,10 @@ import (
 func Test_GetAllFile(t *testing.T) {
 	//expression := "aaaa"
 	expression := "func1    (a      ,b,   func2(e,f,a,func3(a,b),b),c,d)"
-	for _, executor := range GetAllFuncExecutor(expression){
+	for _, executor := range GetAllFuncExecutor(expression) {
 		GetTrimFuncExecutor(executor)
 		fmt.Println(executor.FuncName)
-		for _, arg := range executor.FuncArgs{
+		for _, arg := range executor.FuncArgs {
 			fmt.Println(arg)
 		}
 	}

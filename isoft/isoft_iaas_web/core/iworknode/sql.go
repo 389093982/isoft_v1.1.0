@@ -23,7 +23,7 @@ func (this *SQLQueryNode) Execute(trackingId string) {
 	dataSourceName := tmpDataMap["db_conn"].(string) // 等价于 param.GetStaticParamValue("db_conn", this.WorkStep)
 	// sql_binding 参数获取
 	_sql_binding := getSqlBinding(tmpDataMap)
-	datacounts, rowDetailDatas,rowDatas := sqlutil.Query(sql, _sql_binding, dataSourceName)
+	datacounts, rowDetailDatas, rowDatas := sqlutil.Query(sql, _sql_binding, dataSourceName)
 	// 将数据数据存储到数据中心
 	// 存储 datacounts
 	dataStore.CacheData(this.WorkStep.WorkStepName, "datacounts", datacounts)
@@ -49,9 +49,9 @@ func (this *SQLQueryNode) GetDefaultParamOutputSchema() *schema.ParamOutputSchem
 
 func (this *SQLQueryNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
 	var metadataSql string
-	if sql := param.GetStaticParamValue("metadata_sql?", this.WorkStep); strings.TrimSpace(sql) != ""{
+	if sql := param.GetStaticParamValue("metadata_sql?", this.WorkStep); strings.TrimSpace(sql) != "" {
 		metadataSql = sql
-	}else{
+	} else {
 		metadataSql = param.GetStaticParamValue("sql", this.WorkStep)
 	}
 	dataSourceName := param.GetStaticParamValue("db_conn", this.WorkStep)

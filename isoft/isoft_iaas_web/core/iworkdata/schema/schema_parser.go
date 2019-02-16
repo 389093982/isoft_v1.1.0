@@ -25,7 +25,6 @@ type IParamSchemaParser interface {
 	GetRuntimeParamInputSchema() *ParamInputSchema
 	GetDefaultParamOutputSchema() *ParamOutputSchema
 	GetRuntimeParamOutputSchema() *ParamOutputSchema
-
 }
 
 // 获取出参 schema
