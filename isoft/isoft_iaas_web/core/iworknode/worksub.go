@@ -31,6 +31,34 @@ func (this *WorkSub) Execute(trackingId string) {
 	// 运行子流程
 	work, _ := iwork.QueryWorkByName(workSubName)
 	steps, _ := iwork.GetAllWorkStepByWorkName(workSubName)
+
+	if foreachDatas, ok := tmpDataMap["foreach_data?"].([]map[string]interface{}); ok{
+		itemKey := this.getForeachItemKey(tmpDataMap)
+		// work_sub 节点支持 foreach 循环功能,此处循环 foreach 次数
+		for _, foreachData := range foreachDatas {
+			if itemKey != ""{
+				// 找到 tmpDataMap 中的迭代元素 __item__,将其替换成需要迭代的元素
+				tmpDataMap[itemKey] = foreachData
+			}
+			this.RunOnceSubWork(work, steps, trackingId, tmpDataMap, dataStore)
+		}
+	} else {
+		this.RunOnceSubWork(work, steps, trackingId, tmpDataMap, dataStore)
+	}
+}
+
+func (this *WorkSub) getForeachItemKey(tmpDataMap map[string]interface{}) string {
+	var itemKey string
+	for key, value := range tmpDataMap {
+		if _value, ok := value.(string); ok && strings.TrimSpace(_value) == "__item__" {
+			itemKey = key
+		}
+	}
+	return itemKey
+}
+
+func (this *WorkSub) RunOnceSubWork(work iwork.Work, steps []iwork.WorkStep, trackingId string,
+		tmpDataMap map[string]interface{}, dataStore *datastore.DataStore) {
 	receiver := this.RunFunc(work, steps, &entry.Dispatcher{TrackingId: trackingId, TmpDataMap: tmpDataMap})
 	// 接收子流程数据存入 dataStore
 	for paramName, paramValue := range receiver.TmpDataMap {
@@ -39,7 +67,7 @@ func (this *WorkSub) Execute(trackingId string) {
 }
 
 func (this *WorkSub) GetDefaultParamInputSchema() *schema.ParamInputSchema {
-	return schema.BuildParamInputSchemaWithSlice([]string{"work_sub"})
+	return schema.BuildParamInputSchemaWithSlice([]string{"work_sub","foreach_data?"})
 }
 
 // 获取动态输入值
