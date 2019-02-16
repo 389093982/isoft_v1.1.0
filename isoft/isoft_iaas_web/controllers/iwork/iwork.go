@@ -18,6 +18,21 @@ type WorkController struct {
 	beego.Controller
 }
 
+func (this *WorkController) GetRelativeWork() {
+	work_id,_ := this.GetInt64("work_id")
+	subWorks := make([]iwork.Work,0)
+	parentWorks, _,_ := iwork.QueryParentWorks(work_id)
+	steps, _ := iwork.GetAllWorkStepInfo(work_id)
+	for _, step := range steps{
+		if step.WorkSubId > 0{
+			subwork, _ := iwork.QueryWorkById(step.WorkSubId)
+			subWorks = append(subWorks, subwork)
+		}
+	}
+	this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "parentWorks":parentWorks,"subwork": subWorks}
+	this.ServeJSON()
+}
+
 func (this *WorkController) GetLastRunLogDetail() {
 	tracking_id := this.GetString("tracking_id")
 	runLogDetails, err := iwork.GetLastRunLogDetail(tracking_id)
@@ -305,7 +320,3 @@ func LoadWorkInfo() *schema.ParamOutputSchema {
 	return pos
 }
 
-func (this *WorkController) GetRelativeWork() {
-	work_id,_ := this.GetInt64("work_id")
-	iwork.GetAllWorkStepInfo(work_id)
-}

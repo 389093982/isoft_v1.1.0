@@ -61,6 +61,22 @@ func InsertOrUpdateWork(work *Work) (id int64, err error) {
 	return
 }
 
+
+func QueryParentWorks(work_id int64) (works []Work, counts int64, err error) {
+	works = make([]Work, 0)
+	o := orm.NewOrm()
+	params := make([]orm.Params, 0)
+	_, err = o.QueryTable("work_step").Filter("work_sub_id", work_id).Distinct().Values(&params, "work_id")
+	if err == nil{
+		for _, param := range params{
+			parent_work_id := param["work_id"].(int64)
+			pWork, _ := QueryWorkById(parent_work_id)
+			works = append(works, pWork)
+		}
+	}
+	return
+}
+
 func QueryWork(condArr map[string]string, page int, offset int) (works []Work, counts int64, err error) {
 	o := orm.NewOrm()
 	qs := o.QueryTable("work")

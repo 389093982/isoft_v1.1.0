@@ -176,5 +176,8 @@ export const FilterPageLogRecord = (work_id,offset,current_page) => ajax(BASE_UR
 // 获取最后一次运行日志详情
 export const GetLastRunLogDetail = (tracking_id) => ajax(BASE_URL+"/iwork/getLastRunLogDetail", {tracking_id},'POST');
 
+// 获取相关流程
+export const GetRelativeWork = (work_id) => ajax(BASE_URL+"/iwork/getRelativeWork", {work_id},'POST');
+
 // 跨模块使用,模块化部署时需要使用 nginx 代理
 export const LoginAddr = "/sso/login/";

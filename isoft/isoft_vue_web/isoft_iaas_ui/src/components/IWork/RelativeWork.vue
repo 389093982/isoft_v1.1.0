@@ -8,6 +8,8 @@
 </template>
 
 <script>
+  import {GetRelativeWork} from "../../api"
+
   export default {
     name: "RelativeWork",
     data(){
@@ -16,8 +18,11 @@
       }
     },
     methods:{
-      refreshRelativeWork:function (work_id) {
-        alert(work_id);
+      refreshRelativeWork:async function (work_id) {
+        const result = await GetRelativeWork(work_id);
+        if(result.status == "SUCCESS"){
+          alert(result);
+        }
       }
     }
   }
