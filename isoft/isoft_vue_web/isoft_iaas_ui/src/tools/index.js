@@ -96,3 +96,8 @@ export function formatDate (date, fmt) {
 }
 
 export const validateCron = (cron) => cronValidate(cron);
+
+// 字符串分割函数
+export function strSplit (str, sep) {
+  return str.split(sep);
+}

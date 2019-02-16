@@ -16,6 +16,7 @@
 <script>
   import ParamMappingAdd from "./ParamMappingAdd"
   import {oneOf} from "../../tools"
+  import {strSplit} from "../../tools"
 
   export default {
     name: "ParamMapping",
@@ -28,8 +29,11 @@
     },
     methods:{
       paramMappingAdd:function (data) {
-        if(!oneOf(data, this.paramMappings)){
-          this.paramMappings.push(data);
+        var strs = strSplit(data, ",");
+        for(var i=0; i<strs.length; i++){
+          if(!oneOf(strs[i].trim(), this.paramMappings)){
+            this.paramMappings.push(strs[i].trim());
+          }
         }
       },
       handleDelete:function (data) {
