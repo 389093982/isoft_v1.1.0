@@ -6,7 +6,7 @@
       :footer-hide="true"
       :mask-closable="false"
       :styles="{top: '10px'}">
-      <Scroll height="500">
+      <Scroll height="450">
         <!-- 表单信息 -->
         <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="140">
           <FormItem label="work_step_name" prop="work_step_name">

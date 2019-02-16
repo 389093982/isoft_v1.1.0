@@ -1,13 +1,13 @@
 <template>
   <div style="margin-top: 20px;">
-    <Row :gutter="6">
-      <Col span="12">
+    <Tabs :animated="false">
+      <TabPane label="父级流程清单">
         <RelativeWorkList ref="parentRelativeWork" title="父级流程清单"/>
-      </Col>
-      <Col span="12">
+      </TabPane>
+      <TabPane label="子级流程清单">
         <RelativeWorkList ref="subRelativeWork" title="子级流程清单"/>
-      </Col>
-    </Row>
+      </TabPane>
+    </Tabs>
   </div>
 </template>
 
