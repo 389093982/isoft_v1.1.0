@@ -137,7 +137,9 @@
                   },
                   on: {
                     click: () => {
-                      this.$refs.workStepParamInfo.showWorkStepParamInfo(this.$route.query.work_id, this.worksteps[params.index]['work_step_id']);
+                      if (this.worksteps[params.index]['work_step_type']){
+                        this.$refs.workStepParamInfo.showWorkStepParamInfo(this.$route.query.work_id, this.worksteps[params.index]['work_step_id']);
+                      }
                     }
                   }
                 }, '参数'),
