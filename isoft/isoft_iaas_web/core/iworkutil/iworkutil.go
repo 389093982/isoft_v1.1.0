@@ -3,6 +3,7 @@ package iworkutil
 import (
 	"encoding/base64"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
+	"isoft/isoft_iaas_web/models/iwork"
 	"strings"
 )
 
@@ -35,4 +36,17 @@ func DecodeBase64String(encodeString string) (bytes []byte) {
 		return bytes
 	}
 	return
+}
+
+func GetParamValueForEntity(paramValue string) string {
+	paramValue = strings.TrimSpace(paramValue)
+	paramValue = strings.Replace(paramValue, ";", "", -1)
+	if !strings.HasPrefix(paramValue, "$Entity."){
+		return paramValue
+	}
+	entity_name := strings.Replace(paramValue, "$Entity.", "", -1)
+	if entity, err := iwork.QueryEntityByEntityName(entity_name); err == nil{
+		return entity.EntityFieldStr
+	}
+	return ""
 }
