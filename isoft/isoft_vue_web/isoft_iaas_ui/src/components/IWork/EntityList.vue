@@ -2,8 +2,8 @@
   <span>
     <ISimpleBtnTriggerModal ref="triggerModal" btn-text="实体类管理" modal-title="新增/编辑实体类" :modal-width="800">
       <Table :columns="columns1" :data="entities" size="small"></Table>
-          <Page :total="total" :page-size="offset" show-total show-sizer :styles="{'text-align': 'center','margin-top': '10px'}"
-                @on-change="handleChange" @on-page-size-change="handlePageSizeChange"/>
+      <Page :total="total" :page-size="offset" show-total show-sizer :styles="{'text-align': 'center','margin-top': '10px'}"
+            @on-change="handleChange" @on-page-size-change="handlePageSizeChange"/>
     </ISimpleBtnTriggerModal>
   </span>
 </template>
