@@ -9,7 +9,17 @@
 
 <script>
   export default {
-    name: "RelativeWork"
+    name: "RelativeWork",
+    data(){
+      return {
+        
+      }
+    },
+    methods:{
+      refreshRelativeWork:function (work_id) {
+        alert(work_id);
+      }
+    }
   }
 </script>
 

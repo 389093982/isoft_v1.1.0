@@ -143,7 +143,7 @@ func (this *WorkController) AddWorkStep() {
 }
 
 func (this *WorkController) EditWorkStepBaseInfo() {
-	work_id := this.GetString("work_id")
+	work_id,_ := this.GetInt64("work_id")
 	work_step_id, _ := this.GetInt64("work_step_id", -1)
 	work_step_name := this.GetString("work_step_name")
 	work_step_desc := this.GetString("work_step_desc")
@@ -170,10 +170,10 @@ func (this *WorkController) EditWorkStepBaseInfo() {
 }
 
 func (this *WorkController) FilterPageWorkStep() {
-	condArr := make(map[string]string)
+	condArr := make(map[string]interface{})
 	offset, _ := this.GetInt("offset", 10)            // 每页记录数
 	current_page, _ := this.GetInt("current_page", 1) // 当前页
-	condArr["work_id"] = this.GetString("work_id")
+	condArr["work_id"],_ = this.GetInt64("work_id")
 	worksteps, count, err := iwork.QueryWorkStep(condArr, current_page, offset)
 	paginator := pagination.SetPaginator(this.Ctx, offset, count)
 	if err == nil {
@@ -196,7 +196,7 @@ func (this *WorkController) DeleteWorkStepById() {
 }
 
 func (this *WorkController) LoadWorkStepInfo() {
-	work_id := this.GetString("work_id")
+	work_id,_ := this.GetInt64("work_id")
 	work_step_id, _ := this.GetInt64("work_step_id")
 	// 读取 work_step 信息
 	if step, err := iwork.LoadWorkStepInfo(work_id, work_step_id); err == nil {
@@ -229,7 +229,7 @@ func (this *WorkController) GetAllWorkStepInfo() {
 
 func (this *WorkController) ChangeWorkStepOrder() {
 	this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
-	work_id := this.GetString("work_id")
+	work_id,_ := this.GetInt64("work_id")
 	work_step_id, _ := this.GetInt64("work_step_id")
 	_type := this.GetString("type")
 	// 获取当前步骤
@@ -255,7 +255,7 @@ func (this *WorkController) ChangeWorkStepOrder() {
 }
 
 func (this *WorkController) LoadPreNodeOutput() {
-	work_id := this.GetString("work_id")
+	work_id,_ := this.GetInt64("work_id")
 	work_step_id, _ := this.GetInt64("work_step_id")
 
 	preParamOutputSchemaTreeNodeArr := []*schema.TreeNode{}
@@ -303,4 +303,9 @@ func LoadWorkInfo() *schema.ParamOutputSchema {
 		})
 	}
 	return pos
+}
+
+func (this *WorkController) GetRelativeWork() {
+	work_id,_ := this.GetInt64("work_id")
+	iwork.GetAllWorkStepInfo(work_id)
 }

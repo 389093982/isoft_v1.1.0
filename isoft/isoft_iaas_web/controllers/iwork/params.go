@@ -11,7 +11,7 @@ import (
 )
 
 // 构建动态输入值
-func BuildDynamicInput(work_id string, work_step_id int64) {
+func BuildDynamicInput(work_id int64, work_step_id int64) {
 	// 读取 work_step 信息
 	step, err := iwork.LoadWorkStepInfo(work_id, work_step_id)
 	if err != nil {
@@ -39,7 +39,7 @@ func BuildDynamicInput(work_id string, work_step_id int64) {
 }
 
 // 构建动态输出值
-func BuildDynamicOutput(work_id string, work_step_id int64) {
+func BuildDynamicOutput(work_id int64, work_step_id int64) {
 	// 读取 work_step 信息
 	step, err := iwork.LoadWorkStepInfo(work_id, work_step_id)
 	if err != nil {
@@ -73,7 +73,7 @@ func checkAndCreateSubWork(work_name string) {
 	}
 }
 
-func BuildAutoCreateSubWork(work_id string, work_step_id int64) {
+func BuildAutoCreateSubWork(work_id int64, work_step_id int64) {
 	// 读取 work_step 信息
 	step, err := iwork.LoadWorkStepInfo(work_id, work_step_id)
 	if err != nil {
@@ -105,7 +105,7 @@ func BuildAutoCreateSubWork(work_id string, work_step_id int64) {
 }
 
 // 构建动态值
-func BuildDynamic(work_id string, work_step_id int64) {
+func BuildDynamic(work_id int64, work_step_id int64) {
 	// 自动创建子流程
 	BuildAutoCreateSubWork(work_id, work_step_id)
 	// 构建动态输入值
@@ -115,7 +115,7 @@ func BuildDynamic(work_id string, work_step_id int64) {
 }
 
 func (this *WorkController) EditWorkStepParamInfo() {
-	work_id := this.GetString("work_id")
+	work_id,_ := this.GetInt64("work_id")
 	work_step_id, _ := this.GetInt64("work_step_id", -1)
 	paramInputSchemaStr := this.GetString("paramInputSchemaStr")
 	paramMappingsStr := this.GetString("paramMappingsStr")

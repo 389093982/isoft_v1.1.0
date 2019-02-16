@@ -18,7 +18,7 @@
           @on-change="handleChange" @on-page-size-change="handlePageSizeChange"/>
 
     <!-- 相关流程清单 -->
-    <RelativeWork/>
+    <RelativeWork ref="relativeWork"/>
   </div>
 </template>
 
@@ -170,6 +170,9 @@
         if(result.status=="SUCCESS"){
           this.worksteps = result.worksteps;
           this.total = result.paginator.totalcount;
+
+          // 刷新关联流程信息
+          this.$refs.relativeWork.refreshRelativeWork(this.$route.query.work_id);
         }
       },
       handleChange(page){

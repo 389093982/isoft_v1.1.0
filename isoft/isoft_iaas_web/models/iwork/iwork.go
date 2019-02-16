@@ -105,7 +105,7 @@ func GetNextWorkStepId(work_id int64) int64 {
 	return 1
 }
 
-func QueryWorkStep(condArr map[string]string, page int, offset int) (steps []WorkStep, counts int64, err error) {
+func QueryWorkStep(condArr map[string]interface{}, page int, offset int) (steps []WorkStep, counts int64, err error) {
 	o := orm.NewOrm()
 	qs := o.QueryTable("work_step")
 	if work_id, ok := condArr["work_id"]; ok {
@@ -118,7 +118,7 @@ func QueryWorkStep(condArr map[string]string, page int, offset int) (steps []Wor
 	return
 }
 
-func GetOneWorkStep(work_id string, work_step_id int64) (step WorkStep, err error) {
+func GetOneWorkStep(work_id int64, work_step_id int64) (step WorkStep, err error) {
 	o := orm.NewOrm()
 	err = o.QueryTable("work_step").Filter("work_id", work_id).Filter("work_step_id", work_step_id).One(&step)
 	return
@@ -130,7 +130,7 @@ func GetAllWorkStepInfo(work_id int64) (steps []WorkStep, err error) {
 	return
 }
 
-func LoadWorkStepInfo(work_id string, work_step_id int64) (step WorkStep, err error) {
+func LoadWorkStepInfo(work_id int64, work_step_id int64) (step WorkStep, err error) {
 	o := orm.NewOrm()
 	err = o.QueryTable("work_step").Filter("work_id", work_id).Filter("work_step_id", work_step_id).One(&step)
 	return
@@ -143,7 +143,7 @@ func DeleteWorkStepById(id int64) error {
 }
 
 // 获取前置节点信息
-func GetAllPreStepInfo(work_id string, work_step_id int64) (steps []WorkStep, err error) {
+func GetAllPreStepInfo(work_id int64, work_step_id int64) (steps []WorkStep, err error) {
 	o := orm.NewOrm()
 	_, err = o.QueryTable("work_step").Filter("work_id", work_id).
 		Filter("work_step_id__lt", work_step_id).OrderBy("work_step_id").All(&steps)
