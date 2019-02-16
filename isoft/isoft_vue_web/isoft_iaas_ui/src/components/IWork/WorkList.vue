@@ -1,5 +1,10 @@
 <template>
   <div style="margin: 10px;">
+    <Row type="flex" justify="center">
+      <Col span="2"><EntityList/></Col>
+      <Col span="2"><GlobalVarList/></Col>
+    </Row>
+
     <ISimpleLeftRightRow>
       <!-- left 插槽部分 -->
       <WorkEdit ref="workEdit" slot="left" @handleSuccess="refreshWorkList"/>
@@ -20,10 +25,12 @@
   import ISimpleLeftRightRow from "../Common/layout/ISimpleLeftRightRow"
   import ISimpleSearch from "../Common/search/ISimpleSearch"
   import WorkEdit from "./WorkEdit"
+  import EntityList from "./EntityList"
+  import GlobalVarList from "./GlobalVarList"
 
   export default {
     name: "WorkList",
-    components:{ISimpleLeftRightRow,ISimpleSearch,WorkEdit},
+    components:{ISimpleLeftRightRow,ISimpleSearch,WorkEdit,EntityList,GlobalVarList},
     data(){
       return {
         // 当前页
