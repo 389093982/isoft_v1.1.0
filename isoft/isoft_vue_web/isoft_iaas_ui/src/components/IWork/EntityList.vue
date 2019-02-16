@@ -65,7 +65,23 @@
                     click: () => {
                     }
                   }
-                }, '操作'),
+                }, '删除'),
+                h('Button', {
+                  props: {
+                    type: 'error',
+                    size: 'small'
+                  },
+                  style: {
+                    marginRight: '5px',
+                  },
+                  on: {
+                    click: () => {
+                      this.formValidate.entity_id = this.entities[params.index]['id'];
+                      this.formValidate.entity_name = this.entities[params.index]['entity_name'];
+                      this.formValidate.entity_field_str = this.entities[params.index]['entity_field_str'];
+                    }
+                  }
+                }, '编辑'),
               ]);
             }
           }
@@ -90,6 +106,8 @@
         const result = await FilterPageEntity(this.offset, this.current_page);
         if(result.status == "SUCCESS"){
           this.entities = result.entities;
+          this.worksteps = result.worksteps;
+          this.total = result.paginator.totalcount;
         }
       },
       handleChange(page){
