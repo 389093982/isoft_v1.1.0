@@ -60,7 +60,7 @@
         this.showFormModal = true;
         this.$emit("btnClick");
       }
-    }
+    },
   }
 </script>
 

@@ -18,6 +18,26 @@ type WorkController struct {
 	beego.Controller
 }
 
+func (this *WorkController) EditEntity()  {
+	var entity iwork.Entity
+	entity_id, err := this.GetInt64("entity_id", -1)
+	if err == nil && entity_id > 0 {
+		entity.Id = entity_id
+	}
+	entity.EntityName = this.GetString("entity_name")
+	entity.EntityFieldStr = this.GetString("entity_field_str")
+	entity.CreatedBy = "SYSTEM"
+	entity.CreatedTime = time.Now()
+	entity.LastUpdatedBy = "SYSTEM"
+	entity.LastUpdatedTime = time.Now()
+	if _, err := iwork.InsertOrUpdateEntity(&entity); err == nil {
+		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
+	} else {
+		this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
+	}
+	this.ServeJSON()
+}
+
 func (this *WorkController) FilterPageEntity()  {
 	offset, _ := this.GetInt("offset", 10)            // 每页记录数
 	current_page, _ := this.GetInt("current_page", 1) // 当前页

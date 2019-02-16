@@ -52,6 +52,7 @@ func init() {
 	beego.Router("/api/iwork/httpservice/:work_name", &iwork.WorkController{}, "get,post:PublishAsSerivce")
 	beego.Router("/api/iwork/getRelativeWork", &iwork.WorkController{}, "post:GetRelativeWork")
 	beego.Router("/api/iwork/filterPageEntity", &iwork.WorkController{}, "post:FilterPageEntity")
+	beego.Router("/api/iwork/editEntity", &iwork.WorkController{}, "post:EditEntity")
 
 	// ilearning 模块
 	if strings.Contains(beego.AppConfig.String("open.moudles"), "ilearning") {

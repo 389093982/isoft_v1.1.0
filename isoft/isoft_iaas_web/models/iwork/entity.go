@@ -23,3 +23,13 @@ func QueryEntity(page int, offset int) (entities []Entity, counts int64, err err
 	qs.All(&entities)
 	return
 }
+
+func InsertOrUpdateEntity(entity *Entity) (id int64, err error) {
+	o := orm.NewOrm()
+	if entity.Id > 0 {
+		id, err = o.Update(entity)
+	} else {
+		id, err = o.Insert(entity)
+	}
+	return
+}

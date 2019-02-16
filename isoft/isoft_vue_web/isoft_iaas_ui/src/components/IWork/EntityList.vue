@@ -1,6 +1,20 @@
 <template>
   <span>
     <ISimpleBtnTriggerModal ref="triggerModal" btn-text="实体类管理" modal-title="新增/编辑实体类" :modal-width="800">
+      <!-- 表单信息 -->
+      <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="100">
+        <FormItem label="entity_name" prop="entity_name">
+          <Input v-model.trim="formValidate.entity_name" placeholder="请输入 entity_name"></Input>
+        </FormItem>
+        <FormItem label="entity_field_str" prop="entity_field_str">
+          <Input v-model.trim="formValidate.entity_field_str" type="textarea" :rows="4" placeholder="请输入 entity_field_str"></Input>
+        </FormItem>
+        <FormItem>
+          <Button type="success" @click="handleSubmit('formValidate')" style="margin-right: 6px">Submit</Button>
+          <Button type="warning" @click="handleReset('formValidate')" style="margin-right: 6px">Reset</Button>
+        </FormItem>
+      </Form>
+
       <Table :columns="columns1" :data="entities" size="small"></Table>
       <Page :total="total" :page-size="offset" show-total show-sizer :styles="{'text-align': 'center','margin-top': '10px'}"
             @on-change="handleChange" @on-page-size-change="handlePageSizeChange"/>
@@ -11,6 +25,7 @@
 <script>
   import ISimpleBtnTriggerModal from "../Common/modal/ISimpleBtnTriggerModal"
   import {FilterPageEntity} from "../../api"
+  import {EditEntity} from "../../api"
 
   export default {
     name: "EntityList",
@@ -55,6 +70,19 @@
             }
           }
         ],
+        formValidate: {
+          entity_id:-1,
+          entity_name: '',
+          entity_field_str: '',
+        },
+        ruleValidate: {
+          entity_name: [
+            { required: true, message: 'entity_name 不能为空!', trigger: 'blur' }
+          ],
+          entity_field_str: [
+            { required: true, message: 'entity_field_str 不能为空!', trigger: 'blur' }
+          ],
+        },
       }
     },
     methods:{
@@ -71,6 +99,26 @@
       handlePageSizeChange(pageSize){
         this.offset = pageSize;
         this.refreshEntityList();
+      },
+      handleSubmit (name) {
+        this.$refs[name].validate(async (valid) => {
+          if (valid) {
+            const result = await EditEntity(this.formValidate.entity_id, this.formValidate.entity_name, this.formValidate.entity_field_str);
+            if(result.status == "SUCCESS"){
+              this.$Message.success('提交成功!');
+              // 刷新表格
+              this.refreshEntityList();
+              // 表单重置,以取消缓存
+              this.$refs[name].resetFields();
+              this.formValidate.entity_id = -1;
+            }else{
+              this.$Message.error('提交失败!');
+            }
+          }
+        })
+      },
+      handleReset (name) {
+        this.$refs[name].resetFields();
       },
     },
     mounted(){
