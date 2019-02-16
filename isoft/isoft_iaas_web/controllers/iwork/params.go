@@ -2,9 +2,11 @@ package iwork
 
 import (
 	"encoding/json"
+	"fmt"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
 	"isoft/isoft_iaas_web/core/iworknode"
 	"isoft/isoft_iaas_web/models/iwork"
+	"strings"
 	"time"
 )
 
@@ -53,8 +55,59 @@ func BuildDynamicOutput(work_id string, work_step_id int64) {
 	}
 }
 
+func checkAndCreateSubWork(work_name string)  {
+	if _, err := iwork.QueryWorkByName(work_name); err != nil{
+		// 不存在 work 则直接创建
+		work := &iwork.Work{
+			WorkName : work_name,
+			WorkDesc : fmt.Sprintf("自动创建子流程:%s",work_name),
+			CreatedBy : "SYSTEM",
+			CreatedTime : time.Now(),
+			LastUpdatedBy : "SYSTEM",
+			LastUpdatedTime : time.Now(),
+		}
+		if _, err := iwork.InsertOrUpdateWork(work); err == nil{
+			// 写入 DB 并自动创建开始和结束节点
+			insertStartEndWorkStepNode(work.Id)
+		}
+	}
+}
+
+func BuildAutoCreateSubWork(work_id string, work_step_id int64) {
+	// 读取 work_step 信息
+	step, err := iwork.LoadWorkStepInfo(work_id, work_step_id)
+	if err != nil {
+		panic(err)
+	}
+	if step.WorkStepType != "work_sub"{
+		return
+	}
+	paramInputSchema := schema.GetCacheParamInputSchema(&step, &iworknode.WorkStepFactory{WorkStep: &step})
+	for index, item := range paramInputSchema.ParamInputSchemaItems {
+		if item.ParamName == "work_sub" {
+			paramValue := strings.TrimSpace(item.ParamValue)
+			if strings.HasPrefix(paramValue, "$WORK."){
+				return
+			}else{
+				// 修改值并同步到数据库
+				paramInputSchema.ParamInputSchemaItems[index] = schema.ParamInputSchemaItem{
+					ParamName:item.ParamName,
+					ParamValue:strings.Join([]string{"$WORK.",paramValue},""),
+				}
+				step.WorkStepInput = paramInputSchema.RenderToXml()
+				// 自动创建子流程
+				checkAndCreateSubWork(paramValue)
+			}
+			break
+		}
+	}
+	iwork.InsertOrUpdateWorkStep(&step)
+}
+
 // 构建动态值
 func BuildDynamic(work_id string, work_step_id int64) {
+	// 自动创建子流程
+	BuildAutoCreateSubWork(work_id, work_step_id)
 	// 构建动态输入值
 	BuildDynamicInput(work_id, work_step_id)
 	// 构建动态输出值
