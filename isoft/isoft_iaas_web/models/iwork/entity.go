@@ -45,3 +45,9 @@ func GetAllEntityInfo() (entities []Entity) {
 	o.QueryTable("entity").OrderBy("id").All(&entities)
 	return
 }
+
+func QueryEntityByEntityName(entity_name string) (entity Entity, err error) {
+	o := orm.NewOrm()
+	_, err = o.QueryTable("entity").Filter("entity_name",entity_name).All(&entity)
+	return
+}
