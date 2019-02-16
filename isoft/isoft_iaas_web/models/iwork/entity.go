@@ -1,6 +1,9 @@
 package iwork
 
-import "time"
+import (
+	"github.com/astaxie/beego/orm"
+	"time"
+)
 
 type Entity struct {
 	Id              int64     `json:"id"`
@@ -12,3 +15,11 @@ type Entity struct {
 	LastUpdatedTime time.Time `json:"last_updated_time"`
 }
 
+func QueryEntity(page int, offset int) (entities []Entity, counts int64, err error) {
+	o := orm.NewOrm()
+	qs := o.QueryTable("entity")
+	counts, _ = qs.Count()
+	qs = qs.Limit(offset, (page-1)*offset)
+	qs.All(&entities)
+	return
+}

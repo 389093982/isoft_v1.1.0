@@ -51,6 +51,7 @@ func init() {
 	beego.Router("/api/iwork/getLastRunLogDetail", &iwork.WorkController{}, "post:GetLastRunLogDetail")
 	beego.Router("/api/iwork/httpservice/:work_name", &iwork.WorkController{}, "get,post:PublishAsSerivce")
 	beego.Router("/api/iwork/getRelativeWork", &iwork.WorkController{}, "post:GetRelativeWork")
+	beego.Router("/api/iwork/filterPageEntity", &iwork.WorkController{}, "post:FilterPageEntity")
 
 	// ilearning 模块
 	if strings.Contains(beego.AppConfig.String("open.moudles"), "ilearning") {

@@ -1,6 +1,6 @@
 <template>
   <span>
-    <ISimpleBtnTriggerModal ref="triggerModal" btn-text="全局变量管理" modal-title="新增/编辑 work" :modal-width="600">
+    <ISimpleBtnTriggerModal ref="triggerModal" btn-text="全局变量管理" modal-title="新增/编辑全局变量" :modal-width="800">
       GlobalVar管理
     </ISimpleBtnTriggerModal>
   </span>

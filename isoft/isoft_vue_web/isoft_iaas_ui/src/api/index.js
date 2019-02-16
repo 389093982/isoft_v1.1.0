@@ -167,9 +167,6 @@ export const DeleteWorkStepById = (id) => ajax(BASE_URL+"/iwork/deleteWorkStepBy
 // 交换 workstep 顺序
 export const ChangeWorkStepOrder = (work_id,work_step_id,type) => ajax(BASE_URL+"/iwork/changeWorkStepOrder", {work_id,work_step_id,type},'POST');
 
-// 查询所有的 workstep 信息
-export const GetAllWorkStepInfo = (work_id) => ajax(BASE_URL+"/iwork/getAllWorkStepInfo", {work_id},'POST');
-
 // 分页查询运行记录
 export const FilterPageLogRecord = (work_id,offset,current_page) => ajax(BASE_URL+"/iwork/filterPageLogRecord", {work_id,offset,current_page},'POST');
 
@@ -178,6 +175,9 @@ export const GetLastRunLogDetail = (tracking_id) => ajax(BASE_URL+"/iwork/getLas
 
 // 获取相关流程
 export const GetRelativeWork = (work_id) => ajax(BASE_URL+"/iwork/getRelativeWork", {work_id},'POST');
+
+// 分页查询 entity 信息
+export const FilterPageEntity = (offset,current_page) => ajax(BASE_URL+"/iwork/filterPageEntity", {offset,current_page},'POST');
 
 // 跨模块使用,模块化部署时需要使用 nginx 代理
 export const LoginAddr = "/sso/login/";

@@ -18,6 +18,20 @@ type WorkController struct {
 	beego.Controller
 }
 
+func (this *WorkController) FilterPageEntity()  {
+	offset, _ := this.GetInt("offset", 10)            // 每页记录数
+	current_page, _ := this.GetInt("current_page", 1) // 当前页
+	entities, count, err := iwork.QueryEntity(current_page, offset)
+	paginator := pagination.SetPaginator(this.Ctx, offset, count)
+	if err == nil {
+		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "entities": entities,
+			"paginator": pageutil.Paginator(paginator.Page(), paginator.PerPageNums, paginator.Nums())}
+	} else {
+		this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
+	}
+	this.ServeJSON()
+}
+
 func (this *WorkController) GetRelativeWork() {
 	work_id,_ := this.GetInt64("work_id")
 	subWorks := make([]iwork.Work,0)
