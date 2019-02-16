@@ -1,6 +1,6 @@
 <template>
   <span>
-    <ISimpleBtnTriggerModal ref="triggerModal" btn-text="实体类管理" modal-title="新增/编辑实体类" :modal-width="800">
+    <ISimpleBtnTriggerModal ref="triggerModal" btn-text="实体类管理" modal-title="新增/编辑实体类" :modal-width="800" modal-top="10px">
       <!-- 表单信息 -->
       <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="100">
         <FormItem label="entity_name" prop="entity_name">

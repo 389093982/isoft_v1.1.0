@@ -9,7 +9,8 @@
       :title="modalTitle"
       :footer-hide="true"
       :transfer="false"
-      :mask-closable="false">
+      :mask-closable="false"
+      :styles="{top: modalTop}">
       <div>
         <slot></slot>
       </div>
@@ -40,6 +41,11 @@
       modalWidth: {
         type: Number,
         default: 800
+      },
+
+      modalTop: {
+        type: String,
+        default: '100px'
       },
     },
     data(){
