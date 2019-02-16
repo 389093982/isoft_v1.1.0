@@ -39,3 +39,9 @@ func DeleteEntityById(entity_id int64) error {
 	_, err := o.QueryTable("entity").Filter("id", entity_id).Delete()
 	return err
 }
+
+func GetAllEntityInfo() (entities []Entity) {
+	o := orm.NewOrm()
+	o.QueryTable("entity").OrderBy("id").All(&entities)
+	return
+}

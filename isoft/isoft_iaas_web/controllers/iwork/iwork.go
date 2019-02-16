@@ -325,6 +325,9 @@ func (this *WorkController) LoadPreNodeOutput() {
 	// 加载 work 参数
 	pos = LoadWorkInfo()
 	preParamOutputSchemaTreeNodeArr = append(preParamOutputSchemaTreeNodeArr, pos.RenderToTreeNodes("$WORK"))
+	// 加载 entity 参数
+	pos = LoadEntityInfo()
+	preParamOutputSchemaTreeNodeArr = append(preParamOutputSchemaTreeNodeArr, pos.RenderToTreeNodes("$Entity"))
 	// 加载前置步骤输出
 	if steps, err := iwork.GetAllPreStepInfo(work_id, work_step_id); err == nil {
 		for _, step := range steps {
@@ -360,6 +363,19 @@ func LoadWorkInfo() *schema.ParamOutputSchema {
 	for _, work := range works {
 		pos.ParamOutputSchemaItems = append(pos.ParamOutputSchemaItems, schema.ParamOutputSchemaItem{
 			ParamName: work.WorkName,
+		})
+	}
+	return pos
+}
+
+func LoadEntityInfo() *schema.ParamOutputSchema {
+	pos := &schema.ParamOutputSchema{
+		ParamOutputSchemaItems: []schema.ParamOutputSchemaItem{},
+	}
+	entities := iwork.GetAllEntityInfo()
+	for _, entity := range entities {
+		pos.ParamOutputSchemaItems = append(pos.ParamOutputSchemaItems, schema.ParamOutputSchemaItem{
+			ParamName: entity.EntityName,
 		})
 	}
 	return pos
