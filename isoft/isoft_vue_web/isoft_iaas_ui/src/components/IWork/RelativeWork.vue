@@ -21,7 +21,7 @@
       refreshRelativeWork:async function (work_id) {
         const result = await GetRelativeWork(work_id);
         if(result.status == "SUCCESS"){
-          alert(result);
+          // alert(result);
         }
       }
     }

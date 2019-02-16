@@ -86,9 +86,7 @@ func BuildAutoCreateSubWork(work_id int64, work_step_id int64) {
 	for index, item := range paramInputSchema.ParamInputSchemaItems {
 		if item.ParamName == "work_sub" {
 			paramValue := strings.TrimSpace(item.ParamValue)
-			if strings.HasPrefix(paramValue, "$WORK.") {
-				return
-			} else {
+			if !strings.HasPrefix(paramValue, "$WORK.") {
 				// 修改值并同步到数据库
 				paramInputSchema.ParamInputSchemaItems[index] = schema.ParamInputSchemaItem{
 					ParamName:  item.ParamName,
@@ -98,6 +96,9 @@ func BuildAutoCreateSubWork(work_id int64, work_step_id int64) {
 				// 自动创建子流程
 				checkAndCreateSubWork(paramValue)
 			}
+			// 维护 work 的 WorkSubId 属性
+			subWork,_ := iwork.QueryWorkByName(strings.Replace(paramValue, "$WORK.", "", -1))
+			step.WorkSubId = subWork.Id
 			break
 		}
 	}
