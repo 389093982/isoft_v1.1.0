@@ -69,7 +69,7 @@ func QueryParentWorks(work_id int64) (works []Work, counts int64, err error) {
 	_, err = o.QueryTable("work_step").Filter("work_sub_id", work_id).Distinct().Values(&params, "work_id")
 	if err == nil{
 		for _, param := range params{
-			parent_work_id := param["work_id"].(int64)
+			parent_work_id := param["WorkId"].(int64)
 			pWork, _ := QueryWorkById(parent_work_id)
 			works = append(works, pWork)
 		}
