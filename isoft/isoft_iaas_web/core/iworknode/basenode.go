@@ -7,7 +7,6 @@ import (
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
 	"isoft/isoft_iaas_web/core/iworkutil"
 	"isoft/isoft_iaas_web/core/iworkutil/funcutil"
-	"isoft/isoft_iaas_web/models/iresource"
 	"isoft/isoft_iaas_web/models/iwork"
 	"strconv"
 	"strings"
@@ -16,9 +15,9 @@ import (
 // 所有 node 的基类
 type BaseNode struct {}
 
-// paramValue 来源于 iresource 模块
+// paramValue 来源于 iwork 模块
 func (this *BaseNode) parseAndFillParamVauleWithResource(paramVaule string) interface{} {
-	return iresource.GetResourceDataSourceNameString(strings.Replace(paramVaule, "$RESOURCE.", "", -1))
+	return iwork.GetResourceDataSourceNameString(strings.Replace(paramVaule, "$RESOURCE.", "", -1))
 }
 
 // paramValue 来源于前置节点

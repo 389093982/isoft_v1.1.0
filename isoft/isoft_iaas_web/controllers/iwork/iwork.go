@@ -9,7 +9,6 @@ import (
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
 	"isoft/isoft_iaas_web/core/iworknode"
 	"isoft/isoft_iaas_web/core/iworkrun"
-	"isoft/isoft_iaas_web/models/iresource"
 	"isoft/isoft_iaas_web/models/iwork"
 	"time"
 )
@@ -346,7 +345,7 @@ func LoadResourceInfo() *schema.ParamOutputSchema {
 	pos := &schema.ParamOutputSchema{
 		ParamOutputSchemaItems: []schema.ParamOutputSchemaItem{},
 	}
-	resources := iresource.GetAllResource()
+	resources := iwork.GetAllResource()
 	for _, resource := range resources {
 		pos.ParamOutputSchemaItems = append(pos.ParamOutputSchemaItems, schema.ParamOutputSchemaItem{
 			ParamName: resource.ResourceName,

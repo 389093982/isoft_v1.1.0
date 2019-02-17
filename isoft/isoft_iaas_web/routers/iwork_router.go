@@ -2,8 +2,6 @@ package routers
 
 import (
 	"github.com/astaxie/beego"
-	"isoft/isoft_iaas_web/controllers/iquartz"
-	"isoft/isoft_iaas_web/controllers/iresource"
 	"isoft/isoft_iaas_web/controllers/iwork"
 	"strings"
 )
@@ -15,10 +13,10 @@ func loadIWorkerRouter()  {
 }
 
 func loadloadIWorkerRouterDetail()  {
-	beego.Router("/api/iquartz/addQuartz", &iquartz.QuartzController{}, "post:AddQuartz")
-	beego.Router("/api/iquartz/filterPageQuartz", &iquartz.QuartzController{}, "post:FilterPageQuartz")
-	beego.Router("/api/iresource/addResource", &iresource.ResourceController{}, "post:AddResource")
-	beego.Router("/api/iresource/filterPageResource", &iresource.ResourceController{}, "post:FilterPageResource")
+	beego.Router("/api/iwork/addQuartz", &iwork.WorkController{}, "post:AddQuartz")
+	beego.Router("/api/iwork/filterPageQuartz", &iwork.WorkController{}, "post:FilterPageQuartz")
+	beego.Router("/api/iwork/addResource", &iwork.WorkController{}, "post:AddResource")
+	beego.Router("/api/iwork/filterPageResource", &iwork.WorkController{}, "post:FilterPageResource")
 
 	beego.Router("/api/iwork/filterPageWork", &iwork.WorkController{}, "post:FilterPageWork")
 	beego.Router("/api/iwork/editWork", &iwork.WorkController{}, "post:EditWork")

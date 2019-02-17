@@ -1,4 +1,4 @@
-package iquartz
+package iwork
 
 import (
 	"github.com/astaxie/beego/orm"

@@ -1,10 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-import ILayout from "../components/ILayout/ILayout"
-import QuartzList from "../components/IQuartz/QuartzList"
-import ResourceList from "../components/IResource/ResourceList"
-
 import {getISSORouters} from "./sso"
 import {getIWorkRouters} from "./iwork"
 import {getILearningRouters} from "./ilearning"
@@ -12,23 +8,7 @@ import {getRootRouters} from "./root"
 
 Vue.use(Router);
 
-export const IQuartzRouter = {
-  path: '/quartz',
-  component: ILayout,
-  children: [
-    {path: 'quartzList',component: QuartzList},
-  ]
-};
 
-
-
-export const IResourceRouter = {
-  path: '/resource',
-  component: ILayout,
-  children: [
-    {path: 'resourceList',component: ResourceList},
-  ]
-};
 
 function getAllRouters() {
   let allRouters = [];

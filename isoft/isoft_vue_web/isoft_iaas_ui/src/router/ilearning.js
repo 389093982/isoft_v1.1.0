@@ -19,9 +19,6 @@ import ShareDetail from "../components/Share/ShareDetail"
 import HeartBeat from "../components/Monitor/HeartBeat"
 import CommonLinkList from "../components/CMS/CommonLinkList"
 import ILayout from "../components/ILayout/ILayout"
-import {getIWorkRouter} from "./iwork";
-import {getISSORouter} from "./sso";
-import {IQuartzRouter, IResourceRouter} from "./index";
 import {modulesCheck} from "../imodules";
 
 const IBlogRouter = {

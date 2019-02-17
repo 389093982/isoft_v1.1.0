@@ -1,4 +1,4 @@
-package iresource
+package iwork
 
 import (
 	"github.com/astaxie/beego/orm"

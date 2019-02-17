@@ -120,16 +120,16 @@ export const AddAppRegister = (app_address) => ajax(BASE_URL+"/sso/app/addAppReg
 export const LoginRecordList = (offset,current_page,search) => ajax(BASE_URL+"/sso/user/loginRecordList", {offset,current_page,search},'POST');
 
 // 定时任务分页查询
-export const QuartzList = (offset,current_page,search) => ajax(BASE_URL+"/iquartz/filterPageQuartz", {offset,current_page,search},'POST');
+export const QuartzList = (offset,current_page,search) => ajax(BASE_URL+"/iwork/filterPageQuartz", {offset,current_page,search},'POST');
 
 // 添加 quartz 记录
-export const AddQuartz = (task_name,task_type,task_id,cron_str) => ajax(BASE_URL+"/iquartz/addQuartz", {task_name,task_type,task_id,cron_str},'POST');
+export const AddQuartz = (task_name,task_type,task_id,cron_str) => ajax(BASE_URL+"/iwork/addQuartz", {task_name,task_type,task_id,cron_str},'POST');
 
 // resource 分页查询
-export const ResourceList = (offset,current_page,search) => ajax(BASE_URL+"/iresource/filterPageResource", {offset,current_page,search},'POST');
+export const ResourceList = (offset,current_page,search) => ajax(BASE_URL+"/iwork/filterPageResource", {offset,current_page,search},'POST');
 
 // 添加 resource 记录
-export const AddResource = (resource_name,resource_type,resource_url,resource_dsn,resource_username,resource_password,env_name) => ajax(BASE_URL+"/iresource/addResource", {resource_name,resource_type,resource_url,resource_dsn,resource_username,resource_password,env_name},'POST');
+export const AddResource = (resource_name,resource_type,resource_url,resource_dsn,resource_username,resource_password,env_name) => ajax(BASE_URL+"/iwork/addResource", {resource_name,resource_type,resource_url,resource_dsn,resource_username,resource_password,env_name},'POST');
 
 // work 分页查询
 export const WorkList = (offset,current_page,search) => ajax(BASE_URL+"/iwork/filterPageWork", {offset,current_page,search},'POST');

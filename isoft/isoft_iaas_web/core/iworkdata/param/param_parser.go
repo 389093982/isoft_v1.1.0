@@ -3,7 +3,6 @@ package param
 import (
 	"encoding/xml"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
-	"isoft/isoft_iaas_web/models/iresource"
 	"isoft/isoft_iaas_web/models/iwork"
 	"strings"
 )
@@ -47,7 +46,7 @@ func (this *ParamVauleParser) GetStaticParamValue() string {
 		resource_name = strings.Replace(resource_name, "$RESOURCE.", "", -1)
 		resource_name = strings.Replace(resource_name, ";", "", -1)
 		resource_name = strings.TrimSpace(resource_name)
-		return iresource.GetResourceDataSourceNameString(resource_name)
+		return iwork.GetResourceDataSourceNameString(resource_name)
 	}
 	return this.ParamValue
 }

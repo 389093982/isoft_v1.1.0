@@ -4,25 +4,25 @@ import (
 	"fmt"
 	"github.com/robfig/cron"
 	"isoft/isoft_iaas_web/imodules"
-	"isoft/isoft_iaas_web/models/iquartz"
+	"isoft/isoft_iaas_web/models/iwork"
 )
 
 func StartIQuartzInitialTask() {
 	if imodules.CheckModule("iwork"){
-		if metas, err := iquartz.GetAllCronMeta(); err == nil {
+		if metas, err := iwork.GetAllCronMeta(); err == nil {
 			c := cron.New()
 			for _, meta := range metas {
-				c.AddJob(meta.CronStr, &IQuartzJob{meta: &meta})
+				c.AddJob(meta.CronStr, &iworkJob{meta: &meta})
 			}
 			c.Start()
 		}
 	}
 }
 
-type IQuartzJob struct {
-	meta *iquartz.CronMeta
+type iworkJob struct {
+	meta *iwork.CronMeta
 }
 
-func (this *IQuartzJob) Run() {
+func (this *iworkJob) Run() {
 	fmt.Print(this.meta.CronStr)
 }
