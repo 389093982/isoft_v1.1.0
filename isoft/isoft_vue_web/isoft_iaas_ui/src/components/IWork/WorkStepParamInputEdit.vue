@@ -2,7 +2,10 @@
   <span>
     <Row v-for="item in paramInputSchemaItems" style="margin-bottom: 10px;">
       <Row>
-        <Col span="12">{{item.ParamName}}</Col>
+        <Col span="12">
+          {{item.ParamName}}
+          <Icon type="ios-book-outline" size="18" style="margin-left: 10px;" @click="showParamDesc(item.ParamDesc)"/>
+        </Col>
         <Col span="12">
           <WorkStepParamInputEditDialog :input-label="item.ParamName" :input-text="item.ParamValue"
            @handleSubmit="refreshParamInputSchemaItems"/>
@@ -38,6 +41,12 @@
           }
         }
       },
+      showParamDesc:function (paramDesc) {
+        this.$Modal.info({
+          title: "使用说明",
+          content: paramDesc
+        });
+      }
     },
   }
 </script>
