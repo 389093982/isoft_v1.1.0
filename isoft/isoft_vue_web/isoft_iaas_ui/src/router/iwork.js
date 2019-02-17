@@ -2,12 +2,12 @@ import WorkList from "../components/IWork/WorkList"
 import WorkStepList from "../components/IWork/WorkStepList"
 import RunLogList from "../components/IWork/RunLogList"
 import RunLogDetail from "../components/IWork/RunLogDetail"
-import ILayout from "../components/ILayout/ILayout"
+import IWorkLayout from "../components/ILayout/IWorkLayout"
 import {modulesCheck} from "../imodules";
 
 const IWorkRouter = {
   path: '/iwork',
-  component: ILayout,
+  component: IWorkLayout,
   children: [
     {path: 'workList',component: WorkList},
     {path: 'workstepList',component: WorkStepList},
