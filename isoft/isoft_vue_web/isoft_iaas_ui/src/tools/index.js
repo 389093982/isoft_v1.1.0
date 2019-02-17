@@ -60,6 +60,12 @@ export function checkContainsInString(str, subStr) {
   return str.indexOf(subStr) != -1
 }
 
+// 校验只能含有字母数字和下划线
+export function validateCommonPatternForString(str) {
+  var uPattern = /^[a-zA-Z0-9_]{1,}$/;
+  return uPattern.test(str);
+}
+
 // 校验密码
 export function validateUserName(username) {
   // 6至20位，以字母开头，字母，数字，减号，下划线!

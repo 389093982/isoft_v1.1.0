@@ -21,11 +21,21 @@
 <script>
   import ISimpleBtnTriggerModal from "../Common/modal/ISimpleBtnTriggerModal"
   import {EditWork} from "../../api"
+  import {validateCommonPatternForString} from "../../tools"
 
   export default {
     name: "WorkEdit",
     components:{ISimpleBtnTriggerModal},
     data(){
+      const _validateWorkName = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('字段值不能为空!'));
+        } else if (!validateCommonPatternForString(value)) {
+          callback(new Error('存在非法字符，只能包含字母，数字，下划线!'));
+        } else {
+          callback();
+        }
+      };
       return {
         formValidate: {
           work_id:-1,
@@ -34,7 +44,7 @@
         },
         ruleValidate: {
           work_name: [
-            { required: true, message: 'work_name 不能为空!', trigger: 'blur' }
+            { validator: _validateWorkName, trigger: 'blur' },
           ],
           work_desc: [
             { required: true, message: 'work_desc 不能为空!', trigger: 'blur' }
