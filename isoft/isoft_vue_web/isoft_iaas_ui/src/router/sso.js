@@ -16,9 +16,9 @@ const ISSOReouter = {
   ]
 };
 
-export const getISSORouter = function () {
+export const getISSORouters = function () {
   if (modulesCheck("sso")){
-    return ISSOReouter;
+    return [ISSOReouter];
   }
-  return {}
+  return [];
 };

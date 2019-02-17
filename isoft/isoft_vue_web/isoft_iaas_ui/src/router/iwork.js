@@ -16,9 +16,9 @@ const IWorkRouter = {
   ]
 };
 
-export const getIWorkRouter = function () {
+export const getIWorkRouters = function () {
   if (modulesCheck("iwork")){
-    return IWorkRouter;
+    return [IWorkRouter];
   }
-  return {}
+  return [];
 };
