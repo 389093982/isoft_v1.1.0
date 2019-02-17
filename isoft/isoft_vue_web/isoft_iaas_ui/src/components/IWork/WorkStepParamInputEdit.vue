@@ -9,7 +9,7 @@
         </Col>
       </Row>
       <Row>
-        <Input size="small" v-model="item.ParamValue" readonly type="textarea" :rows="2" placeholder="small size"/>
+        <Input size="small" v-model.trim="item.ParamValue" readonly type="text" placeholder="small size"/>
       </Row>
     </Row>
   </span>
