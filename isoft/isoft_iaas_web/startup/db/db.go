@@ -17,7 +17,7 @@ const RunSyncdbMode = "AUTO"
 func ConfigureDBInfo() {
 	if imodules.CheckModule("iwork") {
 		imysql.RegisterDBForMysql()
-		//RegisterDBForSqlite3()
+		//isqlite3.RegisterDBForSqlite3()
 	}else{
 		imysql.RegisterDBForMysql()
 	}
