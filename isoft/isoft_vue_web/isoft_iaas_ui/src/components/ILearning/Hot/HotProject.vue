@@ -34,7 +34,6 @@
     },
     mounted:function () {
       this.refreshRandomHotProject();
-      setInterval(this.refreshRandomHotProject, 30000);
     }
   }
 </script>

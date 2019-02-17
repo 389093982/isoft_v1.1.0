@@ -36,7 +36,6 @@
     },
     mounted:function () {
       this.refreshRandomFrinkLink();
-      setInterval(this.refreshRandomFrinkLink, 30000);
     }
   }
 </script>
