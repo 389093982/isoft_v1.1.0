@@ -14,7 +14,7 @@ import (
 
 func loadIaasRouter()  {
 	// ilearning 模块
-	if strings.Contains(beego.AppConfig.String("open.moudles"), "ilearning") {
+	if strings.Contains(beego.AppConfig.String("open.modules"), "ilearning") {
 		initIBlogRouter()
 		initILearningRouter()
 		initCMSRouter()

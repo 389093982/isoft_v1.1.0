@@ -9,7 +9,7 @@ import (
 )
 
 func loadIWorkerRouter()  {
-	if strings.Contains(beego.AppConfig.String("open.moudles"), "iwork") {
+	if strings.Contains(beego.AppConfig.String("open.modules"), "iwork") {
 		loadloadIWorkerRouterDetail()
 	}
 }

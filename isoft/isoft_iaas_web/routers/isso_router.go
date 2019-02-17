@@ -8,7 +8,7 @@ import (
 
 func loadISSORouter() {
 	// sso 模块
-	if strings.Contains(beego.AppConfig.String("open.moudles"), "sso") {
+	if strings.Contains(beego.AppConfig.String("open.modules"), "sso") {
 		loadISSORouterDetail()
 	}
 }
