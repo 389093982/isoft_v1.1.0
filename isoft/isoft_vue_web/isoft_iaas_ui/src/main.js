@@ -5,7 +5,7 @@ import App from './App'
 import router from './router'
 import store from './store'
 
-import {checkSSOLogin} from "./imodules"
+import {CheckSSOLogin} from "./imodules"
 
 // 引用全局静态数据
 import global_ from './components/GlobalData'     //引用文件
@@ -35,7 +35,7 @@ router.beforeEach((to, from, next) => {
   iView.LoadingBar.start();
 
   // 登录判断
-  checkSSOLogin(to, from, next);
+  CheckSSOLogin(to, from, next);
 });
 
 router.afterEach(route => {
