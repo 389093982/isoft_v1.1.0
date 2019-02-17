@@ -28,8 +28,8 @@ func (this *JsonRenderNode) Execute(trackingId string) {
 }
 
 func (this *JsonRenderNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
-	paramMap := map[string]string{
-		"json_object":"需要传入json对象",
+	paramMap := map[int][]string{
+		1:[]string{"json_object","需要传入json对象"},
 	}
 	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
 }
@@ -73,9 +73,9 @@ func (this *JsonParserNode) Execute(trackingId string) {
 }
 
 func (this *JsonParserNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
-	paramMap := map[string]string{
-		"json_str":"需要转换成json对象的字符串",
-		"json_fields":"json对象的字段列表",
+	paramMap := map[int][]string{
+		1:[]string{"json_str","需要转换成json对象的字符串"},
+		2:[]string{"json_fields","json对象的字段列表"},
 	}
 	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
 }

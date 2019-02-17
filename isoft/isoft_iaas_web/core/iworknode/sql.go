@@ -36,11 +36,11 @@ func (this *SQLQueryNode) Execute(trackingId string) {
 }
 
 func (this *SQLQueryNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
-	paramMap := map[string]string{
-		"metadata_sql?":"元数据sql语句,可选参数,针对复杂查询sql,需要提供类似于select * from blog where 1=0的辅助sql用来构建节点输出",
-		"sql":"查询sql语句",
-		"sql_binding?":"sql绑定数据,个数必须和当前执行sql语句中的占位符参数个数相同",
-		"db_conn":"数据库连接信息,需要使用 $RESOURCE 全局参数",
+	paramMap := map[int][]string{
+		1:[]string{"metadata_sql?","元数据sql语句,可选参数,针对复杂查询sql,需要提供类似于select * from blog where 1=0的辅助sql用来构建节点输出"},
+		2:[]string{"sql","查询sql语句"},
+		3:[]string{"sql_binding?","sql绑定数据,个数必须和当前执行sql语句中的占位符参数个数相同"},
+		4:[]string{"db_conn","数据库连接信息,需要使用 $RESOURCE 全局参数"},
 	}
 	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
 }
@@ -127,11 +127,11 @@ func (this *SQLExecuteNode) modifySqlInsertWithBatchNumber(tmpDataMap map[string
 }
 
 func (this *SQLExecuteNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
-	paramMap := map[string]string{
-		"batch_number?":"仅供批量插入数据时使用",
-		"sql":"执行sql语句",
-		"sql_binding?":"sql绑定数据,个数必须和当前执行sql语句中的占位符参数个数相同",
-		"db_conn":"数据库连接信息,需要使用 $RESOURCE 全局参数",
+	paramMap := map[int][]string{
+		1:[]string{"batch_number?","仅供批量插入数据时使用"},
+		2:[]string{"sql","执行sql语句"},
+		3:[]string{"sql_binding?","sql绑定数据,个数必须和当前执行sql语句中的占位符参数个数相同"},
+		4:[]string{"db_conn","数据库连接信息,需要使用 $RESOURCE 全局参数"},
 	}
 	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
 }

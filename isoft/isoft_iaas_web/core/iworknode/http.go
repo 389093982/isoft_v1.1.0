@@ -44,11 +44,11 @@ func (this *HttpRequestNode) Execute(trackingId string) {
 }
 
 func (this *HttpRequestNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
-	paramMap := map[string]string{
-		"request_url":"请求资源的url地址",
-		"request_method?":"可选参数,请求方式,默认是GET请求,支持GET、POST",
-		"request_params?":"可选参数,请求参数,格式参考：key=value",
-		"request_headers?":"可选参数,请求头参数,格式参考：key=value",
+	paramMap := map[int][]string{
+		1:[]string{"request_url","请求资源的url地址"},
+		2:[]string{"request_method?","可选参数,请求方式,默认是GET请求,支持GET、POST"},
+		3:[]string{"request_params?","可选参数,请求参数,格式参考：key=value"},
+		4:[]string{"request_headers?","可选参数,请求头参数,格式参考：key=value"},
 	}
 	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
 }
