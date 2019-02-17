@@ -3,16 +3,19 @@ package task
 import (
 	"fmt"
 	"github.com/robfig/cron"
+	"isoft/isoft_iaas_web/imodules"
 	"isoft/isoft_iaas_web/models/iquartz"
 )
 
 func StartIQuartzInitialTask() {
-	if metas, err := iquartz.GetAllCronMeta(); err == nil {
-		c := cron.New()
-		for _, meta := range metas {
-			c.AddJob(meta.CronStr, &IQuartzJob{meta: &meta})
+	if imodules.CheckModule("iwork"){
+		if metas, err := iquartz.GetAllCronMeta(); err == nil {
+			c := cron.New()
+			for _, meta := range metas {
+				c.AddJob(meta.CronStr, &IQuartzJob{meta: &meta})
+			}
+			c.Start()
 		}
-		c.Start()
 	}
 }
 

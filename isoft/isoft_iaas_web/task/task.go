@@ -1,23 +1,29 @@
 package task
 
 import (
-	"fmt"
 	"github.com/astaxie/beego/toolbox"
+	"github.com/pkg/errors"
+	"isoft/isoft_iaas_web/imodules"
 	"isoft/isoft_iaas_web/models/monitor"
 	"net/http"
 )
 
 func StartCronTask() {
-	heartBeatTask := toolbox.NewTask("heartBeatTask", "0 * * * * *", HeartBeatTask)
-	err := heartBeatTask.Run()
-	if err != nil {
-		fmt.Println(err)
+	if task, err := getHeartBeatTask(); err == nil{
+		task.Run()
+		toolbox.AddTask("mytask", task)
 	}
-	toolbox.AddTask("mytask", heartBeatTask)
 	toolbox.StartTask()
 }
 
-func HeartBeatTask() error {
+func getHeartBeatTask() (*toolbox.Task, error) {
+	if imodules.CheckModule("ilearning"){
+		return toolbox.NewTask("heartBeatTask", "0 * * * * *", heartBeatTaskFunc), nil
+	}
+	return nil, errors.New("ilearning moudle is not open!")
+}
+
+func heartBeatTaskFunc() error {
 	heartBeats, err := monitor.GetAllHeartBeat()
 	if err != nil {
 		return err
