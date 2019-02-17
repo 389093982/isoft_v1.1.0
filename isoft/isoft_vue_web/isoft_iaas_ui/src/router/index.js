@@ -20,18 +20,12 @@ import ShareList from "../components/Share/ShareList"
 import ShareDetail from "../components/Share/ShareDetail"
 import HeartBeat from "../components/Monitor/HeartBeat"
 import CommonLinkList from "../components/CMS/CommonLinkList"
-import Login from "../components/SSO/Login"
-import Regist from "../components/SSO/Regist"
-import AppRegist from "../components/SSO/AppRegist"
-import LoginRecord from "../components/SSO/LoginRecord"
-import ISSOLayout from "../components/ILayout/ISSOLayout"
 import ILayout from "../components/ILayout/ILayout"
 import QuartzList from "../components/IQuartz/QuartzList"
 import ResourceList from "../components/IResource/ResourceList"
-import WorkList from "../components/IWork/WorkList"
-import WorkStepList from "../components/IWork/WorkStepList"
-import RunLogList from "../components/IWork/RunLogList"
-import RunLogDetail from "../components/IWork/RunLogDetail"
+
+import {getISSORouter} from "./sso"
+import {getIWorkRouter} from "./iwork"
 
 Vue.use(Router);
 
@@ -147,16 +141,7 @@ export const IQuartzRouter = {
   ]
 };
 
-export const IWorkRouter = {
-  path: '/iwork',
-  component: ILayout,
-  children: [
-    {path: 'workList',component: WorkList},
-    {path: 'workstepList',component: WorkStepList},
-    {path: 'runLogList',component: RunLogList},
-    {path: 'runLogDetail',component: RunLogDetail},
-  ]
-};
+
 
 export const IResourceRouter = {
   path: '/resource',
@@ -166,25 +151,16 @@ export const IResourceRouter = {
   ]
 };
 
-export const ISSOReouter = {
-  path: '/sso',
-  component: ISSOLayout,
-  children: [
-    {path: 'login',component: Login},
-    {path: 'regist',component: Regist},
-    {path: 'appRegist',component: AppRegist},
-    {path: 'loginRecord',component: LoginRecord},
-  ]
-};
+
 
 export default new Router({
   // History 模式,去除vue项目中的 #
   mode: 'history',
   routes: [
-    IWorkRouter,
+    getIWorkRouter(),
     IResourceRouter,
     IQuartzRouter,
-    ISSOReouter,
+    getISSORouter(),
     IBlogRouter,
     IFileRouter,
     ILearningRouter,
