@@ -37,10 +37,20 @@
 <script>
   import {EditWorkStepBaseInfo} from "../../api"
   import {LoadWorkStepInfo} from "../../api"
+  import {validateCommonPatternForString} from "../../tools"
 
   export default {
     name: "WorkStepBaseInfo",
     data(){
+      const _validateWorkStepName = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('字段值不能为空!'));
+        } else if (!validateCommonPatternForString(value)) {
+          callback(new Error('存在非法字符，只能包含字母，数字，下划线!'));
+        } else {
+          callback();
+        }
+      };
       return {
         showFormModal:false,
         default_work_step_types: this.GLOBAL.default_work_step_types,
@@ -53,7 +63,7 @@
         },
         ruleValidate: {
           work_step_name: [
-            { required: true, message: 'work_step_name 不能为空!', trigger: 'blur' }
+            { validator: _validateWorkStepName, trigger: 'blur' },
           ],
           work_step_type: [
             { required: true, message: 'work_step_type 不能为空!', trigger: 'blur' }
