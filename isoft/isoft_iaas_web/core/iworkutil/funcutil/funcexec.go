@@ -6,11 +6,25 @@ import (
 	"strings"
 )
 
-func IworkStringsToUpper(args []interface{}) interface{} {
+type IWorkFuncProxy struct {}
+
+func (this *IWorkFuncProxy) IworkStringsContains(args []interface{}) interface{} {
+	return strings.Contains(args[0].(string), args[1].(string))
+}
+
+func (this *IWorkFuncProxy) IworkStringsHasSuffix(args []interface{}) interface{} {
+	return strings.HasSuffix(args[0].(string), args[1].(string))
+}
+
+func (this *IWorkFuncProxy) IworkStringsHasPrefix(args []interface{}) interface{} {
+	return strings.HasPrefix(args[0].(string), args[1].(string))
+}
+
+func (this *IWorkFuncProxy) IworkStringsToUpper(args []interface{}) interface{} {
 	return strings.ToUpper(args[0].(string))
 }
 
-func IworkStringsJoin(args []interface{}) interface{} {
+func (this *IWorkFuncProxy) IworkStringsJoin(args []interface{}) interface{} {
 	sargs := make([]string, 0)
 	for _, arg := range args {
 		sargs = append(sargs, arg.(string))
@@ -18,7 +32,7 @@ func IworkStringsJoin(args []interface{}) interface{} {
 	return strings.Join(sargs, "")
 }
 
-func IworkInt64Add(args []interface{}) interface{} {
+func (this *IWorkFuncProxy) IworkInt64Add(args []interface{}) interface{} {
 	sargs := parseArgsToInt64Arr(args)
 	if len(sargs) == 2{
 		return sargs[0] + sargs[1]
@@ -27,7 +41,7 @@ func IworkInt64Add(args []interface{}) interface{} {
 	}
 }
 
-func IworkInt64Sub(args []interface{}) interface{} {
+func (this *IWorkFuncProxy) IworkInt64Sub(args []interface{}) interface{} {
 	sargs := parseArgsToInt64Arr(args)
 	if len(sargs) == 2{
 		return sargs[0] - sargs[1]
@@ -50,7 +64,7 @@ func parseArgsToInt64Arr(args []interface{}) []int64 {
 	return sargs
 }
 
-func IworkInt64Multi(args []interface{}) interface{} {
+func (this *IWorkFuncProxy) IworkInt64Multi(args []interface{}) interface{} {
 	sargs := parseArgsToInt64Arr(args)
 	if len(sargs) == 2{
 		return sargs[0] * sargs[1]
@@ -59,7 +73,7 @@ func IworkInt64Multi(args []interface{}) interface{} {
 	}
 }
 
-func IworkStringsJoinWithSep(args []interface{}) interface{} {
+func (this *IWorkFuncProxy) IworkStringsJoinWithSep(args []interface{}) interface{} {
 	sargs := make([]string, 0)
 	for _, arg := range args {
 		sargs = append(sargs, arg.(string))

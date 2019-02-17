@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/pkg/errors"
 	"isoft/isoft/common/stringutil"
+	"reflect"
 	"strings"
 )
 
@@ -117,19 +118,8 @@ func DncodeSpecialForParamVaule(paramVaule string) string {
 }
 
 func CallFuncExecutor(executor *FuncExecutor, args []interface{}) interface{} {
-	switch executor.FuncName {
-	case "IworkStringsToUpper":
-		return IworkStringsToUpper(args)
-	case "IworkStringsJoin":
-		return IworkStringsJoin(args)
-	case "IworkStringsJoinWithSep":
-		return IworkStringsJoinWithSep(args)
-	case "IworkInt64Add":
-		return IworkInt64Add(args)
-	case "IworkInt64Sub":
-		return IworkInt64Sub(args)
-	case "IworkInt64Multi":
-		return IworkInt64Multi(args)
-	}
-	return args[0]
+	proxy := &IWorkFuncProxy{}
+	m := reflect.ValueOf(proxy).MethodByName(executor.FuncName)
+	rtn := m.Call([]reflect.Value{reflect.ValueOf(args)})
+	return rtn[0].Interface()
 }
