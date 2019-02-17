@@ -116,14 +116,20 @@ func DncodeSpecialForParamVaule(paramVaule string) string {
 	return paramVaule
 }
 
-func CallFuncExecutor(executor *FuncExecutor, args ...interface{}) interface{} {
+func CallFuncExecutor(executor *FuncExecutor, args []interface{}) interface{} {
 	switch executor.FuncName {
 	case "IworkStringsToUpper":
-		return IworkStringsToUpper(args...)
+		return IworkStringsToUpper(args)
 	case "IworkStringsJoin":
-		return IworkStringsJoin(args...)
+		return IworkStringsJoin(args)
 	case "IworkStringsJoinWithSep":
-		return IworkStringsJoinWithSep(args...)
+		return IworkStringsJoinWithSep(args)
+	case "IworkInt64Add":
+		return IworkInt64Add(args)
+	case "IworkInt64Sub":
+		return IworkInt64Sub(args)
+	case "IworkInt64Multi":
+		return IworkInt64Multi(args)
 	}
 	return args[0]
 }

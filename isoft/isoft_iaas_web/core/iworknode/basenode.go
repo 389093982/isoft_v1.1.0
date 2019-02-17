@@ -112,7 +112,7 @@ func (this *BaseNode) parseAndGetSingleParamVaule(paramVaule string, dataStore *
 				}
 			}
 			// 执行函数并记录结果,供下一个函数执行使用
-			result := funcutil.CallFuncExecutor(executor, args...)
+			result := funcutil.CallFuncExecutor(executor, args)
 			historyFuncResultMap[executor.FuncUUID] = result
 			lastFuncResult = result
 		}
