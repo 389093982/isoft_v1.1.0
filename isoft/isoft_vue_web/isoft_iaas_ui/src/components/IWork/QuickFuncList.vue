@@ -7,9 +7,9 @@
     :footer-hide="true"
     :transfer="false"
     :mask-closable="false">
-    <div>
+    <Scroll height="380">
       <Table :columns="columns1" :data="funcs" size="small"></Table>
-    </div>
+    </Scroll>
   </Modal>
 </template>
 
@@ -21,11 +21,15 @@
         showFormModal:false,
         funcs:[
           {funcDemo:"IworkStringsToUpper($str)",funcDesc:"字符串转大写函数",},
+          {funcDemo:"IworkStringsToLower($str)",funcDesc:"字符串转小写函数",},
           {funcDemo:"IworkStringsJoin($str1,$str2)",funcDesc:"字符串拼接函数",},
           {funcDemo:"IworkStringsJoinWithSep($str1,$str2,-)",funcDesc:"字符串拼接函数",},
           {funcDemo:"IworkInt64Add($int1,$int2)",funcDesc:"数字相加函数",},
           {funcDemo:"IworkInt64Sub($int1,$int2)",funcDesc:"数字相减函数",},
           {funcDemo:"IworkInt64Multi($int1,$int2)",funcDesc:"数字相乘函数",},
+          {funcDemo:"IworkStringsContains($str1,$str2)",funcDesc:"字符串包含函数",},
+          {funcDemo:"IworkStringsHasPrefix($str1,$str2)",funcDesc:"字符串前缀判断函数",},
+          {funcDemo:"IworkStringsHasSuffix($str1,$str2)",funcDesc:"字符串后缀判断函数",},
         ],
         columns1: [
           {

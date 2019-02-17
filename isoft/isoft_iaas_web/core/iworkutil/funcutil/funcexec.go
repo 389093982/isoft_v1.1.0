@@ -20,6 +20,10 @@ func (this *IWorkFuncProxy) IworkStringsHasPrefix(args []interface{}) interface{
 	return strings.HasPrefix(args[0].(string), args[1].(string))
 }
 
+func (this *IWorkFuncProxy) IworkStringsToLower(args []interface{}) interface{} {
+	return strings.ToLower(args[0].(string))
+}
+
 func (this *IWorkFuncProxy) IworkStringsToUpper(args []interface{}) interface{} {
 	return strings.ToUpper(args[0].(string))
 }
