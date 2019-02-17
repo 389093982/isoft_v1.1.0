@@ -29,7 +29,10 @@ func (this *FileReadNode) Execute(trackingId string) {
 }
 
 func (this *FileReadNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
-	return schema.BuildParamInputSchemaWithSlice([]string{"file_path"})
+	paramMap := map[string]string{
+		"file_path":"读取文件的绝对路径",
+	}
+	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
 }
 
 func (this *FileReadNode) GetRuntimeParamInputSchema() *schema.ParamInputSchema {
@@ -78,7 +81,13 @@ func (this *FileWriteNode) Execute(trackingId string) {
 }
 
 func (this *FileWriteNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
-	return schema.BuildParamInputSchemaWithSlice([]string{"file_path", "data?", "bytes?", "append?"})
+	paramMap := map[string]string{
+		"file_path":"写入文件的绝对路径,文件不存在时会自动创建",
+		"data?":"可选参数(与 bytes? 参数选择其一),写入文件的字符数据",
+		"bytes?":"可选参数(与 data? 参数选择其一),写入文件的二进制字节数据",
+		"append?":"可选参数,文件追加模式,值为空表示覆盖,有值表示追加",
+	}
+	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
 }
 
 func (this *FileWriteNode) GetRuntimeParamInputSchema() *schema.ParamInputSchema {

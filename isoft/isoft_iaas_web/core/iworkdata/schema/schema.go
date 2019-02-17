@@ -5,6 +5,7 @@ import "encoding/xml"
 type ParamInputSchemaItem struct {
 	XMLName    xml.Name `xml:"paramInputSchemaItem" json:"-"`
 	ParamName  string   `xml:"paramName"`
+	ParamDesc  string   `xml:"paramDesc"`			// 使用说明信息
 	ParamValue string   `xml:"paramValue"`
 }
 

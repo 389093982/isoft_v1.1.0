@@ -67,12 +67,16 @@ func (this *WorkSub) RunOnceSubWork(work iwork.Work, steps []iwork.WorkStep, tra
 }
 
 func (this *WorkSub) GetDefaultParamInputSchema() *schema.ParamInputSchema {
-	return schema.BuildParamInputSchemaWithSlice([]string{"work_sub","foreach_data?"})
+	paramMap := map[string]string{
+		"work_sub":"子流程信息",
+		"foreach_data?":"可选参数,当有值时表示迭代流程,该节点会执行多次,并将当前迭代元素放入 __item__ 变量中,其它参数需要引用 __item__ 即可",
+	}
+	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
 }
 
 // 获取动态输入值
 func (this *WorkSub) GetRuntimeParamInputSchema() *schema.ParamInputSchema {
-	items := []schema.ParamInputSchemaItem{}
+	items := make([]schema.ParamInputSchemaItem,0)
 	// 读取历史输入值
 	paramInputSchema := schema.GetCacheParamInputSchema(this.WorkStep, &WorkStepFactory{WorkStep: this.WorkStep})
 	// 从历史输入值中获取子流程名称

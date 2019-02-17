@@ -28,7 +28,10 @@ func (this *JsonRenderNode) Execute(trackingId string) {
 }
 
 func (this *JsonRenderNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
-	return schema.BuildParamInputSchemaWithSlice([]string{"json_object"})
+	paramMap := map[string]string{
+		"json_object":"需要传入json对象",
+	}
+	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
 }
 
 func (this *JsonRenderNode) GetRuntimeParamInputSchema() *schema.ParamInputSchema {
@@ -54,7 +57,7 @@ func (this *JsonParserNode) Execute(trackingId string) {
 	// 节点中间数据
 	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, dataStore)
 	json_str := tmpDataMap["json_str"].(string)
-	json_objects := []map[string]interface{}{}
+	json_objects := make([]map[string]interface{},0)
 	err := json.Unmarshal([]byte(json_str), &json_objects)
 	if err == nil {
 		dataStore.CacheData(this.WorkStep.WorkStepName, "rows", json_objects)
@@ -70,7 +73,11 @@ func (this *JsonParserNode) Execute(trackingId string) {
 }
 
 func (this *JsonParserNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
-	return schema.BuildParamInputSchemaWithSlice([]string{"json_str", "json_fields"})
+	paramMap := map[string]string{
+		"json_str":"需要转换成json对象的字符串",
+		"json_fields":"json对象的字段列表",
+	}
+	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
 }
 
 func (this *JsonParserNode) GetRuntimeParamInputSchema() *schema.ParamInputSchema {

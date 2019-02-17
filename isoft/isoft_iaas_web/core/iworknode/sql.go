@@ -36,7 +36,13 @@ func (this *SQLQueryNode) Execute(trackingId string) {
 }
 
 func (this *SQLQueryNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
-	return schema.BuildParamInputSchemaWithSlice([]string{"metadata_sql?", "sql", "sql_binding?", "db_conn"})
+	paramMap := map[string]string{
+		"metadata_sql?":"元数据sql语句,可选参数,针对复杂查询sql,需要提供类似于select * from blog where 1=0的辅助sql用来构建节点输出",
+		"sql":"查询sql语句",
+		"sql_binding?":"sql绑定数据,个数必须和当前执行sql语句中的占位符参数个数相同",
+		"db_conn":"数据库连接信息,需要使用 $RESOURCE 全局参数",
+	}
+	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
 }
 
 func (this *SQLQueryNode) GetRuntimeParamInputSchema() *schema.ParamInputSchema {
@@ -121,7 +127,13 @@ func (this *SQLExecuteNode) modifySqlInsertWithBatchNumber(tmpDataMap map[string
 }
 
 func (this *SQLExecuteNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
-	return schema.BuildParamInputSchemaWithSlice([]string{"batch_number?", "sql", "sql_binding?", "db_conn"})
+	paramMap := map[string]string{
+		"batch_number?":"仅供批量插入数据时使用",
+		"sql":"执行sql语句",
+		"sql_binding?":"sql绑定数据,个数必须和当前执行sql语句中的占位符参数个数相同",
+		"db_conn":"数据库连接信息,需要使用 $RESOURCE 全局参数",
+	}
+	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
 }
 
 func (this *SQLExecuteNode) GetRuntimeParamInputSchema() *schema.ParamInputSchema {

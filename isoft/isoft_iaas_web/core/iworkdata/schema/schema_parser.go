@@ -61,11 +61,11 @@ func GetRuntimeParamInputSchema(paramSchemaParser IParamSchemaParser) *ParamInpu
 	return paramSchemaParser.GetRuntimeParamInputSchema()
 }
 
-// 根据传入的 paramNames 构建 ParamInputSchema 对象
-func BuildParamInputSchemaWithSlice(paramNames []string) *ParamInputSchema {
-	items := []ParamInputSchemaItem{}
-	for _, paramName := range paramNames {
-		items = append(items, ParamInputSchemaItem{ParamName: paramName})
+// 根据传入的 paramMap 构建 ParamInputSchema 对象
+func BuildParamInputSchemaWithDefaultMap(paramMap map[string]string) *ParamInputSchema {
+	items := make([]ParamInputSchemaItem,0)
+	for paramName,paramDesc := range paramMap {
+		items = append(items, ParamInputSchemaItem{ParamName: paramName, ParamDesc:paramDesc})
 	}
 	return &ParamInputSchema{ParamInputSchemaItems: items}
 }

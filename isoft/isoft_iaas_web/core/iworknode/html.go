@@ -25,7 +25,10 @@ func (this *HrefParserNode) Execute(trackingId string) {
 }
 
 func (this *HrefParserNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
-	return schema.BuildParamInputSchemaWithSlice([]string{"url"})
+	paramMap := map[string]string{
+		"url":"需要分析资源的url地址",
+	}
+	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
 }
 
 func (this *HrefParserNode) GetRuntimeParamInputSchema() *schema.ParamInputSchema {
