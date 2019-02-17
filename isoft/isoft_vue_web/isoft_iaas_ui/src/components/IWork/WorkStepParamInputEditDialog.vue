@@ -12,7 +12,11 @@
         </Button>
       </Col>
       <Col span="14">
-        <h3>{{inputLabel}}</h3>
+        <h3>
+          {{inputLabel}}
+        </h3>
+        <QuickFuncList ref="quickFuncList" @chooseFunc="chooseFunc"/>
+        <Icon type="md-copy" size="18" style="float: right;" @click="showQuickFunc()"/>
         <Input v-model="inputTextData" type="textarea" :rows="10" placeholder="Enter something..." />
       </Col>
     </Row>
@@ -25,10 +29,11 @@
 <script>
   import {LoadPreNodeOutput} from "../../api"
   import ISimpleBtnTriggerModal from "../Common/modal/ISimpleBtnTriggerModal"
+  import QuickFuncList from "./QuickFuncList"
 
   export default {
     name: "WorkStepParamInputEditDialog",
-    components:{ISimpleBtnTriggerModal},
+    components:{ISimpleBtnTriggerModal,QuickFuncList},
     props: {
       inputLabel: {
         type: String,
@@ -46,6 +51,13 @@
       }
     },
     methods:{
+      chooseFunc: function(funcDemo){
+        // 将数据复制到右侧
+        this.inputTextData = this.inputTextData + funcDemo + "\n";
+      },
+      showQuickFunc: function(){
+        this.$refs.quickFuncList.showModal();
+      },
       handleSubmit:function () {
         this.$emit("handleSubmit", this.inputLabel, this.inputTextData);
         this.$refs.triggerModal.hideModal();
