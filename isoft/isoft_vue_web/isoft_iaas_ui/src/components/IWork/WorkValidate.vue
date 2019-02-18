@@ -2,6 +2,12 @@
   <ISimpleBtnTriggerModal ref="triggerModal" btn-text="项目校验" modal-title="查看校验结果" :modal-width="800">
     <Button type="success" @click="validateAllWork">校验全部</Button>
     <Button type="success" @click="refreshValidateResult">刷新校验结果</Button>
+
+    <div style="margin: 20px;min-height: 300px;">
+      <p v-for="detail in details">
+        {{detail.detail}}
+      </p>
+    </div>
   </ISimpleBtnTriggerModal>
 </template>
 
@@ -13,6 +19,11 @@
   export default {
     name: "WorkValidate",
     components:{ISimpleBtnTriggerModal},
+    data(){
+      return {
+        details:[],
+      }
+    },
     methods:{
       validateAllWork:async function () {
         const result = await ValidateAllWork();
@@ -20,7 +31,7 @@
       refreshValidateResult: async function () {
         const result = await LoadValidateResult();
         if(result.status == "SUCCESS"){
-          alert(result.details);
+          this.details = result.details;
         }
       }
     }

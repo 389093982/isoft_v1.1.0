@@ -16,6 +16,7 @@ func (this *WorkController) LoadValidateResult() {
 	}else{
 		this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
 	}
+	this.ServeJSON()
 }
 
 func (this *WorkController) ValidateAllWork()  {
@@ -43,18 +44,14 @@ func validateAll()  {
 	}()
 	works := iwork.GetAllWorkInfo()
 	for _, work := range works{
-		go func(work iwork.Work) {
-			validateWork(&work)
-		}(work)
+		validateWork(&work)
 	}
 }
 
 func validateWork(work *iwork.Work)  {
 	steps, _ := iwork.GetAllWorkStepInfo(work.Id)
 	for _, step := range steps{
-		go func(step iwork.WorkStep) {
-			validateStep(&step)
-		}(step)
+		validateStep(&step)
 	}
 }
 
