@@ -16,7 +16,7 @@ func main() {
 	defer os.Setenv("GOOS", GOOS)
 
 	packApps := pack.ReadPackApp("./pack.xml")
-	err := pack.StartAllPackTask(&packApps, "")
+	err := pack.StartAllPackTask(&packApps, "isoft_iaas_ui")
 	if err != nil {
 		log.Println(err)
 	}

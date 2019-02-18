@@ -22,6 +22,6 @@ function getAllRouters() {
 
 export default new Router({
   // History 模式,去除vue项目中的 #
-  mode: 'history',
+  // mode: 'history',
   routes: getAllRouters(),
 })

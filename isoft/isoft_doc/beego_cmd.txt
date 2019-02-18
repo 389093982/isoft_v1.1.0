@@ -12,7 +12,4 @@ b) 下载代码：git clone https://github.com/389093982/isoft_v1.1.0.git 并移
 c) 下载bee工具 go get github.com/beego/bee (会自动生成 /root/soft/install/go1.11/go/bin/bee 命令)
 d) 进入目录并进行打包 cd /root/soft/install/gopath/src/isoft/isoft_iaas_web && bee pack -be GOOS=linux
 
-
-
-
 bee run -gendoc=true -downdoc=true
