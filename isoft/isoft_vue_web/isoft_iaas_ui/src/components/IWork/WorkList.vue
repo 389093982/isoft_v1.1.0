@@ -4,6 +4,7 @@
       <Col span="3"><EntityList/></Col>
       <Col span="3"><GlobalVarList/></Col>
       <Col span="3"><IWorkDL/></Col>
+      <Col span="3"><WorkValidate/></Col>
     </Row>
 
     <ISimpleLeftRightRow>
@@ -29,10 +30,11 @@
   import EntityList from "./EntityList"
   import GlobalVarList from "./GlobalVarList"
   import IWorkDL from "./IWorkDL"
+  import WorkValidate from "./WorkValidate"
 
   export default {
     name: "WorkList",
-    components:{ISimpleLeftRightRow,ISimpleSearch,WorkEdit,EntityList,GlobalVarList,IWorkDL},
+    components:{ISimpleLeftRightRow,ISimpleSearch,WorkEdit,EntityList,GlobalVarList,IWorkDL,WorkValidate},
     data(){
       return {
         // 当前页

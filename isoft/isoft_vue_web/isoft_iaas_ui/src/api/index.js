@@ -185,5 +185,8 @@ export const EditEntity = (entity_id,entity_name,entity_field_str) => ajax(BASE_
 // 删除 entity
 export const DeleteEntity = (entity_id) => ajax(BASE_URL+"/iwork/deleteEntity", {entity_id},'POST');
 
+// 校验整个工程
+export const ValidateAllWork = () => ajax(BASE_URL+"/iwork/validateAllWork", {},'POST');
+
 // 跨模块使用,模块化部署时需要使用 nginx 代理
 export const LoginAddr = "/sso/login/";

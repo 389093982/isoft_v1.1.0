@@ -17,11 +17,6 @@ type WorkController struct {
 	beego.Controller
 }
 
-
-func (this *WorkController) ValidateAllWork()  {
-
-}
-
 func (this *WorkController) BuildIWorkDL()  {
 	//dls := make([]*IWorkDL,0)
 	//works := iwork.GetAllWorkInfo()
