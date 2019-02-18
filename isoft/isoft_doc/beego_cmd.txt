@@ -1,10 +1,18 @@
 1、beego 新建web应用
 ..\bin\bee.exe new quickstart
 
-
 2、beego 项目打包
 bee pack -be GOOS=linux
 ..\bin\bee.exe pack -be GOOS=linux
+
+3、Linux编译go程序步骤
+a) 升级 golang 并更新 GOROOT 和 GOPATH 环境变量
+    wget https://dl.google.com/go/go1.11.linux-amd64.tar.gz
+b) 下载代码：git clone https://github.com/389093982/isoft_v1.1.0.git 并移动到 gopath 中
+c) 下载bee工具 go get github.com/beego/bee (会自动生成 /root/soft/install/go1.11/go/bin/bee 命令)
+d) 进入目录并进行打包 cd /root/soft/install/gopath/src/isoft/isoft_iaas_web && bee pack -be GOOS=linux
+
+
 
 
 bee run -gendoc=true -downdoc=true
