@@ -2,16 +2,43 @@ package iwork
 
 import (
 	"fmt"
+	"isoft/isoft/common/stringutil"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
 	"isoft/isoft_iaas_web/core/iworknode"
 	"isoft/isoft_iaas_web/models/iwork"
 	"strings"
+	"time"
 )
 
+func (this *WorkController) LoadValidateResult() {
+	if details, err := iwork.QueryLastValidateLogDetail(); err == nil{
+		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "details":details}
+	}else{
+		this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
+	}
+}
+
 func (this *WorkController) ValidateAllWork()  {
+	validateAll()
+	this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
+	this.ServeJSON()
+}
+
+func validateAll()  {
+	trackingId := stringutil.RandomUUID()
+	// 记录日志
+	iwork.InsertValidateLogRecord(&iwork.ValidateLogRecord{
+		TrackingId:      trackingId,
+		CreatedBy:       "SYSTEM",
+		CreatedTime:     time.Now(),
+		LastUpdatedBy:   "SYSTEM",
+		LastUpdatedTime: time.Now(),
+	})
 	defer func() {
 		if err := recover(); err != nil{
-			fmt.Println(err)
+			if _err,ok := err.(error); ok {
+				iwork.InsertValidateLogDetail(trackingId, fmt.Sprintf("internal error:%s", _err.Error()))
+			}
 		}
 	}()
 	works := iwork.GetAllWorkInfo()
@@ -20,8 +47,6 @@ func (this *WorkController) ValidateAllWork()  {
 			validateWork(&work)
 		}(work)
 	}
-	this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
-	this.ServeJSON()
 }
 
 func validateWork(work *iwork.Work)  {
@@ -40,7 +65,6 @@ func validateStep(step *iwork.WorkStep)  {
 func checkEmpty(step *iwork.WorkStep)  {
 	paramInputSchema := schema.GetCacheParamInputSchema(step, &iworknode.WorkStepFactory{WorkStep: step})
 	for _, item := range paramInputSchema.ParamInputSchemaItems{
-		fmt.Println("check param :" + item.ParamName)
 		if !strings.HasSuffix(item.ParamName,"?") && strings.TrimSpace(item.ParamValue) == ""{
 			fmt.Println("found empty param......................")
 		}

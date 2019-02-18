@@ -64,3 +64,61 @@ func GetLastRunLogDetail(tracking_id string) (runLogDetails []RunLogDetail, err 
 	_, err = o.QueryTable("run_log_detail").Filter("tracking_id__startswith", tracking_id).All(&runLogDetails)
 	return
 }
+
+
+type ValidateLogRecord struct {
+	Id              int64     `json:"id"`
+	TrackingId      string    `json:"tracking_id"`
+	CreatedBy       string    `json:"created_by"`
+	CreatedTime     time.Time `json:"created_time" orm:"auto_now_add;type(datetime)"`
+	LastUpdatedBy   string    `json:"last_updated_by"`
+	LastUpdatedTime time.Time `json:"last_updated_time"`
+}
+
+type ValidateLogDetail struct {
+	Id              int64     `json:"id"`
+	TrackingId      string    `json:"tracking_id"`
+	Detail          string    `json:"detail" orm:"type(text)"`
+	CreatedBy       string    `json:"created_by"`
+	CreatedTime     time.Time `json:"created_time" orm:"auto_now_add;type(datetime)"`
+	LastUpdatedBy   string    `json:"last_updated_by"`
+	LastUpdatedTime time.Time `json:"last_updated_time"`
+}
+
+
+func InsertValidateLogRecord(record *ValidateLogRecord) (id int64, err error) {
+	o := orm.NewOrm()
+	id, err = o.Insert(record)
+	return
+}
+
+func insertValidateLogDetailData(detail *ValidateLogDetail) (id int64, err error) {
+	o := orm.NewOrm()
+	id, err = o.Insert(detail)
+	return
+}
+
+func InsertValidateLogDetail(trackingId, detail string) {
+	insertValidateLogDetailData(&ValidateLogDetail{
+		TrackingId:      trackingId,
+		Detail:          detail,
+		CreatedBy:       "SYSTEM",
+		CreatedTime:     time.Now(),
+		LastUpdatedBy:   "SYSTEM",
+		LastUpdatedTime: time.Now(),
+	})
+}
+
+func QueryLastValidateLogRecord() (record ValidateLogRecord, err error) {
+	o := orm.NewOrm()
+	err = o.QueryTable("validate_log_record").OrderBy("-last_updated_time").One(&record)
+	return
+}
+
+func QueryLastValidateLogDetail() (details []ValidateLogDetail, err error) {
+	if record, err := QueryLastValidateLogRecord(); err == nil{
+		o := orm.NewOrm()
+		_, err = o.QueryTable("validate_log_detail").Filter("tracking_id", record.TrackingId).All(&details)
+	}
+	return
+}

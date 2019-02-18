@@ -1,6 +1,7 @@
 package iworknode
 
 import (
+	"errors"
 	"fmt"
 	"isoft/isoft_iaas_web/core/iworkdata/entry"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
@@ -69,7 +70,7 @@ func (this *WorkStepFactory) getProxy() IStandardWorkStep {
 	case "ENTITY_PARSER":
 		return &EntityParserNode{WorkStep: this.WorkStep}
 	}
-	panic(fmt.Sprintf("unsupport workStepType:%s", this.WorkStep.WorkStepType))
+	panic(errors.New(fmt.Sprintf("[%v-%v]unsupport workStepType:%s", this.WorkStep.WorkId, this.WorkStep.WorkStepName, this.WorkStep.WorkStepType)))
 }
 
 func (this *WorkStepFactory) GetDefaultParamInputSchema() *schema.ParamInputSchema {
