@@ -38,4 +38,6 @@ func loadloadIWorkerRouterDetail()  {
 	beego.Router("/api/iwork/filterPageEntity", &iwork.WorkController{}, "post:FilterPageEntity")
 	beego.Router("/api/iwork/editEntity", &iwork.WorkController{}, "post:EditEntity")
 	beego.Router("/api/iwork/deleteEntity", &iwork.WorkController{}, "post:DeleteEntity")
+	beego.Router("/api/iwork/buildIWorkDL", &iwork.WorkController{}, "post:BuildIWorkDL")
+	beego.Router("/api/iwork/validateAllWork", &iwork.WorkController{}, "post:ValidateAllWork")
 }

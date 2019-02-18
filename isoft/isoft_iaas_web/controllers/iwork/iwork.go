@@ -18,6 +18,28 @@ type WorkController struct {
 }
 
 
+func (this *WorkController) ValidateAllWork()  {
+
+}
+
+func (this *WorkController) BuildIWorkDL()  {
+	//dls := make([]*IWorkDL,0)
+	//works := iwork.GetAllWorkInfo()
+	//for _, work := range works{
+	//	dl := &IWorkDL{}
+	//	steps, _ := iwork.GetAllWorkStepInfo(work.Id)
+	//	for _, step := range steps{
+	//		if step.WorkStepType == "work_start"{
+	//			dl.RequestInfo = step.WorkStepInput
+	//		}
+	//		if step.WorkStepType == "work_end"{
+	//			dl.ResponseInfo = step.WorkStepOutput
+	//		}
+	//	}
+	//	dls = append(dls, dl)
+	//}
+}
+
 func (this *WorkController) DeleteEntity()  {
 	entity_id, _ := this.GetInt64("entity_id", -1)
 	if err := iwork.DeleteEntityById(entity_id); err == nil{

@@ -1,8 +1,9 @@
 <template>
   <div style="margin: 10px;">
     <Row type="flex" justify="center">
-      <Col span="2"><EntityList/></Col>
-      <Col span="2"><GlobalVarList/></Col>
+      <Col span="3"><EntityList/></Col>
+      <Col span="3"><GlobalVarList/></Col>
+      <Col span="3"><IWorkDL/></Col>
     </Row>
 
     <ISimpleLeftRightRow>
@@ -27,10 +28,11 @@
   import WorkEdit from "./WorkEdit"
   import EntityList from "./EntityList"
   import GlobalVarList from "./GlobalVarList"
+  import IWorkDL from "./IWorkDL"
 
   export default {
     name: "WorkList",
-    components:{ISimpleLeftRightRow,ISimpleSearch,WorkEdit,EntityList,GlobalVarList},
+    components:{ISimpleLeftRightRow,ISimpleSearch,WorkEdit,EntityList,GlobalVarList,IWorkDL},
     data(){
       return {
         // 当前页
