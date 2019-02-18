@@ -9,6 +9,7 @@ import (
 	"isoft/isoft_iaas_web/imodules/misso"
 	"isoft/isoft_iaas_web/imodules/miwork"
 	"isoft/isoft_iaas_web/startup/db/imysql"
+	"isoft/isoft_iaas_web/startup/db/isqlite3"
 )
 
 // 数据库同步模式,支持 FLYWAY 和 AUTO
@@ -16,8 +17,8 @@ const RunSyncdbMode = "AUTO"
 
 func ConfigureDBInfo() {
 	if imodules.CheckModule("iwork") {
-		imysql.RegisterDBForMysql()
-		//isqlite3.RegisterDBForSqlite3()
+		//imysql.RegisterDBForMysql()
+		isqlite3.RegisterDBForSqlite3()
 	}else{
 		imysql.RegisterDBForMysql()
 	}
