@@ -50,6 +50,8 @@ func (this *WorkStepFactory) getProxy() IStandardWorkStep {
 		return &SQLExecuteNode{WorkStep: this.WorkStep}
 	case "SQL_QUERY":
 		return &SQLQueryNode{WorkStep: this.WorkStep}
+	case "SQL_QUERY_PAGE":
+		return &SQLQueryPageNode{WorkStep: this.WorkStep}
 	case "JSON_RENDER":
 		return &JsonRenderNode{WorkStep: this.WorkStep}
 	case "JSON_PARSER":

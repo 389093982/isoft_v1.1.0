@@ -81,3 +81,23 @@ func scanRowData(rows *sql.Rows, colSize int) []sql.RawBytes {
 	rows.Scan(scanArgs...)
 	return colValues
 }
+
+
+// 查询sql总数据量
+func QuerySelectCount(sqlstring string, sql_binding []interface{}, dataSourceName string) (datacounts int64) {
+	db, err := GetConnForMysql("mysql", dataSourceName)
+	if err != nil {
+		panic(err)
+	}
+	defer db.Close()
+	stmt, err := db.Prepare(sqlstring)
+	if err != nil {
+		panic(err)
+	}
+	row := stmt.QueryRow(sql_binding...)
+	err = row.Scan(&datacounts)
+	if err != nil {
+		panic(err)
+	}
+	return
+}

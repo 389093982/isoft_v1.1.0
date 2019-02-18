@@ -79,6 +79,7 @@ const default_work_step_types=[
   "work_end",
   "work_sub",
   "sql_query",
+  "sql_query_page",
   "sql_execute",
   "json_render",
   "json_parser",

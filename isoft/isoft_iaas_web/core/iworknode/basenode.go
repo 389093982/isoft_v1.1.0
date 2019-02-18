@@ -32,7 +32,7 @@ func (this *BaseNode) parseAndFillParamVauleWithNode(paramVaule string, dataStor
 
 // 判断是否需要跳过解析
 func checkSkipParse(paramName string) bool {
-	names := []string{"sql"}
+	names := []string{"sql","count_sql","metadata_sql?"}
 	for _,name := range names{
 		if name == paramName{
 			return true
