@@ -24,8 +24,8 @@ func (this *SQLQueryNode) Execute(trackingId string) {
 	sql := tmpDataMap["sql"].(string)                // 等价于 param.GetStaticParamValue("sql",this.WorkStep)
 	dataSourceName := tmpDataMap["db_conn"].(string) // 等价于 param.GetStaticParamValue("db_conn", this.WorkStep)
 	// sql_binding 参数获取
-	_sql_binding := getSqlBinding(tmpDataMap)
-	datacounts, rowDetailDatas, rowDatas := sqlutil.Query(sql, _sql_binding, dataSourceName)
+	sql_binding := getSqlBinding(tmpDataMap)
+	datacounts, rowDetailDatas, rowDatas := sqlutil.Query(sql, sql_binding, dataSourceName)
 	// 将数据数据存储到数据中心
 	// 存储 datacounts
 	dataStore.CacheData(this.WorkStep.WorkStepName, "datacounts", datacounts)
@@ -39,7 +39,7 @@ func (this *SQLQueryNode) Execute(trackingId string) {
 
 func (this *SQLQueryNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
 	paramMap := map[int][]string{
-		1:[]string{"metadata_sql?","元数据sql语句,可选参数,针对复杂查询sql,需要提供类似于select * from blog where 1=0的辅助sql用来构建节点输出"},
+		1:[]string{"metadata_sql","元数据sql语句,针对复杂查询sql,需要提供类似于select * from blog where 1=0的辅助sql用来构建节点输出"},
 		2:[]string{"sql","查询sql语句"},
 		3:[]string{"sql_binding?","sql绑定数据,个数必须和当前执行sql语句中的占位符参数个数相同"},
 		4:[]string{"db_conn","数据库连接信息,需要使用 $RESOURCE 全局参数"},
@@ -57,10 +57,8 @@ func (this *SQLQueryNode) GetDefaultParamOutputSchema() *schema.ParamOutputSchem
 
 func (this *SQLQueryNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
 	var metadataSql string
-	if sql := param.GetStaticParamValue("metadata_sql?", this.WorkStep); strings.TrimSpace(sql) != "" {
+	if sql := param.GetStaticParamValue("metadata_sql", this.WorkStep); strings.TrimSpace(sql) != "" {
 		metadataSql = sql
-	} else {
-		metadataSql = param.GetStaticParamValue("sql", this.WorkStep)
 	}
 	dataSourceName := param.GetStaticParamValue("db_conn", this.WorkStep)
 	paramNames := sqlutil.GetMetaDatas(metadataSql, dataSourceName)
@@ -108,8 +106,8 @@ func (this *SQLExecuteNode) Execute(trackingId string) {
 }
 
 func (this *SQLExecuteNode) modifySqlInsertWithBatchNumber(tmpDataMap map[string]interface{}, sql string) string {
-	_batch_number := GetBatchNumber(tmpDataMap)
-	if _batch_number > 1 && strings.HasPrefix(strings.ToUpper(strings.TrimSpace(sql)), "INSERT") {
+	batch_number := GetBatchNumber(tmpDataMap)
+	if batch_number > 1 && strings.HasPrefix(strings.ToUpper(strings.TrimSpace(sql)), "INSERT") {
 		// 最后一个左括号索引
 		index1 := strings.LastIndex(sql, "(")
 		// 最后一个右括号索引
@@ -118,7 +116,7 @@ func (this *SQLExecuteNode) modifySqlInsertWithBatchNumber(tmpDataMap map[string
 		valueSql := sql[index1:(index2 + 1)]
 		// newValueArr 等于 value 填充子句复制 _batch_number 份
 		newValueArr := make([]string, 0)
-		for i := 0; i < _batch_number; i++ {
+		for i := 0; i < batch_number; i++ {
 			newValueArr = append(newValueArr, valueSql)
 		}
 		newValueSql := strings.Join(newValueArr, ",")
@@ -205,7 +203,7 @@ func getPageIndexAndPageSize(tmpDataMap map[string]interface{}) (currentPage int
 
 func (this *SQLQueryPageNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
 	paramMap := map[int][]string{
-		1:[]string{"metadata_sql?","元数据sql语句,可选参数,针对复杂查询sql,需要提供类似于select * from blog where 1=0的辅助sql用来构建节点输出"},
+		1:[]string{"metadata_sql","元数据sql语句,针对复杂查询sql,需要提供类似于select * from blog where 1=0的辅助sql用来构建节点输出"},
 		2:[]string{"count_sql","统计总数sql,返回N页总数据量,格式参考select count(*) as count from blog where xxx"},
 		3:[]string{"sql","带分页条件的sql,等价于 ${count_sql} limit ?,?"},
 		4:[]string{"current_page","当前页数"},
@@ -233,10 +231,8 @@ func (this *SQLQueryPageNode) GetDefaultParamOutputSchema() *schema.ParamOutputS
 
 func (this *SQLQueryPageNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
 	var metadataSql string
-	if sql := param.GetStaticParamValue("metadata_sql?", this.WorkStep); strings.TrimSpace(sql) != "" {
+	if sql := param.GetStaticParamValue("metadata_sql", this.WorkStep); strings.TrimSpace(sql) != "" {
 		metadataSql = sql
-	} else {
-		metadataSql = param.GetStaticParamValue("sql", this.WorkStep)
 	}
 	dataSourceName := param.GetStaticParamValue("db_conn", this.WorkStep)
 	paramNames := sqlutil.GetMetaDatas(metadataSql, dataSourceName)
