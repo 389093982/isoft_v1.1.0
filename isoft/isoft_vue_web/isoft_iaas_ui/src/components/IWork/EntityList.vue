@@ -1,6 +1,6 @@
 <template>
   <span>
-    <ISimpleBtnTriggerModal ref="triggerModal" btn-text="实体类管理" modal-title="新增/编辑实体类" :modal-width="800" modal-top="10px">
+    <ISimpleBtnTriggerModal ref="triggerModal" btn-text="实体类管理" modal-title="新增/编辑实体类" :modal-width="800" modal-top="50px">
       <Tabs :animated="false">
         <TabPane label="编辑">
           <!-- 表单信息 -->
@@ -18,9 +18,11 @@
           </Form>
         </TabPane>
         <TabPane label="全部">
-          <Table :columns="columns1" :data="entities" size="small"></Table>
-          <Page :total="total" :page-size="offset" show-total show-sizer :styles="{'text-align': 'center','margin-top': '10px'}"
-                @on-change="handleChange" @on-page-size-change="handlePageSizeChange"/>
+          <Scroll height="350">
+            <Table :columns="columns1" :data="entities" size="small"></Table>
+            <Page :total="total" :page-size="offset" show-total show-sizer :styles="{'text-align': 'center','margin-top': '10px'}"
+                  @on-change="handleChange" @on-page-size-change="handlePageSizeChange"/>
+          </Scroll>
         </TabPane>
       </Tabs>
     </ISimpleBtnTriggerModal>
@@ -53,7 +55,7 @@
           {
             title: 'entity_field_str',
             key: 'entity_field_str',
-            width: 500,
+            width: 400,
           },
           {
             title: '操作',
