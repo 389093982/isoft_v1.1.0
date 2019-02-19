@@ -284,7 +284,7 @@ func (this *WorkController) LoadWorkStepInfo() {
 			"paramInputSchemaXml":       schema.GetCacheParamInputSchema(&step, &iworknode.WorkStepFactory{WorkStep: &step}).RenderToXml(),
 			"paramOutputSchema":         schema.GetCacheParamOutputSchema(&step),
 			"paramOutputSchemaXml":      schema.GetCacheParamOutputSchema(&step).RenderToXml(),
-			"paramOutputSchemaTreeNode": schema.GetCacheParamOutputSchema(&step).RenderToTreeNodes("$NODE_NAME_OUTPUT"),
+			"paramOutputSchemaTreeNode": schema.GetCacheParamOutputSchema(&step).RenderToTreeNodes("output"),
 			"paramMappings":             paramMappingsArr,
 		}
 	} else {

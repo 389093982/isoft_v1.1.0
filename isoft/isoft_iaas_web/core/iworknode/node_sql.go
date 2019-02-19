@@ -60,7 +60,7 @@ func (this *SQLQueryNode) GetDefaultParamOutputSchema() *schema.ParamOutputSchem
 }
 
 func (this *SQLQueryNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
-	return getMetaDataForQuery(this.WorkStep)
+	return getMetaDataQuietlyForQuery(this.WorkStep)
 }
 func (this *SQLQueryNode) ValidateCustom() {
 	validateAndGetDataSourceName(this.WorkStep)
@@ -234,7 +234,7 @@ func (this *SQLQueryPageNode) GetDefaultParamOutputSchema() *schema.ParamOutputS
 }
 
 func (this *SQLQueryPageNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
-	return getMetaDataForQuery(this.WorkStep)
+	return getMetaDataQuietlyForQuery(this.WorkStep)
 }
 
 func (this *SQLQueryPageNode) ValidateCustom() {
@@ -297,4 +297,13 @@ func getMetaDataForQuery(step *iwork.WorkStep) *schema.ParamOutputSchema {
 		})
 	}
 	return &schema.ParamOutputSchema{ParamOutputSchemaItems: items}
+}
+
+func getMetaDataQuietlyForQuery(step *iwork.WorkStep) *schema.ParamOutputSchema {
+	defer func() {
+		if err := recover(); err != nil{
+			return
+		}
+	}()
+	return getMetaDataForQuery(step)
 }
