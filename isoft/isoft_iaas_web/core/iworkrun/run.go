@@ -28,6 +28,11 @@ func Run(work iwork.Work, steps []iwork.WorkStep, dispatcher *entry.Dispatcher) 
 		LastUpdatedTime: time.Now(),
 	})
 
+	start := time.Now()
+	defer func() {
+		iwork.InsertRunLogDetail(trackingId, fmt.Sprintf("task total cost time :%v ms",time.Now().Sub(start).Nanoseconds() / 1e6))
+	}()
+
 	defer func() {
 		if err := recover(); err != nil {
 			iwork.InsertRunLogDetail(trackingId, fmt.Sprintf("internal error:%s", err))
@@ -52,6 +57,5 @@ func Run(work iwork.Work, steps []iwork.WorkStep, dispatcher *entry.Dispatcher) 
 	// 注销数据中心
 	datastore.UnRegistDataStore(trackingId)
 	iwork.InsertRunLogDetail(trackingId, fmt.Sprintf("~~~~~~~~~~end execute work:%s~~~~~~~~~~", work.WorkName))
-
 	return
 }
