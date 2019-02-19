@@ -1,10 +1,12 @@
 <template>
   <ISimpleBtnTriggerModal ref="triggerModal" btn-text="查看/编辑" btn-size="small" btn-folat="right"
-      modal-title="查看/编辑 workstep 参数" :modal-width="950" @btnClick="refreshPreNodeOutput">
+      modal-title="查看/编辑 workstep 参数" :modal-width="950" @btnClick="refreshPreNodeOutput" modal-top="50px">
     <Row>
       <Col span="8">
         <h3>前置节点输出参数</h3>
-        <Tree :data="data1" show-checkbox ref="tree1"></Tree>
+        <Scroll height="350">
+          <Tree :data="data1" show-checkbox ref="tree1"></Tree>
+        </Scroll>
       </Col>
       <Col span="2" style="text-align: center;margin-top: 100px;">
         <Button>
@@ -17,7 +19,7 @@
         </h3>
         <QuickFuncList ref="quickFuncList" @chooseFunc="chooseFunc"/>
         <Icon type="md-copy" size="18" style="float: right;" @click="showQuickFunc()"/>
-        <Input v-model="inputTextData" type="textarea" :rows="10" placeholder="Enter something..." />
+        <Input v-model="inputTextData" type="textarea" :rows="15" placeholder="Enter something..." />
       </Col>
     </Row>
     <Row style="text-align: center;margin-top: 10px;">
