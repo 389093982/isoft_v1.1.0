@@ -22,11 +22,21 @@
     data(){
       return {
         details:[],
+        validating:false,
       }
     },
     methods:{
       validateAllWork:async function () {
-        const result = await ValidateAllWork();
+        if(this.validating == true){
+          this.$Message.error("校验中,请稍后！");
+        }else{
+          this.validating = true;
+          const result = await ValidateAllWork();
+          if(result.status == "SUCCESS"){
+            this.refreshValidateResult();
+          }
+          this.validating = false;
+        }
       },
       refreshValidateResult: async function () {
         const result = await LoadValidateResult();
