@@ -124,7 +124,7 @@ func validateStep(step *iwork.WorkStep, logCh chan *iwork.ValidateLogDetail, ste
 
 func CheckGeneral(step *iwork.WorkStep)  {
 	// 校验 step 中的参数是否为空
-	iworkvalid.CheckEmpty(step)
+	iworkvalid.CheckEmpty(step, &iworknode.WorkStepFactory{WorkStep:step})
 }
 
 func CheckCustom(step *iwork.WorkStep)  {

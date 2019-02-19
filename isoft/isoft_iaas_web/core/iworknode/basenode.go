@@ -1,13 +1,13 @@
 package iworknode
 
 import (
-	"errors"
 	"fmt"
 	"isoft/isoft_iaas_web/core/iworkdata/datastore"
 	"isoft/isoft_iaas_web/core/iworkdata/param"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
 	"isoft/isoft_iaas_web/core/iworkutil"
 	"isoft/isoft_iaas_web/core/iworkutil/funcutil"
+	"isoft/isoft_iaas_web/core/iworkvalid"
 	"isoft/isoft_iaas_web/models/iwork"
 	"strconv"
 	"strings"
@@ -120,13 +120,6 @@ func (this *BaseNode) parseAndGetSingleParamVaule(paramVaule string, dataStore *
 	}
 }
 
-// 对输入参数做非空校验
-func checkEmptyForParam(item schema.ParamInputSchemaItem) {
-	if !strings.HasSuffix(item.ParamName, "?") && strings.TrimSpace(item.ParamValue) == ""{
-		panic(errors.New(fmt.Sprintf("empty param for %s", item.ParamName)))
-	}
-}
-
 // 将 ParamInputSchema 填充数据并返回临时的数据中心 tmpDataMap
 func (this *BaseNode) FillParamInputSchemaDataToTmp(workStep *iwork.WorkStep, dataStore *datastore.DataStore) map[string]interface{} {
 	// 存储节点中间数据
@@ -134,7 +127,7 @@ func (this *BaseNode) FillParamInputSchemaDataToTmp(workStep *iwork.WorkStep, da
 	paramInputSchema := schema.GetCacheParamInputSchema(workStep, &WorkStepFactory{WorkStep: workStep})
 	for _, item := range paramInputSchema.ParamInputSchemaItems {
 		// 对参数进行非空校验
-		checkEmptyForParam(item)
+		iworkvalid.CheckEmptyForItem(item)
 		// 个性化重写操作
 		this.modifySqlBindingParamValueWithBatchNumber(&item, tmpDataMap)
 		tmpDataMap[item.ParamName] = this.ParseAndGetParamVaule(item.ParamName, item.ParamValue, dataStore) // 输入数据存临时
