@@ -15,11 +15,12 @@ type JsonRenderNode struct {
 	WorkStep *iwork.WorkStep
 }
 
-func (this *JsonRenderNode) Execute(trackingId string) {
+func (this *JsonRenderNode) Execute(trackingId string, skipFunc func(tmpDataMap map[string]interface{}) bool) {
 	// 数据中心
 	dataStore := datastore.GetDataSource(trackingId)
 	// 节点中间数据
 	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, dataStore)
+	if skipFunc(tmpDataMap){return}			// 跳过当前节点执行
 	json_object := tmpDataMap["json_object"].([]map[string]interface{})
 	bytes, err := json.Marshal(json_object)
 	if err == nil {
@@ -55,11 +56,12 @@ type JsonParserNode struct {
 	WorkStep *iwork.WorkStep
 }
 
-func (this *JsonParserNode) Execute(trackingId string) {
+func (this *JsonParserNode) Execute(trackingId string, skipFunc func(tmpDataMap map[string]interface{}) bool) {
 	// 数据中心
 	dataStore := datastore.GetDataSource(trackingId)
 	// 节点中间数据
 	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, dataStore)
+	if skipFunc(tmpDataMap){return}			// 跳过当前节点执行
 	json_str := tmpDataMap["json_str"].(string)
 	json_objects := make([]map[string]interface{},0)
 	err := json.Unmarshal([]byte(json_str), &json_objects)

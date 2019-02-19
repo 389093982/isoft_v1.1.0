@@ -38,18 +38,42 @@ func (this *IWorkFuncProxy) IworkStringsJoin(args []interface{}) interface{} {
 
 func (this *IWorkFuncProxy) IworkInt64Add(args []interface{}) interface{} {
 	sargs := parseArgsToInt64Arr(args)
-	if len(sargs) == 2{
-		return sargs[0] + sargs[1]
-	}else{
-		panic(errors.New("参数个数不足或者参数类型有误！"))
-	}
+	checkArgsAmount(sargs, 2)
+	return sargs[0] + sargs[1]
 }
 
 func (this *IWorkFuncProxy) IworkInt64Sub(args []interface{}) interface{} {
 	sargs := parseArgsToInt64Arr(args)
-	if len(sargs) == 2{
-		return sargs[0] - sargs[1]
-	}else{
+	checkArgsAmount(sargs, 2)
+	return sargs[0] - sargs[1]
+}
+
+func (this *IWorkFuncProxy) IworkInt64Gt(args []interface{}) interface{} {
+	sargs := parseArgsToInt64Arr(args)
+	checkArgsAmount(sargs, 2)
+	return sargs[0] > sargs[1]
+}
+
+func (this *IWorkFuncProxy) IworkInt64Lt(args []interface{}) interface{} {
+	sargs := parseArgsToInt64Arr(args)
+	checkArgsAmount(sargs, 2)
+	return sargs[0] < sargs[1]
+}
+
+func (this *IWorkFuncProxy) IworkInt64Eq(args []interface{}) interface{} {
+	sargs := parseArgsToInt64Arr(args)
+	checkArgsAmount(sargs, 2)
+	return sargs[0] == sargs[1]
+}
+
+func (this *IWorkFuncProxy) IworkInt64Multi(args []interface{}) interface{} {
+	sargs := parseArgsToInt64Arr(args)
+	checkArgsAmount(sargs, 2)
+	return sargs[0] * sargs[1]
+}
+
+func checkArgsAmount(sargs []int64, amount int)  {
+	if len(sargs) < amount{
 		panic(errors.New("参数个数不足或者参数类型有误！"))
 	}
 }
@@ -68,15 +92,6 @@ func parseArgsToInt64Arr(args []interface{}) []int64 {
 	return sargs
 }
 
-func (this *IWorkFuncProxy) IworkInt64Multi(args []interface{}) interface{} {
-	sargs := parseArgsToInt64Arr(args)
-	if len(sargs) == 2{
-		return sargs[0] * sargs[1]
-	}else{
-		panic(errors.New("参数有误..."))
-	}
-}
-
 func (this *IWorkFuncProxy) IworkStringsJoinWithSep(args []interface{}) interface{} {
 	sargs := make([]string, 0)
 	for _, arg := range args {
@@ -84,3 +99,5 @@ func (this *IWorkFuncProxy) IworkStringsJoinWithSep(args []interface{}) interfac
 	}
 	return strings.Join(sargs[:len(args)-1], sargs[len(args)-1])
 }
+
+

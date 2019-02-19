@@ -21,7 +21,7 @@ type WorkStepFactory struct {
 
 type IStandardWorkStep interface {
 	// 节点执行的方法
-	Execute(trackingId string)
+	Execute(trackingId string,skipFunc func(tmpDataMap map[string]interface{}) bool)
 	// 获取默认输入参数
 	GetDefaultParamInputSchema() *schema.ParamInputSchema
 	// 获取动态输入参数
@@ -35,8 +35,17 @@ type IStandardWorkStep interface {
 }
 
 func (this *WorkStepFactory) Execute(trackingId string) {
+	skipFunc := func(tmpDataMap map[string]interface{}) bool {
+		// if 节点判断, if条件判断为 false 时跳过
+		if checkif, ok := tmpDataMap["iwork_if?"].(bool); ok && checkif == false{
+			iwork.InsertRunLogDetail(trackingId, fmt.Sprintf("The step for %s was skipped!", this.WorkStep.WorkStepName))
+			return true
+		}
+		return false
+	}
+
 	proxy := this.getProxy()
-	proxy.Execute(trackingId)
+	proxy.Execute(trackingId, skipFunc)
 	if endNode, ok := proxy.(*WorkEndNode); ok {
 		this.Receiver = endNode.Receiver
 	}

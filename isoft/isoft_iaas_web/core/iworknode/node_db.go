@@ -16,12 +16,12 @@ type DBParserNode struct {
 	WorkStep *iwork.WorkStep
 }
 
-func (this *DBParserNode) Execute(trackingId string) {
+func (this *DBParserNode) Execute(trackingId string, skipFunc func(tmpDataMap map[string]interface{}) bool) {
 	// 数据中心
 	dataStore := datastore.GetDataSource(trackingId)
 	// 节点中间数据
 	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, dataStore)
-
+	if skipFunc(tmpDataMap){return}			// 跳过当前节点执行
 	dataSourceName := param.GetStaticParamValue("db_conn", this.WorkStep)
 	_, _, rowDatas := sqlutil.Query("show tables;", []interface{}{}, dataSourceName)
 	tableNames := make([]string,0)

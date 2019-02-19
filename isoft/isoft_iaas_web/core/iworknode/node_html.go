@@ -12,11 +12,12 @@ type HrefParserNode struct {
 	WorkStep *iwork.WorkStep
 }
 
-func (this *HrefParserNode) Execute(trackingId string) {
+func (this *HrefParserNode) Execute(trackingId string, skipFunc func(tmpDataMap map[string]interface{}) bool) {
 	// 数据中心
 	dataStore := datastore.GetDataSource(trackingId)
 	// 节点中间数据
 	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, dataStore)
+	if skipFunc(tmpDataMap){return}			// 跳过当前节点执行
 	if url, ok := tmpDataMap["url"].(string); ok {
 		if hrefs := htmlutil.GetAllHref(url); len(hrefs) > 0 {
 			dataStore.CacheData(this.WorkStep.WorkStepName, "hrefs", hrefs)

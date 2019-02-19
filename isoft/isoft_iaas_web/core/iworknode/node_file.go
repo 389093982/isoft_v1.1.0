@@ -14,11 +14,12 @@ type FileReadNode struct {
 	WorkStep *iwork.WorkStep
 }
 
-func (this *FileReadNode) Execute(trackingId string) {
+func (this *FileReadNode) Execute(trackingId string, skipFunc func(tmpDataMap map[string]interface{}) bool) {
 	// 数据中心
 	dataStore := datastore.GetDataSource(trackingId)
 	// 节点中间数据
 	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, dataStore)
+	if skipFunc(tmpDataMap){return}			// 跳过当前节点执行
 	file_path := tmpDataMap["file_path"].(string)
 	dataStore.CacheData(this.WorkStep.WorkStepName, "file_path", file_path)
 	if bytes, err := ioutil.ReadFile(file_path); err == nil {
@@ -63,11 +64,12 @@ func checkAppend(tmpDataMap map[string]interface{}) bool {
 	return false
 }
 
-func (this *FileWriteNode) Execute(trackingId string) {
+func (this *FileWriteNode) Execute(trackingId string, skipFunc func(tmpDataMap map[string]interface{}) bool) {
 	// 数据中心
 	dataStore := datastore.GetDataSource(trackingId)
 	// 节点中间数据
 	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, dataStore)
+	if skipFunc(tmpDataMap){return}			// 跳过当前节点执行
 	file_path := tmpDataMap["file_path"].(string)
 	// 写字符串
 	if data, ok := tmpDataMap["data?"].(string); ok {

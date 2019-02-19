@@ -58,7 +58,7 @@ func createNewTrackingIdForWork(dispatcher *entry.Dispatcher, work iwork.Work) s
 // 执行单个步骤
 func runOneStep(trackingId string, step *iwork.WorkStep, dispatcher *entry.Dispatcher) (receiver *entry.Receiver) {
 	defer recordCostTimeLog(step.WorkStepName, trackingId, time.Now())
-	iwork.InsertRunLogDetail(trackingId, fmt.Sprintf("start execute workstep: >> [[%s]]", step.WorkStepName))
+	iwork.InsertRunLogDetail(trackingId, fmt.Sprintf("start execute workstep: >>>>>>>>>> [[%s]]", step.WorkStepName))
 	// 由工厂代为执行步骤
 	factory := &iworknode.WorkStepFactory{WorkStep: step, RunFunc: Run, Dispatcher: dispatcher}
 	factory.Execute(trackingId)
@@ -66,7 +66,7 @@ func runOneStep(trackingId string, step *iwork.WorkStep, dispatcher *entry.Dispa
 	if factory.Receiver != nil {
 		receiver = factory.Receiver
 	}
-	iwork.InsertRunLogDetail(trackingId, fmt.Sprintf("end execute workstep: >> [[%s]]", step.WorkStepName))
+	iwork.InsertRunLogDetail(trackingId, fmt.Sprintf("end execute workstep: >>>>>>>>>> [[%s]]", step.WorkStepName))
 	return
 }
 
