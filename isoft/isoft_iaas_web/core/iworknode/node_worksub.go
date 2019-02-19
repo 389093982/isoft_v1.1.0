@@ -1,6 +1,7 @@
 package iworknode
 
 import (
+	"fmt"
 	"github.com/pkg/errors"
 	"isoft/isoft_iaas_web/core/iworkdata/datastore"
 	"isoft/isoft_iaas_web/core/iworkdata/entry"
@@ -77,10 +78,8 @@ func (this *WorkSub) GetDefaultParamInputSchema() *schema.ParamInputSchema {
 // 获取动态输入值
 func (this *WorkSub) GetRuntimeParamInputSchema() *schema.ParamInputSchema {
 	items := make([]schema.ParamInputSchemaItem,0)
-	// 读取历史输入值
-	paramInputSchema := schema.GetCacheParamInputSchema(this.WorkStep, &WorkStepFactory{WorkStep: this.WorkStep})
-	// 从历史输入值中获取子流程名称
-	workSubName := iworkutil.GetWorkSubNameForWorkSubNode(paramInputSchema)
+	// 获取子流程信息
+	workSubName := this.getWorkSubName()
 	if strings.TrimSpace(workSubName) != "" {
 		// 获取子流程所有步骤
 		subSteps, err := iwork.GetAllWorkStepByWorkName(workSubName)
@@ -99,6 +98,14 @@ func (this *WorkSub) GetRuntimeParamInputSchema() *schema.ParamInputSchema {
 		}
 	}
 	return &schema.ParamInputSchema{ParamInputSchemaItems: items}
+}
+
+func (this *WorkSub) getWorkSubName() string {
+	// 读取历史输入值
+	paramInputSchema := schema.GetCacheParamInputSchema(this.WorkStep, &WorkStepFactory{WorkStep: this.WorkStep})
+	// 从历史输入值中获取子流程名称
+	workSubName := iworkutil.GetWorkSubNameForWorkSubNode(paramInputSchema)
+	return workSubName
 }
 
 func (this *WorkSub) GetDefaultParamOutputSchema() *schema.ParamOutputSchema {
@@ -132,5 +139,11 @@ func (this *WorkSub) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
 }
 
 func (this *WorkSub) ValidateCustom() {
-
+	if workSubName := this.getWorkSubName(); workSubName == ""{
+		panic("Empty workSubName was found!")
+	}else{
+		if _, err := iwork.QueryWorkByName(workSubName); err != nil{
+			panic(fmt.Sprintf("WorkSubName for %s was not found!", workSubName))
+		}
+	}
 }
