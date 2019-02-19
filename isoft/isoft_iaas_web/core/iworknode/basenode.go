@@ -181,7 +181,7 @@ func (this *BaseNode) SubmitParamOutputSchemaDataToDataStore(workStep *iwork.Wor
 func (this *BaseNode) removeUnsupportChars(paramValue string) string {
 	// 先进行初次的 trim
 	paramValue = strings.TrimSpace(paramValue)
-	// 去除前后的 \n
+	// 去除前后的 \n9
 	paramValue = strings.TrimPrefix(paramValue, "\n")
 	paramValue = strings.TrimSuffix(paramValue, "\n")
 	// 再进行二次 trim

@@ -6,6 +6,7 @@ import (
 	"isoft/isoft_iaas_web/core/iworkdata/datastore"
 	"isoft/isoft_iaas_web/core/iworkdata/param"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
+	"isoft/isoft_iaas_web/core/iworkutil/funcutil"
 	"isoft/isoft_iaas_web/core/iworkutil/sqlutil"
 	"isoft/isoft_iaas_web/models/iwork"
 	"strconv"
@@ -19,12 +20,12 @@ type SQLQueryNode struct {
 
 func (this *SQLQueryNode) Execute(trackingId string) {
 	// 跳过解析和填充的数据
-	skips := []string{"db_conn"}
+	skips := []string{"sql","db_conn"}
 	// 数据中心
 	dataStore := datastore.GetDataSource(trackingId)
 	// 节点中间数据
 	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, dataStore, skips...)
-	sql := tmpDataMap["sql"].(string)                // 等价于 param.GetStaticParamValue("sql",this.WorkStep)
+	sql := param.GetStaticParamValue("sql", this.WorkStep)
 	dataSourceName := param.GetStaticParamValue("db_conn", this.WorkStep)
 	// sql_binding 参数获取
 	sql_binding := getSqlBinding(tmpDataMap)
@@ -64,6 +65,7 @@ func (this *SQLQueryNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchem
 func (this *SQLQueryNode) ValidateCustom() {
 	validateAndGetDataSourceName(this.WorkStep)
 	validateAndGetMetaDataSql(this.WorkStep)
+	validateSqlBindingParamCount(this.WorkStep)
 }
 
 // 从 tmpDataMap 获取 sql_binding 数据
@@ -84,12 +86,12 @@ type SQLExecuteNode struct {
 
 func (this *SQLExecuteNode) Execute(trackingId string) {
 	// 跳过解析和填充的数据
-	skips := []string{"db_conn"}
+	skips := []string{"sql","db_conn"}
 	// 数据中心
 	dataStore := datastore.GetDataSource(trackingId)
 	// 节点中间数据
 	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, dataStore, skips...)
-	sql := tmpDataMap["sql"].(string)                // 等价于 param.GetStaticParamValue("sql",this.WorkStep)
+	sql := param.GetStaticParamValue("sql", this.WorkStep)
 	dataSourceName := param.GetStaticParamValue("db_conn", this.WorkStep)
 	// insert 语句且有批量操作时整改 sql 语句
 	sql = this.modifySqlInsertWithBatchNumber(tmpDataMap, sql)
@@ -155,17 +157,17 @@ type SQLQueryPageNode struct {
 
 func (this *SQLQueryPageNode) Execute(trackingId string) {
 	// 跳过解析和填充的数据
-	skips := []string{"db_conn"}
+	skips := []string{"total_sql","sql","db_conn"}
 	// 数据中心
 	dataStore := datastore.GetDataSource(trackingId)
 	// 节点中间数据
 	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, dataStore, skips...)
-	count_sql := tmpDataMap["count_sql"].(string)
-	sql := tmpDataMap["sql"].(string)
+	total_sql := param.GetStaticParamValue("total_sql",this.WorkStep)
+	sql := param.GetStaticParamValue("sql",this.WorkStep)
 	dataSourceName := param.GetStaticParamValue("db_conn",this.WorkStep)
 	// sql_binding 参数获取
 	sql_binding := getSqlBinding(tmpDataMap)
-	totalcount := sqlutil.QuerySelectCount(count_sql, sql_binding[:len(sql_binding) - 2], dataSourceName)
+	totalcount := sqlutil.QuerySelectCount(total_sql, sql_binding[:len(sql_binding) - 2], dataSourceName)
 	datacounts, rowDetailDatas, rowDatas := sqlutil.Query(sql, sql_binding, dataSourceName)
 	// 将数据数据存储到数据中心
 	// 存储 datacounts
@@ -176,8 +178,9 @@ func (this *SQLQueryPageNode) Execute(trackingId string) {
 	}
 	// 数组对象整体存储在 rows 里面
 	dataStore.CacheData(this.WorkStep.WorkStepName, "rows", rowDatas)
-	page,prepage := getPageIndexAndPageSize(tmpDataMap)
-	paginator := pageutil.Paginator(page, prepage, totalcount)
+	// 存储分页信息
+	pageIndex,pageSize := getPageIndexAndPageSize(tmpDataMap)
+	paginator := pageutil.Paginator(pageIndex, pageSize, totalcount)
 	dataStore.CacheData(this.WorkStep.WorkStepName, "paginator", paginator)
 	for key,value := range paginator{
 		dataStore.CacheData(this.WorkStep.WorkStepName, "paginator." + key, value)
@@ -205,11 +208,11 @@ func getPageIndexAndPageSize(tmpDataMap map[string]interface{}) (currentPage int
 func (this *SQLQueryPageNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
 	paramMap := map[int][]string{
 		1:[]string{"metadata_sql","元数据sql语句,针对复杂查询sql,需要提供类似于select * from blog where 1=0的辅助sql用来构建节点输出"},
-		2:[]string{"count_sql","统计总数sql,返回N页总数据量,格式参考select count(*) as count from blog where xxx"},
-		3:[]string{"sql","带分页条件的sql,等价于 ${count_sql} limit ?,?"},
+		2:[]string{"total_sql","统计总数sql,返回N页总数据量,格式参考select count(*) as count from blog where xxx"},
+		3:[]string{"sql","带分页条件的sql,等价于 ${total_sql} limit ?,?"},
 		4:[]string{"current_page","当前页数"},
 		5:[]string{"page_size","每页数据量"},
-		6:[]string{"sql_binding?","sql绑定数据,个数和sql中的?数量相同,前N-2位参数和count_sql中的?数量相同"},
+		6:[]string{"sql_binding?","sql绑定数据,个数和sql中的?数量相同,前N-2位参数和total_sql中的?数量相同"},
 		7:[]string{"db_conn","数据库连接信息,需要使用 $RESOURCE 全局参数"},
 	}
 	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
@@ -237,6 +240,25 @@ func (this *SQLQueryPageNode) GetRuntimeParamOutputSchema() *schema.ParamOutputS
 func (this *SQLQueryPageNode) ValidateCustom() {
 	validateAndGetDataSourceName(this.WorkStep)
 	validateAndGetMetaDataSql(this.WorkStep)
+	validateSqlBindingParamCount(this.WorkStep)
+	validateSqlBindingParamCount(this.WorkStep)
+	validateTotalSqlBindingParamCount(this.WorkStep)
+}
+
+func validateTotalSqlBindingParamCount(step *iwork.WorkStep) {
+	total_sql := param.GetStaticParamValue("total_sql", step)
+	sql_binding := param.GetStaticParamValue("sql_binding?", step)
+	if strings.Count(total_sql, "?") + 2 != strings.Count(funcutil.EncodeSpecialForParamVaule(sql_binding), ";"){
+		panic("Number of ? in total_sql and number of ; in sql_binding is mismatch!")
+	}
+}
+
+func validateSqlBindingParamCount(step *iwork.WorkStep) {
+	sql := param.GetStaticParamValue("sql", step)
+	sql_binding := param.GetStaticParamValue("sql_binding?", step)
+	if strings.Count(sql, "?") != strings.Count(funcutil.EncodeSpecialForParamVaule(sql_binding), ";"){
+		panic("Number of ? in SQL and number of ; in sql_binding is unequal!")
+	}
 }
 
 func validateAndGetMetaDataSql(step *iwork.WorkStep) string {
