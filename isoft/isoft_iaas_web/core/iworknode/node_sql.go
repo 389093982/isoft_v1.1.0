@@ -59,23 +59,11 @@ func (this *SQLQueryNode) GetDefaultParamOutputSchema() *schema.ParamOutputSchem
 }
 
 func (this *SQLQueryNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
-	var metadataSql string
-	if sql := param.GetStaticParamValue("metadata_sql", this.WorkStep); strings.TrimSpace(sql) != "" {
-		metadataSql = sql
-	}
-	dataSourceName := param.GetStaticParamValue("db_conn", this.WorkStep)
-	paramNames := sqlutil.GetMetaDatas(metadataSql, dataSourceName)
-	items := make([]schema.ParamOutputSchemaItem,0)
-	for _, paramName := range paramNames {
-		items = append(items, schema.ParamOutputSchemaItem{
-			ParentPath: "rows",
-			ParamName:  paramName,
-		})
-	}
-	return &schema.ParamOutputSchema{ParamOutputSchemaItems: items}
+	return getMetaDataForQuery(this.WorkStep)
 }
 func (this *SQLQueryNode) ValidateCustom() {
-	validateDBConn(this.WorkStep)
+	validateAndGetDataSourceName(this.WorkStep)
+	validateAndGetMetaDataSql(this.WorkStep)
 }
 
 // 从 tmpDataMap 获取 sql_binding 数据
@@ -157,7 +145,7 @@ func (this *SQLExecuteNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSch
 }
 
 func (this *SQLExecuteNode) ValidateCustom() {
-	validateDBConn(this.WorkStep)
+	validateAndGetDataSourceName(this.WorkStep)
 }
 
 type SQLQueryPageNode struct {
@@ -243,27 +231,26 @@ func (this *SQLQueryPageNode) GetDefaultParamOutputSchema() *schema.ParamOutputS
 }
 
 func (this *SQLQueryPageNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
-	var metadataSql string
-	if sql := param.GetStaticParamValue("metadata_sql", this.WorkStep); strings.TrimSpace(sql) != "" {
-		metadataSql = sql
-	}
-	dataSourceName := param.GetStaticParamValue("db_conn", this.WorkStep)
-	paramNames := sqlutil.GetMetaDatas(metadataSql, dataSourceName)
-	items := make([]schema.ParamOutputSchemaItem,0)
-	for _, paramName := range paramNames {
-		items = append(items, schema.ParamOutputSchemaItem{
-			ParentPath: "rows",
-			ParamName:  paramName,
-		})
-	}
-	return &schema.ParamOutputSchema{ParamOutputSchemaItems: items}
+	return getMetaDataForQuery(this.WorkStep)
 }
 
 func (this *SQLQueryPageNode) ValidateCustom() {
-	validateDBConn(this.WorkStep)
+	validateAndGetDataSourceName(this.WorkStep)
+	validateAndGetMetaDataSql(this.WorkStep)
 }
 
-func validateDBConn(step *iwork.WorkStep) {
+func validateAndGetMetaDataSql(step *iwork.WorkStep) string {
+	metadata_sql := param.GetStaticParamValue("metadata_sql", step)
+	if strings.TrimSpace(metadata_sql) == ""{
+		panic("Empty paramValue for metadata_sql was found!")
+	}
+	if strings.Contains(metadata_sql, "?"){
+		panic("Invalid paramValue form metadata_sql was found!")
+	}
+	return strings.TrimSpace(metadata_sql)
+}
+
+func validateAndGetDataSourceName(step *iwork.WorkStep) string {
 	dataSourceName := param.GetStaticParamValue("db_conn", step)
 	if strings.TrimSpace(dataSourceName) == ""{
 		panic("Invalid param for db_conn! Can't resolve it!")
@@ -273,4 +260,19 @@ func validateDBConn(step *iwork.WorkStep) {
 		panic(fmt.Sprintf("Can't get DB connection for %s!", dataSourceName))
 	}
 	defer db.Close()
+	return dataSourceName
+}
+
+func getMetaDataForQuery(step *iwork.WorkStep) *schema.ParamOutputSchema {
+	metadataSql := validateAndGetMetaDataSql(step)
+	dataSourceName := validateAndGetDataSourceName(step)
+	paramNames := sqlutil.GetMetaDatas(metadataSql, dataSourceName)
+	items := make([]schema.ParamOutputSchemaItem,0)
+	for _, paramName := range paramNames {
+		items = append(items, schema.ParamOutputSchemaItem{
+			ParentPath: "rows",
+			ParamName:  paramName,
+		})
+	}
+	return &schema.ParamOutputSchema{ParamOutputSchemaItems: items}
 }
