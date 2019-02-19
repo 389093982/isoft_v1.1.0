@@ -78,6 +78,10 @@ type ValidateLogRecord struct {
 type ValidateLogDetail struct {
 	Id              int64     `json:"id"`
 	TrackingId      string    `json:"tracking_id"`
+	WorkId			int64	  `json:"work_id"`
+	WorkStepId		int64	  `json:"work_step_id"`
+	WorkName 		string	  `json:"work_name"`
+	WorkStepName 	string	  `json:"work_step_name"`
 	Detail          string    `json:"detail" orm:"type(text)"`
 	CreatedBy       string    `json:"created_by"`
 	CreatedTime     time.Time `json:"created_time" orm:"auto_now_add;type(datetime)"`
@@ -92,21 +96,10 @@ func InsertValidateLogRecord(record *ValidateLogRecord) (id int64, err error) {
 	return
 }
 
-func insertValidateLogDetailData(detail *ValidateLogDetail) (id int64, err error) {
+func InsertValidateLogDetail(detail *ValidateLogDetail) (id int64, err error) {
 	o := orm.NewOrm()
 	id, err = o.Insert(detail)
 	return
-}
-
-func InsertValidateLogDetail(trackingId, detail string) {
-	insertValidateLogDetailData(&ValidateLogDetail{
-		TrackingId:      trackingId,
-		Detail:          detail,
-		CreatedBy:       "SYSTEM",
-		CreatedTime:     time.Now(),
-		LastUpdatedBy:   "SYSTEM",
-		LastUpdatedTime: time.Now(),
-	})
 }
 
 func QueryLastValidateLogRecord() (record ValidateLogRecord, err error) {

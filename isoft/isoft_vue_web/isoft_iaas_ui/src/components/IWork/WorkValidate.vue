@@ -4,9 +4,7 @@
     <Button type="success" @click="refreshValidateResult">刷新校验结果</Button>
 
     <div style="margin: 20px;min-height: 300px;">
-      <p v-for="detail in details">
-        {{detail.detail}}
-      </p>
+      <Table :columns="columns1" :data="details" size="small"></Table>
     </div>
   </ISimpleBtnTriggerModal>
 </template>
@@ -21,8 +19,22 @@
     components:{ISimpleBtnTriggerModal},
     data(){
       return {
-        details:[],
         validating:false,
+        details:[],
+        columns1: [
+          {
+            title: 'work_name',
+            key: 'work_name',
+          },
+          {
+            title: 'work_step_name',
+            key: 'work_step_name',
+          },
+          {
+            title: 'detail',
+            key: 'detail',
+          },
+        ],
       }
     },
     methods:{
