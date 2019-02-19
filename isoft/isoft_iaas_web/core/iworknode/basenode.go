@@ -130,7 +130,7 @@ func (this *BaseNode) FillParamInputSchemaDataToTmp(workStep *iwork.WorkStep, da
 	for _, item := range paramInputSchema.ParamInputSchemaItems {
 		// 跳过校验
 		if stringutil.CheckContains(item.ParamName, skips){
-			break
+			continue
 		}
 		// 对参数进行非空校验
 		iworkvalid.CheckEmptyForItem(item)
