@@ -89,6 +89,7 @@ const default_work_step_types=[
   "file_write",
   "href_parser",
   "entity_parser",
+  "db_parser",
 ];
 
 export default {
