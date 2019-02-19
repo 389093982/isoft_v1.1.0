@@ -106,7 +106,7 @@ func (this *WorkSub) GetDefaultParamOutputSchema() *schema.ParamOutputSchema {
 }
 
 func (this *WorkSub) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
-	items := []schema.ParamOutputSchemaItem{}
+	items := make([]schema.ParamOutputSchemaItem,0)
 	// 读取静态输入值
 	paramInputSchema := schema.GetCacheParamInputSchema(this.WorkStep, &WorkStepFactory{WorkStep: this.WorkStep})
 	// 从静态输入值中获取子流程名称
@@ -129,4 +129,8 @@ func (this *WorkSub) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
 		}
 	}
 	return &schema.ParamOutputSchema{ParamOutputSchemaItems: items}
+}
+
+func (this *WorkSub) ValidateCustom() {
+
 }

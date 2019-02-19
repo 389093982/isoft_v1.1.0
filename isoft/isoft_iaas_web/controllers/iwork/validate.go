@@ -2,6 +2,7 @@ package iwork
 
 import (
 	"isoft/isoft/common/stringutil"
+	"isoft/isoft_iaas_web/core/iworknode"
 	"isoft/isoft_iaas_web/core/iworkvalid"
 	"isoft/isoft_iaas_web/models/iwork"
 	"time"
@@ -114,7 +115,20 @@ func validateStep(step *iwork.WorkStep, logCh chan *iwork.ValidateLogDetail, ste
 		// 每执行完一个 step 就往 stepChan 里面发送完成通知
 		stepChan <- 1
 	}()
+
+	// 通用校验
+	CheckGeneral(step)
+	// 定制化校验
+	CheckCustom(step)
+}
+
+func CheckGeneral(step *iwork.WorkStep)  {
 	// 校验 step 中的参数是否为空
 	iworkvalid.CheckEmpty(step)
+}
+
+func CheckCustom(step *iwork.WorkStep)  {
+	factory := &iworknode.WorkStepFactory{WorkStep:step}
+	factory.ValidateCustom()
 }
 

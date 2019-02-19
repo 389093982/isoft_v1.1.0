@@ -65,6 +65,10 @@ func (this *HttpRequestNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSc
 	return &schema.ParamOutputSchema{}
 }
 
+func (this *HttpRequestNode) ValidateCustom() {
+
+}
+
 func fillParamMapData(tmpDataMap map[string]interface{}, paramName string) map[string]interface{} {
 	paramMap := make(map[string]interface{})
 	if _paramName, ok := tmpDataMap[paramName].(string); ok {

@@ -62,6 +62,10 @@ func (this *WorkStartNode) GetDefaultParamOutputSchema() *schema.ParamOutputSche
 	return &schema.ParamOutputSchema{}
 }
 
+func (this *WorkStartNode) ValidateCustom() {
+
+}
+
 type WorkEndNode struct {
 	BaseNode
 	WorkStep *iwork.WorkStep
@@ -104,4 +108,8 @@ func (this *WorkEndNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema
 
 func (this *WorkEndNode) GetDefaultParamOutputSchema() *schema.ParamOutputSchema {
 	return &schema.ParamOutputSchema{}
+}
+
+func (this *WorkEndNode) ValidateCustom() {
+
 }

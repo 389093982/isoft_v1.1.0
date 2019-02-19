@@ -72,6 +72,10 @@ func (this *SQLQueryNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchem
 	return &schema.ParamOutputSchema{ParamOutputSchemaItems: items}
 }
 
+func (this *SQLQueryNode) ValidateCustom() {
+
+}
+
 // 从 tmpDataMap 获取 sql_binding 数据
 func getSqlBinding(tmpDataMap map[string]interface{}) []interface{} {
 	result := make([]interface{},0)
@@ -148,6 +152,9 @@ func (this *SQLExecuteNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSch
 	return &schema.ParamOutputSchema{}
 }
 
+func (this *SQLExecuteNode) ValidateCustom() {
+
+}
 
 type SQLQueryPageNode struct {
 	BaseNode
@@ -244,4 +251,8 @@ func (this *SQLQueryPageNode) GetRuntimeParamOutputSchema() *schema.ParamOutputS
 		})
 	}
 	return &schema.ParamOutputSchema{ParamOutputSchemaItems: items}
+}
+
+func (this *SQLQueryPageNode) ValidateCustom() {
+
 }

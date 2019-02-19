@@ -47,6 +47,10 @@ func (this *FileReadNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchem
 	return &schema.ParamOutputSchema{}
 }
 
+func (this *FileReadNode) ValidateCustom() {
+
+}
+
 type FileWriteNode struct {
 	BaseNode
 	WorkStep *iwork.WorkStep
@@ -100,4 +104,8 @@ func (this *FileWriteNode) GetDefaultParamOutputSchema() *schema.ParamOutputSche
 
 func (this *FileWriteNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
 	return &schema.ParamOutputSchema{}
+}
+
+func (this *FileWriteNode) ValidateCustom() {
+
 }

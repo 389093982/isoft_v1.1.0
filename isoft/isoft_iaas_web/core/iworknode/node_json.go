@@ -46,6 +46,10 @@ func (this *JsonRenderNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSch
 	return &schema.ParamOutputSchema{}
 }
 
+func (this *JsonRenderNode) ValidateCustom() {
+
+}
+
 type JsonParserNode struct {
 	BaseNode
 	WorkStep *iwork.WorkStep
@@ -102,4 +106,8 @@ func (this *JsonParserNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSch
 		}
 	}
 	return &schema.ParamOutputSchema{ParamOutputSchemaItems: items}
+}
+
+func (this *JsonParserNode) ValidateCustom() {
+
 }

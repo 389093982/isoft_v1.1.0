@@ -47,3 +47,7 @@ func (this *MapperNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema 
 	}
 	return &schema.ParamOutputSchema{ParamOutputSchemaItems: items}
 }
+
+func (this *MapperNode) ValidateCustom() {
+
+}

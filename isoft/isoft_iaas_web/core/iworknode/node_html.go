@@ -42,3 +42,7 @@ func (this *HrefParserNode) GetDefaultParamOutputSchema() *schema.ParamOutputSch
 func (this *HrefParserNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
 	return &schema.ParamOutputSchema{}
 }
+
+func (this *HrefParserNode) ValidateCustom() {
+
+}

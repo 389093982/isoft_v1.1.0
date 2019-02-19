@@ -79,5 +79,6 @@ func (this *EntityParserNode) GetRuntimeParamOutputSchema() *schema.ParamOutputS
 	return &schema.ParamOutputSchema{ParamOutputSchemaItems: items}
 }
 
+func (this *EntityParserNode) ValidateCustom() {
 
-
+}
