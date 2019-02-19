@@ -14,7 +14,10 @@ func CheckEmpty(step *iwork.WorkStep, paramSchemaParser schema.IParamSchemaParse
 	}
 	paramInputSchema := schema.GetCacheParamInputSchema(step, paramSchemaParser)
 	for _, item := range paramInputSchema.ParamInputSchemaItems{
-		CheckEmptyForItem(item)
+		// work_start 节点参数由调度者提供,不做非空校验
+		if step.WorkStepType != "work_start" {
+			CheckEmptyForItem(item)
+		}
 	}
 }
 
