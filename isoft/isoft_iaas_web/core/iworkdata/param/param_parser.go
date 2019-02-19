@@ -66,7 +66,6 @@ func (this *ParamNameParser) ParseAndGetRelativeParamValue() string {
 		if item.ParamName == this.ParamName {
 			// 非必须参数不得为空
 			if !strings.HasSuffix(item.ParamName, "?") && strings.TrimSpace(item.ParamValue) == "" {
-				//panic(errors.New(fmt.Sprint("it is a mast parameter for %s", item.ParamName)))
 				return ""
 			}
 			return item.ParamValue

@@ -12,3 +12,15 @@ func RandomUUID() string {
 func GetTypeOfInterface(v interface{}) string {
 	return reflect.TypeOf(v).String()
 }
+
+func CheckContains(s string, slice []string) bool {
+	if len(slice) == 0{
+		return false
+	}
+	for _, _s := range slice{
+		if _s == s{
+			return true
+		}
+	}
+	return false
+}

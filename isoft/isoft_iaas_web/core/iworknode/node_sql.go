@@ -1,6 +1,7 @@
 package iworknode
 
 import (
+	"fmt"
 	"isoft/isoft/common/pageutil"
 	"isoft/isoft_iaas_web/core/iworkdata/datastore"
 	"isoft/isoft_iaas_web/core/iworkdata/param"
@@ -17,12 +18,14 @@ type SQLQueryNode struct {
 }
 
 func (this *SQLQueryNode) Execute(trackingId string) {
+	// 跳过解析和填充的数据
+	skips := []string{"db_conn"}
 	// 数据中心
 	dataStore := datastore.GetDataSource(trackingId)
 	// 节点中间数据
-	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, dataStore)
+	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, dataStore, skips...)
 	sql := tmpDataMap["sql"].(string)                // 等价于 param.GetStaticParamValue("sql",this.WorkStep)
-	dataSourceName := tmpDataMap["db_conn"].(string) // 等价于 param.GetStaticParamValue("db_conn", this.WorkStep)
+	dataSourceName := param.GetStaticParamValue("db_conn", this.WorkStep)
 	// sql_binding 参数获取
 	sql_binding := getSqlBinding(tmpDataMap)
 	datacounts, rowDetailDatas, rowDatas := sqlutil.Query(sql, sql_binding, dataSourceName)
@@ -71,9 +74,8 @@ func (this *SQLQueryNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchem
 	}
 	return &schema.ParamOutputSchema{ParamOutputSchemaItems: items}
 }
-
 func (this *SQLQueryNode) ValidateCustom() {
-
+	validateDBConn(this.WorkStep)
 }
 
 // 从 tmpDataMap 获取 sql_binding 数据
@@ -93,12 +95,14 @@ type SQLExecuteNode struct {
 }
 
 func (this *SQLExecuteNode) Execute(trackingId string) {
+	// 跳过解析和填充的数据
+	skips := []string{"db_conn"}
 	// 数据中心
 	dataStore := datastore.GetDataSource(trackingId)
 	// 节点中间数据
-	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, dataStore)
+	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, dataStore, skips...)
 	sql := tmpDataMap["sql"].(string)                // 等价于 param.GetStaticParamValue("sql",this.WorkStep)
-	dataSourceName := tmpDataMap["db_conn"].(string) // 等价于 param.GetStaticParamValue("db_conn", this.WorkStep)
+	dataSourceName := param.GetStaticParamValue("db_conn", this.WorkStep)
 	// insert 语句且有批量操作时整改 sql 语句
 	sql = this.modifySqlInsertWithBatchNumber(tmpDataMap, sql)
 	// sql_binding 参数获取
@@ -153,7 +157,7 @@ func (this *SQLExecuteNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSch
 }
 
 func (this *SQLExecuteNode) ValidateCustom() {
-
+	validateDBConn(this.WorkStep)
 }
 
 type SQLQueryPageNode struct {
@@ -162,13 +166,15 @@ type SQLQueryPageNode struct {
 }
 
 func (this *SQLQueryPageNode) Execute(trackingId string) {
+	// 跳过解析和填充的数据
+	skips := []string{"db_conn"}
 	// 数据中心
 	dataStore := datastore.GetDataSource(trackingId)
 	// 节点中间数据
-	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, dataStore)
+	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, dataStore, skips...)
 	count_sql := tmpDataMap["count_sql"].(string)
 	sql := tmpDataMap["sql"].(string)
-	dataSourceName := tmpDataMap["db_conn"].(string)
+	dataSourceName := param.GetStaticParamValue("db_conn",this.WorkStep)
 	// sql_binding 参数获取
 	sql_binding := getSqlBinding(tmpDataMap)
 	totalcount := sqlutil.QuerySelectCount(count_sql, sql_binding[:len(sql_binding) - 2], dataSourceName)
@@ -254,5 +260,17 @@ func (this *SQLQueryPageNode) GetRuntimeParamOutputSchema() *schema.ParamOutputS
 }
 
 func (this *SQLQueryPageNode) ValidateCustom() {
+	validateDBConn(this.WorkStep)
+}
 
+func validateDBConn(step *iwork.WorkStep) {
+	dataSourceName := param.GetStaticParamValue("db_conn", step)
+	if strings.TrimSpace(dataSourceName) == ""{
+		panic("Invalid param for db_conn! Can't resolve it!")
+	}
+	db, err := sqlutil.GetConnForMysql("mysql", dataSourceName)
+	if err != nil {
+		panic(fmt.Sprintf("Can't get DB connection for %s!", dataSourceName))
+	}
+	defer db.Close()
 }

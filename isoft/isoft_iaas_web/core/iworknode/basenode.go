@@ -2,6 +2,7 @@ package iworknode
 
 import (
 	"fmt"
+	"isoft/isoft/common/stringutil"
 	"isoft/isoft_iaas_web/core/iworkdata/datastore"
 	"isoft/isoft_iaas_web/core/iworkdata/param"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
@@ -121,11 +122,16 @@ func (this *BaseNode) parseAndGetSingleParamVaule(paramVaule string, dataStore *
 }
 
 // 将 ParamInputSchema 填充数据并返回临时的数据中心 tmpDataMap
-func (this *BaseNode) FillParamInputSchemaDataToTmp(workStep *iwork.WorkStep, dataStore *datastore.DataStore) map[string]interface{} {
+// skips 表示可以跳过填充的参数
+func (this *BaseNode) FillParamInputSchemaDataToTmp(workStep *iwork.WorkStep, dataStore *datastore.DataStore, skips ...string) map[string]interface{} {
 	// 存储节点中间数据
 	tmpDataMap := make(map[string]interface{})
 	paramInputSchema := schema.GetCacheParamInputSchema(workStep, &WorkStepFactory{WorkStep: workStep})
 	for _, item := range paramInputSchema.ParamInputSchemaItems {
+		// 跳过校验
+		if stringutil.CheckContains(item.ParamName, skips){
+			break
+		}
 		// 对参数进行非空校验
 		iworkvalid.CheckEmptyForItem(item)
 		// 个性化重写操作
