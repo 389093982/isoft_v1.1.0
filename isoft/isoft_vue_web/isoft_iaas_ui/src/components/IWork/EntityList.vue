@@ -1,23 +1,31 @@
 <template>
   <span>
     <ISimpleBtnTriggerModal ref="triggerModal" btn-text="实体类管理" modal-title="新增/编辑实体类" :modal-width="800" modal-top="10px">
-      <!-- 表单信息 -->
-      <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="100">
-        <FormItem label="entity_name" prop="entity_name">
-          <Input v-model.trim="formValidate.entity_name" placeholder="请输入 entity_name"></Input>
-        </FormItem>
-        <FormItem label="entity_field_str" prop="entity_field_str">
-          <Input v-model.trim="formValidate.entity_field_str" type="textarea" :rows="4" placeholder="请输入 entity_field_str"></Input>
-        </FormItem>
-        <FormItem>
-          <Button type="success" @click="handleSubmit('formValidate')" style="margin-right: 6px">Submit</Button>
-          <Button type="warning" @click="handleReset('formValidate')" style="margin-right: 6px">Reset</Button>
-        </FormItem>
-      </Form>
+      <Tabs :animated="false">
+        <TabPane label="编辑">
+          <!-- 表单信息 -->
+          <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="100">
+            <FormItem label="entity_name" prop="entity_name">
+              <Input v-model.trim="formValidate.entity_name" placeholder="请输入 entity_name"></Input>
+            </FormItem>
+            <FormItem label="entity_field_str" prop="entity_field_str">
+              <Input v-model.trim="formValidate.entity_field_str" type="textarea" :rows="4" placeholder="请输入 entity_field_str"></Input>
+            </FormItem>
+            <FormItem>
+              <Button type="success" @click="handleSubmit('formValidate')" style="margin-right: 6px">Submit</Button>
+              <Button type="warning" @click="handleReset('formValidate')" style="margin-right: 6px">Reset</Button>
+            </FormItem>
+          </Form>
+        </TabPane>
+        <TabPane label="全部">
+          <Table :columns="columns1" :data="entities" size="small"></Table>
+          <Page :total="total" :page-size="offset" show-total show-sizer :styles="{'text-align': 'center','margin-top': '10px'}"
+                @on-change="handleChange" @on-page-size-change="handlePageSizeChange"/>
+        </TabPane>
+      </Tabs>
 
-      <Table :columns="columns1" :data="entities" size="small"></Table>
-      <Page :total="total" :page-size="offset" show-total show-sizer :styles="{'text-align': 'center','margin-top': '10px'}"
-            @on-change="handleChange" @on-page-size-change="handlePageSizeChange"/>
+
+
     </ISimpleBtnTriggerModal>
   </span>
 </template>
