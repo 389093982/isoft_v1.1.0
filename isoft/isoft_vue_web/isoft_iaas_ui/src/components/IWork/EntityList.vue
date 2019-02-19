@@ -48,6 +48,7 @@
           {
             title: 'entity_field_str',
             key: 'entity_field_str',
+            width: 500,
           },
           {
             title: '操作',
