@@ -23,9 +23,6 @@
                 @on-change="handleChange" @on-page-size-change="handlePageSizeChange"/>
         </TabPane>
       </Tabs>
-
-
-
     </ISimpleBtnTriggerModal>
   </span>
 </template>
