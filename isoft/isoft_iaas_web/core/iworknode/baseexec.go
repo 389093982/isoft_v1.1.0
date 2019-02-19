@@ -3,6 +3,7 @@ package iworknode
 import (
 	"errors"
 	"fmt"
+	"isoft/isoft/common/stringutil"
 	"isoft/isoft_iaas_web/core/iworkdata/entry"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
 	"isoft/isoft_iaas_web/models/iwork"
@@ -78,10 +79,18 @@ func (this *WorkStepFactory) getProxy() IStandardWorkStep {
 }
 
 func (this *WorkStepFactory) GetDefaultParamInputSchema() *schema.ParamInputSchema {
-	if schema := this.getProxy().GetDefaultParamInputSchema(); schema != nil {
-		return schema
+	var inputSchema *schema.ParamInputSchema
+	if _schema := this.getProxy().GetDefaultParamInputSchema(); _schema != nil {
+		inputSchema = _schema
+	}else{
+		inputSchema = &schema.ParamInputSchema{}
 	}
-	return &schema.ParamInputSchema{}
+	// 非 开始和结束节点支持 if 判断
+	if !stringutil.CheckContains(this.WorkStep.WorkStepType, []string{"work_start","work_end"}){
+		appendDefaultParamInputSchemaItem(schema.ParamInputSchemaItem{
+			ParamName:"iwork_if?",ParamDesc:"if指令,只有满足条件时才会执行,不填时必定会执行!"}, inputSchema)
+	}
+	return inputSchema
 }
 
 func (this *WorkStepFactory) GetRuntimeParamInputSchema() *schema.ParamInputSchema {
@@ -109,4 +118,11 @@ func (this *WorkStepFactory) ValidateCustom() {
 	this.getProxy().ValidateCustom()
 }
 
-
+func appendDefaultParamInputSchemaItem(item schema.ParamInputSchemaItem, inputSchema *schema.ParamInputSchema)  {
+	for _, _item := range inputSchema.ParamInputSchemaItems{
+		if _item.ParamName == item.ParamName{
+			return
+		}
+	}
+	inputSchema.ParamInputSchemaItems = append(inputSchema.ParamInputSchemaItems, item)
+}
