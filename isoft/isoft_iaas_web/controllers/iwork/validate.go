@@ -41,9 +41,9 @@ func validateAll()  {
 	works := iwork.GetAllWorkInfo()
 
 	for _, work := range works{
-		go func(work *iwork.Work) {
-			validateWork(work, logCh, workChan)
-		}(&work)
+		go func(work iwork.Work) {
+			validateWork(&work, logCh, workChan)
+		}(work)
 	}
 
 	go func() {
@@ -58,6 +58,7 @@ func validateAll()  {
 	for log := range logCh{
 		iwork.InsertValidateLogDetail(trackingId, fmt.Sprintf("internal error:%s", log))
 	}
+	iwork.InsertValidateLogDetail(trackingId, "校验完成!")
 }
 
 // 校验单个 work
@@ -65,9 +66,9 @@ func validateWork(work *iwork.Work, logCh chan string, workChan chan int)  {
 	stepChan := make(chan int)
 	steps, _ := iwork.GetAllWorkStepInfo(work.Id)
 	for _, step := range steps{
-		go func(step *iwork.WorkStep) {
-			validateStep(step, logCh, stepChan)
-		}(&step)
+		go func(step iwork.WorkStep) {
+			validateStep(&step, logCh, stepChan)
+		}(step)
 	}
 
 	for i := 0; i<len(steps); i++{
@@ -96,6 +97,9 @@ func validateStep(step *iwork.WorkStep, logCh chan string, stepChan chan int)  {
 
 // 对必须参数进行非空校验
 func checkEmpty(step *iwork.WorkStep)  {
+	if strings.TrimSpace(step.WorkStepName) == "" || strings.TrimSpace(step.WorkStepType) == ""{
+		panic(fmt.Sprintf("[%v-%v]found empty step for %v", step.WorkId, step.WorkStepId, step.WorkStepId))
+	}
 	paramInputSchema := schema.GetCacheParamInputSchema(step, &iworknode.WorkStepFactory{WorkStep: step})
 	for _, item := range paramInputSchema.ParamInputSchemaItems{
 		if !strings.HasSuffix(item.ParamName,"?") && strings.TrimSpace(item.ParamValue) == ""{
