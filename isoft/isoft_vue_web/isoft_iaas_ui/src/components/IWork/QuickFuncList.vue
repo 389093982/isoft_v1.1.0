@@ -33,6 +33,9 @@
           {funcDemo:"IworkInt64Gt($int1,$int2)",funcDesc:"判断数字1是否大于数字2",},
           {funcDemo:"IworkInt64Lt($int1,$int2)",funcDesc:"判断数字1是否小于数字2",},
           {funcDemo:"IworkInt64Eq($int1,$int2)",funcDesc:"判断数字1是否等于数字2",},
+          {funcDemo:"IworkBoolAnd($bool1,$bool2)",funcDesc:"判断bool1和bool2同时满足",},
+          {funcDemo:"IworkBoolOr($bool,$bool2)",funcDesc:"判断bool1和bool2只要一个满足即可",},
+          {funcDemo:"IworkBoolNot($bool)",funcDesc:"bool值取反",},
         ],
         columns1: [
           {

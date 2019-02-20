@@ -100,4 +100,26 @@ func (this *IWorkFuncProxy) IworkStringsJoinWithSep(args []interface{}) interfac
 	return strings.Join(sargs[:len(args)-1], sargs[len(args)-1])
 }
 
+func (this *IWorkFuncProxy) IworkBoolOr(args []interface{}) interface{} {
+	sargs := make([]bool, 0)
+	for _, arg := range args {
+		sargs = append(sargs, arg.(bool))
+	}
+	return sargs[0] || sargs[1]
+}
 
+func (this *IWorkFuncProxy) IworkBoolAnd(args []interface{}) interface{} {
+	sargs := make([]bool, 0)
+	for _, arg := range args {
+		sargs = append(sargs, arg.(bool))
+	}
+	return sargs[0] && sargs[1]
+}
+
+func (this *IWorkFuncProxy) IworkBoolNot(args []interface{}) interface{} {
+	sargs := make([]bool, 0)
+	for _, arg := range args {
+		sargs = append(sargs, arg.(bool))
+	}
+	return !sargs[0]
+}
