@@ -51,7 +51,9 @@ func InsertRunLogDetail(trackingId, detail string) {
 func QueryRunLogRecord(work_id int64, page int, offset int) (runLogRecords []RunLogRecord, counts int64, err error) {
 	work, _ := QueryWorkById(work_id)
 	o := orm.NewOrm()
-	qs := o.QueryTable("run_log_record").Filter("work_name", work.WorkName).OrderBy("-last_updated_time")
+	// Exclude 非顶级流程日志不查出来
+	qs := o.QueryTable("run_log_record").Filter("work_name", work.WorkName).
+		Exclude("tracking_id__contains",".").OrderBy("-last_updated_time")
 	counts, _ = qs.Count()
 	qs = qs.Limit(offset, (page-1)*offset)
 	qs.All(&runLogRecords)
