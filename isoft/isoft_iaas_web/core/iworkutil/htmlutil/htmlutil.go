@@ -20,7 +20,7 @@ func getUrlBytes(url string) (bytes []byte) {
 func GetAllHref(url string) (results []string) {
 	// 发送 HTTP 请求获取 URL 地址 bytes
 	body := getUrlBytes(url)
-	href_pattern := "href=\"(.+?)\""
+	href_pattern := "(href|src)=\"(.+?)\""
 	href_reg := regexp.MustCompile(href_pattern)
 	// 根据正则表达式获取所有的地址
 	hrefs := href_reg.FindAllString(string(body), -1)
