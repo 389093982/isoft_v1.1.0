@@ -50,6 +50,7 @@
           {
             title: 'work_id',
             key: 'work_id',
+            width: 100,
           },
           {
             title: 'work_step_id',
@@ -94,6 +95,21 @@
           {
             title: 'work_step_type',
             key: 'work_step_type',
+            width: 200,
+            render: (h, params) => {
+              return h('div', [
+                h('Icon', {
+                  props: {
+                    type: 'ios-analytics-outline',
+                    size: 30,
+                  },
+                  style: {
+                    marginRight: '5px',
+                  },
+                }),
+                h('span', this.worksteps[params.index]['work_step_type']),
+              ]);
+            }
           },
           {
             title: 'work_step_desc',
