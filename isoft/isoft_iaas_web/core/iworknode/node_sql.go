@@ -230,7 +230,7 @@ func (this *SQLQueryPageNode) GetDefaultParamOutputSchema() *schema.ParamOutputS
 	items := make([]schema.ParamOutputSchemaItem,0)
 	for _, paginatorField := range pageutil.GetPaginatorFields() {
 		items = append(items, schema.ParamOutputSchemaItem{
-			ParentPath: iworkconst.FIELD_PREFIX + "paginator",
+			ParentPath: iworkconst.COMPLEX_PREFIX + "paginator",
 			ParamName:  paginatorField,
 		})
 	}
