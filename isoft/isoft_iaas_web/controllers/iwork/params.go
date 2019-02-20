@@ -3,6 +3,7 @@ package iwork
 import (
 	"encoding/json"
 	"fmt"
+	"isoft/isoft_iaas_web/core/iworkconst"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
 	"isoft/isoft_iaas_web/core/iworknode"
 	"isoft/isoft_iaas_web/models/iwork"
@@ -84,7 +85,7 @@ func BuildAutoCreateSubWork(work_id int64, work_step_id int64) {
 	}
 	paramInputSchema := schema.GetCacheParamInputSchema(&step, &iworknode.WorkStepFactory{WorkStep: &step})
 	for index, item := range paramInputSchema.ParamInputSchemaItems {
-		if item.ParamName == "work_sub" {
+		if item.ParamName == iworkconst.STRING_PREFIX + "work_sub" {
 			paramValue := strings.TrimSpace(item.ParamValue)
 			if !strings.HasPrefix(paramValue, "$WORK.") {
 				// 修改值并同步到数据库

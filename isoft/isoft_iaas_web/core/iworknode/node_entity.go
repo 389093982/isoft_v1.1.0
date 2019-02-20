@@ -3,6 +3,7 @@ package iworknode
 import (
 	"encoding/json"
 	"fmt"
+	"isoft/isoft_iaas_web/core/iworkconst"
 	"isoft/isoft_iaas_web/core/iworkdata/datastore"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
 	"isoft/isoft_iaas_web/core/iworkutil"
@@ -23,19 +24,21 @@ func (this *EntityParserNode) Execute(trackingId string, skipFunc func(tmpDataMa
 	if skipFunc(tmpDataMap){return}			// 跳过当前节点执行
 	inputSchema := schema.GetCacheParamInputSchema(this.WorkStep, &WorkStepFactory{WorkStep: this.WorkStep})
 	for _, item := range inputSchema.ParamInputSchemaItems {
-		if !strings.HasSuffix(item.ParamName, "_data"){
+		if strings.HasSuffix(item.ParamName, "_entity"){
+			entityName := getEntityNameWithRemovePrefixAndSuffix(item.ParamName)
 			// 从 tmpDataMap 中获取入参实体类数据
 			entityDataMap := make(map[string]interface{})
-			if dataMap, ok := tmpDataMap[item.ParamName + "_data"].([]map[string]interface{});ok && len(dataMap) > 0{
+			if dataMap, ok := tmpDataMap[iworkconst.COMPLEX_PREFIX + entityName + "_data"].([]map[string]interface{});ok && len(dataMap) > 0{
 				entityDataMap = dataMap[0]
-			}else if dataMap, ok := tmpDataMap[item.ParamName + "_data"].(map[string]interface{});ok{
+			}else if dataMap, ok := tmpDataMap[iworkconst.COMPLEX_PREFIX + entityName + "_data"].(map[string]interface{});ok{
 				entityDataMap = dataMap
 			}
-			entityFieldStr := tmpDataMap[item.ParamName].(string)
+			entityFieldStr := tmpDataMap[iworkconst.STRING_PREFIX + entityName + "_entity"].(string)
 			for _, entityField := range strings.Split(entityFieldStr, ","){
 				// 将数据数据存储到数据中心
 				dataStore.CacheData(this.WorkStep.WorkStepName,
-					fmt.Sprintf("%s.%s", item.ParamName, strings.TrimSpace(entityField)), entityDataMap[entityField])
+					fmt.Sprintf("%s.%s", iworkconst.COMPLEX_PREFIX + entityName,
+						strings.TrimSpace(entityField)), entityDataMap[entityField])
 			}
 		}
 	}
@@ -51,9 +54,9 @@ func (this *EntityParserNode) GetRuntimeParamInputSchema() *schema.ParamInputSch
 	items := make([]schema.ParamInputSchemaItem, 0)
 	for _, paramMapping := range paramMappingsArr {
 		// paramMapping 存放实体类定义 $Entity
-		items = append(items, schema.ParamInputSchemaItem{ParamName: paramMapping})
+		items = append(items, schema.ParamInputSchemaItem{ParamName: fmt.Sprintf(iworkconst.STRING_PREFIX + "%s_entity",paramMapping)})
 		// paramMapping_data 存放实体类数据
-		items = append(items, schema.ParamInputSchemaItem{ParamName: fmt.Sprintf("%s_data",paramMapping)})
+		items = append(items, schema.ParamInputSchemaItem{ParamName: fmt.Sprintf(iworkconst.COMPLEX_PREFIX + "%s_data",paramMapping)})
 	}
 	return &schema.ParamInputSchema{ParamInputSchemaItems: items}
 }
@@ -71,12 +74,21 @@ func (this *EntityParserNode) GetRuntimeParamOutputSchema() *schema.ParamOutputS
 			if entityFieldStr := iworkutil.GetParamValueForEntity(item.ParamValue); strings.TrimSpace(entityFieldStr) != ""{
 				for _, entityField := range strings.Split(entityFieldStr, ","){
 					// 每个字段放入 items 中
-					items = append(items, schema.ParamOutputSchemaItem{ParamName: strings.TrimSpace(entityField), ParentPath: item.ParamName})
+					items = append(items, schema.ParamOutputSchemaItem{
+						ParamName: strings.TrimSpace(entityField), ParentPath: iworkconst.COMPLEX_PREFIX + getEntityNameWithRemovePrefixAndSuffix(item.ParamName),
+					})
 				}
 			}
 		}
 	}
 	return &schema.ParamOutputSchema{ParamOutputSchemaItems: items}
+}
+
+func getEntityNameWithRemovePrefixAndSuffix(paramName string) string {
+	// 去除 str_ 和 _entity
+	paramName = strings.Replace(paramName, iworkconst.STRING_PREFIX, "", -1)
+	paramName = strings.Replace(paramName, "_entity", "", -1)
+	return paramName
 }
 
 func (this *EntityParserNode) ValidateCustom() {
