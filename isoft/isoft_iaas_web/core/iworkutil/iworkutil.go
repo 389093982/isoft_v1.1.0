@@ -22,7 +22,6 @@ func GetWorkSubNameForWorkSubNode(paramInputSchema *schema.ParamInputSchema) str
 		if item.ParamName == iworkconst.STRING_PREFIX + "work_sub" && strings.HasPrefix(strings.TrimSpace(item.ParamValue), "$WORK.") {
 			// 找到 work_sub 字段值
 			return GetWorkSubNameFromParamValue(strings.TrimSpace(item.ParamValue))
-
 		}
 	}
 	return ""
