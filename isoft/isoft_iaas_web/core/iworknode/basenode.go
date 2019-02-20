@@ -3,6 +3,7 @@ package iworknode
 import (
 	"fmt"
 	"isoft/isoft/common/stringutil"
+	"isoft/isoft_iaas_web/core/iworkconst"
 	"isoft/isoft_iaas_web/core/iworkdata/datastore"
 	"isoft/isoft_iaas_web/core/iworkdata/param"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
@@ -143,10 +144,10 @@ func (this *BaseNode) FillParamInputSchemaDataToTmp(workStep *iwork.WorkStep, da
 
 func (this *BaseNode) modifySqlBindingParamValueWithBatchNumber(item *schema.ParamInputSchemaItem, tmpDataMap map[string]interface{}) {
 	// 当前填充的字段为 sql_binding? 时,检测到批量操作数据大于 1
-	if item.ParamName == "sql_binding?" && GetBatchNumber(tmpDataMap) > 1 {
+	if item.ParamName == iworkconst.MULTI_PREFIX + "sql_binding?" && GetBatchNumber(tmpDataMap) > 1 {
 		var newParamValue string
 		for i := 0; i < GetBatchNumber(tmpDataMap); i++ {
-			newParamValue += strings.Replace(item.ParamValue, ".rows.", fmt.Sprintf(".rows[%v].", i), -1)
+			newParamValue += strings.Replace(item.ParamValue, iworkconst.MULTI_PREFIX + "rows.", fmt.Sprintf(iworkconst.MULTI_PREFIX + "rows[%v].", i), -1)
 		}
 		item.ParamValue = newParamValue
 	}
@@ -154,13 +155,13 @@ func (this *BaseNode) modifySqlBindingParamValueWithBatchNumber(item *schema.Par
 
 // 从 tmpDataMap 获取 batch_number? 数据
 func GetBatchNumber(tmpDataMap map[string]interface{}) int {
-	if _, ok := tmpDataMap["batch_number?"]; !ok {
+	if _, ok := tmpDataMap[iworkconst.NUMBER_PREFIX + "batch_number?"]; !ok {
 		return 0
 	}
-	if batch_number, ok := tmpDataMap["batch_number?"].(int64); ok {
+	if batch_number, ok := tmpDataMap[iworkconst.NUMBER_PREFIX + "batch_number?"].(int64); ok {
 		return int(batch_number)
 	}
-	if batch_number, ok := tmpDataMap["batch_number?"].(string); ok {
+	if batch_number, ok := tmpDataMap[iworkconst.NUMBER_PREFIX + "batch_number?"].(string); ok {
 		if _batch_number, err := strconv.Atoi(batch_number); err == nil {
 			return _batch_number
 		}
