@@ -1,6 +1,7 @@
 package iworknode
 
 import (
+	"isoft/isoft/common/stringutil"
 	"isoft/isoft_iaas_web/core/iworkdata/datastore"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
 	"isoft/isoft_iaas_web/core/iworkutil/htmlutil"
@@ -19,7 +20,9 @@ func (this *HrefParserNode) Execute(trackingId string, skipFunc func(tmpDataMap 
 	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, dataStore)
 	if skipFunc(tmpDataMap){return}			// 跳过当前节点执行
 	if url, ok := tmpDataMap["url"].(string); ok {
-		if hrefs := htmlutil.GetAllHref(url); len(hrefs) > 0 {
+		if _hrefs := htmlutil.GetAllHref(url); len(_hrefs) > 0 {
+			// 将 []string 转换成 []interface{}
+			hrefs := stringutil.ChangeStringsToInterfaces(_hrefs)
 			dataStore.CacheData(this.WorkStep.WorkStepName, "hrefs", hrefs)
 		}
 	}

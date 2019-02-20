@@ -19,25 +19,22 @@ type WorkSub struct {
 
 func (this *WorkSub) Execute(trackingId string, skipFunc func(tmpDataMap map[string]interface{}) bool) {
 	// 获取子流程流程名称
-	workSubName := iworkutil.GetWorkSubNameForWorkSubNode(
-		schema.GetCacheParamInputSchema(this.WorkStep, &WorkStepFactory{WorkStep: this.WorkStep}))
-	if strings.TrimSpace(workSubName) == "" {
-		panic(errors.New("invalid workSubName"))
-	}
+	workSubName := this.checkAndGetWorkSubName()
 	// 数据中心
 	dataStore := datastore.GetDataSource(trackingId)
 	// 节点中间数据
 	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, dataStore)
-	if skipFunc(tmpDataMap){return}			// 跳过当前节点执行
+	if skipFunc(tmpDataMap) {return} // 跳过当前节点执行
 	// 运行子流程
 	work, _ := iwork.QueryWorkByName(workSubName)
 	steps, _ := iwork.GetAllWorkStepByWorkName(workSubName)
-
-	if foreachDatas, ok := tmpDataMap["foreach_data?"].([]map[string]interface{}); ok{
+	// 获取 foreach_data 数据
+	foreachDatas := getConvertedForEachData(tmpDataMap)
+	if len(foreachDatas) > 0 {
 		itemKey := this.getForeachItemKey(tmpDataMap)
 		// work_sub 节点支持 foreach 循环功能,此处循环 foreach 次数
 		for _, foreachData := range foreachDatas {
-			if itemKey != ""{
+			if itemKey != "" {
 				// 找到 tmpDataMap 中的迭代元素 __item__,将其替换成需要迭代的元素
 				tmpDataMap[itemKey] = foreachData
 			}
@@ -46,6 +43,29 @@ func (this *WorkSub) Execute(trackingId string, skipFunc func(tmpDataMap map[str
 	} else {
 		this.RunOnceSubWork(work, steps, trackingId, tmpDataMap, dataStore)
 	}
+}
+
+// 获取转换后的 foreach_data 数据
+// 任意类型切片对象,目前仅限制于 []interface{} 和 []map[string]interface{},需要由前置节点标准化成这种类型才可
+func getConvertedForEachData(tmpDataMap map[string]interface{}) []interface{} {
+	foreachDatas := make([]interface{}, 0)
+	if _foreachDatas, ok := tmpDataMap["foreach_data?"].([]interface{}); ok {
+		foreachDatas = append(foreachDatas, _foreachDatas...)
+	} else if _foreachDatas, ok := tmpDataMap["foreach_data?"].([]map[string]interface{}); ok {
+		for _, _foreachData := range _foreachDatas{
+			foreachDatas = append(foreachDatas, _foreachData)
+		}
+	}
+	return foreachDatas
+}
+
+func (this *WorkSub) checkAndGetWorkSubName() string {
+	workSubName := iworkutil.GetWorkSubNameForWorkSubNode(
+		schema.GetCacheParamInputSchema(this.WorkStep, &WorkStepFactory{WorkStep: this.WorkStep}))
+	if strings.TrimSpace(workSubName) == "" {
+		panic(errors.New("invalid workSubName"))
+	}
+	return workSubName
 }
 
 func (this *WorkSub) getForeachItemKey(tmpDataMap map[string]interface{}) string {

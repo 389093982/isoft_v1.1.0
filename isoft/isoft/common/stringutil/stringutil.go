@@ -24,3 +24,11 @@ func CheckContains(s string, slice []string) bool {
 	}
 	return false
 }
+
+func ChangeStringsToInterfaces(ss []string) []interface{} {
+	result := make([]interface{},0)
+	for _, s := range ss{
+		result = append(result, s)
+	}
+	return result
+}
