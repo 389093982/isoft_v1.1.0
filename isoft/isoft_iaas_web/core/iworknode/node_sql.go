@@ -23,7 +23,7 @@ func (this *SQLQueryNode) Execute(trackingId string, skipFunc func(tmpDataMap ma
 	// 跳过解析和填充的数据
 	skips := []string{iworkconst.STRING_PREFIX + "sql",iworkconst.STRING_PREFIX + "db_conn"}
 	// 数据中心
-	dataStore := datastore.GetDataSource(trackingId)
+	dataStore := datastore.GetDataStore(trackingId)
 	// 节点中间数据
 	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, dataStore, skips...)
 	if skipFunc(tmpDataMap){return}			// 跳过当前节点执行
@@ -65,7 +65,7 @@ func (this *SQLQueryNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchem
 	return getMetaDataQuietlyForQuery(this.WorkStep)
 }
 func (this *SQLQueryNode) ValidateCustom() {
-	validateAndGetDataSourceName(this.WorkStep)
+	validateAndGetDataStoreName(this.WorkStep)
 	validateAndGetMetaDataSql(this.WorkStep)
 	validateSqlBindingParamCount(this.WorkStep)
 }
@@ -90,7 +90,7 @@ func (this *SQLExecuteNode) Execute(trackingId string, skipFunc func(tmpDataMap 
 	// 跳过解析和填充的数据
 	skips := []string{iworkconst.STRING_PREFIX + "sql",iworkconst.STRING_PREFIX + "db_conn"}
 	// 数据中心
-	dataStore := datastore.GetDataSource(trackingId)
+	dataStore := datastore.GetDataStore(trackingId)
 	// 节点中间数据
 	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, dataStore, skips...)
 	if skipFunc(tmpDataMap){return}			// 跳过当前节点执行
@@ -150,7 +150,7 @@ func (this *SQLExecuteNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSch
 }
 
 func (this *SQLExecuteNode) ValidateCustom() {
-	validateAndGetDataSourceName(this.WorkStep)
+	validateAndGetDataStoreName(this.WorkStep)
 }
 
 type SQLQueryPageNode struct {
@@ -162,7 +162,7 @@ func (this *SQLQueryPageNode) Execute(trackingId string, skipFunc func(tmpDataMa
 	// 跳过解析和填充的数据
 	skips := []string{iworkconst.STRING_PREFIX + "total_sql",iworkconst.STRING_PREFIX + "sql",iworkconst.STRING_PREFIX + "db_conn"}
 	// 数据中心
-	dataStore := datastore.GetDataSource(trackingId)
+	dataStore := datastore.GetDataStore(trackingId)
 	// 节点中间数据
 	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, dataStore, skips...)
 	if skipFunc(tmpDataMap){return}			// 跳过当前节点执行
@@ -242,7 +242,7 @@ func (this *SQLQueryPageNode) GetRuntimeParamOutputSchema() *schema.ParamOutputS
 }
 
 func (this *SQLQueryPageNode) ValidateCustom() {
-	validateAndGetDataSourceName(this.WorkStep)
+	validateAndGetDataStoreName(this.WorkStep)
 	validateAndGetMetaDataSql(this.WorkStep)
 	validateSqlBindingParamCount(this.WorkStep)
 	validateSqlBindingParamCount(this.WorkStep)
@@ -276,7 +276,7 @@ func validateAndGetMetaDataSql(step *iwork.WorkStep) string {
 	return strings.TrimSpace(metadata_sql)
 }
 
-func validateAndGetDataSourceName(step *iwork.WorkStep) string {
+func validateAndGetDataStoreName(step *iwork.WorkStep) string {
 	dataSourceName := param.GetStaticParamValue(iworkconst.STRING_PREFIX + "db_conn", step)
 	if strings.TrimSpace(dataSourceName) == ""{
 		panic("Invalid param for db_conn! Can't resolve it!")
@@ -291,7 +291,7 @@ func validateAndGetDataSourceName(step *iwork.WorkStep) string {
 
 func getMetaDataForQuery(step *iwork.WorkStep) *schema.ParamOutputSchema {
 	metadataSql := validateAndGetMetaDataSql(step)
-	dataSourceName := validateAndGetDataSourceName(step)
+	dataSourceName := validateAndGetDataStoreName(step)
 	paramNames := sqlutil.GetMetaDatas(metadataSql, dataSourceName)
 	items := make([]schema.ParamOutputSchemaItem,0)
 	for _, paramName := range paramNames {

@@ -20,7 +20,7 @@ type HttpRequestNode struct {
 
 func (this *HttpRequestNode) Execute(trackingId string, skipFunc func(tmpDataMap map[string]interface{}) bool) {
 	// 数据中心
-	_dataStore := datastore.GetDataSource(trackingId)
+	_dataStore := datastore.GetDataStore(trackingId)
 	// 节点中间数据
 	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, _dataStore)
 	if skipFunc(tmpDataMap){return}			// 跳过当前节点执行

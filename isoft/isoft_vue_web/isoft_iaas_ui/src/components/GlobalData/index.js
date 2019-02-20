@@ -90,6 +90,7 @@ const default_work_step_types=[
   "href_parser",
   "entity_parser",
   "db_parser",
+  "memorymap_cache",
 ];
 
 export default {

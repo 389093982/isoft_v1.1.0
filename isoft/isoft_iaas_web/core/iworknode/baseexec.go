@@ -84,6 +84,8 @@ func (this *WorkStepFactory) getProxy() IStandardWorkStep {
 		return &EntityParserNode{WorkStep: this.WorkStep}
 	case "DB_PARSER":
 		return &DBParserNode{WorkStep: this.WorkStep}
+	case "MEMORYMAP_CACHE":
+		return &MemoryMapCache{WorkStep: this.WorkStep}
 	}
 	panic(errors.New(fmt.Sprintf("[%v-%v]unsupport workStepType:%s", this.WorkStep.WorkId, this.WorkStep.WorkStepName, this.WorkStep.WorkStepType)))
 }

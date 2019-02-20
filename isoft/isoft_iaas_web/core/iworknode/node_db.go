@@ -19,7 +19,7 @@ type DBParserNode struct {
 
 func (this *DBParserNode) Execute(trackingId string, skipFunc func(tmpDataMap map[string]interface{}) bool) {
 	// 数据中心
-	dataStore := datastore.GetDataSource(trackingId)
+	dataStore := datastore.GetDataStore(trackingId)
 	// 节点中间数据
 	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, dataStore)
 	if skipFunc(tmpDataMap){return}			// 跳过当前节点执行
@@ -85,5 +85,5 @@ func (this *DBParserNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchem
 }
 
 func (this *DBParserNode) ValidateCustom() {
-	validateAndGetDataSourceName(this.WorkStep)
+	validateAndGetDataStoreName(this.WorkStep)
 }

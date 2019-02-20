@@ -5,6 +5,7 @@ import (
 	"isoft/isoft/common/stringutil"
 	"isoft/isoft_iaas_web/core/iworkdata/datastore"
 	"isoft/isoft_iaas_web/core/iworkdata/entry"
+	"isoft/isoft_iaas_web/core/iworkdata/memory"
 	"isoft/isoft_iaas_web/core/iworknode"
 	"isoft/isoft_iaas_web/models/iwork"
 	"strings"
@@ -22,8 +23,6 @@ func Run(work iwork.Work, steps []iwork.WorkStep, dispatcher *entry.Dispatcher) 
 	}()
 	// 记录日志详细
 	iwork.InsertRunLogDetail(trackingId, fmt.Sprintf("~~~~~~~~~~start execute work:%s~~~~~~~~~~", work.WorkName))
-	// 申请数据中心存储中间数据
-	datastore.RegistDataStore(trackingId)
 	// 逐步执行步骤
 	for _, step := range steps {
 		_receiver := runOneStep(trackingId, &step, dispatcher)
@@ -31,8 +30,10 @@ func Run(work iwork.Work, steps []iwork.WorkStep, dispatcher *entry.Dispatcher) 
 			receiver = _receiver
 		}
 	}
-	// 注销数据中心
+	// 注销数据中心,无需注册,不存在时会自动注册
 	datastore.UnRegistDataStore(trackingId)
+	// 注销 MemoryCache,无需注册,不存在时会自动注册
+	memory.UnRegistMemoryCache(trackingId)
 	iwork.InsertRunLogDetail(trackingId, fmt.Sprintf("~~~~~~~~~~end execute work:%s~~~~~~~~~~", work.WorkName))
 	return
 }

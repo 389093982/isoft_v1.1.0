@@ -18,7 +18,7 @@ type JsonRenderNode struct {
 
 func (this *JsonRenderNode) Execute(trackingId string, skipFunc func(tmpDataMap map[string]interface{}) bool) {
 	// 数据中心
-	dataStore := datastore.GetDataSource(trackingId)
+	dataStore := datastore.GetDataStore(trackingId)
 	// 节点中间数据
 	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, dataStore)
 	if skipFunc(tmpDataMap){return}			// 跳过当前节点执行
@@ -59,7 +59,7 @@ type JsonParserNode struct {
 
 func (this *JsonParserNode) Execute(trackingId string, skipFunc func(tmpDataMap map[string]interface{}) bool) {
 	// 数据中心
-	dataStore := datastore.GetDataSource(trackingId)
+	dataStore := datastore.GetDataStore(trackingId)
 	// 节点中间数据
 	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, dataStore)
 	if skipFunc(tmpDataMap){return}			// 跳过当前节点执行

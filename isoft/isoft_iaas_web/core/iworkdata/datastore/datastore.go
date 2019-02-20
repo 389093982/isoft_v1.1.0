@@ -21,7 +21,7 @@ func (this *DataStore) CacheData(nodeName, paramName string, paramValue interfac
 	// 为当前 nodeName 绑定 DataNodeStore 数据空间
 	if _, ok := this.nodeStoreMap[nodeName]; !ok {
 		this.nodeStoreMap[nodeName] = &DataNodeStore{
-			NodeOutputDataMap: make(map[string]interface{}, 5),
+			NodeOutputDataMap: make(map[string]interface{}, 0),
 		}
 	}
 	// 存数据
@@ -39,7 +39,7 @@ func (this *DataStore) GetData(nodeName, paramName string) interface{} {
 func RegistDataStore(trackingId string) {
 	datastores[trackingId] = &DataStore{
 		TrackingId:   trackingId,
-		nodeStoreMap: make(map[string]*DataNodeStore, 5),
+		nodeStoreMap: make(map[string]*DataNodeStore, 0),
 	}
 }
 
@@ -49,6 +49,11 @@ func UnRegistDataStore(trackingId string) {
 }
 
 // 获取数据中心
-func GetDataSource(trackingId string) *DataStore {
+func GetDataStore(trackingId string) *DataStore {
+	store := datastores[trackingId]
+	if store != nil{
+		return store
+	}
+	RegistDataStore(trackingId)
 	return datastores[trackingId]
 }

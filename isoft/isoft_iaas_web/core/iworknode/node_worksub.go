@@ -22,7 +22,7 @@ func (this *WorkSub) Execute(trackingId string, skipFunc func(tmpDataMap map[str
 	// 获取子流程流程名称
 	workSubName := this.checkAndGetWorkSubName()
 	// 数据中心
-	dataStore := datastore.GetDataSource(trackingId)
+	dataStore := datastore.GetDataStore(trackingId)
 	// 节点中间数据
 	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, dataStore)
 	if skipFunc(tmpDataMap) {return} // 跳过当前节点执行

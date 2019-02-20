@@ -16,7 +16,7 @@ type HrefParserNode struct {
 
 func (this *HrefParserNode) Execute(trackingId string, skipFunc func(tmpDataMap map[string]interface{}) bool) {
 	// 数据中心
-	dataStore := datastore.GetDataSource(trackingId)
+	dataStore := datastore.GetDataStore(trackingId)
 	// 节点中间数据
 	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, dataStore)
 	if skipFunc(tmpDataMap){return}			// 跳过当前节点执行
