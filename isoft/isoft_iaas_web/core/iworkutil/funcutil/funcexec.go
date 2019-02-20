@@ -2,6 +2,7 @@ package funcutil
 
 import (
 	"github.com/pkg/errors"
+	"isoft/isoft/common/stringutil"
 	"strconv"
 	"strings"
 )
@@ -83,6 +84,8 @@ func parseArgsToInt64Arr(args []interface{}) []int64 {
 	for _, arg := range args {
 		if _arg, ok := arg.(int64); ok {
 			sargs = append(sargs, _arg)
+		} else if _arg, ok := arg.(int); ok{
+			sargs = append(sargs, int64(_arg))
 		} else if _arg, ok := arg.(string); ok {
 			if _arg, err := strconv.ParseInt(_arg, 10, 64); err == nil {
 				sargs = append(sargs, _arg)
@@ -122,4 +125,8 @@ func (this *IWorkFuncProxy) IworkBoolNot(args []interface{}) interface{} {
 		sargs = append(sargs, arg.(bool))
 	}
 	return !sargs[0]
+}
+
+func (this *IWorkFuncProxy) IworkStringsUUID(args []interface{}) interface{} {
+	return stringutil.RandomUUID()
 }
