@@ -3,6 +3,7 @@ package iworknode
 import (
 	"fmt"
 	"github.com/pkg/errors"
+	"isoft/isoft_iaas_web/core/iworkconst"
 	"isoft/isoft_iaas_web/core/iworkdata/datastore"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
 	"isoft/isoft_iaas_web/core/iworkutil"
@@ -25,30 +26,30 @@ func (this *HttpRequestNode) Execute(trackingId string, skipFunc func(tmpDataMap
 	if skipFunc(tmpDataMap){return}			// 跳过当前节点执行
 	// 参数准备
 	var request_url, request_method string
-	if _request_url, ok := tmpDataMap["request_url"].(string); ok {
+	if _request_url, ok := tmpDataMap[iworkconst.STRING_PREFIX + "request_url"].(string); ok {
 		request_url = _request_url
 	}
-	if _request_method, ok := tmpDataMap["request_method?"].(string); ok {
+	if _request_method, ok := tmpDataMap[iworkconst.STRING_PREFIX + "request_method?"].(string); ok {
 		request_method = _request_method
 	}
-	paramMap := fillParamMapData(tmpDataMap, "request_params?")
-	headerMap := fillParamMapData(tmpDataMap, "request_headers?")
+	paramMap := fillParamMapData(tmpDataMap, iworkconst.MULTI_PREFIX + "request_params?")
+	headerMap := fillParamMapData(tmpDataMap, iworkconst.MULTI_PREFIX + "request_headers?")
 
 	responsebytes := httputil.DoHttpRequestWithParserFunc(request_url, request_method, paramMap, headerMap, func(resp *http.Response) {
-		_dataStore.CacheData(this.WorkStep.WorkStepName, "StatusCode", resp.StatusCode)
-		_dataStore.CacheData(this.WorkStep.WorkStepName, "ContentType", resp.Header.Get("content-type"))
+		_dataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.NUMBER_PREFIX + "StatusCode", resp.StatusCode)
+		_dataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.STRING_PREFIX + "ContentType", resp.Header.Get("content-type"))
 	})
-	_dataStore.CacheData(this.WorkStep.WorkStepName, "response_str", string(responsebytes))
-	_dataStore.CacheData(this.WorkStep.WorkStepName, "response_bytes", responsebytes)
-	_dataStore.CacheData(this.WorkStep.WorkStepName, "base64res_str", iworkutil.EncodeToBase64String(responsebytes))
+	_dataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.STRING_PREFIX + "response_data", string(responsebytes))
+	_dataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.BYTE_ARRAY_PREFIX + "response_data", responsebytes)
+	_dataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.BASE64STRING_PREFIX + "response_data", iworkutil.EncodeToBase64String(responsebytes))
 }
 
 func (this *HttpRequestNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
 	paramMap := map[int][]string{
-		1:[]string{"request_url","请求资源的url地址"},
-		2:[]string{"request_method?","可选参数,请求方式,默认是GET请求,支持GET、POST"},
-		3:[]string{"request_params?","可选参数,请求参数,格式参考：key=value"},
-		4:[]string{"request_headers?","可选参数,请求头参数,格式参考：key=value"},
+		1:[]string{iworkconst.STRING_PREFIX + "request_url","请求资源的url地址"},
+		2:[]string{iworkconst.STRING_PREFIX + "request_method?","可选参数,请求方式,默认是GET请求,支持GET、POST"},
+		3:[]string{iworkconst.MULTI_PREFIX + "request_params?","可选参数,请求参数,格式参考：key=value"},
+		4:[]string{iworkconst.MULTI_PREFIX + "request_headers?","可选参数,请求头参数,格式参考：key=value"},
 	}
 	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
 }
@@ -58,7 +59,12 @@ func (this *HttpRequestNode) GetRuntimeParamInputSchema() *schema.ParamInputSche
 }
 
 func (this *HttpRequestNode) GetDefaultParamOutputSchema() *schema.ParamOutputSchema {
-	return schema.BuildParamOutputSchemaWithSlice([]string{"response_str", "response_bytes", "base64res_str", "StatusCode", "ContentType"})
+	return schema.BuildParamOutputSchemaWithSlice([]string{
+		iworkconst.STRING_PREFIX + "response_data",
+		iworkconst.BYTE_ARRAY_PREFIX + "response_data",
+		iworkconst.BASE64STRING_PREFIX + "response_data",
+		iworkconst.NUMBER_PREFIX + "StatusCode",
+		iworkconst.STRING_PREFIX + "ContentType"})
 }
 
 func (this *HttpRequestNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {

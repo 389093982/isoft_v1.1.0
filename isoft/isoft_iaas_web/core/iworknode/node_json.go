@@ -3,6 +3,7 @@ package iworknode
 import (
 	"encoding/json"
 	"fmt"
+	"isoft/isoft_iaas_web/core/iworkconst"
 	"isoft/isoft_iaas_web/core/iworkdata/datastore"
 	"isoft/isoft_iaas_web/core/iworkdata/param"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
@@ -21,16 +22,16 @@ func (this *JsonRenderNode) Execute(trackingId string, skipFunc func(tmpDataMap 
 	// 节点中间数据
 	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, dataStore)
 	if skipFunc(tmpDataMap){return}			// 跳过当前节点执行
-	json_object := tmpDataMap["json_object"].([]map[string]interface{})
+	json_object := tmpDataMap[iworkconst.COMPLEX_PREFIX + "json_data"].([]map[string]interface{})
 	bytes, err := json.Marshal(json_object)
 	if err == nil {
-		dataStore.CacheData(this.WorkStep.WorkStepName, "json_str", string(bytes))
+		dataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.STRING_PREFIX + "json_data", string(bytes))
 	}
 }
 
 func (this *JsonRenderNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
 	paramMap := map[int][]string{
-		1:[]string{"json_object","需要传入json对象"},
+		1:[]string{iworkconst.COMPLEX_PREFIX + "json_data","需要传入json对象"},
 	}
 	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
 }
@@ -40,7 +41,7 @@ func (this *JsonRenderNode) GetRuntimeParamInputSchema() *schema.ParamInputSchem
 }
 
 func (this *JsonRenderNode) GetDefaultParamOutputSchema() *schema.ParamOutputSchema {
-	return schema.BuildParamOutputSchemaWithSlice([]string{"json_str"})
+	return schema.BuildParamOutputSchemaWithSlice([]string{iworkconst.STRING_PREFIX + "json_data"})
 }
 
 func (this *JsonRenderNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
@@ -62,7 +63,7 @@ func (this *JsonParserNode) Execute(trackingId string, skipFunc func(tmpDataMap 
 	// 节点中间数据
 	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, dataStore)
 	if skipFunc(tmpDataMap){return}			// 跳过当前节点执行
-	json_str := tmpDataMap["json_str"].(string)
+	json_str := tmpDataMap[iworkconst.STRING_PREFIX + "json_data"].(string)
 	json_objects := make([]map[string]interface{},0)
 	err := json.Unmarshal([]byte(json_str), &json_objects)
 	if err == nil {
@@ -80,7 +81,7 @@ func (this *JsonParserNode) Execute(trackingId string, skipFunc func(tmpDataMap 
 
 func (this *JsonParserNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
 	paramMap := map[int][]string{
-		1:[]string{"json_str","需要转换成json对象的字符串"},
+		1:[]string{iworkconst.STRING_PREFIX + "json_data","需要转换成json对象的字符串"},
 		2:[]string{"json_fields","json对象的字段列表"},
 	}
 	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
