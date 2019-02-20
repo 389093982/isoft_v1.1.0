@@ -39,6 +39,7 @@
     components:{WorkStepParamInfo,ISimpleLeftRightRow,WorkStepBaseInfo,RelativeWork},
     data(){
       return {
+        default_work_step_types: this.GLOBAL.default_work_step_types,
         // 当前页
         current_page:1,
         // 总页数
@@ -100,8 +101,8 @@
               return h('div', [
                 h('Icon', {
                   props: {
-                    type: 'ios-analytics-outline',
-                    size: 30,
+                    type: this.renderWorkStepTypeIcon(this.worksteps[params.index]['work_step_type']),
+                    size: 25,
                   },
                   style: {
                     marginRight: '5px',
@@ -221,6 +222,14 @@
           this.refreshWorkStepList();
         }
       },
+      renderWorkStepTypeIcon:function (workStepType) {
+        for(var i=0; i<this.default_work_step_types.length; i++){
+          let default_work_step_type = this.default_work_step_types[i];
+          if(default_work_step_type.name == workStepType){
+            return default_work_step_type.icon;
+          }
+        }
+      }
     },
     mounted: function () {
       this.refreshWorkStepList();

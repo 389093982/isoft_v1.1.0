@@ -75,22 +75,22 @@ const hot_share_type=[
 ];
 
 const default_work_step_types=[
-  "work_start",
-  "work_end",
-  "work_sub",
-  "sql_query",
-  "sql_query_page",
-  "sql_execute",
-  "json_render",
-  "json_parser",
-  "http_request",
-  "mapper",
-  "file_read",
-  "file_write",
-  "href_parser",
-  "entity_parser",
-  "db_parser",
-  "memorymap_cache",
+  {"name":"work_start","icon":"ios-arrow-dropleft"},
+  {"name":"work_end","icon":"ios-arrow-dropright"},
+  {"name":"work_sub","icon":"logo-buffer"},
+  {"name":"sql_query","icon":"ios-cube-outline"},
+  {"name":"sql_query_page","icon":"md-cube"},
+  {"name":"sql_execute","icon":"ios-crop-outline"},
+  {"name":"json_render","icon":"ios-git-branch"},
+  {"name":"json_parser","icon":"ios-git-compare"},
+  {"name":"http_request","icon":"ios-globe-outline"},
+  {"name":"mapper","icon":"ios-infinite"},
+  {"name":"file_read","icon":"ios-book-outline"},
+  {"name":"file_write","icon":"ios-create-outline"},
+  {"name":"href_parser","icon":"ios-ionitron-outline"},
+  {"name":"entity_parser","icon":"ios-refresh-circle-outline"},
+  {"name":"db_parser","icon":"ios-map-outline"},
+  {"name":"memorymap_cache","icon":"ios-color-filter-outline"},
 ];
 
 export default {

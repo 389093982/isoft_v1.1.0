@@ -19,7 +19,7 @@
         </FormItem>
         <FormItem label="work_step_type" prop="work_step_type">
           <Select v-model="formValidate.work_step_type" placeholder="请选择 work_step_type">
-            <Option :value="default_work_step_type" v-for="default_work_step_type in default_work_step_types">{{default_work_step_type}}</Option>
+            <Option :value="default_work_step_type.name" v-for="default_work_step_type in default_work_step_types">{{default_work_step_type.name}}</Option>
           </Select>
         </FormItem>
         <FormItem label="work_step_desc" prop="work_step_desc">
