@@ -39,12 +39,14 @@ func (this *MemoryMapCache) Execute(trackingId string, skipFunc func(tmpDataMap 
 	memoryCache := getMemoryCache(trackingId, tmpDataMap)
 	if cachemap_key_get, ok := tmpDataMap[iworkconst.STRING_PREFIX + "cachemap_key_get?"].(string); ok{
 		// 往 MemoryCache 中取值
-		_memoryData := memoryCache.GetData(tmpDataMap[iworkconst.STRING_PREFIX + "cachemap_name"].(string) + "_" + cachemap_key_get)
-		dataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.STRING_PREFIX + "cachemap_val_get", _memoryData)
+		key := iworkconst.STRING_PREFIX + "cachemap_val_get"
+		value := memoryCache.GetData(tmpDataMap[iworkconst.STRING_PREFIX + "cachemap_name"].(string) + "_" + cachemap_key_get)
+		dataStore.CacheData(this.WorkStep.WorkStepName, key, value)
 	} else if cachemap_key_put, ok := tmpDataMap[iworkconst.STRING_PREFIX + "cachemap_key_put?"].(string); ok{
 		// 往 MemoryCache 中放值
-		memoryCache.CacheData(tmpDataMap[iworkconst.STRING_PREFIX + "cachemap_name"].(string) + "_" + cachemap_key_put,
-			tmpDataMap[iworkconst.STRING_PREFIX + "cachemap_val_put?"].(string))
+		key := tmpDataMap[iworkconst.STRING_PREFIX + "cachemap_name"].(string) + "_" + cachemap_key_put
+		value := tmpDataMap[iworkconst.STRING_PREFIX + "cachemap_val_put?"].(string)
+		memoryCache.CacheData(key,value)
 	}
 }
 
