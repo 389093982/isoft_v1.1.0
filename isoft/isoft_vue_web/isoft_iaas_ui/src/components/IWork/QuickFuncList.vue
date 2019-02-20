@@ -37,6 +37,7 @@
           {funcDemo:"IworkBoolOr($bool,$bool2)",funcDesc:"判断bool1和bool2只要一个满足即可",},
           {funcDemo:"IworkBoolNot($bool)",funcDesc:"bool值取反",},
           {funcDemo:"IworkStringsUUID()",funcDesc:"生成随机UUID信息",},
+          {funcDemo:"IworkCheckEmpty($var)",funcDesc:"判断变量是否为空",},
         ],
         columns1: [
           {

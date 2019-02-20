@@ -130,3 +130,7 @@ func (this *IWorkFuncProxy) IworkBoolNot(args []interface{}) interface{} {
 func (this *IWorkFuncProxy) IworkStringsUUID(args []interface{}) interface{} {
 	return stringutil.RandomUUID()
 }
+
+func (this *IWorkFuncProxy) IworkCheckEmpty(args []interface{}) interface{} {
+	return args[0] == nil
+}
