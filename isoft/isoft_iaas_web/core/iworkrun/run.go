@@ -7,6 +7,7 @@ import (
 	"isoft/isoft_iaas_web/core/iworkdata/entry"
 	"isoft/isoft_iaas_web/core/iworknode"
 	"isoft/isoft_iaas_web/models/iwork"
+	"strings"
 	"time"
 )
 
@@ -36,12 +37,30 @@ func Run(work iwork.Work, steps []iwork.WorkStep, dispatcher *entry.Dispatcher) 
 	return
 }
 
+func optimizeTrackingId(pTrackingId, trackingId string) string {
+	if strings.Count(pTrackingId, ".") > 1{
+	// a.~.b.c
+		trackingId = strings.Join(
+			[]string{
+				pTrackingId[:strings.Index(pTrackingId, ".")],			// 顶级 trackingId
+				"~",															// 过渡级 trackingId
+				pTrackingId[strings.LastIndex(pTrackingId, ".") + 1 :],	// 父级 trackingId
+				trackingId,														// 当前级 trackingId
+			},".")
+	}else{
+		trackingId = fmt.Sprintf("%s.%s", pTrackingId, trackingId)
+	}
+	return trackingId
+}
+
 func createNewTrackingIdForWork(dispatcher *entry.Dispatcher, work iwork.Work) string {
-	// 当前流程的 trackingId
+	// 生成当前流程的 trackingId
 	trackingId := stringutil.RandomUUID()
+	// 调度者不为空时代表有父级流程
 	if dispatcher != nil && dispatcher.TrackingId != "" {
 		// 拼接父流程的 trackingId 信息,作为链式 trackingId
-		trackingId = fmt.Sprintf("%s.%s", dispatcher.TrackingId, trackingId)
+		// 同时优化 trackingId,防止递归调用时 trackingId 过长
+		trackingId = optimizeTrackingId(dispatcher.TrackingId, trackingId)
 	}
 	// 记录日志
 	iwork.InsertRunLogRecord(&iwork.RunLogRecord{
