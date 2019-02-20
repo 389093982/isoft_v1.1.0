@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"isoft/isoft/common/stringutil"
+	"isoft/isoft_iaas_web/core/iworkconst"
 	"isoft/isoft_iaas_web/core/iworkdata/entry"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
 	"isoft/isoft_iaas_web/models/iwork"
@@ -37,7 +38,7 @@ type IStandardWorkStep interface {
 func (this *WorkStepFactory) Execute(trackingId string) {
 	skipFunc := func(tmpDataMap map[string]interface{}) bool {
 		// if 节点判断, if条件判断为 false 时跳过
-		if checkif, ok := tmpDataMap["iwork_if?"].(bool); ok && checkif == false{
+		if checkif, ok := tmpDataMap[iworkconst.BOOL_PREFIX + "if?"].(bool); ok && checkif == false{
 			iwork.InsertRunLogDetail(trackingId, fmt.Sprintf("The step for %s was skipped!", this.WorkStep.WorkStepName))
 			return true
 		}
@@ -97,7 +98,7 @@ func (this *WorkStepFactory) GetDefaultParamInputSchema() *schema.ParamInputSche
 	// 非 开始和结束节点支持 if 判断
 	if !stringutil.CheckContains(this.WorkStep.WorkStepType, []string{"work_start","work_end"}){
 		appendDefaultParamInputSchemaItem(schema.ParamInputSchemaItem{
-			ParamName:"iwork_if?",ParamDesc:"if指令,只有满足条件时才会执行,不填时必定会执行!"}, inputSchema)
+			ParamName:iworkconst.BOOL_PREFIX + "if?",ParamDesc:"if指令,只有满足条件时才会执行,不填时必定会执行!"}, inputSchema)
 	}
 	return inputSchema
 }

@@ -3,6 +3,7 @@ package iworknode
 import (
 	"fmt"
 	"github.com/pkg/errors"
+	"isoft/isoft_iaas_web/core/iworkconst"
 	"isoft/isoft_iaas_web/core/iworkdata/datastore"
 	"isoft/isoft_iaas_web/core/iworkdata/entry"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
@@ -49,9 +50,9 @@ func (this *WorkSub) Execute(trackingId string, skipFunc func(tmpDataMap map[str
 // 任意类型切片对象,目前仅限制于 []interface{} 和 []map[string]interface{},需要由前置节点标准化成这种类型才可
 func getConvertedForEachData(tmpDataMap map[string]interface{}) []interface{} {
 	foreachDatas := make([]interface{}, 0)
-	if _foreachDatas, ok := tmpDataMap["foreach_data?"].([]interface{}); ok {
+	if _foreachDatas, ok := tmpDataMap[iworkconst.FOREACH_PREFIX + "data?"].([]interface{}); ok {
 		foreachDatas = append(foreachDatas, _foreachDatas...)
-	} else if _foreachDatas, ok := tmpDataMap["foreach_data?"].([]map[string]interface{}); ok {
+	} else if _foreachDatas, ok := tmpDataMap[iworkconst.FOREACH_PREFIX + "data?"].([]map[string]interface{}); ok {
 		for _, _foreachData := range _foreachDatas{
 			foreachDatas = append(foreachDatas, _foreachData)
 		}
@@ -89,8 +90,8 @@ func (this *WorkSub) RunOnceSubWork(work iwork.Work, steps []iwork.WorkStep, tra
 
 func (this *WorkSub) GetDefaultParamInputSchema() *schema.ParamInputSchema {
 	paramMap := map[int][]string{
-		1:[]string{"work_sub","子流程信息"},
-		2:[]string{"foreach_data?","可选参数,当有值时表示迭代流程,该节点会执行多次,并将当前迭代元素放入 __item__ 变量中,其它参数需要引用 __item__ 即可"},
+		1:[]string{iworkconst.STRING_PREFIX + "work_sub","子流程信息"},
+		2:[]string{iworkconst.FOREACH_PREFIX + "data?","可选参数,当有值时表示迭代流程,该节点会执行多次,并将当前迭代元素放入 __item__ 变量中,其它参数需要引用 __item__ 即可"},
 	}
 	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
 }
