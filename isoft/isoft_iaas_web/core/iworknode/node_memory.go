@@ -9,7 +9,7 @@ import (
 	"strings"
 )
 
-type MemoryMapCache struct {
+type MemoryMapCacheNode struct {
 	BaseNode
 	WorkStep *iwork.WorkStep
 }
@@ -31,7 +31,7 @@ func getMemoryCache(trackingId string, tmpDataMap map[string]interface{}) *memor
 	}
 }
 
-func (this *MemoryMapCache) Execute(trackingId string, skipFunc func(tmpDataMap map[string]interface{}) bool) {
+func (this *MemoryMapCacheNode) Execute(trackingId string, skipFunc func(tmpDataMap map[string]interface{}) bool) {
 	// 数据中心
 	dataStore := datastore.GetDataStore(trackingId)
 	// 节点中间数据
@@ -50,7 +50,7 @@ func (this *MemoryMapCache) Execute(trackingId string, skipFunc func(tmpDataMap 
 	}
 }
 
-func (this *MemoryMapCache) GetDefaultParamInputSchema() *schema.ParamInputSchema {
+func (this *MemoryMapCacheNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
 	paramMap := map[int][]string{
 		1:[]string{iworkconst.STRING_PREFIX + "lifecycle?","内存map存储的生命周期,默认是当前流程,有值的话则表示本次运行时机(即可以跨流程),map不存在会自动创建,运行完后会自动销毁!"},
 		2:[]string{iworkconst.STRING_PREFIX + "cachemap_name","存储的map名称"},
@@ -61,18 +61,18 @@ func (this *MemoryMapCache) GetDefaultParamInputSchema() *schema.ParamInputSchem
 	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
 }
 
-func (this *MemoryMapCache) GetRuntimeParamInputSchema() *schema.ParamInputSchema {
+func (this *MemoryMapCacheNode) GetRuntimeParamInputSchema() *schema.ParamInputSchema {
 	return &schema.ParamInputSchema{}
 }
 
-func (this *MemoryMapCache) GetDefaultParamOutputSchema() *schema.ParamOutputSchema {
+func (this *MemoryMapCacheNode) GetDefaultParamOutputSchema() *schema.ParamOutputSchema {
 	return schema.BuildParamOutputSchemaWithSlice([]string{iworkconst.STRING_PREFIX + "cachemap_val_get"})
 }
 
-func (this *MemoryMapCache) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
+func (this *MemoryMapCacheNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
 	return &schema.ParamOutputSchema{}
 }
 
-func (this *MemoryMapCache) ValidateCustom() {
+func (this *MemoryMapCacheNode) ValidateCustom() {
 
 }

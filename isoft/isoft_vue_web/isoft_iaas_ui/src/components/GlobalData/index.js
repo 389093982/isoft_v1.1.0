@@ -75,8 +75,8 @@ const hot_share_type=[
 ];
 
 const default_work_step_types=[
-  {"name":"work_start","icon":"ios-arrow-dropleft"},
-  {"name":"work_end","icon":"ios-arrow-dropright"},
+  {"name":"work_start","icon":"ios-arrow-dropright"},
+  {"name":"work_end","icon":"ios-arrow-dropleft"},
   {"name":"work_sub","icon":"logo-buffer"},
   {"name":"sql_query","icon":"ios-cube-outline"},
   {"name":"sql_query_page","icon":"md-cube"},
@@ -91,6 +91,7 @@ const default_work_step_types=[
   {"name":"entity_parser","icon":"ios-refresh-circle-outline"},
   {"name":"db_parser","icon":"ios-map-outline"},
   {"name":"memorymap_cache","icon":"ios-color-filter-outline"},
+  {"name":"goto_condition","icon":"md-swap"},
 ];
 
 export default {

@@ -18,10 +18,12 @@ type Work struct {
 
 type WorkStep struct {
 	Id                   int64     `json:"id"`
-	WorkId               int64    `json:"work_id"`
+	WorkId               int64     `json:"work_id"`
 	WorkStepId           int64     `json:"work_step_id"`
-	WorkSubId            int64     `json:"work_sub_id"` // 子流程 id
+	WorkSubId            int64     `json:"work_sub_id"` 			// 子流程 id
 	WorkStepName         string    `json:"work_step_name"`
+	// 互斥域(由互斥组和互斥域组成,同一互斥组中不同域不可同时执行,不同组之间是可以依次执行的)
+	WorkStepMutex		 string	   `json:"work_step_mutex"`
 	WorkStepDesc         string    `json:"work_step_desc" orm:"type(text)"`
 	WorkStepType         string    `json:"work_step_type"`
 	WorkStepInput        string    `json:"work_step_input" orm:"type(text)"`

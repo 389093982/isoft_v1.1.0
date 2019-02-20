@@ -2,11 +2,11 @@
   <span>
     <Row v-for="item in paramInputSchemaItems" style="margin-bottom: 10px;">
       <Row>
-        <Col span="12">
+        <Col span="16">
           {{item.ParamName}}
           <Icon type="ios-book-outline" size="18" style="margin-left: 10px;" @click="showParamDesc(item.ParamDesc)"/>
         </Col>
-        <Col span="12">
+        <Col span="8">
           <WorkStepParamInputEditDialog :input-label="item.ParamName" :input-text="item.ParamValue"
            @handleSubmit="refreshParamInputSchemaItems"/>
         </Col>
