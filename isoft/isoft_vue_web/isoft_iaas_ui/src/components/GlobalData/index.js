@@ -93,6 +93,7 @@ const default_work_step_types=[
   {"name":"db_parser","icon":"ios-map-outline"},
   {"name":"memorymap_cache","icon":"ios-color-filter-outline"},
   {"name":"goto_condition","icon":"md-swap"},
+  {"name":"redirect","icon":"md-undo"},
 ];
 
 export default {

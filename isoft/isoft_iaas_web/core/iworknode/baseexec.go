@@ -88,6 +88,8 @@ func (this *WorkStepFactory) getProxy() IStandardWorkStep {
 		return &MemoryMapCacheNode{WorkStep: this.WorkStep}
 	case "GOTO_CONDITION":
 		return &GotoConditionNode{WorkStep: this.WorkStep}
+	case "REDIRECT":
+		return &RedirectNode{WorkStep: this.WorkStep}
 	case "EMPTY":
 		return &EmptyNode{WorkStep: this.WorkStep}
 	}
