@@ -29,8 +29,8 @@
 <style scoped>
 .badge{
   border-radius: 50%;
-  width: 8px;
-  height: 8px;
+  width: 10px;
+  height: 10px;
   display: inline-block;
 }
 </style>

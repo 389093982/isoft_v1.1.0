@@ -229,25 +229,28 @@
           }
         }
       },
-      renderMutex:function (h, work_step_mutex) {
+      parseBadgeInfoArr:function(work_step_mutex){
         var badgeInfoArr = new Array(5);
         var mutexArr = work_step_mutex.split(";");
         for (var i=0; i<mutexArr.length; i++){
           let mutex = mutexArr[i];
           let mutexItemArr = mutex.split(".");
           if(mutexItemArr.length == 2 && !checkEmpty(mutexItemArr[0]) && !checkEmpty(mutexItemArr[1])){
-            badgeInfoArr[parseInt(mutexItemArr[0]) - 1] = [mutexItemArr[0],mutexItemArr[1]];
+            badgeInfoArr[parseInt(mutexItemArr[0]) - 1] = mutexItemArr[1];
           }
         }
+        return badgeInfoArr;
+      },
+      renderMutex:function (h, work_step_mutex) {
+        var areaColor = ["#FF0000","#660099","#FFFF00","#FF99FF","#99FF66"];
+        var badgeInfoArr = this.parseBadgeInfoArr(work_step_mutex);
         var result = [];
         for (var i=0; i<badgeInfoArr.length; i++){
           let badgeInfo = badgeInfoArr[i];
           if (badgeInfo == null){
-            result.push(h(ISimpleBadge, {props:{backgroundColorStyle:"#FFFFFF"}}));
-            result.push(h(ISimpleBadge, {props:{backgroundColorStyle:"#FFFFFF",marginRightStyle:5}}));
+            result.push(h(ISimpleBadge, {props:{backgroundColorStyle:"#FFFFFF",marginRightStyle:15}}));
           }else{
-            result.push(h(ISimpleBadge, {props:{backgroundColorStyle:"#33FF00"}}));
-            result.push(h(ISimpleBadge, {props:{backgroundColorStyle:"#33FF00",marginRightStyle:5}}));
+            result.push(h(ISimpleBadge, {props:{backgroundColorStyle: areaColor[parseInt(badgeInfo)],marginRightStyle:15}}));
           }
         }
         return result;
