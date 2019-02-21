@@ -77,6 +77,7 @@ const hot_share_type=[
 const default_work_step_types=[
   {"name":"work_start","icon":"ios-arrow-dropright"},
   {"name":"work_end","icon":"ios-arrow-dropleft"},
+  {"name":"empty","icon":"ios-mail-open-outline"},
   {"name":"work_sub","icon":"logo-buffer"},
   {"name":"sql_query","icon":"ios-cube-outline"},
   {"name":"sql_query_page","icon":"md-cube"},
