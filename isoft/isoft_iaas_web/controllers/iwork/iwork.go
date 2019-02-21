@@ -224,13 +224,11 @@ func (this *WorkController) EditWorkStepBaseInfo() {
 	work_step_name := this.GetString("work_step_name")
 	work_step_desc := this.GetString("work_step_desc")
 	work_step_type := this.GetString("work_step_type")
-	work_step_mutex := this.GetString("work_step_mutex")
 	this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
 	// 变更类型需要置空 input 和 output 参数
 	if step, err := iwork.GetOneWorkStep(work_id, work_step_id); err == nil {
 		step.WorkStepName = work_step_name
 		step.WorkStepDesc = work_step_desc
-		step.WorkStepMutex = work_step_mutex
 		if step.WorkStepType != work_step_type {
 			step.WorkStepType = this.GetString("work_step_type")
 			step.WorkStepInput = ""
