@@ -23,7 +23,6 @@
 </template>
 
 <script>
-  import {formatDate} from "../../tools"
   import {WorkStepList} from "../../api"
   import {DeleteWorkStepById} from "../../api"
   import {ChangeWorkStepOrder} from "../../api"
@@ -33,10 +32,12 @@
   import WorkStepBaseInfo from "./WorkStepBaseInfo"
   import RelativeWork from "./RelativeWork"
   import {oneOf} from "../../tools"
+  import ISimpleBadge from "../Common/tool/ISimpleBadge"
+  import {checkEmpty} from "../../tools"
 
   export default {
     name: "WorkStepList",
-    components:{WorkStepParamInfo,ISimpleLeftRightRow,WorkStepBaseInfo,RelativeWork},
+    components:{WorkStepParamInfo,ISimpleLeftRightRow,WorkStepBaseInfo,RelativeWork,ISimpleBadge},
     data(){
       return {
         default_work_step_types: this.GLOBAL.default_work_step_types,
@@ -115,6 +116,9 @@
           {
             title: 'work_step_mutex',
             key: 'work_step_mutex',
+            render: (h, params) => {
+              return h('div', this.renderMutex(h, this.worksteps[params.index]['work_step_mutex']));
+            }
           },
           {
             title: 'work_step_desc',
@@ -224,6 +228,29 @@
             return default_work_step_type.icon;
           }
         }
+      },
+      renderMutex:function (h, work_step_mutex) {
+        var badgeInfoArr = new Array(5);
+        var mutexArr = work_step_mutex.split(";");
+        for (var i=0; i<mutexArr.length; i++){
+          let mutex = mutexArr[i];
+          let mutexItemArr = mutex.split(".");
+          if(mutexItemArr.length == 2 && !checkEmpty(mutexItemArr[0]) && !checkEmpty(mutexItemArr[1])){
+            badgeInfoArr[parseInt(mutexItemArr[0]) - 1] = [mutexItemArr[0],mutexItemArr[1]];
+          }
+        }
+        var result = [];
+        for (var i=0; i<badgeInfoArr.length; i++){
+          let badgeInfo = badgeInfoArr[i];
+          if (badgeInfo == null){
+            result.push(h(ISimpleBadge, {props:{backgroundColorStyle:"#FFFFFF"}}));
+            result.push(h(ISimpleBadge, {props:{backgroundColorStyle:"#FFFFFF",marginRightStyle:5}}));
+          }else{
+            result.push(h(ISimpleBadge, {props:{backgroundColorStyle:"#33FF00"}}));
+            result.push(h(ISimpleBadge, {props:{backgroundColorStyle:"#33FF00",marginRightStyle:5}}));
+          }
+        }
+        return result;
       }
     },
     mounted: function () {
