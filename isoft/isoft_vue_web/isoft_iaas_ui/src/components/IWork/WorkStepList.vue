@@ -216,7 +216,7 @@
       renderWorkStep:function (h, work_step_color,work_id,work_step_id) {
         var colors = [];
         if(checkEmpty(work_step_color)){
-          colors = ["#FF0000","#660099","#FFFF00","#FF99FF","#99FF66"];
+          colors = ["#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF"];
         }else{
           colors = JSON.parse(work_step_color);
         }
@@ -224,16 +224,16 @@
         var _this = this;
         var result = [];
         for (var i=0; i<colors.length; i++){
-          var _index = i;
           result.push(h(ISimpleBadge,
             {
               props:{
                 backgroundColorStyle:colors[i],
                 marginRightStyle:5,
+                backgroundColorIndex:i,
               },
               on:{
-                submitColor:async function (color) {
-                  colors[_index] = color;
+                submitColor:async function (index, color) {
+                  colors[index] = color;
                   // 更新color信息
                   const result = await EditWorkStepColorInfo(work_id, work_step_id, JSON.stringify(colors));
                   if (result.status == "SUCCESS"){

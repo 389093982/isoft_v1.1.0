@@ -34,6 +34,10 @@
         type: String,
         default: 'red',
       },
+      backgroundColorIndex: {
+        type: Number,
+        default: -1,
+      },
     },
     data(){
       return {
@@ -51,7 +55,7 @@
         this.showFormModal = true;
       },
       submitColor:function () {
-        this.$emit("submitColor", this.currentColor)
+        this.$emit("submitColor", this.backgroundColorIndex, this.currentColor)
       }
     }
   }
