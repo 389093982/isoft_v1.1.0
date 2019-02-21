@@ -218,6 +218,20 @@ func (this *WorkController) AddWorkStep() {
 	this.ServeJSON()
 }
 
+func (this *WorkController) EditWorkStepColorInfo()  {
+	work_id,_ := this.GetInt64("work_id")
+	work_step_id, _ := this.GetInt64("work_step_id", -1)
+	work_step_color := this.GetString("work_step_color")
+	this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
+	if step, err := iwork.GetOneWorkStep(work_id, work_step_id); err == nil {
+		step.WorkStepColor = work_step_color
+		if _, err := iwork.InsertOrUpdateWorkStep(&step); err == nil {
+			this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
+		}
+	}
+	this.ServeJSON()
+}
+
 func (this *WorkController) EditWorkStepBaseInfo() {
 	work_id,_ := this.GetInt64("work_id")
 	work_step_id, _ := this.GetInt64("work_step_id", -1)

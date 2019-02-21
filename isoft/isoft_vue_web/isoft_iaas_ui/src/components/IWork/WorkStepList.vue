@@ -30,8 +30,9 @@
   import WorkStepBaseInfo from "./WorkStepBaseInfo"
   import RelativeWork from "./RelativeWork"
   import {oneOf} from "../../tools"
-  import ISimpleBadge from "../Common/tool/ISimpleBadge"
+  import ISimpleBadge from "./ISimpleBadge"
   import {checkEmpty} from "../../tools"
+  import {EditWorkStepColorInfo} from "../../api"
 
   export default {
     name: "WorkStepList",
@@ -103,6 +104,14 @@
                 }),
                 h('span', this.worksteps[params.index]['work_step_type']),
               ]);
+            }
+          },
+          {
+            title: 'work_step_color',
+            key: 'work_step_color',
+            render: (h, params) => {
+              return h('div', this.renderWorkStep(h, this.worksteps[params.index]['work_step_color'],
+                this.worksteps[params.index]['work_id'],this.worksteps[params.index]['work_step_id']));
             }
           },
           {
@@ -204,6 +213,39 @@
           }
         }
       },
+      renderWorkStep:function (h, work_step_color,work_id,work_step_id) {
+        var colors = [];
+        if(checkEmpty(work_step_color)){
+          colors = ["#FF0000","#660099","#FFFF00","#FF99FF","#99FF66"];
+        }else{
+          colors = JSON.parse(work_step_color);
+        }
+
+        var _this = this;
+        var result = [];
+        for (var i=0; i<colors.length; i++){
+          var _index = i;
+          result.push(h(ISimpleBadge,
+            {
+              props:{
+                backgroundColorStyle:colors[i],
+                marginRightStyle:5,
+              },
+              on:{
+                submitColor:async function (color) {
+                  colors[_index] = color;
+                  // 更新color信息
+                  const result = await EditWorkStepColorInfo(work_id, work_step_id, JSON.stringify(colors));
+                  if (result.status == "SUCCESS"){
+                    _this.refreshWorkStepList();
+                  }
+                }
+              }
+            }
+          ));
+        }
+        return result;
+      }
     },
     mounted: function () {
       this.refreshWorkStepList();

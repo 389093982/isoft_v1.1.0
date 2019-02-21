@@ -152,6 +152,8 @@ export const RunWork = (work_id) => ajax(BASE_URL+"/iwork/runWork", {work_id},'P
 // 编辑 workstep 基本信息
 export const EditWorkStepBaseInfo = (work_id,work_step_id,work_step_name,work_step_desc,work_step_type) => ajax(BASE_URL+"/iwork/editWorkStepBaseInfo", {work_id,work_step_id,work_step_name,work_step_desc,work_step_type},'POST');
 
+export const EditWorkStepColorInfo = (work_id,work_step_id,work_step_color) => ajax(BASE_URL+"/iwork/editWorkStepColorInfo", {work_id,work_step_id,work_step_color},'POST');
+
 // 编辑 workstep 记录
 export const EditWorkStepParamInfo = (work_id,work_step_id,paramInputSchemaStr, paramMappingsStr) => ajax(BASE_URL+"/iwork/editWorkStepParamInfo", {work_id,work_step_id,paramInputSchemaStr,paramMappingsStr},'POST');
 

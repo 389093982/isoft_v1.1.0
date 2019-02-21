@@ -22,6 +22,7 @@ type WorkStep struct {
 	WorkStepId           int64     `json:"work_step_id"`
 	WorkSubId            int64     `json:"work_sub_id"` 			// 子流程 id
 	WorkStepName         string    `json:"work_step_name"`
+	WorkStepColor		 string	   `json:"work_step_color"`
 	WorkStepDesc         string    `json:"work_step_desc" orm:"type(text)"`
 	WorkStepType         string    `json:"work_step_type"`
 	WorkStepInput        string    `json:"work_step_input" orm:"type(text)"`
