@@ -88,8 +88,6 @@ func (this *WorkStepFactory) getProxy() IStandardWorkStep {
 		return &MemoryMapCacheNode{WorkStep: this.WorkStep}
 	case "GOTO_CONDITION":
 		return &GotoConditionNode{WorkStep: this.WorkStep}
-	case "REDIRECT":
-		return &RedirectNode{WorkStep: this.WorkStep}
 	case "EMPTY":
 		return &EmptyNode{WorkStep: this.WorkStep}
 	}
@@ -103,10 +101,17 @@ func (this *WorkStepFactory) GetDefaultParamInputSchema() *schema.ParamInputSche
 	}else{
 		inputSchema = &schema.ParamInputSchema{}
 	}
-	// 非 开始和结束节点支持 if 判断
+	// 不支持 if 判断的节点
 	if !stringutil.CheckContains(this.WorkStep.WorkStepType, []string{"work_start","work_end"}){
 		appendDefaultParamInputSchemaItem(schema.ParamInputSchemaItem{
 			ParamName:iworkconst.BOOL_PREFIX + "if?",ParamDesc:"if指令,只有满足条件时才会执行,不填时必定会执行!"}, inputSchema)
+	}
+
+	// 不支持 redirect 跳转的节点
+	if !stringutil.CheckContains(this.WorkStep.WorkStepType, []string{"goto_condition","redirect","work_start","work_end"}){
+		appendDefaultParamInputSchemaItem(schema.ParamInputSchemaItem{
+			ParamName:iworkconst.STRING_PREFIX + "redirect?",ParamDesc:"redirect指令,当前节点执行完成后,会跳往匹配上的节点继续执行!"}, inputSchema)
+
 	}
 	return inputSchema
 }

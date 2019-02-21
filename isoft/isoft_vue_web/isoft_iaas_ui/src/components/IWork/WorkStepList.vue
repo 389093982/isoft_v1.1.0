@@ -30,13 +30,13 @@
   import WorkStepBaseInfo from "./WorkStepBaseInfo"
   import RelativeWork from "./RelativeWork"
   import {oneOf} from "../../tools"
-  import ISimpleBadge from "./ISimpleBadge"
+  import WorkStepColorRender from "./WorkStepColorRender"
   import {checkEmpty} from "../../tools"
   import {EditWorkStepColorInfo} from "../../api"
 
   export default {
     name: "WorkStepList",
-    components:{WorkStepParamInfo,ISimpleLeftRightRow,WorkStepBaseInfo,RelativeWork,ISimpleBadge},
+    components:{WorkStepParamInfo,ISimpleLeftRightRow,WorkStepBaseInfo,RelativeWork,WorkStepColorRender},
     data(){
       return {
         default_work_step_types: this.GLOBAL.default_work_step_types,
@@ -224,7 +224,7 @@
         var _this = this;
         var result = [];
         for (var i=0; i<colors.length; i++){
-          result.push(h(ISimpleBadge,
+          result.push(h(WorkStepColorRender,
             {
               props:{
                 backgroundColorStyle:colors[i],

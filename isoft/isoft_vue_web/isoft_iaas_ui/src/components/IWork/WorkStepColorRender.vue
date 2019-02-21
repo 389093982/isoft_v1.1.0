@@ -24,7 +24,7 @@
 
 <script>
   export default {
-    name: "ISimpleBadge",
+    name: "WorkStepColorRender",
     props: {
       marginRightStyle: {
         type: Number,
@@ -42,7 +42,7 @@
     data(){
       return {
         currentColor:"",
-        colors:["#FF0000","#660099","#FFFF00","#FF99FF","#99FF66"],
+        colors:["#FF0000","#660099","#FFFF00","#FF99FF","#99FF66","#FFFFFF"],
         showFormModal:false,
         mapStyle:{
           marginRight: `${this.marginRightStyle}px`,

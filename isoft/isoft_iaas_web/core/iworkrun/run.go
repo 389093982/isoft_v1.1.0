@@ -27,12 +27,13 @@ func Run(work iwork.Work, steps []iwork.WorkStep, dispatcher *entry.Dispatcher) 
 	for _, step := range steps {
 		// 获取数据中心
 		store := datastore.GetDataStore(trackingId)
-		redirectNodeName := store.GetData("__goto_condition__","__redirect__").(string)
-		if strings.TrimSpace(redirectNodeName) != ""{
+		if redirectNodeName, ok := store.GetData("__goto_condition__","__redirect__").(string);
+			ok && strings.TrimSpace(redirectNodeName) != ""{
 			if step.WorkStepName == redirectNodeName{
 				// 相等代表刚好调到 redirect 节点,此时要将 store 里面的跳转信息置空
 				store.CacheData("__goto_condition__","__redirect__", "")
 			}else{
+				iwork.InsertRunLogDetail(trackingId, fmt.Sprintf("The step for %s was skipped!", step.WorkStepName))
 				// 不相等代表还没有调到 redirect 节点,此时直接跳过, redirect 节点值为 __out__ 时,所用节点都匹配不上,刚好表示为跳出流程
 				continue
 			}

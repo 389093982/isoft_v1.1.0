@@ -78,7 +78,6 @@
         if(result.status == "SUCCESS"){
           this.formValidate.work_step_name = result.step.work_step_name;
           this.formValidate.work_step_type = result.step.work_step_type;
-          this.formValidate.work_step_mutex = result.step.work_step_mutex;
           this.formValidate.work_step_desc = result.step.work_step_desc;
         }
       },

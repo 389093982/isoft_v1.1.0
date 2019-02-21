@@ -139,6 +139,11 @@ func (this *BaseNode) FillParamInputSchemaDataToTmp(workStep *iwork.WorkStep, da
 		this.modifySqlBindingParamValueWithBatchNumber(&item, tmpDataMap)
 		tmpDataMap[item.ParamName] = this.ParseAndGetParamVaule(item.ParamName, item.ParamValue, dataStore) // 输入数据存临时
 	}
+
+	// 后置 redirect 指令判断
+	if redirectNodeName,ok := tmpDataMap[iworkconst.STRING_PREFIX + "redirect?"].(string); ok && strings.TrimSpace(redirectNodeName) != ""{
+		dataStore.CacheData("__goto_condition__","__redirect__", redirectNodeName)
+	}
 	return tmpDataMap
 }
 
