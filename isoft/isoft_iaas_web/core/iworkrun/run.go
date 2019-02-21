@@ -25,6 +25,7 @@ func Run(work iwork.Work, steps []iwork.WorkStep, dispatcher *entry.Dispatcher) 
 	iwork.InsertRunLogDetail(trackingId, fmt.Sprintf("~~~~~~~~~~start execute work:%s~~~~~~~~~~", work.WorkName))
 	// 逐步执行步骤
 	for _, step := range steps {
+		if step.WorkStepType == "empty" {continue}
 		// 获取数据中心
 		store := datastore.GetDataStore(trackingId)
 		if redirectNodeName, ok := store.GetData("__goto_condition__","__redirect__").(string);

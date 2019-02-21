@@ -151,9 +151,13 @@ func LoadWorkStepInfo(work_id int64, work_step_id int64) (step WorkStep, err err
 	return
 }
 
-func DeleteWorkStepById(id int64) error {
+func DeleteWorkStepByWorkStepId(work_step_id int64) error {
 	o := orm.NewOrm()
-	_, err := o.QueryTable("work_step").Filter("id", id).Delete()
+
+	_, err := o.QueryTable("work_step").Filter("work_step_id", work_step_id).Delete()
+	if err == nil{
+		_, err = o.Raw("UPDATE work_step SET work_step_id = work_step_id - 1 WHERE work_step_id > ?", work_step_id).Exec()
+	}
 	return err
 }
 

@@ -202,8 +202,10 @@ func (this *WorkController) DeleteWorkById() {
 
 func (this *WorkController) AddWorkStep() {
 	work_id,_ := this.GetInt64("work_id")
+	work_step_type := this.GetString("default_work_step_type")
 	step := &iwork.WorkStep{
 		WorkId:          work_id,
+		WorkStepType:    work_step_type,
 		WorkStepId:      iwork.GetNextWorkStepId(work_id),
 		CreatedBy:       "SYSTEM",
 		CreatedTime:     time.Now(),
@@ -271,9 +273,9 @@ func (this *WorkController) FilterWorkStep() {
 	this.ServeJSON()
 }
 
-func (this *WorkController) DeleteWorkStepById() {
-	id, _ := this.GetInt64("id")
-	if err := iwork.DeleteWorkStepById(id); err == nil {
+func (this *WorkController) DeleteWorkStepByWorkStepId() {
+	work_step_id, _ := this.GetInt64("work_step_id")
+	if err := iwork.DeleteWorkStepByWorkStepId(work_step_id); err == nil {
 		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
 	} else {
 		this.Data["json"] = &map[string]interface{}{"status": "ERROR"}

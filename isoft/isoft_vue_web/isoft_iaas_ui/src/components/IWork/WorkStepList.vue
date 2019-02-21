@@ -4,7 +4,8 @@
 
     <ISimpleLeftRightRow style="margin-bottom: 10px;">
       <!-- left 插槽部分 -->
-      <Button slot="left" type="success" @click="addWorkStep">新增</Button>
+      <Button slot="left" type="success" @click="addWorkStep('')" style="margin-right: 5px;">新建普通节点</Button>
+      <Button slot="left" type="error" @click="addWorkStep('empty')" style="margin-right: 5px;">新建空节点</Button>
       <div slot="right" style="text-align: right;">
         <Button type="success" @click="renderSourceXml">View Source XML</Button>
       </div>
@@ -22,7 +23,7 @@
 
 <script>
   import {WorkStepList} from "../../api"
-  import {DeleteWorkStepById} from "../../api"
+  import {DeleteWorkStepByWorkStepId} from "../../api"
   import {ChangeWorkStepOrder} from "../../api"
   import {AddWorkStep} from "../../api"
   import WorkStepParamInfo from "./WorkStepParamInfo"
@@ -56,6 +57,7 @@
                   h('Icon', {
                     props: {
                       type: 'md-arrow-round-up',
+                      size: 15,
                     },
                     style: {
                       marginLeft: '5px',
@@ -69,6 +71,7 @@
                   h('Icon', {
                     props: {
                       type: 'md-arrow-round-down',
+                      size: 15,
                     },
                     style: {
                       marginLeft: '5px',
@@ -130,7 +133,7 @@
                   },
                   style: {
                     marginRight: '5px',
-                    display: !oneOf(this.worksteps[params.index]['work_step_type'], ["work_start","work_end"])  ? undefined : 'none'
+                    display: !oneOf(this.worksteps[params.index]['work_step_type'], ["work_start","work_end","empty"])  ? undefined : 'none'
                   },
                   on: {
                     click: () => {
@@ -145,6 +148,7 @@
                   },
                   style: {
                     marginRight: '5px',
+                    display: !oneOf(this.worksteps[params.index]['work_step_type'], ["empty"])  ? undefined : 'none'
                   },
                   on: {
                     click: () => {
@@ -165,7 +169,7 @@
                   },
                   on: {
                     click: () => {
-                      this.deleteWorkStepById(this.worksteps[params.index]['id']);
+                      this.deleteWorkStepByWorkStepId(this.worksteps[params.index]['work_step_id']);
                     }
                   }
                 }, '删除'),
@@ -184,8 +188,8 @@
           this.$refs.relativeWork.refreshRelativeWork(this.$route.query.work_id);
         }
       },
-      deleteWorkStepById:async function(id){
-        const result = await DeleteWorkStepById(id);
+      deleteWorkStepByWorkStepId:async function(work_step_id){
+        const result = await DeleteWorkStepByWorkStepId(work_step_id);
         if(result.status=="SUCCESS"){
           this.refreshWorkStepList();
         }
@@ -199,8 +203,8 @@
       renderSourceXml:function () {
         alert(11111);
       },
-      addWorkStep:async function () {
-        const result = await AddWorkStep(this.$route.query.work_id);
+      addWorkStep:async function (default_work_step_type) {
+        const result = await AddWorkStep(this.$route.query.work_id, default_work_step_type);
         if(result.status == "SUCCESS"){
           this.refreshWorkStepList();
         }

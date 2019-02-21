@@ -88,7 +88,7 @@ func (this *WorkStepFactory) getProxy() IStandardWorkStep {
 		return &MemoryMapCacheNode{WorkStep: this.WorkStep}
 	case "GOTO_CONDITION":
 		return &GotoConditionNode{WorkStep: this.WorkStep}
-	case "EMPTY":
+ 	case "EMPTY":
 		return &EmptyNode{WorkStep: this.WorkStep}
 	}
 	panic(errors.New(fmt.Sprintf("[%v-%v]unsupport workStepType:%s", this.WorkStep.WorkId, this.WorkStep.WorkStepName, this.WorkStep.WorkStepType)))

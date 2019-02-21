@@ -26,7 +26,7 @@ func loadloadIWorkerRouterDetail()  {
 	beego.Router("/api/iwork/editWorkStepColorInfo", &iwork.WorkController{}, "post:EditWorkStepColorInfo")
 	beego.Router("/api/iwork/editWorkStepBaseInfo", &iwork.WorkController{}, "post:EditWorkStepBaseInfo")
 	beego.Router("/api/iwork/editWorkStepParamInfo", &iwork.WorkController{}, "post:EditWorkStepParamInfo")
-	beego.Router("/api/iwork/deleteWorkStepById", &iwork.WorkController{}, "post:DeleteWorkStepById")
+	beego.Router("/api/iwork/deleteWorkStepByWorkStepId", &iwork.WorkController{}, "post:DeleteWorkStepByWorkStepId")
 	beego.Router("/api/iwork/loadWorkStepInfo", &iwork.WorkController{}, "post:LoadWorkStepInfo")
 	beego.Router("/api/iwork/getAllWorkStepInfo", &iwork.WorkController{}, "post:GetAllWorkStepInfo")
 	beego.Router("/api/iwork/changeWorkStepOrder", &iwork.WorkController{}, "post:ChangeWorkStepOrder")
