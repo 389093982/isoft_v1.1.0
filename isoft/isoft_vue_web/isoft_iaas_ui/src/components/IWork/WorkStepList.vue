@@ -14,8 +14,6 @@
     <WorkStepParamInfo ref="workStepParamInfo" @handleSuccess="refreshWorkStepList"/>
 
     <Table :columns="columns1" :data="worksteps" size="small"></Table>
-    <Page :total="total" :page-size="offset" show-total show-sizer :styles="{'text-align': 'center','margin-top': '10px'}"
-          @on-change="handleChange" @on-page-size-change="handlePageSizeChange"/>
 
     <!-- 相关流程清单 -->
     <RelativeWork ref="relativeWork"/>
@@ -41,12 +39,6 @@
     data(){
       return {
         default_work_step_types: this.GLOBAL.default_work_step_types,
-        // 当前页
-        current_page:1,
-        // 总页数
-        total:1,
-        // 每页记录数
-        offset:10,
         worksteps: [],
         columns1: [
           {
@@ -176,22 +168,12 @@
     },
     methods:{
       refreshWorkStepList:async function () {
-        const result = await WorkStepList(this.$route.query.work_id, this.offset,this.current_page);
+        const result = await WorkStepList(this.$route.query.work_id);
         if(result.status=="SUCCESS"){
           this.worksteps = result.worksteps;
-          this.total = result.paginator.totalcount;
-
           // 刷新关联流程信息
           this.$refs.relativeWork.refreshRelativeWork(this.$route.query.work_id);
         }
-      },
-      handleChange(page){
-        this.current_page = page;
-        this.refreshWorkStepList();
-      },
-      handlePageSizeChange(pageSize){
-        this.offset = pageSize;
-        this.refreshWorkStepList();
       },
       deleteWorkStepById:async function(id){
         const result = await DeleteWorkStepById(id);

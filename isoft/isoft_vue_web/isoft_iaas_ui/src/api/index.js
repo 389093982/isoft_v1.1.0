@@ -141,7 +141,7 @@ export const EditWork = (work_id, work_name, work_desc) => ajax(BASE_URL+"/iwork
 export const DeleteWorkById = (id) => ajax(BASE_URL+"/iwork/deleteWorkById", {id},'POST');
 
 // workstep 分页查询
-export const WorkStepList = (work_id,offset,current_page) => ajax(BASE_URL+"/iwork/filterPageWorkStep", {work_id,offset,current_page},'POST');
+export const WorkStepList = (work_id) => ajax(BASE_URL+"/iwork/filterWorkStep", {work_id},'POST');
 
 // 添加 workstep 记录
 export const AddWorkStep = (work_id) => ajax(BASE_URL+"/iwork/addWorkStep", {work_id},'POST');

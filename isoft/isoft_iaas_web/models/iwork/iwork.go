@@ -121,15 +121,13 @@ func GetNextWorkStepId(work_id int64) int64 {
 	return 1
 }
 
-func QueryWorkStep(condArr map[string]interface{}, page int, offset int) (steps []WorkStep, counts int64, err error) {
+func QueryWorkStep(condArr map[string]interface{}) (steps []WorkStep, err error) {
 	o := orm.NewOrm()
 	qs := o.QueryTable("work_step")
 	if work_id, ok := condArr["work_id"]; ok {
 		qs = qs.Filter("work_id", work_id)
 	}
 	qs = qs.OrderBy("work_step_id")
-	counts, _ = qs.Count()
-	qs = qs.Limit(offset, (page-1)*offset)
 	qs.All(&steps)
 	return
 }

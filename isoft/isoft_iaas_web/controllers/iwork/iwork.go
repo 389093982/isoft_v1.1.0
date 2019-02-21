@@ -245,16 +245,12 @@ func (this *WorkController) EditWorkStepBaseInfo() {
 	this.ServeJSON()
 }
 
-func (this *WorkController) FilterPageWorkStep() {
+func (this *WorkController) FilterWorkStep() {
 	condArr := make(map[string]interface{})
-	offset, _ := this.GetInt("offset", 10)            // 每页记录数
-	current_page, _ := this.GetInt("current_page", 1) // 当前页
 	condArr["work_id"],_ = this.GetInt64("work_id")
-	worksteps, count, err := iwork.QueryWorkStep(condArr, current_page, offset)
-	paginator := pagination.SetPaginator(this.Ctx, offset, count)
+	worksteps, err := iwork.QueryWorkStep(condArr)
 	if err == nil {
-		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "worksteps": worksteps,
-			"paginator": pageutil.Paginator(paginator.Page(), paginator.PerPageNums, paginator.Nums())}
+		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "worksteps": worksteps}
 	} else {
 		this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
 	}
