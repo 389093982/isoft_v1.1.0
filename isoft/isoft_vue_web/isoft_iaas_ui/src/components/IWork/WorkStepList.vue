@@ -207,6 +207,8 @@
         const result = await AddWorkStep(this.$route.query.work_id, default_work_step_type);
         if(result.status == "SUCCESS"){
           this.refreshWorkStepList();
+        }else{
+          this.$Message.error('提交失败!参数不合法或者步骤名称已存在!');
         }
       },
       renderWorkStepTypeIcon:function (workStepType) {

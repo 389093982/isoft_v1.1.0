@@ -131,7 +131,7 @@ func (this *WorkController) RunWork() {
 
 func (this *WorkController) EditWork() {
 	var work iwork.Work
-	work_id, err := this.GetInt64("work_id", -1)
+	work_id, err := this.GetInt64("work_id", -1);
 	if err == nil && work_id > 0 {
 		work.Id = work_id
 	}

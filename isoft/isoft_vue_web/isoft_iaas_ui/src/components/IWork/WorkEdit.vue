@@ -75,7 +75,7 @@
               this.$refs[name].resetFields();
               this.formValidate.work_id = -1;
             }else{
-              this.$Message.error('提交失败!');
+              this.$Message.error('提交失败!参数不合法或者参数名已经被注册!');
             }
           }
         })
