@@ -103,8 +103,17 @@ func QueryWork(condArr map[string]string, page int, offset int) (works []Work, c
 }
 
 func DeleteWorkById(id int64) error {
+	if err := DeleteAllWorkStep(id); err != nil{
+		return err
+	}
 	o := orm.NewOrm()
 	_, err := o.QueryTable("work").Filter("id", id).Delete()
+	return err
+}
+
+func DeleteAllWorkStep(work_id int64) error {
+	o := orm.NewOrm()
+	_, err := o.QueryTable("work_step").Filter("work_id",work_id).Delete()
 	return err
 }
 

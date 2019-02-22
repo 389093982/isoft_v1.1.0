@@ -16,7 +16,7 @@
             <Input v-model.trim="formValidate.work_step_type" readonly placeholder="请输入 work_step_type"></Input>
           </FormItem>
           <Row>
-            <Col span="12">
+            <Col span="14">
               <FormItem label="work_step_input" prop="work_step_input">
                 <Tabs type="card" :animated="false">
                   <TabPane label="edit">
@@ -28,7 +28,7 @@
                 </Tabs>
               </FormItem>
             </Col>
-            <Col span="12">
+            <Col span="10">
               <FormItem label="work_step_output" prop="work_step_output">
                 <Tabs type="card" :animated="false">
                   <TabPane label="Tree">
