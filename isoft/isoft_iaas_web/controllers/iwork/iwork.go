@@ -6,6 +6,7 @@ import (
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/utils/pagination"
 	"isoft/isoft/common/pageutil"
+	"isoft/isoft/common/stringutil"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
 	"isoft/isoft_iaas_web/core/iworknode"
 	"isoft/isoft_iaas_web/core/iworkrun"
@@ -205,6 +206,7 @@ func (this *WorkController) AddWorkStep() {
 	work_step_type := this.GetString("default_work_step_type")
 	step := &iwork.WorkStep{
 		WorkId:          work_id,
+		WorkStepName:    "random_" + stringutil.RandomUUID(),
 		WorkStepType:    work_step_type,
 		WorkStepId:      iwork.GetNextWorkStepId(work_id),
 		CreatedBy:       "SYSTEM",

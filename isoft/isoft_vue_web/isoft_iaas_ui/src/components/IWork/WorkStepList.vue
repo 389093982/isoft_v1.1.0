@@ -34,6 +34,7 @@
   import WorkStepColorRender from "./WorkStepColorRender"
   import {checkEmpty} from "../../tools"
   import {EditWorkStepColorInfo} from "../../api"
+  import {checkContainsInString} from "../../tools"
 
   export default {
     name: "WorkStepList",
@@ -89,6 +90,15 @@
           {
             title: 'work_step_name',
             key: 'work_step_name',
+            render: (h, params) => {
+              return h('div', [
+                h('span', {
+                  style: {
+                    display: !checkContainsInString(this.worksteps[params.index]['work_step_name'], "random_")  ? undefined : 'none'
+                  },
+                }, this.worksteps[params.index]['work_step_name']),
+              ]);
+            }
           },
           {
             title: 'work_step_type',
