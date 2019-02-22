@@ -144,7 +144,7 @@ export const DeleteWorkById = (id) => ajax(BASE_URL+"/iwork/deleteWorkById", {id
 export const WorkStepList = (work_id) => ajax(BASE_URL+"/iwork/filterWorkStep", {work_id},'POST');
 
 // 添加 workstep 记录
-export const AddWorkStep = (work_id, default_work_step_type) => ajax(BASE_URL+"/iwork/addWorkStep", {work_id, default_work_step_type},'POST');
+export const AddWorkStep = (work_id, work_step_id, default_work_step_type) => ajax(BASE_URL+"/iwork/addWorkStep", {work_id, work_step_id, default_work_step_type},'POST');
 
 // 运行 work
 export const RunWork = (work_id) => ajax(BASE_URL+"/iwork/runWork", {work_id},'POST');
@@ -164,7 +164,7 @@ export const LoadWorkStepInfo = (work_id,work_step_id) => ajax(BASE_URL+"/iwork/
 export const LoadPreNodeOutput = (work_id,work_step_id) => ajax(BASE_URL+"/iwork/loadPreNodeOutput", {work_id,work_step_id},'POST');
 
 // 删除 workstep 记录
-export const DeleteWorkStepByWorkStepId = (work_step_id) => ajax(BASE_URL+"/iwork/deleteWorkStepByWorkStepId", {work_step_id},'POST');
+export const DeleteWorkStepByWorkStepId = (work_id, work_step_id) => ajax(BASE_URL+"/iwork/deleteWorkStepByWorkStepId", {work_id, work_step_id},'POST');
 
 // 交换 workstep 顺序
 export const ChangeWorkStepOrder = (work_id,work_step_id,type) => ajax(BASE_URL+"/iwork/changeWorkStepOrder", {work_id,work_step_id,type},'POST');

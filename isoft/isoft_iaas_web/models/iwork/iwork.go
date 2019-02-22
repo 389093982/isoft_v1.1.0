@@ -1,6 +1,7 @@
 package iwork
 
 import (
+	"fmt"
 	"github.com/astaxie/beego/orm"
 	"strings"
 	"time"
@@ -37,7 +38,6 @@ type WorkStep struct {
 // 多字段唯一键
 func (u *WorkStep) TableUnique() [][]string {
 	return [][]string{
-		[]string{"WorkId", "WorkStepId"},
 		[]string{"WorkId", "WorkStepName"},
 	}
 }
@@ -118,18 +118,6 @@ func InsertOrUpdateWorkStep(step *WorkStep) (id int64, err error) {
 	return
 }
 
-func GetNextWorkStepId(work_id int64) int64 {
-	steps, _ := GetAllWorkStepInfo(work_id)
-	for index := 1; index <= len(steps)+1; index++ {
-		o := orm.NewOrm()
-		if exist := o.QueryTable("work_step").Filter("work_id", work_id).Filter("work_step_id", index).Exist(); !exist {
-			return int64(index)
-		}
-	}
-	// 默认返回 1
-	return 1
-}
-
 func QueryWorkStep(condArr map[string]interface{}) (steps []WorkStep, err error) {
 	o := orm.NewOrm()
 	qs := o.QueryTable("work_step")
@@ -159,12 +147,19 @@ func LoadWorkStepInfo(work_id int64, work_step_id int64) (step WorkStep, err err
 	return
 }
 
-func DeleteWorkStepByWorkStepId(work_step_id int64) error {
+// mod 只支持 +、- 符号
+func BatchChangeWorkStepIdOrder(work_id, work_step_id int64, mod string) error {
 	o := orm.NewOrm()
+	query := fmt.Sprintf("UPDATE work_step SET work_step_id = work_step_id %s 1 WHERE work_id = ? and work_step_id > ?", mod)
+	_, err := o.Raw(query, work_id, work_step_id).Exec()
+	return err
+}
 
+func DeleteWorkStepByWorkStepId(work_id, work_step_id int64) error {
+	o := orm.NewOrm()
 	_, err := o.QueryTable("work_step").Filter("work_step_id", work_step_id).Delete()
 	if err == nil{
-		_, err = o.Raw("UPDATE work_step SET work_step_id = work_step_id - 1 WHERE work_step_id > ?", work_step_id).Exec()
+		err = BatchChangeWorkStepIdOrder(work_id, work_step_id, "-")
 	}
 	return err
 }

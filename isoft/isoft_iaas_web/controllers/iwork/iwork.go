@@ -155,10 +155,10 @@ func (this *WorkController) EditWork() {
 }
 
 func insertStartEndWorkStepNode(work_id int64) {
-	insertDefaultWorkStepNodeFunc := func(nodeName string) {
+	insertDefaultWorkStepNodeFunc := func(nodeName string, work_step_id int64) {
 		step := &iwork.WorkStep{
 			WorkId:          work_id,
-			WorkStepId:      iwork.GetNextWorkStepId(work_id),
+			WorkStepId:      work_step_id,
 			WorkStepName:    nodeName,
 			WorkStepDesc:    fmt.Sprintf("%s节点", nodeName),
 			WorkStepType:    fmt.Sprintf("work_%s", nodeName),
@@ -169,8 +169,8 @@ func insertStartEndWorkStepNode(work_id int64) {
 		}
 		iwork.InsertOrUpdateWorkStep(step)
 	}
-	insertDefaultWorkStepNodeFunc("start")
-	insertDefaultWorkStepNodeFunc("end")
+	insertDefaultWorkStepNodeFunc("start", 1)
+	insertDefaultWorkStepNodeFunc("end", 2)
 }
 
 func (this *WorkController) FilterPageWork() {
@@ -203,21 +203,25 @@ func (this *WorkController) DeleteWorkById() {
 
 func (this *WorkController) AddWorkStep() {
 	work_id,_ := this.GetInt64("work_id")
-	work_step_type := this.GetString("default_work_step_type")
-	step := &iwork.WorkStep{
-		WorkId:          work_id,
-		WorkStepName:    "random_" + stringutil.RandomUUID(),
-		WorkStepType:    work_step_type,
-		WorkStepId:      iwork.GetNextWorkStepId(work_id),
-		CreatedBy:       "SYSTEM",
-		CreatedTime:     time.Now(),
-		LastUpdatedBy:   "SYSTEM",
-		LastUpdatedTime: time.Now(),
-	}
-	if _, err := iwork.InsertOrUpdateWorkStep(step); err == nil {
-		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
-	} else {
-		this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
+	work_step_id,_ := this.GetInt64("work_step_id")
+	this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
+	// 将 work_step_id 之后的所有节点后移一位
+	err := iwork.BatchChangeWorkStepIdOrder(work_id, work_step_id, "+")
+	if err == nil{
+		work_step_type := this.GetString("default_work_step_type")
+		step := &iwork.WorkStep{
+			WorkId:          work_id,
+			WorkStepName:    "random_" + stringutil.RandomUUID(),
+			WorkStepType:    work_step_type,
+			WorkStepId:      work_step_id + 1,
+			CreatedBy:       "SYSTEM",
+			CreatedTime:     time.Now(),
+			LastUpdatedBy:   "SYSTEM",
+			LastUpdatedTime: time.Now(),
+		}
+		if _, err := iwork.InsertOrUpdateWorkStep(step); err == nil {
+			this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
+		}
 	}
 	this.ServeJSON()
 }
@@ -276,8 +280,9 @@ func (this *WorkController) FilterWorkStep() {
 }
 
 func (this *WorkController) DeleteWorkStepByWorkStepId() {
+	work_id, _ := this.GetInt64("work_id")
 	work_step_id, _ := this.GetInt64("work_step_id")
-	if err := iwork.DeleteWorkStepByWorkStepId(work_step_id); err == nil {
+	if err := iwork.DeleteWorkStepByWorkStepId(work_id, work_step_id); err == nil {
 		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
 	} else {
 		this.Data["json"] = &map[string]interface{}{"status": "ERROR"}

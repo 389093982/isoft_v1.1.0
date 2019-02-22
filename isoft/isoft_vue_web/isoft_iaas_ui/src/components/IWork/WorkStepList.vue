@@ -6,6 +6,7 @@
       <!-- left 插槽部分 -->
       <Button slot="left" type="success" @click="addWorkStep('')" style="margin-right: 5px;">新建普通节点</Button>
       <Button slot="left" type="error" @click="addWorkStep('empty')" style="margin-right: 5px;">新建空节点</Button>
+      <Button slot="left" type="warning" style="margin-right: 5px;">Refactor</Button>
       <div slot="right" style="text-align: right;">
         <Button type="success" @click="renderSourceXml">View Source XML</Button>
       </div>
@@ -14,7 +15,7 @@
     <WorkStepBaseInfo ref="workStepBaseInfo" @handleSuccess="refreshWorkStepList"/>
     <WorkStepParamInfo ref="workStepParamInfo" @handleSuccess="refreshWorkStepList"/>
 
-    <Table :columns="columns1" :data="worksteps" size="small"></Table>
+    <Table :columns="columns1" ref="selection" :data="worksteps" size="small"></Table>
 
     <!-- 相关流程清单 -->
     <RelativeWork ref="relativeWork"/>
@@ -45,6 +46,11 @@
         worksteps: [],
         columns1: [
           {
+            type: 'selection',
+            width: 60,
+            align: 'center',
+          },
+          {
             title: 'work_id',
             key: 'work_id',
             width: 100,
@@ -52,6 +58,7 @@
           {
             title: 'work_step_id',
             key: 'work_step_id',
+            width: 120,
             render: (h,params)=>{
               return h('div', [
                   h('span', params.row.work_step_id),
@@ -179,7 +186,7 @@
                   },
                   on: {
                     click: () => {
-                      this.deleteWorkStepByWorkStepId(this.worksteps[params.index]['work_step_id']);
+                      this.deleteWorkStepByWorkStepId(this.worksteps[params.index]['work_id'], this.worksteps[params.index]['work_step_id']);
                     }
                   }
                 }, '删除'),
@@ -198,8 +205,8 @@
           this.$refs.relativeWork.refreshRelativeWork(this.$route.query.work_id);
         }
       },
-      deleteWorkStepByWorkStepId:async function(work_step_id){
-        const result = await DeleteWorkStepByWorkStepId(work_step_id);
+      deleteWorkStepByWorkStepId:async function(work_id, work_step_id){
+        const result = await DeleteWorkStepByWorkStepId(work_id, work_step_id);
         if(result.status=="SUCCESS"){
           this.refreshWorkStepList();
         }
@@ -214,11 +221,16 @@
         alert(11111);
       },
       addWorkStep:async function (default_work_step_type) {
-        const result = await AddWorkStep(this.$route.query.work_id, default_work_step_type);
+        let selections = this.$refs.selection.getSelection();
+        if(selections.length != 1){
+          this.$Message.warning('选中行数不符合要求,请选择一行并在其之后进行添加!');
+          return
+        }
+        const result = await AddWorkStep(this.$route.query.work_id, selections[0].work_step_id, default_work_step_type);
         if(result.status == "SUCCESS"){
           this.refreshWorkStepList();
         }else{
-          this.$Message.error('提交失败!参数不合法或者步骤名称已存在!');
+          this.$Message.error('新增失败!');
         }
       },
       renderWorkStepTypeIcon:function (workStepType) {
