@@ -11,6 +11,7 @@ import (
 	"isoft/isoft_iaas_web/core/iworknode"
 	"isoft/isoft_iaas_web/core/iworkrun"
 	"isoft/isoft_iaas_web/models/iwork"
+	"strings"
 	"time"
 )
 
@@ -241,30 +242,59 @@ func (this *WorkController) EditWorkStepColorInfo()  {
 }
 
 func (this *WorkController) EditWorkStepBaseInfo() {
+	defer func() {
+		if err := recover(); err != nil{
+			this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
+			this.ServeJSON()
+		}
+	}()
+
 	work_id,_ := this.GetInt64("work_id")
 	work_step_id, _ := this.GetInt64("work_step_id", -1)
 	work_step_name := this.GetString("work_step_name")
 	work_step_desc := this.GetString("work_step_desc")
 	work_step_type := this.GetString("work_step_type")
-	this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
+	step, err := iwork.GetOneWorkStep(work_id, work_step_id)
+	if err != nil{
+		panic(err)
+	}
+	oldWorkStepName := step.WorkStepName
+	step.WorkStepName = work_step_name
+	step.WorkStepDesc = work_step_desc
 	// 变更类型需要置空 input 和 output 参数
-	if step, err := iwork.GetOneWorkStep(work_id, work_step_id); err == nil {
-		step.WorkStepName = work_step_name
-		step.WorkStepDesc = work_step_desc
-		if step.WorkStepType != work_step_type {
-			step.WorkStepType = this.GetString("work_step_type")
-			step.WorkStepInput = ""
-			step.WorkStepOutput = ""
-		}
-		step.CreatedBy = "SYSTEM"
-		step.CreatedTime = time.Now()
-		step.LastUpdatedBy = "SYSTEM"
-		step.LastUpdatedTime = time.Now()
-		if _, err := iwork.InsertOrUpdateWorkStep(&step); err == nil {
-			this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
-		}
+	if step.WorkStepType != work_step_type {
+		step.WorkStepType = this.GetString("work_step_type")
+		step.WorkStepInput = ""
+		step.WorkStepOutput = ""
+	}
+	step.CreatedBy = "SYSTEM"
+	step.CreatedTime = time.Now()
+	step.LastUpdatedBy = "SYSTEM"
+	step.LastUpdatedTime = time.Now()
+	if _, err := iwork.InsertOrUpdateWorkStep(&step); err == nil {
+		// 级联更改相关联的步骤名称
+		changeReferencesWorkStepName(work_id, oldWorkStepName, work_step_name)
+		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
 	}
 	this.ServeJSON()
+}
+
+func changeReferencesWorkStepName(work_id int64, oldWorkStepName, workStepName string) error {
+	if oldWorkStepName == workStepName{
+		return nil
+	}
+	steps, err := iwork.GetAllWorkStepInfo(work_id)
+	if err != nil{
+		return err
+	}
+	for _, step := range steps{
+		step.WorkStepInput = strings.Replace(step.WorkStepInput, "$" + oldWorkStepName, "$" + workStepName, -1)
+		_, err := iwork.InsertOrUpdateWorkStep(&step)
+		if err != nil{
+			return err
+		}
+	}
+	return nil
 }
 
 func (this *WorkController) FilterWorkStep() {

@@ -4,11 +4,18 @@
 
     <ISimpleLeftRightRow style="margin-bottom: 10px;">
       <!-- left 插槽部分 -->
-      <Button slot="left" type="success" @click="addWorkStep('')" style="margin-right: 5px;">新建普通节点</Button>
-      <Button slot="left" type="error" @click="addWorkStep('empty')" style="margin-right: 5px;">新建空节点</Button>
-      <Button slot="left" type="warning" style="margin-right: 5px;">Refactor</Button>
-      <div slot="right" style="text-align: right;">
-        <Button type="success" @click="renderSourceXml">View Source XML</Button>
+      <div slot="left">
+        <Row type="flex" justify="start" class="code-row-bg">
+          <Col span="5"><Button type="success" @click="addWorkStep('')" style="margin-right: 5px;">新建普通节点</Button></Col>
+          <Col span="5"><Button type="error" @click="addWorkStep('empty')" style="margin-right: 5px;">新建空节点</Button></Col>
+          <Col span="5"><Button type="warning" style="margin-right: 5px;">Refactor</Button></Col>
+        </Row>
+      </div>
+      <div slot="right">
+        <Row type="flex" justify="end" class="code-row-bg">
+          <Col span="5"><WorkValidate /></Col>
+          <Col span="5"><Button type="success" @click="renderSourceXml">View Source XML</Button></Col>
+        </Row>
       </div>
     </ISimpleLeftRightRow>
 
@@ -36,10 +43,11 @@
   import {checkEmpty} from "../../tools"
   import {EditWorkStepColorInfo} from "../../api"
   import {checkContainsInString} from "../../tools"
+  import WorkValidate from "./WorkValidate"
 
   export default {
     name: "WorkStepList",
-    components:{WorkStepParamInfo,ISimpleLeftRightRow,WorkStepBaseInfo,RelativeWork,WorkStepColorRender},
+    components:{WorkStepParamInfo,ISimpleLeftRightRow,WorkStepBaseInfo,RelativeWork,WorkStepColorRender,WorkValidate},
     data(){
       return {
         default_work_step_types: this.GLOBAL.default_work_step_types,
