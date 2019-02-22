@@ -79,17 +79,38 @@ func validateAll()  {
 func validateWork(work *iwork.Work, logCh chan *iwork.ValidateLogDetail, workChan chan int)  {
 	stepChan := make(chan int)
 	steps, _ := iwork.GetAllWorkStepInfo(work.Id)
-	for _, step := range steps{
+	// 验证流程必须以 work_start 开始,以 work_end 结束
+	validateWorkStartAndEnd(steps, logCh, work)
+
+	for _, step := range steps {
 		go func(step iwork.WorkStep) {
 			validateStep(&step, logCh, stepChan)
 		}(step)
 	}
 
-	for i := 0; i<len(steps); i++{
-		<- stepChan
+	for i := 0; i < len(steps); i++ {
+		<-stepChan
 	}
 	// 所有 step 执行完成后就往 workChan 里面发送完成通知
 	workChan <- 1
+}
+
+func validateWorkStartAndEnd(steps []iwork.WorkStep, logCh chan *iwork.ValidateLogDetail, work *iwork.Work) {
+	if steps[0].WorkStepType != "work_start" {
+		logCh <- &iwork.ValidateLogDetail{
+			WorkId:     work.Id,
+			WorkStepId: steps[0].WorkStepId,
+			Detail:     "work must start with a work_start node!",
+		}
+	}
+	if steps[len(steps)-1].WorkStepType != "work_end" {
+		logCh <- &iwork.ValidateLogDetail{
+			WorkId:     work.Id,
+			WorkStepId: steps[len(steps)-1].WorkStepId,
+			Detail:     "work must end with a work_end node!",
+		}
+	}
+	return
 }
 
 // 校验单个 step,并将校验不通过的信息放入 logCh 中
