@@ -293,9 +293,7 @@ func (this *WorkController) LoadWorkStepInfo() {
 		// 返回结果
 		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "step": step,
 			"paramInputSchema":          schema.GetCacheParamInputSchema(&step, &iworknode.WorkStepFactory{WorkStep: &step}),
-			"paramInputSchemaXml":       schema.GetCacheParamInputSchema(&step, &iworknode.WorkStepFactory{WorkStep: &step}).RenderToXml(),
-			"paramOutputSchema":         schema.GetCacheParamOutputSchema(&step),
-			"paramOutputSchemaXml":      schema.GetCacheParamOutputSchema(&step).RenderToXml(),
+ 			"paramOutputSchema":         schema.GetCacheParamOutputSchema(&step),
 			"paramOutputSchemaTreeNode": schema.GetCacheParamOutputSchema(&step).RenderToTreeNodes("output"),
 			"paramMappings":             paramMappingsArr,
 		}

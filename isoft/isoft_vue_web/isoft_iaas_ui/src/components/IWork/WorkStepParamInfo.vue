@@ -22,9 +22,6 @@
                   <TabPane label="edit">
                     <WorkStepParamInputEdit :paramInputSchemaItems="paramInputSchema.ParamInputSchemaItems"/>
                   </TabPane>
-                  <TabPane label="Xml">
-                    <Input v-model.trim="formValidate.work_step_input" type="textarea" :rows="10" placeholder="请输入 work_step_input"></Input>
-                  </TabPane>
                   <TabPane label="ParamMapping" v-if="showParamMapping">
                     <ParamMapping :paramMappings="paramMappings"/>
                   </TabPane>
@@ -36,9 +33,6 @@
                 <Tabs type="card" :animated="false">
                   <TabPane label="Tree">
                     <WorkStepParamOutputDisplay v-if="paramOutputSchemaTreeNode" :paramOutputSchemaTreeNode="paramOutputSchemaTreeNode"/>
-                  </TabPane>
-                  <TabPane label="Xml">
-                    <Input v-model.trim="formValidate.work_step_output" type="textarea" :rows="10" placeholder="请输入 work_step_output"></Input>
                   </TabPane>
                 </Tabs>
               </FormItem>
@@ -77,10 +71,8 @@
         showFormModal:false,
         // 输入参数
         paramInputSchema:"",
-        paramInputSchemaXml:"",
         // 输出参数
         paramOutputSchema:"",
-        paramOutputSchemaXml:"",
         paramOutputSchemaTreeNode:null,
         // 显示效果
         showParamMapping:false,
@@ -92,8 +84,6 @@
           work_step_id: 0,
           work_step_name: '',
           work_step_type: '',
-          work_step_input: '',
-          work_step_output: '',
         },
         ruleValidate: {
           work_step_id: [
@@ -142,13 +132,9 @@
 
           // 入参渲染
           this.paramInputSchema = result.paramInputSchema;
-          this.paramInputSchemaXml = result.paramInputSchemaXml;
-          this.formValidate.work_step_input = result.paramInputSchemaXml;
           // 出参渲染
           this.paramOutputSchema = result.paramOutputSchema;
-          this.paramOutputSchemaXml = result.paramOutputSchemaXml;
           this.paramOutputSchemaTreeNode = result.paramOutputSchemaTreeNode;
-          this.formValidate.work_step_output = result.paramOutputSchemaXml;
           // 参数映射渲染
           this.paramMappings = result.paramMappings != null ? result.paramMappings : [];
           // 提交 action
