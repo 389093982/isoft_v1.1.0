@@ -7,6 +7,7 @@ import (
 	"github.com/astaxie/beego/utils/pagination"
 	"isoft/isoft/common/pageutil"
 	"isoft/isoft/common/stringutil"
+	"isoft/isoft_iaas_web/core/iworkconst"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
 	"isoft/isoft_iaas_web/core/iworknode"
 	"isoft/isoft_iaas_web/core/iworkrun"
@@ -132,10 +133,19 @@ func (this *WorkController) RunWork() {
 }
 
 func (this *WorkController) EditWork() {
+	defer func() {
+		if err := recover(); err != nil{
+			this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
+			this.ServeJSON()
+		}
+	}()
+
 	var work iwork.Work
-	work_id, err := this.GetInt64("work_id", -1);
+	var oldWorkName string
+	work_id, err := this.GetInt64("work_id", -1)
 	if err == nil && work_id > 0 {
-		work.Id = work_id
+		work, err = iwork.QueryWorkById(work_id)
+		oldWorkName = work.WorkName
 	}
 	work.WorkName = this.GetString("work_name")
 	work.WorkDesc = this.GetString("work_desc")
@@ -147,12 +157,42 @@ func (this *WorkController) EditWork() {
 		if work_id <= 0 {
 			// 新增 work 场景,自动添加开始和结束节点
 			insertStartEndWorkStepNode(work.Id)
+		}else{
+			// 修改 work 场景
+			changeReferencesWorkName(work_id, oldWorkName, work.WorkName)
 		}
 		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
 	} else {
 		this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
 	}
 	this.ServeJSON()
+}
+
+func changeReferencesWorkName(work_id int64, oldWorkName,workName string) error {
+	if oldWorkName == workName{
+		return nil
+	}
+	parentWorks, _,err := iwork.QueryParentWorks(work_id)
+	if err != nil {
+		return nil
+	}
+	for _, parentWork := range parentWorks{
+		steps, _ := iwork.GetAllWorkStepInfo(parentWork.Id)
+		for _, step := range steps{
+			if step.WorkStepType != "work_sub"{
+				continue
+			}
+			inputSchema := schema.GetCacheParamInputSchema(&step, &iworknode.WorkStepFactory{WorkStep:&step})
+			for index, item := range inputSchema.ParamInputSchemaItems{
+				if item.ParamName == iworkconst.STRING_PREFIX + "work_sub" && strings.Contains(item.ParamValue, oldWorkName){
+					inputSchema.ParamInputSchemaItems[index].ParamValue = strings.Replace(item.ParamValue, oldWorkName, workName, -1)
+				}
+			}
+			step.WorkStepInput = inputSchema.RenderToXml()
+			iwork.InsertOrUpdateWorkStep(&step)
+		}
+	}
+	return nil
 }
 
 func insertStartEndWorkStepNode(work_id int64) {
