@@ -28,7 +28,6 @@
         </FormItem>
         <FormItem>
           <Button type="success" @click="handleSubmit('formValidate')" style="margin-right: 6px">Submit</Button>
-          <Button type="warning" @click="handleReset('formValidate')" style="margin-right: 6px">Reset</Button>
         </FormItem>
       </Form>
     </div>
@@ -102,14 +101,11 @@
               // 重置表单,清除缓存
               this.$refs[name].resetFields();
             }else{
-              this.$Message.error('提交失败!');
+              this.$Message.error('提交失败!参数不合法或者步骤名称已存在!');
             }
           }
         })
       },
-      handleReset (name) {
-        this.$refs[name].resetFields();
-  },
     },
   }
 </script>
