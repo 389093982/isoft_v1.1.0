@@ -7,19 +7,19 @@
           <div class="layout-nav">
             <MenuItem name="1">
               <Icon type="ios-navigate"></Icon>
-              Item 1
+              使用说明
             </MenuItem>
             <MenuItem name="2">
               <Icon type="ios-keypad"></Icon>
-              Item 2
+              用户协议
             </MenuItem>
             <MenuItem name="3">
               <Icon type="ios-analytics"></Icon>
-              Item 3
+              License管理
             </MenuItem>
             <MenuItem name="4">
               <Icon type="ios-paper"></Icon>
-              Item 4
+              系统支持
             </MenuItem>
           </div>
         </Menu>
@@ -100,7 +100,7 @@
     left: 20px;
   }
   .layout-nav{
-    width: 420px;
+    width: 520px;
     margin: 0 auto;
     margin-right: 20px;
   }
