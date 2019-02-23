@@ -123,7 +123,7 @@ export const LoginRecordList = (offset,current_page,search) => ajax(BASE_URL+"/s
 export const QuartzList = (offset,current_page,search) => ajax(BASE_URL+"/iwork/filterPageQuartz", {offset,current_page,search},'POST');
 
 // 添加 quartz 记录
-export const AddQuartz = (task_name,task_type,task_id,cron_str) => ajax(BASE_URL+"/iwork/addQuartz", {task_name,task_type,task_id,cron_str},'POST');
+export const AddQuartz = (task_name,task_type,cron_str) => ajax(BASE_URL+"/iwork/addQuartz", {task_name,task_type,cron_str},'POST');
 
 // resource 分页查询
 export const ResourceList = (offset,current_page,search) => ajax(BASE_URL+"/iwork/filterPageResource", {offset,current_page,search},'POST');

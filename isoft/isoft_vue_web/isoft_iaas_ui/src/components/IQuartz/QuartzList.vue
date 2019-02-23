@@ -44,10 +44,6 @@
             key: 'task_type',
           },
           {
-            title: 'task_id',
-            key: 'task_id',
-          },
-          {
             title: 'cron_str',
             key: 'cron_str',
           },

@@ -10,7 +10,6 @@ type CronMeta struct {
 	Id              int64     `json:"id"`
 	TaskName        string    `json:"task_name"` // 任务名称
 	TaskType        string    `json:"task_type"` // 任务类型
-	TaskId          string    `json:"task_id"`   // 任务唯一性 id
 	CronStr         string    `json:"cron_str"`
 	CreatedBy       string    `json:"created_by"`
 	CreatedTime     time.Time `json:"created_time" orm:"auto_now_add;type(datetime)"`
@@ -25,6 +24,13 @@ func InsertOrUpdateCronMeta(meta *CronMeta) (id int64, err error) {
 	} else {
 		id, err = o.Insert(meta)
 	}
+	return
+}
+
+func QueryCronMetaByName(taskName string) (meta CronMeta, err error) {
+	o := orm.NewOrm()
+	qs := o.QueryTable("cron_meta")
+	err = qs.Filter("task_name",taskName).One(&meta)
 	return
 }
 

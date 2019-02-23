@@ -10,9 +10,6 @@
       <FormItem label="任务类型" prop="task_type">
         <Input v-model.trim="formValidate.task_type" placeholder="请输入任务类型"></Input>
       </FormItem>
-      <FormItem label="任务ID" prop="task_id">
-        <Input v-model.trim="formValidate.task_id" placeholder="请输入任务ID"></Input>
-      </FormItem>
       <FormItem label="cron 表达式" prop="cron_str">
         <Input v-model.trim="formValidate.cron_str" placeholder="请输入 cron 表达式"></Input>
       </FormItem>
@@ -46,7 +43,6 @@
         formValidate: {
           task_name: '',
           task_type: '',
-          task_id: '',
           cron_str: '',
         },
         ruleValidate: {
@@ -55,9 +51,6 @@
           ],
           task_type: [
             { required: true, message: '任务类型不能为空!', trigger: 'blur' }
-          ],
-          task_id: [
-            { required: true, message: '任务 ID 不能为空!', trigger: 'blur' }
           ],
           cron_str: [
             { validator: _validateCron, trigger: 'blur' }
@@ -70,7 +63,7 @@
         this.$refs[name].validate(async (valid) => {
           if (valid) {
             const result = await AddQuartz(this.formValidate.task_name,
-              this.formValidate.task_type,this.formValidate.task_id,this.formValidate.cron_str);
+              this.formValidate.task_type,this.formValidate.cron_str);
             if(result.status == "SUCCESS"){
               this.$Message.success('提交成功!');
               // 调用子组件隐藏 modal (this.refs.xxx.子组件定义的方法())

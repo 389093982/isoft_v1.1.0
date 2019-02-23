@@ -94,26 +94,48 @@ func (this *WorkController) EditWork() {
 			this.ServeJSON()
 		}
 	}()
+	// 将请求参数封装成 work
 	var work iwork.Work
-	var oldWorkName string
-	work_id, err := this.GetInt64("work_id", -1)
-	if err == nil && work_id > 0 {
-		work, err = iwork.QueryWorkById(work_id)
-		oldWorkName = work.WorkName
-	}
 	work.WorkName = this.GetString("work_name")
 	work.WorkDesc = this.GetString("work_desc")
 	work.CreatedBy = "SYSTEM"
 	work.CreatedTime = time.Now()
 	work.LastUpdatedBy = "SYSTEM"
 	work.LastUpdatedTime = time.Now()
+
+	var oldWorkName string
+	work_id, err := this.GetInt64("work_id", -1)
+	if err == nil && work_id > 0 {
+		work, err = iwork.QueryWorkById(work_id)
+		oldWorkName = work.WorkName
+	}
 	if _, err := iwork.InsertOrUpdateWork(&work); err == nil {
 		if work_id <= 0 {
 			// 新增 work 场景,自动添加开始和结束节点
 			insertStartEndWorkStepNode(work.Id)
+			iwork.InsertOrUpdateCronMeta(&iwork.CronMeta{
+				TaskName:work.WorkName,
+				TaskType:"iwork_quartz",
+				CronStr:"0 * * * * ?",
+				CreatedBy:"SYSTEM",
+				CreatedTime:time.Now(),
+				LastUpdatedBy:"SYSTEM",
+				LastUpdatedTime:time.Now(),
+			})
 		}else{
 			// 修改 work 场景
 			changeReferencesWorkName(work_id, oldWorkName, work.WorkName)
+			meta, _ := iwork.QueryCronMetaByName(oldWorkName)
+			iwork.InsertOrUpdateCronMeta(&iwork.CronMeta{
+				Id:meta.Id,
+				TaskName:work.WorkName,
+				TaskType:"iwork_quartz",
+				CronStr:"0 * * * * ?",
+				CreatedBy:"SYSTEM",
+				CreatedTime:time.Now(),
+				LastUpdatedBy:"SYSTEM",
+				LastUpdatedTime:time.Now(),
+			})
 		}
 		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
 	} else {

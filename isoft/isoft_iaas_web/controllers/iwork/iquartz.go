@@ -11,7 +11,6 @@ func (this *WorkController) AddQuartz() {
 	var meta iwork.CronMeta
 	meta.TaskName = this.Input().Get("task_name")
 	meta.TaskType = this.Input().Get("task_type")
-	meta.TaskId = this.Input().Get("task_id")
 	meta.CronStr = this.Input().Get("cron_str")
 	meta.CreatedBy = "SYSTEM"
 	meta.CreatedTime = time.Now()
