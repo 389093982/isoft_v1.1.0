@@ -1,10 +1,13 @@
 package iwork
 
 import (
+	"fmt"
 	"isoft/isoft/common/stringutil"
+	"isoft/isoft_iaas_web/core/iworkdata/schema"
 	"isoft/isoft_iaas_web/core/iworknode"
 	"isoft/isoft_iaas_web/core/iworkvalid"
 	"isoft/isoft_iaas_web/models/iwork"
+	"strings"
 	"time"
 )
 
@@ -138,14 +141,15 @@ func validateStep(step *iwork.WorkStep, logCh chan *iwork.ValidateLogDetail, ste
 	}()
 
 	// 通用校验
-	CheckGeneral(step)
+	CheckGeneral(step, logCh)
 	// 定制化校验
 	CheckCustom(step)
 }
 
-func CheckGeneral(step *iwork.WorkStep)  {
+func CheckGeneral(step *iwork.WorkStep,logCh chan *iwork.ValidateLogDetail)  {
 	// 校验 step 中的参数是否为空
 	iworkvalid.CheckEmpty(step, &iworknode.WorkStepFactory{WorkStep:step})
+	checkVariableRelationShip(step, logCh)
 }
 
 func CheckCustom(step *iwork.WorkStep)  {
@@ -153,3 +157,40 @@ func CheckCustom(step *iwork.WorkStep)  {
 	factory.ValidateCustom()
 }
 
+// 校验变量的引用关系
+func checkVariableRelationShip(step *iwork.WorkStep, logCh chan *iwork.ValidateLogDetail)  {
+	inputSchema := schema.GetCacheParamInputSchema(step, &iworknode.WorkStepFactory{WorkStep:step})
+	for _, item := range inputSchema.ParamInputSchemaItems{
+		checkVariableRelationShipDetail(item, step.WorkId, step.WorkStepId, logCh)
+	}
+}
+
+func checkVariableRelationShipDetail(item schema.ParamInputSchemaItem,work_id, work_step_id int64, logCh chan *iwork.ValidateLogDetail)  {
+	// 根据正则找到关联的节点名称
+	referNodeNames := stringutil.GetNoRepeatSubStringWithRegexp(item.ParamValue, `\$[a-zA-Z0-9_]+`)
+	if len(referNodeNames) == 0{
+		return
+	}
+	preStepNodeNames := getAllPreStepNodeName(work_id, work_step_id)
+	preStepNodeNames = append(preStepNodeNames, []string{"RESOURCE"}...)
+	for _, referNodeName := range referNodeNames{
+		if !stringutil.CheckContains(strings.Replace(referNodeName, "$.", "", -1), preStepNodeNames){
+			logCh <- &iwork.ValidateLogDetail{
+				WorkId:work_id,
+				WorkStepId:work_step_id,
+				Detail:fmt.Sprintf("Invalid variable relationship for %s was found!", referNodeName),
+			}
+		}
+	}
+}
+
+func getAllPreStepNodeName(work_id, work_step_id int64) []string {
+	result := make([]string,0)
+	steps, err := iwork.QueryAllPreStepInfo(work_id, work_step_id)
+	if err == nil{
+		for _,step := range steps{
+			result = append(result, step.WorkStepName)
+		}
+	}
+	return result
+}
