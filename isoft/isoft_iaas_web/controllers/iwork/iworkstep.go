@@ -50,44 +50,21 @@ func (this *WorkController) EditWorkStepColorInfo()  {
 }
 
 func (this *WorkController) EditWorkStepBaseInfo() {
-	defer func() {
-		if err := recover(); err != nil{
-			this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
-			this.ServeJSON()
-		}
-	}()
-
-	work_id,_ := this.GetInt64("work_id")
+	var step *iwork.WorkStep
+	work_id,_ := this.GetInt64("work_id", -1)
 	work_step_id, _ := this.GetInt64("work_step_id", -1)
-	work_step_name := this.GetString("work_step_name")
-	work_step_desc := this.GetString("work_step_desc")
-	work_step_type := this.GetString("work_step_type")
-	step, err := iwork.QueryOneWorkStep(work_id, work_step_id)
-	if err != nil{
-		panic(err)
-	}
-	oldWorkStepName := step.WorkStepName
-	step.WorkStepName = work_step_name
-	step.WorkStepDesc = work_step_desc
-	// 变更类型需要置空 input 和 output 参数
-	if step.WorkStepType != work_step_type {
-		step.WorkStepType = this.GetString("work_step_type")
-		step.WorkStepInput = ""
-		step.WorkStepOutput = ""
-	}
-	step.CreatedBy = "SYSTEM"
-	step.CreatedTime = time.Now()
-	step.LastUpdatedBy = "SYSTEM"
-	step.LastUpdatedTime = time.Now()
-	if _, err := iwork.InsertOrUpdateWorkStep(&step); err == nil {
-		// 级联更改相关联的步骤名称
-		iworkservice.ChangeReferencesWorkStepName(work_id, oldWorkStepName, work_step_name)
+	step.WorkId = work_id
+	step.WorkStepId = work_step_id
+	step.WorkStepName = this.GetString("work_step_name")
+	step.WorkStepType = this.GetString("work_step_type")
+	step.WorkStepDesc = this.GetString("work_step_desc")
+	if err := iworkservice.EditWorkStepBaseInfoService(step); err == nil {
 		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
+	} else {
+		this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
 	}
 	this.ServeJSON()
 }
-
-
 
 func (this *WorkController) FilterWorkStep() {
 	condArr := make(map[string]interface{})

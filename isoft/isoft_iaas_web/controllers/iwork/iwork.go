@@ -84,14 +84,12 @@ func (this *WorkController) RunWork() {
 
 
 func (this *WorkController) EditWork() {
-	defer func() {
-		if err := recover(); err != nil{
-			this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
-			this.ServeJSON()
-		}
-	}()
 	// 将请求参数封装成 work
 	var work iwork.Work
+	work_id, err := this.GetInt64("work_id", -1)
+	if err == nil && work_id > 0{
+		work.Id = work_id
+	}
 	work.WorkName = this.GetString("work_name")
 	work.WorkDesc = this.GetString("work_desc")
 	work.CreatedBy = "SYSTEM"
@@ -99,23 +97,7 @@ func (this *WorkController) EditWork() {
 	work.LastUpdatedBy = "SYSTEM"
 	work.LastUpdatedTime = time.Now()
 
-	var oldWorkName string
-	work_id, err := this.GetInt64("work_id", -1)
-	if err == nil && work_id > 0 {
-		work, err = iwork.QueryWorkById(work_id)
-		oldWorkName = work.WorkName
-	}
-	if _, err := iwork.InsertOrUpdateWork(&work); err == nil {
-		if work_id <= 0 {
-			// 新增 work 场景,自动添加开始和结束节点
-			iworkservice.InsertStartEndWorkStepNode(work.Id)
-			iworkservice.InsertOrUpdateAutoCronMeta(work.WorkName, -1)
-		}else{
-			// 修改 work 场景
-			iworkservice.ChangeReferencesWorkName(work_id, oldWorkName, work.WorkName)
-			meta, _ := iwork.QueryCronMetaByName(oldWorkName)
-			iworkservice.InsertOrUpdateAutoCronMeta(work.WorkName, meta.Id)
-		}
+	if err := iworkservice.EditWorkService(work); err == nil{
 		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
 	} else {
 		this.Data["json"] = &map[string]interface{}{"status": "ERROR"}

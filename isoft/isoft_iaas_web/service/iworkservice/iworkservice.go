@@ -10,6 +10,50 @@ import (
 	"time"
 )
 
+// 根据 id 信息查找旧的 work 信息
+func getOldWorkInfoById(id int64) (oldWorkName string, oldWorkId int64) {
+	if id <= 0{
+		return
+	}
+	if work1, err := iwork.QueryWorkById(id); err == nil{
+		oldWorkName = work1.WorkName
+		oldWorkId = work1.Id
+	}
+	return
+}
+
+func EditWorkService(work iwork.Work) error {
+	oldWorkName,oldWorkId := getOldWorkInfoById(work.Id)
+	// 插入或者更新 work 信息
+	if _, err := iwork.InsertOrUpdateWork(&work); err != nil{
+		return err
+	}
+	if oldWorkName == ""{
+		// 新增 work 场景,自动添加开始和结束节点
+		if err := InsertStartEndWorkStepNode(work.Id); err != nil{
+			return err
+		}
+		if _, err := InsertOrUpdateAutoCronMeta(work.WorkName, -1); err != nil{
+			return err
+		}
+	}else{
+		// 修改 work 场景
+		if err := ChangeReferencesWorkName(oldWorkId, oldWorkName, work.WorkName); err != nil{
+			return err
+		}
+		var oldMetaId int64
+		if meta, err := iwork.QueryCronMetaByName(oldWorkName); err != nil{
+			oldMetaId = -1
+		}else{
+			oldMetaId = meta.Id
+		}
+		if _, err := InsertOrUpdateAutoCronMeta(work.WorkName, oldMetaId); err != nil{
+			return err
+		}
+	}
+	return nil
+}
+
 func InsertOrUpdateAutoCronMeta(task_name string, meta_id int64) (id int64, err error) {
 	meta := &iwork.CronMeta{
 		TaskName:task_name,
