@@ -134,7 +134,9 @@ func (this *BaseNode) FillParamInputSchemaDataToTmp(workStep *iwork.WorkStep, da
 			continue
 		}
 		// 对参数进行非空校验
-		iworkvalid.CheckEmptyForItem(item)
+		if ok, checkResults := iworkvalid.CheckEmptyForItem(item); !ok{
+			panic(strings.Join(checkResults, ";"))
+		}
 		// 个性化重写操作
 		this.modifySqlBindingParamValueWithBatchNumber(&item, tmpDataMap)
 		tmpDataMap[item.ParamName] = this.ParseAndGetParamVaule(item.ParamName, item.ParamValue, dataStore) // 输入数据存临时

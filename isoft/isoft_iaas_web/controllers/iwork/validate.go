@@ -141,15 +141,25 @@ func validateStep(step *iwork.WorkStep, logCh chan *iwork.ValidateLogDetail, ste
 	}()
 
 	// 通用校验
-	CheckGeneral(step, logCh)
+	checkResults := CheckGeneral(step)
+	for _, checkResult := range checkResults{
+		logCh <- &iwork.ValidateLogDetail{
+			WorkId:step.WorkId,
+			WorkStepId:step.WorkStepId,
+			Detail:checkResult,
+		}
+	}
 	// 定制化校验
 	CheckCustom(step)
 }
 
-func CheckGeneral(step *iwork.WorkStep,logCh chan *iwork.ValidateLogDetail)  {
+func CheckGeneral(step *iwork.WorkStep) (checkResult []string) {
 	// 校验 step 中的参数是否为空
-	iworkvalid.CheckEmpty(step, &iworknode.WorkStepFactory{WorkStep:step})
-	checkVariableRelationShip(step, logCh)
+	checkResults1 := iworkvalid.CheckEmpty(step, &iworknode.WorkStepFactory{WorkStep:step})
+	checkResults2 := checkVariableRelationShip(step)
+	checkResult = append(checkResult, checkResults1...)
+	checkResult = append(checkResult, checkResults2...)
+	return
 }
 
 func CheckCustom(step *iwork.WorkStep)  {
@@ -158,14 +168,16 @@ func CheckCustom(step *iwork.WorkStep)  {
 }
 
 // 校验变量的引用关系
-func checkVariableRelationShip(step *iwork.WorkStep, logCh chan *iwork.ValidateLogDetail)  {
+func checkVariableRelationShip(step *iwork.WorkStep) (checkResult []string) {
 	inputSchema := schema.GetCacheParamInputSchema(step, &iworknode.WorkStepFactory{WorkStep:step})
 	for _, item := range inputSchema.ParamInputSchemaItems{
-		checkVariableRelationShipDetail(item, step.WorkId, step.WorkStepId, logCh)
+		result := checkVariableRelationShipDetail(item, step.WorkId, step.WorkStepId)
+		checkResult = append(checkResult, result...)
 	}
+	return
 }
 
-func checkVariableRelationShipDetail(item schema.ParamInputSchemaItem,work_id, work_step_id int64, logCh chan *iwork.ValidateLogDetail)  {
+func checkVariableRelationShipDetail(item schema.ParamInputSchemaItem,work_id, work_step_id int64) (checkResult []string) {
 	// 根据正则找到关联的节点名称
 	referNodeNames := stringutil.GetNoRepeatSubStringWithRegexp(item.ParamValue, `\$[a-zA-Z0-9_]+`)
 	if len(referNodeNames) == 0{
@@ -175,13 +187,10 @@ func checkVariableRelationShipDetail(item schema.ParamInputSchemaItem,work_id, w
 	preStepNodeNames = append(preStepNodeNames, []string{"RESOURCE"}...)
 	for _, referNodeName := range referNodeNames{
 		if !stringutil.CheckContains(strings.Replace(referNodeName, "$.", "", -1), preStepNodeNames){
-			logCh <- &iwork.ValidateLogDetail{
-				WorkId:work_id,
-				WorkStepId:work_step_id,
-				Detail:fmt.Sprintf("Invalid variable relationship for %s was found!", referNodeName),
-			}
+			checkResult = append(checkResult, fmt.Sprintf("Invalid variable relationship for %s was found!", referNodeName))
 		}
 	}
+	return
 }
 
 func getAllPreStepNodeName(work_id, work_step_id int64) []string {
