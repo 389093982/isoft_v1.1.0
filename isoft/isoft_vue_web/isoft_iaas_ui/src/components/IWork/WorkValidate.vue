@@ -33,6 +33,14 @@
           {
             title: 'detail',
             key: 'detail',
+            render: (h,params)=>{
+              return h('span',{
+                style: {
+                  color: 'red',
+                },
+              },this.details[params.index]['detail']
+              )
+            }
           },
         ],
       }
