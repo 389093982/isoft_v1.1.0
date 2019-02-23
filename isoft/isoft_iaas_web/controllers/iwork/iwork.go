@@ -86,6 +86,7 @@ func (this *WorkController) RunWork() {
 	this.ServeJSON()
 }
 
+
 func (this *WorkController) EditWork() {
 	defer func() {
 		if err := recover(); err != nil{
@@ -93,7 +94,6 @@ func (this *WorkController) EditWork() {
 			this.ServeJSON()
 		}
 	}()
-
 	var work iwork.Work
 	var oldWorkName string
 	work_id, err := this.GetInt64("work_id", -1)
