@@ -28,7 +28,7 @@ func (this *WorkSub) Execute(trackingId string, skipFunc func(tmpDataMap map[str
 	if skipFunc(tmpDataMap) {return} // 跳过当前节点执行
 	// 运行子流程
 	work, _ := iwork.QueryWorkByName(workSubName)
-	steps, _ := iwork.GetAllWorkStepByWorkName(workSubName)
+	steps, _ := iwork.QueryAllWorkStepByWorkName(workSubName)
 	// 获取 foreach_data 数据
 	foreachDatas := getConvertedForEachData(tmpDataMap)
 	if len(foreachDatas) > 0 {
@@ -103,7 +103,7 @@ func (this *WorkSub) GetRuntimeParamInputSchema() *schema.ParamInputSchema {
 	workSubName := this.getWorkSubName()
 	if strings.TrimSpace(workSubName) != "" {
 		// 获取子流程所有步骤
-		subSteps, err := iwork.GetAllWorkStepByWorkName(workSubName)
+		subSteps, err := iwork.QueryAllWorkStepByWorkName(workSubName)
 		if err != nil {
 			panic(err)
 		}
@@ -141,7 +141,7 @@ func (this *WorkSub) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
 	workSubName := iworkutil.GetWorkSubNameForWorkSubNode(paramInputSchema)
 	if strings.TrimSpace(workSubName) != "" {
 		// 获取子流程所有步骤
-		subSteps, err := iwork.GetAllWorkStepByWorkName(workSubName)
+		subSteps, err := iwork.QueryAllWorkStepByWorkName(workSubName)
 		if err != nil {
 			panic(err)
 		}

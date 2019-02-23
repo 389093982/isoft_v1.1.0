@@ -46,7 +46,7 @@ func (this *ParamVauleParser) GetStaticParamValue() string {
 		resource_name = strings.Replace(resource_name, "$RESOURCE.", "", -1)
 		resource_name = strings.Replace(resource_name, ";", "", -1)
 		resource_name = strings.TrimSpace(resource_name)
-		return iwork.GetResourceDataSourceNameString(resource_name)
+		return iwork.QueryResourceDataSourceNameString(resource_name)
 	}
 	return this.ParamValue
 }

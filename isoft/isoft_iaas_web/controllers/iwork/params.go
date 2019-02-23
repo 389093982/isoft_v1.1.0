@@ -14,7 +14,7 @@ import (
 // 构建动态输入值
 func BuildDynamicInput(work_id int64, work_step_id int64) {
 	// 读取 work_step 信息
-	step, err := iwork.LoadWorkStepInfo(work_id, work_step_id)
+	step, err := iwork.QueryWorkStepInfo(work_id, work_step_id)
 	if err != nil {
 		panic(err)
 	}
@@ -42,7 +42,7 @@ func BuildDynamicInput(work_id int64, work_step_id int64) {
 // 构建动态输出值
 func BuildDynamicOutput(work_id int64, work_step_id int64) {
 	// 读取 work_step 信息
-	step, err := iwork.LoadWorkStepInfo(work_id, work_step_id)
+	step, err := iwork.QueryWorkStepInfo(work_id, work_step_id)
 	if err != nil {
 		panic(err)
 	}
@@ -76,7 +76,7 @@ func checkAndCreateSubWork(work_name string) {
 
 func BuildAutoCreateSubWork(work_id int64, work_step_id int64) {
 	// 读取 work_step 信息
-	step, err := iwork.LoadWorkStepInfo(work_id, work_step_id)
+	step, err := iwork.QueryWorkStepInfo(work_id, work_step_id)
 	if err != nil {
 		panic(err)
 	}
@@ -124,7 +124,7 @@ func (this *WorkController) EditWorkStepParamInfo() {
 	var paramInputSchema schema.ParamInputSchema
 	json.Unmarshal([]byte(paramInputSchemaStr), &paramInputSchema)
 	this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
-	if step, err := iwork.GetOneWorkStep(work_id, work_step_id); err == nil {
+	if step, err := iwork.QueryOneWorkStep(work_id, work_step_id); err == nil {
 		step.WorkStepInput = paramInputSchema.RenderToXml()
 		step.WorkStepParamMapping = paramMappingsStr
 		step.CreatedBy = "SYSTEM"

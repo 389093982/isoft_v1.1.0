@@ -44,7 +44,7 @@ func QueryCronMeta(condArr map[string]string, page int, offset int) (metas []Cro
 	return
 }
 
-func GetAllCronMeta() (metas []CronMeta, err error) {
+func QueryAllCronMeta() (metas []CronMeta, err error) {
 	o := orm.NewOrm()
 	_, err = o.QueryTable("cron_meta").All(&metas)
 	return

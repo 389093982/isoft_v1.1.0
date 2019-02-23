@@ -40,7 +40,7 @@ func (this *WorkController) GetRelativeWork() {
 	work_id,_ := this.GetInt64("work_id")
 	subWorks := make([]iwork.Work,0)
 	parentWorks, _,_ := iwork.QueryParentWorks(work_id)
-	steps, _ := iwork.GetAllWorkStepInfo(work_id)
+	steps, _ := iwork.QueryAllWorkStepInfo(work_id)
 	for _, step := range steps{
 		if step.WorkSubId > 0{
 			subwork, _ := iwork.QueryWorkById(step.WorkSubId)
@@ -53,7 +53,7 @@ func (this *WorkController) GetRelativeWork() {
 
 func (this *WorkController) GetLastRunLogDetail() {
 	tracking_id := this.GetString("tracking_id")
-	runLogDetails, err := iwork.GetLastRunLogDetail(tracking_id)
+	runLogDetails, err := iwork.QueryLastRunLogDetail(tracking_id)
 	if err == nil {
 		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "runLogDetails": runLogDetails}
 	} else {
@@ -80,7 +80,7 @@ func (this *WorkController) FilterPageLogRecord() {
 func (this *WorkController) RunWork() {
 	work_id,_ := this.GetInt64("work_id")
 	work, _ := iwork.QueryWorkById(work_id)
-	steps, _ := iwork.GetAllWorkStepInfo(work_id)
+	steps, _ := iwork.QueryAllWorkStepInfo(work_id)
 	go iworkrun.Run(work, steps, nil)
 	this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
 	this.ServeJSON()
@@ -131,7 +131,7 @@ func changeReferencesWorkName(work_id int64, oldWorkName,workName string) error 
 		return nil
 	}
 	for _, parentWork := range parentWorks{
-		steps, _ := iwork.GetAllWorkStepInfo(parentWork.Id)
+		steps, _ := iwork.QueryAllWorkStepInfo(parentWork.Id)
 		for _, step := range steps{
 			if step.WorkStepType != "work_sub"{
 				continue

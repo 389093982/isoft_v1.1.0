@@ -60,7 +60,7 @@ func QueryRunLogRecord(work_id int64, page int, offset int) (runLogRecords []Run
 	return
 }
 
-func GetLastRunLogDetail(tracking_id string) (runLogDetails []RunLogDetail, err error) {
+func QueryLastRunLogDetail(tracking_id string) (runLogDetails []RunLogDetail, err error) {
 	o := orm.NewOrm()
 	// __startswith 多级 tracking_id 也查出来
 	_, err = o.QueryTable("run_log_detail").Filter("tracking_id__startswith", tracking_id).All(&runLogDetails)

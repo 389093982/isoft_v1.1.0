@@ -47,13 +47,13 @@ func QueryResource(condArr map[string]string, page int, offset int) (resources [
 	return
 }
 
-func GetAllResource() (resources []Resource) {
+func QueryAllResource() (resources []Resource) {
 	o := orm.NewOrm()
 	o.QueryTable("resource").All(&resources)
 	return
 }
 
-func GetResourceDataSourceNameString(resource_name string) string {
+func QueryResourceDataSourceNameString(resource_name string) string {
 	var resource Resource
 	o := orm.NewOrm()
 	if err := o.QueryTable("resource").Filter("resource_name", resource_name).One(&resource); err == nil {

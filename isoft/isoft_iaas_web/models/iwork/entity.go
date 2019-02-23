@@ -34,7 +34,7 @@ func InsertOrUpdateEntity(entity *Entity) (id int64, err error) {
 	return
 }
 
-func GetEntityByName(entity_name string) (entity Entity, err error) {
+func QueryEntityByName(entity_name string) (entity Entity, err error) {
 	o := orm.NewOrm()
 	err = o.QueryTable("entity").Filter("entity_name", entity_name).One(&entity)
 	return
@@ -46,7 +46,7 @@ func DeleteEntityById(entity_id int64) error {
 	return err
 }
 
-func GetAllEntityInfo() (entities []Entity) {
+func QueryAllEntityInfo() (entities []Entity) {
 	o := orm.NewOrm()
 	o.QueryTable("entity").OrderBy("id").All(&entities)
 	return

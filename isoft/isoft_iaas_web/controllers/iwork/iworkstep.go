@@ -40,7 +40,7 @@ func (this *WorkController) EditWorkStepColorInfo()  {
 	work_step_id, _ := this.GetInt64("work_step_id", -1)
 	work_step_color := this.GetString("work_step_color")
 	this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
-	if step, err := iwork.GetOneWorkStep(work_id, work_step_id); err == nil {
+	if step, err := iwork.QueryOneWorkStep(work_id, work_step_id); err == nil {
 		step.WorkStepColor = work_step_color
 		if _, err := iwork.InsertOrUpdateWorkStep(&step); err == nil {
 			this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
@@ -62,7 +62,7 @@ func (this *WorkController) EditWorkStepBaseInfo() {
 	work_step_name := this.GetString("work_step_name")
 	work_step_desc := this.GetString("work_step_desc")
 	work_step_type := this.GetString("work_step_type")
-	step, err := iwork.GetOneWorkStep(work_id, work_step_id)
+	step, err := iwork.QueryOneWorkStep(work_id, work_step_id)
 	if err != nil{
 		panic(err)
 	}
@@ -91,7 +91,7 @@ func changeReferencesWorkStepName(work_id int64, oldWorkStepName, workStepName s
 	if oldWorkStepName == workStepName{
 		return nil
 	}
-	steps, err := iwork.GetAllWorkStepInfo(work_id)
+	steps, err := iwork.QueryAllWorkStepInfo(work_id)
 	if err != nil{
 		return err
 	}
@@ -132,7 +132,7 @@ func (this *WorkController) LoadWorkStepInfo() {
 	work_id,_ := this.GetInt64("work_id")
 	work_step_id, _ := this.GetInt64("work_step_id")
 	// 读取 work_step 信息
-	if step, err := iwork.LoadWorkStepInfo(work_id, work_step_id); err == nil {
+	if step, err := iwork.QueryWorkStepInfo(work_id, work_step_id); err == nil {
 		var paramMappingsArr []string
 		json.Unmarshal([]byte(step.WorkStepParamMapping), &paramMappingsArr)
 		// 返回结果
@@ -150,7 +150,7 @@ func (this *WorkController) LoadWorkStepInfo() {
 
 func (this *WorkController) GetAllWorkStepInfo() {
 	work_id,_ := this.GetInt64("work_id")
-	if steps, err := iwork.GetAllWorkStepInfo(work_id); err == nil {
+	if steps, err := iwork.QueryAllWorkStepInfo(work_id); err == nil {
 		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "steps": steps}
 	} else {
 		this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
@@ -164,9 +164,9 @@ func (this *WorkController) ChangeWorkStepOrder() {
 	work_step_id, _ := this.GetInt64("work_step_id")
 	_type := this.GetString("type")
 	// 获取当前步骤
-	step, _ := iwork.GetOneWorkStep(work_id, work_step_id)
+	step, _ := iwork.QueryOneWorkStep(work_id, work_step_id)
 	if _type == "up" {
-		if prevStep, err := iwork.GetOneWorkStep(work_id, work_step_id-1); err == nil {
+		if prevStep, err := iwork.QueryOneWorkStep(work_id, work_step_id-1); err == nil {
 			prevStep.WorkStepId = prevStep.WorkStepId + 1
 			step.WorkStepId = step.WorkStepId - 1
 			iwork.InsertOrUpdateWorkStep(&prevStep)
@@ -174,7 +174,7 @@ func (this *WorkController) ChangeWorkStepOrder() {
 			this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
 		}
 	} else {
-		if nextStep, err := iwork.GetOneWorkStep(work_id, work_step_id+1); err == nil {
+		if nextStep, err := iwork.QueryOneWorkStep(work_id, work_step_id+1); err == nil {
 			nextStep.WorkStepId = nextStep.WorkStepId + 1
 			step.WorkStepId = step.WorkStepId + 1
 			iwork.InsertOrUpdateWorkStep(&nextStep)
@@ -201,7 +201,7 @@ func (this *WorkController) LoadPreNodeOutput() {
 	pos = LoadEntityInfo()
 	preParamOutputSchemaTreeNodeArr = append(preParamOutputSchemaTreeNodeArr, pos.RenderToTreeNodes("$Entity"))
 	// 加载前置步骤输出
-	if steps, err := iwork.GetAllPreStepInfo(work_id, work_step_id); err == nil {
+	if steps, err := iwork.QueryAllPreStepInfo(work_id, work_step_id); err == nil {
 		for _, step := range steps {
 			pos := schema.GetCacheParamOutputSchema(&step)
 			preParamOutputSchemaTreeNodeArr = append(preParamOutputSchemaTreeNodeArr, pos.RenderToTreeNodes("$"+step.WorkStepName))
@@ -218,7 +218,7 @@ func LoadResourceInfo() *schema.ParamOutputSchema {
 	pos := &schema.ParamOutputSchema{
 		ParamOutputSchemaItems: []schema.ParamOutputSchemaItem{},
 	}
-	resources := iwork.GetAllResource()
+	resources := iwork.QueryAllResource()
 	for _, resource := range resources {
 		pos.ParamOutputSchemaItems = append(pos.ParamOutputSchemaItems, schema.ParamOutputSchemaItem{
 			ParamName: resource.ResourceName,
@@ -231,7 +231,7 @@ func LoadWorkInfo() *schema.ParamOutputSchema {
 	pos := &schema.ParamOutputSchema{
 		ParamOutputSchemaItems: []schema.ParamOutputSchemaItem{},
 	}
-	works := iwork.GetAllWorkInfo()
+	works := iwork.QueryAllWorkInfo()
 	for _, work := range works {
 		pos.ParamOutputSchemaItems = append(pos.ParamOutputSchemaItems, schema.ParamOutputSchemaItem{
 			ParamName: work.WorkName,
@@ -244,7 +244,7 @@ func LoadEntityInfo() *schema.ParamOutputSchema {
 	pos := &schema.ParamOutputSchema{
 		ParamOutputSchemaItems: []schema.ParamOutputSchemaItem{},
 	}
-	entities := iwork.GetAllEntityInfo()
+	entities := iwork.QueryAllEntityInfo()
 	for _, entity := range entities {
 		pos.ParamOutputSchemaItems = append(pos.ParamOutputSchemaItems, schema.ParamOutputSchemaItem{
 			ParamName: entity.EntityName,

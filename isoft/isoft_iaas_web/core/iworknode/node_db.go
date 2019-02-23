@@ -57,7 +57,7 @@ func saveEntity(tmpDataMap map[string]interface{}, tablecolsmap map[string]strin
 			LastUpdatedBy:   "SYSTEM",
 			LastUpdatedTime: time.Now(),
 		}
-		if _entity,err := iwork.GetEntityByName(tableName); err == nil{
+		if _entity,err := iwork.QueryEntityByName(tableName); err == nil{
 			entity.Id = _entity.Id
 		}
 		iwork.InsertOrUpdateEntity(entity)

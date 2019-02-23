@@ -9,7 +9,7 @@ import (
 
 func StartIQuartzInitialTask() {
 	if imodules.CheckModule("iwork"){
-		if metas, err := iwork.GetAllCronMeta(); err == nil {
+		if metas, err := iwork.QueryAllCronMeta(); err == nil {
 			c := cron.New()
 			for _, meta := range metas {
 				c.AddJob(meta.CronStr, &iworkJob{meta: &meta})

@@ -36,7 +36,7 @@ func validateAll()  {
 
 	logCh := make(chan *iwork.ValidateLogDetail)
 	workChan := make(chan int)
-	works := iwork.GetAllWorkInfo()
+	works := iwork.QueryAllWorkInfo()
 
 	for _, work := range works{
 		go func(work iwork.Work) {
@@ -55,7 +55,7 @@ func validateAll()  {
 	// 从 logCh 中循环读取校验不通过的信息,并将其写入日志表中去
 	for log := range logCh{
 		work, _ := iwork.QueryWorkById(log.WorkId)
-		step, _ := iwork.GetOneWorkStep(work.Id, log.WorkStepId)
+		step, _ := iwork.QueryOneWorkStep(work.Id, log.WorkStepId)
 		log.TrackingId = trackingId
 		log.WorkName = work.WorkName
 		log.WorkStepName = step.WorkStepName
@@ -78,7 +78,7 @@ func validateAll()  {
 // 校验单个 work
 func validateWork(work *iwork.Work, logCh chan *iwork.ValidateLogDetail, workChan chan int)  {
 	stepChan := make(chan int)
-	steps, _ := iwork.GetAllWorkStepInfo(work.Id)
+	steps, _ := iwork.QueryAllWorkStepInfo(work.Id)
 	// 验证流程必须以 work_start 开始,以 work_end 结束
 	validateWorkStartAndEnd(steps, logCh, work)
 

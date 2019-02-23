@@ -22,7 +22,7 @@ func (this *WorkController) PublishAsSerivce() {
 	if err != nil {
 		panic(err)
 	}
-	steps, err := iwork.GetAllWorkStepByWorkName(work_name)
+	steps, err := iwork.QueryAllWorkStepByWorkName(work_name)
 	if err != nil {
 		panic(err)
 	}

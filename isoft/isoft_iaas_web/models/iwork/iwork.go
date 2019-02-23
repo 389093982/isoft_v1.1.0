@@ -42,7 +42,7 @@ func (u *WorkStep) TableUnique() [][]string {
 	}
 }
 
-func GetAllWorkInfo() (works []Work) {
+func QueryAllWorkInfo() (works []Work) {
 	o := orm.NewOrm()
 	o.QueryTable("work").OrderBy("id").All(&works)
 	return
@@ -138,19 +138,19 @@ func QueryWorkStep(condArr map[string]interface{}) (steps []WorkStep, err error)
 	return
 }
 
-func GetOneWorkStep(work_id int64, work_step_id int64) (step WorkStep, err error) {
+func QueryOneWorkStep(work_id int64, work_step_id int64) (step WorkStep, err error) {
 	o := orm.NewOrm()
 	err = o.QueryTable("work_step").Filter("work_id", work_id).Filter("work_step_id", work_step_id).One(&step)
 	return
 }
 
-func GetAllWorkStepInfo(work_id int64) (steps []WorkStep, err error) {
+func QueryAllWorkStepInfo(work_id int64) (steps []WorkStep, err error) {
 	o := orm.NewOrm()
 	_, err = o.QueryTable("work_step").Filter("work_id", work_id).OrderBy("work_step_id").All(&steps)
 	return
 }
 
-func LoadWorkStepInfo(work_id int64, work_step_id int64) (step WorkStep, err error) {
+func QueryWorkStepInfo(work_id int64, work_step_id int64) (step WorkStep, err error) {
 	o := orm.NewOrm()
 	err = o.QueryTable("work_step").Filter("work_id", work_id).Filter("work_step_id", work_step_id).One(&step)
 	return
@@ -174,16 +174,16 @@ func DeleteWorkStepByWorkStepId(work_id, work_step_id int64) error {
 }
 
 // 获取前置节点信息
-func GetAllPreStepInfo(work_id int64, work_step_id int64) (steps []WorkStep, err error) {
+func QueryAllPreStepInfo(work_id int64, work_step_id int64) (steps []WorkStep, err error) {
 	o := orm.NewOrm()
 	_, err = o.QueryTable("work_step").Filter("work_id", work_id).
 		Filter("work_step_id__lt", work_step_id).OrderBy("work_step_id").All(&steps)
 	return
 }
 
-func GetAllWorkStepByWorkName(work_name string) (steps []WorkStep, err error) {
+func QueryAllWorkStepByWorkName(work_name string) (steps []WorkStep, err error) {
 	if work, err := QueryWorkByName(work_name); err == nil {
-		steps, err = GetAllWorkStepInfo(work.Id)
+		steps, err = QueryAllWorkStepInfo(work.Id)
 	}
 	return
 }
