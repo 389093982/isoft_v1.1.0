@@ -4,7 +4,7 @@
     <Button type="success" @click="refreshValidateResult">刷新校验结果</Button>
 
     <div style="margin: 20px;min-height: 300px;">
-      <Table :columns="columns1" :data="details" size="small"></Table>
+      <Table border :columns="columns1" :data="details" size="small"></Table>
     </div>
   </ISimpleBtnTriggerModal>
 </template>

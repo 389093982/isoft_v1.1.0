@@ -34,8 +34,8 @@
 </template>
 
 <script>
-  import ISimpleBtnTriggerModal from "../Common/modal/ISimpleBtnTriggerModal"
-  import {AddResource} from "../../api"
+  import ISimpleBtnTriggerModal from "../../Common/modal/ISimpleBtnTriggerModal"
+  import {AddResource} from "../../../api/index"
 
   export default {
     name: "ResourceAdd",

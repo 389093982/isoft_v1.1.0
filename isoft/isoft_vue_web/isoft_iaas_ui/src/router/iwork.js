@@ -3,8 +3,8 @@ import WorkStepList from "../components/IWork/WorkStepList"
 import RunLogList from "../components/IWork/RunLogList"
 import RunLogDetail from "../components/IWork/RunLogDetail"
 import IWorkLayout from "../components/ILayout/IWorkLayout"
-import QuartzList from "../components/IQuartz/QuartzList"
-import ResourceList from "../components/IResource/ResourceList"
+import QuartzList from "../components/IWork/IQuartz/QuartzList"
+import ResourceList from "../components/IWork/IResource/ResourceList"
 import {modulesCheck} from "../imodules";
 
 const IWorkRouter = {

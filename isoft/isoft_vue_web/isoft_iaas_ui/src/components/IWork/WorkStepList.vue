@@ -22,7 +22,7 @@
     <WorkStepBaseInfo ref="workStepBaseInfo" @handleSuccess="refreshWorkStepList"/>
     <WorkStepParamInfo ref="workStepParamInfo" @handleSuccess="refreshWorkStepList"/>
 
-    <Table :columns="columns1" ref="selection" :data="worksteps" size="small"></Table>
+    <Table border :columns="columns1" ref="selection" :data="worksteps" size="small"></Table>
 
     <!-- 相关流程清单 -->
     <RelativeWork ref="relativeWork"/>
@@ -105,6 +105,7 @@
           {
             title: 'work_step_name',
             key: 'work_step_name',
+            width: 180,
             render: (h, params) => {
               return h('div', [
                 h('span', {
@@ -118,7 +119,7 @@
           {
             title: 'work_step_type',
             key: 'work_step_type',
-            width: 200,
+            width: 180,
             render: (h, params) => {
               return h('div', [
                 h('Icon', {
@@ -137,6 +138,7 @@
           {
             title: 'work_step_color',
             key: 'work_step_color',
+            width: 180,
             render: (h, params) => {
               return h('div', this.renderWorkStep(h, this.worksteps[params.index]['work_step_color'],
                 this.worksteps[params.index]['work_id'],this.worksteps[params.index]['work_step_id']));
@@ -145,10 +147,13 @@
           {
             title: 'work_step_desc',
             key: 'work_step_desc',
+            width: 180,
           },
           {
             title: '操作',
             key: 'operate',
+            width: 180,
+            fixed: 'right',
             render: (h, params) => {
               return h('div', [
                 h('Button', {

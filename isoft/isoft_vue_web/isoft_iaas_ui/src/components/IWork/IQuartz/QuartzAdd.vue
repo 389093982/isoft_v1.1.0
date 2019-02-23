@@ -22,9 +22,9 @@
 </template>
 
 <script>
-  import ISimpleBtnTriggerModal from "../Common/modal/ISimpleBtnTriggerModal"
-  import {AddQuartz} from "../../api"
-  import {validateCron} from "../../tools"
+  import ISimpleBtnTriggerModal from "../../Common/modal/ISimpleBtnTriggerModal"
+  import {AddQuartz} from "../../../api/index"
+  import {validateCron} from "../../../tools/index"
 
   export default {
     name: "QuartzAdd",

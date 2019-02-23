@@ -14,7 +14,7 @@
       <ISimpleSearch slot="right" @handleSimpleSearch="handleSearch"/>
     </ISimpleLeftRightRow>
 
-    <Table :columns="columns1" :data="works" size="small"></Table>
+    <Table border :columns="columns1" :data="works" size="small"></Table>
     <Page :total="total" :page-size="offset" show-total show-sizer :styles="{'text-align': 'center','margin-top': '10px'}"
           @on-change="handleChange" @on-page-size-change="handlePageSizeChange"/>
   </div>
