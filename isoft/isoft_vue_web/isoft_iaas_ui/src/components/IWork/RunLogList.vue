@@ -25,6 +25,7 @@
           {
             title: 'tracking_id',
             key: 'tracking_id',
+            width: 300,
           },
           {
             title: 'work_name',

@@ -52,6 +52,13 @@
               </template>
               <MenuItem name="3-1"><router-link to="/iwork/quartzList">调度列表</router-link></MenuItem>
             </Submenu>
+            <Submenu name="4">
+              <template slot="title">
+                <Icon type="ios-barcode"></Icon>
+                日志管理
+              </template>
+              <MenuItem name="4-1"><router-link to="/iwork/runLogList">日志列表</router-link></MenuItem>
+            </Submenu>
           </Menu>
         </Sider>
         <Layout :style="{padding: '24px'}">
