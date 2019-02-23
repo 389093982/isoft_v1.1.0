@@ -6,7 +6,7 @@ import (
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
 	"isoft/isoft_iaas_web/core/iworknode"
 	"isoft/isoft_iaas_web/models/iwork"
-	"strings"
+	"isoft/isoft_iaas_web/service/iworkservice"
 	"time"
 )
 
@@ -81,29 +81,13 @@ func (this *WorkController) EditWorkStepBaseInfo() {
 	step.LastUpdatedTime = time.Now()
 	if _, err := iwork.InsertOrUpdateWorkStep(&step); err == nil {
 		// 级联更改相关联的步骤名称
-		changeReferencesWorkStepName(work_id, oldWorkStepName, work_step_name)
+		iworkservice.ChangeReferencesWorkStepName(work_id, oldWorkStepName, work_step_name)
 		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
 	}
 	this.ServeJSON()
 }
 
-func changeReferencesWorkStepName(work_id int64, oldWorkStepName, workStepName string) error {
-	if oldWorkStepName == workStepName{
-		return nil
-	}
-	steps, err := iwork.QueryAllWorkStepInfo(work_id)
-	if err != nil{
-		return err
-	}
-	for _, step := range steps{
-		step.WorkStepInput = strings.Replace(step.WorkStepInput, "$" + oldWorkStepName, "$" + workStepName, -1)
-		_, err := iwork.InsertOrUpdateWorkStep(&step)
-		if err != nil{
-			return err
-		}
-	}
-	return nil
-}
+
 
 func (this *WorkController) FilterWorkStep() {
 	condArr := make(map[string]interface{})
@@ -120,7 +104,7 @@ func (this *WorkController) FilterWorkStep() {
 func (this *WorkController) DeleteWorkStepByWorkStepId() {
 	work_id, _ := this.GetInt64("work_id")
 	work_step_id, _ := this.GetInt64("work_step_id")
-	if err := iwork.DeleteWorkStepByWorkStepId(work_id, work_step_id); err == nil {
+	if err := iworkservice.DeleteWorkStepByWorkStepIdService(work_id, work_step_id); err == nil {
 		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
 	} else {
 		this.Data["json"] = &map[string]interface{}{"status": "ERROR"}

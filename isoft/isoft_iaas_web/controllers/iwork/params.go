@@ -7,6 +7,7 @@ import (
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
 	"isoft/isoft_iaas_web/core/iworknode"
 	"isoft/isoft_iaas_web/models/iwork"
+	"isoft/isoft_iaas_web/service/iworkservice"
 	"strings"
 	"time"
 )
@@ -69,7 +70,7 @@ func checkAndCreateSubWork(work_name string) {
 		}
 		if _, err := iwork.InsertOrUpdateWork(work); err == nil {
 			// 写入 DB 并自动创建开始和结束节点
-			insertStartEndWorkStepNode(work.Id)
+			iworkservice.InsertStartEndWorkStepNode(work.Id)
 		}
 	}
 }

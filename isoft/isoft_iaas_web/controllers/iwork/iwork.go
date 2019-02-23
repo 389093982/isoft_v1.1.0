@@ -1,16 +1,12 @@
 package iwork
 
 import (
-	"fmt"
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/utils/pagination"
 	"isoft/isoft/common/pageutil"
-	"isoft/isoft_iaas_web/core/iworkconst"
-	"isoft/isoft_iaas_web/core/iworkdata/schema"
-	"isoft/isoft_iaas_web/core/iworknode"
 	"isoft/isoft_iaas_web/core/iworkrun"
 	"isoft/isoft_iaas_web/models/iwork"
-	"strings"
+	"isoft/isoft_iaas_web/service/iworkservice"
 	"time"
 )
 
@@ -112,82 +108,19 @@ func (this *WorkController) EditWork() {
 	if _, err := iwork.InsertOrUpdateWork(&work); err == nil {
 		if work_id <= 0 {
 			// 新增 work 场景,自动添加开始和结束节点
-			insertStartEndWorkStepNode(work.Id)
-			iwork.InsertOrUpdateCronMeta(&iwork.CronMeta{
-				TaskName:work.WorkName,
-				TaskType:"iwork_quartz",
-				CronStr:"0 * * * * ?",
-				CreatedBy:"SYSTEM",
-				CreatedTime:time.Now(),
-				LastUpdatedBy:"SYSTEM",
-				LastUpdatedTime:time.Now(),
-			})
+			iworkservice.InsertStartEndWorkStepNode(work.Id)
+			iworkservice.InsertOrUpdateAutoCronMeta(work.WorkName, -1)
 		}else{
 			// 修改 work 场景
-			changeReferencesWorkName(work_id, oldWorkName, work.WorkName)
+			iworkservice.ChangeReferencesWorkName(work_id, oldWorkName, work.WorkName)
 			meta, _ := iwork.QueryCronMetaByName(oldWorkName)
-			iwork.InsertOrUpdateCronMeta(&iwork.CronMeta{
-				Id:meta.Id,
-				TaskName:work.WorkName,
-				TaskType:"iwork_quartz",
-				CronStr:"0 * * * * ?",
-				CreatedBy:"SYSTEM",
-				CreatedTime:time.Now(),
-				LastUpdatedBy:"SYSTEM",
-				LastUpdatedTime:time.Now(),
-			})
+			iworkservice.InsertOrUpdateAutoCronMeta(work.WorkName, meta.Id)
 		}
 		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
 	} else {
 		this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
 	}
 	this.ServeJSON()
-}
-
-func changeReferencesWorkName(work_id int64, oldWorkName,workName string) error {
-	if oldWorkName == workName{
-		return nil
-	}
-	parentWorks, _,err := iwork.QueryParentWorks(work_id)
-	if err != nil {
-		return nil
-	}
-	for _, parentWork := range parentWorks{
-		steps, _ := iwork.QueryAllWorkStepInfo(parentWork.Id)
-		for _, step := range steps{
-			if step.WorkStepType != "work_sub"{
-				continue
-			}
-			inputSchema := schema.GetCacheParamInputSchema(&step, &iworknode.WorkStepFactory{WorkStep:&step})
-			for index, item := range inputSchema.ParamInputSchemaItems{
-				if item.ParamName == iworkconst.STRING_PREFIX + "work_sub" && strings.Contains(item.ParamValue, oldWorkName){
-					inputSchema.ParamInputSchemaItems[index].ParamValue = strings.Replace(item.ParamValue, oldWorkName, workName, -1)
-				}
-			}
-			step.WorkStepInput = inputSchema.RenderToXml()
-			iwork.InsertOrUpdateWorkStep(&step)
-		}
-	}
-	return nil
-}
-
-func insertStartEndWorkStepNode(work_id int64) {
-	insertDefaultWorkStepNodeFunc := func(nodeName string, work_step_id int64) {
-		step := &iwork.WorkStep{
-			WorkId:          work_id,
-			WorkStepId:      work_step_id,
-			WorkStepName:    nodeName,
-			WorkStepDesc:    fmt.Sprintf("%s节点", nodeName),
-			WorkStepType:    fmt.Sprintf("work_%s", nodeName),
-			CreatedBy:       "SYSTEM",
-			CreatedTime:     time.Now(),
-			LastUpdatedBy:   "SYSTEM",
-			LastUpdatedTime: time.Now(),
-		}
-		iwork.InsertOrUpdateWorkStep(step)
-	}
-	insertDefaultWorkStepNodeFunc("start", 1)
-	insertDefaultWorkStepNodeFunc("end", 2)
 }
 
 func (this *WorkController) FilterPageWork() {
@@ -210,7 +143,7 @@ func (this *WorkController) FilterPageWork() {
 
 func (this *WorkController) DeleteWorkById() {
 	id, _ := this.GetInt64("id")
-	if err := iwork.DeleteWorkById(id); err == nil {
+	if err := iworkservice.DeleteWorkByIdService(id); err == nil {
 		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
 	} else {
 		this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
