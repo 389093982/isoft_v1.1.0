@@ -2,19 +2,19 @@
   <div style="margin: 10px;">
     <h4 v-if="$route.query.work_name" style="text-align: center;">当前流程为：{{$route.query.work_name}}</h4>
 
-    <ISimpleLeftRightRow style="margin-bottom: 10px;">
+    <ISimpleLeftRightRow style="margin-bottom: 10px;margin-right: 10px;">
       <!-- left 插槽部分 -->
       <div slot="left">
         <Row type="flex" justify="start" class="code-row-bg">
-          <Col span="5"><Button type="success" @click="addWorkStep('')" style="margin-right: 5px;">新建普通节点</Button></Col>
-          <Col span="5"><Button type="error" @click="addWorkStep('empty')" style="margin-right: 5px;">新建空节点</Button></Col>
-          <Col span="5"><Button type="warning" style="margin-right: 5px;">Refactor</Button></Col>
+          <Col span="6"><Button type="success" @click="addWorkStep('')" style="margin-right: 5px;">新建普通节点</Button></Col>
+          <Col span="6"><Button type="error" @click="addWorkStep('empty')" style="margin-right: 5px;">新建空节点</Button></Col>
+          <Col span="6"><Button type="warning" style="margin-right: 5px;">Refactor</Button></Col>
         </Row>
       </div>
       <div slot="right">
         <Row type="flex" justify="end" class="code-row-bg">
-          <Col span="5"><WorkValidate /></Col>
-          <Col span="5"><Button type="success" @click="renderSourceXml">View Source XML</Button></Col>
+          <Col span="6"><WorkValidate /></Col>
+          <Col span="6"><Button type="success" @click="renderSourceXml">View Source XML</Button></Col>
         </Row>
       </div>
     </ISimpleLeftRightRow>

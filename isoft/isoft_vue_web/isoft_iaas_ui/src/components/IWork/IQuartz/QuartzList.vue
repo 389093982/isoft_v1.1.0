@@ -1,6 +1,6 @@
 <template>
   <div style="margin: 10px;">
-    <ISimpleLeftRightRow>
+    <ISimpleLeftRightRow style="margin-bottom: 10px;margin-right: 10px;">
       <!-- left 插槽部分 -->
       <QuartzAdd slot="left" @handleSuccess="refreshQuartzList"/>
       <!-- right 插槽部分 -->

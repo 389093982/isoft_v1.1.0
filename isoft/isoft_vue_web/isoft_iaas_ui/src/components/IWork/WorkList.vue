@@ -7,7 +7,7 @@
       <Col span="3"><WorkValidate/></Col>
     </Row>
 
-    <ISimpleLeftRightRow>
+    <ISimpleLeftRightRow style="margin-bottom: 10px;margin-right: 10px;">
       <!-- left 插槽部分 -->
       <WorkEdit ref="workEdit" slot="left" @handleSuccess="refreshWorkList"/>
       <!-- right 插槽部分 -->
@@ -50,10 +50,12 @@
           {
             title: 'work_name',
             key: 'work_name',
+            width: 250,
           },
           {
             title: 'work_desc',
             key: 'work_desc',
+            width: 250,
           },
           {
             title: '操作',
