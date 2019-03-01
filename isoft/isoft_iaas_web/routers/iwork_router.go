@@ -6,13 +6,13 @@ import (
 	"strings"
 )
 
-func loadIWorkerRouter()  {
+func loadIWorkerRouter() {
 	if strings.Contains(beego.AppConfig.String("open.modules"), "iwork") {
 		loadloadIWorkerRouterDetail()
 	}
 }
 
-func loadloadIWorkerRouterDetail()  {
+func loadloadIWorkerRouterDetail() {
 	beego.Router("/api/iwork/addQuartz", &iwork.WorkController{}, "post:AddQuartz")
 	beego.Router("/api/iwork/filterPageQuartz", &iwork.WorkController{}, "post:FilterPageQuartz")
 	beego.Router("/api/iwork/addResource", &iwork.WorkController{}, "post:AddResource")
@@ -23,7 +23,6 @@ func loadloadIWorkerRouterDetail()  {
 	beego.Router("/api/iwork/deleteWorkById", &iwork.WorkController{}, "post:DeleteWorkById")
 	beego.Router("/api/iwork/filterWorkStep", &iwork.WorkController{}, "post:FilterWorkStep")
 	beego.Router("/api/iwork/addWorkStep", &iwork.WorkController{}, "post:AddWorkStep")
-	beego.Router("/api/iwork/editWorkStepColorInfo", &iwork.WorkController{}, "post:EditWorkStepColorInfo")
 	beego.Router("/api/iwork/editWorkStepBaseInfo", &iwork.WorkController{}, "post:EditWorkStepBaseInfo")
 	beego.Router("/api/iwork/editWorkStepParamInfo", &iwork.WorkController{}, "post:EditWorkStepParamInfo")
 	beego.Router("/api/iwork/deleteWorkStepByWorkStepId", &iwork.WorkController{}, "post:DeleteWorkStepByWorkStepId")

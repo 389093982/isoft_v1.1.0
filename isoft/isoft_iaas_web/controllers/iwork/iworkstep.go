@@ -11,12 +11,12 @@ import (
 )
 
 func (this *WorkController) AddWorkStep() {
-	work_id,_ := this.GetInt64("work_id")
-	work_step_id,_ := this.GetInt64("work_step_id")
+	work_id, _ := this.GetInt64("work_id")
+	work_step_id, _ := this.GetInt64("work_step_id")
 	this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
 	// 将 work_step_id 之后的所有节点后移一位
 	err := iwork.BatchChangeWorkStepIdOrder(work_id, work_step_id, "+")
-	if err == nil{
+	if err == nil {
 		work_step_type := this.GetString("default_work_step_type")
 		step := &iwork.WorkStep{
 			WorkId:          work_id,
@@ -35,23 +35,9 @@ func (this *WorkController) AddWorkStep() {
 	this.ServeJSON()
 }
 
-func (this *WorkController) EditWorkStepColorInfo()  {
-	work_id,_ := this.GetInt64("work_id")
-	work_step_id, _ := this.GetInt64("work_step_id", -1)
-	work_step_color := this.GetString("work_step_color")
-	this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
-	if step, err := iwork.QueryOneWorkStep(work_id, work_step_id); err == nil {
-		step.WorkStepColor = work_step_color
-		if _, err := iwork.InsertOrUpdateWorkStep(&step); err == nil {
-			this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
-		}
-	}
-	this.ServeJSON()
-}
-
 func (this *WorkController) EditWorkStepBaseInfo() {
 	var step *iwork.WorkStep
-	work_id,_ := this.GetInt64("work_id", -1)
+	work_id, _ := this.GetInt64("work_id", -1)
 	work_step_id, _ := this.GetInt64("work_step_id", -1)
 	step.WorkId = work_id
 	step.WorkStepId = work_step_id
@@ -68,7 +54,7 @@ func (this *WorkController) EditWorkStepBaseInfo() {
 
 func (this *WorkController) FilterWorkStep() {
 	condArr := make(map[string]interface{})
-	condArr["work_id"],_ = this.GetInt64("work_id")
+	condArr["work_id"], _ = this.GetInt64("work_id")
 	worksteps, err := iwork.QueryWorkStep(condArr)
 	if err == nil {
 		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "worksteps": worksteps}
@@ -90,7 +76,7 @@ func (this *WorkController) DeleteWorkStepByWorkStepId() {
 }
 
 func (this *WorkController) LoadWorkStepInfo() {
-	work_id,_ := this.GetInt64("work_id")
+	work_id, _ := this.GetInt64("work_id")
 	work_step_id, _ := this.GetInt64("work_step_id")
 	// 读取 work_step 信息
 	if step, err := iwork.QueryWorkStepInfo(work_id, work_step_id); err == nil {
@@ -110,7 +96,7 @@ func (this *WorkController) LoadWorkStepInfo() {
 }
 
 func (this *WorkController) GetAllWorkStepInfo() {
-	work_id,_ := this.GetInt64("work_id")
+	work_id, _ := this.GetInt64("work_id")
 	if steps, err := iwork.QueryAllWorkStepInfo(work_id); err == nil {
 		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "steps": steps}
 	} else {
@@ -121,7 +107,7 @@ func (this *WorkController) GetAllWorkStepInfo() {
 
 func (this *WorkController) ChangeWorkStepOrder() {
 	this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
-	work_id,_ := this.GetInt64("work_id")
+	work_id, _ := this.GetInt64("work_id")
 	work_step_id, _ := this.GetInt64("work_step_id")
 	_type := this.GetString("type")
 	// 获取当前步骤
@@ -146,9 +132,8 @@ func (this *WorkController) ChangeWorkStepOrder() {
 	this.ServeJSON()
 }
 
-
 func (this *WorkController) LoadPreNodeOutput() {
-	work_id,_ := this.GetInt64("work_id")
+	work_id, _ := this.GetInt64("work_id")
 	work_step_id, _ := this.GetInt64("work_step_id")
 
 	preParamOutputSchemaTreeNodeArr := []*schema.TreeNode{}

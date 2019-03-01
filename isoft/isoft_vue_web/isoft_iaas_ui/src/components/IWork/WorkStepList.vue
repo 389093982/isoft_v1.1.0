@@ -39,7 +39,6 @@
   import WorkStepBaseInfo from "./WorkStepBaseInfo"
   import RelativeWork from "./RelativeWork"
   import {oneOf} from "../../tools"
-  import WorkStepColorRender from "./WorkStepColorRender"
   import {checkEmpty} from "../../tools"
   import {EditWorkStepColorInfo} from "../../api"
   import {checkContainsInString} from "../../tools"
@@ -47,7 +46,7 @@
 
   export default {
     name: "WorkStepList",
-    components:{WorkStepParamInfo,ISimpleLeftRightRow,WorkStepBaseInfo,RelativeWork,WorkStepColorRender,WorkValidate},
+    components:{WorkStepParamInfo,ISimpleLeftRightRow,WorkStepBaseInfo,RelativeWork,WorkValidate},
     data(){
       return {
         default_work_step_types: this.GLOBAL.default_work_step_types,
@@ -133,15 +132,6 @@
                 }),
                 h('span', this.worksteps[params.index]['work_step_type']),
               ]);
-            }
-          },
-          {
-            title: 'work_step_color',
-            key: 'work_step_color',
-            width: 180,
-            render: (h, params) => {
-              return h('div', this.renderWorkStep(h, this.worksteps[params.index]['work_step_color'],
-                this.worksteps[params.index]['work_id'],this.worksteps[params.index]['work_step_id']));
             }
           },
           {
@@ -254,39 +244,6 @@
           }
         }
       },
-      renderWorkStep:function (h, work_step_color,work_id,work_step_id) {
-        var colors = [];
-        if(checkEmpty(work_step_color)){
-          colors = ["#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF","#FFFFFF"];
-        }else{
-          colors = JSON.parse(work_step_color);
-        }
-
-        var _this = this;
-        var result = [];
-        for (var i=0; i<colors.length; i++){
-          result.push(h(WorkStepColorRender,
-            {
-              props:{
-                backgroundColorStyle:colors[i],
-                marginRightStyle:5,
-                backgroundColorIndex:i,
-              },
-              on:{
-                submitColor:async function (index, color) {
-                  colors[index] = color;
-                  // 更新color信息
-                  const result = await EditWorkStepColorInfo(work_id, work_step_id, JSON.stringify(colors));
-                  if (result.status == "SUCCESS"){
-                    _this.refreshWorkStepList();
-                  }
-                }
-              }
-            }
-          ));
-        }
-        return result;
-      }
     },
     mounted: function () {
       this.refreshWorkStepList();

@@ -10,9 +10,8 @@ type WorkStep struct {
 	Id                   int64     `json:"id"`
 	WorkId               int64     `json:"work_id"`
 	WorkStepId           int64     `json:"work_step_id"`
-	WorkSubId            int64     `json:"work_sub_id"` 			// 子流程 id
+	WorkSubId            int64     `json:"work_sub_id"` // 子流程 id
 	WorkStepName         string    `json:"work_step_name"`
-	WorkStepColor		 string	   `json:"work_step_color"`
 	WorkStepDesc         string    `json:"work_step_desc" orm:"type(text)"`
 	WorkStepType         string    `json:"work_step_type"`
 	WorkStepInput        string    `json:"work_step_input" orm:"type(text)"`
@@ -33,7 +32,7 @@ func (u *WorkStep) TableUnique() [][]string {
 
 func DeleteAllWorkStep(work_id int64) error {
 	o := orm.NewOrm()
-	_, err := o.QueryTable("work_step").Filter("work_id",work_id).Delete()
+	_, err := o.QueryTable("work_step").Filter("work_id", work_id).Delete()
 	return err
 }
 
@@ -87,7 +86,7 @@ func BatchChangeWorkStepIdOrder(work_id, work_step_id int64, mod string) error {
 func DeleteWorkStepByWorkStepId(work_id, work_step_id int64) error {
 	o := orm.NewOrm()
 	_, err := o.QueryTable("work_step").Filter("work_step_id", work_step_id).Delete()
-	if err == nil{
+	if err == nil {
 		err = BatchChangeWorkStepIdOrder(work_id, work_step_id, "-")
 	}
 	return err
