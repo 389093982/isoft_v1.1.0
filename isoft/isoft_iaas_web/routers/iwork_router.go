@@ -41,4 +41,5 @@ func loadloadIWorkerRouterDetail() {
 	beego.Router("/api/iwork/buildIWorkDL", &iwork.WorkController{}, "post:BuildIWorkDL")
 	beego.Router("/api/iwork/validateAllWork", &iwork.WorkController{}, "post:ValidateAllWork")
 	beego.Router("/api/iwork/loadValidateResult", &iwork.WorkController{}, "post:LoadValidateResult")
+	beego.Router("/api/iwork/refactorWorkStepInfo", &iwork.WorkController{}, "post:RefactorWorkStepInfo")
 }

@@ -8,7 +8,12 @@
         <Row type="flex" justify="start" class="code-row-bg">
           <Col span="6"><Button type="success" @click="addWorkStep('')" style="margin-right: 5px;">新建普通节点</Button></Col>
           <Col span="6"><Button type="error" @click="addWorkStep('empty')" style="margin-right: 5px;">新建空节点</Button></Col>
-          <Col span="6"><Button type="warning" style="margin-right: 5px;">Refactor</Button></Col>
+          <Col span="6"><Button type="warning" @click="refactor">Refactor</Button></Col>
+          <Col span="6"><Button type="info">View as Tree</Button></Col>
+
+          <ISimpleConfirmModal ref="refactor_modal" modal-title="重构为子流程" modal-width="500">
+            <Input v-model.trim="refactor_worksub_name" placeholder="请输入重构的子流程名称"></Input>
+          </ISimpleConfirmModal>
         </Row>
       </div>
       <div slot="right">
@@ -33,22 +38,23 @@
   import {WorkStepList} from "../../api"
   import {DeleteWorkStepByWorkStepId} from "../../api"
   import {ChangeWorkStepOrder} from "../../api"
+  import {RefactorWorkStepInfo} from "../../api"
   import {AddWorkStep} from "../../api"
   import WorkStepParamInfo from "./WorkStepParamInfo"
   import ISimpleLeftRightRow from "../Common/layout/ISimpleLeftRightRow"
   import WorkStepBaseInfo from "./WorkStepBaseInfo"
   import RelativeWork from "./RelativeWork"
   import {oneOf} from "../../tools"
-  import {checkEmpty} from "../../tools"
-  import {EditWorkStepColorInfo} from "../../api"
   import {checkContainsInString} from "../../tools"
   import WorkValidate from "./WorkValidate"
+  import ISimpleConfirmModal from "../Common/modal/ISimpleConfirmModal"
 
   export default {
     name: "WorkStepList",
-    components:{WorkStepParamInfo,ISimpleLeftRightRow,WorkStepBaseInfo,RelativeWork,WorkValidate},
+    components:{WorkStepParamInfo,ISimpleLeftRightRow,WorkStepBaseInfo,RelativeWork,WorkValidate,ISimpleConfirmModal},
     data(){
       return {
+        refactor_worksub_name:'',
         default_work_step_types: this.GLOBAL.default_work_step_types,
         worksteps: [],
         columns1: [
@@ -244,6 +250,15 @@
           }
         }
       },
+      refactor: async function () {
+        let refactor_work_step_ids = [];
+        let selections = this.$refs.selection.getSelection();
+        for(var i=0; i<selections.length; i++){
+          refactor_work_step_ids.push(selections[i].work_step_id);
+        }
+        this.$refs.refactor_modal.showModal();
+        const result = await RefactorWorkStepInfo(this.refactor_worksub_name, refactor_work_step_ids);
+      }
     },
     mounted: function () {
       this.refreshWorkStepList();

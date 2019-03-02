@@ -1,6 +1,7 @@
 package iwork
 
 import (
+	"fmt"
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/utils/pagination"
 	"isoft/isoft/common/pageutil"
@@ -14,7 +15,7 @@ type WorkController struct {
 	beego.Controller
 }
 
-func (this *WorkController) BuildIWorkDL()  {
+func (this *WorkController) BuildIWorkDL() {
 	//dls := make([]*IWorkDL,0)
 	//works := iwork.GetAllWorkInfo()
 	//for _, work := range works{
@@ -33,17 +34,17 @@ func (this *WorkController) BuildIWorkDL()  {
 }
 
 func (this *WorkController) GetRelativeWork() {
-	work_id,_ := this.GetInt64("work_id")
-	subWorks := make([]iwork.Work,0)
-	parentWorks, _,_ := iwork.QueryParentWorks(work_id)
+	work_id, _ := this.GetInt64("work_id")
+	subWorks := make([]iwork.Work, 0)
+	parentWorks, _, _ := iwork.QueryParentWorks(work_id)
 	steps, _ := iwork.QueryAllWorkStepInfo(work_id)
-	for _, step := range steps{
-		if step.WorkSubId > 0{
+	for _, step := range steps {
+		if step.WorkSubId > 0 {
 			subwork, _ := iwork.QueryWorkById(step.WorkSubId)
 			subWorks = append(subWorks, subwork)
 		}
 	}
-	this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "parentWorks":parentWorks,"subwork": subWorks}
+	this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "parentWorks": parentWorks, "subwork": subWorks}
 	this.ServeJSON()
 }
 
@@ -59,7 +60,7 @@ func (this *WorkController) GetLastRunLogDetail() {
 }
 
 func (this *WorkController) FilterPageLogRecord() {
-	work_id,_ := this.GetInt64("work_id")
+	work_id, _ := this.GetInt64("work_id")
 	offset, _ := this.GetInt("offset", 10)            // 每页记录数
 	current_page, _ := this.GetInt("current_page", 1) // 当前页
 	runLogRecords, count, err := iwork.QueryRunLogRecord(work_id, current_page, offset)
@@ -74,7 +75,7 @@ func (this *WorkController) FilterPageLogRecord() {
 }
 
 func (this *WorkController) RunWork() {
-	work_id,_ := this.GetInt64("work_id")
+	work_id, _ := this.GetInt64("work_id")
 	work, _ := iwork.QueryWorkById(work_id)
 	steps, _ := iwork.QueryAllWorkStepInfo(work_id)
 	go iworkrun.Run(work, steps, nil)
@@ -82,12 +83,11 @@ func (this *WorkController) RunWork() {
 	this.ServeJSON()
 }
 
-
 func (this *WorkController) EditWork() {
 	// 将请求参数封装成 work
 	var work iwork.Work
 	work_id, err := this.GetInt64("work_id", -1)
-	if err == nil && work_id > 0{
+	if err == nil && work_id > 0 {
 		work.Id = work_id
 	}
 	work.WorkName = this.GetString("work_name")
@@ -97,7 +97,7 @@ func (this *WorkController) EditWork() {
 	work.LastUpdatedBy = "SYSTEM"
 	work.LastUpdatedTime = time.Now()
 
-	if err := iworkservice.EditWorkService(work); err == nil{
+	if err := iworkservice.EditWorkService(work); err == nil {
 		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
 	} else {
 		this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
@@ -133,5 +133,13 @@ func (this *WorkController) DeleteWorkById() {
 	this.ServeJSON()
 }
 
+func (this *WorkController) RefactorWorkStepInfo() {
+	refactor_worksub_name := this.GetString("refactor_worksub_name")
+	refactor_work_step_ids := this.GetString("refactor_work_step_ids")
 
+	fmt.Println(refactor_worksub_name)
+	fmt.Println(refactor_work_step_ids)
 
+	this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
+	this.ServeJSON()
+}
