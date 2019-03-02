@@ -257,7 +257,7 @@
           refactor_work_step_ids.push(selections[i].work_step_id);
         }
         this.$refs.refactor_modal.showModal();
-        const result = await RefactorWorkStepInfo(this.refactor_worksub_name, refactor_work_step_ids);
+        const result = await RefactorWorkStepInfo(this.refactor_worksub_name, JSON.stringify(refactor_work_step_ids));
       }
     },
     mounted: function () {

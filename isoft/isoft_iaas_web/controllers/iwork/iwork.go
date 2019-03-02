@@ -1,6 +1,7 @@
 package iwork
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/utils/pagination"
@@ -136,9 +137,11 @@ func (this *WorkController) DeleteWorkById() {
 func (this *WorkController) RefactorWorkStepInfo() {
 	refactor_worksub_name := this.GetString("refactor_worksub_name")
 	refactor_work_step_ids := this.GetString("refactor_work_step_ids")
+	var refactor_work_step_id_arr []int
+	json.Unmarshal([]byte(refactor_work_step_ids), &refactor_work_step_id_arr)
 
 	fmt.Println(refactor_worksub_name)
-	fmt.Println(refactor_work_step_ids)
+	fmt.Println(refactor_work_step_id_arr)
 
 	this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
 	this.ServeJSON()
