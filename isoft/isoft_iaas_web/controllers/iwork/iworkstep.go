@@ -127,3 +127,22 @@ func (this *WorkController) RefactorWorkStepInfo() {
 	}
 	this.ServeJSON()
 }
+
+func (this *WorkController) EditWorkStepParamInfo() {
+	work_id, _ := this.GetInt64("work_id")
+	work_step_id, _ := this.GetInt64("work_step_id", -1)
+	paramInputSchemaStr := this.GetString("paramInputSchemaStr")
+	paramMappingsStr := this.GetString("paramMappingsStr")
+	serviceArgs := map[string]interface{}{
+		"work_id":             work_id,
+		"work_step_id":        work_step_id,
+		"paramInputSchemaStr": paramInputSchemaStr,
+		"paramMappingsStr":    paramMappingsStr,
+	}
+	if err := service.ExecuteServiceWithTx(serviceArgs, iworkservice.EditWorkStepParamInfoService); err == nil {
+		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
+	} else {
+		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": err.Error()}
+	}
+	this.ServeJSON()
+}
