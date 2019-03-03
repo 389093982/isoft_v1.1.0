@@ -116,6 +116,11 @@ func DeleteWorkStepByWorkStepIdService(serviceArgs map[string]interface{}) error
 	work_id := serviceArgs["work_id"].(int64)
 	work_step_id := serviceArgs["work_step_id"].(int64)
 	o := serviceArgs["o"].(orm.Ormer)
+	if step, err := iwork.QueryWorkStepInfo(work_id, work_step_id, o); err == nil {
+		if step.WorkStepType == "work_start" || step.WorkStepType == "work_end" {
+			return errors.New("start 节点和 end 节点不能被删除!")
+		}
+	}
 	if err := iwork.DeleteWorkStepByWorkStepId(work_id, work_step_id, o); err != nil {
 		return err
 	}
@@ -220,12 +225,11 @@ func EditWorkStepBaseInfoService(serviceArgs map[string]interface{}) error {
 		step.WorkStepInput = ""
 		step.WorkStepOutput = ""
 	}
-	if _, err := iwork.InsertOrUpdateWorkStep(step, o); err == nil {
-		// 级联更改相关联的步骤名称
-		if err := ChangeReferencesWorkStepName(step.WorkId, oldStep.WorkStepName, step.WorkStepName, o); err != nil {
-			return err
-		}
-	} else {
+	if _, err := iwork.InsertOrUpdateWorkStep(step, o); err != nil {
+		return err
+	}
+	// 级联更改相关联的步骤名称
+	if err := ChangeReferencesWorkStepName(step.WorkId, oldStep.WorkStepName, step.WorkStepName, o); err != nil {
 		return err
 	}
 	return nil
