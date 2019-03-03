@@ -71,21 +71,31 @@ func RefactorWorkStepInfoService(serviceArgs map[string]interface{}) error {
 		LastUpdatedBy:   "SYSTEM",
 		LastUpdatedTime: time.Now(),
 	}
-	iwork.InsertOrUpdateWork(subWork)
+	if _, err := iwork.InsertOrUpdateWork(subWork); err != nil {
+		return err
+	}
+	// 为子流程添加开始和结束节点
+	if err := InsertStartEndWorkStepNode(subWork.Id); err != nil {
+		return err
+	}
 	// 循环移动子步骤
 	for index, work_step_id := range refactor_work_step_id_arr {
 		step, err := iwork.QueryWorkStepInfo(work_id, int64(work_step_id))
-		if err == nil {
-			if step.WorkStepType == "work_start" || step.WorkStepType == "work_end" {
-				return errors.New("start 和 end 节点不能重构！")
-			}
-			InsertStartEndWorkStepNode(subWork.Id)
-			newStep := iwork.CopyWorkStepInfo(step)
-			newStep.WorkId = subWork.Id
-			newStep.WorkStepId = int64(index + 2)
-			iwork.InsertOrUpdateWorkStep(newStep)
-			// 当前流程循环删除该节点
-			DeleteWorkStepByWorkStepIdService(work_id, int64(work_step_id))
+		if err != nil {
+			return err
+		}
+		if step.WorkStepType == "work_start" || step.WorkStepType == "work_end" {
+			return errors.New("start 和 end 节点不能重构！")
+		}
+		newStep := iwork.CopyWorkStepInfo(step)
+		newStep.WorkId = subWork.Id
+		newStep.WorkStepId = int64(index + 2)
+		if _, err := iwork.InsertOrUpdateWorkStep(newStep); err != nil {
+			return err
+		}
+		// 当前流程循环删除该节点
+		if err := DeleteWorkStepByWorkStepIdService(work_id, int64(work_step_id)); err != nil {
+			return err
 		}
 	}
 	return nil

@@ -137,7 +137,7 @@ func (this *WorkController) LoadPreNodeOutput() {
 	work_id, _ := this.GetInt64("work_id")
 	work_step_id, _ := this.GetInt64("work_step_id")
 
-	preParamOutputSchemaTreeNodeArr := []*schema.TreeNode{}
+	preParamOutputSchemaTreeNodeArr := make([]*schema.TreeNode, 0)
 	// 加载 resource 参数
 	pos := LoadResourceInfo()
 	preParamOutputSchemaTreeNodeArr = append(preParamOutputSchemaTreeNodeArr, pos.RenderToTreeNodes("$RESOURCE"))
