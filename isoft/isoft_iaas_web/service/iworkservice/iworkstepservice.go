@@ -8,6 +8,45 @@ import (
 	"time"
 )
 
+func ChangeWorkStepOrderService(serviceArgs map[string]interface{}) error {
+	work_id := serviceArgs["work_id"].(int64)
+	work_step_id := serviceArgs["work_step_id"].(int64)
+	_type := serviceArgs["_type"].(string)
+	// 获取当前步骤
+	step, err := iwork.QueryOneWorkStep(work_id, work_step_id)
+	if err != nil {
+		return err
+	}
+	if _type == "up" {
+		prevStep, err := iwork.QueryOneWorkStep(work_id, work_step_id-1)
+		if err != nil {
+			return err
+		}
+		prevStep.WorkStepId = prevStep.WorkStepId + 1
+		step.WorkStepId = step.WorkStepId - 1
+		if _, err := iwork.InsertOrUpdateWorkStep(&prevStep); err != nil {
+			return err
+		}
+		if _, err := iwork.InsertOrUpdateWorkStep(&step); err != nil {
+			return err
+		}
+	} else {
+		nextStep, err := iwork.QueryOneWorkStep(work_id, work_step_id+1)
+		if err != nil {
+			return err
+		}
+		nextStep.WorkStepId = nextStep.WorkStepId + 1
+		step.WorkStepId = step.WorkStepId + 1
+		if _, err := iwork.InsertOrUpdateWorkStep(&nextStep); err != nil {
+			return err
+		}
+		if _, err := iwork.InsertOrUpdateWorkStep(&step); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
 func EditWorkStepBaseInfoService(step *iwork.WorkStep) error {
 	oldStep, err := iwork.QueryOneWorkStep(step.WorkId, step.WorkStepId)
 	if err != nil {

@@ -107,28 +107,14 @@ func (this *WorkController) GetAllWorkStepInfo() {
 }
 
 func (this *WorkController) ChangeWorkStepOrder() {
-	this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
 	work_id, _ := this.GetInt64("work_id")
 	work_step_id, _ := this.GetInt64("work_step_id")
 	_type := this.GetString("type")
-	// 获取当前步骤
-	step, _ := iwork.QueryOneWorkStep(work_id, work_step_id)
-	if _type == "up" {
-		if prevStep, err := iwork.QueryOneWorkStep(work_id, work_step_id-1); err == nil {
-			prevStep.WorkStepId = prevStep.WorkStepId + 1
-			step.WorkStepId = step.WorkStepId - 1
-			iwork.InsertOrUpdateWorkStep(&prevStep)
-			iwork.InsertOrUpdateWorkStep(&step)
-			this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
-		}
+	serviceArgs := map[string]interface{}{"work_id": work_id, "work_step_id": work_step_id, "_type": _type}
+	if err := service.ExecuteServiceWithTx(serviceArgs, iworkservice.ChangeWorkStepOrderService); err == nil {
+		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
 	} else {
-		if nextStep, err := iwork.QueryOneWorkStep(work_id, work_step_id+1); err == nil {
-			nextStep.WorkStepId = nextStep.WorkStepId + 1
-			step.WorkStepId = step.WorkStepId + 1
-			iwork.InsertOrUpdateWorkStep(&nextStep)
-			iwork.InsertOrUpdateWorkStep(&step)
-			this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
-		}
+		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": err.Error()}
 	}
 	this.ServeJSON()
 }
