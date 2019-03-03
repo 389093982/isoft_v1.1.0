@@ -16,8 +16,7 @@ type Work struct {
 	LastUpdatedTime time.Time `json:"last_updated_time"`
 }
 
-func QueryAllWorkInfo() (works []Work) {
-	o := orm.NewOrm()
+func QueryAllWorkInfo(o orm.Ormer) (works []Work) {
 	o.QueryTable("work").OrderBy("id").All(&works)
 	return
 }
@@ -27,8 +26,7 @@ func QueryWorkById(work_id int64, o orm.Ormer) (work Work, err error) {
 	return
 }
 
-func QueryWorkByName(work_name string) (work Work, err error) {
-	o := orm.NewOrm()
+func QueryWorkByName(work_name string, o orm.Ormer) (work Work, err error) {
 	err = o.QueryTable("work").Filter("work_name", work_name).One(&work)
 	return
 }

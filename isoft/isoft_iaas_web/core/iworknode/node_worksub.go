@@ -30,7 +30,7 @@ func (this *WorkSub) Execute(trackingId string, skipFunc func(tmpDataMap map[str
 		return
 	} // 跳过当前节点执行
 	// 运行子流程
-	work, _ := iwork.QueryWorkByName(workSubName)
+	work, _ := iwork.QueryWorkByName(workSubName, orm.NewOrm())
 	steps, _ := iwork.QueryAllWorkStepByWorkName(workSubName, orm.NewOrm())
 	// 获取 foreach_data 数据
 	foreachDatas := getConvertedForEachData(tmpDataMap)
@@ -166,7 +166,7 @@ func (this *WorkSub) ValidateCustom() {
 	if workSubName := this.getWorkSubName(); workSubName == "" {
 		panic("Empty workSubName was found!")
 	} else {
-		if _, err := iwork.QueryWorkByName(workSubName); err != nil {
+		if _, err := iwork.QueryWorkByName(workSubName, orm.NewOrm()); err != nil {
 			panic(fmt.Sprintf("WorkSubName for %s was not found!", workSubName))
 		}
 	}

@@ -19,7 +19,7 @@ func (this *WorkController) PublishAsSerivce() {
 		}
 	}()
 	work_name := this.Ctx.Input.Param(":work_name")
-	work, err := iwork.QueryWorkByName(work_name)
+	work, err := iwork.QueryWorkByName(work_name, orm.NewOrm())
 	if err != nil {
 		panic(err)
 	}

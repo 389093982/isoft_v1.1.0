@@ -42,7 +42,7 @@ func validateAll() {
 
 	logCh := make(chan *iwork.ValidateLogDetail)
 	workChan := make(chan int)
-	works := iwork.QueryAllWorkInfo()
+	works := iwork.QueryAllWorkInfo(orm.NewOrm())
 
 	for _, work := range works {
 		go func(work iwork.Work) {

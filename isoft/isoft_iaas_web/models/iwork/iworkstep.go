@@ -100,8 +100,13 @@ func QueryAllPreStepInfo(work_id int64, work_step_id int64) (steps []WorkStep, e
 }
 
 func QueryAllWorkStepByWorkName(work_name string, o orm.Ormer) (steps []WorkStep, err error) {
-	if work, err := QueryWorkByName(work_name); err == nil {
-		steps, err = QueryAllWorkStepInfo(work.Id, o)
+	work, err := QueryWorkByName(work_name, o)
+	if err != nil {
+		return nil, err
+	}
+	steps, err = QueryAllWorkStepInfo(work.Id, o)
+	if err != nil {
+		return nil, err
 	}
 	return
 }

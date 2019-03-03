@@ -31,7 +31,7 @@ func LoadWorkInfo() *schema.ParamOutputSchema {
 	pos := &schema.ParamOutputSchema{
 		ParamOutputSchemaItems: []schema.ParamOutputSchemaItem{},
 	}
-	works := iwork.QueryAllWorkInfo()
+	works := iwork.QueryAllWorkInfo(orm.NewOrm())
 	for _, work := range works {
 		pos.ParamOutputSchemaItems = append(pos.ParamOutputSchemaItems, schema.ParamOutputSchemaItem{
 			ParamName: work.WorkName,
@@ -369,7 +369,7 @@ func BuildDynamicOutput(work_id int64, work_step_id int64) {
 }
 
 func checkAndCreateSubWork(work_name string) {
-	if _, err := iwork.QueryWorkByName(work_name); err != nil {
+	if _, err := iwork.QueryWorkByName(work_name, orm.NewOrm()); err != nil {
 		// 不存在 work 则直接创建
 		work := &iwork.Work{
 			WorkName:        work_name,
@@ -410,7 +410,7 @@ func BuildAutoCreateSubWork(work_id int64, work_step_id int64) {
 				checkAndCreateSubWork(paramValue)
 			}
 			// 维护 work 的 WorkSubId 属性
-			subWork, _ := iwork.QueryWorkByName(strings.Replace(paramValue, "$WORK.", "", -1))
+			subWork, _ := iwork.QueryWorkByName(strings.Replace(paramValue, "$WORK.", "", -1), orm.NewOrm())
 			step.WorkSubId = subWork.Id
 			break
 		}
