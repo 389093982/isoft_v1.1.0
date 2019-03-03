@@ -6,6 +6,7 @@ import (
 	"isoft/isoft/common/pageutil"
 	"isoft/isoft_iaas_web/core/iworkrun"
 	"isoft/isoft_iaas_web/models/iwork"
+	"isoft/isoft_iaas_web/service"
 	"isoft/isoft_iaas_web/service/iworkservice"
 	"time"
 )
@@ -70,6 +71,13 @@ func (this *WorkController) FilterPageLogRecord() {
 	} else {
 		this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
 	}
+
+	serviceArgs := map[string]interface{}{"work_id": work_id, "offset": offset, "current_page": current_page}
+	if result, err := service.ExecuteResultServiceWithTx(serviceArgs, iworkservice.FilterPageLogRecord); err == nil {
+		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "runLogRecords": result["runLogRecords"], "paginator": result["paginator"]}
+	} else {
+		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": err.Error()}
+	}
 	this.ServeJSON()
 }
 
@@ -95,12 +103,13 @@ func (this *WorkController) EditWork() {
 	work.CreatedTime = time.Now()
 	work.LastUpdatedBy = "SYSTEM"
 	work.LastUpdatedTime = time.Now()
-
-	if err := iworkservice.EditWorkService(work); err == nil {
+	serviceArgs := map[string]interface{}{"work": work}
+	if err := service.ExecuteServiceWithTx(serviceArgs, iworkservice.EditWorkService); err == nil {
 		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
 	} else {
-		this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
+		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": err.Error()}
 	}
+
 	this.ServeJSON()
 }
 
@@ -111,20 +120,20 @@ func (this *WorkController) FilterPageWork() {
 	if search := this.GetString("search"); search != "" {
 		condArr["search"] = search
 	}
-	works, count, err := iwork.QueryWork(condArr, current_page, offset)
-	paginator := pagination.SetPaginator(this.Ctx, offset, count)
-	if err == nil {
-		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "works": works,
-			"paginator": pageutil.Paginator(paginator.Page(), paginator.PerPageNums, paginator.Nums())}
+	serviceArgs := map[string]interface{}{"condArr": condArr, "offset": offset, "current_page": current_page, "ctx": this.Ctx}
+	if result, err := service.ExecuteResultServiceWithTx(serviceArgs, iworkservice.FilterPageWorkService); err == nil {
+		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "works": result["works"], "paginator": result["paginator"]}
 	} else {
-		this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
+		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": err.Error()}
 	}
 	this.ServeJSON()
 }
 
 func (this *WorkController) DeleteWorkById() {
 	id, _ := this.GetInt64("id")
-	if err := iworkservice.DeleteWorkByIdService(id); err == nil {
+	serviceArgs := make(map[string]interface{}, 0)
+	serviceArgs["id"] = id
+	if err := service.ExecuteServiceWithTx(serviceArgs, iworkservice.DeleteWorkByIdService); err == nil {
 		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
 	} else {
 		this.Data["json"] = &map[string]interface{}{"status": "ERROR"}

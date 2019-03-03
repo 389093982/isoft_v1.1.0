@@ -2,6 +2,9 @@ package iworkservice
 
 import (
 	"fmt"
+	"github.com/astaxie/beego/context"
+	"github.com/astaxie/beego/utils/pagination"
+	"isoft/isoft/common/pageutil"
 	"isoft/isoft_iaas_web/core/iworkconst"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
 	"isoft/isoft_iaas_web/core/iworknode"
@@ -10,44 +13,81 @@ import (
 	"time"
 )
 
+func FilterPageLogRecord(serviceArgs map[string]interface{}) (result map[string]interface{}, err error) {
+	work_id := serviceArgs["work_id"].(int64)
+	offset := serviceArgs["offset"].(int)
+	current_page := serviceArgs["current_page"].(int)
+	ctx := serviceArgs["ctx"].(*context.Context)
+	runLogRecords, count, err := iwork.QueryRunLogRecord(work_id, current_page, offset)
+	if err != nil {
+		return nil, err
+	}
+	paginator := pagination.SetPaginator(ctx, offset, count)
+	if err != nil {
+		return nil, err
+	}
+	result["runLogRecords"] = runLogRecords
+	result["paginator"] = pageutil.Paginator(paginator.Page(), paginator.PerPageNums, paginator.Nums())
+	return
+}
+
+func FilterPageWorkService(serviceArgs map[string]interface{}) (result map[string]interface{}, err error) {
+	condArr := serviceArgs["condArr"].(map[string]string)
+	offset := serviceArgs["offset"].(int)
+	current_page := serviceArgs["current_page"].(int)
+	ctx := serviceArgs["ctx"].(*context.Context)
+	works, count, err := iwork.QueryWork(condArr, current_page, offset)
+	if err != nil {
+		return nil, err
+	}
+	paginator := pagination.SetPaginator(ctx, offset, count)
+	if err != nil {
+		return nil, err
+	}
+	result["works"] = works
+	result["paginator"] = pageutil.Paginator(paginator.Page(), paginator.PerPageNums, paginator.Nums())
+	return
+}
+
 // 根据 id 信息查找旧的 work 信息
 func getOldWorkInfoById(id int64) (oldWorkName string, oldWorkId int64) {
-	if id <= 0{
+	if id <= 0 {
 		return
 	}
-	if work1, err := iwork.QueryWorkById(id); err == nil{
+	if work1, err := iwork.QueryWorkById(id); err == nil {
 		oldWorkName = work1.WorkName
 		oldWorkId = work1.Id
 	}
 	return
 }
 
-func EditWorkService(work iwork.Work) error {
-	oldWorkName,oldWorkId := getOldWorkInfoById(work.Id)
+func EditWorkService(serviceArgs map[string]interface{}) error {
+	work := serviceArgs["work"].(iwork.Work)
+	oldWorkName, oldWorkId := getOldWorkInfoById(work.Id)
 	// 插入或者更新 work 信息
-	if _, err := iwork.InsertOrUpdateWork(&work); err != nil{
+	if _, err := iwork.InsertOrUpdateWork(&work); err != nil {
 		return err
 	}
-	if oldWorkName == ""{
+	if oldWorkName == "" {
 		// 新增 work 场景,自动添加开始和结束节点
-		if err := InsertStartEndWorkStepNode(work.Id); err != nil{
+		if err := InsertStartEndWorkStepNode(work.Id); err != nil {
 			return err
 		}
-		if _, err := InsertOrUpdateAutoCronMeta(work.WorkName, -1); err != nil{
+		if _, err := InsertOrUpdateAutoCronMeta(work.WorkName, -1); err != nil {
 			return err
 		}
-	}else{
+	} else {
 		// 修改 work 场景
-		if err := ChangeReferencesWorkName(oldWorkId, oldWorkName, work.WorkName); err != nil{
+		if err := ChangeReferencesWorkName(oldWorkId, oldWorkName, work.WorkName); err != nil {
 			return err
 		}
 		var oldMetaId int64
-		if meta, err := iwork.QueryCronMetaByName(oldWorkName); err != nil{
+		if meta, err := iwork.QueryCronMetaByName(oldWorkName); err != nil {
 			oldMetaId = -1
-		}else{
+		} else {
 			oldMetaId = meta.Id
 		}
-		if _, err := InsertOrUpdateAutoCronMeta(work.WorkName, oldMetaId); err != nil{
+		if _, err := InsertOrUpdateAutoCronMeta(work.WorkName, oldMetaId); err != nil {
 			return err
 		}
 	}
@@ -56,42 +96,43 @@ func EditWorkService(work iwork.Work) error {
 
 func InsertOrUpdateAutoCronMeta(task_name string, meta_id int64) (id int64, err error) {
 	meta := &iwork.CronMeta{
-		TaskName:task_name,
-		TaskType:"iwork_quartz",
-		CronStr:"0 * * * * ?",
-		CreatedBy:"SYSTEM",
-		CreatedTime:time.Now(),
-		LastUpdatedBy:"SYSTEM",
-		LastUpdatedTime:time.Now(),
+		TaskName:        task_name,
+		TaskType:        "iwork_quartz",
+		CronStr:         "0 * * * * ?",
+		CreatedBy:       "SYSTEM",
+		CreatedTime:     time.Now(),
+		LastUpdatedBy:   "SYSTEM",
+		LastUpdatedTime: time.Now(),
 	}
-	if meta_id > 0{
+	if meta_id > 0 {
 		meta.Id = meta_id
 	}
-	id , err = iwork.InsertOrUpdateCronMeta(meta)
+	id, err = iwork.InsertOrUpdateCronMeta(meta)
 	return
 }
 
-func DeleteWorkByIdService(id int64) error {
+func DeleteWorkByIdService(serviceArgs map[string]interface{}) error {
+	id := serviceArgs["id"].(int64)
 	return iwork.DeleteWorkById(id)
 }
 
-func ChangeReferencesWorkName(work_id int64, oldWorkName,workName string) error {
-	if oldWorkName == workName{
+func ChangeReferencesWorkName(work_id int64, oldWorkName, workName string) error {
+	if oldWorkName == workName {
 		return nil
 	}
-	parentWorks, _,err := iwork.QueryParentWorks(work_id)
+	parentWorks, _, err := iwork.QueryParentWorks(work_id)
 	if err != nil {
 		return nil
 	}
-	for _, parentWork := range parentWorks{
+	for _, parentWork := range parentWorks {
 		steps, _ := iwork.QueryAllWorkStepInfo(parentWork.Id)
-		for _, step := range steps{
-			if step.WorkStepType != "work_sub"{
+		for _, step := range steps {
+			if step.WorkStepType != "work_sub" {
 				continue
 			}
-			inputSchema := schema.GetCacheParamInputSchema(&step, &iworknode.WorkStepFactory{WorkStep:&step})
-			for index, item := range inputSchema.ParamInputSchemaItems{
-				if item.ParamName == iworkconst.STRING_PREFIX + "work_sub" && strings.Contains(item.ParamValue, oldWorkName){
+			inputSchema := schema.GetCacheParamInputSchema(&step, &iworknode.WorkStepFactory{WorkStep: &step})
+			for index, item := range inputSchema.ParamInputSchemaItems {
+				if item.ParamName == iworkconst.STRING_PREFIX+"work_sub" && strings.Contains(item.ParamValue, oldWorkName) {
 					inputSchema.ParamInputSchemaItems[index].ParamValue = strings.Replace(item.ParamValue, oldWorkName, workName, -1)
 				}
 			}
@@ -103,7 +144,7 @@ func ChangeReferencesWorkName(work_id int64, oldWorkName,workName string) error 
 }
 
 func InsertStartEndWorkStepNode(work_id int64) error {
-	insertDefaultWorkStepNodeFunc := func(nodeName string, work_step_id int64) error{
+	insertDefaultWorkStepNodeFunc := func(nodeName string, work_step_id int64) error {
 		step := &iwork.WorkStep{
 			WorkId:          work_id,
 			WorkStepId:      work_step_id,
@@ -115,15 +156,15 @@ func InsertStartEndWorkStepNode(work_id int64) error {
 			LastUpdatedBy:   "SYSTEM",
 			LastUpdatedTime: time.Now(),
 		}
-		if _, err := iwork.InsertOrUpdateWorkStep(step); err != nil{
+		if _, err := iwork.InsertOrUpdateWorkStep(step); err != nil {
 			return err
 		}
 		return nil
 	}
-	if err := insertDefaultWorkStepNodeFunc("start", 1); err != nil{
+	if err := insertDefaultWorkStepNodeFunc("start", 1); err != nil {
 		return err
 	}
-	if err := insertDefaultWorkStepNodeFunc("end", 2); err != nil{
+	if err := insertDefaultWorkStepNodeFunc("end", 2); err != nil {
 		return err
 	}
 	return nil
