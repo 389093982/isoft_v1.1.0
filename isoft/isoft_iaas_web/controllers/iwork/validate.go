@@ -2,31 +2,34 @@ package iwork
 
 import (
 	"fmt"
+	"github.com/astaxie/beego/orm"
 	"isoft/isoft/common/stringutil"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
 	"isoft/isoft_iaas_web/core/iworknode"
 	"isoft/isoft_iaas_web/core/iworkvalid"
 	"isoft/isoft_iaas_web/models/iwork"
+	"isoft/isoft_iaas_web/service"
+	"isoft/isoft_iaas_web/service/iworkservice"
 	"strings"
 	"time"
 )
 
 func (this *WorkController) LoadValidateResult() {
-	if details, err := iwork.QueryLastValidateLogDetail(); err == nil{
-		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "details":details}
-	}else{
-		this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
+	if result, err := service.ExecuteResultServiceWithTx(map[string]interface{}{}, iworkservice.LoadValidateResultService); err == nil {
+		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "details": result["details"]}
+	} else {
+		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": err.Error()}
 	}
 	this.ServeJSON()
 }
 
-func (this *WorkController) ValidateAllWork()  {
+func (this *WorkController) ValidateAllWork() {
 	validateAll()
 	this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
 	this.ServeJSON()
 }
 
-func validateAll()  {
+func validateAll() {
 	trackingId := stringutil.RandomUUID()
 	// 记录日志
 	iwork.InsertValidateLogRecord(&iwork.ValidateLogRecord{
@@ -41,23 +44,23 @@ func validateAll()  {
 	workChan := make(chan int)
 	works := iwork.QueryAllWorkInfo()
 
-	for _, work := range works{
+	for _, work := range works {
 		go func(work iwork.Work) {
 			validateWork(&work, logCh, workChan)
 		}(work)
 	}
 
 	go func() {
-		for i :=0 ;i<len(works); i++{
-			<- workChan
+		for i := 0; i < len(works); i++ {
+			<-workChan
 		}
 		// 所有 work 执行完成后关闭 logCh
 		close(logCh)
 	}()
 
 	// 从 logCh 中循环读取校验不通过的信息,并将其写入日志表中去
-	for log := range logCh{
-		work, _ := iwork.QueryWorkById(log.WorkId)
+	for log := range logCh {
+		work, _ := iwork.QueryWorkById(log.WorkId, orm.NewOrm())
 		step, _ := iwork.QueryOneWorkStep(work.Id, log.WorkStepId)
 		log.TrackingId = trackingId
 		log.WorkName = work.WorkName
@@ -69,17 +72,17 @@ func validateAll()  {
 		iwork.InsertValidateLogDetail(log)
 	}
 	iwork.InsertValidateLogDetail(&iwork.ValidateLogDetail{
-		TrackingId:trackingId,
-		Detail:"校验完成！",
-		CreatedBy:"SYSTEM",
-		LastUpdatedBy:"SYSTEM",
-		CreatedTime:time.Now(),
-		LastUpdatedTime:time.Now(),
+		TrackingId:      trackingId,
+		Detail:          "校验完成！",
+		CreatedBy:       "SYSTEM",
+		LastUpdatedBy:   "SYSTEM",
+		CreatedTime:     time.Now(),
+		LastUpdatedTime: time.Now(),
 	})
 }
 
 // 校验单个 work
-func validateWork(work *iwork.Work, logCh chan *iwork.ValidateLogDetail, workChan chan int)  {
+func validateWork(work *iwork.Work, logCh chan *iwork.ValidateLogDetail, workChan chan int) {
 	stepChan := make(chan int)
 	steps, _ := iwork.QueryAllWorkStepInfo(work.Id)
 	// 验证流程必须以 work_start 开始,以 work_end 结束
@@ -117,22 +120,22 @@ func validateWorkStartAndEnd(steps []iwork.WorkStep, logCh chan *iwork.ValidateL
 }
 
 // 校验单个 step,并将校验不通过的信息放入 logCh 中
-func validateStep(step *iwork.WorkStep, logCh chan *iwork.ValidateLogDetail, stepChan chan int)  {
+func validateStep(step *iwork.WorkStep, logCh chan *iwork.ValidateLogDetail, stepChan chan int) {
 	defer func() {
-		if err := recover(); err != nil{
-			if _err,ok := err.(error); ok {
+		if err := recover(); err != nil {
+			if _err, ok := err.(error); ok {
 				logCh <- &iwork.ValidateLogDetail{
-					WorkId:step.WorkId,
-					WorkStepId:step.WorkStepId,
-					Detail:_err.Error(),
+					WorkId:     step.WorkId,
+					WorkStepId: step.WorkStepId,
+					Detail:     _err.Error(),
 				}
-			} else if _err,ok := err.(string); ok {
+			} else if _err, ok := err.(string); ok {
 				logCh <- &iwork.ValidateLogDetail{
-					WorkId:step.WorkId,
-					WorkStepId:step.WorkStepId,
-					Detail:_err,
+					WorkId:     step.WorkId,
+					WorkStepId: step.WorkStepId,
+					Detail:     _err,
 				}
-			} else if _err,ok := err.(iwork.ValidateLogDetail); ok {
+			} else if _err, ok := err.(iwork.ValidateLogDetail); ok {
 				logCh <- &_err
 			}
 		}
@@ -142,11 +145,11 @@ func validateStep(step *iwork.WorkStep, logCh chan *iwork.ValidateLogDetail, ste
 
 	// 通用校验
 	checkResults := CheckGeneral(step)
-	for _, checkResult := range checkResults{
+	for _, checkResult := range checkResults {
 		logCh <- &iwork.ValidateLogDetail{
-			WorkId:step.WorkId,
-			WorkStepId:step.WorkStepId,
-			Detail:checkResult,
+			WorkId:     step.WorkId,
+			WorkStepId: step.WorkStepId,
+			Detail:     checkResult,
 		}
 	}
 	// 定制化校验
@@ -155,38 +158,38 @@ func validateStep(step *iwork.WorkStep, logCh chan *iwork.ValidateLogDetail, ste
 
 func CheckGeneral(step *iwork.WorkStep) (checkResult []string) {
 	// 校验 step 中的参数是否为空
-	checkResults1 := iworkvalid.CheckEmpty(step, &iworknode.WorkStepFactory{WorkStep:step})
+	checkResults1 := iworkvalid.CheckEmpty(step, &iworknode.WorkStepFactory{WorkStep: step})
 	checkResults2 := checkVariableRelationShip(step)
 	checkResult = append(checkResult, checkResults1...)
 	checkResult = append(checkResult, checkResults2...)
 	return
 }
 
-func CheckCustom(step *iwork.WorkStep)  {
-	factory := &iworknode.WorkStepFactory{WorkStep:step}
+func CheckCustom(step *iwork.WorkStep) {
+	factory := &iworknode.WorkStepFactory{WorkStep: step}
 	factory.ValidateCustom()
 }
 
 // 校验变量的引用关系
 func checkVariableRelationShip(step *iwork.WorkStep) (checkResult []string) {
-	inputSchema := schema.GetCacheParamInputSchema(step, &iworknode.WorkStepFactory{WorkStep:step})
-	for _, item := range inputSchema.ParamInputSchemaItems{
+	inputSchema := schema.GetCacheParamInputSchema(step, &iworknode.WorkStepFactory{WorkStep: step})
+	for _, item := range inputSchema.ParamInputSchemaItems {
 		result := checkVariableRelationShipDetail(item, step.WorkId, step.WorkStepId)
 		checkResult = append(checkResult, result...)
 	}
 	return
 }
 
-func checkVariableRelationShipDetail(item schema.ParamInputSchemaItem,work_id, work_step_id int64) (checkResult []string) {
+func checkVariableRelationShipDetail(item schema.ParamInputSchemaItem, work_id, work_step_id int64) (checkResult []string) {
 	// 根据正则找到关联的节点名称
 	referNodeNames := stringutil.GetNoRepeatSubStringWithRegexp(item.ParamValue, `\$[a-zA-Z0-9_]+`)
-	if len(referNodeNames) == 0{
+	if len(referNodeNames) == 0 {
 		return
 	}
 	preStepNodeNames := getAllPreStepNodeName(work_id, work_step_id)
 	preStepNodeNames = append(preStepNodeNames, []string{"RESOURCE"}...)
-	for _, referNodeName := range referNodeNames{
-		if !stringutil.CheckContains(strings.Replace(referNodeName, "$.", "", -1), preStepNodeNames){
+	for _, referNodeName := range referNodeNames {
+		if !stringutil.CheckContains(strings.Replace(referNodeName, "$.", "", -1), preStepNodeNames) {
 			checkResult = append(checkResult, fmt.Sprintf("Invalid variable relationship for %s was found!", referNodeName))
 		}
 	}
@@ -194,10 +197,10 @@ func checkVariableRelationShipDetail(item schema.ParamInputSchemaItem,work_id, w
 }
 
 func getAllPreStepNodeName(work_id, work_step_id int64) []string {
-	result := make([]string,0)
+	result := make([]string, 0)
 	steps, err := iwork.QueryAllPreStepInfo(work_id, work_step_id)
-	if err == nil{
-		for _,step := range steps{
+	if err == nil {
+		for _, step := range steps {
 			result = append(result, step.WorkStepName)
 		}
 	}

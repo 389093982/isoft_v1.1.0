@@ -16,15 +16,13 @@ type Work struct {
 	LastUpdatedTime time.Time `json:"last_updated_time"`
 }
 
-
 func QueryAllWorkInfo() (works []Work) {
 	o := orm.NewOrm()
 	o.QueryTable("work").OrderBy("id").All(&works)
 	return
 }
 
-func QueryWorkById(work_id int64) (work Work, err error) {
-	o := orm.NewOrm()
+func QueryWorkById(work_id int64, o orm.Ormer) (work Work, err error) {
 	err = o.QueryTable("work").Filter("id", work_id).One(&work)
 	return
 }
@@ -45,15 +43,14 @@ func InsertOrUpdateWork(work *Work) (id int64, err error) {
 	return
 }
 
-func QueryParentWorks(work_id int64) (works []Work, counts int64, err error) {
+func QueryParentWorks(work_id int64, o orm.Ormer) (works []Work, counts int64, err error) {
 	works = make([]Work, 0)
-	o := orm.NewOrm()
 	params := make([]orm.Params, 0)
 	_, err = o.QueryTable("work_step").Filter("work_sub_id", work_id).Distinct().Values(&params, "work_id")
-	if err == nil{
-		for _, param := range params{
+	if err == nil {
+		for _, param := range params {
 			parent_work_id := param["WorkId"].(int64)
-			pWork, _ := QueryWorkById(parent_work_id)
+			pWork, _ := QueryWorkById(parent_work_id, o)
 			works = append(works, pWork)
 		}
 	}
@@ -77,12 +74,10 @@ func QueryWork(condArr map[string]string, page int, offset int) (works []Work, c
 }
 
 func DeleteWorkById(id int64) error {
-	if err := DeleteAllWorkStep(id); err != nil{
+	if err := DeleteAllWorkStep(id); err != nil {
 		return err
 	}
 	o := orm.NewOrm()
 	_, err := o.QueryTable("work").Filter("id", id).Delete()
 	return err
 }
-
-

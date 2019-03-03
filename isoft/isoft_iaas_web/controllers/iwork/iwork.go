@@ -32,16 +32,16 @@ func (this *WorkController) BuildIWorkDL() {
 
 func (this *WorkController) GetRelativeWork() {
 	work_id, _ := this.GetInt64("work_id")
-	subWorks := make([]iwork.Work, 0)
-	parentWorks, _, _ := iwork.QueryParentWorks(work_id)
-	steps, _ := iwork.QueryAllWorkStepInfo(work_id)
-	for _, step := range steps {
-		if step.WorkSubId > 0 {
-			subwork, _ := iwork.QueryWorkById(step.WorkSubId)
-			subWorks = append(subWorks, subwork)
+	serviceArgs := map[string]interface{}{"work_id": work_id}
+	if result, err := service.ExecuteResultServiceWithTx(serviceArgs, iworkservice.GetRelativeWorkService); err == nil {
+		this.Data["json"] = &map[string]interface{}{
+			"status":      "SUCCESS",
+			"parentWorks": result["parentWorks"],
+			"subworks":    result["subworks"],
 		}
+	} else {
+		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": err.Error()}
 	}
-	this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "parentWorks": parentWorks, "subwork": subWorks}
 	this.ServeJSON()
 }
 

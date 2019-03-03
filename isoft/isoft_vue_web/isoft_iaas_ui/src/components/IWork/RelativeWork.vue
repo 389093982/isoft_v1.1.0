@@ -23,7 +23,7 @@
         const result = await GetRelativeWork(work_id);
         if(result.status == "SUCCESS"){
           this.$refs.parentRelativeWork.refreshWorkList(result.parentWorks);
-          this.$refs.subRelativeWork.refreshWorkList(result.subwork);
+          this.$refs.subRelativeWork.refreshWorkList(result.subworks);
         }
       }
     }

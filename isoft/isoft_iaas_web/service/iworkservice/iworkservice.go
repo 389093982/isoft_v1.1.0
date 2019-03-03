@@ -3,6 +3,7 @@ package iworkservice
 import (
 	"fmt"
 	"github.com/astaxie/beego/context"
+	"github.com/astaxie/beego/orm"
 	"github.com/astaxie/beego/utils/pagination"
 	"isoft/isoft/common/pageutil"
 	"isoft/isoft_iaas_web/core/iworkconst"
@@ -14,9 +15,28 @@ import (
 	"time"
 )
 
+func GetRelativeWorkService(serviceArgs map[string]interface{}) (result map[string]interface{}, err error) {
+	result = make(map[string]interface{}, 0)
+	work_id := serviceArgs["work_id"].(int64)
+	o := serviceArgs["o"].(orm.Ormer)
+	subWorks := make([]iwork.Work, 0)
+	parentWorks, _, _ := iwork.QueryParentWorks(work_id, o)
+	steps, _ := iwork.QueryAllWorkStepInfo(work_id)
+	for _, step := range steps {
+		if step.WorkSubId > 0 {
+			subwork, _ := iwork.QueryWorkById(step.WorkSubId, o)
+			subWorks = append(subWorks, subwork)
+		}
+	}
+	result["parentWorks"] = parentWorks
+	result["subworks"] = subWorks
+	return
+}
+
 func RunWorkService(serviceArgs map[string]interface{}) error {
 	work_id := serviceArgs["work_id"].(int64)
-	work, err := iwork.QueryWorkById(work_id)
+	o := serviceArgs["o"].(orm.Ormer)
+	work, err := iwork.QueryWorkById(work_id, o)
 	if err != nil {
 		return err
 	}
@@ -67,11 +87,11 @@ func FilterPageWorkService(serviceArgs map[string]interface{}) (result map[strin
 }
 
 // 根据 id 信息查找旧的 work 信息
-func getOldWorkInfoById(id int64) (oldWorkName string, oldWorkId int64) {
+func getOldWorkInfoById(id int64, o orm.Ormer) (oldWorkName string, oldWorkId int64) {
 	if id <= 0 {
 		return
 	}
-	if work1, err := iwork.QueryWorkById(id); err == nil {
+	if work1, err := iwork.QueryWorkById(id, o); err == nil {
 		oldWorkName = work1.WorkName
 		oldWorkId = work1.Id
 	}
@@ -80,7 +100,8 @@ func getOldWorkInfoById(id int64) (oldWorkName string, oldWorkId int64) {
 
 func EditWorkService(serviceArgs map[string]interface{}) error {
 	work := serviceArgs["work"].(iwork.Work)
-	oldWorkName, oldWorkId := getOldWorkInfoById(work.Id)
+	o := serviceArgs["o"].(orm.Ormer)
+	oldWorkName, oldWorkId := getOldWorkInfoById(work.Id, o)
 	// 插入或者更新 work 信息
 	if _, err := iwork.InsertOrUpdateWork(&work); err != nil {
 		return err
@@ -95,7 +116,7 @@ func EditWorkService(serviceArgs map[string]interface{}) error {
 		}
 	} else {
 		// 修改 work 场景
-		if err := ChangeReferencesWorkName(oldWorkId, oldWorkName, work.WorkName); err != nil {
+		if err := ChangeReferencesWorkName(oldWorkId, oldWorkName, work.WorkName, o); err != nil {
 			return err
 		}
 		var oldMetaId int64
@@ -133,11 +154,11 @@ func DeleteWorkByIdService(serviceArgs map[string]interface{}) error {
 	return iwork.DeleteWorkById(id)
 }
 
-func ChangeReferencesWorkName(work_id int64, oldWorkName, workName string) error {
+func ChangeReferencesWorkName(work_id int64, oldWorkName, workName string, o orm.Ormer) error {
 	if oldWorkName == workName {
 		return nil
 	}
-	parentWorks, _, err := iwork.QueryParentWorks(work_id)
+	parentWorks, _, err := iwork.QueryParentWorks(work_id, o)
 	if err != nil {
 		return nil
 	}
