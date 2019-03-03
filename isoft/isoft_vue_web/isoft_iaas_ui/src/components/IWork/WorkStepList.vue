@@ -6,7 +6,6 @@
       <!-- left 插槽部分 -->
       <div slot="left">
         <Row type="flex" justify="start" class="code-row-bg">
-          <Col span="6"><Button type="success" @click="addWorkStep('')" style="margin-right: 5px;">新建普通节点</Button></Col>
           <Col span="6"><Button type="error" @click="addWorkStep('empty')" style="margin-right: 5px;">新建空节点</Button></Col>
           <Col span="6"><Button type="warning" @click="showRefactorModal">Refactor</Button></Col>
           <Col span="6"><Button type="info">View as Tree</Button></Col>
@@ -161,7 +160,7 @@
                   },
                   style: {
                     marginRight: '5px',
-                    display: !oneOf(this.worksteps[params.index]['work_step_type'], ["work_start","work_end","empty"])  ? undefined : 'none'
+                    display: !oneOf(this.worksteps[params.index]['work_step_type'], ["work_start","work_end"])  ? undefined : 'none'
                   },
                   on: {
                     click: () => {
@@ -176,7 +175,6 @@
                   },
                   style: {
                     marginRight: '5px',
-                    display: !oneOf(this.worksteps[params.index]['work_step_type'], ["empty"])  ? undefined : 'none'
                   },
                   on: {
                     click: () => {
@@ -233,13 +231,13 @@
       renderSourceXml:function () {
         alert(11111);
       },
-      addWorkStep:async function (default_work_step_type) {
+      addWorkStep:async function () {
         let selections = this.$refs.selection.getSelection();
         if(selections.length != 1){
           this.$Message.warning('选中行数不符合要求,请选择一行并在其之后进行添加!');
           return
         }
-        const result = await AddWorkStep(this.$route.query.work_id, selections[0].work_step_id, default_work_step_type);
+        const result = await AddWorkStep(this.$route.query.work_id, selections[0].work_step_id);
         if(result.status == "SUCCESS"){
           this.refreshWorkStepList();
         }else{
