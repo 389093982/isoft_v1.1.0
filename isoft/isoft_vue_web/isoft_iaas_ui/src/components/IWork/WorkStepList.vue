@@ -8,10 +8,10 @@
         <Row type="flex" justify="start" class="code-row-bg">
           <Col span="6"><Button type="success" @click="addWorkStep('')" style="margin-right: 5px;">新建普通节点</Button></Col>
           <Col span="6"><Button type="error" @click="addWorkStep('empty')" style="margin-right: 5px;">新建空节点</Button></Col>
-          <Col span="6"><Button type="warning" @click="refactor">Refactor</Button></Col>
+          <Col span="6"><Button type="warning" @click="showRefactorModal">Refactor</Button></Col>
           <Col span="6"><Button type="info">View as Tree</Button></Col>
 
-          <ISimpleConfirmModal ref="refactor_modal" modal-title="重构为子流程" modal-width="500">
+          <ISimpleConfirmModal ref="refactor_modal" modal-title="重构为子流程" :modal-width="500" @handleSubmit="refactor">
             <Input v-model.trim="refactor_worksub_name" placeholder="请输入重构的子流程名称"></Input>
           </ISimpleConfirmModal>
         </Row>
@@ -250,14 +250,21 @@
           }
         }
       },
+      showRefactorModal:function (){
+        this.$refs.refactor_modal.showModal();
+      },
       refactor: async function () {
         let refactor_work_step_ids = [];
         let selections = this.$refs.selection.getSelection();
         for(var i=0; i<selections.length; i++){
           refactor_work_step_ids.push(selections[i].work_step_id);
         }
-        this.$refs.refactor_modal.showModal();
-        const result = await RefactorWorkStepInfo(this.refactor_worksub_name, JSON.stringify(refactor_work_step_ids));
+        const result = await RefactorWorkStepInfo(this.$route.query.work_id, this.refactor_worksub_name, JSON.stringify(refactor_work_step_ids));
+        if(result.status == "SUCCESS"){
+          this.refreshWorkStepList();
+        }else{
+          this.$Message.error(result.errorMsg);
+        }
       }
     },
     mounted: function () {

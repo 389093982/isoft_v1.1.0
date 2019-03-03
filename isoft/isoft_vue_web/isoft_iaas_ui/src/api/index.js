@@ -191,7 +191,7 @@ export const ValidateAllWork = () => ajax(BASE_URL+"/iwork/validateAllWork", {},
 // 显示校验结果
 export const LoadValidateResult = () => ajax(BASE_URL+"/iwork/loadValidateResult", {},'POST');
 
-export const RefactorWorkStepInfo = (refactor_worksub_name,refactor_work_step_ids) => ajax(BASE_URL+"/iwork/refactorWorkStepInfo", {refactor_worksub_name,refactor_work_step_ids},'POST');
+export const RefactorWorkStepInfo = (work_id, refactor_worksub_name,refactor_work_step_ids) => ajax(BASE_URL+"/iwork/refactorWorkStepInfo", {work_id, refactor_worksub_name,refactor_work_step_ids},'POST');
 
 // 跨模块使用,模块化部署时需要使用 nginx 代理
 export const LoginAddr = "/sso/login/";
