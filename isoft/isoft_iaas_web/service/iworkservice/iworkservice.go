@@ -8,10 +8,25 @@ import (
 	"isoft/isoft_iaas_web/core/iworkconst"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
 	"isoft/isoft_iaas_web/core/iworknode"
+	"isoft/isoft_iaas_web/core/iworkrun"
 	"isoft/isoft_iaas_web/models/iwork"
 	"strings"
 	"time"
 )
+
+func RunWorkService(serviceArgs map[string]interface{}) error {
+	work_id := serviceArgs["work_id"].(int64)
+	work, err := iwork.QueryWorkById(work_id)
+	if err != nil {
+		return err
+	}
+	steps, err := iwork.QueryAllWorkStepInfo(work_id)
+	if err != nil {
+		return err
+	}
+	go iworkrun.Run(work, steps, nil)
+	return nil
+}
 
 func FilterPageLogRecord(serviceArgs map[string]interface{}) (result map[string]interface{}, err error) {
 	work_id := serviceArgs["work_id"].(int64)

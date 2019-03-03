@@ -2,7 +2,6 @@ package iwork
 
 import (
 	"github.com/astaxie/beego"
-	"isoft/isoft_iaas_web/core/iworkrun"
 	"isoft/isoft_iaas_web/models/iwork"
 	"isoft/isoft_iaas_web/service"
 	"isoft/isoft_iaas_web/service/iworkservice"
@@ -76,10 +75,12 @@ func (this *WorkController) FilterPageLogRecord() {
 
 func (this *WorkController) RunWork() {
 	work_id, _ := this.GetInt64("work_id")
-	work, _ := iwork.QueryWorkById(work_id)
-	steps, _ := iwork.QueryAllWorkStepInfo(work_id)
-	go iworkrun.Run(work, steps, nil)
-	this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
+	serviceArgs := map[string]interface{}{"work_id": work_id}
+	if err := service.ExecuteServiceWithTx(serviceArgs, iworkservice.RunWorkService); err == nil {
+		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
+	} else {
+		this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
+	}
 	this.ServeJSON()
 }
 
