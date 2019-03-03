@@ -220,6 +220,12 @@ func EditWorkStepBaseInfoService(serviceArgs map[string]interface{}) error {
 	if err != nil {
 		return err
 	}
+	// 沿用旧值
+	step.Id = oldStep.Id
+	step.CreatedBy = oldStep.CreatedBy
+	step.CreatedTime = oldStep.CreatedTime
+	step.LastUpdatedBy = oldStep.LastUpdatedBy
+	step.LastUpdatedTime = oldStep.LastUpdatedTime
 	// 变更类型需要置空 input 和 output 参数
 	if step.WorkStepType != oldStep.WorkStepType {
 		step.WorkStepInput = ""

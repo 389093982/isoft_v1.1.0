@@ -4,7 +4,6 @@ import (
 	"isoft/isoft_iaas_web/models/iwork"
 	"isoft/isoft_iaas_web/service"
 	"isoft/isoft_iaas_web/service/iworkservice"
-	"time"
 )
 
 func (this *WorkController) AddWorkStep() {
@@ -29,10 +28,6 @@ func (this *WorkController) EditWorkStepBaseInfo() {
 	step.WorkStepName = this.GetString("work_step_name")
 	step.WorkStepType = this.GetString("work_step_type")
 	step.WorkStepDesc = this.GetString("work_step_desc")
-	step.CreatedBy = "SYSTEM"
-	step.CreatedTime = time.Now()
-	step.LastUpdatedBy = "SYSTEM"
-	step.LastUpdatedTime = time.Now()
 	serviceArgs := map[string]interface{}{"step": step}
 	if err := service.ExecuteServiceWithTx(serviceArgs, iworkservice.EditWorkStepBaseInfoService); err == nil {
 		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
