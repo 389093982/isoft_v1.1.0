@@ -17,6 +17,11 @@ type CronMeta struct {
 	LastUpdatedTime time.Time `json:"last_updated_time"`
 }
 
+func DeleteCronMetaByTaskName(taskName string, o orm.Ormer) error {
+	_, err := o.QueryTable("cron_meta").Filter("task_name", taskName).Delete()
+	return err
+}
+
 func InsertOrUpdateCronMeta(meta *CronMeta, o orm.Ormer) (id int64, err error) {
 	if meta.Id > 0 {
 		id, err = o.Update(meta)

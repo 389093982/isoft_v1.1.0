@@ -163,6 +163,10 @@ func InsertOrUpdateAutoCronMeta(task_name string, meta_id int64, o orm.Ormer) (i
 func DeleteWorkByIdService(serviceArgs map[string]interface{}) error {
 	id := serviceArgs["id"].(int64)
 	o := serviceArgs["o"].(orm.Ormer)
+	if work, err := iwork.QueryWorkById(id, o); err == nil {
+		// cronMeta 可以提前删除,删除失败不影响功能
+		iwork.DeleteCronMetaByTaskName(work.WorkName, o)
+	}
 	return iwork.DeleteWorkById(id, o)
 }
 
