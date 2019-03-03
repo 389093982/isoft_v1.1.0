@@ -66,7 +66,9 @@ func (this *WorkController) LoadWorkStepInfo() {
 	work_step_id, _ := this.GetInt64("work_step_id")
 	serviceArgs := map[string]interface{}{"work_id": work_id, "work_step_id": work_step_id}
 	if result, err := service.ExecuteResultServiceWithTx(serviceArgs, iworkservice.LoadWorkStepInfoService); err == nil {
-		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "step": result["step"],
+		this.Data["json"] = &map[string]interface{}{
+			"status":                    "SUCCESS",
+			"step":                      result["step"],
 			"paramInputSchema":          result["paramInputSchema"],
 			"paramOutputSchema":         result["paramOutputSchema"],
 			"paramOutputSchemaTreeNode": result["paramOutputSchemaTreeNode"],
