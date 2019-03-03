@@ -2,8 +2,6 @@ package iwork
 
 import (
 	"github.com/astaxie/beego"
-	"github.com/astaxie/beego/utils/pagination"
-	"isoft/isoft/common/pageutil"
 	"isoft/isoft_iaas_web/core/iworkrun"
 	"isoft/isoft_iaas_web/models/iwork"
 	"isoft/isoft_iaas_web/service"
@@ -63,18 +61,13 @@ func (this *WorkController) FilterPageLogRecord() {
 	work_id, _ := this.GetInt64("work_id")
 	offset, _ := this.GetInt("offset", 10)            // 每页记录数
 	current_page, _ := this.GetInt("current_page", 1) // 当前页
-	runLogRecords, count, err := iwork.QueryRunLogRecord(work_id, current_page, offset)
-	paginator := pagination.SetPaginator(this.Ctx, offset, count)
-	if err == nil {
-		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "runLogRecords": runLogRecords,
-			"paginator": pageutil.Paginator(paginator.Page(), paginator.PerPageNums, paginator.Nums())}
-	} else {
-		this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
-	}
-
-	serviceArgs := map[string]interface{}{"work_id": work_id, "offset": offset, "current_page": current_page}
+	serviceArgs := map[string]interface{}{"work_id": work_id, "offset": offset, "current_page": current_page, "ctx": this.Ctx}
 	if result, err := service.ExecuteResultServiceWithTx(serviceArgs, iworkservice.FilterPageLogRecord); err == nil {
-		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "runLogRecords": result["runLogRecords"], "paginator": result["paginator"]}
+		this.Data["json"] = &map[string]interface{}{
+			"status":        "SUCCESS",
+			"runLogRecords": result["runLogRecords"],
+			"paginator":     result["paginator"],
+		}
 	} else {
 		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": err.Error()}
 	}
@@ -122,7 +115,11 @@ func (this *WorkController) FilterPageWork() {
 	}
 	serviceArgs := map[string]interface{}{"condArr": condArr, "offset": offset, "current_page": current_page, "ctx": this.Ctx}
 	if result, err := service.ExecuteResultServiceWithTx(serviceArgs, iworkservice.FilterPageWorkService); err == nil {
-		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "works": result["works"], "paginator": result["paginator"]}
+		this.Data["json"] = &map[string]interface{}{
+			"status":    "SUCCESS",
+			"works":     result["works"],
+			"paginator": result["paginator"],
+		}
 	} else {
 		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": err.Error()}
 	}
@@ -131,8 +128,7 @@ func (this *WorkController) FilterPageWork() {
 
 func (this *WorkController) DeleteWorkById() {
 	id, _ := this.GetInt64("id")
-	serviceArgs := make(map[string]interface{}, 0)
-	serviceArgs["id"] = id
+	serviceArgs := map[string]interface{}{"id": id}
 	if err := service.ExecuteServiceWithTx(serviceArgs, iworkservice.DeleteWorkByIdService); err == nil {
 		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
 	} else {
