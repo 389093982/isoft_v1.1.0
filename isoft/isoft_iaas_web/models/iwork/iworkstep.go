@@ -106,3 +106,19 @@ func QueryAllWorkStepByWorkName(work_name string) (steps []WorkStep, err error) 
 	}
 	return
 }
+
+func CopyWorkStepInfo(step WorkStep) *WorkStep {
+	newStep := &WorkStep{
+		WorkStepName:         step.WorkStepName,
+		WorkStepType:         step.WorkStepType,
+		WorkStepDesc:         step.WorkStepDesc,
+		WorkStepInput:        step.WorkStepInput,
+		WorkStepOutput:       step.WorkStepOutput,
+		WorkStepParamMapping: step.WorkStepParamMapping,
+		CreatedBy:            step.CreatedBy,
+		CreatedTime:          step.CreatedTime,
+		LastUpdatedBy:        step.LastUpdatedBy,
+		LastUpdatedTime:      step.LastUpdatedTime,
+	}
+	return newStep
+}

@@ -198,3 +198,45 @@ func LoadEntityInfo() *schema.ParamOutputSchema {
 	}
 	return pos
 }
+
+func (this *WorkController) RefactorWorkStepInfo() {
+	this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
+	work_id, _ := this.GetInt64("work_id")
+	refactor_worksub_name := this.GetString("refactor_worksub_name")
+	refactor_work_step_ids := this.GetString("refactor_work_step_ids")
+	var refactor_work_step_id_arr []int
+	json.Unmarshal([]byte(refactor_work_step_ids), &refactor_work_step_id_arr)
+	// 校验 refactor_work_step_id_arr 是否连续
+	if refactor_work_step_id_arr[len(refactor_work_step_id_arr)-1]-refactor_work_step_id_arr[0] != len(refactor_work_step_id_arr)-1 {
+		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": "refactor workStepId 必须是连续的!"}
+	} else {
+		// 创建子流程
+		subWork := &iwork.Work{
+			WorkName:        refactor_worksub_name,
+			WorkDesc:        "refactor worksub",
+			CreatedBy:       "SYSTEM",
+			CreatedTime:     time.Now(),
+			LastUpdatedBy:   "SYSTEM",
+			LastUpdatedTime: time.Now(),
+		}
+		iwork.InsertOrUpdateWork(subWork)
+		// 循环移动子步骤
+		for index, work_step_id := range refactor_work_step_id_arr {
+			step, err := iwork.QueryWorkStepInfo(work_id, int64(work_step_id))
+			if err == nil {
+				if step.WorkStepType == "work_start" || step.WorkStepType == "work_end" {
+					this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": "start 和 end 节点不能重构"}
+					break
+				}
+				iworkservice.InsertStartEndWorkStepNode(subWork.Id)
+				newStep := iwork.CopyWorkStepInfo(step)
+				newStep.WorkId = subWork.Id
+				newStep.WorkStepId = int64(index + 2)
+				iwork.InsertOrUpdateWorkStep(newStep)
+				// 当前流程循环删除该节点
+				iworkservice.DeleteWorkStepByWorkStepIdService(work_id, int64(work_step_id))
+			}
+		}
+	}
+	this.ServeJSON()
+}
