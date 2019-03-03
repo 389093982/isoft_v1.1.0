@@ -239,7 +239,7 @@
         if(result.status == "SUCCESS"){
           this.refreshWorkStepList();
         }else{
-          this.$Message.error('新增失败!');
+          this.$Message.error(result.errorMsg);
         }
       },
       renderWorkStepTypeIcon:function (workStepType) {

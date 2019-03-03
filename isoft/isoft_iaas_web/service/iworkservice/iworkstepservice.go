@@ -140,6 +140,12 @@ func AddWorkStepService(serviceArgs map[string]interface{}) error {
 	work_step_id := serviceArgs["work_step_id"].(int64)
 	work_step_type := serviceArgs["default_work_step_type"].(string)
 	o := serviceArgs["o"].(orm.Ormer)
+	// end 节点之后不能添加节点
+	if step, err := iwork.QueryWorkStepInfo(work_id, work_step_id, o); err == nil {
+		if step.WorkStepType == "work_end" {
+			return errors.New("不能再 end 节点后面添加节点!")
+		}
+	}
 	// 将 work_step_id 之后的所有节点后移一位
 	err := iwork.BatchChangeWorkStepIdOrder(work_id, work_step_id, "+", o)
 	if err != nil {
