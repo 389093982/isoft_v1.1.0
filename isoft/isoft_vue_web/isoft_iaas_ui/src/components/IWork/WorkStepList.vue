@@ -82,7 +82,7 @@
                     },
                     style: {
                       marginLeft: '5px',
-                      display: !oneOf(this.worksteps[params.index]['work_step_type'], ["work_start","work_end"])  ? undefined : 'none',
+                      display: !oneOf(this.worksteps[params.index]['work_step_type'], ["work_start","work_end"]) ? undefined : 'none',
                     },
                     on: {
                       click: () => {
@@ -97,7 +97,7 @@
                     },
                     style: {
                       marginLeft: '5px',
-                      display: !oneOf(this.worksteps[params.index]['work_step_type'], ["work_start","work_end"])  ? undefined : 'none',
+                      display: !oneOf(this.worksteps[params.index]['work_step_type'], ["work_start","work_end"]) ? undefined : 'none',
                     },
                     on: {
                       click: () => {
