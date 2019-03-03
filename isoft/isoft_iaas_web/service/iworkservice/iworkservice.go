@@ -19,11 +19,12 @@ func GetRelativeWorkService(serviceArgs map[string]interface{}) (result map[stri
 	result = make(map[string]interface{}, 0)
 	work_id := serviceArgs["work_id"].(int64)
 	o := serviceArgs["o"].(orm.Ormer)
-	subWorks := make([]iwork.Work, 0)
+
 	parentWorks, _, err := iwork.QueryParentWorks(work_id, o)
 	if err != nil {
 		return nil, err
 	}
+	subWorks := make([]iwork.Work, 0)
 	steps, err := iwork.QueryAllWorkStepInfo(work_id, o)
 	if err != nil {
 		return nil, err
@@ -101,9 +102,9 @@ func getOldWorkInfoById(id int64, o orm.Ormer) (oldWorkName string, oldWorkId in
 	if id <= 0 {
 		return
 	}
-	if work1, err := iwork.QueryWorkById(id, o); err == nil {
-		oldWorkName = work1.WorkName
-		oldWorkId = work1.Id
+	if work, err := iwork.QueryWorkById(id, o); err == nil {
+		oldWorkName = work.WorkName
+		oldWorkId = work.Id
 	}
 	return
 }
