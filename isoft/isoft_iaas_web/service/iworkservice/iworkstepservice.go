@@ -11,6 +11,16 @@ import (
 	"time"
 )
 
+func GetAllWorkStepInfoService(serviceArgs map[string]interface{}) (result map[string]interface{}, err error) {
+	work_id := serviceArgs["work_id"].(int64)
+	steps, err := iwork.QueryAllWorkStepInfo(work_id)
+	if err != nil {
+		return nil, err
+	}
+	result["steps"] = steps
+	return
+}
+
 func LoadWorkStepInfoService(serviceArgs map[string]interface{}) (result map[string]interface{}, err error) {
 	work_id := serviceArgs["work_id"].(int64)
 	work_step_id := serviceArgs["work_step_id"].(int64)

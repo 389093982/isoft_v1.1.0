@@ -82,10 +82,11 @@ func (this *WorkController) LoadWorkStepInfo() {
 
 func (this *WorkController) GetAllWorkStepInfo() {
 	work_id, _ := this.GetInt64("work_id")
-	if steps, err := iwork.QueryAllWorkStepInfo(work_id); err == nil {
-		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "steps": steps}
+	serviceArgs := map[string]interface{}{"work_id": work_id}
+	if result, err := service.ExecuteResultServiceWithTx(serviceArgs, iworkservice.GetAllWorkStepInfoService); err == nil {
+		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "steps": result["steps"]}
 	} else {
-		this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
+		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": err.Error()}
 	}
 	this.ServeJSON()
 }
