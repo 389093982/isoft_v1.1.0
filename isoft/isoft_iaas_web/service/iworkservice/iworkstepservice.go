@@ -3,10 +3,36 @@ package iworkservice
 import (
 	"encoding/json"
 	"errors"
+	"isoft/isoft/common/stringutil"
 	"isoft/isoft_iaas_web/models/iwork"
 	"strings"
 	"time"
 )
+
+func AddWorkStepService(serviceArgs map[string]interface{}) error {
+	work_id := serviceArgs["work_id"].(int64)
+	work_step_id := serviceArgs["work_step_id"].(int64)
+	work_step_type := serviceArgs["default_work_step_type"].(string)
+	// 将 work_step_id 之后的所有节点后移一位
+	err := iwork.BatchChangeWorkStepIdOrder(work_id, work_step_id, "+")
+	if err != nil {
+		return err
+	}
+	step := &iwork.WorkStep{
+		WorkId:          work_id,
+		WorkStepName:    "random_" + stringutil.RandomUUID(),
+		WorkStepType:    work_step_type,
+		WorkStepId:      work_step_id + 1,
+		CreatedBy:       "SYSTEM",
+		CreatedTime:     time.Now(),
+		LastUpdatedBy:   "SYSTEM",
+		LastUpdatedTime: time.Now(),
+	}
+	if _, err := iwork.InsertOrUpdateWorkStep(step); err != nil {
+		return err
+	}
+	return nil
+}
 
 func ChangeWorkStepOrderService(serviceArgs map[string]interface{}) error {
 	work_id := serviceArgs["work_id"].(int64)

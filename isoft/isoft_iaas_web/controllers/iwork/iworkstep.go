@@ -2,36 +2,22 @@ package iwork
 
 import (
 	"encoding/json"
-	"isoft/isoft/common/stringutil"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
 	"isoft/isoft_iaas_web/core/iworknode"
 	"isoft/isoft_iaas_web/models/iwork"
 	"isoft/isoft_iaas_web/service"
 	"isoft/isoft_iaas_web/service/iworkservice"
-	"time"
 )
 
 func (this *WorkController) AddWorkStep() {
-	work_id, _ := this.GetInt64("work_id")
-	work_step_id, _ := this.GetInt64("work_step_id")
-	this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
-	// 将 work_step_id 之后的所有节点后移一位
-	err := iwork.BatchChangeWorkStepIdOrder(work_id, work_step_id, "+")
-	if err == nil {
-		work_step_type := this.GetString("default_work_step_type")
-		step := &iwork.WorkStep{
-			WorkId:          work_id,
-			WorkStepName:    "random_" + stringutil.RandomUUID(),
-			WorkStepType:    work_step_type,
-			WorkStepId:      work_step_id + 1,
-			CreatedBy:       "SYSTEM",
-			CreatedTime:     time.Now(),
-			LastUpdatedBy:   "SYSTEM",
-			LastUpdatedTime: time.Now(),
-		}
-		if _, err := iwork.InsertOrUpdateWorkStep(step); err == nil {
-			this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
-		}
+	serviceArgs := make(map[string]interface{}, 0)
+	serviceArgs["work_id"], _ = this.GetInt64("work_id")
+	serviceArgs["work_step_id"], _ = this.GetInt64("work_step_id")
+	serviceArgs["default_work_step_type"] = this.GetString("default_work_step_type")
+	if err := service.ExecuteServiceWithTx(serviceArgs, iworkservice.AddWorkStepService); err == nil {
+		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
+	} else {
+		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": err.Error()}
 	}
 	this.ServeJSON()
 }
