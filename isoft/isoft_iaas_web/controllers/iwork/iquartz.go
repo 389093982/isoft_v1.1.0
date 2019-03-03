@@ -1,6 +1,7 @@
 package iwork
 
 import (
+	"github.com/astaxie/beego/orm"
 	"github.com/astaxie/beego/utils/pagination"
 	"isoft/isoft/common/pageutil"
 	"isoft/isoft_iaas_web/models/iwork"
@@ -16,7 +17,7 @@ func (this *WorkController) AddQuartz() {
 	meta.CreatedTime = time.Now()
 	meta.LastUpdatedBy = "SYSTEM"
 	meta.LastUpdatedTime = time.Now()
-	if _, err := iwork.InsertOrUpdateCronMeta(&meta); err == nil {
+	if _, err := iwork.InsertOrUpdateCronMeta(&meta, orm.NewOrm()); err == nil {
 		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
 	} else {
 		this.Data["json"] = &map[string]interface{}{"status": "ERROR"}

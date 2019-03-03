@@ -122,7 +122,7 @@ func EditWorkService(serviceArgs map[string]interface{}) error {
 		if err := InsertStartEndWorkStepNode(work.Id, o); err != nil {
 			return err
 		}
-		if _, err := InsertOrUpdateAutoCronMeta(work.WorkName, -1); err != nil {
+		if _, err := InsertOrUpdateAutoCronMeta(work.WorkName, -1, o); err != nil {
 			return err
 		}
 	} else {
@@ -136,14 +136,14 @@ func EditWorkService(serviceArgs map[string]interface{}) error {
 		} else {
 			oldMetaId = meta.Id
 		}
-		if _, err := InsertOrUpdateAutoCronMeta(work.WorkName, oldMetaId); err != nil {
+		if _, err := InsertOrUpdateAutoCronMeta(work.WorkName, oldMetaId, o); err != nil {
 			return err
 		}
 	}
 	return nil
 }
 
-func InsertOrUpdateAutoCronMeta(task_name string, meta_id int64) (id int64, err error) {
+func InsertOrUpdateAutoCronMeta(task_name string, meta_id int64, o orm.Ormer) (id int64, err error) {
 	meta := &iwork.CronMeta{
 		TaskName:        task_name,
 		TaskType:        "iwork_quartz",
@@ -156,7 +156,7 @@ func InsertOrUpdateAutoCronMeta(task_name string, meta_id int64) (id int64, err 
 	if meta_id > 0 {
 		meta.Id = meta_id
 	}
-	id, err = iwork.InsertOrUpdateCronMeta(meta)
+	id, err = iwork.InsertOrUpdateCronMeta(meta, o)
 	return
 }
 

@@ -17,8 +17,7 @@ type CronMeta struct {
 	LastUpdatedTime time.Time `json:"last_updated_time"`
 }
 
-func InsertOrUpdateCronMeta(meta *CronMeta) (id int64, err error) {
-	o := orm.NewOrm()
+func InsertOrUpdateCronMeta(meta *CronMeta, o orm.Ormer) (id int64, err error) {
 	if meta.Id > 0 {
 		id, err = o.Update(meta)
 	} else {
@@ -30,7 +29,7 @@ func InsertOrUpdateCronMeta(meta *CronMeta) (id int64, err error) {
 func QueryCronMetaByName(taskName string) (meta CronMeta, err error) {
 	o := orm.NewOrm()
 	qs := o.QueryTable("cron_meta")
-	err = qs.Filter("task_name",taskName).One(&meta)
+	err = qs.Filter("task_name", taskName).One(&meta)
 	return
 }
 
