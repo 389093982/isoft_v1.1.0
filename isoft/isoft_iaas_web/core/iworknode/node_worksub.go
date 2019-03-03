@@ -2,6 +2,7 @@ package iworknode
 
 import (
 	"fmt"
+	"github.com/astaxie/beego/orm"
 	"github.com/pkg/errors"
 	"isoft/isoft_iaas_web/core/iworkconst"
 	"isoft/isoft_iaas_web/core/iworkdata/datastore"
@@ -25,10 +26,12 @@ func (this *WorkSub) Execute(trackingId string, skipFunc func(tmpDataMap map[str
 	dataStore := datastore.GetDataStore(trackingId)
 	// 节点中间数据
 	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, dataStore)
-	if skipFunc(tmpDataMap) {return} // 跳过当前节点执行
+	if skipFunc(tmpDataMap) {
+		return
+	} // 跳过当前节点执行
 	// 运行子流程
 	work, _ := iwork.QueryWorkByName(workSubName)
-	steps, _ := iwork.QueryAllWorkStepByWorkName(workSubName)
+	steps, _ := iwork.QueryAllWorkStepByWorkName(workSubName, orm.NewOrm())
 	// 获取 foreach_data 数据
 	foreachDatas := getConvertedForEachData(tmpDataMap)
 	if len(foreachDatas) > 0 {
@@ -50,10 +53,10 @@ func (this *WorkSub) Execute(trackingId string, skipFunc func(tmpDataMap map[str
 // 任意类型切片对象,目前仅限制于 []interface{} 和 []map[string]interface{},需要由前置节点标准化成这种类型才可
 func getConvertedForEachData(tmpDataMap map[string]interface{}) []interface{} {
 	foreachDatas := make([]interface{}, 0)
-	if _foreachDatas, ok := tmpDataMap[iworkconst.FOREACH_PREFIX + "data?"].([]interface{}); ok {
+	if _foreachDatas, ok := tmpDataMap[iworkconst.FOREACH_PREFIX+"data?"].([]interface{}); ok {
 		foreachDatas = append(foreachDatas, _foreachDatas...)
-	} else if _foreachDatas, ok := tmpDataMap[iworkconst.FOREACH_PREFIX + "data?"].([]map[string]interface{}); ok {
-		for _, _foreachData := range _foreachDatas{
+	} else if _foreachDatas, ok := tmpDataMap[iworkconst.FOREACH_PREFIX+"data?"].([]map[string]interface{}); ok {
+		for _, _foreachData := range _foreachDatas {
 			foreachDatas = append(foreachDatas, _foreachData)
 		}
 	}
@@ -80,7 +83,7 @@ func (this *WorkSub) getForeachItemKey(tmpDataMap map[string]interface{}) string
 }
 
 func (this *WorkSub) RunOnceSubWork(work iwork.Work, steps []iwork.WorkStep, trackingId string,
-		tmpDataMap map[string]interface{}, dataStore *datastore.DataStore) {
+	tmpDataMap map[string]interface{}, dataStore *datastore.DataStore) {
 	receiver := this.RunFunc(work, steps, &entry.Dispatcher{TrackingId: trackingId, TmpDataMap: tmpDataMap})
 	// 接收子流程数据存入 dataStore
 	for paramName, paramValue := range receiver.TmpDataMap {
@@ -90,20 +93,20 @@ func (this *WorkSub) RunOnceSubWork(work iwork.Work, steps []iwork.WorkStep, tra
 
 func (this *WorkSub) GetDefaultParamInputSchema() *schema.ParamInputSchema {
 	paramMap := map[int][]string{
-		1:[]string{iworkconst.STRING_PREFIX + "work_sub","子流程信息"},
-		2:[]string{iworkconst.FOREACH_PREFIX + "data?","可选参数,当有值时表示迭代流程,该节点会执行多次,并将当前迭代元素放入 __item__ 变量中,其它参数需要引用 __item__ 即可"},
+		1: []string{iworkconst.STRING_PREFIX + "work_sub", "子流程信息"},
+		2: []string{iworkconst.FOREACH_PREFIX + "data?", "可选参数,当有值时表示迭代流程,该节点会执行多次,并将当前迭代元素放入 __item__ 变量中,其它参数需要引用 __item__ 即可"},
 	}
 	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
 }
 
 // 获取动态输入值
 func (this *WorkSub) GetRuntimeParamInputSchema() *schema.ParamInputSchema {
-	items := make([]schema.ParamInputSchemaItem,0)
+	items := make([]schema.ParamInputSchemaItem, 0)
 	// 获取子流程信息
 	workSubName := this.getWorkSubName()
 	if strings.TrimSpace(workSubName) != "" {
 		// 获取子流程所有步骤
-		subSteps, err := iwork.QueryAllWorkStepByWorkName(workSubName)
+		subSteps, err := iwork.QueryAllWorkStepByWorkName(workSubName, orm.NewOrm())
 		if err != nil {
 			panic(err)
 		}
@@ -134,14 +137,14 @@ func (this *WorkSub) GetDefaultParamOutputSchema() *schema.ParamOutputSchema {
 }
 
 func (this *WorkSub) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
-	items := make([]schema.ParamOutputSchemaItem,0)
+	items := make([]schema.ParamOutputSchemaItem, 0)
 	// 读取静态输入值
 	paramInputSchema := schema.GetCacheParamInputSchema(this.WorkStep, &WorkStepFactory{WorkStep: this.WorkStep})
 	// 从静态输入值中获取子流程名称
 	workSubName := iworkutil.GetWorkSubNameForWorkSubNode(paramInputSchema)
 	if strings.TrimSpace(workSubName) != "" {
 		// 获取子流程所有步骤
-		subSteps, err := iwork.QueryAllWorkStepByWorkName(workSubName)
+		subSteps, err := iwork.QueryAllWorkStepByWorkName(workSubName, orm.NewOrm())
 		if err != nil {
 			panic(err)
 		}
@@ -160,10 +163,10 @@ func (this *WorkSub) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
 }
 
 func (this *WorkSub) ValidateCustom() {
-	if workSubName := this.getWorkSubName(); workSubName == ""{
+	if workSubName := this.getWorkSubName(); workSubName == "" {
 		panic("Empty workSubName was found!")
-	}else{
-		if _, err := iwork.QueryWorkByName(workSubName); err != nil{
+	} else {
+		if _, err := iwork.QueryWorkByName(workSubName); err != nil {
 			panic(fmt.Sprintf("WorkSubName for %s was not found!", workSubName))
 		}
 	}

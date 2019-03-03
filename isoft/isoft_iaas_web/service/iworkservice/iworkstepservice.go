@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/astaxie/beego/orm"
 	"isoft/isoft/common/stringutil"
 	"isoft/isoft_iaas_web/core/iworkconst"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
@@ -81,7 +82,8 @@ func LoadPreNodeOutputService(serviceArgs map[string]interface{}) (result map[st
 func GetAllWorkStepInfoService(serviceArgs map[string]interface{}) (result map[string]interface{}, err error) {
 	result = make(map[string]interface{}, 0)
 	work_id := serviceArgs["work_id"].(int64)
-	steps, err := iwork.QueryAllWorkStepInfo(work_id)
+	o := serviceArgs["o"].(orm.Ormer)
+	steps, err := iwork.QueryAllWorkStepInfo(work_id, o)
 	if err != nil {
 		return nil, err
 	}
@@ -195,6 +197,7 @@ func ChangeWorkStepOrderService(serviceArgs map[string]interface{}) error {
 
 func EditWorkStepBaseInfoService(serviceArgs map[string]interface{}) error {
 	step := serviceArgs["step"].(*iwork.WorkStep)
+	o := serviceArgs["o"].(orm.Ormer)
 	oldStep, err := iwork.QueryOneWorkStep(step.WorkId, step.WorkStepId)
 	if err != nil {
 		return err
@@ -206,7 +209,7 @@ func EditWorkStepBaseInfoService(serviceArgs map[string]interface{}) error {
 	}
 	if _, err := iwork.InsertOrUpdateWorkStep(step); err == nil {
 		// 级联更改相关联的步骤名称
-		if err := ChangeReferencesWorkStepName(step.WorkId, oldStep.WorkStepName, step.WorkStepName); err != nil {
+		if err := ChangeReferencesWorkStepName(step.WorkId, oldStep.WorkStepName, step.WorkStepName, o); err != nil {
 			return err
 		}
 	} else {
@@ -215,11 +218,11 @@ func EditWorkStepBaseInfoService(serviceArgs map[string]interface{}) error {
 	return nil
 }
 
-func ChangeReferencesWorkStepName(work_id int64, oldWorkStepName, workStepName string) error {
+func ChangeReferencesWorkStepName(work_id int64, oldWorkStepName, workStepName string, o orm.Ormer) error {
 	if oldWorkStepName == workStepName {
 		return nil
 	}
-	steps, err := iwork.QueryAllWorkStepInfo(work_id)
+	steps, err := iwork.QueryAllWorkStepInfo(work_id, o)
 	if err != nil {
 		return err
 	}

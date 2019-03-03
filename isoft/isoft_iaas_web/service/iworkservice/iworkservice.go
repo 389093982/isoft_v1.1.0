@@ -20,11 +20,20 @@ func GetRelativeWorkService(serviceArgs map[string]interface{}) (result map[stri
 	work_id := serviceArgs["work_id"].(int64)
 	o := serviceArgs["o"].(orm.Ormer)
 	subWorks := make([]iwork.Work, 0)
-	parentWorks, _, _ := iwork.QueryParentWorks(work_id, o)
-	steps, _ := iwork.QueryAllWorkStepInfo(work_id)
+	parentWorks, _, err := iwork.QueryParentWorks(work_id, o)
+	if err != nil {
+		return nil, err
+	}
+	steps, err := iwork.QueryAllWorkStepInfo(work_id, o)
+	if err != nil {
+		return nil, err
+	}
 	for _, step := range steps {
 		if step.WorkSubId > 0 {
-			subwork, _ := iwork.QueryWorkById(step.WorkSubId, o)
+			subwork, err := iwork.QueryWorkById(step.WorkSubId, o)
+			if err != nil {
+				return nil, err
+			}
 			subWorks = append(subWorks, subwork)
 		}
 	}
@@ -40,7 +49,7 @@ func RunWorkService(serviceArgs map[string]interface{}) error {
 	if err != nil {
 		return err
 	}
-	steps, err := iwork.QueryAllWorkStepInfo(work_id)
+	steps, err := iwork.QueryAllWorkStepInfo(work_id, o)
 	if err != nil {
 		return err
 	}
@@ -163,7 +172,7 @@ func ChangeReferencesWorkName(work_id int64, oldWorkName, workName string, o orm
 		return nil
 	}
 	for _, parentWork := range parentWorks {
-		steps, _ := iwork.QueryAllWorkStepInfo(parentWork.Id)
+		steps, _ := iwork.QueryAllWorkStepInfo(parentWork.Id, o)
 		for _, step := range steps {
 			if step.WorkStepType != "work_sub" {
 				continue

@@ -63,8 +63,7 @@ func QueryOneWorkStep(work_id int64, work_step_id int64) (step WorkStep, err err
 	return
 }
 
-func QueryAllWorkStepInfo(work_id int64) (steps []WorkStep, err error) {
-	o := orm.NewOrm()
+func QueryAllWorkStepInfo(work_id int64, o orm.Ormer) (steps []WorkStep, err error) {
 	_, err = o.QueryTable("work_step").Filter("work_id", work_id).OrderBy("work_step_id").All(&steps)
 	return
 }
@@ -100,9 +99,9 @@ func QueryAllPreStepInfo(work_id int64, work_step_id int64) (steps []WorkStep, e
 	return
 }
 
-func QueryAllWorkStepByWorkName(work_name string) (steps []WorkStep, err error) {
+func QueryAllWorkStepByWorkName(work_name string, o orm.Ormer) (steps []WorkStep, err error) {
 	if work, err := QueryWorkByName(work_name); err == nil {
-		steps, err = QueryAllWorkStepInfo(work.Id)
+		steps, err = QueryAllWorkStepInfo(work.Id, o)
 	}
 	return
 }

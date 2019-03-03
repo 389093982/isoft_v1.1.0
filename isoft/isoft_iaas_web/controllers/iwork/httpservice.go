@@ -1,6 +1,7 @@
 package iwork
 
 import (
+	"github.com/astaxie/beego/orm"
 	"isoft/isoft_iaas_web/core/iworkdata/entry"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
 	"isoft/isoft_iaas_web/core/iworknode"
@@ -22,7 +23,7 @@ func (this *WorkController) PublishAsSerivce() {
 	if err != nil {
 		panic(err)
 	}
-	steps, err := iwork.QueryAllWorkStepByWorkName(work_name)
+	steps, err := iwork.QueryAllWorkStepByWorkName(work_name, orm.NewOrm())
 	if err != nil {
 		panic(err)
 	}

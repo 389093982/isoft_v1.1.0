@@ -84,7 +84,7 @@ func validateAll() {
 // 校验单个 work
 func validateWork(work *iwork.Work, logCh chan *iwork.ValidateLogDetail, workChan chan int) {
 	stepChan := make(chan int)
-	steps, _ := iwork.QueryAllWorkStepInfo(work.Id)
+	steps, _ := iwork.QueryAllWorkStepInfo(work.Id, orm.NewOrm())
 	// 验证流程必须以 work_start 开始,以 work_end 结束
 	validateWorkStartAndEnd(steps, logCh, work)
 
