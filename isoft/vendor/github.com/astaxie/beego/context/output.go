@@ -20,6 +20,7 @@ import (
 	"encoding/xml"
 	"errors"
 	"fmt"
+	"gopkg.in/yaml.v2"
 	"html/template"
 	"io"
 	"mime"
@@ -30,7 +31,6 @@ import (
 	"strconv"
 	"strings"
 	"time"
-	"gopkg.in/yaml.v2"
 )
 
 // BeegoOutput does work for sending response header.
@@ -203,10 +203,9 @@ func (output *BeegoOutput) JSON(data interface{}, hasIndent bool, encoding bool)
 	return output.Body(content)
 }
 
-
 // YAML writes yaml to response body.
 func (output *BeegoOutput) YAML(data interface{}) error {
-	output.Header("Content-Type", "application/application/x-yaml; charset=utf-8")
+	output.Header("Content-Type", "application/x-yaml; charset=utf-8")
 	var content []byte
 	var err error
 	content, err = yaml.Marshal(data)
@@ -258,6 +257,19 @@ func (output *BeegoOutput) XML(data interface{}, hasIndent bool) error {
 		return err
 	}
 	return output.Body(content)
+}
+
+// ServeFormatted serve YAML, XML OR JSON, depending on the value of the Accept header
+func (output *BeegoOutput) ServeFormatted(data interface{}, hasIndent bool, hasEncode ...bool) {
+	accept := output.Context.Input.Header("Accept")
+	switch accept {
+	case ApplicationYAML:
+		output.YAML(data)
+	case ApplicationXML, TextXML:
+		output.XML(data, hasIndent)
+	default:
+		output.JSON(data, hasIndent, len(hasEncode) > 0 && hasEncode[0])
+	}
 }
 
 // Download forces response for download file.
