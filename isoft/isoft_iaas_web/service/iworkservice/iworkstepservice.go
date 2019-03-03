@@ -167,42 +167,43 @@ func AddWorkStepService(serviceArgs map[string]interface{}) error {
 	return nil
 }
 
-func ChangeWorkStepOrderService(serviceArgs map[string]interface{}) error {
-	work_id := serviceArgs["work_id"].(int64)
-	work_step_id := serviceArgs["work_step_id"].(int64)
-	_type := serviceArgs["_type"].(string)
-	o := serviceArgs["o"].(orm.Ormer)
+// 更改邻近两个节点的顺序
+func changeNearWorkStepOrder(work_id, work_step_id int64, o orm.Ormer, nearStepLength int64) error {
 	// 获取当前步骤
 	step, err := iwork.QueryOneWorkStep(work_id, work_step_id, o)
 	if err != nil {
 		return err
 	}
+	// 获取邻近步骤
+	nearStep, err := iwork.QueryOneWorkStep(work_id, work_step_id-nearStepLength, o)
+	if err != nil {
+		return err
+	}
+	if nearStep.WorkStepType == "work_start" || nearStep.WorkStepType == "work_end" {
+		return errors.New("start 节点和 end 节点不能移动位置!")
+	}
+	nearStep.WorkStepId = nearStep.WorkStepId + nearStepLength
+	step.WorkStepId = step.WorkStepId - nearStepLength
+	// 更新邻近步骤
+	if _, err := iwork.InsertOrUpdateWorkStep(&nearStep, o); err != nil {
+		return err
+	}
+	// 更新当前步骤
+	if _, err := iwork.InsertOrUpdateWorkStep(&step, o); err != nil {
+		return err
+	}
+	return nil
+}
+
+func ChangeWorkStepOrderService(serviceArgs map[string]interface{}) error {
+	work_id := serviceArgs["work_id"].(int64)
+	work_step_id := serviceArgs["work_step_id"].(int64)
+	_type := serviceArgs["_type"].(string)
+	o := serviceArgs["o"].(orm.Ormer)
 	if _type == "up" {
-		prevStep, err := iwork.QueryOneWorkStep(work_id, work_step_id-1, o)
-		if err != nil {
-			return err
-		}
-		prevStep.WorkStepId = prevStep.WorkStepId + 1
-		step.WorkStepId = step.WorkStepId - 1
-		if _, err := iwork.InsertOrUpdateWorkStep(&prevStep, o); err != nil {
-			return err
-		}
-		if _, err := iwork.InsertOrUpdateWorkStep(&step, o); err != nil {
-			return err
-		}
+		return changeNearWorkStepOrder(work_id, work_step_id, o, 1)
 	} else {
-		nextStep, err := iwork.QueryOneWorkStep(work_id, work_step_id+1, o)
-		if err != nil {
-			return err
-		}
-		nextStep.WorkStepId = nextStep.WorkStepId + 1
-		step.WorkStepId = step.WorkStepId + 1
-		if _, err := iwork.InsertOrUpdateWorkStep(&nextStep, o); err != nil {
-			return err
-		}
-		if _, err := iwork.InsertOrUpdateWorkStep(&step, o); err != nil {
-			return err
-		}
+		return changeNearWorkStepOrder(work_id, work_step_id, o, -1)
 	}
 	return nil
 }

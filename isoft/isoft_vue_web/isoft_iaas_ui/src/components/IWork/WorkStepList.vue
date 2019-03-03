@@ -226,6 +226,8 @@
         const result = await ChangeWorkStepOrder(this.$route.query.work_id, work_step_id, type);
         if(result.status == "SUCCESS"){
           this.refreshWorkStepList();
+        }else{
+          this.$Message.error(result.errorMsg);
         }
       },
       renderSourceXml:function () {
