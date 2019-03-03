@@ -9,6 +9,26 @@ import (
 	"time"
 )
 
+func DeleteWorkStepByWorkStepIdService(serviceArgs map[string]interface{}) error {
+	work_id := serviceArgs["work_id"].(int64)
+	work_step_id := serviceArgs["work_step_id"].(int64)
+	if err := iwork.DeleteWorkStepByWorkStepId(work_id, work_step_id); err != nil {
+		return err
+	}
+	return nil
+}
+
+func FilterWorkStepService(serviceArgs map[string]interface{}) (result map[string]interface{}, err error) {
+	condArr := make(map[string]interface{})
+	condArr["work_id"] = serviceArgs["work_id"].(int64)
+	worksteps, err := iwork.QueryWorkStep(condArr)
+	if err != nil {
+		return nil, err
+	}
+	result["worksteps"] = worksteps
+	return
+}
+
 func AddWorkStepService(serviceArgs map[string]interface{}) error {
 	work_id := serviceArgs["work_id"].(int64)
 	work_step_id := serviceArgs["work_step_id"].(int64)
@@ -73,7 +93,8 @@ func ChangeWorkStepOrderService(serviceArgs map[string]interface{}) error {
 	return nil
 }
 
-func EditWorkStepBaseInfoService(step *iwork.WorkStep) error {
+func EditWorkStepBaseInfoService(serviceArgs map[string]interface{}) error {
+	step := serviceArgs["step"].(*iwork.WorkStep)
 	oldStep, err := iwork.QueryOneWorkStep(step.WorkId, step.WorkStepId)
 	if err != nil {
 		return err
@@ -92,10 +113,6 @@ func EditWorkStepBaseInfoService(step *iwork.WorkStep) error {
 		return err
 	}
 	return nil
-}
-
-func DeleteWorkStepByWorkStepIdService(work_id, work_step_id int64) error {
-	return iwork.DeleteWorkStepByWorkStepId(work_id, work_step_id)
 }
 
 func ChangeReferencesWorkStepName(work_id int64, oldWorkStepName, workStepName string) error {

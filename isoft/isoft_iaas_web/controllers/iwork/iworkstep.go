@@ -31,22 +31,22 @@ func (this *WorkController) EditWorkStepBaseInfo() {
 	step.WorkStepName = this.GetString("work_step_name")
 	step.WorkStepType = this.GetString("work_step_type")
 	step.WorkStepDesc = this.GetString("work_step_desc")
-	if err := iworkservice.EditWorkStepBaseInfoService(step); err == nil {
+	serviceArgs := map[string]interface{}{"step": step}
+	if err := service.ExecuteServiceWithTx(serviceArgs, iworkservice.EditWorkStepBaseInfoService); err == nil {
 		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
 	} else {
-		this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
+		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": err.Error()}
 	}
 	this.ServeJSON()
 }
 
 func (this *WorkController) FilterWorkStep() {
-	condArr := make(map[string]interface{})
-	condArr["work_id"], _ = this.GetInt64("work_id")
-	worksteps, err := iwork.QueryWorkStep(condArr)
-	if err == nil {
-		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "worksteps": worksteps}
+	work_id, _ := this.GetInt64("work_id")
+	serviceArgs := map[string]interface{}{"work_id": work_id}
+	if result, err := service.ExecuteResultServiceWithTx(serviceArgs, iworkservice.FilterWorkStepService); err == nil {
+		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "worksteps": result["worksteps"]}
 	} else {
-		this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
+		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": err.Error()}
 	}
 	this.ServeJSON()
 }
@@ -54,10 +54,11 @@ func (this *WorkController) FilterWorkStep() {
 func (this *WorkController) DeleteWorkStepByWorkStepId() {
 	work_id, _ := this.GetInt64("work_id")
 	work_step_id, _ := this.GetInt64("work_step_id")
-	if err := iworkservice.DeleteWorkStepByWorkStepIdService(work_id, work_step_id); err == nil {
+	serviceArgs := map[string]interface{}{"work_id": work_id, "work_step_id": work_step_id}
+	if err := service.ExecuteServiceWithTx(serviceArgs, iworkservice.DeleteWorkStepByWorkStepIdService); err == nil {
 		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
 	} else {
-		this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
+		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": err.Error()}
 	}
 	this.ServeJSON()
 }
