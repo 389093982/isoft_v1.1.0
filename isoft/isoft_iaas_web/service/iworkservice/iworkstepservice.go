@@ -11,6 +11,70 @@ import (
 	"time"
 )
 
+func LoadResourceInfo() *schema.ParamOutputSchema {
+	pos := &schema.ParamOutputSchema{
+		ParamOutputSchemaItems: []schema.ParamOutputSchemaItem{},
+	}
+	resources := iwork.QueryAllResource()
+	for _, resource := range resources {
+		pos.ParamOutputSchemaItems = append(pos.ParamOutputSchemaItems, schema.ParamOutputSchemaItem{
+			ParamName: resource.ResourceName,
+		})
+	}
+	return pos
+}
+
+func LoadWorkInfo() *schema.ParamOutputSchema {
+	pos := &schema.ParamOutputSchema{
+		ParamOutputSchemaItems: []schema.ParamOutputSchemaItem{},
+	}
+	works := iwork.QueryAllWorkInfo()
+	for _, work := range works {
+		pos.ParamOutputSchemaItems = append(pos.ParamOutputSchemaItems, schema.ParamOutputSchemaItem{
+			ParamName: work.WorkName,
+		})
+	}
+	return pos
+}
+
+func LoadEntityInfo() *schema.ParamOutputSchema {
+	pos := &schema.ParamOutputSchema{
+		ParamOutputSchemaItems: []schema.ParamOutputSchemaItem{},
+	}
+	entities := iwork.QueryAllEntityInfo()
+	for _, entity := range entities {
+		pos.ParamOutputSchemaItems = append(pos.ParamOutputSchemaItems, schema.ParamOutputSchemaItem{
+			ParamName: entity.EntityName,
+		})
+	}
+	return pos
+}
+
+func LoadPreNodeOutputService(serviceArgs map[string]interface{}) (result map[string]interface{}, err error) {
+	work_id := serviceArgs["work_id"].(int64)
+	work_step_id := serviceArgs["work_step_id"].(int64)
+	preParamOutputSchemaTreeNodeArr := make([]*schema.TreeNode, 0)
+	// 加载 resource 参数
+	pos := LoadResourceInfo()
+	preParamOutputSchemaTreeNodeArr = append(preParamOutputSchemaTreeNodeArr, pos.RenderToTreeNodes("$RESOURCE"))
+	// 加载 work 参数
+	pos = LoadWorkInfo()
+	preParamOutputSchemaTreeNodeArr = append(preParamOutputSchemaTreeNodeArr, pos.RenderToTreeNodes("$WORK"))
+	// 加载 entity 参数
+	pos = LoadEntityInfo()
+	preParamOutputSchemaTreeNodeArr = append(preParamOutputSchemaTreeNodeArr, pos.RenderToTreeNodes("$Entity"))
+	// 加载前置步骤输出
+	if steps, err := iwork.QueryAllPreStepInfo(work_id, work_step_id); err == nil {
+		for _, step := range steps {
+			pos := schema.GetCacheParamOutputSchema(&step)
+			preParamOutputSchemaTreeNodeArr = append(preParamOutputSchemaTreeNodeArr, pos.RenderToTreeNodes("$"+step.WorkStepName))
+		}
+	}
+	// 返回结果
+	result["preParamOutputSchemaTreeNodeArr"] = preParamOutputSchemaTreeNodeArr
+	return
+}
+
 func GetAllWorkStepInfoService(serviceArgs map[string]interface{}) (result map[string]interface{}, err error) {
 	work_id := serviceArgs["work_id"].(int64)
 	steps, err := iwork.QueryAllWorkStepInfo(work_id)

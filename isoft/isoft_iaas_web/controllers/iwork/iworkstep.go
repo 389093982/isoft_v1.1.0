@@ -1,7 +1,6 @@
 package iwork
 
 import (
-	"isoft/isoft_iaas_web/core/iworkdata/schema"
 	"isoft/isoft_iaas_web/models/iwork"
 	"isoft/isoft_iaas_web/service"
 	"isoft/isoft_iaas_web/service/iworkservice"
@@ -107,68 +106,13 @@ func (this *WorkController) ChangeWorkStepOrder() {
 func (this *WorkController) LoadPreNodeOutput() {
 	work_id, _ := this.GetInt64("work_id")
 	work_step_id, _ := this.GetInt64("work_step_id")
-
-	preParamOutputSchemaTreeNodeArr := make([]*schema.TreeNode, 0)
-	// 加载 resource 参数
-	pos := LoadResourceInfo()
-	preParamOutputSchemaTreeNodeArr = append(preParamOutputSchemaTreeNodeArr, pos.RenderToTreeNodes("$RESOURCE"))
-	// 加载 work 参数
-	pos = LoadWorkInfo()
-	preParamOutputSchemaTreeNodeArr = append(preParamOutputSchemaTreeNodeArr, pos.RenderToTreeNodes("$WORK"))
-	// 加载 entity 参数
-	pos = LoadEntityInfo()
-	preParamOutputSchemaTreeNodeArr = append(preParamOutputSchemaTreeNodeArr, pos.RenderToTreeNodes("$Entity"))
-	// 加载前置步骤输出
-	if steps, err := iwork.QueryAllPreStepInfo(work_id, work_step_id); err == nil {
-		for _, step := range steps {
-			pos := schema.GetCacheParamOutputSchema(&step)
-			preParamOutputSchemaTreeNodeArr = append(preParamOutputSchemaTreeNodeArr, pos.RenderToTreeNodes("$"+step.WorkStepName))
-		}
-	}
-	// 返回结果
-	this.Data["json"] = &map[string]interface{}{"status": "SUCCESS",
-		"preParamOutputSchemaTreeNodeArr": preParamOutputSchemaTreeNodeArr,
+	serviceArgs := map[string]interface{}{"work_id": work_id, "work_step_id": work_step_id}
+	if result, err := service.ExecuteResultServiceWithTx(serviceArgs, iworkservice.LoadPreNodeOutputService); err == nil {
+		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "preParamOutputSchemaTreeNodeArr": result["preParamOutputSchemaTreeNodeArr"]}
+	} else {
+		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": err.Error()}
 	}
 	this.ServeJSON()
-}
-
-func LoadResourceInfo() *schema.ParamOutputSchema {
-	pos := &schema.ParamOutputSchema{
-		ParamOutputSchemaItems: []schema.ParamOutputSchemaItem{},
-	}
-	resources := iwork.QueryAllResource()
-	for _, resource := range resources {
-		pos.ParamOutputSchemaItems = append(pos.ParamOutputSchemaItems, schema.ParamOutputSchemaItem{
-			ParamName: resource.ResourceName,
-		})
-	}
-	return pos
-}
-
-func LoadWorkInfo() *schema.ParamOutputSchema {
-	pos := &schema.ParamOutputSchema{
-		ParamOutputSchemaItems: []schema.ParamOutputSchemaItem{},
-	}
-	works := iwork.QueryAllWorkInfo()
-	for _, work := range works {
-		pos.ParamOutputSchemaItems = append(pos.ParamOutputSchemaItems, schema.ParamOutputSchemaItem{
-			ParamName: work.WorkName,
-		})
-	}
-	return pos
-}
-
-func LoadEntityInfo() *schema.ParamOutputSchema {
-	pos := &schema.ParamOutputSchema{
-		ParamOutputSchemaItems: []schema.ParamOutputSchemaItem{},
-	}
-	entities := iwork.QueryAllEntityInfo()
-	for _, entity := range entities {
-		pos.ParamOutputSchemaItems = append(pos.ParamOutputSchemaItems, schema.ParamOutputSchemaItem{
-			ParamName: entity.EntityName,
-		})
-	}
-	return pos
 }
 
 func (this *WorkController) RefactorWorkStepInfo() {
