@@ -82,7 +82,8 @@ func FilterPageWorkService(serviceArgs map[string]interface{}) (result map[strin
 	offset := serviceArgs["offset"].(int)
 	current_page := serviceArgs["current_page"].(int)
 	ctx := serviceArgs["ctx"].(*context.Context)
-	works, count, err := iwork.QueryWork(condArr, current_page, offset)
+	o := serviceArgs["o"].(orm.Ormer)
+	works, count, err := iwork.QueryWork(condArr, current_page, offset, o)
 	if err != nil {
 		return nil, err
 	}
@@ -112,12 +113,12 @@ func EditWorkService(serviceArgs map[string]interface{}) error {
 	o := serviceArgs["o"].(orm.Ormer)
 	oldWorkName, oldWorkId := getOldWorkInfoById(work.Id, o)
 	// 插入或者更新 work 信息
-	if _, err := iwork.InsertOrUpdateWork(&work); err != nil {
+	if _, err := iwork.InsertOrUpdateWork(&work, o); err != nil {
 		return err
 	}
 	if oldWorkName == "" {
 		// 新增 work 场景,自动添加开始和结束节点
-		if err := InsertStartEndWorkStepNode(work.Id); err != nil {
+		if err := InsertStartEndWorkStepNode(work.Id, o); err != nil {
 			return err
 		}
 		if _, err := InsertOrUpdateAutoCronMeta(work.WorkName, -1); err != nil {
@@ -160,7 +161,8 @@ func InsertOrUpdateAutoCronMeta(task_name string, meta_id int64) (id int64, err 
 
 func DeleteWorkByIdService(serviceArgs map[string]interface{}) error {
 	id := serviceArgs["id"].(int64)
-	return iwork.DeleteWorkById(id)
+	o := serviceArgs["o"].(orm.Ormer)
+	return iwork.DeleteWorkById(id, o)
 }
 
 func ChangeReferencesWorkName(work_id int64, oldWorkName, workName string, o orm.Ormer) error {
@@ -184,13 +186,13 @@ func ChangeReferencesWorkName(work_id int64, oldWorkName, workName string, o orm
 				}
 			}
 			step.WorkStepInput = inputSchema.RenderToXml()
-			iwork.InsertOrUpdateWorkStep(&step)
+			iwork.InsertOrUpdateWorkStep(&step, o)
 		}
 	}
 	return nil
 }
 
-func InsertStartEndWorkStepNode(work_id int64) error {
+func InsertStartEndWorkStepNode(work_id int64, o orm.Ormer) error {
 	insertDefaultWorkStepNodeFunc := func(nodeName string, work_step_id int64) error {
 		step := &iwork.WorkStep{
 			WorkId:          work_id,
@@ -203,7 +205,7 @@ func InsertStartEndWorkStepNode(work_id int64) error {
 			LastUpdatedBy:   "SYSTEM",
 			LastUpdatedTime: time.Now(),
 		}
-		if _, err := iwork.InsertOrUpdateWorkStep(step); err != nil {
+		if _, err := iwork.InsertOrUpdateWorkStep(step, o); err != nil {
 			return err
 		}
 		return nil

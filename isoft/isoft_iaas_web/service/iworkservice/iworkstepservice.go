@@ -57,6 +57,7 @@ func LoadPreNodeOutputService(serviceArgs map[string]interface{}) (result map[st
 	result = make(map[string]interface{}, 0)
 	work_id := serviceArgs["work_id"].(int64)
 	work_step_id := serviceArgs["work_step_id"].(int64)
+	o := serviceArgs["o"].(orm.Ormer)
 	preParamOutputSchemaTreeNodeArr := make([]*schema.TreeNode, 0)
 	// 加载 resource 参数
 	pos := LoadResourceInfo()
@@ -68,7 +69,7 @@ func LoadPreNodeOutputService(serviceArgs map[string]interface{}) (result map[st
 	pos = LoadEntityInfo()
 	preParamOutputSchemaTreeNodeArr = append(preParamOutputSchemaTreeNodeArr, pos.RenderToTreeNodes("$Entity"))
 	// 加载前置步骤输出
-	if steps, err := iwork.QueryAllPreStepInfo(work_id, work_step_id); err == nil {
+	if steps, err := iwork.QueryAllPreStepInfo(work_id, work_step_id, o); err == nil {
 		for _, step := range steps {
 			pos := schema.GetCacheParamOutputSchema(&step)
 			preParamOutputSchemaTreeNodeArr = append(preParamOutputSchemaTreeNodeArr, pos.RenderToTreeNodes("$"+step.WorkStepName))
@@ -95,8 +96,9 @@ func LoadWorkStepInfoService(serviceArgs map[string]interface{}) (result map[str
 	result = make(map[string]interface{}, 0)
 	work_id := serviceArgs["work_id"].(int64)
 	work_step_id := serviceArgs["work_step_id"].(int64)
+	o := serviceArgs["o"].(orm.Ormer)
 	// 读取 work_step 信息
-	step, err := iwork.QueryWorkStepInfo(work_id, work_step_id)
+	step, err := iwork.QueryWorkStepInfo(work_id, work_step_id, o)
 	if err != nil {
 		return nil, err
 	}
@@ -113,7 +115,8 @@ func LoadWorkStepInfoService(serviceArgs map[string]interface{}) (result map[str
 func DeleteWorkStepByWorkStepIdService(serviceArgs map[string]interface{}) error {
 	work_id := serviceArgs["work_id"].(int64)
 	work_step_id := serviceArgs["work_step_id"].(int64)
-	if err := iwork.DeleteWorkStepByWorkStepId(work_id, work_step_id); err != nil {
+	o := serviceArgs["o"].(orm.Ormer)
+	if err := iwork.DeleteWorkStepByWorkStepId(work_id, work_step_id, o); err != nil {
 		return err
 	}
 	return nil
@@ -123,7 +126,8 @@ func FilterWorkStepService(serviceArgs map[string]interface{}) (result map[strin
 	result = make(map[string]interface{}, 0)
 	condArr := make(map[string]interface{})
 	condArr["work_id"] = serviceArgs["work_id"].(int64)
-	worksteps, err := iwork.QueryWorkStep(condArr)
+	o := serviceArgs["o"].(orm.Ormer)
+	worksteps, err := iwork.QueryWorkStep(condArr, o)
 	if err != nil {
 		return nil, err
 	}
@@ -135,8 +139,9 @@ func AddWorkStepService(serviceArgs map[string]interface{}) error {
 	work_id := serviceArgs["work_id"].(int64)
 	work_step_id := serviceArgs["work_step_id"].(int64)
 	work_step_type := serviceArgs["default_work_step_type"].(string)
+	o := serviceArgs["o"].(orm.Ormer)
 	// 将 work_step_id 之后的所有节点后移一位
-	err := iwork.BatchChangeWorkStepIdOrder(work_id, work_step_id, "+")
+	err := iwork.BatchChangeWorkStepIdOrder(work_id, work_step_id, "+", o)
 	if err != nil {
 		return err
 	}
@@ -150,7 +155,7 @@ func AddWorkStepService(serviceArgs map[string]interface{}) error {
 		LastUpdatedBy:   "SYSTEM",
 		LastUpdatedTime: time.Now(),
 	}
-	if _, err := iwork.InsertOrUpdateWorkStep(step); err != nil {
+	if _, err := iwork.InsertOrUpdateWorkStep(step, o); err != nil {
 		return err
 	}
 	return nil
@@ -160,35 +165,36 @@ func ChangeWorkStepOrderService(serviceArgs map[string]interface{}) error {
 	work_id := serviceArgs["work_id"].(int64)
 	work_step_id := serviceArgs["work_step_id"].(int64)
 	_type := serviceArgs["_type"].(string)
+	o := serviceArgs["o"].(orm.Ormer)
 	// 获取当前步骤
-	step, err := iwork.QueryOneWorkStep(work_id, work_step_id)
+	step, err := iwork.QueryOneWorkStep(work_id, work_step_id, o)
 	if err != nil {
 		return err
 	}
 	if _type == "up" {
-		prevStep, err := iwork.QueryOneWorkStep(work_id, work_step_id-1)
+		prevStep, err := iwork.QueryOneWorkStep(work_id, work_step_id-1, o)
 		if err != nil {
 			return err
 		}
 		prevStep.WorkStepId = prevStep.WorkStepId + 1
 		step.WorkStepId = step.WorkStepId - 1
-		if _, err := iwork.InsertOrUpdateWorkStep(&prevStep); err != nil {
+		if _, err := iwork.InsertOrUpdateWorkStep(&prevStep, o); err != nil {
 			return err
 		}
-		if _, err := iwork.InsertOrUpdateWorkStep(&step); err != nil {
+		if _, err := iwork.InsertOrUpdateWorkStep(&step, o); err != nil {
 			return err
 		}
 	} else {
-		nextStep, err := iwork.QueryOneWorkStep(work_id, work_step_id+1)
+		nextStep, err := iwork.QueryOneWorkStep(work_id, work_step_id+1, o)
 		if err != nil {
 			return err
 		}
 		nextStep.WorkStepId = nextStep.WorkStepId + 1
 		step.WorkStepId = step.WorkStepId + 1
-		if _, err := iwork.InsertOrUpdateWorkStep(&nextStep); err != nil {
+		if _, err := iwork.InsertOrUpdateWorkStep(&nextStep, o); err != nil {
 			return err
 		}
-		if _, err := iwork.InsertOrUpdateWorkStep(&step); err != nil {
+		if _, err := iwork.InsertOrUpdateWorkStep(&step, o); err != nil {
 			return err
 		}
 	}
@@ -198,7 +204,7 @@ func ChangeWorkStepOrderService(serviceArgs map[string]interface{}) error {
 func EditWorkStepBaseInfoService(serviceArgs map[string]interface{}) error {
 	step := serviceArgs["step"].(*iwork.WorkStep)
 	o := serviceArgs["o"].(orm.Ormer)
-	oldStep, err := iwork.QueryOneWorkStep(step.WorkId, step.WorkStepId)
+	oldStep, err := iwork.QueryOneWorkStep(step.WorkId, step.WorkStepId, o)
 	if err != nil {
 		return err
 	}
@@ -207,7 +213,7 @@ func EditWorkStepBaseInfoService(serviceArgs map[string]interface{}) error {
 		step.WorkStepInput = ""
 		step.WorkStepOutput = ""
 	}
-	if _, err := iwork.InsertOrUpdateWorkStep(step); err == nil {
+	if _, err := iwork.InsertOrUpdateWorkStep(step, o); err == nil {
 		// 级联更改相关联的步骤名称
 		if err := ChangeReferencesWorkStepName(step.WorkId, oldStep.WorkStepName, step.WorkStepName, o); err != nil {
 			return err
@@ -228,7 +234,7 @@ func ChangeReferencesWorkStepName(work_id int64, oldWorkStepName, workStepName s
 	}
 	for _, step := range steps {
 		step.WorkStepInput = strings.Replace(step.WorkStepInput, "$"+oldWorkStepName, "$"+workStepName, -1)
-		_, err := iwork.InsertOrUpdateWorkStep(&step)
+		_, err := iwork.InsertOrUpdateWorkStep(&step, o)
 		if err != nil {
 			return err
 		}
@@ -241,6 +247,7 @@ func RefactorWorkStepInfoService(serviceArgs map[string]interface{}) error {
 	work_id := serviceArgs["work_id"].(int64)
 	refactor_worksub_name := serviceArgs["refactor_worksub_name"].(string)
 	refactor_work_step_ids := serviceArgs["refactor_work_step_ids"].(string)
+	o := serviceArgs["o"].(orm.Ormer)
 	var refactor_work_step_id_arr []int
 	json.Unmarshal([]byte(refactor_work_step_ids), &refactor_work_step_id_arr)
 	// 校验 refactor_work_step_id_arr 是否连续
@@ -256,16 +263,16 @@ func RefactorWorkStepInfoService(serviceArgs map[string]interface{}) error {
 		LastUpdatedBy:   "SYSTEM",
 		LastUpdatedTime: time.Now(),
 	}
-	if _, err := iwork.InsertOrUpdateWork(subWork); err != nil {
+	if _, err := iwork.InsertOrUpdateWork(subWork, o); err != nil {
 		return err
 	}
 	// 为子流程添加开始和结束节点
-	if err := InsertStartEndWorkStepNode(subWork.Id); err != nil {
+	if err := InsertStartEndWorkStepNode(subWork.Id, o); err != nil {
 		return err
 	}
 	// 循环移动子步骤
 	for index, work_step_id := range refactor_work_step_id_arr {
-		step, err := iwork.QueryWorkStepInfo(work_id, int64(work_step_id))
+		step, err := iwork.QueryWorkStepInfo(work_id, int64(work_step_id), o)
 		if err != nil {
 			return err
 		}
@@ -275,7 +282,7 @@ func RefactorWorkStepInfoService(serviceArgs map[string]interface{}) error {
 		newStep := iwork.CopyWorkStepInfo(step)
 		newStep.WorkId = subWork.Id
 		newStep.WorkStepId = int64(index + 2)
-		if _, err := iwork.InsertOrUpdateWorkStep(newStep); err != nil {
+		if _, err := iwork.InsertOrUpdateWorkStep(newStep, o); err != nil {
 			return err
 		}
 		// 当前流程循环删除该节点
@@ -292,9 +299,10 @@ func EditWorkStepParamInfoService(serviceArgs map[string]interface{}) error {
 	work_step_id := serviceArgs["work_step_id"].(int64)
 	paramInputSchemaStr := serviceArgs["paramInputSchemaStr"].(string)
 	paramMappingsStr := serviceArgs["paramMappingsStr"].(string)
+	o := serviceArgs["o"].(orm.Ormer)
 	var paramInputSchema schema.ParamInputSchema
 	json.Unmarshal([]byte(paramInputSchemaStr), &paramInputSchema)
-	step, err := iwork.QueryOneWorkStep(work_id, work_step_id)
+	step, err := iwork.QueryOneWorkStep(work_id, work_step_id, o)
 	if err != nil {
 		return err
 	}
@@ -304,29 +312,29 @@ func EditWorkStepParamInfoService(serviceArgs map[string]interface{}) error {
 	step.CreatedTime = time.Now()
 	step.LastUpdatedBy = "SYSTEM"
 	step.LastUpdatedTime = time.Now()
-	_, err = iwork.InsertOrUpdateWorkStep(&step)
+	_, err = iwork.InsertOrUpdateWorkStep(&step, o)
 	if err != nil {
 		return err
 	}
 	// 保存完静态参数后自动构建获动态参数并保存
-	BuildDynamic(work_id, work_step_id)
+	BuildDynamic(work_id, work_step_id, o)
 	return nil
 }
 
 // 构建动态值
-func BuildDynamic(work_id int64, work_step_id int64) {
+func BuildDynamic(work_id int64, work_step_id int64, o orm.Ormer) {
 	// 自动创建子流程
-	BuildAutoCreateSubWork(work_id, work_step_id)
+	BuildAutoCreateSubWork(work_id, work_step_id, o)
 	// 构建动态输入值
-	BuildDynamicInput(work_id, work_step_id)
+	BuildDynamicInput(work_id, work_step_id, o)
 	// 构建动态输出值
-	BuildDynamicOutput(work_id, work_step_id)
+	BuildDynamicOutput(work_id, work_step_id, o)
 }
 
 // 构建动态输入值
-func BuildDynamicInput(work_id int64, work_step_id int64) {
+func BuildDynamicInput(work_id int64, work_step_id int64, o orm.Ormer) {
 	// 读取 work_step 信息
-	step, err := iwork.QueryWorkStepInfo(work_id, work_step_id)
+	step, err := iwork.QueryWorkStepInfo(work_id, work_step_id, o)
 	if err != nil {
 		panic(err)
 	}
@@ -346,15 +354,15 @@ func BuildDynamicInput(work_id int64, work_step_id int64) {
 	}
 	paramInputSchema := &schema.ParamInputSchema{ParamInputSchemaItems: newInputSchemaItems}
 	step.WorkStepInput = paramInputSchema.RenderToXml()
-	if _, err = iwork.InsertOrUpdateWorkStep(&step); err != nil {
+	if _, err = iwork.InsertOrUpdateWorkStep(&step, o); err != nil {
 		panic(err)
 	}
 }
 
 // 构建动态输出值
-func BuildDynamicOutput(work_id int64, work_step_id int64) {
+func BuildDynamicOutput(work_id int64, work_step_id int64, o orm.Ormer) {
 	// 读取 work_step 信息
-	step, err := iwork.QueryWorkStepInfo(work_id, work_step_id)
+	step, err := iwork.QueryWorkStepInfo(work_id, work_step_id, o)
 	if err != nil {
 		panic(err)
 	}
@@ -363,12 +371,12 @@ func BuildDynamicOutput(work_id int64, work_step_id int64) {
 	defaultParamOutputSchema.ParamOutputSchemaItems = append(defaultParamOutputSchema.ParamOutputSchemaItems, runtimeParamOutputSchema.ParamOutputSchemaItems...)
 	// 构建输出参数,使用全新值
 	step.WorkStepOutput = defaultParamOutputSchema.RenderToXml()
-	if _, err = iwork.InsertOrUpdateWorkStep(&step); err != nil {
+	if _, err = iwork.InsertOrUpdateWorkStep(&step, o); err != nil {
 		panic(err)
 	}
 }
 
-func checkAndCreateSubWork(work_name string) {
+func checkAndCreateSubWork(work_name string, o orm.Ormer) {
 	if _, err := iwork.QueryWorkByName(work_name, orm.NewOrm()); err != nil {
 		// 不存在 work 则直接创建
 		work := &iwork.Work{
@@ -379,16 +387,16 @@ func checkAndCreateSubWork(work_name string) {
 			LastUpdatedBy:   "SYSTEM",
 			LastUpdatedTime: time.Now(),
 		}
-		if _, err := iwork.InsertOrUpdateWork(work); err == nil {
+		if _, err := iwork.InsertOrUpdateWork(work, o); err == nil {
 			// 写入 DB 并自动创建开始和结束节点
-			InsertStartEndWorkStepNode(work.Id)
+			InsertStartEndWorkStepNode(work.Id, o)
 		}
 	}
 }
 
-func BuildAutoCreateSubWork(work_id int64, work_step_id int64) {
+func BuildAutoCreateSubWork(work_id int64, work_step_id int64, o orm.Ormer) {
 	// 读取 work_step 信息
-	step, err := iwork.QueryWorkStepInfo(work_id, work_step_id)
+	step, err := iwork.QueryWorkStepInfo(work_id, work_step_id, o)
 	if err != nil {
 		panic(err)
 	}
@@ -407,7 +415,7 @@ func BuildAutoCreateSubWork(work_id int64, work_step_id int64) {
 				}
 				step.WorkStepInput = paramInputSchema.RenderToXml()
 				// 自动创建子流程
-				checkAndCreateSubWork(paramValue)
+				checkAndCreateSubWork(paramValue, o)
 			}
 			// 维护 work 的 WorkSubId 属性
 			subWork, _ := iwork.QueryWorkByName(strings.Replace(paramValue, "$WORK.", "", -1), orm.NewOrm())
@@ -415,7 +423,7 @@ func BuildAutoCreateSubWork(work_id int64, work_step_id int64) {
 			break
 		}
 	}
-	iwork.InsertOrUpdateWorkStep(&step)
+	iwork.InsertOrUpdateWorkStep(&step, o)
 }
 
 func CheckAndGetParamValueByInputSchemaParamName(items []schema.ParamInputSchemaItem, paramName string) (exist bool, paramValue string) {

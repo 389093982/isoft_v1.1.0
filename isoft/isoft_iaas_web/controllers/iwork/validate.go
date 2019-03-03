@@ -61,7 +61,7 @@ func validateAll() {
 	// 从 logCh 中循环读取校验不通过的信息,并将其写入日志表中去
 	for log := range logCh {
 		work, _ := iwork.QueryWorkById(log.WorkId, orm.NewOrm())
-		step, _ := iwork.QueryOneWorkStep(work.Id, log.WorkStepId)
+		step, _ := iwork.QueryOneWorkStep(work.Id, log.WorkStepId, orm.NewOrm())
 		log.TrackingId = trackingId
 		log.WorkName = work.WorkName
 		log.WorkStepName = step.WorkStepName
@@ -198,7 +198,7 @@ func checkVariableRelationShipDetail(item schema.ParamInputSchemaItem, work_id, 
 
 func getAllPreStepNodeName(work_id, work_step_id int64) []string {
 	result := make([]string, 0)
-	steps, err := iwork.QueryAllPreStepInfo(work_id, work_step_id)
+	steps, err := iwork.QueryAllPreStepInfo(work_id, work_step_id, orm.NewOrm())
 	if err == nil {
 		for _, step := range steps {
 			result = append(result, step.WorkStepName)

@@ -30,14 +30,12 @@ func (u *WorkStep) TableUnique() [][]string {
 	}
 }
 
-func DeleteAllWorkStep(work_id int64) error {
-	o := orm.NewOrm()
+func DeleteAllWorkStep(work_id int64, o orm.Ormer) error {
 	_, err := o.QueryTable("work_step").Filter("work_id", work_id).Delete()
 	return err
 }
 
-func InsertOrUpdateWorkStep(step *WorkStep) (id int64, err error) {
-	o := orm.NewOrm()
+func InsertOrUpdateWorkStep(step *WorkStep, o orm.Ormer) (id int64, err error) {
 	if step.Id > 0 {
 		id, err = o.Update(step)
 	} else {
@@ -46,8 +44,7 @@ func InsertOrUpdateWorkStep(step *WorkStep) (id int64, err error) {
 	return
 }
 
-func QueryWorkStep(condArr map[string]interface{}) (steps []WorkStep, err error) {
-	o := orm.NewOrm()
+func QueryWorkStep(condArr map[string]interface{}, o orm.Ormer) (steps []WorkStep, err error) {
 	qs := o.QueryTable("work_step")
 	if work_id, ok := condArr["work_id"]; ok {
 		qs = qs.Filter("work_id", work_id)
@@ -57,8 +54,7 @@ func QueryWorkStep(condArr map[string]interface{}) (steps []WorkStep, err error)
 	return
 }
 
-func QueryOneWorkStep(work_id int64, work_step_id int64) (step WorkStep, err error) {
-	o := orm.NewOrm()
+func QueryOneWorkStep(work_id int64, work_step_id int64, o orm.Ormer) (step WorkStep, err error) {
 	err = o.QueryTable("work_step").Filter("work_id", work_id).Filter("work_step_id", work_step_id).One(&step)
 	return
 }
@@ -68,32 +64,28 @@ func QueryAllWorkStepInfo(work_id int64, o orm.Ormer) (steps []WorkStep, err err
 	return
 }
 
-func QueryWorkStepInfo(work_id int64, work_step_id int64) (step WorkStep, err error) {
-	o := orm.NewOrm()
+func QueryWorkStepInfo(work_id int64, work_step_id int64, o orm.Ormer) (step WorkStep, err error) {
 	err = o.QueryTable("work_step").Filter("work_id", work_id).Filter("work_step_id", work_step_id).One(&step)
 	return
 }
 
 // mod 只支持 +、- 符号
-func BatchChangeWorkStepIdOrder(work_id, work_step_id int64, mod string) error {
-	o := orm.NewOrm()
+func BatchChangeWorkStepIdOrder(work_id, work_step_id int64, mod string, o orm.Ormer) error {
 	query := fmt.Sprintf("UPDATE work_step SET work_step_id = work_step_id %s 1 WHERE work_id = ? and work_step_id > ?", mod)
 	_, err := o.Raw(query, work_id, work_step_id).Exec()
 	return err
 }
 
-func DeleteWorkStepByWorkStepId(work_id, work_step_id int64) error {
-	o := orm.NewOrm()
+func DeleteWorkStepByWorkStepId(work_id, work_step_id int64, o orm.Ormer) error {
 	_, err := o.QueryTable("work_step").Filter("work_step_id", work_step_id).Delete()
 	if err == nil {
-		err = BatchChangeWorkStepIdOrder(work_id, work_step_id, "-")
+		err = BatchChangeWorkStepIdOrder(work_id, work_step_id, "-", o)
 	}
 	return err
 }
 
 // 获取前置节点信息
-func QueryAllPreStepInfo(work_id int64, work_step_id int64) (steps []WorkStep, err error) {
-	o := orm.NewOrm()
+func QueryAllPreStepInfo(work_id int64, work_step_id int64, o orm.Ormer) (steps []WorkStep, err error) {
 	_, err = o.QueryTable("work_step").Filter("work_id", work_id).
 		Filter("work_step_id__lt", work_step_id).OrderBy("work_step_id").All(&steps)
 	return

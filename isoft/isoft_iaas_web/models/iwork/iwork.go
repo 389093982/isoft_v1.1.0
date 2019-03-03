@@ -31,8 +31,7 @@ func QueryWorkByName(work_name string, o orm.Ormer) (work Work, err error) {
 	return
 }
 
-func InsertOrUpdateWork(work *Work) (id int64, err error) {
-	o := orm.NewOrm()
+func InsertOrUpdateWork(work *Work, o orm.Ormer) (id int64, err error) {
 	if work.Id > 0 {
 		id, err = o.Update(work)
 	} else {
@@ -48,15 +47,17 @@ func QueryParentWorks(work_id int64, o orm.Ormer) (works []Work, counts int64, e
 	if err == nil {
 		for _, param := range params {
 			parent_work_id := param["WorkId"].(int64)
-			pWork, _ := QueryWorkById(parent_work_id, o)
+			pWork, err := QueryWorkById(parent_work_id, o)
+			if err != nil {
+				return nil, 0, err
+			}
 			works = append(works, pWork)
 		}
 	}
 	return
 }
 
-func QueryWork(condArr map[string]string, page int, offset int) (works []Work, counts int64, err error) {
-	o := orm.NewOrm()
+func QueryWork(condArr map[string]string, page int, offset int, o orm.Ormer) (works []Work, counts int64, err error) {
 	qs := o.QueryTable("work")
 	var cond = orm.NewCondition()
 	if search, ok := condArr["search"]; ok && strings.TrimSpace(search) != "" {
@@ -71,11 +72,10 @@ func QueryWork(condArr map[string]string, page int, offset int) (works []Work, c
 	return
 }
 
-func DeleteWorkById(id int64) error {
-	if err := DeleteAllWorkStep(id); err != nil {
+func DeleteWorkById(id int64, o orm.Ormer) error {
+	if err := DeleteAllWorkStep(id, o); err != nil {
 		return err
 	}
-	o := orm.NewOrm()
 	_, err := o.QueryTable("work").Filter("id", id).Delete()
 	return err
 }
