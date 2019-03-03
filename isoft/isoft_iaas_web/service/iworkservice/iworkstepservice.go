@@ -53,6 +53,7 @@ func LoadEntityInfo() *schema.ParamOutputSchema {
 }
 
 func LoadPreNodeOutputService(serviceArgs map[string]interface{}) (result map[string]interface{}, err error) {
+	result = make(map[string]interface{}, 0)
 	work_id := serviceArgs["work_id"].(int64)
 	work_step_id := serviceArgs["work_step_id"].(int64)
 	preParamOutputSchemaTreeNodeArr := make([]*schema.TreeNode, 0)
@@ -78,6 +79,7 @@ func LoadPreNodeOutputService(serviceArgs map[string]interface{}) (result map[st
 }
 
 func GetAllWorkStepInfoService(serviceArgs map[string]interface{}) (result map[string]interface{}, err error) {
+	result = make(map[string]interface{}, 0)
 	work_id := serviceArgs["work_id"].(int64)
 	steps, err := iwork.QueryAllWorkStepInfo(work_id)
 	if err != nil {
@@ -88,6 +90,7 @@ func GetAllWorkStepInfoService(serviceArgs map[string]interface{}) (result map[s
 }
 
 func LoadWorkStepInfoService(serviceArgs map[string]interface{}) (result map[string]interface{}, err error) {
+	result = make(map[string]interface{}, 0)
 	work_id := serviceArgs["work_id"].(int64)
 	work_step_id := serviceArgs["work_step_id"].(int64)
 	// 读取 work_step 信息
@@ -115,6 +118,7 @@ func DeleteWorkStepByWorkStepIdService(serviceArgs map[string]interface{}) error
 }
 
 func FilterWorkStepService(serviceArgs map[string]interface{}) (result map[string]interface{}, err error) {
+	result = make(map[string]interface{}, 0)
 	condArr := make(map[string]interface{})
 	condArr["work_id"] = serviceArgs["work_id"].(int64)
 	worksteps, err := iwork.QueryWorkStep(condArr)

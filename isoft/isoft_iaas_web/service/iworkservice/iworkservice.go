@@ -29,6 +29,7 @@ func RunWorkService(serviceArgs map[string]interface{}) error {
 }
 
 func FilterPageLogRecord(serviceArgs map[string]interface{}) (result map[string]interface{}, err error) {
+	result = make(map[string]interface{}, 0)
 	work_id := serviceArgs["work_id"].(int64)
 	offset := serviceArgs["offset"].(int)
 	current_page := serviceArgs["current_page"].(int)
@@ -47,6 +48,7 @@ func FilterPageLogRecord(serviceArgs map[string]interface{}) (result map[string]
 }
 
 func FilterPageWorkService(serviceArgs map[string]interface{}) (result map[string]interface{}, err error) {
+	result = make(map[string]interface{}, 0)
 	condArr := serviceArgs["condArr"].(map[string]string)
 	offset := serviceArgs["offset"].(int)
 	current_page := serviceArgs["current_page"].(int)
