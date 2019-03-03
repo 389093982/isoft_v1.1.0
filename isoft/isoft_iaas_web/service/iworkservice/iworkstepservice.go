@@ -4,10 +4,30 @@ import (
 	"encoding/json"
 	"errors"
 	"isoft/isoft/common/stringutil"
+	"isoft/isoft_iaas_web/core/iworkdata/schema"
+	"isoft/isoft_iaas_web/core/iworknode"
 	"isoft/isoft_iaas_web/models/iwork"
 	"strings"
 	"time"
 )
+
+func LoadWorkStepInfoService(serviceArgs map[string]interface{}) (result map[string]interface{}, err error) {
+	work_id := serviceArgs["work_id"].(int64)
+	work_step_id := serviceArgs["work_step_id"].(int64)
+	// 读取 work_step 信息
+	step, err := iwork.QueryWorkStepInfo(work_id, work_step_id)
+	if err != nil {
+		return nil, err
+	}
+	var paramMappingsArr []string
+	json.Unmarshal([]byte(step.WorkStepParamMapping), &paramMappingsArr)
+	result["step"] = step
+	result["paramInputSchema"] = schema.GetCacheParamInputSchema(&step, &iworknode.WorkStepFactory{WorkStep: &step})
+	result["paramOutputSchema"] = schema.GetCacheParamOutputSchema(&step)
+	result["paramOutputSchemaTreeNode"] = schema.GetCacheParamOutputSchema(&step).RenderToTreeNodes("output")
+	result["paramMappings"] = paramMappingsArr
+	return
+}
 
 func DeleteWorkStepByWorkStepIdService(serviceArgs map[string]interface{}) error {
 	work_id := serviceArgs["work_id"].(int64)

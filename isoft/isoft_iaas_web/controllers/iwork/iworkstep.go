@@ -1,9 +1,7 @@
 package iwork
 
 import (
-	"encoding/json"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
-	"isoft/isoft_iaas_web/core/iworknode"
 	"isoft/isoft_iaas_web/models/iwork"
 	"isoft/isoft_iaas_web/service"
 	"isoft/isoft_iaas_web/service/iworkservice"
@@ -66,19 +64,16 @@ func (this *WorkController) DeleteWorkStepByWorkStepId() {
 func (this *WorkController) LoadWorkStepInfo() {
 	work_id, _ := this.GetInt64("work_id")
 	work_step_id, _ := this.GetInt64("work_step_id")
-	// 读取 work_step 信息
-	if step, err := iwork.QueryWorkStepInfo(work_id, work_step_id); err == nil {
-		var paramMappingsArr []string
-		json.Unmarshal([]byte(step.WorkStepParamMapping), &paramMappingsArr)
-		// 返回结果
-		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "step": step,
-			"paramInputSchema":          schema.GetCacheParamInputSchema(&step, &iworknode.WorkStepFactory{WorkStep: &step}),
-			"paramOutputSchema":         schema.GetCacheParamOutputSchema(&step),
-			"paramOutputSchemaTreeNode": schema.GetCacheParamOutputSchema(&step).RenderToTreeNodes("output"),
-			"paramMappings":             paramMappingsArr,
+	serviceArgs := map[string]interface{}{"work_id": work_id, "work_step_id": work_step_id}
+	if result, err := service.ExecuteResultServiceWithTx(serviceArgs, iworkservice.LoadWorkStepInfoService); err == nil {
+		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "step": result["step"],
+			"paramInputSchema":          result["paramInputSchema"],
+			"paramOutputSchema":         result["paramOutputSchema"],
+			"paramOutputSchemaTreeNode": result["paramOutputSchemaTreeNode"],
+			"paramMappings":             result["paramMappings"],
 		}
 	} else {
-		this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
+		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": err.Error()}
 	}
 	this.ServeJSON()
 }
