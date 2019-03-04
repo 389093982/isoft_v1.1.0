@@ -280,6 +280,47 @@ func createSubWork(refactor_worksub_name string, o orm.Ormer) (int64, error) {
 	return subWork.Id, nil
 }
 
+func getRefactorWorkStep(work_id, work_step_id int64, o orm.Ormer) (step iwork.WorkStep, err error) {
+	step, err = iwork.QueryWorkStepInfo(work_id, int64(work_step_id), o)
+	if err != nil {
+		return
+	}
+	if step.WorkStepType == "work_start" || step.WorkStepType == "work_end" {
+		return step, errors.New("start 和 end 节点不能重构！")
+	}
+	return step, nil
+}
+
+func refactorSubWork(refactorStep iwork.WorkStep, subWorkId int64, o orm.Ormer) error {
+	// 将子流程 start 节点后面所有的步骤 id 顺序 + 1
+	err := iwork.BatchChangeWorkStepIdOrder(subWorkId, 1, "+", o)
+	if err != nil {
+		return err
+	}
+	newStep := iwork.CopyWorkStepInfo(refactorStep)
+	newStep.WorkId = subWorkId
+	newStep.WorkStepId = 2
+	// 在 2 号步骤位置插入当前步骤
+	if _, err := iwork.InsertOrUpdateWorkStep(newStep, o); err != nil {
+		return err
+	}
+	return nil
+}
+
+func refactorCurrentWorkByDelete(refactorStep iwork.WorkStep, o orm.Ormer) error {
+	_serviceArgs := map[string]interface{}{"work_id": refactorStep.WorkId, "work_step_id": refactorStep.WorkStepId, "o": o}
+	return DeleteWorkStepByWorkStepIdService(_serviceArgs)
+}
+
+func refactorCurrentWorkByChangeToWorkSub(subWorkId int64, refactorStep iwork.WorkStep, o orm.Ormer) error {
+	refactorStep.WorkStepType = "work_sub"
+	refactorStep.WorkSubId = subWorkId
+	if _, err := iwork.InsertOrUpdateWorkStep(&refactorStep, o); err != nil {
+		return err
+	}
+	return nil
+}
+
 func RefactorWorkStepInfoService(serviceArgs map[string]interface{}) error {
 	// 获取参数
 	work_id := serviceArgs["work_id"].(int64)
@@ -298,30 +339,20 @@ func RefactorWorkStepInfoService(serviceArgs map[string]interface{}) error {
 		return err
 	}
 	// 循环移动子步骤,移动一个删除一个,反转slice,从 id 大的开始执行
-	for _, work_step_id := range iworkutil.ReverseIntSlice(refactor_work_step_id_arr) {
-		step, err := iwork.QueryWorkStepInfo(work_id, int64(work_step_id), o)
+	for index, work_step_id := range iworkutil.ReverseIntSlice(refactor_work_step_id_arr) {
+		refactorStep, err := getRefactorWorkStep(work_id, int64(work_step_id), o)
 		if err != nil {
 			return err
 		}
-		if step.WorkStepType == "work_start" || step.WorkStepType == "work_end" {
-			return errors.New("start 和 end 节点不能重构！")
-		}
-		// 将子流程 start 节点后面所有的步骤 id 顺序 + 1
-		err = iwork.BatchChangeWorkStepIdOrder(subWorkId, 1, "+", o)
-		if err != nil {
+		if err := refactorSubWork(refactorStep, subWorkId, o); err != nil {
 			return err
 		}
-		newStep := iwork.CopyWorkStepInfo(step)
-		newStep.WorkId = subWorkId
-		newStep.WorkStepId = 2
-		// 在 2 号步骤位置插入当前步骤
-		if _, err := iwork.InsertOrUpdateWorkStep(newStep, o); err != nil {
-			return err
-		}
-		// 当前流程循环删除该节点
-		_serviceArgs := map[string]interface{}{"work_id": work_id, "work_step_id": int64(work_step_id), "o": o}
-		if err := DeleteWorkStepByWorkStepIdService(_serviceArgs); err != nil {
-			return err
+		if index == len(refactor_work_step_id_arr)-1 {
+			// 最后一次操作不再是删除,而是替换成子节点
+			return refactorCurrentWorkByChangeToWorkSub(subWorkId, refactorStep, o)
+		} else {
+			// 删除节点
+			return refactorCurrentWorkByDelete(refactorStep, o)
 		}
 	}
 	return nil
