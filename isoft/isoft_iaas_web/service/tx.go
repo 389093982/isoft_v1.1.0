@@ -17,7 +17,8 @@ func ExecuteServiceWithTx(serviceArgs map[string]interface{}, serviceFunc func(a
 	return nil
 }
 
-func ExecuteResultServiceWithTx(serviceArgs map[string]interface{}, serviceFunc func(args map[string]interface{}) (map[string]interface{}, error)) (map[string]interface{}, error) {
+func ExecuteResultServiceWithTx(serviceArgs map[string]interface{},
+	serviceFunc func(args map[string]interface{}) (map[string]interface{}, error)) (map[string]interface{}, error) {
 	o := orm.NewOrm()
 	err := o.Begin()
 	if err != nil {

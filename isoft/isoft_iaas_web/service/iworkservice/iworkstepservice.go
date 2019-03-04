@@ -259,6 +259,26 @@ func ChangeReferencesWorkStepName(work_id int64, oldWorkStepName, workStepName s
 	return nil
 }
 
+func createSubWork(refactor_worksub_name string, o orm.Ormer) (int64, error) {
+	// 创建子流程
+	subWork := &iwork.Work{
+		WorkName:        refactor_worksub_name,
+		WorkDesc:        "refactor worksub",
+		CreatedBy:       "SYSTEM",
+		CreatedTime:     time.Now(),
+		LastUpdatedBy:   "SYSTEM",
+		LastUpdatedTime: time.Now(),
+	}
+	if _, err := iwork.InsertOrUpdateWork(subWork, o); err != nil {
+		return -1, err
+	}
+	// 为子流程添加开始和结束节点
+	if err := InsertStartEndWorkStepNode(subWork.Id, o); err != nil {
+		return -1, err
+	}
+	return subWork.Id, nil
+}
+
 func RefactorWorkStepInfoService(serviceArgs map[string]interface{}) error {
 	// 获取参数
 	work_id := serviceArgs["work_id"].(int64)
@@ -272,19 +292,8 @@ func RefactorWorkStepInfoService(serviceArgs map[string]interface{}) error {
 		return errors.New("refactor workStepId 必须是连续的!")
 	}
 	// 创建子流程
-	subWork := &iwork.Work{
-		WorkName:        refactor_worksub_name,
-		WorkDesc:        "refactor worksub",
-		CreatedBy:       "SYSTEM",
-		CreatedTime:     time.Now(),
-		LastUpdatedBy:   "SYSTEM",
-		LastUpdatedTime: time.Now(),
-	}
-	if _, err := iwork.InsertOrUpdateWork(subWork, o); err != nil {
-		return err
-	}
-	// 为子流程添加开始和结束节点
-	if err := InsertStartEndWorkStepNode(subWork.Id, o); err != nil {
+	subWorkId, err := createSubWork(refactor_worksub_name, o)
+	if err != nil {
 		return err
 	}
 	// 循环移动子步骤
@@ -297,7 +306,7 @@ func RefactorWorkStepInfoService(serviceArgs map[string]interface{}) error {
 			return errors.New("start 和 end 节点不能重构！")
 		}
 		newStep := iwork.CopyWorkStepInfo(step)
-		newStep.WorkId = subWork.Id
+		newStep.WorkId = subWorkId
 		newStep.WorkStepId = int64(index + 2)
 		if _, err := iwork.InsertOrUpdateWorkStep(newStep, o); err != nil {
 			return err
