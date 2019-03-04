@@ -322,7 +322,7 @@ func refactorCurrentWorkByChangeToWorkSub(subWorkId int64, refactor_worksub_name
 	inputSchema := factory.GetDefaultParamInputSchema()
 	for index, item := range inputSchema.ParamInputSchemaItems {
 		if item.ParamName == iworkconst.STRING_PREFIX+"work_sub" {
-			item.ParamValue = "$WORK." + refactor_worksub_name
+			item.ParamValue = fmt.Sprintf("$WORK.%s;", refactor_worksub_name)
 			inputSchema.ParamInputSchemaItems[index] = item
 			break
 		}
