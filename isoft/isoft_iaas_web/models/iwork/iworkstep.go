@@ -77,7 +77,7 @@ func BatchChangeWorkStepIdOrder(work_id, work_step_id int64, mod string, o orm.O
 }
 
 func DeleteWorkStepByWorkStepId(work_id, work_step_id int64, o orm.Ormer) error {
-	_, err := o.QueryTable("work_step").Filter("work_step_id", work_step_id).Delete()
+	_, err := o.QueryTable("work_step").Filter("work_id", work_id).Filter("work_step_id", work_step_id).Delete()
 	if err == nil {
 		err = BatchChangeWorkStepIdOrder(work_id, work_step_id, "-", o)
 	}
