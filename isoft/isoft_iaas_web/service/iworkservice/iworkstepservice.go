@@ -303,7 +303,7 @@ func RefactorWorkStepInfoService(serviceArgs map[string]interface{}) error {
 			return err
 		}
 		// 当前流程循环删除该节点
-		_serviceArgs := map[string]interface{}{"work_id": work_id, "work_step_id": int64(work_step_id)}
+		_serviceArgs := map[string]interface{}{"work_id": work_id, "work_step_id": int64(work_step_id), "o": o}
 		if err := DeleteWorkStepByWorkStepIdService(_serviceArgs); err != nil {
 			return err
 		}
