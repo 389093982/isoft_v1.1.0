@@ -9,6 +9,7 @@ import (
 	"isoft/isoft_iaas_web/core/iworkconst"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
 	"isoft/isoft_iaas_web/core/iworknode"
+	"isoft/isoft_iaas_web/core/iworkutil"
 	"isoft/isoft_iaas_web/models/iwork"
 	"strings"
 	"time"
@@ -296,8 +297,8 @@ func RefactorWorkStepInfoService(serviceArgs map[string]interface{}) error {
 	if err != nil {
 		return err
 	}
-	// 循环移动子步骤
-	for index, work_step_id := range refactor_work_step_id_arr {
+	// 循环移动子步骤,移动一个删除一个,反转slice,从 id 大的开始执行
+	for _, work_step_id := range iworkutil.ReverseIntSlice(refactor_work_step_id_arr) {
 		step, err := iwork.QueryWorkStepInfo(work_id, int64(work_step_id), o)
 		if err != nil {
 			return err
@@ -305,9 +306,15 @@ func RefactorWorkStepInfoService(serviceArgs map[string]interface{}) error {
 		if step.WorkStepType == "work_start" || step.WorkStepType == "work_end" {
 			return errors.New("start 和 end 节点不能重构！")
 		}
+		// 将子流程 start 节点后面所有的步骤 id 顺序 + 1
+		err = iwork.BatchChangeWorkStepIdOrder(subWorkId, 1, "+", o)
+		if err != nil {
+			return err
+		}
 		newStep := iwork.CopyWorkStepInfo(step)
 		newStep.WorkId = subWorkId
-		newStep.WorkStepId = int64(index + 2)
+		newStep.WorkStepId = 2
+		// 在 2 号步骤位置插入当前步骤
 		if _, err := iwork.InsertOrUpdateWorkStep(newStep, o); err != nil {
 			return err
 		}
