@@ -312,9 +312,22 @@ func refactorCurrentWorkByDelete(refactorStep iwork.WorkStep, o orm.Ormer) error
 	return DeleteWorkStepByWorkStepIdService(_serviceArgs)
 }
 
-func refactorCurrentWorkByChangeToWorkSub(subWorkId int64, refactorStep iwork.WorkStep, o orm.Ormer) error {
+func refactorCurrentWorkByChangeToWorkSub(subWorkId int64, refactor_worksub_name string, refactorStep iwork.WorkStep, o orm.Ormer) error {
+	// 修改 refactorStep 的类型
 	refactorStep.WorkStepType = "work_sub"
+	// 修改 refactorStep 的 subWorkId
 	refactorStep.WorkSubId = subWorkId
+	// 修改 refactorStep 的 WorkStepInput
+	factory := iworknode.WorkStepFactory{WorkStep: &refactorStep}
+	inputSchema := factory.GetDefaultParamInputSchema()
+	for index, item := range inputSchema.ParamInputSchemaItems {
+		if item.ParamName == iworkconst.STRING_PREFIX+"work_sub" {
+			item.ParamValue = "$WORK." + refactor_worksub_name
+			inputSchema.ParamInputSchemaItems[index] = item
+			break
+		}
+	}
+	refactorStep.WorkStepInput = inputSchema.RenderToXml()
 	if _, err := iwork.InsertOrUpdateWorkStep(&refactorStep, o); err != nil {
 		return err
 	}
@@ -349,10 +362,14 @@ func RefactorWorkStepInfoService(serviceArgs map[string]interface{}) error {
 		}
 		if index == len(refactor_work_step_id_arr)-1 {
 			// 最后一次操作不再是删除,而是替换成子节点
-			return refactorCurrentWorkByChangeToWorkSub(subWorkId, refactorStep, o)
+			if err := refactorCurrentWorkByChangeToWorkSub(subWorkId, refactor_worksub_name, refactorStep, o); err != nil {
+				return err
+			}
 		} else {
 			// 删除节点
-			return refactorCurrentWorkByDelete(refactorStep, o)
+			if err := refactorCurrentWorkByDelete(refactorStep, o); err != nil {
+				return err
+			}
 		}
 	}
 	return nil
