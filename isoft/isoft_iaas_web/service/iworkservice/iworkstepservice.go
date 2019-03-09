@@ -344,9 +344,9 @@ func BatchChangeIndentService(serviceArgs map[string]interface{}) error {
 	json.Unmarshal([]byte(indent_work_step_ids), &indent_work_step_id_arr)
 	for _, work_step_id := range indent_work_step_id_arr {
 		if step, err := iwork.QueryWorkStepInfo(work_id, int64(work_step_id), o); err == nil {
-			if mod == "left" {
+			if mod == "left" && step.WorkStepIndent > 0 {
 				step.WorkStepIndent -= 1
-			} else {
+			} else if mod == "right" {
 				step.WorkStepIndent += 1
 			}
 			if _, err := iwork.InsertOrUpdateWorkStep(&step, o); err != nil {
