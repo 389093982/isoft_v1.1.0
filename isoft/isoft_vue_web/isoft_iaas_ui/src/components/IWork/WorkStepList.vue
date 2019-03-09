@@ -68,6 +68,9 @@
             title: 'work_step_indent',
             key: 'work_step_indent',
             width: 150,
+            render: (h,params)=>{
+              return h('div', params.row.work_step_indent)
+            }
           },
           {
             title: '步骤编号',

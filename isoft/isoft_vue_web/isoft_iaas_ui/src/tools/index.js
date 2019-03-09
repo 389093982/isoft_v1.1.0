@@ -107,3 +107,8 @@ export const validateCron = (cron) => cronValidate(cron);
 export function strSplit (str, sep) {
   return str.split(sep);
 }
+
+// 字符串重复 n 次
+export function getRepeatStr(str, n){
+  return new Array(n+1).join(str);
+}
