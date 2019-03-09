@@ -70,7 +70,11 @@
             key: 'work_step_indent',
             width: 150,
             render: (h,params)=>{
-              return h("div", getRepeatStr('\xa0\xa0\xa0', params.row.work_step_indent) + params.row.work_step_indent)
+              return h("div",{
+                style: {
+                  color: ['red','green','blue','grey'][params.row.work_step_indent],
+                },
+              },getRepeatStr('\xa0\xa0\xa0', params.row.work_step_indent) + params.row.work_step_indent)
             }
           },
           {
