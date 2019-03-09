@@ -9,12 +9,9 @@
       <Scroll height="450">
         <!-- 表单信息 -->
         <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="140">
-          <FormItem label="work_step_name" prop="work_step_name">
-            <Input v-model.trim="formValidate.work_step_name" readonly placeholder="请输入 work_step_name"></Input>
-          </FormItem>
-          <FormItem label="work_step_type" prop="work_step_type">
-            <Input v-model.trim="formValidate.work_step_type" readonly placeholder="请输入 work_step_type"></Input>
-          </FormItem>
+          <h3 style="text-align: center;color: green;margin-bottom: 20px;">
+            步骤名称:{{formValidate.work_step_name}},步骤类型:{{formValidate.work_step_type}}
+          </h3>
           <Row>
             <Col span="14">
               <FormItem label="work_step_input" prop="work_step_input">
