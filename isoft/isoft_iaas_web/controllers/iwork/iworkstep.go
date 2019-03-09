@@ -119,8 +119,21 @@ func (this *WorkController) RefactorWorkStepInfo() {
 	serviceArgs := make(map[string]interface{}, 0)
 	serviceArgs["work_id"], _ = this.GetInt64("work_id")
 	serviceArgs["refactor_worksub_name"] = this.GetString("refactor_worksub_name")
-	serviceArgs["refactor_work_step_ids"] = this.GetString("refactor_work_step_ids")
+	serviceArgs["refactor_work_step_ids"] = this.GetString("selections")
 	if err := service.ExecuteServiceWithTx(serviceArgs, iworkservice.RefactorWorkStepInfoService); err == nil {
+		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
+	} else {
+		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": err.Error()}
+	}
+	this.ServeJSON()
+}
+
+func (this *WorkController) BatchChangeIndent() {
+	serviceArgs := make(map[string]interface{}, 0)
+	serviceArgs["work_id"], _ = this.GetInt64("work_id")
+	serviceArgs["mod"] = this.GetString("mod")
+	serviceArgs["indent_work_step_ids"] = this.GetString("selections")
+	if err := service.ExecuteServiceWithTx(serviceArgs, iworkservice.BatchChangeIndentService); err == nil {
 		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
 	} else {
 		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": err.Error()}

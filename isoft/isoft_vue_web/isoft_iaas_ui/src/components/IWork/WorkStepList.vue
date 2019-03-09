@@ -39,6 +39,7 @@
   import {DeleteWorkStepByWorkStepId} from "../../api"
   import {ChangeWorkStepOrder} from "../../api"
   import {RefactorWorkStepInfo} from "../../api"
+  import {BatchChangeIndent} from "../../api"
   import {AddWorkStep} from "../../api"
   import WorkStepParamInfo from "./WorkStepParamInfo"
   import ISimpleLeftRightRow from "../Common/layout/ISimpleLeftRightRow"
@@ -256,21 +257,31 @@
       showRefactorModal:function (){
         this.$refs.refactor_modal.showModal();
       },
-      refactor: async function () {
-        let refactor_work_step_ids = [];
+      getSelectionArr:function(){
+        let selectionArr = [];
         let selections = this.$refs.selection.getSelection();
         for(var i=0; i<selections.length; i++){
-          refactor_work_step_ids.push(selections[i].work_step_id);
+          selectionArr.push(selections[i].work_step_id);
         }
-        const result = await RefactorWorkStepInfo(this.$route.query.work_id, this.refactor_worksub_name, JSON.stringify(refactor_work_step_ids));
+        return selectionArr;
+      },
+      refactor: async function () {
+        let selections = this.getSelectionArr();
+        const result = await RefactorWorkStepInfo(this.$route.query.work_id, this.refactor_worksub_name, JSON.stringify(selections));
         if(result.status == "SUCCESS"){
           this.refreshWorkStepList();
         }else{
           this.$Message.error(result.errorMsg);
         }
       },
-      batchChangeIndent:function (mod) {
-        alert(mod);
+      batchChangeIndent:async function (mod) {
+        let selections = this.getSelectionArr();
+        const result = await BatchChangeIndent(this.$route.query.work_id, mod, JSON.stringify(selections));
+        if(result.status == "SUCCESS"){
+          this.refreshWorkStepList();
+        }else{
+          this.$Message.error(result.errorMsg);
+        }
       }
     },
     mounted: function () {

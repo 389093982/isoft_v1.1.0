@@ -335,6 +335,28 @@ func refactorCurrentWorkByChangeToWorkSub(subWorkId int64, refactor_worksub_name
 	return nil
 }
 
+func BatchChangeIndentService(serviceArgs map[string]interface{}) error {
+	work_id := serviceArgs["work_id"].(int64)
+	mod := serviceArgs["mod"].(string)
+	indent_work_step_ids := serviceArgs["indent_work_step_ids"].(string)
+	o := serviceArgs["o"].(orm.Ormer)
+	var indent_work_step_id_arr []int
+	json.Unmarshal([]byte(indent_work_step_ids), &indent_work_step_id_arr)
+	for _, work_step_id := range indent_work_step_id_arr {
+		if step, err := iwork.QueryWorkStepInfo(work_id, int64(work_step_id), o); err == nil {
+			if mod == "left" {
+				step.WorkStepIndent -= 1
+			} else {
+				step.WorkStepIndent += 1
+			}
+			if _, err := iwork.InsertOrUpdateWorkStep(&step, o); err != nil {
+				return err
+			}
+		}
+	}
+	return nil
+}
+
 func RefactorWorkStepInfoService(serviceArgs map[string]interface{}) error {
 	// 获取参数
 	work_id := serviceArgs["work_id"].(int64)

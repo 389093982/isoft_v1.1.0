@@ -191,7 +191,9 @@ export const ValidateAllWork = () => ajax(BASE_URL+"/iwork/validateAllWork", {},
 // 显示校验结果
 export const LoadValidateResult = () => ajax(BASE_URL+"/iwork/loadValidateResult", {},'POST');
 
-export const RefactorWorkStepInfo = (work_id, refactor_worksub_name,refactor_work_step_ids) => ajax(BASE_URL+"/iwork/refactorWorkStepInfo", {work_id, refactor_worksub_name,refactor_work_step_ids},'POST');
+export const RefactorWorkStepInfo = (work_id, refactor_worksub_name,selections) => ajax(BASE_URL+"/iwork/refactorWorkStepInfo", {work_id, refactor_worksub_name,selections},'POST');
+
+export const BatchChangeIndent = (work_id, mod,selections) => ajax(BASE_URL+"/iwork/batchChangeIndent", {work_id, mod,selections},'POST');
 
 // 跨模块使用,模块化部署时需要使用 nginx 代理
 export const LoginAddr = "/sso/login/";
