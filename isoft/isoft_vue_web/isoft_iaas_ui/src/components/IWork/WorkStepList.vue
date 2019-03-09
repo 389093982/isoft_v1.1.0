@@ -49,6 +49,7 @@
   import {checkContainsInString} from "../../tools"
   import WorkValidate from "./WorkValidate"
   import ISimpleConfirmModal from "../Common/modal/ISimpleConfirmModal"
+  import {getRepeatStr} from "../../tools"
 
   export default {
     name: "WorkStepList",
@@ -65,11 +66,11 @@
             align: 'center',
           },
           {
-            title: 'work_step_indent',
+            title: '缩进级别',
             key: 'work_step_indent',
             width: 150,
             render: (h,params)=>{
-              return h('div', params.row.work_step_indent)
+              return h("div", getRepeatStr('\xa0\xa0\xa0', params.row.work_step_indent) + params.row.work_step_indent)
             }
           },
           {
