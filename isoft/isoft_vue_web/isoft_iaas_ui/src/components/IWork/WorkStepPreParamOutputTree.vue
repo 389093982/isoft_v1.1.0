@@ -6,7 +6,7 @@
 
 <script>
   export default {
-    name: "WorkStepParamOutputDisplay",
+    name: "WorkStepPreParamOutputTree",
     props:{
       paramOutputSchemaTreeNode:{
         type: Object,

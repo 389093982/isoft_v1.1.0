@@ -29,7 +29,7 @@
               <FormItem label="work_step_output" prop="work_step_output">
                 <Tabs type="card" :animated="false">
                   <TabPane label="Tree">
-                    <WorkStepParamOutputDisplay v-if="paramOutputSchemaTreeNode" :paramOutputSchemaTreeNode="paramOutputSchemaTreeNode"/>
+                    <WorkStepPreParamOutputTree v-if="paramOutputSchemaTreeNode" :paramOutputSchemaTreeNode="paramOutputSchemaTreeNode"/>
                   </TabPane>
                 </Tabs>
               </FormItem>
@@ -47,7 +47,7 @@
 
 <script>
   import WorkStepParamInputEdit from "./WorkStepParamInputEdit"
-  import WorkStepParamOutputDisplay from "./WorkStepParamOutputDisplay"
+  import WorkStepPreParamOutputTree from "./WorkStepPreParamOutputTree"
   import ISimpleConfirmModal from "../Common/modal/ISimpleConfirmModal"
   import ParamMapping from "./ParamMapping"
   import {EditWorkStepParamInfo} from "../../api"
@@ -56,7 +56,7 @@
 
   export default {
     name: "WorkStepParamInfo",
-    components:{WorkStepParamInputEdit,WorkStepParamOutputDisplay,ParamMapping,ISimpleConfirmModal},
+    components:{WorkStepParamInputEdit,WorkStepPreParamOutputTree,ParamMapping,ISimpleConfirmModal},
     props: {
       workId: {
         type: Number,
