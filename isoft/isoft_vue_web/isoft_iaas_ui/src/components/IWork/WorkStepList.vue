@@ -1,6 +1,6 @@
 <template>
   <div style="margin: 10px;">
-    <h4 v-if="$route.query.work_name" style="text-align: center;">当前流程为：{{$route.query.work_name}}</h4>
+    <h4 v-if="$route.query.work_name" style="text-align: center;margin-bottom: 10px;">当前流程为：{{$route.query.work_name}}</h4>
 
     <ISimpleLeftRightRow style="margin-bottom: 10px;margin-right: 10px;">
       <!-- left 插槽部分 -->
@@ -8,7 +8,8 @@
         <Row type="flex" justify="start" class="code-row-bg">
           <Col span="6"><Button type="error" @click="addWorkStep('empty')" style="margin-right: 5px;">新建空节点</Button></Col>
           <Col span="6"><Button type="warning" @click="showRefactorModal">Refactor</Button></Col>
-          <Col span="6"><Button type="info">View as Tree</Button></Col>
+          <Col span="6"><Button type="info">向左缩进</Button></Col>
+          <Col span="6"><Button type="success">向右缩进</Button></Col>
 
           <ISimpleConfirmModal ref="refactor_modal" modal-title="重构为子流程" :modal-width="500" @handleSubmit="refactor">
             <Input v-model.trim="refactor_worksub_name" placeholder="请输入重构的子流程名称"></Input>
