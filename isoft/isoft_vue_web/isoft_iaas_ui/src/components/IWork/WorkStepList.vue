@@ -8,8 +8,8 @@
         <Row type="flex" justify="start" class="code-row-bg">
           <Col span="6"><Button type="error" @click="addWorkStep('empty')" style="margin-right: 5px;">新建空节点</Button></Col>
           <Col span="6"><Button type="warning" @click="showRefactorModal">Refactor</Button></Col>
-          <Col span="6"><Button type="info">向左缩进</Button></Col>
-          <Col span="6"><Button type="success">向右缩进</Button></Col>
+          <Col span="6"><Button type="info" @click="batchChangeIndent('left')">向左缩进</Button></Col>
+          <Col span="6"><Button type="success" @click="batchChangeIndent('right')">向右缩进</Button></Col>
 
           <ISimpleConfirmModal ref="refactor_modal" modal-title="重构为子流程" :modal-width="500" @handleSubmit="refactor">
             <Input v-model.trim="refactor_worksub_name" placeholder="请输入重构的子流程名称"></Input>
@@ -268,6 +268,9 @@
         }else{
           this.$Message.error(result.errorMsg);
         }
+      },
+      batchChangeIndent:function (mod) {
+        alert(mod);
       }
     },
     mounted: function () {
