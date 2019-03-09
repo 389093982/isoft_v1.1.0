@@ -25,4 +25,3 @@ func (this *iworkJob) Run() {
 	paramMap := make(map[string]interface{}, 0)
 	httputil.DoPost(fmt.Sprintf("http://localhost:8086/api/iwork/httpservice/%s", this.meta.TaskName), paramMap)
 }
-

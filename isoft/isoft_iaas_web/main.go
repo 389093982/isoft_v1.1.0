@@ -6,7 +6,7 @@ import (
 	_ "isoft/isoft_iaas_web/routers"
 	"isoft/isoft_iaas_web/startup/db"
 	"isoft/isoft_iaas_web/startup/logger"
-	"isoft/isoft_iaas_web/task"
+	"isoft/isoft_iaas_web/startup/task"
 )
 
 func init() {

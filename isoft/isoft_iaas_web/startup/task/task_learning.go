@@ -9,16 +9,15 @@ import (
 )
 
 func startILearningCronTask() {
-	if task, err := getHeartBeatTask(); err == nil{
+	if task, err := getHeartBeatTask(); err == nil {
 		task.Run()
 		toolbox.AddTask("mytask", task)
 	}
 	toolbox.StartTask()
 }
 
-
 func getHeartBeatTask() (*toolbox.Task, error) {
-	if imodules.CheckModule("ilearning"){
+	if imodules.CheckModule("ilearning") {
 		return toolbox.NewTask("heartBeatTask", "0 * * * * *", heartBeatTaskFunc), nil
 	}
 	return nil, errors.New("ilearning moudle is not open!")
