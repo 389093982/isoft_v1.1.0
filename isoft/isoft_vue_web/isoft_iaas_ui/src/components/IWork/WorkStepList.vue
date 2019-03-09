@@ -63,14 +63,14 @@
             align: 'center',
           },
           {
-            title: 'work_id',
-            key: 'work_id',
-            width: 100,
+            title: 'work_step_indent',
+            key: 'work_step_indent',
+            width: 150,
           },
           {
-            title: 'work_step_id',
+            title: '步骤编号',
             key: 'work_step_id',
-            width: 120,
+            width: 100,
             render: (h,params)=>{
               return h('div', [
                   h('span', params.row.work_step_id),

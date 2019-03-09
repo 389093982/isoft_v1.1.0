@@ -161,6 +161,7 @@ func AddWorkStepService(serviceArgs map[string]interface{}) error {
 		WorkId:          work_id,
 		WorkStepName:    "random_" + stringutil.RandomUUID(),
 		WorkStepType:    work_step_type,
+		WorkStepIndent:  0, // 默认缩进级别为 0
 		WorkStepId:      work_step_id + 1,
 		CreatedBy:       "SYSTEM",
 		CreatedTime:     time.Now(),
