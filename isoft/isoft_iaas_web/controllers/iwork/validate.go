@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/astaxie/beego/orm"
 	"isoft/isoft/common/stringutil"
+	"isoft/isoft_iaas_web/core/iworkdata/block"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
 	"isoft/isoft_iaas_web/core/iworknode"
 	"isoft/isoft_iaas_web/core/iworkvalid"
@@ -187,9 +188,9 @@ func checkVariableRelationShipDetail(item schema.ParamInputSchemaItem, work_id, 
 		return
 	}
 	preStepNodeNames := getAllPreStepNodeName(work_id, work_step_id)
-	preStepNodeNames = append(preStepNodeNames, []string{"RESOURCE"}...)
+	preStepNodeNames = append(preStepNodeNames, []string{"RESOURCE", "WORK"}...)
 	for _, referNodeName := range referNodeNames {
-		if !stringutil.CheckContains(strings.Replace(referNodeName, "$.", "", -1), preStepNodeNames) {
+		if !stringutil.CheckContains(strings.Replace(referNodeName, "$", "", -1), preStepNodeNames) {
 			checkResult = append(checkResult, fmt.Sprintf("Invalid variable relationship for %s was found!", referNodeName))
 		}
 	}
@@ -200,8 +201,16 @@ func getAllPreStepNodeName(work_id, work_step_id int64) []string {
 	result := make([]string, 0)
 	steps, err := iwork.QueryAllPreStepInfo(work_id, work_step_id, orm.NewOrm())
 	if err == nil {
+		// 当前步骤信息
+		currentWorkStep, _ := iwork.QueryWorkStepInfo(work_id, work_step_id, orm.NewOrm())
+		// 所有步骤信息
+		allSteps, _ := iwork.QueryAllWorkStepInfo(work_id, orm.NewOrm())
+		currentBlockStep, allBlockSteps := block.ParseAndGetCurrentBlockStep(&currentWorkStep, allSteps)
 		for _, step := range steps {
-			result = append(result, step.WorkStepName)
+			// 判断前置 step 在块范围内是否是可访问的
+			if block.CheckBlockAccessble(allBlockSteps, currentBlockStep, step.WorkStepId) {
+				result = append(result, step.WorkStepName)
+			}
 		}
 	}
 	return result

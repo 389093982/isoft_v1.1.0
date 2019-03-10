@@ -80,7 +80,7 @@ func LoadPreNodeOutputService(serviceArgs map[string]interface{}) (result map[st
 		currentBlockStep, allBlockSteps := block.ParseAndGetCurrentBlockStep(&currentWorkStep, allSteps)
 		for _, step := range steps {
 			// 判断前置 step 在块范围内是否是可访问的
-			if checkBlockAccessble(allBlockSteps, currentBlockStep, step.WorkStepId) {
+			if block.CheckBlockAccessble(allBlockSteps, currentBlockStep, step.WorkStepId) {
 				pos := schema.GetCacheParamOutputSchema(&step)
 				preParamOutputSchemaTreeNodeArr = append(preParamOutputSchemaTreeNodeArr, pos.RenderToTreeNodes("$"+step.WorkStepName))
 			}
@@ -89,28 +89,6 @@ func LoadPreNodeOutputService(serviceArgs map[string]interface{}) (result map[st
 	// 返回结果
 	result["preParamOutputSchemaTreeNodeArr"] = preParamOutputSchemaTreeNodeArr
 	return
-}
-
-// 判断前置 step 在块范围内是否是可访问的
-func checkBlockAccessble(allBlockSteps []*block.BlockStep, currentBlockStep *block.BlockStep, checkStepId int64) bool {
-	for {
-		// 获取父级别 blockStep
-		parentBlockStep := currentBlockStep.ParentBlockStep
-		if parentBlockStep == nil { // 最外层 block
-			for _, blockStep := range allBlockSteps {
-				if blockStep.Step.WorkStepId == checkStepId {
-					return true
-				}
-			}
-			return false
-		}
-		for _, cBlockStep := range parentBlockStep.ChildBlockSteps {
-			if cBlockStep.Step.WorkStepId == checkStepId {
-				return true
-			}
-		}
-		currentBlockStep = parentBlockStep
-	}
 }
 
 func GetAllWorkStepInfoService(serviceArgs map[string]interface{}) (result map[string]interface{}, err error) {

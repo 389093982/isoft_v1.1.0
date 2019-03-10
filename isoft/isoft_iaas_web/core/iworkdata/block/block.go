@@ -91,3 +91,25 @@ func getMinIndentIndex(steps []iwork.WorkStep) []int {
 	sort.Ints(indents)
 	return indentMap[indents[0]]
 }
+
+// 判断前置 step 在块范围内是否是可访问的
+func CheckBlockAccessble(allBlockSteps []*BlockStep, currentBlockStep *BlockStep, checkStepId int64) bool {
+	for {
+		// 获取父级别 blockStep
+		parentBlockStep := currentBlockStep.ParentBlockStep
+		if parentBlockStep == nil { // 最外层 block
+			for _, blockStep := range allBlockSteps {
+				if blockStep.Step.WorkStepId == checkStepId {
+					return true
+				}
+			}
+			return false
+		}
+		for _, cBlockStep := range parentBlockStep.ChildBlockSteps {
+			if cBlockStep.Step.WorkStepId == checkStepId {
+				return true
+			}
+		}
+		currentBlockStep = parentBlockStep
+	}
+}
