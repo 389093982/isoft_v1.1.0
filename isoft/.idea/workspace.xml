@@ -514,7 +514,7 @@
   <component name="PropertiesComponent">
     <property name="DefaultGoTemplateProperty" value="Go File" />
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
-    <property name="GO_FMT" value="false" />
+    <property name="GO_FMT" value="true" />
     <property name="SearchEverywhereHistoryKey" value="int&#9;null&#9;null&#10;id&#9;FILE&#9;file://D:/zhourui/program/go/goland_workspace/src/isoft/isoft_vue_web/isoft_iaas_ui/src/components/SSO/Forbidden.vue&#10;''&#9;null&#9;null" />
     <property name="configurable.Global.GOPATH.is.expanded" value="true" />
     <property name="configurable.Module.GOPATH.is.expanded" value="true" />
