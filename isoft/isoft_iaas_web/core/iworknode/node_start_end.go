@@ -15,7 +15,7 @@ type WorkStartNode struct {
 	Dispatcher *entry.Dispatcher
 }
 
-func (this *WorkStartNode) Execute(trackingId string, skipFunc func(tmpDataMap map[string]interface{}) bool) {
+func (this *WorkStartNode) Execute(trackingId string) {
 	// 存储节点中间数据
 	tmpDataMap := make(map[string]interface{})
 	if this.Dispatcher != nil && len(this.Dispatcher.TmpDataMap) > 0 {
@@ -72,7 +72,7 @@ type WorkEndNode struct {
 	Receiver *entry.Receiver
 }
 
-func (this *WorkEndNode) Execute(trackingId string, skipFunc func(tmpDataMap map[string]interface{}) bool) {
+func (this *WorkEndNode) Execute(trackingId string) {
 	// 数据中心
 	dataStore := datastore.GetDataStore(trackingId)
 	// 节点中间数据

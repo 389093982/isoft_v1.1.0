@@ -16,14 +16,11 @@ type EntityParserNode struct {
 	WorkStep *iwork.WorkStep
 }
 
-func (this *EntityParserNode) Execute(trackingId string, skipFunc func(tmpDataMap map[string]interface{}) bool) {
+func (this *EntityParserNode) Execute(trackingId string) {
 	// 获取数据中心
 	dataStore := datastore.GetDataStore(trackingId)
 	// 节点中间数据
 	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, dataStore)
-	if skipFunc(tmpDataMap) {
-		return
-	} // 跳过当前节点执行
 	inputSchema := schema.GetCacheParamInputSchema(this.WorkStep, &WorkStepFactory{WorkStep: this.WorkStep})
 	for _, item := range inputSchema.ParamInputSchemaItems {
 		if strings.HasSuffix(item.ParamName, "_entity") {

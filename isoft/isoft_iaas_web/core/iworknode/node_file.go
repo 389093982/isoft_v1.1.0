@@ -15,14 +15,11 @@ type FileReadNode struct {
 	WorkStep *iwork.WorkStep
 }
 
-func (this *FileReadNode) Execute(trackingId string, skipFunc func(tmpDataMap map[string]interface{}) bool) {
+func (this *FileReadNode) Execute(trackingId string) {
 	// 数据中心
 	dataStore := datastore.GetDataStore(trackingId)
 	// 节点中间数据
 	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, dataStore)
-	if skipFunc(tmpDataMap) {
-		return
-	} // 跳过当前节点执行
 	file_path := tmpDataMap[iworkconst.STRING_PREFIX+"file_path"].(string)
 	dataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.STRING_PREFIX+"file_path", file_path)
 	if bytes, err := ioutil.ReadFile(file_path); err == nil {
@@ -67,14 +64,11 @@ func checkAppend(tmpDataMap map[string]interface{}) bool {
 	return false
 }
 
-func (this *FileWriteNode) Execute(trackingId string, skipFunc func(tmpDataMap map[string]interface{}) bool) {
+func (this *FileWriteNode) Execute(trackingId string) {
 	// 数据中心
 	dataStore := datastore.GetDataStore(trackingId)
 	// 节点中间数据
 	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, dataStore)
-	if skipFunc(tmpDataMap) {
-		return
-	} // 跳过当前节点执行
 	file_path := tmpDataMap[iworkconst.STRING_PREFIX+"file_path"].(string)
 	// 写字符串
 	if data, ok := tmpDataMap[iworkconst.STRING_PREFIX+"data?"].(string); ok {

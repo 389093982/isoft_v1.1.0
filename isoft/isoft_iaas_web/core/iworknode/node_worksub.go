@@ -19,16 +19,13 @@ type WorkSub struct {
 	WorkSubRunFunc func(work iwork.Work, steps []iwork.WorkStep, dispatcher *entry.Dispatcher) (receiver *entry.Receiver)
 }
 
-func (this *WorkSub) Execute(trackingId string, skipFunc func(tmpDataMap map[string]interface{}) bool) {
+func (this *WorkSub) Execute(trackingId string) {
 	// 获取子流程流程名称
 	workSubName := this.checkAndGetWorkSubName()
 	// 数据中心
 	dataStore := datastore.GetDataStore(trackingId)
 	// 节点中间数据
 	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, dataStore)
-	if skipFunc(tmpDataMap) {
-		return
-	} // 跳过当前节点执行
 	// 运行子流程
 	work, _ := iwork.QueryWorkByName(workSubName, orm.NewOrm())
 	steps, _ := iwork.QueryAllWorkStepByWorkName(workSubName, orm.NewOrm())

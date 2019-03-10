@@ -31,7 +31,7 @@ func getMemoryCache(trackingId string, tmpDataMap map[string]interface{}) *memor
 	}
 }
 
-func (this *MemoryMapCacheNode) Execute(trackingId string, skipFunc func(tmpDataMap map[string]interface{}) bool) {
+func (this *MemoryMapCacheNode) Execute(trackingId string) {
 	// 数据中心
 	dataStore := datastore.GetDataStore(trackingId)
 	// 节点中间数据

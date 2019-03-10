@@ -21,14 +21,11 @@ func getMappingInfoWithRemovePrefixAndSuffix(paramName string) string {
 	return paramName
 }
 
-func (this *GotoConditionNode) Execute(trackingId string, skipFunc func(tmpDataMap map[string]interface{}) bool) {
+func (this *GotoConditionNode) Execute(trackingId string) {
 	// 获取数据中心
 	dataStore := datastore.GetDataStore(trackingId)
 	// 节点中间数据
 	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, dataStore)
-	if skipFunc(tmpDataMap) {
-		return
-	} // 跳过当前节点执行
 	inputSchema := schema.GetCacheParamInputSchema(this.WorkStep, &WorkStepFactory{WorkStep: this.WorkStep})
 	for _, item := range inputSchema.ParamInputSchemaItems {
 		if item.ParamName == iworkconst.BOOL_PREFIX+"goto_end_condition?" {
@@ -92,42 +89,3 @@ func (this *GotoConditionNode) GetRuntimeParamOutputSchema() *schema.ParamOutput
 func (this *GotoConditionNode) ValidateCustom() {
 
 }
-
-//type RedirectNode struct {
-//	BaseNode
-//	WorkStep *iwork.WorkStep
-//}
-//
-//func (this *RedirectNode) Execute(trackingId string, skipFunc func(tmpDataMap map[string]interface{}) bool) {
-//	// 获取数据中心
-//	dataStore := datastore.GetDataStore(trackingId)
-//	// 节点中间数据
-//	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, dataStore)
-//	if skipFunc(tmpDataMap){return}			// 跳过当前节点执行
-//	redirectNodeName := tmpDataMap[iworkconst.STRING_PREFIX + "redirect"].(string)
-//	// 往 dataStore 中发送一条 redirect 指令
-//	dataStore.CacheData("__goto_condition__","__redirect__", redirectNodeName)
-//}
-//
-//func (this *RedirectNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
-//	paramMap := map[int][]string{
-//		1:[]string{iworkconst.STRING_PREFIX + "redirect","无条件直接跳往的节点!"},
-//	}
-//	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
-//}
-//
-//func (this *RedirectNode) GetRuntimeParamInputSchema() *schema.ParamInputSchema {
-//	return &schema.ParamInputSchema{}
-//}
-//
-//func (this *RedirectNode) GetDefaultParamOutputSchema() *schema.ParamOutputSchema {
-//	return &schema.ParamOutputSchema{}
-//}
-//
-//func (this *RedirectNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
-//	return &schema.ParamOutputSchema{}
-//}
-//
-//func (this *RedirectNode) ValidateCustom() {
-//
-//}

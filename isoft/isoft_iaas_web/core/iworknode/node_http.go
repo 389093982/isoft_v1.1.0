@@ -18,14 +18,11 @@ type HttpRequestNode struct {
 	WorkStep *iwork.WorkStep
 }
 
-func (this *HttpRequestNode) Execute(trackingId string, skipFunc func(tmpDataMap map[string]interface{}) bool) {
+func (this *HttpRequestNode) Execute(trackingId string) {
 	// 数据中心
 	_dataStore := datastore.GetDataStore(trackingId)
 	// 节点中间数据
 	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, _dataStore)
-	if skipFunc(tmpDataMap) {
-		return
-	} // 跳过当前节点执行
 	// 参数准备
 	var request_url, request_method string
 	if _request_url, ok := tmpDataMap[iworkconst.STRING_PREFIX+"request_url"].(string); ok {

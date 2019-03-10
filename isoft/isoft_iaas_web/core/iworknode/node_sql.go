@@ -19,16 +19,13 @@ type SQLQueryNode struct {
 	WorkStep *iwork.WorkStep
 }
 
-func (this *SQLQueryNode) Execute(trackingId string, skipFunc func(tmpDataMap map[string]interface{}) bool) {
+func (this *SQLQueryNode) Execute(trackingId string) {
 	// 跳过解析和填充的数据
 	skips := []string{iworkconst.STRING_PREFIX + "sql", iworkconst.STRING_PREFIX + "db_conn"}
 	// 数据中心
 	dataStore := datastore.GetDataStore(trackingId)
 	// 节点中间数据
 	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, dataStore, skips...)
-	if skipFunc(tmpDataMap) {
-		return
-	} // 跳过当前节点执行
 	sql := param.GetStaticParamValue(iworkconst.STRING_PREFIX+"sql", this.WorkStep)
 	dataSourceName := param.GetStaticParamValue(iworkconst.STRING_PREFIX+"db_conn", this.WorkStep)
 	// sql_binding 参数获取
@@ -88,16 +85,13 @@ type SQLExecuteNode struct {
 	WorkStep *iwork.WorkStep
 }
 
-func (this *SQLExecuteNode) Execute(trackingId string, skipFunc func(tmpDataMap map[string]interface{}) bool) {
+func (this *SQLExecuteNode) Execute(trackingId string) {
 	// 跳过解析和填充的数据
 	skips := []string{iworkconst.STRING_PREFIX + "sql", iworkconst.STRING_PREFIX + "db_conn"}
 	// 数据中心
 	dataStore := datastore.GetDataStore(trackingId)
 	// 节点中间数据
 	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, dataStore, skips...)
-	if skipFunc(tmpDataMap) {
-		return
-	} // 跳过当前节点执行
 	sql := param.GetStaticParamValue(iworkconst.STRING_PREFIX+"sql", this.WorkStep)
 	dataSourceName := param.GetStaticParamValue(iworkconst.STRING_PREFIX+"db_conn", this.WorkStep)
 	// insert 语句且有批量操作时整改 sql 语句
@@ -162,16 +156,13 @@ type SQLQueryPageNode struct {
 	WorkStep *iwork.WorkStep
 }
 
-func (this *SQLQueryPageNode) Execute(trackingId string, skipFunc func(tmpDataMap map[string]interface{}) bool) {
+func (this *SQLQueryPageNode) Execute(trackingId string) {
 	// 跳过解析和填充的数据
 	skips := []string{iworkconst.STRING_PREFIX + "total_sql", iworkconst.STRING_PREFIX + "sql", iworkconst.STRING_PREFIX + "db_conn"}
 	// 数据中心
 	dataStore := datastore.GetDataStore(trackingId)
 	// 节点中间数据
 	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, dataStore, skips...)
-	if skipFunc(tmpDataMap) {
-		return
-	} // 跳过当前节点执行
 	total_sql := param.GetStaticParamValue(iworkconst.STRING_PREFIX+"total_sql", this.WorkStep)
 	sql := param.GetStaticParamValue(iworkconst.STRING_PREFIX+"sql", this.WorkStep)
 	dataSourceName := param.GetStaticParamValue(iworkconst.STRING_PREFIX+"db_conn", this.WorkStep)

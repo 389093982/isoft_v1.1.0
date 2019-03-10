@@ -10,7 +10,7 @@ type EmptyNode struct {
 	WorkStep *iwork.WorkStep
 }
 
-func (this *EmptyNode) Execute(trackingId string, skipFunc func(tmpDataMap map[string]interface{}) bool) {
+func (this *EmptyNode) Execute(trackingId string) {
 
 }
 

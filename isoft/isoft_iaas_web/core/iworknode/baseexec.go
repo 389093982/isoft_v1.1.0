@@ -26,7 +26,7 @@ type WorkStepFactory struct {
 
 type IStandardWorkStep interface {
 	// 节点执行的方法
-	Execute(trackingId string, skipFunc func(tmpDataMap map[string]interface{}) bool)
+	Execute(trackingId string)
 	// 获取默认输入参数
 	GetDefaultParamInputSchema() *schema.ParamInputSchema
 	// 获取动态输入参数
@@ -40,17 +40,8 @@ type IStandardWorkStep interface {
 }
 
 func (this *WorkStepFactory) Execute(trackingId string) {
-	skipFunc := func(tmpDataMap map[string]interface{}) bool {
-		// if 节点判断, if条件判断为 false 时跳过
-		if checkif, ok := tmpDataMap[iworkconst.BOOL_PREFIX+"if?"].(bool); ok && checkif == false {
-			iwork.InsertRunLogDetail(trackingId, fmt.Sprintf("The step for %s was skipped!", this.WorkStep.WorkStepName))
-			return true
-		}
-		return false
-	}
-
 	proxy := this.getProxy()
-	proxy.Execute(trackingId, skipFunc)
+	proxy.Execute(trackingId)
 	if endNode, ok := proxy.(*WorkEndNode); ok {
 		this.Receiver = endNode.Receiver
 	}
@@ -107,12 +98,6 @@ func (this *WorkStepFactory) GetDefaultParamInputSchema() *schema.ParamInputSche
 	} else {
 		inputSchema = &schema.ParamInputSchema{}
 	}
-	// 不支持 if 判断的节点
-	if !stringutil.CheckContains(this.WorkStep.WorkStepType, []string{"work_start", "work_end"}) {
-		appendDefaultParamInputSchemaItem(schema.ParamInputSchemaItem{
-			ParamName: iworkconst.BOOL_PREFIX + "if?", ParamDesc: "if指令,只有满足条件时才会执行,不填时必定会执行!"}, inputSchema)
-	}
-
 	// 不支持 redirect 跳转的节点
 	if !stringutil.CheckContains(this.WorkStep.WorkStepType, []string{"goto_condition", "redirect", "work_start", "work_end"}) {
 		appendDefaultParamInputSchemaItem(schema.ParamInputSchemaItem{

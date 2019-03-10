@@ -1,6 +1,7 @@
 package iworknode
 
 import (
+	"fmt"
 	"isoft/isoft_iaas_web/core/iworkconst"
 	"isoft/isoft_iaas_web/core/iworkdata/block"
 	"isoft/isoft_iaas_web/core/iworkdata/datastore"
@@ -16,14 +17,11 @@ type IFNode struct {
 	BlockStepRunFunc func(trackingId string, blockStep *block.BlockStep, dispatcher *entry.Dispatcher) (receiver *entry.Receiver)
 }
 
-func (this *IFNode) Execute(trackingId string, skipFunc func(tmpDataMap map[string]interface{}) bool) {
+func (this *IFNode) Execute(trackingId string) {
 	// 数据中心
 	dataStore := datastore.GetDataStore(trackingId)
 	// 节点中间数据
 	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, dataStore)
-	if skipFunc(tmpDataMap) {
-		return
-	} // 跳过当前节点执行
 	expression := tmpDataMap[iworkconst.BOOL_PREFIX+"expression"].(bool)
 	dataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.BOOL_PREFIX+"expression", expression)
 
@@ -31,6 +29,8 @@ func (this *IFNode) Execute(trackingId string, skipFunc func(tmpDataMap map[stri
 		for _, blockStep := range this.BlockStep.ChildBlockSteps {
 			this.BlockStepRunFunc(trackingId, blockStep, nil)
 		}
+	} else {
+		iwork.InsertRunLogDetail(trackingId, fmt.Sprintf("The blockStep for %s was skipped!", this.WorkStep.WorkStepName))
 	}
 }
 
