@@ -144,7 +144,7 @@
           {
             title: 'work_step_desc',
             key: 'work_step_desc',
-            width: 180,
+            width: 250,
           },
           {
             title: '操作',
