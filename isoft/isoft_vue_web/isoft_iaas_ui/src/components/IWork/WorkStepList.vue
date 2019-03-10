@@ -116,7 +116,7 @@
                   style: {
                     // work_step_name 根据缩进级别进行缩进,不同级别使用不同颜色
                     display: !checkContainsInString(this.worksteps[params.index]['work_step_name'], "random_")  ? undefined : 'none',
-                    color: ['red','green','blue','grey'][params.row.work_step_indent],
+                    color: ['green','blue','grey','red'][params.row.work_step_indent],
                   },
                 }, getRepeatStr('\xa0\xa0\xa0\xa0\xa0', params.row.work_step_indent) + this.worksteps[params.index]['work_step_name']),
               ]);
