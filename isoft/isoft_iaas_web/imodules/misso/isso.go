@@ -6,8 +6,8 @@ import (
 	"isoft/isoft_iaas_web/models/sso"
 )
 
-func RegisterModel()  {
-	if imodules.CheckModule("sso"){
+func RegisterModel() {
+	if imodules.CheckModule("sso") {
 		orm.RegisterModel(new(sso.User))
 		orm.RegisterModel(new(sso.AppRegister))
 		orm.RegisterModel(new(sso.LoginRecord))

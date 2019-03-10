@@ -12,7 +12,7 @@ type ItemMemoryCache struct {
 }
 
 type MemoryCache struct {
-	TrackingId   	string
+	TrackingId      string
 	MemoryCacheData map[string]interface{}
 }
 
@@ -30,8 +30,8 @@ func (this *MemoryCache) GetData(paramName string) interface{} {
 // 注册 MemoryCache
 func RegistMemoryCache(trackingId string) {
 	memorycaches[trackingId] = &MemoryCache{
-		TrackingId:   trackingId,
-		MemoryCacheData: make(map[string]interface{},0),
+		TrackingId:      trackingId,
+		MemoryCacheData: make(map[string]interface{}, 0),
 	}
 }
 
@@ -43,10 +43,9 @@ func UnRegistMemoryCache(trackingId string) {
 // 获取 MemoryCache
 func GetMemoryCache(trackingId string) *MemoryCache {
 	cache := memorycaches[trackingId]
-	if cache != nil{
+	if cache != nil {
 		return cache
 	}
 	RegistMemoryCache(trackingId)
 	return memorycaches[trackingId]
 }
-

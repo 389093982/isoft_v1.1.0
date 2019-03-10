@@ -54,6 +54,6 @@ func QueryAllEntityInfo() (entities []Entity) {
 
 func QueryEntityByEntityName(entity_name string) (entity Entity, err error) {
 	o := orm.NewOrm()
-	_, err = o.QueryTable("entity").Filter("entity_name",entity_name).All(&entity)
+	_, err = o.QueryTable("entity").Filter("entity_name", entity_name).All(&entity)
 	return
 }

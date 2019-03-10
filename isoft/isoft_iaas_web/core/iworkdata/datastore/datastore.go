@@ -33,7 +33,7 @@ func (this *DataStore) CacheData(nodeName, paramName string, paramValue interfac
 // 从数据中心获取数据
 func (this *DataStore) GetData(nodeName, paramName string) interface{} {
 	store := this.nodeStoreMap[nodeName]
-	if store == nil{
+	if store == nil {
 		return nil
 	}
 	return this.nodeStoreMap[nodeName].NodeOutputDataMap[paramName]
@@ -55,7 +55,7 @@ func UnRegistDataStore(trackingId string) {
 // 获取数据中心
 func GetDataStore(trackingId string) *DataStore {
 	store := datastores[trackingId]
-	if store != nil{
+	if store != nil {
 		return store
 	}
 	RegistDataStore(trackingId)

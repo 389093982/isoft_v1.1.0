@@ -19,5 +19,3 @@ func main() {
 	task.RegisterCronTask()
 	beego.Run()
 }
-
-

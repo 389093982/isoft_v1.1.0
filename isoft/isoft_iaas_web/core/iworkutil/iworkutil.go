@@ -19,7 +19,7 @@ func GetWorkSubNameFromParamValue(paramValue string) string {
 
 func GetWorkSubNameForWorkSubNode(paramInputSchema *schema.ParamInputSchema) string {
 	for _, item := range paramInputSchema.ParamInputSchemaItems {
-		if item.ParamName == iworkconst.STRING_PREFIX + "work_sub" && strings.HasPrefix(strings.TrimSpace(item.ParamValue), "$WORK.") {
+		if item.ParamName == iworkconst.STRING_PREFIX+"work_sub" && strings.HasPrefix(strings.TrimSpace(item.ParamValue), "$WORK.") {
 			// 找到 work_sub 字段值
 			return GetWorkSubNameFromParamValue(strings.TrimSpace(item.ParamValue))
 		}
@@ -41,11 +41,11 @@ func DecodeBase64String(encodeString string) (bytes []byte) {
 func GetParamValueForEntity(paramValue string) string {
 	paramValue = strings.TrimSpace(paramValue)
 	paramValue = strings.Replace(paramValue, ";", "", -1)
-	if !strings.HasPrefix(paramValue, "$Entity."){
+	if !strings.HasPrefix(paramValue, "$Entity.") {
 		return paramValue
 	}
 	entity_name := strings.Replace(paramValue, "$Entity.", "", -1)
-	if entity, err := iwork.QueryEntityByEntityName(entity_name); err == nil{
+	if entity, err := iwork.QueryEntityByEntityName(entity_name); err == nil {
 		return entity.EntityFieldStr
 	}
 	return ""

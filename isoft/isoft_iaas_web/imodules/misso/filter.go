@@ -19,9 +19,8 @@ func ssoFilterFunc(ctx *context.Context) {
 	filter.Filter()
 }
 
-func RegisterISSOFilter()  {
+func RegisterISSOFilter() {
 	if imodules.CheckModule("sso") {
 		beego.InsertFilter("/api/*", beego.BeforeExec, ssoFilterFunc)
 	}
 }
-

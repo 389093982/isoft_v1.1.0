@@ -54,6 +54,6 @@ func Paginator(page, prepage int, nums int64) map[string]interface{} {
 }
 
 func GetPaginatorFields() []string {
-	paginatorFields := []string{"pages","totalpages","firstpage","lastpage","currpage","pagesize","totalcount"}
+	paginatorFields := []string{"pages", "totalpages", "firstpage", "lastpage", "currpage", "pagesize", "totalcount"}
 	return paginatorFields
 }

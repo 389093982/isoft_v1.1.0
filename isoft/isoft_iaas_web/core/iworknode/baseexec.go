@@ -12,10 +12,9 @@ import (
 )
 
 type WorkStepFactory struct {
-	Work     iwork.Work
-	WorkStep *iwork.WorkStep
-	// 执行 Execute 方法时遇到子流程时的回调函数
-	RunFunc    func(work iwork.Work, steps []iwork.WorkStep, dispatcher *entry.Dispatcher) (receiver *entry.Receiver)
+	Work       iwork.Work
+	WorkStep   *iwork.WorkStep
+	RunFunc    func(work iwork.Work, steps []iwork.WorkStep, dispatcher *entry.Dispatcher) (receiver *entry.Receiver) // 执行 Execute 方法时遇到子流程时的回调函数
 	Dispatcher *entry.Dispatcher
 	Receiver   *entry.Receiver // 代理了 Receiver,值从 work_end 节点获取
 }

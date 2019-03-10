@@ -6,8 +6,8 @@ import (
 	"isoft/isoft_iaas_web/models/iwork"
 )
 
-func RegisterModel()  {
-	if imodules.CheckModule("iwork"){
+func RegisterModel() {
+	if imodules.CheckModule("iwork") {
 		orm.RegisterModel(new(iwork.CronMeta))
 		orm.RegisterModel(new(iwork.Resource))
 		orm.RegisterModel(new(iwork.Work))

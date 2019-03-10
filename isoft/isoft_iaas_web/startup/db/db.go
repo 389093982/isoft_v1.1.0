@@ -19,7 +19,7 @@ func ConfigureDBInfo() {
 	if imodules.CheckModule("iwork") {
 		//imysql.RegisterDBForMysql()
 		isqlite3.RegisterDBForSqlite3()
-	}else{
+	} else {
 		imysql.RegisterDBForMysql()
 	}
 

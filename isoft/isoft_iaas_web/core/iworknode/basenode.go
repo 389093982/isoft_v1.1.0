@@ -16,7 +16,7 @@ import (
 )
 
 // 所有 node 的基类
-type BaseNode struct {}
+type BaseNode struct{}
 
 // paramValue 来源于 iwork 模块
 func (this *BaseNode) parseAndFillParamVauleWithResource(paramVaule string) interface{} {
@@ -35,9 +35,9 @@ func (this *BaseNode) parseAndFillParamVauleWithNode(paramVaule string, dataStor
 
 // 判断是否需要跳过解析
 func checkSkipParse(paramName string) bool {
-	names := []string{"sql","count_sql","metadata_sql?"}
-	for _,name := range names{
-		if name == paramName{
+	names := []string{"sql", "count_sql", "metadata_sql?"}
+	for _, name := range names {
+		if name == paramName {
 			return true
 		}
 	}
@@ -46,7 +46,7 @@ func checkSkipParse(paramName string) bool {
 
 // 解析 paramVaule 并从 dataStore 中获取实际值
 func (this *BaseNode) ParseAndGetParamVaule(paramName, paramVaule string, dataStore *datastore.DataStore) interface{} {
-	if checkSkipParse(paramName){
+	if checkSkipParse(paramName) {
 		return paramVaule
 	}
 	values := this.parseParamValueToMulti(paramVaule)
@@ -130,11 +130,11 @@ func (this *BaseNode) FillParamInputSchemaDataToTmp(workStep *iwork.WorkStep, da
 	paramInputSchema := schema.GetCacheParamInputSchema(workStep, &WorkStepFactory{WorkStep: workStep})
 	for _, item := range paramInputSchema.ParamInputSchemaItems {
 		// 跳过校验
-		if stringutil.CheckContains(item.ParamName, skips){
+		if stringutil.CheckContains(item.ParamName, skips) {
 			continue
 		}
 		// 对参数进行非空校验
-		if ok, checkResults := iworkvalid.CheckEmptyForItem(item); !ok{
+		if ok, checkResults := iworkvalid.CheckEmptyForItem(item); !ok {
 			panic(strings.Join(checkResults, ";"))
 		}
 		// 个性化重写操作
@@ -143,18 +143,18 @@ func (this *BaseNode) FillParamInputSchemaDataToTmp(workStep *iwork.WorkStep, da
 	}
 
 	// 后置 redirect 指令判断
-	if redirectNodeName,ok := tmpDataMap[iworkconst.STRING_PREFIX + "redirect?"].(string); ok && strings.TrimSpace(redirectNodeName) != ""{
-		dataStore.CacheData("__goto_condition__","__redirect__", redirectNodeName)
+	if redirectNodeName, ok := tmpDataMap[iworkconst.STRING_PREFIX+"redirect?"].(string); ok && strings.TrimSpace(redirectNodeName) != "" {
+		dataStore.CacheData("__goto_condition__", "__redirect__", redirectNodeName)
 	}
 	return tmpDataMap
 }
 
 func (this *BaseNode) modifySqlBindingParamValueWithBatchNumber(item *schema.ParamInputSchemaItem, tmpDataMap map[string]interface{}) {
 	// 当前填充的字段为 sql_binding? 时,检测到批量操作数据大于 1
-	if item.ParamName == iworkconst.MULTI_PREFIX + "sql_binding?" && GetBatchNumber(tmpDataMap) > 1 {
+	if item.ParamName == iworkconst.MULTI_PREFIX+"sql_binding?" && GetBatchNumber(tmpDataMap) > 1 {
 		var newParamValue string
 		for i := 0; i < GetBatchNumber(tmpDataMap); i++ {
-			newParamValue += strings.Replace(item.ParamValue, iworkconst.MULTI_PREFIX + "rows.", fmt.Sprintf(iworkconst.MULTI_PREFIX + "rows[%v].", i), -1)
+			newParamValue += strings.Replace(item.ParamValue, iworkconst.MULTI_PREFIX+"rows.", fmt.Sprintf(iworkconst.MULTI_PREFIX+"rows[%v].", i), -1)
 		}
 		item.ParamValue = newParamValue
 	}
@@ -162,13 +162,13 @@ func (this *BaseNode) modifySqlBindingParamValueWithBatchNumber(item *schema.Par
 
 // 从 tmpDataMap 获取 batch_number? 数据
 func GetBatchNumber(tmpDataMap map[string]interface{}) int {
-	if _, ok := tmpDataMap[iworkconst.NUMBER_PREFIX + "batch_number?"]; !ok {
+	if _, ok := tmpDataMap[iworkconst.NUMBER_PREFIX+"batch_number?"]; !ok {
 		return 0
 	}
-	if batch_number, ok := tmpDataMap[iworkconst.NUMBER_PREFIX + "batch_number?"].(int64); ok {
+	if batch_number, ok := tmpDataMap[iworkconst.NUMBER_PREFIX+"batch_number?"].(int64); ok {
 		return int(batch_number)
 	}
-	if batch_number, ok := tmpDataMap[iworkconst.NUMBER_PREFIX + "batch_number?"].(string); ok {
+	if batch_number, ok := tmpDataMap[iworkconst.NUMBER_PREFIX+"batch_number?"].(string); ok {
 		if _batch_number, err := strconv.Atoi(batch_number); err == nil {
 			return _batch_number
 		}

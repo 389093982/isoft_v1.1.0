@@ -13,7 +13,7 @@ func loadISSORouter() {
 	}
 }
 
-func loadISSORouterDetail()  {
+func loadISSORouterDetail() {
 	beego.Router("/api/sso/user/login", &sso.LoginController{}, "post:PostLogin")
 	beego.Router("/api/sso/user/regist", &sso.LoginController{}, "post:PostRegist")
 	beego.Router("/api/sso/app/appRegisterList", &sso.AppRegisterController{}, "post:AppRegisterList")

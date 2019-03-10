@@ -65,21 +65,21 @@ func GetRuntimeParamInputSchema(paramSchemaParser IParamSchemaParser) *ParamInpu
 // 根据传入的 paramMap 构建 ParamInputSchema 对象
 func BuildParamInputSchemaWithDefaultMap(paramMap map[int][]string) *ParamInputSchema {
 	var keys []int
-	for key, _ := range paramMap{
+	for key, _ := range paramMap {
 		keys = append(keys, key)
 	}
 	sort.Ints(keys)
-	items := make([]ParamInputSchemaItem,0)
-	for _, key := range keys{
+	items := make([]ParamInputSchemaItem, 0)
+	for _, key := range keys {
 		_paramMap := paramMap[key]
-		items = append(items, ParamInputSchemaItem{ParamName: _paramMap[0], ParamDesc:_paramMap[1]})
+		items = append(items, ParamInputSchemaItem{ParamName: _paramMap[0], ParamDesc: _paramMap[1]})
 	}
 	return &ParamInputSchema{ParamInputSchemaItems: items}
 }
 
 // 根据传入的 paramNames 构建 ParamOutputSchema 对象
 func BuildParamOutputSchemaWithSlice(paramNames []string) *ParamOutputSchema {
-	items := make([]ParamOutputSchemaItem,0)
+	items := make([]ParamOutputSchemaItem, 0)
 	for _, paramName := range paramNames {
 		items = append(items, ParamOutputSchemaItem{ParamName: paramName})
 	}

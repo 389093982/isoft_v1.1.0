@@ -17,7 +17,9 @@ func (this *MapperNode) Execute(trackingId string, skipFunc func(tmpDataMap map[
 	dataStore := datastore.GetDataStore(trackingId)
 	// 节点中间数据
 	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, dataStore)
-	if skipFunc(tmpDataMap){return}			// 跳过当前节点执行
+	if skipFunc(tmpDataMap) {
+		return
+	} // 跳过当前节点执行
 	//c 提交输出数据至数据中心,此类数据能直接从 tmpDataMap 中获取,而不依赖于计算,只适用于 WORK_START、WORK_END、Mapper 等节点
 	this.SubmitParamOutputSchemaDataToDataStore(this.WorkStep, dataStore, tmpDataMap)
 }

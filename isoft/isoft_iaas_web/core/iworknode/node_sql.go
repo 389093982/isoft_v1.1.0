@@ -21,34 +21,36 @@ type SQLQueryNode struct {
 
 func (this *SQLQueryNode) Execute(trackingId string, skipFunc func(tmpDataMap map[string]interface{}) bool) {
 	// 跳过解析和填充的数据
-	skips := []string{iworkconst.STRING_PREFIX + "sql",iworkconst.STRING_PREFIX + "db_conn"}
+	skips := []string{iworkconst.STRING_PREFIX + "sql", iworkconst.STRING_PREFIX + "db_conn"}
 	// 数据中心
 	dataStore := datastore.GetDataStore(trackingId)
 	// 节点中间数据
 	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, dataStore, skips...)
-	if skipFunc(tmpDataMap){return}			// 跳过当前节点执行
-	sql := param.GetStaticParamValue(iworkconst.STRING_PREFIX + "sql", this.WorkStep)
-	dataSourceName := param.GetStaticParamValue(iworkconst.STRING_PREFIX + "db_conn", this.WorkStep)
+	if skipFunc(tmpDataMap) {
+		return
+	} // 跳过当前节点执行
+	sql := param.GetStaticParamValue(iworkconst.STRING_PREFIX+"sql", this.WorkStep)
+	dataSourceName := param.GetStaticParamValue(iworkconst.STRING_PREFIX+"db_conn", this.WorkStep)
 	// sql_binding 参数获取
 	sql_binding := getSqlBinding(tmpDataMap)
 	datacounts, rowDetailDatas, rowDatas := sqlutil.Query(sql, sql_binding, dataSourceName)
 	// 将数据数据存储到数据中心
 	// 存储 datacounts
-	dataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.NUMBER_PREFIX + "datacounts", datacounts)
+	dataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.NUMBER_PREFIX+"datacounts", datacounts)
 	for paramName, paramValue := range rowDetailDatas {
 		// 存储具体字段值
 		dataStore.CacheData(this.WorkStep.WorkStepName, paramName, paramValue)
 	}
 	// 数组对象整体存储在 rows 里面
-	dataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.MULTI_PREFIX + "rows", rowDatas)
+	dataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.MULTI_PREFIX+"rows", rowDatas)
 }
 
 func (this *SQLQueryNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
 	paramMap := map[int][]string{
-		1:[]string{iworkconst.STRING_PREFIX + "metadata_sql","元数据sql语句,针对复杂查询sql,需要提供类似于select * from blog where 1=0的辅助sql用来构建节点输出"},
-		2:[]string{iworkconst.STRING_PREFIX + "sql","查询sql语句"},
-		3:[]string{iworkconst.MULTI_PREFIX + "sql_binding?","sql绑定数据,个数必须和当前执行sql语句中的占位符参数个数相同"},
-		4:[]string{iworkconst.STRING_PREFIX + "db_conn","数据库连接信息,需要使用 $RESOURCE 全局参数"},
+		1: []string{iworkconst.STRING_PREFIX + "metadata_sql", "元数据sql语句,针对复杂查询sql,需要提供类似于select * from blog where 1=0的辅助sql用来构建节点输出"},
+		2: []string{iworkconst.STRING_PREFIX + "sql", "查询sql语句"},
+		3: []string{iworkconst.MULTI_PREFIX + "sql_binding?", "sql绑定数据,个数必须和当前执行sql语句中的占位符参数个数相同"},
+		4: []string{iworkconst.STRING_PREFIX + "db_conn", "数据库连接信息,需要使用 $RESOURCE 全局参数"},
 	}
 	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
 }
@@ -72,10 +74,10 @@ func (this *SQLQueryNode) ValidateCustom() {
 
 // 从 tmpDataMap 获取 sql_binding 数据
 func getSqlBinding(tmpDataMap map[string]interface{}) []interface{} {
-	result := make([]interface{},0)
-	if sql_binding, ok := tmpDataMap[iworkconst.MULTI_PREFIX + "sql_binding?"].([]interface{}); ok {
+	result := make([]interface{}, 0)
+	if sql_binding, ok := tmpDataMap[iworkconst.MULTI_PREFIX+"sql_binding?"].([]interface{}); ok {
 		result = sql_binding
-	} else if sql_binding, ok := tmpDataMap[iworkconst.MULTI_PREFIX + "sql_binding?"].(interface{}); ok {
+	} else if sql_binding, ok := tmpDataMap[iworkconst.MULTI_PREFIX+"sql_binding?"].(interface{}); ok {
 		result = append(result, sql_binding)
 	}
 	return result
@@ -88,14 +90,16 @@ type SQLExecuteNode struct {
 
 func (this *SQLExecuteNode) Execute(trackingId string, skipFunc func(tmpDataMap map[string]interface{}) bool) {
 	// 跳过解析和填充的数据
-	skips := []string{iworkconst.STRING_PREFIX + "sql",iworkconst.STRING_PREFIX + "db_conn"}
+	skips := []string{iworkconst.STRING_PREFIX + "sql", iworkconst.STRING_PREFIX + "db_conn"}
 	// 数据中心
 	dataStore := datastore.GetDataStore(trackingId)
 	// 节点中间数据
 	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, dataStore, skips...)
-	if skipFunc(tmpDataMap){return}			// 跳过当前节点执行
-	sql := param.GetStaticParamValue(iworkconst.STRING_PREFIX + "sql", this.WorkStep)
-	dataSourceName := param.GetStaticParamValue(iworkconst.STRING_PREFIX + "db_conn", this.WorkStep)
+	if skipFunc(tmpDataMap) {
+		return
+	} // 跳过当前节点执行
+	sql := param.GetStaticParamValue(iworkconst.STRING_PREFIX+"sql", this.WorkStep)
+	dataSourceName := param.GetStaticParamValue(iworkconst.STRING_PREFIX+"db_conn", this.WorkStep)
 	// insert 语句且有批量操作时整改 sql 语句
 	sql = this.modifySqlInsertWithBatchNumber(tmpDataMap, sql)
 	// sql_binding 参数获取
@@ -103,7 +107,7 @@ func (this *SQLExecuteNode) Execute(trackingId string, skipFunc func(tmpDataMap 
 	affected := sqlutil.Execute(sql, _sql_binding, dataSourceName)
 	// 将数据数据存储到数据中心
 	// 存储 affected
-	dataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.NUMBER_PREFIX + "affected", affected)
+	dataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.NUMBER_PREFIX+"affected", affected)
 }
 
 func (this *SQLExecuteNode) modifySqlInsertWithBatchNumber(tmpDataMap map[string]interface{}, sql string) string {
@@ -129,10 +133,10 @@ func (this *SQLExecuteNode) modifySqlInsertWithBatchNumber(tmpDataMap map[string
 
 func (this *SQLExecuteNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
 	paramMap := map[int][]string{
-		1:[]string{iworkconst.NUMBER_PREFIX + "batch_number?","仅供批量插入数据时使用"},
-		2:[]string{iworkconst.STRING_PREFIX + "sql","执行sql语句"},
-		3:[]string{iworkconst.MULTI_PREFIX + "sql_binding?","sql绑定数据,个数必须和当前执行sql语句中的占位符参数个数相同"},
-		4:[]string{iworkconst.STRING_PREFIX + "db_conn","数据库连接信息,需要使用 $RESOURCE 全局参数"},
+		1: []string{iworkconst.NUMBER_PREFIX + "batch_number?", "仅供批量插入数据时使用"},
+		2: []string{iworkconst.STRING_PREFIX + "sql", "执行sql语句"},
+		3: []string{iworkconst.MULTI_PREFIX + "sql_binding?", "sql绑定数据,个数必须和当前执行sql语句中的占位符参数个数相同"},
+		4: []string{iworkconst.STRING_PREFIX + "db_conn", "数据库连接信息,需要使用 $RESOURCE 全局参数"},
 	}
 	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
 }
@@ -160,50 +164,52 @@ type SQLQueryPageNode struct {
 
 func (this *SQLQueryPageNode) Execute(trackingId string, skipFunc func(tmpDataMap map[string]interface{}) bool) {
 	// 跳过解析和填充的数据
-	skips := []string{iworkconst.STRING_PREFIX + "total_sql",iworkconst.STRING_PREFIX + "sql",iworkconst.STRING_PREFIX + "db_conn"}
+	skips := []string{iworkconst.STRING_PREFIX + "total_sql", iworkconst.STRING_PREFIX + "sql", iworkconst.STRING_PREFIX + "db_conn"}
 	// 数据中心
 	dataStore := datastore.GetDataStore(trackingId)
 	// 节点中间数据
 	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, dataStore, skips...)
-	if skipFunc(tmpDataMap){return}			// 跳过当前节点执行
-	total_sql := param.GetStaticParamValue(iworkconst.STRING_PREFIX + "total_sql",this.WorkStep)
-	sql := param.GetStaticParamValue(iworkconst.STRING_PREFIX + "sql",this.WorkStep)
-	dataSourceName := param.GetStaticParamValue(iworkconst.STRING_PREFIX + "db_conn",this.WorkStep)
+	if skipFunc(tmpDataMap) {
+		return
+	} // 跳过当前节点执行
+	total_sql := param.GetStaticParamValue(iworkconst.STRING_PREFIX+"total_sql", this.WorkStep)
+	sql := param.GetStaticParamValue(iworkconst.STRING_PREFIX+"sql", this.WorkStep)
+	dataSourceName := param.GetStaticParamValue(iworkconst.STRING_PREFIX+"db_conn", this.WorkStep)
 	// sql_binding 参数获取
 	sql_binding := getSqlBinding(tmpDataMap)
-	totalcount := sqlutil.QuerySelectCount(total_sql, sql_binding[:len(sql_binding) - 2], dataSourceName)
+	totalcount := sqlutil.QuerySelectCount(total_sql, sql_binding[:len(sql_binding)-2], dataSourceName)
 	datacounts, rowDetailDatas, rowDatas := sqlutil.Query(sql, sql_binding, dataSourceName)
 	// 将数据数据存储到数据中心
 	// 存储 datacounts
-	dataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.NUMBER_PREFIX + "datacounts", datacounts)
+	dataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.NUMBER_PREFIX+"datacounts", datacounts)
 	for paramName, paramValue := range rowDetailDatas {
 		// 存储具体字段值
 		dataStore.CacheData(this.WorkStep.WorkStepName, paramName, paramValue)
 	}
 	// 数组对象整体存储在 rows 里面
-	dataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.MULTI_PREFIX + "rows", rowDatas)
+	dataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.MULTI_PREFIX+"rows", rowDatas)
 	// 存储分页信息
-	pageIndex,pageSize := getPageIndexAndPageSize(tmpDataMap)
+	pageIndex, pageSize := getPageIndexAndPageSize(tmpDataMap)
 	paginator := pageutil.Paginator(pageIndex, pageSize, totalcount)
-	dataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.COMPLEX_PREFIX + "paginator", paginator)
-	for key,value := range paginator{
-		dataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.FIELD_PREFIX + "paginator." + key, value)
+	dataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.COMPLEX_PREFIX+"paginator", paginator)
+	for key, value := range paginator {
+		dataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.FIELD_PREFIX+"paginator."+key, value)
 	}
 }
 
-func getPageIndexAndPageSize(tmpDataMap map[string]interface{}) (currentPage int,pageSize int) {
-	if current_page, ok := tmpDataMap[iworkconst.NUMBER_PREFIX + "current_page"].(string); ok{
+func getPageIndexAndPageSize(tmpDataMap map[string]interface{}) (currentPage int, pageSize int) {
+	if current_page, ok := tmpDataMap[iworkconst.NUMBER_PREFIX+"current_page"].(string); ok {
 		currentPage, _ = strconv.Atoi(current_page)
-	}else if current_page, ok := tmpDataMap[iworkconst.NUMBER_PREFIX + "current_page"].(int); ok{
+	} else if current_page, ok := tmpDataMap[iworkconst.NUMBER_PREFIX+"current_page"].(int); ok {
 		currentPage = current_page
-	}else if current_page, ok := tmpDataMap[iworkconst.NUMBER_PREFIX + "current_page"].(int64); ok{
+	} else if current_page, ok := tmpDataMap[iworkconst.NUMBER_PREFIX+"current_page"].(int64); ok {
 		currentPage = int(current_page)
 	}
-	if page_size, ok := tmpDataMap[iworkconst.NUMBER_PREFIX + "page_size"].(string); ok{
+	if page_size, ok := tmpDataMap[iworkconst.NUMBER_PREFIX+"page_size"].(string); ok {
 		pageSize, _ = strconv.Atoi(page_size)
-	}else if page_size, ok := tmpDataMap[iworkconst.NUMBER_PREFIX + "page_size"].(int); ok{
+	} else if page_size, ok := tmpDataMap[iworkconst.NUMBER_PREFIX+"page_size"].(int); ok {
 		pageSize = page_size
-	}else if page_size, ok := tmpDataMap[iworkconst.NUMBER_PREFIX + "page_size"].(int64); ok{
+	} else if page_size, ok := tmpDataMap[iworkconst.NUMBER_PREFIX+"page_size"].(int64); ok {
 		pageSize = int(page_size)
 	}
 	return
@@ -211,13 +217,13 @@ func getPageIndexAndPageSize(tmpDataMap map[string]interface{}) (currentPage int
 
 func (this *SQLQueryPageNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
 	paramMap := map[int][]string{
-		1:[]string{iworkconst.STRING_PREFIX + "metadata_sql","元数据sql语句,针对复杂查询sql,需要提供类似于select * from blog where 1=0的辅助sql用来构建节点输出"},
-		2:[]string{iworkconst.STRING_PREFIX + "total_sql","统计总数sql,返回N页总数据量,格式参考select count(*) as count from blog where xxx"},
-		3:[]string{iworkconst.STRING_PREFIX + "sql","带分页条件的sql,等价于 ${total_sql} limit ?,?"},
-		4:[]string{iworkconst.NUMBER_PREFIX + "current_page","当前页数"},
-		5:[]string{iworkconst.NUMBER_PREFIX + "page_size","每页数据量"},
-		6:[]string{iworkconst.MULTI_PREFIX + "sql_binding?","sql绑定数据,个数和sql中的?数量相同,前N-2位参数和total_sql中的?数量相同"},
-		7:[]string{iworkconst.STRING_PREFIX + "db_conn","数据库连接信息,需要使用 $RESOURCE 全局参数"},
+		1: []string{iworkconst.STRING_PREFIX + "metadata_sql", "元数据sql语句,针对复杂查询sql,需要提供类似于select * from blog where 1=0的辅助sql用来构建节点输出"},
+		2: []string{iworkconst.STRING_PREFIX + "total_sql", "统计总数sql,返回N页总数据量,格式参考select count(*) as count from blog where xxx"},
+		3: []string{iworkconst.STRING_PREFIX + "sql", "带分页条件的sql,等价于 ${total_sql} limit ?,?"},
+		4: []string{iworkconst.NUMBER_PREFIX + "current_page", "当前页数"},
+		5: []string{iworkconst.NUMBER_PREFIX + "page_size", "每页数据量"},
+		6: []string{iworkconst.MULTI_PREFIX + "sql_binding?", "sql绑定数据,个数和sql中的?数量相同,前N-2位参数和total_sql中的?数量相同"},
+		7: []string{iworkconst.STRING_PREFIX + "db_conn", "数据库连接信息,需要使用 $RESOURCE 全局参数"},
 	}
 	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
 }
@@ -227,7 +233,7 @@ func (this *SQLQueryPageNode) GetRuntimeParamInputSchema() *schema.ParamInputSch
 }
 
 func (this *SQLQueryPageNode) GetDefaultParamOutputSchema() *schema.ParamOutputSchema {
-	items := make([]schema.ParamOutputSchemaItem,0)
+	items := make([]schema.ParamOutputSchemaItem, 0)
 	for _, paginatorField := range pageutil.GetPaginatorFields() {
 		items = append(items, schema.ParamOutputSchemaItem{
 			ParentPath: iworkconst.COMPLEX_PREFIX + "paginator",
@@ -250,35 +256,35 @@ func (this *SQLQueryPageNode) ValidateCustom() {
 }
 
 func validateTotalSqlBindingParamCount(step *iwork.WorkStep) {
-	total_sql := param.GetStaticParamValue(iworkconst.STRING_PREFIX + "total_sql", step)
-	sql_binding := param.GetStaticParamValue(iworkconst.MULTI_PREFIX + "sql_binding?", step)
-	if strings.Count(total_sql, "?") + 2 != strings.Count(funcutil.EncodeSpecialForParamVaule(sql_binding), ";"){
+	total_sql := param.GetStaticParamValue(iworkconst.STRING_PREFIX+"total_sql", step)
+	sql_binding := param.GetStaticParamValue(iworkconst.MULTI_PREFIX+"sql_binding?", step)
+	if strings.Count(total_sql, "?")+2 != strings.Count(funcutil.EncodeSpecialForParamVaule(sql_binding), ";") {
 		panic("Number of ? in total_sql and number of ; in sql_binding is mismatch!")
 	}
 }
 
 func validateSqlBindingParamCount(step *iwork.WorkStep) {
-	sql := param.GetStaticParamValue(iworkconst.STRING_PREFIX + "sql", step)
-	sql_binding := param.GetStaticParamValue(iworkconst.MULTI_PREFIX + "sql_binding?", step)
-	if strings.Count(sql, "?") != strings.Count(funcutil.EncodeSpecialForParamVaule(sql_binding), ";"){
+	sql := param.GetStaticParamValue(iworkconst.STRING_PREFIX+"sql", step)
+	sql_binding := param.GetStaticParamValue(iworkconst.MULTI_PREFIX+"sql_binding?", step)
+	if strings.Count(sql, "?") != strings.Count(funcutil.EncodeSpecialForParamVaule(sql_binding), ";") {
 		panic("Number of ? in SQL and number of ; in sql_binding is unequal!")
 	}
 }
 
 func validateAndGetMetaDataSql(step *iwork.WorkStep) string {
-	metadata_sql := param.GetStaticParamValue(iworkconst.STRING_PREFIX + "metadata_sql", step)
-	if strings.TrimSpace(metadata_sql) == ""{
+	metadata_sql := param.GetStaticParamValue(iworkconst.STRING_PREFIX+"metadata_sql", step)
+	if strings.TrimSpace(metadata_sql) == "" {
 		panic("Empty paramValue for metadata_sql was found!")
 	}
-	if strings.Contains(metadata_sql, "?"){
+	if strings.Contains(metadata_sql, "?") {
 		panic("Invalid paramValue form metadata_sql was found!")
 	}
 	return strings.TrimSpace(metadata_sql)
 }
 
 func validateAndGetDataStoreName(step *iwork.WorkStep) string {
-	dataSourceName := param.GetStaticParamValue(iworkconst.STRING_PREFIX + "db_conn", step)
-	if strings.TrimSpace(dataSourceName) == ""{
+	dataSourceName := param.GetStaticParamValue(iworkconst.STRING_PREFIX+"db_conn", step)
+	if strings.TrimSpace(dataSourceName) == "" {
 		panic("Invalid param for db_conn! Can't resolve it!")
 	}
 	db, err := sqlutil.GetConnForMysql("mysql", dataSourceName)
@@ -293,7 +299,7 @@ func getMetaDataForQuery(step *iwork.WorkStep) *schema.ParamOutputSchema {
 	metadataSql := validateAndGetMetaDataSql(step)
 	dataSourceName := validateAndGetDataStoreName(step)
 	paramNames := sqlutil.GetMetaDatas(metadataSql, dataSourceName)
-	items := make([]schema.ParamOutputSchemaItem,0)
+	items := make([]schema.ParamOutputSchemaItem, 0)
 	for _, paramName := range paramNames {
 		items = append(items, schema.ParamOutputSchemaItem{
 			ParentPath: iworkconst.MULTI_PREFIX + "rows",
@@ -305,7 +311,7 @@ func getMetaDataForQuery(step *iwork.WorkStep) *schema.ParamOutputSchema {
 
 func getMetaDataQuietlyForQuery(step *iwork.WorkStep) *schema.ParamOutputSchema {
 	defer func() {
-		if err := recover(); err != nil{
+		if err := recover(); err != nil {
 			return
 		}
 	}()

@@ -5,8 +5,7 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 )
 
-
-func RegisterDBForSqlite3()  {
+func RegisterDBForSqlite3() {
 	orm.RegisterDriver("sqlite", orm.DRSqlite)
 	orm.RegisterDataBase("default", "sqlite3", "iwork.db")
 }

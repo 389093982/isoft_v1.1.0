@@ -58,10 +58,10 @@ func parseRows(rows *sql.Rows) (datacounts int64, rowDetailDatas map[string]inte
 		for index, colValue := range colValues {
 			rowData[colNames[index]] = string(colValue)
 			// sql.RawBytes 转字符串
-			rowDetailDatas[fmt.Sprintf(iworkconst.MULTI_PREFIX + "rows[%d].%s", datacounts, colNames[index])] = string(colValue)
+			rowDetailDatas[fmt.Sprintf(iworkconst.MULTI_PREFIX+"rows[%d].%s", datacounts, colNames[index])] = string(colValue)
 			// 第一条记录进行简写,去除[0]标识
 			if datacounts == 0 {
-				_name := fmt.Sprintf(iworkconst.MULTI_PREFIX + "rows.%s", colNames[index])
+				_name := fmt.Sprintf(iworkconst.MULTI_PREFIX+"rows.%s", colNames[index])
 				rowDetailDatas[_name] = string(colValue)
 			}
 		}
@@ -82,7 +82,6 @@ func scanRowData(rows *sql.Rows, colSize int) []sql.RawBytes {
 	rows.Scan(scanArgs...)
 	return colValues
 }
-
 
 // 查询sql总数据量
 func QuerySelectCount(sqlstring string, sql_binding []interface{}, dataSourceName string) (datacounts int64) {

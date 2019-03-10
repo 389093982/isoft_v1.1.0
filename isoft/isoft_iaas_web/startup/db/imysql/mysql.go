@@ -11,7 +11,7 @@ import (
 // 数据库连接串
 var Dsn string
 
-func RegisterDBForMysql ()  {
+func RegisterDBForMysql() {
 	dbhost := beego.AppConfig.String("db.host")
 	dbport := beego.AppConfig.String("db.port")
 	dbname := beego.AppConfig.String("db.name")

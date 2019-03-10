@@ -12,8 +12,8 @@ import (
 	"isoft/isoft_iaas_web/models/share"
 )
 
-func RegisterModel()  {
-	if imodules.CheckModule("ilearning"){
+func RegisterModel() {
+	if imodules.CheckModule("ilearning") {
 		orm.RegisterModel(new(iblog.Catalog))
 		orm.RegisterModel(new(iblog.Blog))
 
@@ -37,4 +37,3 @@ func RegisterModel()  {
 		orm.RegisterModel(new(monitor.HeartBeatDetail))
 	}
 }
-

@@ -10,4 +10,3 @@ type Dispatcher struct {
 type Receiver struct {
 	TmpDataMap map[string]interface{} // 被调度者发送过来的临时数据
 }
-
