@@ -14,7 +14,7 @@ type WorkStep struct {
 	WorkStepName         string    `json:"work_step_name"`
 	WorkStepDesc         string    `json:"work_step_desc" orm:"type(text)"`
 	WorkStepType         string    `json:"work_step_type"`
-	WorkStepIndent       int64     `json:"work_step_indent"` // 调整缩进级别
+	WorkStepIndent       int       `json:"work_step_indent"` // 调整缩进级别
 	WorkStepInput        string    `json:"work_step_input" orm:"type(text)"`
 	WorkStepOutput       string    `json:"work_step_output" orm:"type(text)"`
 	WorkStepParamMapping string    `json:"work_step_param_mapping" orm:"type(text)"`
