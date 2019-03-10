@@ -14,13 +14,24 @@ type BlockStep struct {
 
 // 将 steps 转换为 BlockStep,最终执行的是 BlockStep
 func ParseToBlockStep(steps []iwork.WorkStep) []*BlockStep {
-	bSteps := make([]*BlockStep, 0)
+	_, blockSteps := ParseAndGetCurrentBlockStep(nil, steps)
+	return blockSteps
+}
+
+func ParseAndGetCurrentBlockStep(currentStep *iwork.WorkStep, steps []iwork.WorkStep) (currentBlockStep *BlockStep, blockSteps []*BlockStep) {
+	blockSteps = make([]*BlockStep, 0)
 	minIndentIndexs := getMinIndentIndex(steps)
 	for index, indentIndex := range minIndentIndexs {
 		bStep := &BlockStep{
 			Step: &steps[indentIndex],
 		}
-		childs := getChildBlockSteps(index, minIndentIndexs, steps)
+		if currentStep != nil && steps[indentIndex].WorkStepId == currentStep.WorkStepId {
+			currentBlockStep = bStep
+		}
+		_currentBlockStep, childs := getChildBlockSteps(currentStep, index, minIndentIndexs, steps)
+		if _currentBlockStep != nil {
+			currentBlockStep = _currentBlockStep
+		}
 		if len(childs) > 0 {
 			bStep.HasChildren = true
 			bStep.ChildBlockSteps = childs
@@ -29,14 +40,15 @@ func ParseToBlockStep(steps []iwork.WorkStep) []*BlockStep {
 				child.ParentBlockStep = bStep
 			}
 		}
-		bSteps = append(bSteps, bStep)
+		blockSteps = append(blockSteps, bStep)
 	}
-	return bSteps
+	return
 }
 
 // index 当前最小缩进索引
 // minIndentIndexs 所有最小缩进位置
-func getChildBlockSteps(index int, minIndentIndexs []int, steps []iwork.WorkStep) []*BlockStep {
+func getChildBlockSteps(currentStep *iwork.WorkStep, index int, minIndentIndexs []int,
+	steps []iwork.WorkStep) (currentBlockStep *BlockStep, blockSteps []*BlockStep) {
 	var max, min int
 	min = minIndentIndexs[index]
 	if len(minIndentIndexs)-1 == index { // 最后一个最小缩进索引
@@ -46,8 +58,7 @@ func getChildBlockSteps(index int, minIndentIndexs []int, steps []iwork.WorkStep
 
 	}
 
-	bSteps := make([]*BlockStep, 0)
-
+	blockSteps = make([]*BlockStep, 0)
 	if max-min > 1 {
 		// 获取所有的 childSteps
 		childSteps := make([]iwork.WorkStep, 0)
@@ -55,9 +66,13 @@ func getChildBlockSteps(index int, minIndentIndexs []int, steps []iwork.WorkStep
 			childSteps = append(childSteps, steps[i])
 		}
 		// 转换为 BlockStep
-		bSteps = append(bSteps, ParseToBlockStep(childSteps)...)
+		_currentBlockStep, _blockSteps := ParseAndGetCurrentBlockStep(currentStep, childSteps)
+		if _currentBlockStep != nil {
+			currentBlockStep = _currentBlockStep
+		}
+		blockSteps = append(blockSteps, _blockSteps...)
 	}
-	return bSteps
+	return
 }
 
 // 获取同批最小缩进值索引
