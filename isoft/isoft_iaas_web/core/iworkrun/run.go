@@ -14,6 +14,7 @@ import (
 
 // dispatcher 为父流程遗传下来的参数
 func Run(work iwork.Work, steps []iwork.WorkStep, dispatcher *entry.Dispatcher) (receiver *entry.Receiver) {
+	// 为当前流程创建新的 trackingId
 	trackingId := createNewTrackingIdForWork(dispatcher, work)
 	defer recordCostTimeLog("execute work", trackingId, time.Now())
 	defer func() {
@@ -25,15 +26,16 @@ func Run(work iwork.Work, steps []iwork.WorkStep, dispatcher *entry.Dispatcher) 
 	iwork.InsertRunLogDetail(trackingId, fmt.Sprintf("~~~~~~~~~~start execute work:%s~~~~~~~~~~", work.WorkName))
 	// 逐步执行步骤
 	for _, step := range steps {
-		if step.WorkStepType == "empty" {continue}
+		if step.WorkStepType == "empty" {
+			continue
+		}
 		// 获取数据中心
 		store := datastore.GetDataStore(trackingId)
-		if redirectNodeName, ok := store.GetData("__goto_condition__","__redirect__").(string);
-			ok && strings.TrimSpace(redirectNodeName) != ""{
-			if step.WorkStepName == redirectNodeName{
+		if redirectNodeName, ok := store.GetData("__goto_condition__", "__redirect__").(string); ok && strings.TrimSpace(redirectNodeName) != "" {
+			if step.WorkStepName == redirectNodeName {
 				// 相等代表刚好调到 redirect 节点,此时要将 store 里面的跳转信息置空
-				store.CacheData("__goto_condition__","__redirect__", "")
-			}else{
+				store.CacheData("__goto_condition__", "__redirect__", "")
+			} else {
 				iwork.InsertRunLogDetail(trackingId, fmt.Sprintf("The step for %s was skipped!", step.WorkStepName))
 				// 不相等代表还没有调到 redirect 节点,此时直接跳过, redirect 节点值为 __out__ 时,所用节点都匹配不上,刚好表示为跳出流程
 				continue
@@ -54,16 +56,16 @@ func Run(work iwork.Work, steps []iwork.WorkStep, dispatcher *entry.Dispatcher) 
 }
 
 func optimizeTrackingId(pTrackingId, trackingId string) string {
-	if strings.Count(pTrackingId, ".") > 1{
-	// a.~.b.c
+	if strings.Count(pTrackingId, ".") > 1 {
+		// a.~.b.c
 		trackingId = strings.Join(
 			[]string{
-				pTrackingId[:strings.Index(pTrackingId, ".")],			// 顶级 trackingId
-				"~",															// 过渡级 trackingId
-				pTrackingId[strings.LastIndex(pTrackingId, ".") + 1 :],	// 父级 trackingId
-				trackingId,														// 当前级 trackingId
-			},".")
-	}else{
+				pTrackingId[:strings.Index(pTrackingId, ".")], // 顶级 trackingId
+				"~", // 过渡级 trackingId
+				pTrackingId[strings.LastIndex(pTrackingId, ".")+1:], // 父级 trackingId
+				trackingId, // 当前级 trackingId
+			}, ".")
+	} else {
 		trackingId = fmt.Sprintf("%s.%s", pTrackingId, trackingId)
 	}
 	return trackingId
@@ -108,5 +110,5 @@ func runOneStep(trackingId string, step *iwork.WorkStep, dispatcher *entry.Dispa
 // 统计操作所花费的时间方法
 func recordCostTimeLog(operateName, trackingId string, start time.Time) {
 	iwork.InsertRunLogDetail(trackingId, fmt.Sprintf(
-		"%s total cost time :%v ms",operateName, time.Now().Sub(start).Nanoseconds() / 1e6))
+		"%s total cost time :%v ms", operateName, time.Now().Sub(start).Nanoseconds()/1e6))
 }
