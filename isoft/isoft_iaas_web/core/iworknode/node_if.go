@@ -2,6 +2,7 @@ package iworknode
 
 import (
 	"isoft/isoft_iaas_web/core/iworkconst"
+	"isoft/isoft_iaas_web/core/iworkdata/datastore"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
 	"isoft/isoft_iaas_web/models/iwork"
 )
@@ -12,7 +13,15 @@ type IFNode struct {
 }
 
 func (this *IFNode) Execute(trackingId string, skipFunc func(tmpDataMap map[string]interface{}) bool) {
-
+	// 数据中心
+	dataStore := datastore.GetDataStore(trackingId)
+	// 节点中间数据
+	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, dataStore)
+	if skipFunc(tmpDataMap) {
+		return
+	} // 跳过当前节点执行
+	expression := tmpDataMap[iworkconst.BOOL_PREFIX+"expression"].(bool)
+	dataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.BOOL_PREFIX+"expression", expression)
 }
 
 func (this *IFNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
