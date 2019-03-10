@@ -66,18 +66,6 @@
             align: 'center',
           },
           {
-            title: '缩进级别',
-            key: 'work_step_indent',
-            width: 150,
-            render: (h,params)=>{
-              return h("div",{
-                style: {
-                  color: ['red','green','blue','grey'][params.row.work_step_indent],
-                },
-              },getRepeatStr('\xa0\xa0\xa0', params.row.work_step_indent) + params.row.work_step_indent)
-            }
-          },
-          {
             title: '步骤编号',
             key: 'work_step_id',
             width: 100,
@@ -121,14 +109,16 @@
           {
             title: 'work_step_name',
             key: 'work_step_name',
-            width: 180,
+            width: 220,
             render: (h, params) => {
               return h('div', [
                 h('span', {
                   style: {
-                    display: !checkContainsInString(this.worksteps[params.index]['work_step_name'], "random_")  ? undefined : 'none'
+                    // work_step_name 根据缩进级别进行缩进,不同级别使用不同颜色
+                    display: !checkContainsInString(this.worksteps[params.index]['work_step_name'], "random_")  ? undefined : 'none',
+                    color: ['red','green','blue','grey'][params.row.work_step_indent],
                   },
-                }, this.worksteps[params.index]['work_step_name']),
+                }, getRepeatStr('\xa0\xa0\xa0', params.row.work_step_indent) + this.worksteps[params.index]['work_step_name']),
               ]);
             }
           },
