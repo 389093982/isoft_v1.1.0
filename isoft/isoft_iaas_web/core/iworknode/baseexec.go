@@ -22,7 +22,7 @@ type WorkStepFactory struct {
 
 type IStandardWorkStep interface {
 	// 节点执行的方法
-	Execute(trackingId string,skipFunc func(tmpDataMap map[string]interface{}) bool)
+	Execute(trackingId string, skipFunc func(tmpDataMap map[string]interface{}) bool)
 	// 获取默认输入参数
 	GetDefaultParamInputSchema() *schema.ParamInputSchema
 	// 获取动态输入参数
@@ -38,7 +38,7 @@ type IStandardWorkStep interface {
 func (this *WorkStepFactory) Execute(trackingId string) {
 	skipFunc := func(tmpDataMap map[string]interface{}) bool {
 		// if 节点判断, if条件判断为 false 时跳过
-		if checkif, ok := tmpDataMap[iworkconst.BOOL_PREFIX + "if?"].(bool); ok && checkif == false{
+		if checkif, ok := tmpDataMap[iworkconst.BOOL_PREFIX+"if?"].(bool); ok && checkif == false {
 			iwork.InsertRunLogDetail(trackingId, fmt.Sprintf("The step for %s was skipped!", this.WorkStep.WorkStepName))
 			return true
 		}
@@ -88,7 +88,9 @@ func (this *WorkStepFactory) getProxy() IStandardWorkStep {
 		return &MemoryMapCacheNode{WorkStep: this.WorkStep}
 	case "GOTO_CONDITION":
 		return &GotoConditionNode{WorkStep: this.WorkStep}
- 	case "EMPTY":
+	case "IF":
+		return &IFNode{WorkStep: this.WorkStep}
+	case "EMPTY":
 		return &EmptyNode{WorkStep: this.WorkStep}
 	}
 	panic(errors.New(fmt.Sprintf("[%v-%v]unsupport workStepType:%s", this.WorkStep.WorkId, this.WorkStep.WorkStepName, this.WorkStep.WorkStepType)))
@@ -98,19 +100,19 @@ func (this *WorkStepFactory) GetDefaultParamInputSchema() *schema.ParamInputSche
 	var inputSchema *schema.ParamInputSchema
 	if _schema := this.getProxy().GetDefaultParamInputSchema(); _schema != nil {
 		inputSchema = _schema
-	}else{
+	} else {
 		inputSchema = &schema.ParamInputSchema{}
 	}
 	// 不支持 if 判断的节点
-	if !stringutil.CheckContains(this.WorkStep.WorkStepType, []string{"work_start","work_end"}){
+	if !stringutil.CheckContains(this.WorkStep.WorkStepType, []string{"work_start", "work_end"}) {
 		appendDefaultParamInputSchemaItem(schema.ParamInputSchemaItem{
-			ParamName:iworkconst.BOOL_PREFIX + "if?",ParamDesc:"if指令,只有满足条件时才会执行,不填时必定会执行!"}, inputSchema)
+			ParamName: iworkconst.BOOL_PREFIX + "if?", ParamDesc: "if指令,只有满足条件时才会执行,不填时必定会执行!"}, inputSchema)
 	}
 
 	// 不支持 redirect 跳转的节点
-	if !stringutil.CheckContains(this.WorkStep.WorkStepType, []string{"goto_condition","redirect","work_start","work_end"}){
+	if !stringutil.CheckContains(this.WorkStep.WorkStepType, []string{"goto_condition", "redirect", "work_start", "work_end"}) {
 		appendDefaultParamInputSchemaItem(schema.ParamInputSchemaItem{
-			ParamName:iworkconst.STRING_PREFIX + "redirect?",ParamDesc:"redirect指令,当前节点执行完成后,会跳往匹配上的节点继续执行!"}, inputSchema)
+			ParamName: iworkconst.STRING_PREFIX + "redirect?", ParamDesc: "redirect指令,当前节点执行完成后,会跳往匹配上的节点继续执行!"}, inputSchema)
 
 	}
 	return inputSchema
@@ -141,9 +143,9 @@ func (this *WorkStepFactory) ValidateCustom() {
 	this.getProxy().ValidateCustom()
 }
 
-func appendDefaultParamInputSchemaItem(item schema.ParamInputSchemaItem, inputSchema *schema.ParamInputSchema)  {
-	for _, _item := range inputSchema.ParamInputSchemaItems{
-		if _item.ParamName == item.ParamName{
+func appendDefaultParamInputSchemaItem(item schema.ParamInputSchemaItem, inputSchema *schema.ParamInputSchema) {
+	for _, _item := range inputSchema.ParamInputSchemaItems {
+		if _item.ParamName == item.ParamName {
 			return
 		}
 	}
