@@ -18,6 +18,12 @@ type DataStore struct {
 
 // 向数据中心缓存数据
 func (this *DataStore) CacheData(nodeName, paramName string, paramValue interface{}) {
+	this.CacheByteData(nodeName, paramName, paramValue)
+	iwork.InsertRunLogDetail(this.TrackingId, fmt.Sprintf("[%s]cache data for $%s.%s:%v", this.TrackingId, nodeName, paramName, paramValue))
+}
+
+// 存储字节数据,不用记录日志
+func (this *DataStore) CacheByteData(nodeName, paramName string, paramValue interface{}) {
 	// 为当前 nodeName 绑定 DataNodeStore 数据空间
 	if _, ok := this.nodeStoreMap[nodeName]; !ok {
 		this.nodeStoreMap[nodeName] = &DataNodeStore{
@@ -27,7 +33,6 @@ func (this *DataStore) CacheData(nodeName, paramName string, paramValue interfac
 	// 存数据
 	dataNodeStore := this.nodeStoreMap[nodeName]
 	dataNodeStore.NodeOutputDataMap[paramName] = paramValue
-	iwork.InsertRunLogDetail(this.TrackingId, fmt.Sprintf("[%s]cache data for $%s.%s:%v", this.TrackingId, nodeName, paramName, paramValue))
 }
 
 // 从数据中心获取数据
