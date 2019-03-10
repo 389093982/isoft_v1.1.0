@@ -9,6 +9,7 @@ type BlockStep struct {
 	Step            *iwork.WorkStep // 步骤
 	HasChildren     bool            // 是否有子步骤
 	ChildBlockSteps []*BlockStep    // 子步骤列表
+	ParentBlockStep *BlockStep      // 父级 BlockStep
 }
 
 // 将 steps 转换为 BlockStep,最终执行的是 BlockStep
@@ -23,6 +24,10 @@ func ParseToBlockStep(steps []iwork.WorkStep) []*BlockStep {
 		if len(childs) > 0 {
 			bStep.HasChildren = true
 			bStep.ChildBlockSteps = childs
+			for _, child := range childs {
+				// 设置 parent 属性
+				child.ParentBlockStep = bStep
+			}
 		}
 		bSteps = append(bSteps, bStep)
 	}

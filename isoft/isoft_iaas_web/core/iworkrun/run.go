@@ -3,6 +3,7 @@ package iworkrun
 import (
 	"fmt"
 	"isoft/isoft/common/stringutil"
+	"isoft/isoft_iaas_web/core/iworkdata/block"
 	"isoft/isoft_iaas_web/core/iworkdata/datastore"
 	"isoft/isoft_iaas_web/core/iworkdata/entry"
 	"isoft/isoft_iaas_web/core/iworkdata/memory"
@@ -24,25 +25,26 @@ func Run(work iwork.Work, steps []iwork.WorkStep, dispatcher *entry.Dispatcher) 
 	}()
 	// 记录日志详细
 	iwork.InsertRunLogDetail(trackingId, fmt.Sprintf("~~~~~~~~~~start execute work:%s~~~~~~~~~~", work.WorkName))
-	// 逐步执行步骤
-	for _, step := range steps {
-		if step.WorkStepType == "empty" {
+	// 将 steps 转换成 BlockSteps
+	// 逐个 block 依次执行
+	for _, blockStep := range block.ParseToBlockStep(steps) {
+		if blockStep.Step.WorkStepType == "empty" {
 			continue
 		}
 		// 获取数据中心
 		store := datastore.GetDataStore(trackingId)
 		if redirectNodeName, ok := store.GetData("__goto_condition__", "__redirect__").(string); ok && strings.TrimSpace(redirectNodeName) != "" {
-			if step.WorkStepName == redirectNodeName {
+			if blockStep.Step.WorkStepName == redirectNodeName {
 				// 相等代表刚好调到 redirect 节点,此时要将 store 里面的跳转信息置空
 				store.CacheData("__goto_condition__", "__redirect__", "")
 			} else {
-				iwork.InsertRunLogDetail(trackingId, fmt.Sprintf("The step for %s was skipped!", step.WorkStepName))
+				iwork.InsertRunLogDetail(trackingId, fmt.Sprintf("The step for %s was skipped!", blockStep.Step.WorkStepName))
 				// 不相等代表还没有调到 redirect 节点,此时直接跳过, redirect 节点值为 __out__ 时,所用节点都匹配不上,刚好表示为跳出流程
 				continue
 			}
 		}
 
-		_receiver := runOneStep(trackingId, &step, dispatcher)
+		_receiver := runOneStep(trackingId, blockStep, dispatcher)
 		if _receiver != nil {
 			receiver = _receiver
 		}
@@ -92,18 +94,18 @@ func createNewTrackingIdForWork(dispatcher *entry.Dispatcher, work iwork.Work) s
 	return trackingId
 }
 
-// 执行单个步骤
-func runOneStep(trackingId string, step *iwork.WorkStep, dispatcher *entry.Dispatcher) (receiver *entry.Receiver) {
-	defer recordCostTimeLog(step.WorkStepName, trackingId, time.Now())
-	iwork.InsertRunLogDetail(trackingId, fmt.Sprintf("start execute workstep: >>>>>>>>>> [[%s]]", step.WorkStepName))
+// 执行单个 BlockStep
+func runOneStep(trackingId string, blockStep *block.BlockStep, dispatcher *entry.Dispatcher) (receiver *entry.Receiver) {
+	defer recordCostTimeLog(blockStep.Step.WorkStepName, trackingId, time.Now())
+	iwork.InsertRunLogDetail(trackingId, fmt.Sprintf("start execute blockStep: >>>>>>>>>> [[%s]]", blockStep.Step.WorkStepName))
 	// 由工厂代为执行步骤
-	factory := &iworknode.WorkStepFactory{WorkStep: step, RunFunc: Run, Dispatcher: dispatcher}
+	factory := &iworknode.WorkStepFactory{WorkStep: blockStep.Step, RunFunc: Run, Dispatcher: dispatcher}
 	factory.Execute(trackingId)
 	// factory 节点如果代理的是 work_end 节点,则传递 Receiver 出去
 	if factory.Receiver != nil {
 		receiver = factory.Receiver
 	}
-	iwork.InsertRunLogDetail(trackingId, fmt.Sprintf("end execute workstep: >>>>>>>>>> [[%s]]", step.WorkStepName))
+	iwork.InsertRunLogDetail(trackingId, fmt.Sprintf("end execute blockStep: >>>>>>>>>> [[%s]]", blockStep.Step.WorkStepName))
 	return
 }
 
