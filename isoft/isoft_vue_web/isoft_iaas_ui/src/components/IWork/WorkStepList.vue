@@ -118,7 +118,7 @@
                     display: !checkContainsInString(this.worksteps[params.index]['work_step_name'], "random_")  ? undefined : 'none',
                     color: ['red','green','blue','grey'][params.row.work_step_indent],
                   },
-                }, getRepeatStr('\xa0\xa0\xa0', params.row.work_step_indent) + this.worksteps[params.index]['work_step_name']),
+                }, getRepeatStr('\xa0\xa0\xa0\xa0\xa0', params.row.work_step_indent) + this.worksteps[params.index]['work_step_name']),
               ]);
             }
           },
