@@ -15,8 +15,8 @@ import (
 
 type WorkSub struct {
 	BaseNode
-	WorkStep *iwork.WorkStep
-	RunFunc  func(work iwork.Work, steps []iwork.WorkStep, dispatcher *entry.Dispatcher) (receiver *entry.Receiver)
+	WorkStep       *iwork.WorkStep
+	WorkSubRunFunc func(work iwork.Work, steps []iwork.WorkStep, dispatcher *entry.Dispatcher) (receiver *entry.Receiver)
 }
 
 func (this *WorkSub) Execute(trackingId string, skipFunc func(tmpDataMap map[string]interface{}) bool) {
@@ -84,7 +84,7 @@ func (this *WorkSub) getForeachItemKey(tmpDataMap map[string]interface{}) string
 
 func (this *WorkSub) RunOnceSubWork(work iwork.Work, steps []iwork.WorkStep, trackingId string,
 	tmpDataMap map[string]interface{}, dataStore *datastore.DataStore) {
-	receiver := this.RunFunc(work, steps, &entry.Dispatcher{TrackingId: trackingId, TmpDataMap: tmpDataMap})
+	receiver := this.WorkSubRunFunc(work, steps, &entry.Dispatcher{TrackingId: trackingId, TmpDataMap: tmpDataMap})
 	// 接收子流程数据存入 dataStore
 	for paramName, paramValue := range receiver.TmpDataMap {
 		dataStore.CacheData(this.WorkStep.WorkStepName, paramName, paramValue)

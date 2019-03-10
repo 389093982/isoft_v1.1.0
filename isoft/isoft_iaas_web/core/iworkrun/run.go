@@ -44,7 +44,7 @@ func Run(work iwork.Work, steps []iwork.WorkStep, dispatcher *entry.Dispatcher) 
 			}
 		}
 
-		_receiver := runOneStep(trackingId, blockStep, dispatcher)
+		_receiver := RunOneStep(trackingId, blockStep, dispatcher)
 		if _receiver != nil {
 			receiver = _receiver
 		}
@@ -95,11 +95,17 @@ func createNewTrackingIdForWork(dispatcher *entry.Dispatcher, work iwork.Work) s
 }
 
 // 执行单个 BlockStep
-func runOneStep(trackingId string, blockStep *block.BlockStep, dispatcher *entry.Dispatcher) (receiver *entry.Receiver) {
+func RunOneStep(trackingId string, blockStep *block.BlockStep, dispatcher *entry.Dispatcher) (receiver *entry.Receiver) {
 	defer recordCostTimeLog(blockStep.Step.WorkStepName, trackingId, time.Now())
 	iwork.InsertRunLogDetail(trackingId, fmt.Sprintf("start execute blockStep: >>>>>>>>>> [[%s]]", blockStep.Step.WorkStepName))
 	// 由工厂代为执行步骤
-	factory := &iworknode.WorkStepFactory{WorkStep: blockStep.Step, RunFunc: Run, Dispatcher: dispatcher}
+	factory := &iworknode.WorkStepFactory{
+		WorkStep:         blockStep.Step,
+		WorkSubRunFunc:   Run,
+		Dispatcher:       dispatcher,
+		BlockStep:        blockStep,
+		BlockStepRunFunc: RunOneStep,
+	}
 	factory.Execute(trackingId)
 	// factory 节点如果代理的是 work_end 节点,则传递 Receiver 出去
 	if factory.Receiver != nil {
