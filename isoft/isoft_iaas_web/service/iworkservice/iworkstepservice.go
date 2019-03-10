@@ -228,6 +228,7 @@ func EditWorkStepBaseInfoService(serviceArgs map[string]interface{}) error {
 	step.CreatedTime = oldStep.CreatedTime
 	step.LastUpdatedBy = oldStep.LastUpdatedBy
 	step.LastUpdatedTime = oldStep.LastUpdatedTime
+	step.WorkStepIndent = oldStep.WorkStepIndent
 	// 变更类型需要置空 input 和 output 参数
 	if step.WorkStepType != oldStep.WorkStepType {
 		step.WorkStepInput = ""
