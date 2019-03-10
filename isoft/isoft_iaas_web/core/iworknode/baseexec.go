@@ -3,8 +3,6 @@ package iworknode
 import (
 	"errors"
 	"fmt"
-	"isoft/isoft/common/stringutil"
-	"isoft/isoft_iaas_web/core/iworkconst"
 	"isoft/isoft_iaas_web/core/iworkdata/block"
 	"isoft/isoft_iaas_web/core/iworkdata/entry"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
@@ -98,12 +96,6 @@ func (this *WorkStepFactory) GetDefaultParamInputSchema() *schema.ParamInputSche
 	} else {
 		inputSchema = &schema.ParamInputSchema{}
 	}
-	// 不支持 redirect 跳转的节点
-	if !stringutil.CheckContains(this.WorkStep.WorkStepType, []string{"goto_condition", "redirect", "work_start", "work_end"}) {
-		appendDefaultParamInputSchemaItem(schema.ParamInputSchemaItem{
-			ParamName: iworkconst.STRING_PREFIX + "redirect?", ParamDesc: "redirect指令,当前节点执行完成后,会跳往匹配上的节点继续执行!"}, inputSchema)
-
-	}
 	return inputSchema
 }
 
@@ -132,11 +124,3 @@ func (this *WorkStepFactory) ValidateCustom() {
 	this.getProxy().ValidateCustom()
 }
 
-func appendDefaultParamInputSchemaItem(item schema.ParamInputSchemaItem, inputSchema *schema.ParamInputSchema) {
-	for _, _item := range inputSchema.ParamInputSchemaItems {
-		if _item.ParamName == item.ParamName {
-			return
-		}
-	}
-	inputSchema.ParamInputSchemaItems = append(inputSchema.ParamInputSchemaItems, item)
-}
