@@ -38,7 +38,7 @@ func (this *HttpRequestNode) Execute(trackingId string) {
 		_dataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.NUMBER_PREFIX+"StatusCode", resp.StatusCode)
 		_dataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.STRING_PREFIX+"ContentType", resp.Header.Get("content-type"))
 	})
-	_dataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.STRING_PREFIX+"response_data", string(responsebytes))
+	_dataStore.CacheByteData(this.WorkStep.WorkStepName, iworkconst.STRING_PREFIX+"response_data", string(responsebytes))
 	_dataStore.CacheByteData(this.WorkStep.WorkStepName, iworkconst.BYTE_ARRAY_PREFIX+"response_data", responsebytes)
 	_dataStore.CacheByteData(this.WorkStep.WorkStepName, iworkconst.BASE64STRING_PREFIX+"response_data", iworkutil.EncodeToBase64String(responsebytes))
 }
