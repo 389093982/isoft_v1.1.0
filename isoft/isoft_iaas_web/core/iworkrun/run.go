@@ -8,6 +8,7 @@ import (
 	"isoft/isoft_iaas_web/core/iworkdata/entry"
 	"isoft/isoft_iaas_web/core/iworkdata/memory"
 	"isoft/isoft_iaas_web/core/iworknode"
+	"isoft/isoft_iaas_web/core/iworkutil/errorutil"
 	"isoft/isoft_iaas_web/models/iwork"
 	"strings"
 	"time"
@@ -20,7 +21,11 @@ func Run(work iwork.Work, steps []iwork.WorkStep, dispatcher *entry.Dispatcher) 
 	defer recordCostTimeLog("execute work", trackingId, time.Now())
 	defer func() {
 		if err := recover(); err != nil {
+			// 记录 4 kb大小的堆栈信息
+			iwork.InsertRunLogDetail(trackingId, "~~~~~~~~~~~~~~~~~~~~~~~~ internal error trace stack ~~~~~~~~~~~~~~~~~~~~~~~~~~")
+			iwork.InsertRunLogDetail(trackingId, string(errorutil.PanicTrace(4)))
 			iwork.InsertRunLogDetail(trackingId, fmt.Sprintf("internal error:%s", err))
+			iwork.InsertRunLogDetail(trackingId, "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
 		}
 	}()
 	// 记录日志详细
