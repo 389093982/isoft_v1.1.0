@@ -188,10 +188,14 @@ func checkVariableRelationShipDetail(item schema.ParamInputSchemaItem, work_id, 
 		return
 	}
 	preStepNodeNames := getAllPreStepNodeName(work_id, work_step_id)
-	preStepNodeNames = append(preStepNodeNames, []string{"RESOURCE", "WORK"}...)
+	skipNodeNames := []string{"RESOURCE", "WORK"}
 	for _, refer := range refers {
 		referNodeName := refer[1:strings.Index(refer, ".")]
 		referFileName := refer[strings.Index(refer, ".")+1:]
+		// 非节点类型直接跳过
+		if stringutil.CheckContains(referNodeName, skipNodeNames) {
+			break
+		}
 		// 判断节点名称是否有效
 		if !stringutil.CheckContains(referNodeName, preStepNodeNames) {
 			checkResult = append(checkResult, fmt.Sprintf("Invalid referNodeName relationship for %s was found!", referNodeName))
