@@ -160,12 +160,33 @@ func (this *WorkSub) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
 }
 
 func (this *WorkSub) ValidateCustom() (checkResult []string) {
-	if workSubName := this.getWorkSubName(); workSubName == "" {
-		panic("Empty workSubName was found!")
-	} else {
-		if _, err := iwork.QueryWorkByName(workSubName, orm.NewOrm()); err != nil {
-			panic(fmt.Sprintf("WorkSubName for %s was not found!", workSubName))
-		}
+	workSubName := this.getWorkSubName()
+	if workSubName == "" {
+		checkResult = append(checkResult, fmt.Sprintf("Empty workSubName was found!"))
+		return
 	}
-	return []string{}
+	work, err := iwork.QueryWorkByName(workSubName, orm.NewOrm())
+	if err != nil {
+		checkResult = append(checkResult, fmt.Sprintf("WorkSubName for %s was not found!", workSubName))
+		return
+	}
+	if startStep, err := iwork.QueryWorkStepByStepName(work.Id, "start", orm.NewOrm()); err == nil {
+		workSubInputSchema := schema.GetCacheParamInputSchema(this.WorkStep, &WorkStepFactory{WorkStep: this.WorkStep})
+		inputSchema := schema.GetCacheParamInputSchema(&startStep, &WorkStepFactory{WorkStep: &startStep})
+		for _, item := range inputSchema.ParamInputSchemaItems {
+			exist := false
+			for _, workSubItem := range workSubInputSchema.ParamInputSchemaItems {
+				if item.ParamName == workSubItem.ParamName {
+					exist = true
+					break
+				}
+			}
+			if !exist {
+				checkResult = append(checkResult, fmt.Sprintf("Miss paramName for %s was found!", item.ParamName))
+			}
+		}
+	} else {
+		checkResult = append(checkResult, fmt.Sprintf("Miss start node for worksub %s was found!", work.WorkName))
+	}
+	return
 }
