@@ -30,6 +30,6 @@ func (this *EmptyNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
 	return &schema.ParamOutputSchema{}
 }
 
-func (this *EmptyNode) ValidateCustom() {
-
+func (this *EmptyNode) ValidateCustom() (checkResult []string) {
+	return []string{}
 }

@@ -83,6 +83,7 @@ func (this *DBParserNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchem
 	return &schema.ParamOutputSchema{}
 }
 
-func (this *DBParserNode) ValidateCustom() {
+func (this *DBParserNode) ValidateCustom() (checkResult []string) {
 	validateAndGetDataStoreName(this.WorkStep)
+	return []string{}
 }

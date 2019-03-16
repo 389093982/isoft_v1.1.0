@@ -48,8 +48,8 @@ func (this *FileReadNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchem
 	return &schema.ParamOutputSchema{}
 }
 
-func (this *FileReadNode) ValidateCustom() {
-
+func (this *FileReadNode) ValidateCustom() (checkResult []string) {
+	return []string{}
 }
 
 type FileWriteNode struct {
@@ -107,6 +107,6 @@ func (this *FileWriteNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSche
 	return &schema.ParamOutputSchema{}
 }
 
-func (this *FileWriteNode) ValidateCustom() {
-
+func (this *FileWriteNode) ValidateCustom() (checkResult []string) {
+	return []string{}
 }

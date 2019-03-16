@@ -86,6 +86,6 @@ func (this *GotoConditionNode) GetRuntimeParamOutputSchema() *schema.ParamOutput
 	return &schema.ParamOutputSchema{}
 }
 
-func (this *GotoConditionNode) ValidateCustom() {
-
+func (this *GotoConditionNode) ValidateCustom() (checkResult []string) {
+	return []string{}
 }

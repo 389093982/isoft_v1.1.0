@@ -62,8 +62,8 @@ func (this *WorkStartNode) GetDefaultParamOutputSchema() *schema.ParamOutputSche
 	return &schema.ParamOutputSchema{}
 }
 
-func (this *WorkStartNode) ValidateCustom() {
-
+func (this *WorkStartNode) ValidateCustom() (checkResult []string) {
+	return []string{}
 }
 
 type WorkEndNode struct {
@@ -110,6 +110,6 @@ func (this *WorkEndNode) GetDefaultParamOutputSchema() *schema.ParamOutputSchema
 	return &schema.ParamOutputSchema{}
 }
 
-func (this *WorkEndNode) ValidateCustom() {
-
+func (this *WorkEndNode) ValidateCustom() (checkResult []string) {
+	return []string{}
 }

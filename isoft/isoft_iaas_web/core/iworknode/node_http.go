@@ -70,8 +70,8 @@ func (this *HttpRequestNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSc
 	return &schema.ParamOutputSchema{}
 }
 
-func (this *HttpRequestNode) ValidateCustom() {
-
+func (this *HttpRequestNode) ValidateCustom() (checkResult []string) {
+	return []string{}
 }
 
 func fillParamMapData(tmpDataMap map[string]interface{}, paramName string) map[string]interface{} {

@@ -63,10 +63,11 @@ func (this *SQLQueryNode) GetDefaultParamOutputSchema() *schema.ParamOutputSchem
 func (this *SQLQueryNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
 	return getMetaDataQuietlyForQuery(this.WorkStep)
 }
-func (this *SQLQueryNode) ValidateCustom() {
+func (this *SQLQueryNode) ValidateCustom() (checkResult []string) {
 	validateAndGetDataStoreName(this.WorkStep)
 	validateAndGetMetaDataSql(this.WorkStep)
 	validateSqlBindingParamCount(this.WorkStep)
+	return []string{}
 }
 
 // 从 tmpDataMap 获取 sql_binding 数据
@@ -147,8 +148,9 @@ func (this *SQLExecuteNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSch
 	return &schema.ParamOutputSchema{}
 }
 
-func (this *SQLExecuteNode) ValidateCustom() {
+func (this *SQLExecuteNode) ValidateCustom() (checkResult []string) {
 	validateAndGetDataStoreName(this.WorkStep)
+	return []string{}
 }
 
 type SQLQueryPageNode struct {
@@ -238,12 +240,13 @@ func (this *SQLQueryPageNode) GetRuntimeParamOutputSchema() *schema.ParamOutputS
 	return getMetaDataQuietlyForQuery(this.WorkStep)
 }
 
-func (this *SQLQueryPageNode) ValidateCustom() {
+func (this *SQLQueryPageNode) ValidateCustom() (checkResult []string) {
 	validateAndGetDataStoreName(this.WorkStep)
 	validateAndGetMetaDataSql(this.WorkStep)
 	validateSqlBindingParamCount(this.WorkStep)
 	validateSqlBindingParamCount(this.WorkStep)
 	validateTotalSqlBindingParamCount(this.WorkStep)
+	return
 }
 
 func validateTotalSqlBindingParamCount(step *iwork.WorkStep) {

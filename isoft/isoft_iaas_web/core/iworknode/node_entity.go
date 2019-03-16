@@ -90,6 +90,6 @@ func getEntityNameWithRemovePrefixAndSuffix(paramName string) string {
 	return paramName
 }
 
-func (this *EntityParserNode) ValidateCustom() {
-
+func (this *EntityParserNode) ValidateCustom() (checkResult []string) {
+	return []string{}
 }

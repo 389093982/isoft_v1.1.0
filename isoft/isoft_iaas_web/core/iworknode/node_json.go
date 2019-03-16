@@ -47,8 +47,8 @@ func (this *JsonRenderNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSch
 	return &schema.ParamOutputSchema{}
 }
 
-func (this *JsonRenderNode) ValidateCustom() {
-
+func (this *JsonRenderNode) ValidateCustom() (checkResult []string) {
+	return []string{}
 }
 
 type JsonParserNode struct {
@@ -109,6 +109,6 @@ func (this *JsonParserNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSch
 	return &schema.ParamOutputSchema{ParamOutputSchemaItems: items}
 }
 
-func (this *JsonParserNode) ValidateCustom() {
-
+func (this *JsonParserNode) ValidateCustom() (checkResult []string) {
+	return []string{}
 }

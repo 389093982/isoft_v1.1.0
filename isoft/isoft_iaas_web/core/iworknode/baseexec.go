@@ -34,7 +34,7 @@ type IStandardWorkStep interface {
 	// 获取动态输出参数
 	GetRuntimeParamOutputSchema() *schema.ParamOutputSchema
 	// 节点定制化校验函数,校验不通过会触发 panic
-	ValidateCustom()
+	ValidateCustom() (checkResult []string)
 }
 
 func (this *WorkStepFactory) Execute(trackingId string) {
@@ -120,7 +120,6 @@ func (this *WorkStepFactory) GetRuntimeParamOutputSchema() *schema.ParamOutputSc
 	return &schema.ParamOutputSchema{}
 }
 
-func (this *WorkStepFactory) ValidateCustom() {
-	this.getProxy().ValidateCustom()
+func (this *WorkStepFactory) ValidateCustom() (checkResult []string) {
+	return this.getProxy().ValidateCustom()
 }
-

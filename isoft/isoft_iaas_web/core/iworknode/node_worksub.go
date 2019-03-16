@@ -159,7 +159,7 @@ func (this *WorkSub) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
 	return &schema.ParamOutputSchema{ParamOutputSchemaItems: items}
 }
 
-func (this *WorkSub) ValidateCustom() {
+func (this *WorkSub) ValidateCustom() (checkResult []string) {
 	if workSubName := this.getWorkSubName(); workSubName == "" {
 		panic("Empty workSubName was found!")
 	} else {
@@ -167,4 +167,5 @@ func (this *WorkSub) ValidateCustom() {
 			panic(fmt.Sprintf("WorkSubName for %s was not found!", workSubName))
 		}
 	}
+	return []string{}
 }

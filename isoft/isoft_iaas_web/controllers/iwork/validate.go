@@ -144,8 +144,7 @@ func validateStep(step *iwork.WorkStep, logCh chan *iwork.ValidateLogDetail, ste
 		stepChan <- 1
 	}()
 
-	// 通用校验
-	checkResults := CheckGeneral(step)
+	checkResults := CheckStep(step)
 	for _, checkResult := range checkResults {
 		logCh <- &iwork.ValidateLogDetail{
 			WorkId:     step.WorkId,
@@ -153,22 +152,23 @@ func validateStep(step *iwork.WorkStep, logCh chan *iwork.ValidateLogDetail, ste
 			Detail:     checkResult,
 		}
 	}
-	// 定制化校验
-	CheckCustom(step)
 }
 
-func CheckGeneral(step *iwork.WorkStep) (checkResult []string) {
+func CheckStep(step *iwork.WorkStep) (checkResult []string) {
 	// 校验 step 中的参数是否为空
 	checkResults1 := iworkvalid.CheckEmpty(step, &iworknode.WorkStepFactory{WorkStep: step})
 	checkResults2 := checkVariableRelationShip(step)
+	// 定制化校验
+	checkResults3 := CheckCustom(step)
 	checkResult = append(checkResult, checkResults1...)
 	checkResult = append(checkResult, checkResults2...)
+	checkResult = append(checkResult, checkResults3...)
 	return
 }
 
-func CheckCustom(step *iwork.WorkStep) {
+func CheckCustom(step *iwork.WorkStep) (checkResult []string) {
 	factory := &iworknode.WorkStepFactory{WorkStep: step}
-	factory.ValidateCustom()
+	return factory.ValidateCustom()
 }
 
 // 校验变量的引用关系

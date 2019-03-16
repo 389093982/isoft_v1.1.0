@@ -53,6 +53,6 @@ func (this *IFNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
 	return &schema.ParamOutputSchema{}
 }
 
-func (this *IFNode) ValidateCustom() {
-
+func (this *IFNode) ValidateCustom() (checkResult []string) {
+	return []string{}
 }

@@ -73,6 +73,6 @@ func (this *MemoryMapCacheNode) GetRuntimeParamOutputSchema() *schema.ParamOutpu
 	return &schema.ParamOutputSchema{}
 }
 
-func (this *MemoryMapCacheNode) ValidateCustom() {
-
+func (this *MemoryMapCacheNode) ValidateCustom() (checkResult []string) {
+	return []string{}
 }

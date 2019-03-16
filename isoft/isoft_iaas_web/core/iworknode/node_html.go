@@ -50,6 +50,6 @@ func (this *HrefParserNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSch
 	return &schema.ParamOutputSchema{}
 }
 
-func (this *HrefParserNode) ValidateCustom() {
-
+func (this *HrefParserNode) ValidateCustom() (checkResult []string) {
+	return []string{}
 }
