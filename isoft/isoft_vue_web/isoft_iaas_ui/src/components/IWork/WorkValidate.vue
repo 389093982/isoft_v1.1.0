@@ -4,6 +4,7 @@
     <Button type="success" @click="refreshValidateResult">刷新校验结果</Button>
 
     <div style="margin: 20px;min-height: 300px;">
+      <p style="color: green;">last tracking_id: {{tracking_id}}</p>
       <Table border :columns="columns1" :data="details" size="small"></Table>
     </div>
   </ISimpleBtnTriggerModal>
@@ -13,6 +14,7 @@
   import ISimpleBtnTriggerModal from "../Common/modal/ISimpleBtnTriggerModal"
   import {ValidateAllWork} from "../../api"
   import {LoadValidateResult} from "../../api"
+  import {checkEmpty} from "../../tools"
 
   export default {
     name: "WorkValidate",
@@ -21,6 +23,7 @@
       return {
         validating:false,
         details:[],
+        tracking_id:'',
         columns1: [
           {
             title: 'work_name',
@@ -36,7 +39,7 @@
             render: (h,params)=>{
               return h('span',{
                 style: {
-                  color: 'red',
+                  color: checkEmpty(this.details[params.index]['work_step_name']) ? 'green': 'red',
                 },
               },this.details[params.index]['detail']
               )
@@ -62,6 +65,7 @@
         const result = await LoadValidateResult();
         if(result.status == "SUCCESS"){
           this.details = result.details;
+          this.tracking_id = result.details[0].tracking_id;
         }
       }
     }
