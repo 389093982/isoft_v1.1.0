@@ -30,8 +30,16 @@ func (this *WorkController) ValidateAllWork() {
 	this.ServeJSON()
 }
 
+// 统计操作所花费的时间方法
+func recordCostTimeLog(trackingId string, start time.Time) {
+	iwork.InsertValidateLogDetail(getValidateLogDetail(trackingId,
+		fmt.Sprintf("validate complete! total cost %d ms!", time.Now().Sub(start).Nanoseconds()/1e6)))
+}
+
 func validateAll() {
 	trackingId := stringutil.RandomUUID()
+	// 记录校验耗费时间
+	defer recordCostTimeLog(trackingId, time.Now())
 	// 记录日志
 	iwork.InsertValidateLogRecord(&iwork.ValidateLogRecord{
 		TrackingId:      trackingId,
@@ -40,7 +48,6 @@ func validateAll() {
 		LastUpdatedBy:   "SYSTEM",
 		LastUpdatedTime: time.Now(),
 	})
-
 	logCh := make(chan *iwork.ValidateLogDetail)
 	workChan := make(chan int)
 	works := iwork.QueryAllWorkInfo(orm.NewOrm())
@@ -72,14 +79,6 @@ func validateAll() {
 		log.LastUpdatedTime = time.Now()
 		iwork.InsertValidateLogDetail(log)
 	}
-	iwork.InsertValidateLogDetail(&iwork.ValidateLogDetail{
-		TrackingId:      trackingId,
-		Detail:          "校验完成！",
-		CreatedBy:       "SYSTEM",
-		LastUpdatedBy:   "SYSTEM",
-		CreatedTime:     time.Now(),
-		LastUpdatedTime: time.Now(),
-	})
 }
 
 // 校验单个 work
@@ -217,4 +216,15 @@ func checkVariableRelationShipDetail(item schema.ParamInputSchemaItem, work_id, 
 		}
 	}
 	return
+}
+
+func getValidateLogDetail(trackingId, detail string) *iwork.ValidateLogDetail {
+	return &iwork.ValidateLogDetail{
+		TrackingId:      trackingId,
+		Detail:          detail,
+		CreatedBy:       "SYSTEM",
+		LastUpdatedBy:   "SYSTEM",
+		CreatedTime:     time.Now(),
+		LastUpdatedTime: time.Now(),
+	}
 }
