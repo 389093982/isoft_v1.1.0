@@ -70,6 +70,11 @@ func QueryWorkStepInfo(work_id int64, work_step_id int64, o orm.Ormer) (step Wor
 	return
 }
 
+func QueryWorkStepByStepName(work_id int64, work_step_name string, o orm.Ormer) (step WorkStep, err error) {
+	err = o.QueryTable("work_step").Filter("work_id", work_id).Filter("work_step_name", work_step_name).One(&step)
+	return
+}
+
 // mod 只支持 +、- 符号
 func BatchChangeWorkStepIdOrder(work_id, work_step_id int64, mod string, o orm.Ormer) error {
 	query := fmt.Sprintf("UPDATE work_step SET work_step_id = work_step_id %s 1 WHERE work_id = ? and work_step_id > ?", mod)

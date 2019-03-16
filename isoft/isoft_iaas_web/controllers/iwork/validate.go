@@ -182,16 +182,34 @@ func checkVariableRelationShip(step *iwork.WorkStep) (checkResult []string) {
 }
 
 func checkVariableRelationShipDetail(item schema.ParamInputSchemaItem, work_id, work_step_id int64) (checkResult []string) {
-	// 根据正则找到关联的节点名称
-	referNodeNames := stringutil.GetNoRepeatSubStringWithRegexp(item.ParamValue, `\$[a-zA-Z0-9_]+`)
-	if len(referNodeNames) == 0 {
+	// 根据正则找到关联的节点名和字段名
+	refers := stringutil.GetNoRepeatSubStringWithRegexp(item.ParamValue, `\$[a-zA-Z0-9_]+\.[a-zA-Z0-9_]+`)
+	if len(refers) == 0 {
 		return
 	}
 	preStepNodeNames := getAllPreStepNodeName(work_id, work_step_id)
 	preStepNodeNames = append(preStepNodeNames, []string{"RESOURCE", "WORK"}...)
-	for _, referNodeName := range referNodeNames {
-		if !stringutil.CheckContains(strings.Replace(referNodeName, "$", "", -1), preStepNodeNames) {
-			checkResult = append(checkResult, fmt.Sprintf("Invalid variable relationship for %s was found!", referNodeName))
+	for _, refer := range refers {
+		referNodeName := refer[1:strings.Index(refer, ".")]
+		referFileName := refer[strings.Index(refer, ".")+1:]
+		// 判断节点名称是否有效
+		if !stringutil.CheckContains(referNodeName, preStepNodeNames) {
+			checkResult = append(checkResult, fmt.Sprintf("Invalid referNodeName relationship for %s was found!", referNodeName))
+			continue
+		}
+		// 判断字段名称是否有效
+		if step, err := iwork.QueryWorkStepByStepName(work_id, referNodeName, orm.NewOrm()); err == nil {
+			outputSchema := schema.GetCacheParamOutputSchema(&step)
+			exist := false
+			for _, item := range outputSchema.ParamOutputSchemaItems {
+				if item.ParamName == referFileName {
+					exist = true
+					break
+				}
+			}
+			if !exist {
+				checkResult = append(checkResult, fmt.Sprintf("Invalid referFileName relationship for %s was found!", referFileName))
+			}
 		}
 	}
 	return
