@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"github.com/astaxie/beego/orm"
 	"isoft/isoft/common/stringutil"
-	"isoft/isoft_iaas_web/core/iworkdata/block"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
 	"isoft/isoft_iaas_web/core/iworknode"
+	"isoft/isoft_iaas_web/core/iworkutil"
 	"isoft/isoft_iaas_web/core/iworkvalid"
 	"isoft/isoft_iaas_web/models/iwork"
 	"isoft/isoft_iaas_web/service"
@@ -187,7 +187,7 @@ func checkVariableRelationShipDetail(item schema.ParamInputSchemaItem, work_id, 
 	if len(refers) == 0 {
 		return
 	}
-	preStepNodeNames := getAllPreStepNodeName(work_id, work_step_id)
+	preStepNodeNames := iworkutil.GetAllPreStepNodeName(work_id, work_step_id)
 	skipNodeNames := []string{"RESOURCE", "WORK"}
 	for _, refer := range refers {
 		referNodeName := refer[1:strings.Index(refer, ".")]
@@ -217,23 +217,4 @@ func checkVariableRelationShipDetail(item schema.ParamInputSchemaItem, work_id, 
 		}
 	}
 	return
-}
-
-func getAllPreStepNodeName(work_id, work_step_id int64) []string {
-	result := make([]string, 0)
-	steps, err := iwork.QueryAllPreStepInfo(work_id, work_step_id, orm.NewOrm())
-	if err == nil {
-		// 当前步骤信息
-		currentWorkStep, _ := iwork.QueryWorkStepInfo(work_id, work_step_id, orm.NewOrm())
-		// 所有步骤信息
-		allSteps, _ := iwork.QueryAllWorkStepInfo(work_id, orm.NewOrm())
-		currentBlockStep, allBlockSteps := block.ParseAndGetCurrentBlockStep(&currentWorkStep, allSteps)
-		for _, step := range steps {
-			// 判断前置 step 在块范围内是否是可访问的
-			if block.CheckBlockAccessble(allBlockSteps, currentBlockStep, step.WorkStepId) {
-				result = append(result, step.WorkStepName)
-			}
-		}
-	}
-	return result
 }
