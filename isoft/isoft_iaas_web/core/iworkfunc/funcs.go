@@ -1,4 +1,4 @@
-package funcutil
+package iworkfunc
 
 import (
 	"github.com/pkg/errors"

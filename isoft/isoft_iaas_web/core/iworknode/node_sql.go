@@ -7,7 +7,7 @@ import (
 	"isoft/isoft_iaas_web/core/iworkdata/datastore"
 	"isoft/isoft_iaas_web/core/iworkdata/param"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
-	"isoft/isoft_iaas_web/core/iworkutil/funcutil"
+	"isoft/isoft_iaas_web/core/iworkfunc"
 	"isoft/isoft_iaas_web/core/iworkutil/sqlutil"
 	"isoft/isoft_iaas_web/models/iwork"
 	"strconv"
@@ -252,7 +252,7 @@ func (this *SQLQueryPageNode) ValidateCustom() (checkResult []string) {
 func validateTotalSqlBindingParamCount(step *iwork.WorkStep) {
 	total_sql := param.GetStaticParamValue(iworkconst.STRING_PREFIX+"total_sql", step)
 	sql_binding := param.GetStaticParamValue(iworkconst.MULTI_PREFIX+"sql_binding?", step)
-	if strings.Count(total_sql, "?")+2 != strings.Count(funcutil.EncodeSpecialForParamVaule(sql_binding), ";") {
+	if strings.Count(total_sql, "?")+2 != strings.Count(iworkfunc.EncodeSpecialForParamVaule(sql_binding), ";") {
 		panic("Number of ? in total_sql and number of ; in sql_binding is mismatch!")
 	}
 }
@@ -260,7 +260,7 @@ func validateTotalSqlBindingParamCount(step *iwork.WorkStep) {
 func validateSqlBindingParamCount(step *iwork.WorkStep) {
 	sql := param.GetStaticParamValue(iworkconst.STRING_PREFIX+"sql", step)
 	sql_binding := param.GetStaticParamValue(iworkconst.MULTI_PREFIX+"sql_binding?", step)
-	if strings.Count(sql, "?") != strings.Count(funcutil.EncodeSpecialForParamVaule(sql_binding), ";") {
+	if strings.Count(sql, "?") != strings.Count(iworkfunc.EncodeSpecialForParamVaule(sql_binding), ";") {
 		panic("Number of ? in SQL and number of ; in sql_binding is unequal!")
 	}
 }

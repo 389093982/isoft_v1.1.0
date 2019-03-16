@@ -7,8 +7,8 @@ import (
 	"isoft/isoft_iaas_web/core/iworkdata/datastore"
 	"isoft/isoft_iaas_web/core/iworkdata/param"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
+	"isoft/isoft_iaas_web/core/iworkfunc"
 	"isoft/isoft_iaas_web/core/iworkutil"
-	"isoft/isoft_iaas_web/core/iworkutil/funcutil"
 	"isoft/isoft_iaas_web/core/iworkvalid"
 	"isoft/isoft_iaas_web/models/iwork"
 	"strconv"
@@ -67,7 +67,7 @@ func (this *BaseNode) ParseAndGetParamVaule(paramName, paramVaule string, dataSt
 func (this *BaseNode) parseParamValueToMulti(paramVaule string) []string {
 	results := []string{}
 	// 对转义字符 \, \; \( \) 等进行编码
-	paramVaule = funcutil.EncodeSpecialForParamVaule(paramVaule)
+	paramVaule = iworkfunc.EncodeSpecialForParamVaule(paramVaule)
 	vaules := strings.Split(paramVaule, ";")
 	for _, value := range vaules {
 		if _value := this.removeUnsupportChars(value); strings.TrimSpace(_value) != "" {
@@ -78,7 +78,7 @@ func (this *BaseNode) parseParamValueToMulti(paramVaule string) []string {
 }
 
 func (this *BaseNode) _parseAndGetSingleParamVaule(paramVaule string, dataStore *datastore.DataStore) interface{} {
-	paramVaule = funcutil.DncodeSpecialForParamVaule(paramVaule)
+	paramVaule = iworkfunc.DncodeSpecialForParamVaule(paramVaule)
 	if strings.HasPrefix(strings.ToUpper(paramVaule), "$RESOURCE.") {
 		return this.parseAndFillParamVauleWithResource(paramVaule)
 	} else if strings.HasPrefix(strings.ToUpper(paramVaule), "$WORK.") {
@@ -91,8 +91,8 @@ func (this *BaseNode) _parseAndGetSingleParamVaule(paramVaule string, dataStore 
 
 func (this *BaseNode) parseAndGetSingleParamVaule(paramVaule string, dataStore *datastore.DataStore) interface{} {
 	// 对单个 paramVaule 进行特殊字符编码
-	paramVaule = funcutil.EncodeSpecialForParamVaule(paramVaule)
-	executors := funcutil.GetAllFuncExecutor(paramVaule)
+	paramVaule = iworkfunc.EncodeSpecialForParamVaule(paramVaule)
+	executors := iworkfunc.GetAllFuncExecutor(paramVaule)
 	if executors == nil || len(executors) == 0 {
 		// 是直接参数,不需要函数进行特殊处理
 		return this._parseAndGetSingleParamVaule(paramVaule, dataStore)
@@ -102,7 +102,7 @@ func (this *BaseNode) parseAndGetSingleParamVaule(paramVaule string, dataStore *
 		// 按照顺序依次执行函数
 		for _, executor := range executors {
 			// executor 所有参数进行 trim 操作
-			funcutil.GetTrimFuncExecutor(executor)
+			iworkfunc.GetTrimFuncExecutor(executor)
 			args := make([]interface{}, 0)
 			// 函数参数替换成实际意义上的值
 			for _, arg := range executor.FuncArgs {
@@ -114,7 +114,7 @@ func (this *BaseNode) parseAndGetSingleParamVaule(paramVaule string, dataStore *
 				}
 			}
 			// 执行函数并记录结果,供下一个函数执行使用
-			result := funcutil.CallFuncExecutor(executor, args)
+			result := iworkfunc.CallFuncExecutor(executor, args)
 			historyFuncResultMap[executor.FuncUUID] = result
 			lastFuncResult = result
 		}
