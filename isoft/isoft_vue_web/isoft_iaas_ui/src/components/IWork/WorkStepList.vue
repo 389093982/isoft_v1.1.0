@@ -109,7 +109,7 @@
           {
             title: 'work_step_name',
             key: 'work_step_name',
-            width: 220,
+            width: 250,
             render: (h, params) => {
               return h('div', [
                 h('span', {

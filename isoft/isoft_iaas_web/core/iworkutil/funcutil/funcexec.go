@@ -131,6 +131,10 @@ func (this *IWorkFuncProxy) IworkStringsUUID(args []interface{}) interface{} {
 	return stringutil.RandomUUID()
 }
 
+func (this *IWorkFuncProxy) IworkStringsCheckEmpty(args []interface{}) interface{} {
+	return args[0].(string) == ""
+}
+
 func (this *IWorkFuncProxy) IworkCheckEmpty(args []interface{}) interface{} {
 	return args[0] == nil
 }

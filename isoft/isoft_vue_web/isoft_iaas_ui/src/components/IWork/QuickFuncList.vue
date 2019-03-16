@@ -30,6 +30,7 @@
           {funcDemo:"IworkStringsContains($str1,$str2)",funcDesc:"字符串包含函数",},
           {funcDemo:"IworkStringsHasPrefix($str1,$str2)",funcDesc:"字符串前缀判断函数",},
           {funcDemo:"IworkStringsHasSuffix($str1,$str2)",funcDesc:"字符串后缀判断函数",},
+          {funcDemo:"IworkStringsCheckEmpty($str1)",funcDesc:"字符串是否为空",},
           {funcDemo:"IworkInt64Gt($int1,$int2)",funcDesc:"判断数字1是否大于数字2",},
           {funcDemo:"IworkInt64Lt($int1,$int2)",funcDesc:"判断数字1是否小于数字2",},
           {funcDemo:"IworkInt64Eq($int1,$int2)",funcDesc:"判断数字1是否等于数字2",},
