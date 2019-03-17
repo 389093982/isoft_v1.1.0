@@ -71,7 +71,7 @@ func (this *WorkController) ValidateResource() {
 			}
 			err = err1
 		case "sftp":
-			sshClient, sftpClient, err1 := sftputil.SFTPConnect(resource.ResourceName, resource.ResourcePassword, resource.ResourceDsn, 22)
+			sshClient, sftpClient, err1 := sftputil.SFTPConnect(resource.ResourceUsername, resource.ResourcePassword, resource.ResourceDsn, 22)
 			if err1 == nil {
 				defer sshClient.Close()
 				defer sftpClient.Close()
