@@ -7,6 +7,7 @@ import (
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
 	"isoft/isoft_iaas_web/core/iworkutil/fileutil"
 	"isoft/isoft_iaas_web/models/iwork"
+	"os"
 	"strings"
 )
 
@@ -31,7 +32,7 @@ func (this *FileReadNode) Execute(trackingId string) {
 
 func (this *FileReadNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
 	paramMap := map[int][]string{
-		1: []string{iworkconst.STRING_PREFIX + "file_path", "读取文件的绝对路径"},
+		1: {iworkconst.STRING_PREFIX + "file_path", "读取文件的绝对路径"},
 	}
 	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
 }
@@ -49,7 +50,7 @@ func (this *FileReadNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchem
 }
 
 func (this *FileReadNode) ValidateCustom() (checkResult []string) {
-	return []string{}
+	return
 }
 
 type FileWriteNode struct {
@@ -113,5 +114,48 @@ func (this *FileWriteNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSche
 }
 
 func (this *FileWriteNode) ValidateCustom() (checkResult []string) {
-	return []string{}
+	return
+}
+
+type FileRenameNode struct {
+	BaseNode
+	WorkStep *iwork.WorkStep
+}
+
+func (this *FileRenameNode) Execute(trackingId string) {
+	// 数据中心
+	dataStore := datastore.GetDataStore(trackingId)
+	// 节点中间数据
+	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, dataStore)
+	file_path := tmpDataMap[iworkconst.STRING_PREFIX+"file_path"].(string)
+	new_file_path := tmpDataMap[iworkconst.STRING_PREFIX+"new_file_path"].(string)
+	if err := os.Rename(file_path, new_file_path); err == nil {
+		dataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.STRING_PREFIX+"file_path", new_file_path)
+	} else {
+		panic(err)
+	}
+}
+
+func (this *FileRenameNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
+	paramMap := map[int][]string{
+		1: {iworkconst.STRING_PREFIX + "file_path", "需要进行移动重命名的文件路径"},
+		2: {iworkconst.STRING_PREFIX + "new_file_path", "移动重命名后的文件路径"},
+	}
+	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
+}
+
+func (this *FileRenameNode) GetRuntimeParamInputSchema() *schema.ParamInputSchema {
+	return &schema.ParamInputSchema{}
+}
+
+func (this *FileRenameNode) GetDefaultParamOutputSchema() *schema.ParamOutputSchema {
+	return &schema.ParamOutputSchema{}
+}
+
+func (this *FileRenameNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
+	return &schema.ParamOutputSchema{}
+}
+
+func (this *FileRenameNode) ValidateCustom() (checkResult []string) {
+	return
 }

@@ -71,6 +71,8 @@ func (this *WorkStepFactory) getProxy() IStandardWorkStep {
 		return &FileReadNode{WorkStep: this.WorkStep}
 	case "FILE_WRITE":
 		return &FileWriteNode{WorkStep: this.WorkStep}
+	case "FILE_RENAME":
+		return &FileRenameNode{WorkStep: this.WorkStep}
 	case "HREF_PARSER":
 		return &HrefParserNode{WorkStep: this.WorkStep}
 	case "ENTITY_PARSER":
