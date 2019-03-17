@@ -1,9 +1,9 @@
 package iwork
 
 import (
-	"fmt"
 	"github.com/astaxie/beego/utils/pagination"
 	"isoft/isoft/common/pageutil"
+	"isoft/isoft_iaas_web/core/iworkutil/sftputil"
 	"isoft/isoft_iaas_web/core/iworkutil/sqlutil"
 	"isoft/isoft_iaas_web/models/iwork"
 	"time"
@@ -65,9 +65,18 @@ func (this *WorkController) ValidateResource() {
 	if err == nil {
 		switch resource.ResourceType {
 		case "db":
-			_, err = sqlutil.GetConnForMysql("mysql", resource.ResourceDsn)
+			db, err1 := sqlutil.GetConnForMysql("mysql", resource.ResourceDsn)
+			if err1 == nil {
+				defer db.Close()
+			}
+			err = err1
 		case "sftp":
-			fmt.Println("helloworld...")
+			sshClient, sftpClient, err1 := sftputil.SFTPConnect(resource.ResourceName, resource.ResourcePassword, resource.ResourceDsn, 22)
+			if err1 == nil {
+				defer sshClient.Close()
+				defer sftpClient.Close()
+			}
+			err = err1
 		}
 	}
 	if err == nil {
