@@ -70,27 +70,32 @@ func (this *FileWriteNode) Execute(trackingId string) {
 	// 节点中间数据
 	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, dataStore)
 	file_path := tmpDataMap[iworkconst.STRING_PREFIX+"file_path"].(string)
+	var strdata string
 	// 写字符串
 	if data, ok := tmpDataMap[iworkconst.STRING_PREFIX+"data?"].(string); ok {
-		if err := fileutil.WriteFile(file_path, []byte(data), checkAppend(tmpDataMap)); err != nil {
-			panic(err)
-		}
+		strdata = data
 	}
 	// 写字节数组
 	if bytes, ok := tmpDataMap[iworkconst.BYTE_ARRAY_PREFIX+"data?"].([]byte); ok {
-		if err := fileutil.WriteFile(file_path, bytes, checkAppend(tmpDataMap)); err != nil {
-			panic(err)
-		}
+		strdata = string(bytes)
+	}
+	// 判断是否需要添加行分隔符
+	if linesep, ok := tmpDataMap[iworkconst.BOOL_PREFIX+"linesep?"].(string); ok && strings.TrimSpace(linesep) != "" {
+		strdata += "\n"
+	}
+	if err := fileutil.WriteFile(file_path, []byte(strdata), checkAppend(tmpDataMap)); err != nil {
+		panic(err)
 	}
 	dataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.STRING_PREFIX+"file_path", file_path)
 }
 
 func (this *FileWriteNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
 	paramMap := map[int][]string{
-		1: []string{iworkconst.STRING_PREFIX + "file_path", "写入文件的绝对路径,文件不存在时会自动创建"},
-		2: []string{iworkconst.STRING_PREFIX + "data?", "可选参数,写入文件的字符数据"},
-		3: []string{iworkconst.BYTE_ARRAY_PREFIX + "data?", "可选参数,写入文件的二进制字节数据"},
-		4: []string{iworkconst.BOOL_PREFIX + "append?", "可选参数,文件追加模式,值为空表示覆盖,有值表示追加"},
+		1: {iworkconst.STRING_PREFIX + "file_path", "写入文件的绝对路径,文件不存在时会自动创建"},
+		2: {iworkconst.STRING_PREFIX + "data?", "可选参数,写入文件的字符数据"},
+		3: {iworkconst.BYTE_ARRAY_PREFIX + "data?", "可选参数,写入文件的二进制字节数据"},
+		4: {iworkconst.BOOL_PREFIX + "append?", "可选参数,文件追加模式,值为空表示覆盖,有值表示追加"},
+		5: {iworkconst.BOOL_PREFIX + "linesep?", "可选参数,行分隔符,默认没有分割符,有值表示使用换行符进行分割"},
 	}
 	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
 }
