@@ -15,6 +15,7 @@ func (this *BlockParser) ParseToBlockStep() []*BlockStep {
 	return blockSteps
 }
 
+// 将 steps 转换为 BlockStep,同时获取当前步骤对应的 BlockStep
 func (this *BlockParser) ParseAndGetCurrentBlockStep(currentStep *iwork.WorkStep) (currentBlockStep *BlockStep, blockSteps []*BlockStep) {
 	blockSteps = make([]*BlockStep, 0)
 	minIndentIndexs := this.getMinIndentIndex(this.Steps)
