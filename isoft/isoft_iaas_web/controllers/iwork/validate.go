@@ -7,6 +7,7 @@ import (
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
 	"isoft/isoft_iaas_web/core/iworknode"
 	"isoft/isoft_iaas_web/core/iworkutil"
+	"isoft/isoft_iaas_web/core/iworkutil/errorutil"
 	"isoft/isoft_iaas_web/core/iworkvalid"
 	"isoft/isoft_iaas_web/models/iwork"
 	"isoft/isoft_iaas_web/service"
@@ -123,11 +124,11 @@ func validateWorkStartAndEnd(steps []iwork.WorkStep, logCh chan *iwork.ValidateL
 func validateStep(step *iwork.WorkStep, logCh chan *iwork.ValidateLogDetail, stepChan chan int) {
 	defer func() {
 		if err := recover(); err != nil {
-			if _err, ok := err.(error); ok {
+			if _, ok := err.(error); ok {
 				logCh <- &iwork.ValidateLogDetail{
 					WorkId:     step.WorkId,
 					WorkStepId: step.WorkStepId,
-					Detail:     _err.Error(),
+					Detail:     string(errorutil.PanicTrace(4)),
 				}
 			} else if _err, ok := err.(string); ok {
 				logCh <- &iwork.ValidateLogDetail{
