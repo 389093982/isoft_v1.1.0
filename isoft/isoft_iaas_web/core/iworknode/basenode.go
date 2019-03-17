@@ -20,7 +20,11 @@ type BaseNode struct{}
 
 // paramValue 来源于 iwork 模块
 func (this *BaseNode) parseAndFillParamVauleWithResource(paramVaule string) interface{} {
-	return iwork.QueryResourceDataSourceNameString(strings.Replace(paramVaule, "$RESOURCE.", "", -1))
+	resource, err := iwork.QueryResourceByName(strings.Replace(paramVaule, "$RESOURCE.", "", -1))
+	if err == nil {
+		return resource.ResourceDsn
+	}
+	return ""
 }
 
 // paramValue 来源于前置节点

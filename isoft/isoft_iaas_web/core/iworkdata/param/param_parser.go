@@ -46,7 +46,11 @@ func (this *ParamVauleParser) GetStaticParamValue() string {
 		resource_name = strings.Replace(resource_name, "$RESOURCE.", "", -1)
 		resource_name = strings.Replace(resource_name, ";", "", -1)
 		resource_name = strings.TrimSpace(resource_name)
-		return iwork.QueryResourceDataSourceNameString(resource_name)
+		resource, err := iwork.QueryResourceByName(resource_name)
+		if err == nil {
+			return resource.ResourceDsn
+		}
+		return ""
 	}
 	return this.ParamValue
 }
@@ -75,7 +79,7 @@ func (this *ParamNameParser) ParseAndGetRelativeParamValue() string {
 }
 
 // 根据步骤和参数名称获取静态参数值
-func GetStaticParamValue(paramName string, step *iwork.WorkStep) string {
+func GetStaticParamValue(paramName string, step *iwork.WorkStep) interface{} {
 	paramNameParser := &ParamNameParser{
 		ParamName: paramName,
 		Step:      step,

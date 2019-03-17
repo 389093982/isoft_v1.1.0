@@ -52,13 +52,10 @@ func QueryAllResource() (resources []Resource) {
 	return
 }
 
-func QueryResourceDataSourceNameString(resource_name string) string {
-	var resource Resource
+func QueryResourceByName(resource_name string) (resource Resource, err error) {
 	o := orm.NewOrm()
-	if err := o.QueryTable("resource").Filter("resource_name", resource_name).One(&resource); err == nil {
-		return resource.ResourceDsn
-	}
-	return ""
+	err = o.QueryTable("resource").Filter("resource_name", resource_name).One(&resource)
+	return
 }
 
 func DeleteResource(id int64) error {

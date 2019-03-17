@@ -44,10 +44,10 @@ func (this *SQLQueryNode) Execute(trackingId string) {
 
 func (this *SQLQueryNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
 	paramMap := map[int][]string{
-		1: []string{iworkconst.STRING_PREFIX + "metadata_sql", "元数据sql语句,针对复杂查询sql,需要提供类似于select * from blog where 1=0的辅助sql用来构建节点输出"},
-		2: []string{iworkconst.STRING_PREFIX + "sql", "查询sql语句"},
-		3: []string{iworkconst.MULTI_PREFIX + "sql_binding?", "sql绑定数据,个数必须和当前执行sql语句中的占位符参数个数相同"},
-		4: []string{iworkconst.STRING_PREFIX + "db_conn", "数据库连接信息,需要使用 $RESOURCE 全局参数"},
+		1: {iworkconst.STRING_PREFIX + "metadata_sql", "元数据sql语句,针对复杂查询sql,需要提供类似于select * from blog where 1=0的辅助sql用来构建节点输出"},
+		2: {iworkconst.STRING_PREFIX + "sql", "查询sql语句"},
+		3: {iworkconst.MULTI_PREFIX + "sql_binding?", "sql绑定数据,个数必须和当前执行sql语句中的占位符参数个数相同"},
+		4: {iworkconst.STRING_PREFIX + "db_conn", "数据库连接信息,需要使用 $RESOURCE 全局参数"},
 	}
 	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
 }
@@ -128,10 +128,10 @@ func (this *SQLExecuteNode) modifySqlInsertWithBatchNumber(tmpDataMap map[string
 
 func (this *SQLExecuteNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
 	paramMap := map[int][]string{
-		1: []string{iworkconst.NUMBER_PREFIX + "batch_number?", "仅供批量插入数据时使用"},
-		2: []string{iworkconst.STRING_PREFIX + "sql", "执行sql语句"},
-		3: []string{iworkconst.MULTI_PREFIX + "sql_binding?", "sql绑定数据,个数必须和当前执行sql语句中的占位符参数个数相同"},
-		4: []string{iworkconst.STRING_PREFIX + "db_conn", "数据库连接信息,需要使用 $RESOURCE 全局参数"},
+		1: {iworkconst.NUMBER_PREFIX + "batch_number?", "仅供批量插入数据时使用"},
+		2: {iworkconst.STRING_PREFIX + "sql", "执行sql语句"},
+		3: {iworkconst.MULTI_PREFIX + "sql_binding?", "sql绑定数据,个数必须和当前执行sql语句中的占位符参数个数相同"},
+		4: {iworkconst.STRING_PREFIX + "db_conn", "数据库连接信息,需要使用 $RESOURCE 全局参数"},
 	}
 	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
 }
@@ -210,13 +210,13 @@ func getPageIndexAndPageSize(tmpDataMap map[string]interface{}) (currentPage int
 
 func (this *SQLQueryPageNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
 	paramMap := map[int][]string{
-		1: []string{iworkconst.STRING_PREFIX + "metadata_sql", "元数据sql语句,针对复杂查询sql,需要提供类似于select * from blog where 1=0的辅助sql用来构建节点输出"},
-		2: []string{iworkconst.STRING_PREFIX + "total_sql", "统计总数sql,返回N页总数据量,格式参考select count(*) as count from blog where xxx"},
-		3: []string{iworkconst.STRING_PREFIX + "sql", "带分页条件的sql,等价于 ${total_sql} limit ?,?"},
-		4: []string{iworkconst.NUMBER_PREFIX + "current_page", "当前页数"},
-		5: []string{iworkconst.NUMBER_PREFIX + "page_size", "每页数据量"},
-		6: []string{iworkconst.MULTI_PREFIX + "sql_binding?", "sql绑定数据,个数和sql中的?数量相同,前N-2位参数和total_sql中的?数量相同"},
-		7: []string{iworkconst.STRING_PREFIX + "db_conn", "数据库连接信息,需要使用 $RESOURCE 全局参数"},
+		1: {iworkconst.STRING_PREFIX + "metadata_sql", "元数据sql语句,针对复杂查询sql,需要提供类似于select * from blog where 1=0的辅助sql用来构建节点输出"},
+		2: {iworkconst.STRING_PREFIX + "total_sql", "统计总数sql,返回N页总数据量,格式参考select count(*) as count from blog where xxx"},
+		3: {iworkconst.STRING_PREFIX + "sql", "带分页条件的sql,等价于 ${total_sql} limit ?,?"},
+		4: {iworkconst.NUMBER_PREFIX + "current_page", "当前页数"},
+		5: {iworkconst.NUMBER_PREFIX + "page_size", "每页数据量"},
+		6: {iworkconst.MULTI_PREFIX + "sql_binding?", "sql绑定数据,个数和sql中的?数量相同,前N-2位参数和total_sql中的?数量相同"},
+		7: {iworkconst.STRING_PREFIX + "db_conn", "数据库连接信息,需要使用 $RESOURCE 全局参数"},
 	}
 	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
 }
