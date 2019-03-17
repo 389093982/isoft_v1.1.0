@@ -3,12 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="61c01151-84f0-4bfd-a227-5c1f0b5a424d" name="Default" comment="代码优化">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_iaas_web/controllers/iwork/iresource.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_iaas_web/controllers/iwork/iresource.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_iaas_web/iwork.db" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_iaas_web/iwork.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_iaas_web/models/iwork/iresource.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_iaas_web/models/iwork/iresource.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_iaas_web/routers/iwork_router.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_iaas_web/routers/iwork_router.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/api/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/api/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/IWork/IResource/ResourceList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/IWork/IResource/ResourceList.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/IWork/IResource/ResourceAdd.vue" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/IWork/IResource/ResourceAdd.vue" afterDir="false" />
     </list>
     <ignored path="isoft_deploy_web/static/uploadfile/" />
     <ignored path="../.idea/inspectionProfiles/profiles_settings.xml" />
@@ -108,7 +103,7 @@
           <entry key="svg" value="1" />
           <entry key="ts" value="20" />
           <entry key="txt" value="82" />
-          <entry key="vue" value="1570" />
+          <entry key="vue" value="1573" />
           <entry key="vue_bak" value="1" />
           <entry key="xml" value="10" />
           <entry key="yml" value="1" />
@@ -128,7 +123,7 @@
           <entry key="SQL" value="6" />
           <entry key="SVG" value="1" />
           <entry key="TypeScript" value="20" />
-          <entry key="Vue.js" value="1557" />
+          <entry key="Vue.js" value="1560" />
           <entry key="XML" value="10" />
           <entry key="YAML" value="1" />
           <entry key="x86 Plan9 Assembly" value="18" />
@@ -146,7 +141,7 @@
           <entry key="sql" value="113" />
           <entry key="sum" value="3" />
           <entry key="txt" value="1243" />
-          <entry key="vue" value="65423" />
+          <entry key="vue" value="65488" />
           <entry key="xml" value="48" />
         </counts>
       </usages-collector>
@@ -158,7 +153,7 @@
           <entry key="JavaScript" value="8081" />
           <entry key="PLAIN_TEXT" value="3613" />
           <entry key="SQL" value="141" />
-          <entry key="Vue.js" value="65316" />
+          <entry key="Vue.js" value="65381" />
           <entry key="XML" value="48" />
         </counts>
       </usages-collector>
@@ -181,33 +176,29 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/IWork/IResource/ResourceList.vue">
+        <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/IWork/IResource/ResourceAdd.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="195">
-              <caret line="110" column="20" selection-start-line="110" selection-start-column="20" selection-end-line="110" selection-end-column="20" />
+            <state relative-caret-position="124">
+              <caret line="59" column="78" selection-start-line="59" selection-start-column="78" selection-end-line="59" selection-end-column="78" />
               <folding>
-                <element signature="n#style#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#ISimpleLeftRightRow#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-                <element signature="e#651#698#0" expanded="true" />
+                <element signature="n#style#0;n#Button#0;n#FormItem#6;n#Form#0;n#ISimpleBtnTriggerModal#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#Button#1;n#FormItem#6;n#Form#0;n#ISimpleBtnTriggerModal#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="e#1678#1756#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/api/index.js">
+        <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/IWork/WorkStepBaseInfo.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="351">
-              <caret line="134" column="27" selection-start-line="134" selection-start-column="27" selection-end-line="134" selection-end-column="27" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/IWork/WorkStepList.vue">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="217" selection-start-line="217" selection-end-line="220" selection-end-column="9" />
+            <state relative-caret-position="161">
+              <caret line="80" column="24" selection-start-line="80" selection-start-column="10" selection-end-line="80" selection-end-column="24" />
+              <folding>
+                <element signature="n#style#0;n#Button#0;n#Poptip#0;n#Col#1;n#Row#0;n#FormItem#3;n#Form#0;n#div#0;n#Modal#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#span#0;n#div#0;n#Poptip#0;n#Col#1;n#Row#0;n#FormItem#3;n#Form#0;n#div#0;n#Modal#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#Button#0;n#FormItem#5;n#Form#0;n#div#0;n#Modal#0;n#template#0;n#!!top" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -229,7 +220,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>addWorkStep</find>
       <find>GetCacheParamInputSchema</find>
       <find>getRel</find>
       <find>cloudsql</find>
@@ -257,8 +247,9 @@
       <find>funcutil</find>
       <find>error msg</find>
       <find>iworkconst</find>
-      <find>closePoptip</find>
       <find>DeleteResource</find>
+      <find>closePoptip</find>
+      <find>work_step_type</find>
     </findStrings>
     <replaceStrings>
       <replace>Helper</replace>
@@ -376,12 +367,12 @@
         <option value="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/GlobalData/index.js" />
         <option value="$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_cmd.go" />
         <option value="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/IWork/WorkStepBaseInfo.vue" />
-        <option value="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/IWork/IResource/ResourceAdd.vue" />
         <option value="$PROJECT_DIR$/isoft_iaas_web/models/iwork/iresource.go" />
         <option value="$PROJECT_DIR$/isoft_iaas_web/controllers/iwork/iresource.go" />
         <option value="$PROJECT_DIR$/isoft_iaas_web/routers/iwork_router.go" />
         <option value="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/api/index.js" />
         <option value="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/IWork/IResource/ResourceList.vue" />
+        <option value="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/IWork/IResource/ResourceAdd.vue" />
       </list>
     </option>
   </component>
@@ -723,7 +714,7 @@
     <layout>
       <window_info id="Favorites" order="0" sideWeight="0.72113675" side_tool="true" weight="0.28698465" />
       <window_info id="Structure" order="1" sideWeight="0.72113675" side_tool="true" weight="0.3354891" />
-      <window_info content_ui="combo" id="Project" order="2" sideWeight="0.27886322" weight="0.31204528" />
+      <window_info content_ui="combo" id="Project" order="2" sideWeight="0.27886322" weight="0.44058207" />
       <window_info anchor="bottom" id="TypeScript" order="0" weight="0.46003553" />
       <window_info anchor="bottom" id="Messages" order="1" weight="0.55239785" />
       <window_info anchor="bottom" id="Terminal" order="2" sideWeight="0.4890865" weight="0.39076376" />
@@ -731,7 +722,7 @@
       <window_info anchor="bottom" id="Version Control" order="4" weight="0.6749556" />
       <window_info anchor="bottom" id="Message" order="5" />
       <window_info anchor="bottom" id="Find" order="6" weight="0.79040855" />
-      <window_info anchor="bottom" id="Run" order="7" sideWeight="0.4890865" weight="0.5506217" />
+      <window_info anchor="bottom" id="Run" order="7" sideWeight="0.4890865" weight="0.54884547" />
       <window_info anchor="bottom" id="Debug" order="8" sideWeight="0.49393696" weight="0.357016" />
       <window_info anchor="bottom" id="Cvs" order="9" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="10" weight="0.4" />
@@ -747,7 +738,7 @@
     <layout-to-restore>
       <window_info id="Favorites" order="0" sideWeight="0.72113675" side_tool="true" weight="0.28698465" />
       <window_info id="Structure" order="1" sideWeight="0.72113675" side_tool="true" weight="0.3354891" />
-      <window_info active="true" content_ui="combo" id="Project" order="2" sideWeight="0.27886322" visible="true" weight="0.31204528" />
+      <window_info active="true" content_ui="combo" id="Project" order="2" sideWeight="0.27886322" visible="true" weight="0.44058207" />
       <window_info anchor="bottom" id="TypeScript" order="0" weight="0.46003553" />
       <window_info anchor="bottom" id="Messages" order="1" weight="0.55239785" />
       <window_info anchor="bottom" id="Terminal" order="2" sideWeight="0.4890865" weight="0.39076376" />
@@ -755,7 +746,7 @@
       <window_info anchor="bottom" id="Version Control" order="4" weight="0.6749556" />
       <window_info anchor="bottom" id="Message" order="5" />
       <window_info anchor="bottom" id="Find" order="6" weight="0.79040855" />
-      <window_info anchor="bottom" id="Run" order="7" sideWeight="0.4890865" weight="0.5506217" />
+      <window_info anchor="bottom" id="Run" order="7" sideWeight="0.4890865" weight="0.54884547" />
       <window_info anchor="bottom" id="Debug" order="8" sideWeight="0.49393696" weight="0.357016" />
       <window_info anchor="bottom" id="Cvs" order="9" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="10" weight="0.4" />
@@ -1078,18 +1069,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/IWork/WorkStepBaseInfo.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="96">
-          <caret line="24" column="18" lean-forward="true" selection-start-line="24" selection-start-column="18" selection-end-line="24" selection-end-column="18" />
-          <folding>
-            <element signature="n#style#0;n#Button#0;n#Poptip#0;n#Col#1;n#Row#0;n#FormItem#3;n#Form#0;n#div#0;n#Modal#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#div#0;n#Poptip#0;n#Col#1;n#Row#0;n#FormItem#3;n#Form#0;n#div#0;n#Modal#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#Button#0;n#FormItem#5;n#Form#0;n#div#0;n#Modal#0;n#template#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/isoft/ssofilter/sso_filter.gotxt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1446" />
@@ -1102,17 +1081,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
           <caret line="2" column="8" selection-start-line="2" selection-start-column="8" selection-end-line="2" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/IWork/IResource/ResourceAdd.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="261">
-          <caret line="76" column="39" selection-start-line="76" selection-start-column="39" selection-end-line="76" selection-end-column="39" />
-          <folding>
-            <element signature="n#style#0;n#Button#0;n#FormItem#7;n#Form#0;n#ISimpleBtnTriggerModal#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#Button#1;n#FormItem#7;n#Form#0;n#ISimpleBtnTriggerModal#0;n#template#0;n#!!top" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1201,13 +1169,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/IWork/WorkStepList.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="217" selection-start-line="217" selection-end-line="220" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/api/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="351">
@@ -1217,12 +1178,43 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/IWork/IResource/ResourceList.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="110" column="20" selection-start-line="110" selection-start-column="20" selection-end-line="110" selection-end-column="20" />
+        <state relative-caret-position="1870">
+          <caret line="110" column="19" selection-start-line="110" selection-start-column="19" selection-end-line="110" selection-end-column="19" />
           <folding>
             <element signature="n#style#0;n#div#0;n#template#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#ISimpleLeftRightRow#0;n#div#0;n#template#0;n#!!top" expanded="true" />
             <element signature="e#651#698#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/IWork/WorkStepList.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3145">
+          <caret line="222" column="61" lean-forward="true" selection-start-line="222" selection-start-column="61" selection-end-line="222" selection-end-column="61" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/IWork/WorkStepBaseInfo.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="161">
+          <caret line="80" column="24" selection-start-line="80" selection-start-column="10" selection-end-line="80" selection-end-column="24" />
+          <folding>
+            <element signature="n#style#0;n#Button#0;n#Poptip#0;n#Col#1;n#Row#0;n#FormItem#3;n#Form#0;n#div#0;n#Modal#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#div#0;n#Poptip#0;n#Col#1;n#Row#0;n#FormItem#3;n#Form#0;n#div#0;n#Modal#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#Button#0;n#FormItem#5;n#Form#0;n#div#0;n#Modal#0;n#template#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/IWork/IResource/ResourceAdd.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="124">
+          <caret line="59" column="78" selection-start-line="59" selection-start-column="78" selection-end-line="59" selection-end-column="78" />
+          <folding>
+            <element signature="n#style#0;n#Button#0;n#FormItem#6;n#Form#0;n#ISimpleBtnTriggerModal#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#Button#1;n#FormItem#6;n#Form#0;n#ISimpleBtnTriggerModal#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="e#1678#1756#0" expanded="true" />
           </folding>
         </state>
       </provider>

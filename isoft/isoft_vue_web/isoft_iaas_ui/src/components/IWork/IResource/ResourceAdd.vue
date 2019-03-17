@@ -8,7 +8,11 @@
         <Input v-model.trim="formValidate.resource_name" placeholder="请输入 resource_name"></Input>
       </FormItem>
       <FormItem label="resource_type" prop="resource_type">
-        <Input v-model.trim="formValidate.resource_type" placeholder="请输入 resource_type"></Input>
+        <Select v-model="formValidate.resource_type" placeholder="请选择 resource_type">
+          <Option value="db">db</Option>
+          <Option value="sftp">sftp</Option>
+          <Option value="ssh">ssh</Option>
+        </Select>
       </FormItem>
       <FormItem label="resource_url" prop="resource_url">
         <Input v-model.trim="formValidate.resource_url" placeholder="请输入 resource_url"></Input>
@@ -53,7 +57,7 @@
             { required: true, message: 'resource_name 不能为空!', trigger: 'blur' }
           ],
           resource_type: [
-            { required: true, message: 'resource_type 不能为空!', trigger: 'blur' }
+            { required: true, message: 'resource_type 不能为空!', trigger: 'change' }
           ],
           resource_url: [
             { required: true, message: 'resource_url 不能为空!', trigger: 'blur' }
