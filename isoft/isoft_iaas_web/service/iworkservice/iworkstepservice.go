@@ -77,7 +77,8 @@ func LoadPreNodeOutputService(serviceArgs map[string]interface{}) (result map[st
 		currentWorkStep, _ := iwork.QueryWorkStepInfo(work_id, work_step_id, orm.NewOrm())
 		// 所有步骤信息
 		allSteps, _ := iwork.QueryAllWorkStepInfo(work_id, orm.NewOrm())
-		currentBlockStep, allBlockSteps := block.ParseAndGetCurrentBlockStep(&currentWorkStep, allSteps)
+		parser := &block.BlockParser{Steps: allSteps}
+		currentBlockStep, allBlockSteps := parser.ParseAndGetCurrentBlockStep(&currentWorkStep)
 		for _, step := range steps {
 			// 判断前置 step 在块范围内是否是可访问的
 			if block.CheckBlockAccessble(allBlockSteps, currentBlockStep, step.WorkStepId) {
