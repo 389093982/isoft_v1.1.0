@@ -15,7 +15,6 @@ func (this *WorkController) AddResource() {
 	resource.ResourceDsn = this.Input().Get("resource_dsn")
 	resource.ResourceUsername = this.Input().Get("resource_username")
 	resource.ResourcePassword = this.Input().Get("resource_password")
-	resource.EnvName = this.Input().Get("env_name")
 	resource.CreatedBy = "SYSTEM"
 	resource.CreatedTime = time.Now()
 	resource.LastUpdatedBy = "SYSTEM"

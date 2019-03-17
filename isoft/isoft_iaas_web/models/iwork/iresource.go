@@ -14,7 +14,6 @@ type Resource struct {
 	ResourceDsn      string    `json:"resource_dsn"`
 	ResourceUsername string    `json:"resource_username"`
 	ResourcePassword string    `json:"resource_password"`
-	EnvName          string    `json:"env_name"`
 	CreatedBy        string    `json:"created_by"`
 	CreatedTime      time.Time `json:"created_time" orm:"auto_now_add;type(datetime)"`
 	LastUpdatedBy    string    `json:"last_updated_by"`

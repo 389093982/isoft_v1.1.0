@@ -60,10 +60,6 @@
             key: 'resource_password',
           },
           {
-            title: 'env_name',
-            key: 'env_name',
-          },
-          {
             title: 'last_updated_time',
             key: 'last_updated_time',
             render: (h,params)=>{

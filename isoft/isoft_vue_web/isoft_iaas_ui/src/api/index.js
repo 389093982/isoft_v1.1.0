@@ -129,7 +129,7 @@ export const AddQuartz = (task_name,task_type,cron_str) => ajax(BASE_URL+"/iwork
 export const ResourceList = (offset,current_page,search) => ajax(BASE_URL+"/iwork/filterPageResource", {offset,current_page,search},'POST');
 
 // 添加 resource 记录
-export const AddResource = (resource_name,resource_type,resource_url,resource_dsn,resource_username,resource_password,env_name) => ajax(BASE_URL+"/iwork/addResource", {resource_name,resource_type,resource_url,resource_dsn,resource_username,resource_password,env_name},'POST');
+export const AddResource = (resource_name,resource_type,resource_url,resource_dsn,resource_username,resource_password) => ajax(BASE_URL+"/iwork/addResource", {resource_name,resource_type,resource_url,resource_dsn,resource_username,resource_password},'POST');
 
 // work 分页查询
 export const WorkList = (offset,current_page,search) => ajax(BASE_URL+"/iwork/filterPageWork", {offset,current_page,search},'POST');

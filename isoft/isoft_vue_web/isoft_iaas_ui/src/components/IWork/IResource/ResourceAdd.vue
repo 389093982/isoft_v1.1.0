@@ -22,9 +22,6 @@
       <FormItem label="resource_password" prop="resource_password">
         <Input v-model.trim="formValidate.resource_password" placeholder="请输入 resource_password"></Input>
       </FormItem>
-      <FormItem label="env_name" prop="env_name">
-        <Input v-model.trim="formValidate.env_name" placeholder="请输入 env_name"></Input>
-      </FormItem>
       <FormItem>
         <Button type="success" @click="handleSubmit('formValidate')" style="margin-right: 6px">Submit</Button>
         <Button type="warning" @click="handleReset('formValidate')" style="margin-right: 6px">Reset</Button>
@@ -70,9 +67,6 @@
           resource_password: [
             { required: true, message: 'resource_password 不能为空!', trigger: 'blur' }
           ],
-          env_name: [
-            { required: true, message: 'env_name 不能为空!', trigger: 'blur' }
-          ],
         },
       }
     },
@@ -82,8 +76,7 @@
           if (valid) {
             const result = await AddResource(this.formValidate.resource_name,
               this.formValidate.resource_type,this.formValidate.resource_url,this.formValidate.resource_dsn,
-              this.formValidate.resource_username,this.formValidate.resource_password,
-              this.formValidate.env_name);
+              this.formValidate.resource_username,this.formValidate.resource_password);
             if(result.status == "SUCCESS"){
               this.$Message.success('提交成功!');
               // 调用子组件隐藏 modal (this.refs.xxx.子组件定义的方法())
