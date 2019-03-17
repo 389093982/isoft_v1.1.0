@@ -95,7 +95,7 @@ const default_work_step_types=[
   {"name":"goto_condition","icon":"md-undo"},
   {"name":"if","icon":"md-code-working"},
   {"name":"set_env","icon":"ios-nuclear-outline"},
-  {"name":"get_env","icon":"<ios-nuclear"},
+  {"name":"get_env","icon":"ios-nuclear"},
 ];
 
 export default {
