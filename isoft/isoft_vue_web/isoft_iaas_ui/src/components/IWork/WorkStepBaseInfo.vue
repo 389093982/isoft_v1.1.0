@@ -19,9 +19,21 @@
           <Input v-model.trim="formValidate.work_step_name" placeholder="请输入 work_step_name"></Input>
         </FormItem>
         <FormItem label="work_step_type" prop="work_step_type">
-          <Select v-model="formValidate.work_step_type" placeholder="请选择 work_step_type">
-            <Option :value="default_work_step_type.name" v-for="default_work_step_type in default_work_step_types">{{default_work_step_type.name}}</Option>
-          </Select>
+          <Row>
+            <Col span="18">
+              <Input v-model.trim="formValidate.work_step_type" placeholder="请输入 work_step_type"></Input>
+            </Col>
+            <Col span="6">
+              <Poptip v-model="visible" placement="left-start" width="420">
+                <Button style="margin-left: 5px;">选择步骤类型</Button>
+                <div slot="content">
+                  <span v-for="default_work_step_type in default_work_step_types" style="margin: 5px;float: left;">
+                    <Tag><span @click="closePoptip(default_work_step_type.name)">{{default_work_step_type.name}}</span></Tag>
+                  </span>
+                </div>
+              </Poptip>
+            </Col>
+          </Row>
         </FormItem>
         <FormItem label="work_step_desc" prop="work_step_desc">
           <Input v-model.trim="formValidate.work_step_desc" type="textarea" :rows="4" placeholder="请输入 work_step_desc"></Input>
@@ -53,6 +65,7 @@
       };
       return {
         showFormModal:false,
+        visible:false,
         default_work_step_types: this.GLOBAL.default_work_step_types,
         formValidate: {
           work_id: -1,
@@ -72,6 +85,10 @@
       }
     },
     methods:{
+      closePoptip (type) {
+        this.formValidate.work_step_type=type;
+        this.visible = false;
+      },
       loadWorkStepInfo:async function(){
         const result = await LoadWorkStepInfo(this.formValidate.work_id,this.formValidate.work_step_id);
         if(result.status == "SUCCESS"){
