@@ -98,6 +98,7 @@ const default_work_step_types=[
   {"name":"set_env","icon":"ios-nuclear-outline"},
   {"name":"get_env","icon":"ios-nuclear"},
   {"name":"cal_hash","icon":"ios-flower-outline"},
+  {"name":"run_cmd","icon":"md-bonfire"},
 ];
 
 export default {
