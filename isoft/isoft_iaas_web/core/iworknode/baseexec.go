@@ -81,6 +81,10 @@ func (this *WorkStepFactory) getProxy() IStandardWorkStep {
 		return &MemoryMapCacheNode{WorkStep: this.WorkStep}
 	case "GOTO_CONDITION":
 		return &GotoConditionNode{WorkStep: this.WorkStep}
+	case "SET_ENV":
+		return &SetEnvNode{WorkStep: this.WorkStep}
+	case "GET_ENV":
+		return &GetEnvNode{WorkStep: this.WorkStep}
 	case "IF":
 		return &IFNode{WorkStep: this.WorkStep, BlockStep: this.BlockStep, BlockStepRunFunc: this.BlockStepRunFunc}
 	case "EMPTY":
