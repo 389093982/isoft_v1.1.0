@@ -50,18 +50,17 @@ func (this *BaseNode) ParseAndGetParamVaule(paramName, paramVaule string, dataSt
 		return paramVaule
 	}
 	values := this.parseParamValueToMulti(paramVaule)
+	// 单值
 	if len(values) == 1 {
-		// 单值
 		return this.parseAndGetSingleParamVaule(values[0], dataStore)
-	} else {
-		// 多值
-		results := make([]interface{}, 0)
-		for _, value := range values {
-			result := this.parseAndGetSingleParamVaule(value, dataStore)
-			results = append(results, result)
-		}
-		return results
 	}
+	// 多值
+	results := make([]interface{}, 0)
+	for _, value := range values {
+		result := this.parseAndGetSingleParamVaule(value, dataStore)
+		results = append(results, result)
+	}
+	return results
 }
 
 func (this *BaseNode) parseParamValueToMulti(paramVaule string) []string {
@@ -90,36 +89,40 @@ func (this *BaseNode) _parseAndGetSingleParamVaule(paramVaule string, dataStore 
 }
 
 func (this *BaseNode) parseAndGetSingleParamVaule(paramVaule string, dataStore *datastore.DataStore) interface{} {
+	defer func() {
+		if err := recover(); err != nil {
+			panic(fmt.Sprintf("execute func with expression is %s, error msg is :%s", paramVaule, err.(error).Error()))
+		}
+	}()
 	// 对单个 paramVaule 进行特殊字符编码
 	paramVaule = iworkfunc.EncodeSpecialForParamVaule(paramVaule)
 	executors := iworkfunc.GetAllFuncExecutor(paramVaule)
 	if executors == nil || len(executors) == 0 {
 		// 是直接参数,不需要函数进行特殊处理
 		return this._parseAndGetSingleParamVaule(paramVaule, dataStore)
-	} else {
-		historyFuncResultMap := make(map[string]interface{}, 0)
-		var lastFuncResult interface{}
-		// 按照顺序依次执行函数
-		for _, executor := range executors {
-			// executor 所有参数进行 trim 操作
-			iworkfunc.GetTrimFuncExecutor(executor)
-			args := make([]interface{}, 0)
-			// 函数参数替换成实际意义上的值
-			for _, arg := range executor.FuncArgs {
-				// 判断参数是否来源于 historyFuncResultMap
-				if _arg, ok := historyFuncResultMap[arg]; ok {
-					args = append(args, _arg)
-				} else {
-					args = append(args, this._parseAndGetSingleParamVaule(arg, dataStore))
-				}
-			}
-			// 执行函数并记录结果,供下一个函数执行使用
-			result := iworkfunc.CallFuncExecutor(executor, args)
-			historyFuncResultMap[executor.FuncUUID] = result
-			lastFuncResult = result
-		}
-		return lastFuncResult
 	}
+	historyFuncResultMap := make(map[string]interface{}, 0)
+	var lastFuncResult interface{}
+	// 按照顺序依次执行函数
+	for _, executor := range executors {
+		// executor 所有参数进行 trim 操作
+		iworkfunc.GetTrimFuncExecutor(executor)
+		args := make([]interface{}, 0)
+		// 函数参数替换成实际意义上的值
+		for _, arg := range executor.FuncArgs {
+			// 判断参数是否来源于 historyFuncResultMap
+			if _arg, ok := historyFuncResultMap[arg]; ok {
+				args = append(args, _arg)
+			} else {
+				args = append(args, this._parseAndGetSingleParamVaule(arg, dataStore))
+			}
+		}
+		// 执行函数并记录结果,供下一个函数执行使用
+		result := iworkfunc.CallFuncExecutor(executor, args)
+		historyFuncResultMap[executor.FuncUUID] = result
+		lastFuncResult = result
+	}
+	return lastFuncResult
 }
 
 // 将 ParamInputSchema 填充数据并返回临时的数据中心 tmpDataMap
