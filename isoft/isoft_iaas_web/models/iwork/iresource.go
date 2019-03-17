@@ -60,3 +60,9 @@ func QueryResourceDataSourceNameString(resource_name string) string {
 	}
 	return ""
 }
+
+func DeleteResource(id int64) error {
+	o := orm.NewOrm()
+	_, err := o.QueryTable("resource").Filter("id", id).Delete()
+	return err
+}

@@ -131,6 +131,9 @@ export const ResourceList = (offset,current_page,search) => ajax(BASE_URL+"/iwor
 // 添加 resource 记录
 export const AddResource = (resource_name,resource_type,resource_url,resource_dsn,resource_username,resource_password) => ajax(BASE_URL+"/iwork/addResource", {resource_name,resource_type,resource_url,resource_dsn,resource_username,resource_password},'POST');
 
+// 删除 resource 记录
+export const DeleteResource = (id) => ajax(BASE_URL+"/iwork/deleteResource", {id},'POST');
+
 // work 分页查询
 export const WorkList = (offset,current_page,search) => ajax(BASE_URL+"/iwork/filterPageWork", {offset,current_page,search},'POST');
 

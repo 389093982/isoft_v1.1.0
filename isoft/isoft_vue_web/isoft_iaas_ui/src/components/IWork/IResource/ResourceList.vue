@@ -16,6 +16,7 @@
 <script>
   import {formatDate} from "../../../tools/index"
   import {ResourceList} from "../../../api/index"
+  import {DeleteResource} from "../../../api/index"
   import ISimpleLeftRightRow from "../../Common/layout/ISimpleLeftRightRow"
   import ISimpleSearch from "../../Common/search/ISimpleSearch"
   import ResourceAdd from "./ResourceAdd"
@@ -105,6 +106,7 @@
                   },
                   on: {
                     click: () => {
+                      this.deleteResource(this.resources[params.index]['id']);
                     }
                   }
                 }, '删除'),
@@ -115,6 +117,12 @@
       }
     },
     methods:{
+      deleteResource: async function(id){
+        const result = await DeleteResource(id);
+        if(result.status=="SUCCESS"){
+          this.refreshResourceList();
+        }
+      },
       refreshResourceList:async function () {
         const result = await ResourceList(this.offset,this.current_page,this.search);
         if(result.status=="SUCCESS"){

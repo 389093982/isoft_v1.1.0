@@ -44,3 +44,14 @@ func (this *WorkController) FilterPageResource() {
 	}
 	this.ServeJSON()
 }
+
+func (this *WorkController) DeleteResource() {
+	id, _ := this.GetInt64("id")
+	err := iwork.DeleteResource(id)
+	if err == nil {
+		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
+	} else {
+		this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
+	}
+	this.ServeJSON()
+}
