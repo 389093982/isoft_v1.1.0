@@ -38,34 +38,77 @@
           {
             title: 'resource_name',
             key: 'resource_name',
+            width: 100,
           },
           {
             title: 'resource_type',
             key: 'resource_type',
+            width: 100,
           },
           {
             title: 'resource_url',
             key: 'resource_url',
+            width: 100,
           },
           {
             title: 'resource_dsn',
             key: 'resource_dsn',
+            width: 300,
           },
           {
             title: 'resource_username',
             key: 'resource_username',
+            width: 120,
           },
           {
             title: 'resource_password',
             key: 'resource_password',
+            width: 120,
           },
           {
             title: 'last_updated_time',
             key: 'last_updated_time',
+            width: 150,
             render: (h,params)=>{
               return h('div',
                 formatDate(new Date(params.row.last_updated_time),'yyyy-MM-dd hh:mm')
               )
+            }
+          },
+          {
+            title: '操作',
+            key: 'operate',
+            width: 180,
+            fixed: 'right',
+            render: (h, params) => {
+              return h('div', [
+                h('Button', {
+                  props: {
+                    type: 'error',
+                    size: 'small'
+                  },
+                  style: {
+                    marginRight: '5px',
+                  },
+                  on: {
+                    click: () => {
+                    }
+                  }
+                }, '连接测试'),
+                h('Button', {
+                  props: {
+                    type: 'success',
+                    size: 'small'
+                  },
+                  style: {
+                    marginRight: '5px',
+                  },
+                  on: {
+                    click: () => {
+                    }
+                  }
+                }, '删除'),
+              ]);
             }
           }
         ],
