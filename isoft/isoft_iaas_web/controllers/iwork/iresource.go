@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/astaxie/beego/utils/pagination"
 	"isoft/isoft/common/pageutil"
+	"isoft/isoft_iaas_web/core/iworkutil/sqlutil"
 	"isoft/isoft_iaas_web/models/iwork"
 	"time"
 )
@@ -58,13 +59,21 @@ func (this *WorkController) DeleteResource() {
 }
 
 func (this *WorkController) ValidateResource() {
+	var err error
 	id, _ := this.GetInt64("id")
 	resource, err := iwork.QueryResourceById(id)
 	if err == nil {
-		fmt.Println(resource)
+		switch resource.ResourceType {
+		case "db":
+			_, err = sqlutil.GetConnForMysql("mysql", resource.ResourceDsn)
+		case "sftp":
+			fmt.Println("helloworld...")
+		}
+	}
+	if err == nil {
 		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
 	} else {
-		this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
+		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": err.Error()}
 	}
 	this.ServeJSON()
 }

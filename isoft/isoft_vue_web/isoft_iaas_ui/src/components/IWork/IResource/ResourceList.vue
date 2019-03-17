@@ -125,7 +125,7 @@
           this.$Message.success("验证通过!");
 
         }else{
-          this.$Message.error("验证失败!");
+          this.$Message.error("验证失败!" + result.errorMsg);
         }
       },
       deleteResource: async function(id){
