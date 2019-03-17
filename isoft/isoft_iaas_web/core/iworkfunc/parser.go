@@ -118,6 +118,12 @@ func DncodeSpecialForParamVaule(paramVaule string) string {
 }
 
 func CallFuncExecutor(executor *FuncExecutor, args []interface{}) interface{} {
+	defer func() {
+		if err := recover(); err != nil {
+			panic(errors.New(fmt.Sprintf("execute func error %s, %v, error msg: %s", executor.FuncName, args, err.(error).Error())))
+		}
+	}()
+
 	proxy := &IWorkFuncProxy{}
 	m := reflect.ValueOf(proxy).MethodByName(executor.FuncName)
 	rtn := m.Call([]reflect.Value{reflect.ValueOf(args)})
