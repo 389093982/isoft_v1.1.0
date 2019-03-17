@@ -17,6 +17,7 @@
   import {formatDate} from "../../../tools/index"
   import {ResourceList} from "../../../api/index"
   import {DeleteResource} from "../../../api/index"
+  import {ValidateResource} from "../../../api/index"
   import ISimpleLeftRightRow from "../../Common/layout/ISimpleLeftRightRow"
   import ISimpleSearch from "../../Common/search/ISimpleSearch"
   import ResourceAdd from "./ResourceAdd"
@@ -93,6 +94,7 @@
                   },
                   on: {
                     click: () => {
+                      this.validateResource(this.resources[params.index]['id']);
                     }
                   }
                 }, '连接测试'),
@@ -117,6 +119,15 @@
       }
     },
     methods:{
+      validateResource: async function(id){
+        const result = await ValidateResource(id);
+        if(result.status=="SUCCESS"){
+          this.$Message.success("验证通过!");
+
+        }else{
+          this.$Message.error("验证失败!");
+        }
+      },
       deleteResource: async function(id){
         const result = await DeleteResource(id);
         if(result.status=="SUCCESS"){

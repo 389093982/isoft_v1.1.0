@@ -1,6 +1,7 @@
 package iwork
 
 import (
+	"fmt"
 	"github.com/astaxie/beego/utils/pagination"
 	"isoft/isoft/common/pageutil"
 	"isoft/isoft_iaas_web/models/iwork"
@@ -49,6 +50,18 @@ func (this *WorkController) DeleteResource() {
 	id, _ := this.GetInt64("id")
 	err := iwork.DeleteResource(id)
 	if err == nil {
+		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
+	} else {
+		this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
+	}
+	this.ServeJSON()
+}
+
+func (this *WorkController) ValidateResource() {
+	id, _ := this.GetInt64("id")
+	resource, err := iwork.QueryResourceById(id)
+	if err == nil {
+		fmt.Println(resource)
 		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
 	} else {
 		this.Data["json"] = &map[string]interface{}{"status": "ERROR"}

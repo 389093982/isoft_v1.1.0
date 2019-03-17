@@ -134,6 +134,10 @@ export const AddResource = (resource_name,resource_type,resource_url,resource_ds
 // 删除 resource 记录
 export const DeleteResource = (id) => ajax(BASE_URL+"/iwork/deleteResource", {id},'POST');
 
+// 验证 resource
+export const ValidateResource = (id) => ajax(BASE_URL+"/iwork/validateResource", {id},'POST');
+
+
 // work 分页查询
 export const WorkList = (offset,current_page,search) => ajax(BASE_URL+"/iwork/filterPageWork", {offset,current_page,search},'POST');
 

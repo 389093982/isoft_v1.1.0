@@ -66,3 +66,9 @@ func DeleteResource(id int64) error {
 	_, err := o.QueryTable("resource").Filter("id", id).Delete()
 	return err
 }
+
+func QueryResourceById(id int64) (resource Resource, err error) {
+	o := orm.NewOrm()
+	err = o.QueryTable("resource").Filter("id", id).One(&resource)
+	return
+}
