@@ -3,7 +3,6 @@ package sftputil
 import (
 	"github.com/pkg/sftp"
 	"isoft/isoft/common/fileutil"
-	"log"
 	"os"
 	"path"
 	"path/filepath"
@@ -37,9 +36,8 @@ func sftpClientFileCopy(sftpClient *sftp.Client, localFilePath, remoteDir string
 	dstFile, err := sftpClient.Create(dstFilePath)
 
 	SFTPClientChmodXForShell(sftpClient, dstFilePath)
-
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
 	defer dstFile.Close()
 
