@@ -39,7 +39,7 @@ func (this *ParamVauleParser) removeUnsupportChars() {
 	this.ParamValue = strings.Replace(this.ParamValue, "\n", "", -1)
 }
 
-func (this *ParamVauleParser) GetStaticParamValue() string {
+func (this *ParamVauleParser) GetStaticParamValue() interface{} {
 	this.removeUnsupportChars()
 	if strings.HasPrefix(this.ParamValue, "$RESOURCE.") {
 		resource_name := strings.TrimSpace(this.ParamValue)
@@ -48,7 +48,11 @@ func (this *ParamVauleParser) GetStaticParamValue() string {
 		resource_name = strings.TrimSpace(resource_name)
 		resource, err := iwork.QueryResourceByName(resource_name)
 		if err == nil {
-			return resource.ResourceDsn
+			if resource.ResourceType == "db" {
+				return resource.ResourceDsn
+			} else if resource.ResourceType == "sftp" {
+				return resource
+			}
 		}
 		return ""
 	}

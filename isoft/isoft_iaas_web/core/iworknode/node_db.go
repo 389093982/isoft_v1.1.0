@@ -22,7 +22,7 @@ func (this *DBParserNode) Execute(trackingId string) {
 	dataStore := datastore.GetDataStore(trackingId)
 	// 节点中间数据
 	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, dataStore)
-	dataSourceName := param.GetStaticParamValue(iworkconst.STRING_PREFIX+"db_conn", this.WorkStep)
+	dataSourceName := param.GetStaticParamValue(iworkconst.STRING_PREFIX+"db_conn", this.WorkStep).(string)
 	_, _, rowDatas := sqlutil.Query("show tables;", []interface{}{}, dataSourceName)
 	tableNames := make([]string, 0)
 	for _, rowData := range rowDatas {
@@ -65,8 +65,8 @@ func saveEntity(tmpDataMap map[string]interface{}, tablecolsmap map[string]strin
 
 func (this *DBParserNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
 	paramMap := map[int][]string{
-		1: []string{iworkconst.STRING_PREFIX + "db_conn", "数据库连接信息,需要使用 $RESOURCE 全局参数"},
-		2: []string{iworkconst.BOOL_PREFIX + "save_entity?", "是否将分析的结果映射成实体类?"},
+		1: {iworkconst.STRING_PREFIX + "db_conn", "数据库连接信息,需要使用 $RESOURCE 全局参数"},
+		2: {iworkconst.BOOL_PREFIX + "save_entity?", "是否将分析的结果映射成实体类?"},
 	}
 	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
 }

@@ -26,8 +26,8 @@ func (this *SQLQueryNode) Execute(trackingId string) {
 	dataStore := datastore.GetDataStore(trackingId)
 	// 节点中间数据
 	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, dataStore, skips...)
-	sql := param.GetStaticParamValue(iworkconst.STRING_PREFIX+"sql", this.WorkStep)
-	dataSourceName := param.GetStaticParamValue(iworkconst.STRING_PREFIX+"db_conn", this.WorkStep)
+	sql := param.GetStaticParamValue(iworkconst.STRING_PREFIX+"sql", this.WorkStep).(string)
+	dataSourceName := param.GetStaticParamValue(iworkconst.STRING_PREFIX+"db_conn", this.WorkStep).(string)
 	// sql_binding 参数获取
 	sql_binding := getSqlBinding(tmpDataMap)
 	datacounts, rowDetailDatas, rowDatas := sqlutil.Query(sql, sql_binding, dataSourceName)
@@ -93,8 +93,8 @@ func (this *SQLExecuteNode) Execute(trackingId string) {
 	dataStore := datastore.GetDataStore(trackingId)
 	// 节点中间数据
 	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, dataStore, skips...)
-	sql := param.GetStaticParamValue(iworkconst.STRING_PREFIX+"sql", this.WorkStep)
-	dataSourceName := param.GetStaticParamValue(iworkconst.STRING_PREFIX+"db_conn", this.WorkStep)
+	sql := param.GetStaticParamValue(iworkconst.STRING_PREFIX+"sql", this.WorkStep).(string)
+	dataSourceName := param.GetStaticParamValue(iworkconst.STRING_PREFIX+"db_conn", this.WorkStep).(string)
 	// insert 语句且有批量操作时整改 sql 语句
 	sql = this.modifySqlInsertWithBatchNumber(tmpDataMap, sql)
 	// sql_binding 参数获取
@@ -165,9 +165,9 @@ func (this *SQLQueryPageNode) Execute(trackingId string) {
 	dataStore := datastore.GetDataStore(trackingId)
 	// 节点中间数据
 	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, dataStore, skips...)
-	total_sql := param.GetStaticParamValue(iworkconst.STRING_PREFIX+"total_sql", this.WorkStep)
-	sql := param.GetStaticParamValue(iworkconst.STRING_PREFIX+"sql", this.WorkStep)
-	dataSourceName := param.GetStaticParamValue(iworkconst.STRING_PREFIX+"db_conn", this.WorkStep)
+	total_sql := param.GetStaticParamValue(iworkconst.STRING_PREFIX+"total_sql", this.WorkStep).(string)
+	sql := param.GetStaticParamValue(iworkconst.STRING_PREFIX+"sql", this.WorkStep).(string)
+	dataSourceName := param.GetStaticParamValue(iworkconst.STRING_PREFIX+"db_conn", this.WorkStep).(string)
 	// sql_binding 参数获取
 	sql_binding := getSqlBinding(tmpDataMap)
 	totalcount := sqlutil.QuerySelectCount(total_sql, sql_binding[:len(sql_binding)-2], dataSourceName)
@@ -250,23 +250,23 @@ func (this *SQLQueryPageNode) ValidateCustom() (checkResult []string) {
 }
 
 func validateTotalSqlBindingParamCount(step *iwork.WorkStep) {
-	total_sql := param.GetStaticParamValue(iworkconst.STRING_PREFIX+"total_sql", step)
-	sql_binding := param.GetStaticParamValue(iworkconst.MULTI_PREFIX+"sql_binding?", step)
+	total_sql := param.GetStaticParamValue(iworkconst.STRING_PREFIX+"total_sql", step).(string)
+	sql_binding := param.GetStaticParamValue(iworkconst.MULTI_PREFIX+"sql_binding?", step).(string)
 	if strings.Count(total_sql, "?")+2 != strings.Count(iworkfunc.EncodeSpecialForParamVaule(sql_binding), ";") {
 		panic("Number of ? in total_sql and number of ; in sql_binding is mismatch!")
 	}
 }
 
 func validateSqlBindingParamCount(step *iwork.WorkStep) {
-	sql := param.GetStaticParamValue(iworkconst.STRING_PREFIX+"sql", step)
-	sql_binding := param.GetStaticParamValue(iworkconst.MULTI_PREFIX+"sql_binding?", step)
+	sql := param.GetStaticParamValue(iworkconst.STRING_PREFIX+"sql", step).(string)
+	sql_binding := param.GetStaticParamValue(iworkconst.MULTI_PREFIX+"sql_binding?", step).(string)
 	if strings.Count(sql, "?") != strings.Count(iworkfunc.EncodeSpecialForParamVaule(sql_binding), ";") {
 		panic("Number of ? in SQL and number of ; in sql_binding is unequal!")
 	}
 }
 
 func validateAndGetMetaDataSql(step *iwork.WorkStep) string {
-	metadata_sql := param.GetStaticParamValue(iworkconst.STRING_PREFIX+"metadata_sql", step)
+	metadata_sql := param.GetStaticParamValue(iworkconst.STRING_PREFIX+"metadata_sql", step).(string)
 	if strings.TrimSpace(metadata_sql) == "" {
 		panic("Empty paramValue for metadata_sql was found!")
 	}
@@ -277,7 +277,7 @@ func validateAndGetMetaDataSql(step *iwork.WorkStep) string {
 }
 
 func validateAndGetDataStoreName(step *iwork.WorkStep) string {
-	dataSourceName := param.GetStaticParamValue(iworkconst.STRING_PREFIX+"db_conn", step)
+	dataSourceName := param.GetStaticParamValue(iworkconst.STRING_PREFIX+"db_conn", step).(string)
 	if strings.TrimSpace(dataSourceName) == "" {
 		panic("Invalid param for db_conn! Can't resolve it!")
 	}

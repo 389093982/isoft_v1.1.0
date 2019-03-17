@@ -99,6 +99,7 @@ const default_work_step_types=[
   {"name":"get_env","icon":"ios-nuclear"},
   {"name":"cal_hash","icon":"ios-flower-outline"},
   {"name":"run_cmd","icon":"md-bonfire"},
+  {"name":"sftp_upload","icon":"md-arrow-up"},
 ];
 
 export default {

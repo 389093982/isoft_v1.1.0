@@ -95,7 +95,7 @@ func (this *JsonParserNode) GetDefaultParamOutputSchema() *schema.ParamOutputSch
 
 func (this *JsonParserNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
 	items := []schema.ParamOutputSchemaItem{}
-	if json_fields := param.GetStaticParamValue("json_fields", this.WorkStep); strings.TrimSpace(json_fields) != "" {
+	if json_fields := param.GetStaticParamValue("json_fields", this.WorkStep).(string); strings.TrimSpace(json_fields) != "" {
 		jsonArr := strings.Split(json_fields, ",")
 		for _, paramName := range jsonArr {
 			if _paramName := strings.TrimSpace(paramName); _paramName != "" {

@@ -91,6 +91,8 @@ func (this *WorkStepFactory) getProxy() IStandardWorkStep {
 		return &GetEnvNode{WorkStep: this.WorkStep}
 	case "RUN_CMD":
 		return &RunCmd{WorkStep: this.WorkStep}
+	case "SFTP_UPLOAD":
+		return &SftpUploadNode{WorkStep: this.WorkStep}
 	case "IF":
 		return &IFNode{WorkStep: this.WorkStep, BlockStep: this.BlockStep, BlockStepRunFunc: this.BlockStepRunFunc}
 	case "EMPTY":
