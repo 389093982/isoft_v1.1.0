@@ -22,9 +22,10 @@ func (this *RunCmd) Execute(trackingId string) {
 	// 节点中间数据
 	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, dataStore)
 
-	cd := tmpDataMap[iworkconst.STRING_PREFIX+"cd?"].(string)
-	if err := os.Chdir(cd); err != nil {
-		panic(err)
+	if cd := tmpDataMap[iworkconst.STRING_PREFIX+"cd?"].(string); cd != "" {
+		if err := os.Chdir(cd); err != nil {
+			panic(err)
+		}
 	}
 
 	command_name := tmpDataMap[iworkconst.STRING_PREFIX+"command_name"].(string)
