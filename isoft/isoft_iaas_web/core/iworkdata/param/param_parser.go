@@ -50,7 +50,7 @@ func (this *ParamVauleParser) GetStaticParamValue() interface{} {
 		if err == nil {
 			if resource.ResourceType == "db" {
 				return resource.ResourceDsn
-			} else if resource.ResourceType == "sftp" {
+			} else if resource.ResourceType == "sftp" || resource.ResourceType == "ssh" {
 				return resource
 			}
 		}

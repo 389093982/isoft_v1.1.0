@@ -5,6 +5,7 @@ import (
 	"isoft/isoft/common/pageutil"
 	"isoft/isoft_iaas_web/core/iworkutil/sftputil"
 	"isoft/isoft_iaas_web/core/iworkutil/sqlutil"
+	"isoft/isoft_iaas_web/core/iworkutil/sshutil"
 	"isoft/isoft_iaas_web/models/iwork"
 	"time"
 )
@@ -77,6 +78,8 @@ func (this *WorkController) ValidateResource() {
 				defer sftpClient.Close()
 			}
 			err = err1
+		case "ssh":
+			err = sshutil.SSHConnectTest(resource.ResourceUsername, resource.ResourcePassword, resource.ResourceDsn, 22)
 		}
 	}
 	if err == nil {

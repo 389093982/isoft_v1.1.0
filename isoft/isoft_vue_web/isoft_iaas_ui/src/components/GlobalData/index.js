@@ -100,6 +100,7 @@ const default_work_step_types=[
   {"name":"cal_hash","icon":"ios-flower-outline"},
   {"name":"run_cmd","icon":"md-bonfire"},
   {"name":"sftp_upload","icon":"md-arrow-up"},
+  {"name":"ssh_shell","icon":"ios-cloud-upload-outline"},
 ];
 
 export default {

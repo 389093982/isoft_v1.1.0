@@ -30,7 +30,7 @@ func (this *JsonRenderNode) Execute(trackingId string) {
 
 func (this *JsonRenderNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
 	paramMap := map[int][]string{
-		1: []string{iworkconst.COMPLEX_PREFIX + "json_data", "需要传入json对象"},
+		1: {iworkconst.COMPLEX_PREFIX + "json_data", "需要传入json对象"},
 	}
 	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
 }
@@ -79,8 +79,8 @@ func (this *JsonParserNode) Execute(trackingId string) {
 
 func (this *JsonParserNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
 	paramMap := map[int][]string{
-		1: []string{iworkconst.STRING_PREFIX + "json_data", "需要转换成json对象的字符串"},
-		2: []string{"json_fields", "json对象的字段列表"},
+		1: {iworkconst.STRING_PREFIX + "json_data", "需要转换成json对象的字符串"},
+		2: {"json_fields", "json对象的字段列表"},
 	}
 	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
 }
@@ -110,5 +110,5 @@ func (this *JsonParserNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSch
 }
 
 func (this *JsonParserNode) ValidateCustom() (checkResult []string) {
-	return []string{}
+	return
 }
