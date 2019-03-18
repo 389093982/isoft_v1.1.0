@@ -87,9 +87,13 @@
       // 转义成 html 符号
       shiftEnter:function(msg){
         return msg
-          .replace(/&/g, '&amp;')
-          .replace(/</g, "&lt;")
-          .replace(/>/g, "&gt;")
+          // 转义嵌套 json
+          .replace(/\\\"/g, "&quot;")
+          .replace(/\\\'/g, "&#39;")
+          .replace(/\\n/g, "\\n\\t\\t\\t")        // 控制嵌套 json 缩进
+          .replace(/\\t/g, "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;")
+          .replace(/\\n/g, "<br>")
+          // 转义外层 json
           .replace(/\"/g, "&quot;")
           .replace(/\'/g, "&#39;")
           .replace(/\t/g, "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;")
