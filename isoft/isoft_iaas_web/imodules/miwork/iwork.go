@@ -17,5 +17,6 @@ func RegisterModel() {
 		orm.RegisterModel(new(iwork.Entity))
 		orm.RegisterModel(new(iwork.ValidateLogRecord))
 		orm.RegisterModel(new(iwork.ValidateLogDetail))
+		orm.RegisterModel(new(iwork.WorkHistory))
 	}
 }
