@@ -2,6 +2,7 @@ package iwork
 
 import (
 	"github.com/astaxie/beego/orm"
+	"strings"
 	"time"
 )
 
@@ -24,5 +25,20 @@ func InsertOrUpdateWorkHistory(history *WorkHistory) (id int64, err error) {
 	} else {
 		id, err = o.Insert(history)
 	}
+	return
+}
+
+func QueryWorkHistory(condArr map[string]string, page int, offset int, o orm.Ormer) (histories []WorkHistory, counts int64, err error) {
+	qs := o.QueryTable("work_history")
+	var cond = orm.NewCondition()
+	if search, ok := condArr["search"]; ok && strings.TrimSpace(search) != "" {
+		subCond := orm.NewCondition()
+		subCond = cond.And("work_name__contains", search)
+		cond = cond.AndCond(subCond)
+	}
+	qs = qs.SetCond(cond)
+	counts, _ = qs.Count()
+	qs = qs.OrderBy("-last_updated_time").Limit(offset, (page-1)*offset)
+	qs.All(&histories)
 	return
 }

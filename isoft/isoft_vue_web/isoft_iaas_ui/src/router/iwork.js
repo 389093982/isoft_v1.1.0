@@ -1,6 +1,7 @@
 import WorkList from "../components/IWork/WorkList"
 import WorkStepList from "../components/IWork/WorkStepList"
 import RunLogList from "../components/IWork/RunLogList"
+import WorkHistoryList from "../components/IWork/WorkHistoryList"
 import RunLogDetail from "../components/IWork/RunLogDetail"
 import IWorkLayout from "../components/ILayout/IWorkLayout"
 import QuartzList from "../components/IWork/IQuartz/QuartzList"
@@ -16,6 +17,7 @@ const IWorkRouter = {
     {path: 'workList',component: WorkList},
     {path: 'workstepList',component: WorkStepList},
     {path: 'runLogList',component: RunLogList},
+    {path: 'workHistoryList',component: WorkHistoryList},
     {path: 'runLogDetail',component: RunLogDetail},
   ]
 };

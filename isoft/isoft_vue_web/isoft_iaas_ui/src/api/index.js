@@ -157,7 +157,10 @@ export const AddWorkStep = (work_id, work_step_id) => ajax(BASE_URL+"/iwork/addW
 export const RunWork = (work_id) => ajax(BASE_URL+"/iwork/runWork", {work_id},'POST');
 
 // 保存为历史版本
-export const SaveHistory = (work_id) => ajax(BASE_URL+"/iwork/saveHistory", {work_id},'POST');
+export const SaveHistory = (offset,current_page) => ajax(BASE_URL+"/iwork/saveHistory", {offset,current_page},'POST');
+
+// 分页查询历史版本信息
+export const FilterPageWorkHistory = (work_id) => ajax(BASE_URL+"/iwork/filterPageWorkHistory", {work_id},'POST');
 
 // 编辑 workstep 基本信息
 export const EditWorkStepBaseInfo = (work_id,work_step_id,work_step_name,work_step_desc,work_step_type) => ajax(BASE_URL+"/iwork/editWorkStepBaseInfo", {work_id,work_step_id,work_step_name,work_step_desc,work_step_type},'POST');
