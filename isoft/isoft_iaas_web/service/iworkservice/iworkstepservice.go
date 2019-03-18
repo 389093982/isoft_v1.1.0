@@ -340,7 +340,7 @@ func refactorCurrentWorkByChangeToWorkSub(subWorkId int64, refactor_worksub_name
 			break
 		}
 	}
-	refactorStep.WorkStepInput = inputSchema.RenderToXml()
+	refactorStep.WorkStepInput = inputSchema.RenderToJson()
 	if _, err := iwork.InsertOrUpdateWorkStep(&refactorStep, o); err != nil {
 		return err
 	}
@@ -422,7 +422,7 @@ func EditWorkStepParamInfoService(serviceArgs map[string]interface{}) error {
 	if err != nil {
 		return err
 	}
-	step.WorkStepInput = paramInputSchema.RenderToXml()
+	step.WorkStepInput = paramInputSchema.RenderToJson()
 	step.WorkStepParamMapping = paramMappingsStr
 	step.CreatedBy = "SYSTEM"
 	step.CreatedTime = time.Now()
@@ -469,7 +469,7 @@ func BuildDynamicInput(work_id int64, work_step_id int64, o orm.Ormer) {
 		}
 	}
 	paramInputSchema := &schema.ParamInputSchema{ParamInputSchemaItems: newInputSchemaItems}
-	step.WorkStepInput = paramInputSchema.RenderToXml()
+	step.WorkStepInput = paramInputSchema.RenderToJson()
 	if _, err = iwork.InsertOrUpdateWorkStep(&step, o); err != nil {
 		panic(err)
 	}
@@ -486,7 +486,7 @@ func BuildDynamicOutput(work_id int64, work_step_id int64, o orm.Ormer) {
 	defaultParamOutputSchema := schema.GetDefaultParamOutputSchema(&iworknode.WorkStepFactory{WorkStep: &step})
 	defaultParamOutputSchema.ParamOutputSchemaItems = append(defaultParamOutputSchema.ParamOutputSchemaItems, runtimeParamOutputSchema.ParamOutputSchemaItems...)
 	// 构建输出参数,使用全新值
-	step.WorkStepOutput = defaultParamOutputSchema.RenderToXml()
+	step.WorkStepOutput = defaultParamOutputSchema.RenderToJson()
 	if _, err = iwork.InsertOrUpdateWorkStep(&step, o); err != nil {
 		panic(err)
 	}
@@ -529,7 +529,7 @@ func BuildAutoCreateSubWork(work_id int64, work_step_id int64, o orm.Ormer) {
 					ParamName:  item.ParamName,
 					ParamValue: strings.Join([]string{"$WORK.", paramValue}, ""),
 				}
-				step.WorkStepInput = paramInputSchema.RenderToXml()
+				step.WorkStepInput = paramInputSchema.RenderToJson()
 				// 自动创建子流程
 				checkAndCreateSubWork(paramValue, o)
 			}

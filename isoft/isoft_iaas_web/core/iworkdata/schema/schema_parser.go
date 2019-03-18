@@ -1,7 +1,7 @@
 package schema
 
 import (
-	"encoding/xml"
+	"encoding/json"
 	"isoft/isoft_iaas_web/models/iwork"
 	"sort"
 	"strings"
@@ -12,7 +12,7 @@ func GetCacheParamOutputSchema(step *iwork.WorkStep) *ParamOutputSchema {
 	// 从缓存(数据库字段)中获取
 	if strings.TrimSpace(step.WorkStepOutput) != "" {
 		var paramOutputSchema *ParamOutputSchema
-		if err := xml.Unmarshal([]byte(step.WorkStepOutput), &paramOutputSchema); err == nil {
+		if err := json.Unmarshal([]byte(step.WorkStepOutput), &paramOutputSchema); err == nil {
 			return paramOutputSchema
 		}
 	}
@@ -42,7 +42,7 @@ func GetCacheParamInputSchema(step *iwork.WorkStep, paramSchemaParser IParamSche
 	// 从缓存(数据库字段)中获取
 	if strings.TrimSpace(step.WorkStepInput) != "" {
 		var paramInputSchema *ParamInputSchema
-		if err := xml.Unmarshal([]byte(step.WorkStepInput), &paramInputSchema); err == nil {
+		if err := json.Unmarshal([]byte(step.WorkStepInput), &paramInputSchema); err == nil {
 			return paramInputSchema
 		}
 	}

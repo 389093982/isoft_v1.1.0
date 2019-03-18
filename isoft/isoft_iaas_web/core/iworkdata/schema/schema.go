@@ -1,6 +1,9 @@
 package schema
 
-import "encoding/xml"
+import (
+	"encoding/json"
+	"encoding/xml"
+)
 
 type ParamInputSchemaItem struct {
 	XMLName    xml.Name `xml:"paramInputSchemaItem" json:"-"`
@@ -14,8 +17,8 @@ type ParamInputSchema struct {
 	ParamInputSchemaItems []ParamInputSchemaItem `xml:"paramInputSchemaItem"`
 }
 
-func (this *ParamInputSchema) RenderToXml() string {
-	if bytes, err := xml.MarshalIndent(this, "", "\t"); err == nil {
+func (this *ParamInputSchema) RenderToJson() string {
+	if bytes, err := json.MarshalIndent(this, "", "\t"); err == nil {
 		return string(bytes)
 	}
 	return ""
@@ -33,8 +36,8 @@ type ParamOutputSchema struct {
 	ParamOutputSchemaItems []ParamOutputSchemaItem `xml:"paramOutputSchemaItem"`
 }
 
-func (this *ParamOutputSchema) RenderToXml() string {
-	if bytes, err := xml.MarshalIndent(this, "", "\t"); err == nil {
+func (this *ParamOutputSchema) RenderToJson() string {
+	if bytes, err := json.MarshalIndent(this, "", "\t"); err == nil {
 		return string(bytes)
 	}
 	return ""

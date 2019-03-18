@@ -190,7 +190,7 @@ func ChangeReferencesWorkName(work_id int64, oldWorkName, workName string, o orm
 					inputSchema.ParamInputSchemaItems[index].ParamValue = strings.Replace(item.ParamValue, oldWorkName, workName, -1)
 				}
 			}
-			step.WorkStepInput = inputSchema.RenderToXml()
+			step.WorkStepInput = inputSchema.RenderToJson()
 			iwork.InsertOrUpdateWorkStep(&step, o)
 		}
 	}
