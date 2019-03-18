@@ -7,8 +7,9 @@
       v-model="modal1"
       title="流程详情"
       :footer-hide="true"
-      width="1000"
-      :styles="{top: '20px'}">
+      :mask-closable="false"
+      :styles="{top: '20px'}"
+      width="1000">
       <Scroll height="400">
         <span v-html="workHistory"></span>
       </Scroll>
