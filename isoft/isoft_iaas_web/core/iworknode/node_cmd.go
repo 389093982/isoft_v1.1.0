@@ -1,15 +1,31 @@
 package iworknode
 
 import (
-	"io/ioutil"
+	"fmt"
 	"isoft/isoft_iaas_web/core/iworkconst"
 	"isoft/isoft_iaas_web/core/iworkdata/datastore"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
+	"isoft/isoft_iaas_web/core/iworkutil/cmdutil"
 	"isoft/isoft_iaas_web/models/iwork"
 	"os"
-	"os/exec"
 	"strings"
 )
+
+type RunCmdLogWriter struct {
+	LogType    string
+	TrackingId string
+}
+
+func (this *RunCmdLogWriter) Write(p []byte) (n int, err error) {
+	message := string(p)
+	messages := strings.Split(message, "\n")
+	for _, messageInfo := range messages {
+		if strings.TrimSpace(messageInfo) != "" {
+			iwork.InsertRunLogDetail(this.TrackingId, fmt.Sprintf("%s -- %s", this.LogType, strings.TrimSpace(messageInfo)))
+		}
+	}
+	return len(p), nil
+}
 
 type RunCmd struct {
 	BaseNode
@@ -28,10 +44,19 @@ func (this *RunCmd) Execute(trackingId string) {
 		}
 	}
 
+	stdout := &RunCmdLogWriter{
+		LogType:    "INFO",
+		TrackingId: trackingId,
+	}
+	stderr := &RunCmdLogWriter{
+		LogType:    "ERROR",
+		TrackingId: trackingId,
+	}
+
 	command_name := tmpDataMap[iworkconst.STRING_PREFIX+"command_name"].(string)
 	command_args := tmpDataMap[iworkconst.STRING_PREFIX+"command_args"].(string)
 	args := strings.Split(command_args, " ")
-	result := runCommand(command_name, args...)
+	result := cmdutil.RunCommand(stdout, stderr, command_name, args...)
 	dataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.STRING_PREFIX+"command_result", result)
 }
 
@@ -58,22 +83,4 @@ func (this *RunCmd) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
 
 func (this *RunCmd) ValidateCustom() (checkResult []string) {
 	return
-}
-
-// 执行系统命令,第一个参数是命令名称,第二个参数是参数列表
-func runCommand(name string, arg ...string) string {
-	cmd := exec.Command(name, arg...)
-	stdout, err := cmd.StdoutPipe()
-	if err != nil {
-		panic(err)
-	}
-	defer stdout.Close()
-	if err := cmd.Start(); err != nil {
-		panic(err)
-	}
-	opBytes, err := ioutil.ReadAll(stdout)
-	if err != nil {
-		panic(err)
-	}
-	return string(opBytes)
 }
