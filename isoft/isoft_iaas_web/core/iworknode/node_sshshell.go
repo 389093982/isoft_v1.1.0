@@ -8,6 +8,7 @@ import (
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
 	"isoft/isoft_iaas_web/core/iworkutil/sshutil"
 	"isoft/isoft_iaas_web/models/iwork"
+	"strconv"
 	"strings"
 )
 
@@ -39,6 +40,12 @@ func (this *SSHShellNode) Execute(trackingId string) {
 	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, dataStore)
 	sshResource := param.GetStaticParamValue(iworkconst.STRING_PREFIX+"ssh_conn", this.WorkStep).(iwork.Resource)
 	ssh_command := tmpDataMap[iworkconst.STRING_PREFIX+"ssh_command"].(string)
+
+	var timeout int64
+	if _timeout, err := strconv.ParseInt(tmpDataMap[iworkconst.NUMBER_PREFIX+"command_timeout?"].(string), 10, 64); err == nil {
+		timeout = _timeout
+	}
+
 	stdout := &SSHShellLogWriter{
 		LogType:    "INFO",
 		TrackingId: trackingId,
@@ -47,8 +54,9 @@ func (this *SSHShellNode) Execute(trackingId string) {
 		LogType:    "ERROR",
 		TrackingId: trackingId,
 	}
+
 	err := sshutil.RunSSHShellCommand(sshResource.ResourceUsername, sshResource.ResourcePassword,
-		sshResource.ResourceDsn, ssh_command, stdout, stderr)
+		sshResource.ResourceDsn, ssh_command, stdout, stderr, timeout)
 	if err != nil {
 		panic(err)
 	}
@@ -58,6 +66,7 @@ func (this *SSHShellNode) GetDefaultParamInputSchema() *schema.ParamInputSchema 
 	paramMap := map[int][]string{
 		1: {iworkconst.STRING_PREFIX + "ssh_conn", "ssh连接信息,需要使用 $RESOURCE 全局参数"},
 		2: {iworkconst.STRING_PREFIX + "ssh_command", "远程执行的命令"},
+		3: {iworkconst.NUMBER_PREFIX + "command_timeout?", "执行命令超时时间"},
 	}
 	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
 }
