@@ -13,5 +13,8 @@ func RunCommand(stdout, stderr io.Writer, name string, arg ...string) error {
 	if err := cmd.Start(); err != nil {
 		return err
 	}
+	if err := cmd.Wait(); err != nil {
+		return err
+	}
 	return nil
 }

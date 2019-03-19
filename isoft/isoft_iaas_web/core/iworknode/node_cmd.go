@@ -56,8 +56,10 @@ func (this *RunCmd) Execute(trackingId string) {
 	command_name := tmpDataMap[iworkconst.STRING_PREFIX+"command_name"].(string)
 	command_args := tmpDataMap[iworkconst.STRING_PREFIX+"command_args"].(string)
 	args := strings.Split(command_args, " ")
-	result := cmdutil.RunCommand(stdout, stderr, command_name, args...)
-	dataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.STRING_PREFIX+"command_result", result)
+	err := cmdutil.RunCommand(stdout, stderr, command_name, args...)
+	if err != nil {
+		panic(err)
+	}
 }
 
 func (this *RunCmd) GetDefaultParamInputSchema() *schema.ParamInputSchema {
