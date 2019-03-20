@@ -65,7 +65,7 @@ func (this *SSHShellNode) Execute(trackingId string) {
 func (this *SSHShellNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
 	paramMap := map[int][]string{
 		1: {iworkconst.STRING_PREFIX + "ssh_conn", "ssh连接信息,需要使用 $RESOURCE 全局参数"},
-		2: {iworkconst.STRING_PREFIX + "ssh_command", "远程执行的命令"},
+		2: {iworkconst.STRING_PREFIX + "ssh_command", "远程执行的命令,耗时的命令建议使用 nohup xxx > command.log & 格式"},
 		3: {iworkconst.NUMBER_PREFIX + "command_timeout?", "执行命令超时时间"},
 	}
 	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
