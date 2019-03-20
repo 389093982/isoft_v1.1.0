@@ -102,6 +102,7 @@ const default_work_step_types=[
   {"name":"sftp_upload","icon":"md-arrow-up"},
   {"name":"ssh_shell","icon":"ios-cloud-upload-outline"},
   {"name":"targz_uncompress","icon":"ios-aperture"},
+  {"name":"targz_compress","icon":"ios-aperture-outline"},
 ];
 
 export default {

@@ -97,6 +97,8 @@ func (this *WorkStepFactory) getProxy() IStandardWorkStep {
 		return &SSHShellNode{WorkStep: this.WorkStep}
 	case "TARGZ_UNCOMPRESS":
 		return &TarGzUnCompressNode{WorkStep: this.WorkStep}
+	case "TARGZ_COMPRESS":
+		return &TarGzCompressNode{WorkStep: this.WorkStep}
 	case "IF":
 		return &IFNode{WorkStep: this.WorkStep, BlockStep: this.BlockStep, BlockStepRunFunc: this.BlockStepRunFunc}
 	case "EMPTY":

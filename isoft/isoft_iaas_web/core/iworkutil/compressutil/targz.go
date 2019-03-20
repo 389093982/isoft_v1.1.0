@@ -9,8 +9,30 @@ import (
 	"strings"
 )
 
+func CompressDir(dirPath, dest string) error {
+	filePaths, _, err := fileutil.GetAllFile(dirPath, false)
+	if err != nil {
+		return err
+	}
+
+	files := make([]*os.File, 0)
+	for _, filePath := range filePaths {
+		file, err := os.Open(filePath)
+		if err != nil {
+			return err
+		}
+		files = append(files, file)
+	}
+
+	return Compress(files, dest)
+}
+
 //压缩 使用gzip压缩成tar.gz
 func Compress(files []*os.File, dest string) error {
+	dest = fileutil.ChangeToLinuxSeparator(dest)
+	// 文件夹不存在时需要创建文件夹
+	os.MkdirAll(string([]rune(dest)[0:strings.LastIndex(dest, "/")]), 0755)
+
 	d, _ := os.Create(dest)
 	defer d.Close()
 	gw := gzip.NewWriter(d)
