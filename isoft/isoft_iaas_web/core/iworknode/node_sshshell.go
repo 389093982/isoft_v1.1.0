@@ -42,8 +42,10 @@ func (this *SSHShellNode) Execute(trackingId string) {
 	ssh_command := tmpDataMap[iworkconst.STRING_PREFIX+"ssh_command"].(string)
 
 	var timeout int64
-	if _timeout, err := strconv.ParseInt(tmpDataMap[iworkconst.NUMBER_PREFIX+"command_timeout?"].(string), 10, 64); err == nil {
-		timeout = _timeout
+	if _timeout, ok := tmpDataMap[iworkconst.NUMBER_PREFIX+"command_timeout?"].(string); ok {
+		if _timeout, err := strconv.ParseInt(_timeout, 10, 64); err == nil {
+			timeout = _timeout
+		}
 	}
 
 	stdout := &SSHShellLogWriter{
