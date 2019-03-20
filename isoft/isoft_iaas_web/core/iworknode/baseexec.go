@@ -95,6 +95,8 @@ func (this *WorkStepFactory) getProxy() IStandardWorkStep {
 		return &SftpUploadNode{WorkStep: this.WorkStep}
 	case "SSH_SHELL":
 		return &SSHShellNode{WorkStep: this.WorkStep}
+	case "TARGZ_UNCOMPRESS":
+		return &TarGzUnCompressNode{WorkStep: this.WorkStep}
 	case "IF":
 		return &IFNode{WorkStep: this.WorkStep, BlockStep: this.BlockStep, BlockStepRunFunc: this.BlockStepRunFunc}
 	case "EMPTY":

@@ -1,0 +1,5 @@
+D:\zhourui\program\go\goland_workspace\bin\bee.exe pack -be GOOS=linux
+
+cd /mydata/isoft_deploy_web && tar -xzvf isoft_deploy_web.tar.gz && chmod +x isoft_deploy_web && nohup ./isoft_deploy_web > hello.log &
+
+ps -ef | grep isoft_deploy_web | grep -v grep | awk '{print $2}' | xargs kill -9
