@@ -56,6 +56,8 @@ func (this *RunCmd) Execute(trackingId string) {
 	command_name := tmpDataMap[iworkconst.STRING_PREFIX+"command_name"].(string)
 	command_args := tmpDataMap[iworkconst.STRING_PREFIX+"command_args"].(string)
 	args := strings.Split(command_args, " ")
+	// 记录当前正在执行的命令
+	iwork.InsertRunLogDetail(trackingId, fmt.Sprintf("current cmd command is ==> %s %s", command_name, strings.Join(args, " ")))
 	err := cmdutil.RunCommand(stdout, stderr, command_name, args...)
 	if err != nil {
 		panic(err)
