@@ -8,8 +8,51 @@ import (
 	"isoft/isoft_iaas_web/core/iworkdata/entry"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
 	"isoft/isoft_iaas_web/models/iwork"
+	"reflect"
 	"strings"
 )
+
+var typeMap map[string]reflect.Type
+
+func init() {
+	typeMap = make(map[string]reflect.Type, 0)
+	vs := []interface{}{
+		WorkStartNode{},
+		WorkEndNode{},
+		WorkSub{},
+		SQLExecuteNode{},
+		SQLQueryNode{},
+		SQLQueryPageNode{},
+		JsonRenderNode{},
+		JsonParserNode{},
+		HttpRequestNode{},
+		MapperNode{},
+		FileReadNode{},
+		FileWriteNode{},
+		FileRenameNode{},
+		HrefParserNode{},
+		EntityParserNode{},
+		DBParserNode{},
+		MemoryMapCacheNode{},
+		GotoConditionNode{},
+		CalHashNode{},
+		SetEnvNode{},
+		GetEnvNode{},
+		RunCmd{},
+		SftpUploadNode{},
+		SSHShellNode{},
+		TarGzUnCompressNode{},
+		TarGzCompressNode{},
+		IniReadNode{},
+		IniWriteNode{},
+		IFNode{},
+		EmptyNode{},
+	}
+	for _, v := range vs {
+		t := reflect.ValueOf(v).Type()
+		typeMap[strings.ToUpper(t.Name())] = t
+	}
+}
 
 type WorkStepFactory struct {
 	Work           iwork.Work
@@ -47,71 +90,49 @@ func (this *WorkStepFactory) Execute(trackingId string) {
 	}
 }
 
-func (this *WorkStepFactory) getProxy() IStandardWorkStep {
-	baseNode := BaseNode{DataStore: this.DataStore}
-	switch strings.ToUpper(this.WorkStep.WorkStepType) {
-	case "WORK_START":
-		return &WorkStartNode{WorkStep: this.WorkStep, BaseNode: baseNode, Dispatcher: this.Dispatcher}
-	case "WORK_END":
-		return &WorkEndNode{WorkStep: this.WorkStep, BaseNode: baseNode, Receiver: this.Receiver}
-	case "WORK_SUB":
-		return &WorkSub{WorkStep: this.WorkStep, BaseNode: baseNode, WorkSubRunFunc: this.WorkSubRunFunc}
-	case "SQL_EXECUTE":
-		return &SQLExecuteNode{WorkStep: this.WorkStep, BaseNode: baseNode}
-	case "SQL_QUERY":
-		return &SQLQueryNode{WorkStep: this.WorkStep, BaseNode: baseNode}
-	case "SQL_QUERY_PAGE":
-		return &SQLQueryPageNode{WorkStep: this.WorkStep, BaseNode: baseNode}
-	case "JSON_RENDER":
-		return &JsonRenderNode{WorkStep: this.WorkStep, BaseNode: baseNode}
-	case "JSON_PARSER":
-		return &JsonParserNode{WorkStep: this.WorkStep, BaseNode: baseNode}
-	case "HTTP_REQUEST":
-		return &HttpRequestNode{WorkStep: this.WorkStep, BaseNode: baseNode}
-	case "MAPPER":
-		return &MapperNode{WorkStep: this.WorkStep, BaseNode: baseNode}
-	case "FILE_READ":
-		return &FileReadNode{WorkStep: this.WorkStep, BaseNode: baseNode}
-	case "FILE_WRITE":
-		return &FileWriteNode{WorkStep: this.WorkStep, BaseNode: baseNode}
-	case "FILE_RENAME":
-		return &FileRenameNode{WorkStep: this.WorkStep, BaseNode: baseNode}
-	case "HREF_PARSER":
-		return &HrefParserNode{WorkStep: this.WorkStep, BaseNode: baseNode}
-	case "ENTITY_PARSER":
-		return &EntityParserNode{WorkStep: this.WorkStep, BaseNode: baseNode}
-	case "DB_PARSER":
-		return &DBParserNode{WorkStep: this.WorkStep, BaseNode: baseNode}
-	case "MEMORYMAP_CACHE":
-		return &MemoryMapCacheNode{WorkStep: this.WorkStep, BaseNode: baseNode}
-	case "GOTO_CONDITION":
-		return &GotoConditionNode{WorkStep: this.WorkStep, BaseNode: baseNode}
-	case "CAL_HASH":
-		return &CalHashNode{WorkStep: this.WorkStep, BaseNode: baseNode}
-	case "SET_ENV":
-		return &SetEnvNode{WorkStep: this.WorkStep, BaseNode: baseNode}
-	case "GET_ENV":
-		return &GetEnvNode{WorkStep: this.WorkStep, BaseNode: baseNode}
-	case "RUN_CMD":
-		return &RunCmd{WorkStep: this.WorkStep, BaseNode: baseNode}
-	case "SFTP_UPLOAD":
-		return &SftpUploadNode{WorkStep: this.WorkStep, BaseNode: baseNode}
-	case "SSH_SHELL":
-		return &SSHShellNode{WorkStep: this.WorkStep, BaseNode: baseNode}
-	case "TARGZ_UNCOMPRESS":
-		return &TarGzUnCompressNode{WorkStep: this.WorkStep, BaseNode: baseNode}
-	case "TARGZ_COMPRESS":
-		return &TarGzCompressNode{WorkStep: this.WorkStep, BaseNode: baseNode}
-	case "INI_READ":
-		return &IniReadNode{WorkStep: this.WorkStep, BaseNode: baseNode}
-	case "INI_WRITE":
-		return &IniWriteNode{WorkStep: this.WorkStep, BaseNode: baseNode}
-	case "IF":
-		return &IFNode{WorkStep: this.WorkStep, BaseNode: baseNode, BlockStep: this.BlockStep, BlockStepRunFunc: this.BlockStepRunFunc}
-	case "EMPTY":
-		return &EmptyNode{WorkStep: this.WorkStep, BaseNode: baseNode}
+func GetIStandardWorkStep(workStepType string) IStandardWorkStep {
+	// 调整 workStepType
+	workStepType = strings.ToUpper(strings.Replace(workStepType, "_", "", -1) + "NODE")
+	if t, ok := typeMap[workStepType]; ok {
+		return reflect.New(t).Interface().(IStandardWorkStep)
 	}
-	panic(errors.New(fmt.Sprintf("[%v-%v]unsupport workStepType:%s", this.WorkStep.WorkId, this.WorkStep.WorkStepName, this.WorkStep.WorkStepType)))
+	return nil
+}
+
+func (this *WorkStepFactory) getProxy() IStandardWorkStep {
+	fieldMap := map[string]interface{}{
+		"WorkStep":         this.WorkStep,
+		"BaseNode":         BaseNode{DataStore: this.DataStore},
+		"Dispatcher":       this.Dispatcher,
+		"Receiver":         this.Receiver,
+		"WorkSubRunFunc":   this.WorkSubRunFunc,
+		"BlockStep":        this.BlockStep,
+		"BlockStepRunFunc": this.BlockStepRunFunc,
+	}
+	stepNode := GetIStandardWorkStep(this.WorkStep.WorkStepType)
+	if stepNode == nil {
+		panic(errors.New(fmt.Sprintf("[%v-%v]unsupport workStepType:%s",
+			this.WorkStep.WorkId, this.WorkStep.WorkStepName, this.WorkStep.WorkStepType)))
+	}
+	// 从 map 中找出属性值赋值给对象
+	fillFieldValueToStruct(stepNode, fieldMap)
+	return stepNode
+}
+
+// 将结构体里的成员按照字段名字来赋值
+func fillFieldValueToStruct(ptr interface{}, fields map[string]interface{}) {
+	v := reflect.ValueOf(ptr).Elem() // the struct variable
+	for i := 0; i < v.NumField(); i++ {
+		fieldInfo := v.Type().Field(i) // a reflect.StructField
+		if value, ok := fields[fieldInfo.Name]; ok {
+			//给结构体赋值
+			//保证赋值时数据类型一致
+			if reflect.ValueOf(value).Type() == v.FieldByName(fieldInfo.Name).Type() {
+				v.FieldByName(fieldInfo.Name).Set(reflect.ValueOf(value))
+			}
+		}
+	}
+	return
 }
 
 func (this *WorkStepFactory) GetDefaultParamInputSchema() *schema.ParamInputSchema {
