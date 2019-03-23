@@ -3,7 +3,6 @@ package iworknode
 import (
 	"fmt"
 	"isoft/isoft_iaas_web/core/iworkconst"
-	"isoft/isoft_iaas_web/core/iworkdata/datastore"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
 	"isoft/isoft_iaas_web/core/iworkutil/cmdutil"
 	"isoft/isoft_iaas_web/models/iwork"
@@ -33,10 +32,8 @@ type RunCmd struct {
 }
 
 func (this *RunCmd) Execute(trackingId string) {
-	// 数据中心
-	dataStore := datastore.GetDataStore(trackingId)
 	// 节点中间数据
-	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, dataStore)
+	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, this.DataStore)
 
 	if cd := tmpDataMap[iworkconst.STRING_PREFIX+"cd?"].(string); cd != "" {
 		if err := os.Chdir(cd); err != nil {

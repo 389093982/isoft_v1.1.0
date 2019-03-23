@@ -2,7 +2,6 @@ package iworknode
 
 import (
 	"encoding/json"
-	"isoft/isoft_iaas_web/core/iworkdata/datastore"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
 	"isoft/isoft_iaas_web/models/iwork"
 )
@@ -13,12 +12,10 @@ type MapperNode struct {
 }
 
 func (this *MapperNode) Execute(trackingId string) {
-	// 获取数据中心
-	dataStore := datastore.GetDataStore(trackingId)
 	// 节点中间数据
-	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, dataStore)
+	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, this.DataStore)
 	//c 提交输出数据至数据中心,此类数据能直接从 tmpDataMap 中获取,而不依赖于计算,只适用于 WORK_START、WORK_END、Mapper 等节点
-	this.SubmitParamOutputSchemaDataToDataStore(this.WorkStep, dataStore, tmpDataMap)
+	this.SubmitParamOutputSchemaDataToDataStore(this.WorkStep, this.DataStore, tmpDataMap)
 }
 
 func (this *MapperNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {

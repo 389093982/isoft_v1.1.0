@@ -30,14 +30,14 @@ func Run(work iwork.Work, steps []iwork.WorkStep, dispatcher *entry.Dispatcher) 
 	}()
 	// 记录日志详细
 	iwork.InsertRunLogDetail(trackingId, fmt.Sprintf("~~~~~~~~~~start execute work:%s~~~~~~~~~~", work.WorkName))
+	// 获取数据中心
+	store := datastore.InitDataStore(trackingId)
 	// 将 steps 转换成 BlockSteps
 	// 逐个 block 依次执行
 	for _, blockStep := range block.ParseToBlockStep(steps) {
 		if blockStep.Step.WorkStepType == "empty" {
 			continue
 		}
-		// 获取数据中心
-		store := datastore.GetDataStore(trackingId)
 		if redirectNodeName, ok := store.GetData("__goto_condition__", "__redirect__").(string); ok && strings.TrimSpace(redirectNodeName) != "" {
 			if blockStep.Step.WorkStepName == redirectNodeName {
 				// 相等代表刚好调到 redirect 节点,此时要将 store 里面的跳转信息置空
@@ -49,13 +49,11 @@ func Run(work iwork.Work, steps []iwork.WorkStep, dispatcher *entry.Dispatcher) 
 			}
 		}
 
-		_receiver := RunOneStep(trackingId, blockStep, dispatcher)
+		_receiver := RunOneStep(trackingId, blockStep, store, dispatcher)
 		if _receiver != nil {
 			receiver = _receiver
 		}
 	}
-	// 注销数据中心,无需注册,不存在时会自动注册
-	datastore.UnRegistDataStore(trackingId)
 	// 注销 MemoryCache,无需注册,不存在时会自动注册
 	memory.UnRegistMemoryCache(trackingId)
 	iwork.InsertRunLogDetail(trackingId, fmt.Sprintf("~~~~~~~~~~end execute work:%s~~~~~~~~~~", work.WorkName))
@@ -100,7 +98,7 @@ func createNewTrackingIdForWork(dispatcher *entry.Dispatcher, work iwork.Work) s
 }
 
 // 执行单个 BlockStep
-func RunOneStep(trackingId string, blockStep *block.BlockStep, dispatcher *entry.Dispatcher) (receiver *entry.Receiver) {
+func RunOneStep(trackingId string, blockStep *block.BlockStep, datastore *datastore.DataStore, dispatcher *entry.Dispatcher) (receiver *entry.Receiver) {
 	defer recordCostTimeLog(blockStep.Step.WorkStepName, trackingId, time.Now())
 	iwork.InsertRunLogDetail(trackingId, fmt.Sprintf("start execute blockStep: >>>>>>>>>> [[%s]]", blockStep.Step.WorkStepName))
 	// 由工厂代为执行步骤
@@ -110,6 +108,7 @@ func RunOneStep(trackingId string, blockStep *block.BlockStep, dispatcher *entry
 		Dispatcher:       dispatcher,
 		BlockStep:        blockStep,
 		BlockStepRunFunc: RunOneStep,
+		DataStore:        datastore,
 	}
 	factory.Execute(trackingId)
 	// factory 节点如果代理的是 work_end 节点,则传递 Receiver 出去

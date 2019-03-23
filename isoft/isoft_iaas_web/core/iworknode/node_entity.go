@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"isoft/isoft_iaas_web/core/iworkconst"
-	"isoft/isoft_iaas_web/core/iworkdata/datastore"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
 	"isoft/isoft_iaas_web/core/iworkutil"
 	"isoft/isoft_iaas_web/models/iwork"
@@ -17,10 +16,8 @@ type EntityParserNode struct {
 }
 
 func (this *EntityParserNode) Execute(trackingId string) {
-	// 获取数据中心
-	dataStore := datastore.GetDataStore(trackingId)
 	// 节点中间数据
-	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, dataStore)
+	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, this.DataStore)
 	inputSchema := schema.GetCacheParamInputSchema(this.WorkStep, &WorkStepFactory{WorkStep: this.WorkStep})
 	for _, item := range inputSchema.ParamInputSchemaItems {
 		if strings.HasSuffix(item.ParamName, "_entity") {
@@ -35,7 +32,7 @@ func (this *EntityParserNode) Execute(trackingId string) {
 			entityFieldStr := tmpDataMap[iworkconst.STRING_PREFIX+entityName+"_entity"].(string)
 			for _, entityField := range strings.Split(entityFieldStr, ",") {
 				// 将数据数据存储到数据中心
-				dataStore.CacheData(this.WorkStep.WorkStepName,
+				this.DataStore.CacheData(this.WorkStep.WorkStepName,
 					fmt.Sprintf("%s.%s", iworkconst.COMPLEX_PREFIX+entityName,
 						strings.TrimSpace(entityField)), entityDataMap[entityField])
 			}

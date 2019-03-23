@@ -14,20 +14,18 @@ type IFNode struct {
 	BaseNode
 	WorkStep         *iwork.WorkStep
 	BlockStep        *block.BlockStep
-	BlockStepRunFunc func(trackingId string, blockStep *block.BlockStep, dispatcher *entry.Dispatcher) (receiver *entry.Receiver)
+	BlockStepRunFunc func(trackingId string, blockStep *block.BlockStep, datastore *datastore.DataStore, dispatcher *entry.Dispatcher) (receiver *entry.Receiver)
 }
 
 func (this *IFNode) Execute(trackingId string) {
-	// 数据中心
-	dataStore := datastore.GetDataStore(trackingId)
 	// 节点中间数据
-	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, dataStore)
+	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, this.DataStore)
 	expression := tmpDataMap[iworkconst.BOOL_PREFIX+"expression"].(bool)
-	dataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.BOOL_PREFIX+"expression", expression)
+	this.DataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.BOOL_PREFIX+"expression", expression)
 
 	if expression && this.BlockStep.HasChildren {
 		for _, blockStep := range this.BlockStep.ChildBlockSteps {
-			this.BlockStepRunFunc(trackingId, blockStep, nil)
+			this.BlockStepRunFunc(trackingId, blockStep, this.DataStore, nil)
 		}
 	} else {
 		iwork.InsertRunLogDetail(trackingId, fmt.Sprintf("The blockStep for %s was skipped!", this.WorkStep.WorkStepName))

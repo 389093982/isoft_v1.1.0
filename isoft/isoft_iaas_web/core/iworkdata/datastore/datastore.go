@@ -44,25 +44,10 @@ func (this *DataStore) GetData(nodeName, paramName string) interface{} {
 	return this.nodeStoreMap[nodeName].NodeOutputDataMap[paramName]
 }
 
-// 注册数据中心
-func RegistDataStore(trackingId string) {
-	datastores[trackingId] = &DataStore{
+// 获取数据中心
+func InitDataStore(trackingId string) *DataStore {
+	return &DataStore{
 		TrackingId:   trackingId,
 		nodeStoreMap: make(map[string]*DataNodeStore, 0),
 	}
-}
-
-// 注销数据中心
-func UnRegistDataStore(trackingId string) {
-	delete(datastores, trackingId)
-}
-
-// 获取数据中心
-func GetDataStore(trackingId string) *DataStore {
-	store := datastores[trackingId]
-	if store != nil {
-		return store
-	}
-	RegistDataStore(trackingId)
-	return datastores[trackingId]
 }

@@ -2,7 +2,6 @@ package iworknode
 
 import (
 	"isoft/isoft_iaas_web/core/iworkconst"
-	"isoft/isoft_iaas_web/core/iworkdata/datastore"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
 	"isoft/isoft_iaas_web/core/iworkutil/compressutil"
 	"isoft/isoft_iaas_web/models/iwork"
@@ -14,10 +13,8 @@ type TarGzUnCompressNode struct {
 }
 
 func (this *TarGzUnCompressNode) Execute(trackingId string) {
-	// 数据中心
-	dataStore := datastore.GetDataStore(trackingId)
 	// 节点中间数据
-	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, dataStore)
+	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, this.DataStore)
 	targz_file_path := tmpDataMap[iworkconst.STRING_PREFIX+"targz_file_path"].(string)
 	dest_path := tmpDataMap[iworkconst.STRING_PREFIX+"dest_path"].(string)
 	if err := compressutil.DeCompress(targz_file_path, dest_path); err != nil {
@@ -55,10 +52,8 @@ type TarGzCompressNode struct {
 }
 
 func (this *TarGzCompressNode) Execute(trackingId string) {
-	// 数据中心
-	dataStore := datastore.GetDataStore(trackingId)
 	// 节点中间数据
-	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, dataStore)
+	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, this.DataStore)
 	dir_file_path := tmpDataMap[iworkconst.STRING_PREFIX+"dir_file_path"].(string)
 	dest_file_path := tmpDataMap[iworkconst.STRING_PREFIX+"dest_file_path"].(string)
 	if err := compressutil.CompressDir(dir_file_path, dest_file_path); err != nil {

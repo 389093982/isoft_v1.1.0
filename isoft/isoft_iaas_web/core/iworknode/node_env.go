@@ -2,7 +2,6 @@ package iworknode
 
 import (
 	"isoft/isoft_iaas_web/core/iworkconst"
-	"isoft/isoft_iaas_web/core/iworkdata/datastore"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
 	"isoft/isoft_iaas_web/models/iwork"
 	"os"
@@ -14,12 +13,10 @@ type GetEnvNode struct {
 }
 
 func (this *GetEnvNode) Execute(trackingId string) {
-	// 数据中心
-	dataStore := datastore.GetDataStore(trackingId)
 	// 节点中间数据
-	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, dataStore)
+	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, this.DataStore)
 	env_var_value := os.Getenv(tmpDataMap[iworkconst.STRING_PREFIX+"env_var_name"].(string))
-	dataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.STRING_PREFIX+"env_var_value", env_var_value)
+	this.DataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.STRING_PREFIX+"env_var_value", env_var_value)
 }
 
 func (this *GetEnvNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
@@ -51,10 +48,8 @@ type SetEnvNode struct {
 }
 
 func (this *SetEnvNode) Execute(trackingId string) {
-	// 数据中心
-	dataStore := datastore.GetDataStore(trackingId)
 	// 节点中间数据
-	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, dataStore)
+	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, this.DataStore)
 	env_var_name := tmpDataMap[iworkconst.STRING_PREFIX+"env_var_name"].(string)
 	env_var_value := tmpDataMap[iworkconst.STRING_PREFIX+"env_var_value"].(string)
 	if err := os.Setenv(env_var_name, env_var_value); err != nil {

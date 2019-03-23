@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"isoft/isoft/common/pageutil"
 	"isoft/isoft_iaas_web/core/iworkconst"
-	"isoft/isoft_iaas_web/core/iworkdata/datastore"
 	"isoft/isoft_iaas_web/core/iworkdata/param"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
 	"isoft/isoft_iaas_web/core/iworkfunc"
@@ -22,10 +21,8 @@ type SQLQueryNode struct {
 func (this *SQLQueryNode) Execute(trackingId string) {
 	// 跳过解析和填充的数据
 	skips := []string{iworkconst.STRING_PREFIX + "sql", iworkconst.STRING_PREFIX + "db_conn"}
-	// 数据中心
-	dataStore := datastore.GetDataStore(trackingId)
 	// 节点中间数据
-	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, dataStore, skips...)
+	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, this.DataStore, skips...)
 	sql := param.GetStaticParamValue(iworkconst.STRING_PREFIX+"sql", this.WorkStep).(string)
 	dataSourceName := param.GetStaticParamValue(iworkconst.STRING_PREFIX+"db_conn", this.WorkStep).(string)
 	// sql_binding 参数获取
@@ -33,13 +30,13 @@ func (this *SQLQueryNode) Execute(trackingId string) {
 	datacounts, rowDetailDatas, rowDatas := sqlutil.Query(sql, sql_binding, dataSourceName)
 	// 将数据数据存储到数据中心
 	// 存储 datacounts
-	dataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.NUMBER_PREFIX+"datacounts", datacounts)
+	this.DataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.NUMBER_PREFIX+"datacounts", datacounts)
 	for paramName, paramValue := range rowDetailDatas {
 		// 存储具体字段值
-		dataStore.CacheData(this.WorkStep.WorkStepName, paramName, paramValue)
+		this.DataStore.CacheData(this.WorkStep.WorkStepName, paramName, paramValue)
 	}
 	// 数组对象整体存储在 rows 里面
-	dataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.MULTI_PREFIX+"rows", rowDatas)
+	this.DataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.MULTI_PREFIX+"rows", rowDatas)
 }
 
 func (this *SQLQueryNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
@@ -89,10 +86,8 @@ type SQLExecuteNode struct {
 func (this *SQLExecuteNode) Execute(trackingId string) {
 	// 跳过解析和填充的数据
 	skips := []string{iworkconst.STRING_PREFIX + "sql", iworkconst.STRING_PREFIX + "db_conn"}
-	// 数据中心
-	dataStore := datastore.GetDataStore(trackingId)
 	// 节点中间数据
-	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, dataStore, skips...)
+	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, this.DataStore, skips...)
 	sql := param.GetStaticParamValue(iworkconst.STRING_PREFIX+"sql", this.WorkStep).(string)
 	dataSourceName := param.GetStaticParamValue(iworkconst.STRING_PREFIX+"db_conn", this.WorkStep).(string)
 	// insert 语句且有批量操作时整改 sql 语句
@@ -102,7 +97,7 @@ func (this *SQLExecuteNode) Execute(trackingId string) {
 	affected := sqlutil.Execute(sql, _sql_binding, dataSourceName)
 	// 将数据数据存储到数据中心
 	// 存储 affected
-	dataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.NUMBER_PREFIX+"affected", affected)
+	this.DataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.NUMBER_PREFIX+"affected", affected)
 }
 
 func (this *SQLExecuteNode) modifySqlInsertWithBatchNumber(tmpDataMap map[string]interface{}, sql string) string {
@@ -161,10 +156,8 @@ type SQLQueryPageNode struct {
 func (this *SQLQueryPageNode) Execute(trackingId string) {
 	// 跳过解析和填充的数据
 	skips := []string{iworkconst.STRING_PREFIX + "total_sql", iworkconst.STRING_PREFIX + "sql", iworkconst.STRING_PREFIX + "db_conn"}
-	// 数据中心
-	dataStore := datastore.GetDataStore(trackingId)
 	// 节点中间数据
-	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, dataStore, skips...)
+	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, this.DataStore, skips...)
 	total_sql := param.GetStaticParamValue(iworkconst.STRING_PREFIX+"total_sql", this.WorkStep).(string)
 	sql := param.GetStaticParamValue(iworkconst.STRING_PREFIX+"sql", this.WorkStep).(string)
 	dataSourceName := param.GetStaticParamValue(iworkconst.STRING_PREFIX+"db_conn", this.WorkStep).(string)
@@ -174,19 +167,19 @@ func (this *SQLQueryPageNode) Execute(trackingId string) {
 	datacounts, rowDetailDatas, rowDatas := sqlutil.Query(sql, sql_binding, dataSourceName)
 	// 将数据数据存储到数据中心
 	// 存储 datacounts
-	dataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.NUMBER_PREFIX+"datacounts", datacounts)
+	this.DataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.NUMBER_PREFIX+"datacounts", datacounts)
 	for paramName, paramValue := range rowDetailDatas {
 		// 存储具体字段值
-		dataStore.CacheData(this.WorkStep.WorkStepName, paramName, paramValue)
+		this.DataStore.CacheData(this.WorkStep.WorkStepName, paramName, paramValue)
 	}
 	// 数组对象整体存储在 rows 里面
-	dataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.MULTI_PREFIX+"rows", rowDatas)
+	this.DataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.MULTI_PREFIX+"rows", rowDatas)
 	// 存储分页信息
 	pageIndex, pageSize := getPageIndexAndPageSize(tmpDataMap)
 	paginator := pageutil.Paginator(pageIndex, pageSize, totalcount)
-	dataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.COMPLEX_PREFIX+"paginator", paginator)
+	this.DataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.COMPLEX_PREFIX+"paginator", paginator)
 	for key, value := range paginator {
-		dataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.FIELD_PREFIX+"paginator."+key, value)
+		this.DataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.FIELD_PREFIX+"paginator."+key, value)
 	}
 }
 

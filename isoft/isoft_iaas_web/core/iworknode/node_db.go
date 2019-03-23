@@ -3,7 +3,6 @@ package iworknode
 import (
 	"fmt"
 	"isoft/isoft_iaas_web/core/iworkconst"
-	"isoft/isoft_iaas_web/core/iworkdata/datastore"
 	"isoft/isoft_iaas_web/core/iworkdata/param"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
 	"isoft/isoft_iaas_web/core/iworkutil/sqlutil"
@@ -18,10 +17,8 @@ type DBParserNode struct {
 }
 
 func (this *DBParserNode) Execute(trackingId string) {
-	// 数据中心
-	dataStore := datastore.GetDataStore(trackingId)
 	// 节点中间数据
-	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, dataStore)
+	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, this.DataStore)
 	dataSourceName := param.GetStaticParamValue(iworkconst.STRING_PREFIX+"db_conn", this.WorkStep).(string)
 	_, _, rowDatas := sqlutil.Query("show tables;", []interface{}{}, dataSourceName)
 	tableNames := make([]string, 0)
@@ -38,9 +35,9 @@ func (this *DBParserNode) Execute(trackingId string) {
 	// 将其自动存为实体类
 	saveEntity(tmpDataMap, tablecolsmap)
 	// 存进 dataStore
-	dataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.MULTI_PREFIX+"tablecolsmap", tablecolsmap)
+	this.DataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.MULTI_PREFIX+"tablecolsmap", tablecolsmap)
 	// 数组对象整体存储在 rows 里面
-	dataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.STRING_PREFIX+"tables", strings.Join(tableNames, ","))
+	this.DataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.STRING_PREFIX+"tables", strings.Join(tableNames, ","))
 }
 
 func saveEntity(tmpDataMap map[string]interface{}, tablecolsmap map[string]string) {

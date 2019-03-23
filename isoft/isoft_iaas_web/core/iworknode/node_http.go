@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"github.com/pkg/errors"
 	"isoft/isoft_iaas_web/core/iworkconst"
-	"isoft/isoft_iaas_web/core/iworkdata/datastore"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
 	"isoft/isoft_iaas_web/core/iworkutil"
 	"isoft/isoft_iaas_web/core/iworkutil/httputil"
@@ -19,10 +18,8 @@ type HttpRequestNode struct {
 }
 
 func (this *HttpRequestNode) Execute(trackingId string) {
-	// 数据中心
-	_dataStore := datastore.GetDataStore(trackingId)
 	// 节点中间数据
-	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, _dataStore)
+	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, this.DataStore)
 	// 参数准备
 	var request_url, request_method string
 	if _request_url, ok := tmpDataMap[iworkconst.STRING_PREFIX+"request_url"].(string); ok {
@@ -35,12 +32,12 @@ func (this *HttpRequestNode) Execute(trackingId string) {
 	headerMap := fillParamMapData(tmpDataMap, iworkconst.MULTI_PREFIX+"request_headers?")
 
 	responsebytes := httputil.DoHttpRequestWithParserFunc(request_url, request_method, paramMap, headerMap, func(resp *http.Response) {
-		_dataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.NUMBER_PREFIX+"StatusCode", resp.StatusCode)
-		_dataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.STRING_PREFIX+"ContentType", resp.Header.Get("content-type"))
+		this.DataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.NUMBER_PREFIX+"StatusCode", resp.StatusCode)
+		this.DataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.STRING_PREFIX+"ContentType", resp.Header.Get("content-type"))
 	})
-	_dataStore.CacheByteData(this.WorkStep.WorkStepName, iworkconst.STRING_PREFIX+"response_data", string(responsebytes))
-	_dataStore.CacheByteData(this.WorkStep.WorkStepName, iworkconst.BYTE_ARRAY_PREFIX+"response_data", responsebytes)
-	_dataStore.CacheByteData(this.WorkStep.WorkStepName, iworkconst.BASE64STRING_PREFIX+"response_data", iworkutil.EncodeToBase64String(responsebytes))
+	this.DataStore.CacheByteData(this.WorkStep.WorkStepName, iworkconst.STRING_PREFIX+"response_data", string(responsebytes))
+	this.DataStore.CacheByteData(this.WorkStep.WorkStepName, iworkconst.BYTE_ARRAY_PREFIX+"response_data", responsebytes)
+	this.DataStore.CacheByteData(this.WorkStep.WorkStepName, iworkconst.BASE64STRING_PREFIX+"response_data", iworkutil.EncodeToBase64String(responsebytes))
 }
 
 func (this *HttpRequestNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {

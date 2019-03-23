@@ -3,7 +3,6 @@ package iworknode
 import (
 	"isoft/isoft/common/hashutil"
 	"isoft/isoft_iaas_web/core/iworkconst"
-	"isoft/isoft_iaas_web/core/iworkdata/datastore"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
 	"isoft/isoft_iaas_web/models/iwork"
 )
@@ -14,13 +13,11 @@ type CalHashNode struct {
 }
 
 func (this *CalHashNode) Execute(trackingId string) {
-	// 数据中心
-	dataStore := datastore.GetDataStore(trackingId)
 	// 节点中间数据
-	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, dataStore)
+	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, this.DataStore)
 	str_data := tmpDataMap[iworkconst.STRING_PREFIX+"str_data"].(string)
 	hash := hashutil.CalculateHashWithString(str_data)
-	dataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.STRING_PREFIX+"hash", hash)
+	this.DataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.STRING_PREFIX+"hash", hash)
 }
 
 func (this *CalHashNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {

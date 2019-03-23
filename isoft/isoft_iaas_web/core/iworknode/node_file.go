@@ -3,7 +3,6 @@ package iworknode
 import (
 	"io/ioutil"
 	"isoft/isoft_iaas_web/core/iworkconst"
-	"isoft/isoft_iaas_web/core/iworkdata/datastore"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
 	"isoft/isoft_iaas_web/core/iworkutil/fileutil"
 	"isoft/isoft_iaas_web/models/iwork"
@@ -17,14 +16,12 @@ type FileReadNode struct {
 }
 
 func (this *FileReadNode) Execute(trackingId string) {
-	// 数据中心
-	dataStore := datastore.GetDataStore(trackingId)
 	// 节点中间数据
-	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, dataStore)
+	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, this.DataStore)
 	file_path := tmpDataMap[iworkconst.STRING_PREFIX+"file_path"].(string)
-	dataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.STRING_PREFIX+"file_path", file_path)
+	this.DataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.STRING_PREFIX+"file_path", file_path)
 	if bytes, err := ioutil.ReadFile(file_path); err == nil {
-		dataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.STRING_PREFIX+"data", string(bytes))
+		this.DataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.STRING_PREFIX+"data", string(bytes))
 	} else {
 		panic(err)
 	}
@@ -66,10 +63,8 @@ func checkAppend(tmpDataMap map[string]interface{}) bool {
 }
 
 func (this *FileWriteNode) Execute(trackingId string) {
-	// 数据中心
-	dataStore := datastore.GetDataStore(trackingId)
 	// 节点中间数据
-	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, dataStore)
+	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, this.DataStore)
 	file_path := tmpDataMap[iworkconst.STRING_PREFIX+"file_path"].(string)
 	var strdata string
 	// 写字符串
@@ -87,7 +82,7 @@ func (this *FileWriteNode) Execute(trackingId string) {
 	if err := fileutil.WriteFile(file_path, []byte(strdata), checkAppend(tmpDataMap)); err != nil {
 		panic(err)
 	}
-	dataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.STRING_PREFIX+"file_path", file_path)
+	this.DataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.STRING_PREFIX+"file_path", file_path)
 }
 
 func (this *FileWriteNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
@@ -123,14 +118,12 @@ type FileRenameNode struct {
 }
 
 func (this *FileRenameNode) Execute(trackingId string) {
-	// 数据中心
-	dataStore := datastore.GetDataStore(trackingId)
 	// 节点中间数据
-	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, dataStore)
+	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, this.DataStore)
 	file_path := tmpDataMap[iworkconst.STRING_PREFIX+"file_path"].(string)
 	new_file_path := tmpDataMap[iworkconst.STRING_PREFIX+"new_file_path"].(string)
 	if err := os.Rename(file_path, new_file_path); err == nil {
-		dataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.STRING_PREFIX+"file_path", new_file_path)
+		this.DataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.STRING_PREFIX+"file_path", new_file_path)
 	} else {
 		panic(err)
 	}

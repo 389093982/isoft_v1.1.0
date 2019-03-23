@@ -22,10 +22,8 @@ type WorkSub struct {
 func (this *WorkSub) Execute(trackingId string) {
 	// 获取子流程流程名称
 	workSubName := this.checkAndGetWorkSubName()
-	// 数据中心
-	dataStore := datastore.GetDataStore(trackingId)
 	// 节点中间数据
-	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, dataStore)
+	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, this.DataStore)
 	// 运行子流程
 	work, _ := iwork.QueryWorkByName(workSubName, orm.NewOrm())
 	steps, _ := iwork.QueryAllWorkStepByWorkName(workSubName, orm.NewOrm())
@@ -39,10 +37,10 @@ func (this *WorkSub) Execute(trackingId string) {
 				// 找到 tmpDataMap 中的迭代元素 __item__,将其替换成需要迭代的元素
 				tmpDataMap[itemKey] = foreachData
 			}
-			this.RunOnceSubWork(work, steps, trackingId, tmpDataMap, dataStore)
+			this.RunOnceSubWork(work, steps, trackingId, tmpDataMap, this.DataStore)
 		}
 	} else {
-		this.RunOnceSubWork(work, steps, trackingId, tmpDataMap, dataStore)
+		this.RunOnceSubWork(work, steps, trackingId, tmpDataMap, this.DataStore)
 	}
 }
 

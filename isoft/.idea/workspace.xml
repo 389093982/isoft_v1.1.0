@@ -3,7 +3,29 @@
   <component name="ChangeListManager">
     <list default="true" id="61c01151-84f0-4bfd-a227-5c1f0b5a424d" name="Default" comment="代码优化">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_iaas_web/core/iworkdata/datastore/datastore.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_iaas_web/core/iworkdata/datastore/datastore.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_iaas_web/core/iworknode/baseexec.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_iaas_web/core/iworknode/baseexec.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_iaas_web/core/iworknode/basenode.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_iaas_web/core/iworknode/basenode.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_cmd.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_cmd.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_compress.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_compress.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_db.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_db.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_entity.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_entity.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_env.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_env.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_file.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_file.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_hash.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_hash.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_html.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_html.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_http.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_http.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_if.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_if.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_json.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_json.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_mapper.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_mapper.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_memory.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_memory.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_redirect.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_redirect.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_sftp.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_sftp.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_sql.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_sql.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_sshshell.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_sshshell.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_start_end.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_start_end.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_worksub.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_worksub.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_iaas_web/core/iworkrun/run.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_iaas_web/core/iworkrun/run.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/isoft_iaas_web/iwork.db" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_iaas_web/iwork.db" afterDir="false" />
     </list>
     <ignored path="isoft_deploy_web/static/uploadfile/" />
@@ -56,7 +78,7 @@
           <entry key="project.open.time.13" value="14" />
           <entry key="project.open.time.14" value="16" />
           <entry key="project.open.time.15" value="13" />
-          <entry key="project.open.time.16" value="11" />
+          <entry key="project.open.time.16" value="12" />
           <entry key="project.open.time.17" value="8" />
           <entry key="project.open.time.18" value="12" />
           <entry key="project.open.time.19" value="5" />
@@ -75,18 +97,18 @@
           <entry key="project.open.time.39" value="1" />
           <entry key="project.open.time.40" value="1" />
           <entry key="project.open.time.9" value="4" />
-          <entry key="project.opened" value="158" />
+          <entry key="project.opened" value="159" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="conf" value="187" />
+          <entry key="conf" value="189" />
           <entry key="css" value="18" />
           <entry key="editorconfig" value="1" />
           <entry key="eslintignore" value="1" />
           <entry key="gitignore" value="1" />
           <entry key="gitkeep" value="1" />
-          <entry key="go" value="4216" />
+          <entry key="go" value="4246" />
           <entry key="go_bak" value="15" />
           <entry key="gotxt" value="2" />
           <entry key="html" value="75" />
@@ -116,12 +138,12 @@
         <counts>
           <entry key="CSS" value="18" />
           <entry key="DTD" value="5" />
-          <entry key="Go" value="4216" />
+          <entry key="Go" value="4246" />
           <entry key="HTML" value="75" />
           <entry key="Image" value="8" />
           <entry key="JSON" value="6" />
           <entry key="JavaScript" value="561" />
-          <entry key="PLAIN_TEXT" value="477" />
+          <entry key="PLAIN_TEXT" value="479" />
           <entry key="RNG Compact" value="2" />
           <entry key="SQL" value="6" />
           <entry key="SVG" value="1" />
@@ -136,7 +158,7 @@
         <counts>
           <entry key="conf" value="397" />
           <entry key="css" value="106" />
-          <entry key="go" value="133724" />
+          <entry key="go" value="134330" />
           <entry key="ini" value="211" />
           <entry key="js" value="8204" />
           <entry key="mod" value="1" />
@@ -152,7 +174,7 @@
         <counts>
           <entry key="CSS" value="106" />
           <entry key="DTD" value="1" />
-          <entry key="Go" value="133696" />
+          <entry key="Go" value="134302" />
           <entry key="JavaScript" value="8204" />
           <entry key="PLAIN_TEXT" value="3618" />
           <entry key="SQL" value="141" />
@@ -179,19 +201,106 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/isoft_doc/vue_project.txt">
+        <entry file="file://$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_html.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="92">
-              <caret line="120" column="6" selection-start-line="120" selection-start-column="6" selection-end-line="120" selection-end-column="6" />
+            <state relative-caret-position="83">
+              <caret line="28" column="1" selection-start-line="28" selection-start-column="1" selection-end-line="28" selection-end-column="1" />
+              <folding>
+                <element signature="e#19#282#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_mapper.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="125">
+              <caret line="17" column="77" selection-start-line="17" selection-start-column="77" selection-end-line="17" selection-end-column="77" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_memory.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="83">
+              <caret line="40" column="8" selection-start-line="40" selection-start-column="8" selection-end-line="40" selection-end-column="8" />
+              <folding>
+                <element signature="e#19#209#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_json.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="83">
+              <caret line="58" column="17" selection-start-line="58" selection-start-column="17" selection-end-line="58" selection-end-column="17" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_redirect.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="83">
+              <caret line="46" column="16" selection-start-line="46" selection-start-column="16" selection-end-line="46" selection-end-column="16" />
+              <folding>
+                <element signature="e#19#236#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_sshshell.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="83">
+              <caret line="37" column="17" selection-start-line="37" selection-start-column="17" selection-end-line="37" selection-end-column="17" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_cmd.go">
+        <entry file="file://$PROJECT_DIR$/isoft_iaas_web/core/iworkrun/run.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="57">
-              <caret line="60" column="59" selection-start-line="60" selection-start-column="59" selection-end-line="60" selection-end-column="59" />
+            <state relative-caret-position="253">
+              <caret line="56" selection-start-line="56" selection-end-line="56" />
+              <folding>
+                <element signature="e#18#397#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/isoft_iaas_web/core/iworkdata/datastore/datastore.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="394">
+              <caret line="53" lean-forward="true" selection-start-line="53" selection-end-line="53" />
+              <folding>
+                <element signature="e#19#73#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_sftp.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="210">
+              <caret line="26" column="22" selection-start-line="26" selection-start-column="22" selection-end-line="26" selection-end-column="22" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_sql.go">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="34">
+              <caret line="159" column="82" selection-start-line="159" selection-start-column="82" selection-end-line="159" selection-end-column="82" />
             </state>
           </provider>
         </entry>
@@ -213,8 +322,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>redirect</find>
-      <find>$</find>
       <find>strings.Replace</find>
       <find>str_response_data</find>
       <find>Attach</find>
@@ -243,9 +350,10 @@
       <find>xml.Unmarshal</find>
       <find>strconv.ParseInt</find>
       <find>unknown opcode</find>
+      <find>DataStore: this.DataStore</find>
+      <find>datastore.GetDataStore</find>
     </findStrings>
     <replaceStrings>
-      <replace>Helper</replace>
       <replace>schema</replace>
       <replace />
       <replace>ParamInputSchema</replace>
@@ -275,6 +383,7 @@
       <replace>currentColor</replace>
       <replace>IFNode</replace>
       <replace>iworkfunc</replace>
+      <replace>BaseNode: BaseNode{DataStore: this.DataStore}</replace>
     </replaceStrings>
     <dirStrings>
       <dir>D:\zhourui\program\go\goland_workspace\src\github.com\isoft\isoft_sso_web</dir>
@@ -315,32 +424,13 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/isoft_iaas_web/core/iworkrun/run.go" />
-        <option value="$PROJECT_DIR$/isoft_iaas_web/core/iworkutil/funcutil/funcexec.go" />
-        <option value="$PROJECT_DIR$/isoft_iaas_web/core/iworkfunc/funcexec.go" />
-        <option value="$PROJECT_DIR$/isoft_iaas_web/core/iworkfunc/parser.go" />
-        <option value="$PROJECT_DIR$/isoft_iaas_web/controllers/iwork/validate.go" />
-        <option value="$PROJECT_DIR$/isoft_iaas_web/core/iworkdata/block/block.go" />
-        <option value="$PROJECT_DIR$/isoft_iaas_web/core/iworkutil/iworkutil.go" />
-        <option value="$PROJECT_DIR$/isoft_iaas_web/core/iworkdata/block/blockparser.go" />
-        <option value="$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_env.go" />
-        <option value="$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_file.go" />
-        <option value="$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_hash.go" />
-        <option value="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/IWork/WorkStepBaseInfo.vue" />
-        <option value="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/IWork/IResource/ResourceAdd.vue" />
-        <option value="$PROJECT_DIR$/isoft_iaas_web/core/iworkutil/sqlutil/conn.go" />
         <option value="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/IWork/IResource/ResourceList.vue" />
         <option value="$PROJECT_DIR$/isoft_iaas_web/core/iworkutil/sftputil/connection.go" />
         <option value="$PROJECT_DIR$/isoft_iaas_web/core/iworkutil/sftputil/conn.go" />
         <option value="$PROJECT_DIR$/isoft_iaas_web/core/iworkutil/sftputil/conn_test.go" />
         <option value="$PROJECT_DIR$/isoft_iaas_web/models/iwork/iresource.go" />
-        <option value="$PROJECT_DIR$/isoft_iaas_web/core/iworknode/basenode.go" />
-        <option value="$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_sql.go" />
-        <option value="$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_db.go" />
-        <option value="$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_sftp.go" />
         <option value="$PROJECT_DIR$/isoft/common/sftputil/sftputil.go" />
         <option value="$PROJECT_DIR$/isoft_iaas_web/core/iworkutil/sftputil/sftputil.go" />
-        <option value="$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_json.go" />
         <option value="$PROJECT_DIR$/isoft_iaas_web/controllers/iwork/iresource.go" />
         <option value="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/IWork/WorkList.vue" />
         <option value="$PROJECT_DIR$/isoft_iaas_web/controllers/iwork/iwork.go" />
@@ -359,13 +449,32 @@
         <option value="$PROJECT_DIR$/isoft_iaas_web/core/iworkutil/cmdutil/cmdutil.go" />
         <option value="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/IWork/WorkHistoryList.vue" />
         <option value="$PROJECT_DIR$/isoft_iaas_web/core/iworkutil/sshutil/shell.go" />
-        <option value="$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_sshshell.go" />
         <option value="$PROJECT_DIR$/isoft_iaas_web/core/iworknode/egg.txt" />
-        <option value="$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_compress.go" />
-        <option value="$PROJECT_DIR$/isoft_iaas_web/core/iworknode/baseexec.go" />
         <option value="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/GlobalData/index.js" />
         <option value="$PROJECT_DIR$/isoft_iaas_web/core/iworkutil/compressutil/targz.go" />
+        <option value="$PROJECT_DIR$/isoft_iaas_web/core/iworknode/basenode.go" />
+        <option value="$PROJECT_DIR$/isoft_iaas_web/core/iworknode/baseexec.go" />
+        <option value="$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_start_end.go" />
+        <option value="$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_worksub.go" />
         <option value="$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_cmd.go" />
+        <option value="$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_compress.go" />
+        <option value="$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_entity.go" />
+        <option value="$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_hash.go" />
+        <option value="$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_http.go" />
+        <option value="$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_db.go" />
+        <option value="$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_env.go" />
+        <option value="$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_file.go" />
+        <option value="$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_if.go" />
+        <option value="$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_json.go" />
+        <option value="$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_sftp.go" />
+        <option value="$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_sql.go" />
+        <option value="$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_html.go" />
+        <option value="$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_mapper.go" />
+        <option value="$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_memory.go" />
+        <option value="$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_redirect.go" />
+        <option value="$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_sshshell.go" />
+        <option value="$PROJECT_DIR$/isoft_iaas_web/core/iworkdata/datastore/datastore.go" />
+        <option value="$PROJECT_DIR$/isoft_iaas_web/core/iworkrun/run.go" />
       </list>
     </option>
   </component>
@@ -430,7 +539,22 @@
               <item name="isoft" type="462c0819:PsiDirectoryNode" />
               <item name="isoft_iaas_web" type="462c0819:PsiDirectoryNode" />
               <item name="core" type="462c0819:PsiDirectoryNode" />
-              <item name="iworknode" type="462c0819:PsiDirectoryNode" />
+              <item name="iworkdata" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="isoft" type="b2602c69:ProjectViewProjectNode" />
+              <item name="isoft" type="462c0819:PsiDirectoryNode" />
+              <item name="isoft_iaas_web" type="462c0819:PsiDirectoryNode" />
+              <item name="core" type="462c0819:PsiDirectoryNode" />
+              <item name="iworkdata" type="462c0819:PsiDirectoryNode" />
+              <item name="datastore" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="isoft" type="b2602c69:ProjectViewProjectNode" />
+              <item name="isoft" type="462c0819:PsiDirectoryNode" />
+              <item name="isoft_iaas_web" type="462c0819:PsiDirectoryNode" />
+              <item name="core" type="462c0819:PsiDirectoryNode" />
+              <item name="iworkrun" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -643,7 +767,7 @@
     <layout>
       <window_info id="Favorites" order="0" sideWeight="0.72113675" side_tool="true" weight="0.28698465" />
       <window_info id="Structure" order="1" sideWeight="0.72113675" side_tool="true" weight="0.3354891" />
-      <window_info content_ui="combo" id="Project" order="2" sideWeight="0.27886322" weight="0.3678254" />
+      <window_info content_ui="combo" id="Project" order="2" sideWeight="0.27886322" weight="0.36459175" />
       <window_info anchor="bottom" id="TypeScript" order="0" weight="0.46003553" />
       <window_info anchor="bottom" id="Messages" order="1" weight="0.27886322" />
       <window_info anchor="bottom" id="Terminal" order="2" sideWeight="0.4890865" weight="0.60035527" />
@@ -651,7 +775,7 @@
       <window_info anchor="bottom" id="Version Control" order="4" weight="0.6749556" />
       <window_info anchor="bottom" id="Message" order="5" />
       <window_info anchor="bottom" id="Find" order="6" weight="0.79040855" />
-      <window_info anchor="bottom" id="Run" order="7" sideWeight="0.4882781" weight="0.55772644" />
+      <window_info anchor="bottom" id="Run" order="7" sideWeight="0.4882781" weight="0.4635879" />
       <window_info anchor="bottom" id="Debug" order="8" sideWeight="0.49393696" weight="0.34991118" />
       <window_info anchor="bottom" id="Cvs" order="9" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="10" weight="0.4" />
@@ -667,7 +791,7 @@
     <layout-to-restore>
       <window_info id="Favorites" order="0" sideWeight="0.72113675" side_tool="true" weight="0.28698465" />
       <window_info id="Structure" order="1" sideWeight="0.72113675" side_tool="true" weight="0.3354891" />
-      <window_info active="true" content_ui="combo" id="Project" order="2" sideWeight="0.27886322" visible="true" weight="0.3678254" />
+      <window_info active="true" content_ui="combo" id="Project" order="2" sideWeight="0.27886322" visible="true" weight="0.36459175" />
       <window_info anchor="bottom" id="TypeScript" order="0" weight="0.46003553" />
       <window_info anchor="bottom" id="Messages" order="1" weight="0.27886322" />
       <window_info anchor="bottom" id="Terminal" order="2" sideWeight="0.4890865" weight="0.60035527" />
@@ -675,7 +799,7 @@
       <window_info anchor="bottom" id="Version Control" order="4" weight="0.6749556" />
       <window_info anchor="bottom" id="Message" order="5" />
       <window_info anchor="bottom" id="Find" order="6" weight="0.79040855" />
-      <window_info anchor="bottom" id="Run" order="7" sideWeight="0.4882781" weight="0.55772644" />
+      <window_info anchor="bottom" id="Run" order="7" sideWeight="0.4882781" weight="0.4635879" />
       <window_info anchor="bottom" id="Debug" order="8" sideWeight="0.49393696" weight="0.34991118" />
       <window_info anchor="bottom" id="Cvs" order="9" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="10" weight="0.4" />
@@ -799,11 +923,6 @@
           <line>29</line>
           <option name="timeStamp" value="164" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
-          <url>file://$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_entity.go</url>
-          <line>20</line>
-          <option name="timeStamp" value="171" />
-        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
     <watches-manager>
@@ -838,125 +957,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/isoft_iaas_web/core/iworkdata/schema/schema_parser.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="10" column="9" selection-start-line="10" selection-start-column="9" selection-end-line="10" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_iaas_web/core/iworkdata/schema/schema.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="37">
-          <caret line="20" column="25" selection-start-line="20" selection-start-column="25" selection-end-line="20" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_iaas_web/core/iworkdata/param/param_parser.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="37">
-          <caret line="69" column="14" selection-start-line="69" selection-start-column="14" selection-end-line="69" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_iaas_web/service/iworkservice/iworkservice.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="128">
-          <caret line="192" column="57" selection-start-line="192" selection-start-column="45" selection-end-line="192" selection-end-column="57" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_iaas_web/service/iworkservice/iworkstepservice.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="32">
-          <caret line="528" column="47" selection-start-line="528" selection-start-column="47" selection-end-line="528" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/IWork/WorkList.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="178">
-          <caret line="193" column="34" lean-forward="true" selection-start-line="193" selection-start-column="34" selection-end-line="193" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/api/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="159" column="84" selection-start-line="159" selection-start-column="84" selection-end-line="159" selection-end-column="84" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_iaas_web/models/iwork/history.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="194">
-          <caret line="30" column="5" selection-start-line="30" selection-start-column="5" selection-end-line="30" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft/common/sshutil/sshutil.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="8" column="5" selection-start-line="8" selection-start-column="5" selection-end-line="8" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft/build/build_pack/pack/pack.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="92" column="5" selection-start-line="92" selection-start-column="5" selection-end-line="92" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_deploy_web/deploycore/deploy/command_args.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1490" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_deploy_web/deploycore/prework/copywork.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-247" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_deploy_web/deploycore/prework/work.go">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_deploy_web/deploycore/executors/executor_router.go">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_deploy_web/deploycore/deploy/command.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-807" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../../../soft/install/go/go1.12/src/os/exec/exec.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="178">
-          <caret line="464" column="14" selection-start-line="464" selection-start-column="14" selection-end-line="464" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_iaas_web/core/iworkutil/cmdutil/cmdutil.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" column="24" selection-start-line="15" selection-start-column="24" selection-end-line="15" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft/common/sshutil/ssh_execute.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="10" column="5" selection-start-line="10" selection-start-column="5" selection-end-line="10" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_deploy_web/deploycore/deploy/trackinglog.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1122">
-          <caret line="72" column="33" selection-start-line="72" selection-start-column="33" selection-end-line="72" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/vendor/golang.org/x/crypto/ssh/session.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="106">
@@ -1005,31 +1005,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_sshshell.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="138">
-          <caret line="38" column="13" selection-start-line="38" selection-start-column="13" selection-end-line="38" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/IWork/WorkHistoryList.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
           <caret line="105" column="51" selection-start-line="105" selection-start-column="51" selection-end-line="105" selection-end-column="51" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_compress.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="22" column="33" selection-start-line="22" selection-start-column="33" selection-end-line="22" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_iaas_web/core/iworknode/baseexec.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1564">
-          <caret line="100" column="27" selection-start-line="100" selection-start-column="27" selection-end-line="100" selection-end-column="27" />
         </state>
       </provider>
     </entry>
@@ -1044,13 +1023,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
           <caret line="4" column="80" selection-start-line="4" selection-start-column="80" selection-end-line="4" selection-end-column="80" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_file.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="748">
-          <caret line="53" column="1" selection-start-line="13" selection-end-line="53" selection-end-column="1" />
         </state>
       </provider>
     </entry>
@@ -1093,9 +1065,6 @@
     <entry file="file://$PROJECT_DIR$/isoft_deploy_web/controllers/service.go">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_iaas_web/conf/app.conf">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/isoft_iaas_web/main.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
@@ -1129,15 +1098,209 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/isoft_doc/vue_project.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="92">
+        <state relative-caret-position="2040">
           <caret line="120" column="6" selection-start-line="120" selection-start-column="6" selection-end-line="120" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_iaas_web/conf/dev.conf">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_iaas_web/conf/app.conf">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="15" lean-forward="true" selection-start-line="2" selection-start-column="15" selection-end-line="2" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_start_end.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="75" column="77" selection-start-line="75" selection-start-column="77" selection-end-line="75" selection-end-column="77" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_iaas_web/core/iworknode/basenode.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="18" column="5" selection-start-line="18" selection-start-column="5" selection-end-line="18" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_worksub.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="387">
+          <caret line="42" column="79" selection-start-line="42" selection-start-column="79" selection-end-line="42" selection-end-column="79" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_iaas_web/core/iworknode/baseexec.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="337">
+          <caret line="60" column="21" lean-forward="true" selection-start-line="60" selection-start-column="21" selection-end-line="60" selection-end-column="21" />
+          <folding>
+            <element signature="e#19#230#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_cmd.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="57">
-          <caret line="60" column="59" selection-start-line="60" selection-start-column="59" selection-end-line="60" selection-end-column="59" />
+        <state relative-caret-position="65">
+          <caret line="35" column="82" selection-start-line="35" selection-start-column="82" selection-end-line="35" selection-end-column="82" />
+          <folding>
+            <element signature="e#19#272#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_compress.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="95">
+          <caret line="55" column="82" selection-start-line="55" selection-start-column="82" selection-end-line="55" selection-end-column="82" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_entity.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="186">
+          <caret line="34" column="30" selection-start-line="34" selection-start-column="30" selection-end-line="34" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_hash.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="19" column="18" selection-start-line="19" selection-start-column="18" selection-end-line="19" selection-end-column="18" />
+          <folding>
+            <element signature="e#19#232#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_http.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="95">
+          <caret line="39" column="18" selection-start-line="39" selection-start-column="18" selection-end-line="39" selection-end-column="18" />
+          <folding>
+            <element signature="e#19#343#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_db.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="63">
+          <caret line="40" column="1" selection-start-line="40" selection-start-column="1" selection-end-line="40" selection-end-column="1" />
+          <folding>
+            <element signature="e#19#319#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_env.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="63">
+          <caret line="51" column="82" selection-start-line="51" selection-start-column="82" selection-end-line="51" selection-end-column="82" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_file.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="83">
+          <caret line="126" column="12" selection-start-line="126" selection-start-column="12" selection-end-line="126" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_if.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="27" column="71" selection-start-line="27" selection-start-column="71" selection-end-line="27" selection-end-column="71" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_json.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="83">
+          <caret line="58" column="17" selection-start-line="58" selection-start-column="17" selection-end-line="58" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_sftp.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="26" column="22" selection-start-line="26" selection-start-column="22" selection-end-line="26" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_sql.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="159" column="82" selection-start-line="159" selection-start-column="82" selection-end-line="159" selection-end-column="82" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_html.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="83">
+          <caret line="28" column="1" selection-start-line="28" selection-start-column="1" selection-end-line="28" selection-end-column="1" />
+          <folding>
+            <element signature="e#19#282#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_mapper.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="125">
+          <caret line="17" column="77" selection-start-line="17" selection-start-column="77" selection-end-line="17" selection-end-column="77" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_memory.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="83">
+          <caret line="40" column="8" selection-start-line="40" selection-start-column="8" selection-end-line="40" selection-end-column="8" />
+          <folding>
+            <element signature="e#19#209#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_redirect.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="83">
+          <caret line="46" column="16" selection-start-line="46" selection-start-column="16" selection-end-line="46" selection-end-column="16" />
+          <folding>
+            <element signature="e#19#236#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_iaas_web/core/iworknode/node_sshshell.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="83">
+          <caret line="37" column="17" selection-start-line="37" selection-start-column="17" selection-end-line="37" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_iaas_web/core/iworkdata/datastore/datastore.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="394">
+          <caret line="53" lean-forward="true" selection-start-line="53" selection-end-line="53" />
+          <folding>
+            <element signature="e#19#73#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_iaas_web/core/iworkrun/run.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="253">
+          <caret line="56" selection-start-line="56" selection-end-line="56" />
+          <folding>
+            <element signature="e#18#397#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

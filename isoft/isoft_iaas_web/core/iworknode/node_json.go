@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"isoft/isoft_iaas_web/core/iworkconst"
-	"isoft/isoft_iaas_web/core/iworkdata/datastore"
 	"isoft/isoft_iaas_web/core/iworkdata/param"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
 	"isoft/isoft_iaas_web/models/iwork"
@@ -17,14 +16,12 @@ type JsonRenderNode struct {
 }
 
 func (this *JsonRenderNode) Execute(trackingId string) {
-	// 数据中心
-	dataStore := datastore.GetDataStore(trackingId)
 	// 节点中间数据
-	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, dataStore)
+	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, this.DataStore)
 	json_object := tmpDataMap[iworkconst.COMPLEX_PREFIX+"json_data"].([]map[string]interface{})
 	bytes, err := json.Marshal(json_object)
 	if err == nil {
-		dataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.STRING_PREFIX+"json_data", string(bytes))
+		this.DataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.STRING_PREFIX+"json_data", string(bytes))
 	}
 }
 
@@ -57,20 +54,18 @@ type JsonParserNode struct {
 }
 
 func (this *JsonParserNode) Execute(trackingId string) {
-	// 数据中心
-	dataStore := datastore.GetDataStore(trackingId)
 	// 节点中间数据
-	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, dataStore)
+	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, this.DataStore)
 	json_str := tmpDataMap[iworkconst.STRING_PREFIX+"json_data"].(string)
 	json_objects := make([]map[string]interface{}, 0)
 	err := json.Unmarshal([]byte(json_str), &json_objects)
 	if err == nil {
-		dataStore.CacheData(this.WorkStep.WorkStepName, "rows", json_objects)
+		this.DataStore.CacheData(this.WorkStep.WorkStepName, "rows", json_objects)
 		for index, json_object := range json_objects {
 			for paramName, paramValue := range json_object {
-				dataStore.CacheData(this.WorkStep.WorkStepName, fmt.Sprintf("rows[%d].%s", index, paramName), paramValue)
+				this.DataStore.CacheData(this.WorkStep.WorkStepName, fmt.Sprintf("rows[%d].%s", index, paramName), paramValue)
 				if index == 0 {
-					dataStore.CacheData(this.WorkStep.WorkStepName, fmt.Sprintf("rows.%s", paramName), paramValue)
+					this.DataStore.CacheData(this.WorkStep.WorkStepName, fmt.Sprintf("rows.%s", paramName), paramValue)
 				}
 			}
 		}

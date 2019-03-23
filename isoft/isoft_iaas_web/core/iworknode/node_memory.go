@@ -2,7 +2,6 @@ package iworknode
 
 import (
 	"isoft/isoft_iaas_web/core/iworkconst"
-	"isoft/isoft_iaas_web/core/iworkdata/datastore"
 	"isoft/isoft_iaas_web/core/iworkdata/memory"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
 	"isoft/isoft_iaas_web/models/iwork"
@@ -32,16 +31,14 @@ func getMemoryCache(trackingId string, tmpDataMap map[string]interface{}) *memor
 }
 
 func (this *MemoryMapCacheNode) Execute(trackingId string) {
-	// 数据中心
-	dataStore := datastore.GetDataStore(trackingId)
 	// 节点中间数据
-	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, dataStore)
+	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, this.DataStore)
 	memoryCache := getMemoryCache(trackingId, tmpDataMap)
 	if cachemap_key_get, ok := tmpDataMap[iworkconst.STRING_PREFIX+"cachemap_key_get?"].(string); ok {
 		// 往 MemoryCache 中取值
 		key := iworkconst.STRING_PREFIX + "cachemap_val_get"
 		value := memoryCache.GetData(tmpDataMap[iworkconst.STRING_PREFIX+"cachemap_name"].(string) + "_" + cachemap_key_get)
-		dataStore.CacheData(this.WorkStep.WorkStepName, key, value)
+		this.DataStore.CacheData(this.WorkStep.WorkStepName, key, value)
 	} else if cachemap_key_put, ok := tmpDataMap[iworkconst.STRING_PREFIX+"cachemap_key_put?"].(string); ok {
 		// 往 MemoryCache 中放值
 		key := tmpDataMap[iworkconst.STRING_PREFIX+"cachemap_name"].(string) + "_" + cachemap_key_put

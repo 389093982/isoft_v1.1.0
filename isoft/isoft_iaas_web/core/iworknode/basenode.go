@@ -16,7 +16,9 @@ import (
 )
 
 // 所有 node 的基类
-type BaseNode struct{}
+type BaseNode struct {
+	DataStore *datastore.DataStore
+}
 
 // paramValue 来源于 iwork 模块
 func (this *BaseNode) parseAndFillParamVauleWithResource(paramVaule string) interface{} {

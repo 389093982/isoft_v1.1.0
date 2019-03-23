@@ -3,7 +3,6 @@ package iworknode
 import (
 	"isoft/isoft/common/fileutil"
 	"isoft/isoft_iaas_web/core/iworkconst"
-	"isoft/isoft_iaas_web/core/iworkdata/datastore"
 	"isoft/isoft_iaas_web/core/iworkdata/param"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
 	"isoft/isoft_iaas_web/core/iworkutil/sftputil"
@@ -17,17 +16,15 @@ type SftpUploadNode struct {
 }
 
 func (this *SftpUploadNode) Execute(trackingId string) {
-	// 数据中心
-	dataStore := datastore.GetDataStore(trackingId)
 	// 节点中间数据
-	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, dataStore)
+	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, this.DataStore)
 	sftpResource := param.GetStaticParamValue(iworkconst.STRING_PREFIX+"sftp_conn", this.WorkStep).(iwork.Resource)
 	local_file_path := tmpDataMap[iworkconst.STRING_PREFIX+"local_file_path"].(string)
 	remote_dir_path := tmpDataMap[iworkconst.STRING_PREFIX+"remote_dir_path"].(string)
 	err := sftputil.SFTPFileCopy(sftpResource.ResourceUsername, sftpResource.ResourcePassword, sftpResource.ResourceDsn, 22, local_file_path, remote_dir_path)
 	if err == nil {
 		remote_file_path := fileutil.ChangeToLinuxSeparator(filepath.Join(remote_dir_path, filepath.Base(local_file_path)))
-		dataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.STRING_PREFIX+"remote_file_path", remote_file_path)
+		this.DataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.STRING_PREFIX+"remote_file_path", remote_file_path)
 	} else {
 		panic(err)
 	}

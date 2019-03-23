@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"isoft/isoft_iaas_web/core/iworkdata/block"
+	"isoft/isoft_iaas_web/core/iworkdata/datastore"
 	"isoft/isoft_iaas_web/core/iworkdata/entry"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
 	"isoft/isoft_iaas_web/models/iwork"
@@ -17,9 +18,10 @@ type WorkStepFactory struct {
 	WorkSubRunFunc func(work iwork.Work, steps []iwork.WorkStep,
 		dispatcher *entry.Dispatcher) (receiver *entry.Receiver) // 执行步骤时遇到子流程时的回调函数
 	BlockStepRunFunc func(trackingId string, blockStep *block.BlockStep,
-		dispatcher *entry.Dispatcher) (receiver *entry.Receiver) // 执行步骤时使用 BlockStep 时的回调函数
+		datastore *datastore.DataStore, dispatcher *entry.Dispatcher) (receiver *entry.Receiver) // 执行步骤时使用 BlockStep 时的回调函数
 	Dispatcher *entry.Dispatcher
 	Receiver   *entry.Receiver // 代理了 Receiver,值从 work_end 节点获取
+	DataStore  *datastore.DataStore
 }
 
 type IStandardWorkStep interface {
@@ -48,61 +50,61 @@ func (this *WorkStepFactory) Execute(trackingId string) {
 func (this *WorkStepFactory) getProxy() IStandardWorkStep {
 	switch strings.ToUpper(this.WorkStep.WorkStepType) {
 	case "WORK_START":
-		return &WorkStartNode{WorkStep: this.WorkStep, Dispatcher: this.Dispatcher}
+		return &WorkStartNode{WorkStep: this.WorkStep, BaseNode: BaseNode{DataStore: this.DataStore}, Dispatcher: this.Dispatcher}
 	case "WORK_END":
-		return &WorkEndNode{WorkStep: this.WorkStep, Receiver: this.Receiver}
+		return &WorkEndNode{WorkStep: this.WorkStep, BaseNode: BaseNode{DataStore: this.DataStore}, Receiver: this.Receiver}
 	case "WORK_SUB":
-		return &WorkSub{WorkStep: this.WorkStep, WorkSubRunFunc: this.WorkSubRunFunc}
+		return &WorkSub{WorkStep: this.WorkStep, BaseNode: BaseNode{DataStore: this.DataStore}, WorkSubRunFunc: this.WorkSubRunFunc}
 	case "SQL_EXECUTE":
-		return &SQLExecuteNode{WorkStep: this.WorkStep}
+		return &SQLExecuteNode{WorkStep: this.WorkStep, BaseNode: BaseNode{DataStore: this.DataStore}}
 	case "SQL_QUERY":
-		return &SQLQueryNode{WorkStep: this.WorkStep}
+		return &SQLQueryNode{WorkStep: this.WorkStep, BaseNode: BaseNode{DataStore: this.DataStore}}
 	case "SQL_QUERY_PAGE":
-		return &SQLQueryPageNode{WorkStep: this.WorkStep}
+		return &SQLQueryPageNode{WorkStep: this.WorkStep, BaseNode: BaseNode{DataStore: this.DataStore}}
 	case "JSON_RENDER":
-		return &JsonRenderNode{WorkStep: this.WorkStep}
+		return &JsonRenderNode{WorkStep: this.WorkStep, BaseNode: BaseNode{DataStore: this.DataStore}}
 	case "JSON_PARSER":
-		return &JsonParserNode{WorkStep: this.WorkStep}
+		return &JsonParserNode{WorkStep: this.WorkStep, BaseNode: BaseNode{DataStore: this.DataStore}}
 	case "HTTP_REQUEST":
-		return &HttpRequestNode{WorkStep: this.WorkStep}
+		return &HttpRequestNode{WorkStep: this.WorkStep, BaseNode: BaseNode{DataStore: this.DataStore}}
 	case "MAPPER":
-		return &MapperNode{WorkStep: this.WorkStep}
+		return &MapperNode{WorkStep: this.WorkStep, BaseNode: BaseNode{DataStore: this.DataStore}}
 	case "FILE_READ":
-		return &FileReadNode{WorkStep: this.WorkStep}
+		return &FileReadNode{WorkStep: this.WorkStep, BaseNode: BaseNode{DataStore: this.DataStore}}
 	case "FILE_WRITE":
-		return &FileWriteNode{WorkStep: this.WorkStep}
+		return &FileWriteNode{WorkStep: this.WorkStep, BaseNode: BaseNode{DataStore: this.DataStore}}
 	case "FILE_RENAME":
-		return &FileRenameNode{WorkStep: this.WorkStep}
+		return &FileRenameNode{WorkStep: this.WorkStep, BaseNode: BaseNode{DataStore: this.DataStore}}
 	case "HREF_PARSER":
-		return &HrefParserNode{WorkStep: this.WorkStep}
+		return &HrefParserNode{WorkStep: this.WorkStep, BaseNode: BaseNode{DataStore: this.DataStore}}
 	case "ENTITY_PARSER":
-		return &EntityParserNode{WorkStep: this.WorkStep}
+		return &EntityParserNode{WorkStep: this.WorkStep, BaseNode: BaseNode{DataStore: this.DataStore}}
 	case "DB_PARSER":
-		return &DBParserNode{WorkStep: this.WorkStep}
+		return &DBParserNode{WorkStep: this.WorkStep, BaseNode: BaseNode{DataStore: this.DataStore}}
 	case "MEMORYMAP_CACHE":
-		return &MemoryMapCacheNode{WorkStep: this.WorkStep}
+		return &MemoryMapCacheNode{WorkStep: this.WorkStep, BaseNode: BaseNode{DataStore: this.DataStore}}
 	case "GOTO_CONDITION":
-		return &GotoConditionNode{WorkStep: this.WorkStep}
+		return &GotoConditionNode{WorkStep: this.WorkStep, BaseNode: BaseNode{DataStore: this.DataStore}}
 	case "CAL_HASH":
-		return &CalHashNode{WorkStep: this.WorkStep}
+		return &CalHashNode{WorkStep: this.WorkStep, BaseNode: BaseNode{DataStore: this.DataStore}}
 	case "SET_ENV":
-		return &SetEnvNode{WorkStep: this.WorkStep}
+		return &SetEnvNode{WorkStep: this.WorkStep, BaseNode: BaseNode{DataStore: this.DataStore}}
 	case "GET_ENV":
-		return &GetEnvNode{WorkStep: this.WorkStep}
+		return &GetEnvNode{WorkStep: this.WorkStep, BaseNode: BaseNode{DataStore: this.DataStore}}
 	case "RUN_CMD":
-		return &RunCmd{WorkStep: this.WorkStep}
+		return &RunCmd{WorkStep: this.WorkStep, BaseNode: BaseNode{DataStore: this.DataStore}}
 	case "SFTP_UPLOAD":
-		return &SftpUploadNode{WorkStep: this.WorkStep}
+		return &SftpUploadNode{WorkStep: this.WorkStep, BaseNode: BaseNode{DataStore: this.DataStore}}
 	case "SSH_SHELL":
-		return &SSHShellNode{WorkStep: this.WorkStep}
+		return &SSHShellNode{WorkStep: this.WorkStep, BaseNode: BaseNode{DataStore: this.DataStore}}
 	case "TARGZ_UNCOMPRESS":
-		return &TarGzUnCompressNode{WorkStep: this.WorkStep}
+		return &TarGzUnCompressNode{WorkStep: this.WorkStep, BaseNode: BaseNode{DataStore: this.DataStore}}
 	case "TARGZ_COMPRESS":
-		return &TarGzCompressNode{WorkStep: this.WorkStep}
+		return &TarGzCompressNode{WorkStep: this.WorkStep, BaseNode: BaseNode{DataStore: this.DataStore}}
 	case "IF":
-		return &IFNode{WorkStep: this.WorkStep, BlockStep: this.BlockStep, BlockStepRunFunc: this.BlockStepRunFunc}
+		return &IFNode{WorkStep: this.WorkStep, BaseNode: BaseNode{DataStore: this.DataStore}, BlockStep: this.BlockStep, BlockStepRunFunc: this.BlockStepRunFunc}
 	case "EMPTY":
-		return &EmptyNode{WorkStep: this.WorkStep}
+		return &EmptyNode{WorkStep: this.WorkStep, BaseNode: BaseNode{DataStore: this.DataStore}}
 	}
 	panic(errors.New(fmt.Sprintf("[%v-%v]unsupport workStepType:%s", this.WorkStep.WorkId, this.WorkStep.WorkStepName, this.WorkStep.WorkStepType)))
 }
