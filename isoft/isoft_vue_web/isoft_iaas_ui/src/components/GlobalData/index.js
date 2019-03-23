@@ -103,6 +103,8 @@ const default_work_step_types=[
   {"name":"ssh_shell","icon":"ios-cloud-upload-outline"},
   {"name":"targz_uncompress","icon":"ios-aperture"},
   {"name":"targz_compress","icon":"ios-aperture-outline"},
+  {"name":"ini_read","icon":"ios-fastforward"},
+  {"name":"ini_write","icon":"ios-aperture-outline"},
 ];
 
 export default {

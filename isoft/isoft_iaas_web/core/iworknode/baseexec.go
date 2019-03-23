@@ -101,6 +101,10 @@ func (this *WorkStepFactory) getProxy() IStandardWorkStep {
 		return &TarGzUnCompressNode{WorkStep: this.WorkStep, BaseNode: BaseNode{DataStore: this.DataStore}}
 	case "TARGZ_COMPRESS":
 		return &TarGzCompressNode{WorkStep: this.WorkStep, BaseNode: BaseNode{DataStore: this.DataStore}}
+	case "INI_READ":
+		return &IniReadNode{WorkStep: this.WorkStep, BaseNode: BaseNode{DataStore: this.DataStore}}
+	case "INI_WRITE":
+		return &IniWriteNode{WorkStep: this.WorkStep, BaseNode: BaseNode{DataStore: this.DataStore}}
 	case "IF":
 		return &IFNode{WorkStep: this.WorkStep, BaseNode: BaseNode{DataStore: this.DataStore}, BlockStep: this.BlockStep, BlockStepRunFunc: this.BlockStepRunFunc}
 	case "EMPTY":
