@@ -21,7 +21,7 @@ func (this *IniReadNode) Execute(trackingId string) {
 		section_name = _section_name
 	}
 	key := tmpDataMap[iworkconst.STRING_PREFIX+"key"].(string)
-	value, err := fileutil.ReadIniFile(file_path, section_name, key)
+	value, err := fileutil.ReadBeegoIniFile(file_path, section_name, key)
 	if err == nil {
 		this.DataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.STRING_PREFIX+"value", value)
 	} else {
@@ -69,10 +69,8 @@ func (this *IniWriteNode) Execute(trackingId string) {
 	}
 	key := tmpDataMap[iworkconst.STRING_PREFIX+"key"].(string)
 	value := tmpDataMap[iworkconst.STRING_PREFIX+"value"].(string)
-	err := fileutil.WriteIniFile(file_path, section_name, key, value)
-	if err == nil {
-		this.DataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.STRING_PREFIX+"value", value)
-	} else {
+	err := fileutil.WriteBeegoIniFile(file_path, section_name, key, value)
+	if err != nil {
 		panic(err)
 	}
 }
