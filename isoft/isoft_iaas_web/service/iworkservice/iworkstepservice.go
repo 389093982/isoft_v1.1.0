@@ -227,29 +227,27 @@ func ChangeWorkStepOrderService(serviceArgs map[string]interface{}) error {
 }
 
 func EditWorkStepBaseInfoService(serviceArgs map[string]interface{}) error {
-	step := serviceArgs["step"].(*iwork.WorkStep)
 	o := serviceArgs["o"].(orm.Ormer)
-	oldStep, err := iwork.QueryOneWorkStep(step.WorkId, step.WorkStepId, o)
+	step, err := iwork.QueryOneWorkStep(serviceArgs["work_id"].(int64), serviceArgs["work_step_id"].(int64), o)
 	if err != nil {
 		return err
 	}
-	// 沿用旧值
-	step.Id = oldStep.Id
-	step.CreatedBy = oldStep.CreatedBy
-	step.CreatedTime = oldStep.CreatedTime
-	step.LastUpdatedBy = oldStep.LastUpdatedBy
-	step.LastUpdatedTime = oldStep.LastUpdatedTime
-	step.WorkStepIndent = oldStep.WorkStepIndent
+	old_work_step_name := step.WorkStepName
+	old_work_step_type := step.WorkStepType
+	// 替换成新值
+	step.WorkStepName = serviceArgs["work_step_name"].(string)
+	step.WorkStepType = serviceArgs["work_step_type"].(string)
+	step.WorkStepDesc = serviceArgs["work_step_desc"].(string)
 	// 变更类型需要置空 input 和 output 参数
-	if step.WorkStepType != oldStep.WorkStepType {
+	if step.WorkStepType != old_work_step_type {
 		step.WorkStepInput = ""
 		step.WorkStepOutput = ""
 	}
-	if _, err := iwork.InsertOrUpdateWorkStep(step, o); err != nil {
+	if _, err := iwork.InsertOrUpdateWorkStep(&step, o); err != nil {
 		return err
 	}
 	// 级联更改相关联的步骤名称
-	if err := ChangeReferencesWorkStepName(step.WorkId, oldStep.WorkStepName, step.WorkStepName, o); err != nil {
+	if err := ChangeReferencesWorkStepName(step.WorkId, old_work_step_name, step.WorkStepName, o); err != nil {
 		return err
 	}
 	return nil
