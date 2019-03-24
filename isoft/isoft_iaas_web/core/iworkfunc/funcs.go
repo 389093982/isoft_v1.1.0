@@ -3,6 +3,7 @@ package iworkfunc
 import (
 	"github.com/pkg/errors"
 	"isoft/isoft/common/stringutil"
+	"path/filepath"
 	"strconv"
 	"strings"
 )
@@ -137,4 +138,8 @@ func (this *IWorkFuncProxy) IworkStringsCheckEmpty(args []interface{}) interface
 
 func (this *IWorkFuncProxy) IworkCheckEmpty(args []interface{}) interface{} {
 	return args[0] == nil
+}
+
+func (this *IWorkFuncProxy) IworkGetDirPath(args []interface{}) string {
+	return filepath.Dir(args[0].(string))
 }

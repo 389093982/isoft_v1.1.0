@@ -39,6 +39,7 @@
           {funcDemo:"IworkBoolNot($bool)",funcDesc:"bool值取反",},
           {funcDemo:"IworkStringsUUID()",funcDesc:"生成随机UUID信息",},
           {funcDemo:"IworkCheckEmpty($var)",funcDesc:"判断变量是否为空",},
+          {funcDemo:"IworkGetDirPath($filepath)",funcDesc:"获取当前文件父级目录的绝对路径",},
         ],
         columns1: [
           {
