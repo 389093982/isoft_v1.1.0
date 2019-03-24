@@ -16,9 +16,9 @@ func (this *TarGzUnCompressNode) Execute(trackingId string) {
 	// 节点中间数据
 	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, this.DataStore)
 	targz_file_path := tmpDataMap[iworkconst.STRING_PREFIX+"targz_file_path"].(string)
-	dest_path := tmpDataMap[iworkconst.STRING_PREFIX+"dest_path"].(string)
+	dest_path := tmpDataMap[iworkconst.STRING_PREFIX+"dest_dir_path"].(string)
 	if err := compressutil.DeCompress(targz_file_path, dest_path); err == nil {
-		this.DataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.STRING_PREFIX+"dest_path", dest_path)
+		this.DataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.STRING_PREFIX+"dest_dir_path", dest_path)
 	} else {
 		panic(err)
 	}
@@ -27,7 +27,7 @@ func (this *TarGzUnCompressNode) Execute(trackingId string) {
 func (this *TarGzUnCompressNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
 	paramMap := map[int][]string{
 		1: {iworkconst.STRING_PREFIX + "targz_file_path", "targz 文件路径"},
-		2: {iworkconst.STRING_PREFIX + "dest_path", "解压后的路径"},
+		2: {iworkconst.STRING_PREFIX + "dest_dir_path", "解压后的文件夹路径"},
 	}
 	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
 }
@@ -37,7 +37,7 @@ func (this *TarGzUnCompressNode) GetRuntimeParamInputSchema() *schema.ParamInput
 }
 
 func (this *TarGzUnCompressNode) GetDefaultParamOutputSchema() *schema.ParamOutputSchema {
-	return schema.BuildParamOutputSchemaWithSlice([]string{iworkconst.STRING_PREFIX + "dest_path"})
+	return schema.BuildParamOutputSchemaWithSlice([]string{iworkconst.STRING_PREFIX + "dest_dir_path"})
 }
 
 func (this *TarGzUnCompressNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
@@ -56,7 +56,7 @@ type TarGzCompressNode struct {
 func (this *TarGzCompressNode) Execute(trackingId string) {
 	// 节点中间数据
 	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, this.DataStore)
-	dir_file_path := tmpDataMap[iworkconst.STRING_PREFIX+"dir_file_path"].(string)
+	dir_file_path := tmpDataMap[iworkconst.STRING_PREFIX+"src_dir_path"].(string)
 	dest_file_path := tmpDataMap[iworkconst.STRING_PREFIX+"dest_file_path"].(string)
 	if err := compressutil.CompressDir(dir_file_path, dest_file_path); err == nil {
 		this.DataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.STRING_PREFIX+"dest_file_path", dest_file_path)
@@ -67,7 +67,7 @@ func (this *TarGzCompressNode) Execute(trackingId string) {
 
 func (this *TarGzCompressNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
 	paramMap := map[int][]string{
-		1: {iworkconst.STRING_PREFIX + "dir_file_path", "待压缩的文件夹路径"},
+		1: {iworkconst.STRING_PREFIX + "src_dir_path", "待压缩的文件夹路径"},
 		2: {iworkconst.STRING_PREFIX + "dest_file_path", "压缩后的targz文件路径"},
 	}
 	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)

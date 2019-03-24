@@ -49,6 +49,7 @@ func Compress(files []*os.File, dest string) error {
 }
 
 func compress(file *os.File, prefix string, tw *tar.Writer) error {
+	defer file.Close()
 	info, err := file.Stat()
 	if err != nil {
 		return err
@@ -80,7 +81,6 @@ func compress(file *os.File, prefix string, tw *tar.Writer) error {
 			return err
 		}
 		_, err = io.Copy(tw, file)
-		file.Close()
 		if err != nil {
 			return err
 		}
