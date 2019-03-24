@@ -183,7 +183,7 @@ func checkVariableRelationShip(step *iwork.WorkStep) (checkResult []string) {
 
 func checkVariableRelationShipDetail(item schema.ParamInputSchemaItem, work_id, work_step_id int64) (checkResult []string) {
 	// 根据正则找到关联的节点名和字段名
-	refers := stringutil.GetNoRepeatSubStringWithRegexp(item.ParamValue, `\$[a-zA-Z0-9_]+\.[a-zA-Z0-9_]+`)
+	refers := iworkutil.GetRelativeValueWithReg(item.ParamValue)
 	if len(refers) == 0 {
 		return
 	}

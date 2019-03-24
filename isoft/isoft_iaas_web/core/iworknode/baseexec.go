@@ -19,7 +19,7 @@ func init() {
 	vs := []interface{}{
 		WorkStartNode{},
 		WorkEndNode{},
-		WorkSub{},
+		WorkSubNode{},
 		SQLExecuteNode{},
 		SQLQueryNode{},
 		SQLQueryPageNode{},

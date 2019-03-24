@@ -3,12 +3,27 @@ package iworkutil
 import (
 	"encoding/base64"
 	"github.com/astaxie/beego/orm"
+	"isoft/isoft/common/stringutil"
 	"isoft/isoft_iaas_web/core/iworkconst"
 	"isoft/isoft_iaas_web/core/iworkdata/block"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
 	"isoft/isoft_iaas_web/models/iwork"
 	"strings"
 )
+
+// 用正则表达式匹配出相对变量值
+func GetRelativeValueWithReg(s string) []string {
+	return stringutil.GetNoRepeatSubStringWithRegexp(s, `\$[a-zA-Z0-9_]+\.[a-zA-Z0-9_]+`)
+}
+
+// 用正则表达式匹配出相对变量值,多个值只返回第一个
+func GetSingleRelativeValueWithReg(s string) string {
+	values := GetRelativeValueWithReg(s)
+	if len(values) > 0 {
+		return values[0]
+	}
+	return s
+}
 
 func GetWorkSubNameFromParamValue(paramValue string) string {
 	value := strings.TrimSpace(paramValue)

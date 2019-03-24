@@ -13,13 +13,13 @@ import (
 	"strings"
 )
 
-type WorkSub struct {
+type WorkSubNode struct {
 	BaseNode
 	WorkStep       *iwork.WorkStep
 	WorkSubRunFunc func(work iwork.Work, steps []iwork.WorkStep, dispatcher *entry.Dispatcher) (receiver *entry.Receiver)
 }
 
-func (this *WorkSub) Execute(trackingId string) {
+func (this *WorkSubNode) Execute(trackingId string) {
 	// 获取子流程流程名称
 	workSubName := this.checkAndGetWorkSubName()
 	// 节点中间数据
@@ -58,7 +58,7 @@ func getConvertedForEachData(tmpDataMap map[string]interface{}) []interface{} {
 	return foreachDatas
 }
 
-func (this *WorkSub) checkAndGetWorkSubName() string {
+func (this *WorkSubNode) checkAndGetWorkSubName() string {
 	workSubName := iworkutil.GetWorkSubNameForWorkSubNode(
 		schema.GetCacheParamInputSchema(this.WorkStep, &WorkStepFactory{WorkStep: this.WorkStep}))
 	if strings.TrimSpace(workSubName) == "" {
@@ -67,7 +67,7 @@ func (this *WorkSub) checkAndGetWorkSubName() string {
 	return workSubName
 }
 
-func (this *WorkSub) getForeachItemKey(tmpDataMap map[string]interface{}) string {
+func (this *WorkSubNode) getForeachItemKey(tmpDataMap map[string]interface{}) string {
 	var itemKey string
 	for key, value := range tmpDataMap {
 		if _value, ok := value.(string); ok && strings.TrimSpace(_value) == "__item__" {
@@ -77,7 +77,7 @@ func (this *WorkSub) getForeachItemKey(tmpDataMap map[string]interface{}) string
 	return itemKey
 }
 
-func (this *WorkSub) RunOnceSubWork(work iwork.Work, steps []iwork.WorkStep, trackingId string,
+func (this *WorkSubNode) RunOnceSubWork(work iwork.Work, steps []iwork.WorkStep, trackingId string,
 	tmpDataMap map[string]interface{}, dataStore *datastore.DataStore) {
 	receiver := this.WorkSubRunFunc(work, steps, &entry.Dispatcher{TrackingId: trackingId, TmpDataMap: tmpDataMap})
 	// 接收子流程数据存入 dataStore
@@ -86,7 +86,7 @@ func (this *WorkSub) RunOnceSubWork(work iwork.Work, steps []iwork.WorkStep, tra
 	}
 }
 
-func (this *WorkSub) GetDefaultParamInputSchema() *schema.ParamInputSchema {
+func (this *WorkSubNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
 	paramMap := map[int][]string{
 		1: []string{iworkconst.STRING_PREFIX + "work_sub", "子流程信息"},
 		2: []string{iworkconst.FOREACH_PREFIX + "data?", "可选参数,当有值时表示迭代流程,该节点会执行多次,并将当前迭代元素放入 __item__ 变量中,其它参数需要引用 __item__ 即可"},
@@ -95,7 +95,7 @@ func (this *WorkSub) GetDefaultParamInputSchema() *schema.ParamInputSchema {
 }
 
 // 获取动态输入值
-func (this *WorkSub) GetRuntimeParamInputSchema() *schema.ParamInputSchema {
+func (this *WorkSubNode) GetRuntimeParamInputSchema() *schema.ParamInputSchema {
 	items := make([]schema.ParamInputSchemaItem, 0)
 	// 获取子流程信息
 	workSubName := this.getWorkSubName()
@@ -119,7 +119,7 @@ func (this *WorkSub) GetRuntimeParamInputSchema() *schema.ParamInputSchema {
 	return &schema.ParamInputSchema{ParamInputSchemaItems: items}
 }
 
-func (this *WorkSub) getWorkSubName() string {
+func (this *WorkSubNode) getWorkSubName() string {
 	// 读取历史输入值
 	paramInputSchema := schema.GetCacheParamInputSchema(this.WorkStep, &WorkStepFactory{WorkStep: this.WorkStep})
 	// 从历史输入值中获取子流程名称
@@ -127,11 +127,11 @@ func (this *WorkSub) getWorkSubName() string {
 	return workSubName
 }
 
-func (this *WorkSub) GetDefaultParamOutputSchema() *schema.ParamOutputSchema {
+func (this *WorkSubNode) GetDefaultParamOutputSchema() *schema.ParamOutputSchema {
 	return &schema.ParamOutputSchema{}
 }
 
-func (this *WorkSub) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
+func (this *WorkSubNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
 	items := make([]schema.ParamOutputSchemaItem, 0)
 	// 读取静态输入值
 	paramInputSchema := schema.GetCacheParamInputSchema(this.WorkStep, &WorkStepFactory{WorkStep: this.WorkStep})
@@ -157,7 +157,7 @@ func (this *WorkSub) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
 	return &schema.ParamOutputSchema{ParamOutputSchemaItems: items}
 }
 
-func (this *WorkSub) ValidateCustom() (checkResult []string) {
+func (this *WorkSubNode) ValidateCustom() (checkResult []string) {
 	workSubName := this.getWorkSubName()
 	if workSubName == "" {
 		checkResult = append(checkResult, fmt.Sprintf("Empty workSubName was found!"))

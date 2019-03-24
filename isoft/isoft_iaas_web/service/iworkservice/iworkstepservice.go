@@ -534,6 +534,7 @@ func BuildAutoCreateSubWork(work_id int64, work_step_id int64, o orm.Ormer) {
 				checkAndCreateSubWork(paramValue, o)
 			}
 			// 维护 work 的 WorkSubId 属性
+			paramValue = iworkutil.GetSingleRelativeValueWithReg(paramValue) // 去除多余的 ; 等字符
 			subWork, _ := iwork.QueryWorkByName(strings.Replace(paramValue, "$WORK.", "", -1), orm.NewOrm())
 			step.WorkSubId = subWork.Id
 			break
