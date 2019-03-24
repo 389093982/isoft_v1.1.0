@@ -140,6 +140,15 @@
                   },
                 }),
                 h('span', this.worksteps[params.index]['work_step_type']),
+                h('Badge', {    // 延迟执行函数显示效果
+                  props: {
+                    status: "error",
+                  },
+                  style: {
+                    marginLeft: '5px',
+                    display: oneOf(this.worksteps[params.index]['is_defer'], ["true"])  ? undefined : 'none',
+                  },
+                }),
               ]);
             }
           },
