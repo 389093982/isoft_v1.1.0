@@ -88,8 +88,8 @@ func (this *WorkSubNode) RunOnceSubWork(work iwork.Work, steps []iwork.WorkStep,
 
 func (this *WorkSubNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
 	paramMap := map[int][]string{
-		1: []string{iworkconst.STRING_PREFIX + "work_sub", "子流程信息"},
-		2: []string{iworkconst.FOREACH_PREFIX + "data?", "可选参数,当有值时表示迭代流程,该节点会执行多次,并将当前迭代元素放入 __item__ 变量中,其它参数需要引用 __item__ 即可"},
+		1: {iworkconst.STRING_PREFIX + "work_sub", "子流程信息,此节点其它参数支持 __item__ 和 __default__ 参数"},
+		2: {iworkconst.FOREACH_PREFIX + "data?", "可选参数,当有值时表示迭代流程,该节点会执行多次,并将当前迭代元素放入 __item__ 变量中,其它参数需要引用 __item__ 即可"},
 	}
 	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
 }

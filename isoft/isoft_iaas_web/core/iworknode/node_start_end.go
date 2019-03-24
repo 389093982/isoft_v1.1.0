@@ -15,17 +15,19 @@ type WorkStartNode struct {
 }
 
 func (this *WorkStartNode) Execute(trackingId string) {
-	// 存储节点中间数据
-	tmpDataMap := make(map[string]interface{})
+	// 节点中间数据
+	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, this.DataStore)
+	// dispatcher 非空时替换成父流程参数
 	if this.Dispatcher != nil && len(this.Dispatcher.TmpDataMap) > 0 {
 		// 从父流程中获取值,即从 Dispatcher 中获取值
-		tmpDataMap = this.Dispatcher.TmpDataMap
-	} else {
-		// 使用节点默认值
-		tmpDataMap = this.FillParamInputSchemaDataToTmp(this.WorkStep, this.DataStore)
-		for key, value := range tmpDataMap {
-			iwork.InsertRunLogDetail(trackingId, fmt.Sprintf("fill param with default for %s:%s", key, value))
+		for key, value := range this.Dispatcher.TmpDataMap {
+			if value != "__default__" { // __default__ 则表示不用替换,还是使用子流程默认值参数
+				tmpDataMap[key] = value
+			}
 		}
+	}
+	for key, value := range tmpDataMap {
+		iwork.InsertRunLogDetail(trackingId, fmt.Sprintf("fill param with for %s:%s", key, value))
 	}
 	// 提交输出数据至数据中心,此类数据能直接从 tmpDataMap 中获取,而不依赖于计算,只适用于 WORK_START、WORK_END、Mapper 等节点
 	this.SubmitParamOutputSchemaDataToDataStore(this.WorkStep, this.DataStore, tmpDataMap)
