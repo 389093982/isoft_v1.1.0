@@ -22,10 +22,9 @@ func (this *WorkStartNode) Execute(trackingId string) {
 		tmpDataMap = this.Dispatcher.TmpDataMap
 	} else {
 		// 使用节点默认值
-		paramInputSchema := schema.GetCacheParamInputSchema(this.WorkStep, &WorkStepFactory{WorkStep: this.WorkStep})
-		for _, item := range paramInputSchema.ParamInputSchemaItems {
-			iwork.InsertRunLogDetail(trackingId, fmt.Sprintf("fill param with default for %s:%s", item.ParamName, item.ParamValue))
-			tmpDataMap[item.ParamName] = item.ParamValue // 输入数据存临时
+		tmpDataMap = this.FillParamInputSchemaDataToTmp(this.WorkStep, this.DataStore)
+		for key, value := range tmpDataMap {
+			iwork.InsertRunLogDetail(trackingId, fmt.Sprintf("fill param with default for %s:%s", key, value))
 		}
 	}
 	// 提交输出数据至数据中心,此类数据能直接从 tmpDataMap 中获取,而不依赖于计算,只适用于 WORK_START、WORK_END、Mapper 等节点
