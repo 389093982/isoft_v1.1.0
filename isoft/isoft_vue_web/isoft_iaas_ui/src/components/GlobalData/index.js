@@ -88,7 +88,7 @@ const default_work_step_types=[
   {"name":"mapper","icon":"ios-infinite"},
   {"name":"file_read","icon":"ios-book-outline"},
   {"name":"file_write","icon":"ios-create-outline"},
-  {"name":"file_rename","icon":"md-paper"},
+  {"name":"file_sync","icon":"md-paper"},
   {"name":"href_parser","icon":"ios-ionitron-outline"},
   {"name":"entity_parser","icon":"ios-refresh-circle-outline"},
   {"name":"db_parser","icon":"ios-map-outline"},

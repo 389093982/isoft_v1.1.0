@@ -26,12 +26,12 @@ func (this *RunCmdLogWriter) Write(p []byte) (n int, err error) {
 	return len(p), nil
 }
 
-type RunCmd struct {
+type RunCmdNode struct {
 	BaseNode
 	WorkStep *iwork.WorkStep
 }
 
-func (this *RunCmd) Execute(trackingId string) {
+func (this *RunCmdNode) Execute(trackingId string) {
 	// 节点中间数据
 	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, this.DataStore)
 
@@ -61,7 +61,7 @@ func (this *RunCmd) Execute(trackingId string) {
 	}
 }
 
-func (this *RunCmd) GetDefaultParamInputSchema() *schema.ParamInputSchema {
+func (this *RunCmdNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
 	paramMap := map[int][]string{
 		1: {iworkconst.STRING_PREFIX + "cd?", "切换目录"},
 		2: {iworkconst.STRING_PREFIX + "command_name", "执行命令"},
@@ -70,18 +70,18 @@ func (this *RunCmd) GetDefaultParamInputSchema() *schema.ParamInputSchema {
 	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
 }
 
-func (this *RunCmd) GetRuntimeParamInputSchema() *schema.ParamInputSchema {
+func (this *RunCmdNode) GetRuntimeParamInputSchema() *schema.ParamInputSchema {
 	return &schema.ParamInputSchema{}
 }
 
-func (this *RunCmd) GetDefaultParamOutputSchema() *schema.ParamOutputSchema {
+func (this *RunCmdNode) GetDefaultParamOutputSchema() *schema.ParamOutputSchema {
 	return schema.BuildParamOutputSchemaWithSlice([]string{iworkconst.STRING_PREFIX + "command_result"})
 }
 
-func (this *RunCmd) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
+func (this *RunCmdNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
 	return &schema.ParamOutputSchema{}
 }
 
-func (this *RunCmd) ValidateCustom() (checkResult []string) {
+func (this *RunCmdNode) ValidateCustom() (checkResult []string) {
 	return
 }

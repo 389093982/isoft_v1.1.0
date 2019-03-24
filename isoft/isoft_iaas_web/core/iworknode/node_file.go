@@ -5,6 +5,7 @@ import (
 	"isoft/isoft_iaas_web/core/iworkconst"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
 	"isoft/isoft_iaas_web/core/iworkutil/fileutil"
+	"isoft/isoft_iaas_web/core/iworkutil/stringutil"
 	"isoft/isoft_iaas_web/models/iwork"
 	"os"
 	"strings"
@@ -112,43 +113,51 @@ func (this *FileWriteNode) ValidateCustom() (checkResult []string) {
 	return
 }
 
-type FileRenameNode struct {
+type FileSyncNode struct {
 	BaseNode
 	WorkStep *iwork.WorkStep
 }
 
-func (this *FileRenameNode) Execute(trackingId string) {
+func (this *FileSyncNode) Execute(trackingId string) {
 	// 节点中间数据
 	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, this.DataStore)
+	sync_mod := stringutil.GetString(tmpDataMap[iworkconst.STRING_PREFIX+"sync_mod?"], "copy", true)
 	file_path := tmpDataMap[iworkconst.STRING_PREFIX+"file_path"].(string)
 	new_file_path := tmpDataMap[iworkconst.STRING_PREFIX+"new_file_path"].(string)
-	if err := os.Rename(file_path, new_file_path); err == nil {
+	var err error
+	if sync_mod == "copy" {
+		err = fileutil.CopyFile(file_path, new_file_path)
+	} else if sync_mod == "rename" {
+		err = os.Rename(file_path, new_file_path)
+	}
+	if err == nil {
 		this.DataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.STRING_PREFIX+"file_path", new_file_path)
 	} else {
 		panic(err)
 	}
 }
 
-func (this *FileRenameNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
+func (this *FileSyncNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
 	paramMap := map[int][]string{
-		1: {iworkconst.STRING_PREFIX + "file_path", "需要进行移动重命名的文件路径"},
-		2: {iworkconst.STRING_PREFIX + "new_file_path", "移动重命名后的文件路径"},
+		1: {iworkconst.STRING_PREFIX + "sync_mod?", "文件同步的策略,支持拷贝重命名和移动重命名(copy、rename),默认是 copy"},
+		2: {iworkconst.STRING_PREFIX + "file_path", "需要进行同步操作的文件路径"},
+		3: {iworkconst.STRING_PREFIX + "new_file_path", "同步操作后的文件路径"},
 	}
 	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
 }
 
-func (this *FileRenameNode) GetRuntimeParamInputSchema() *schema.ParamInputSchema {
+func (this *FileSyncNode) GetRuntimeParamInputSchema() *schema.ParamInputSchema {
 	return &schema.ParamInputSchema{}
 }
 
-func (this *FileRenameNode) GetDefaultParamOutputSchema() *schema.ParamOutputSchema {
+func (this *FileSyncNode) GetDefaultParamOutputSchema() *schema.ParamOutputSchema {
 	return &schema.ParamOutputSchema{}
 }
 
-func (this *FileRenameNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
+func (this *FileSyncNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
 	return &schema.ParamOutputSchema{}
 }
 
-func (this *FileRenameNode) ValidateCustom() (checkResult []string) {
+func (this *FileSyncNode) ValidateCustom() (checkResult []string) {
 	return
 }
