@@ -101,7 +101,7 @@ func (this *WorkSubNode) GetRuntimeParamInputSchema() *schema.ParamInputSchema {
 	workSubName := this.getWorkSubName()
 	if strings.TrimSpace(workSubName) != "" {
 		// 获取子流程所有步骤
-		subSteps, err := iwork.QueryAllWorkStepByWorkName(workSubName, orm.NewOrm())
+		subSteps, err := iwork.QueryAllWorkStepByWorkName(workSubName, this.GetOrmer())
 		if err != nil {
 			panic(err)
 		}

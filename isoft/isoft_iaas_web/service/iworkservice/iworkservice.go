@@ -20,7 +20,7 @@ func GetRelativeWorkService(serviceArgs map[string]interface{}) (result map[stri
 	work_id := serviceArgs["work_id"].(int64)
 	o := serviceArgs["o"].(orm.Ormer)
 
-	parentWorks, _, err := iwork.QueryParentWorks(work_id, o)
+	_, parentWorks, _, err := iwork.QueryParentWorks(work_id, o)
 	if err != nil {
 		return nil, err
 	}
@@ -174,7 +174,7 @@ func ChangeReferencesWorkName(work_id int64, oldWorkName, workName string, o orm
 	if oldWorkName == workName {
 		return nil
 	}
-	parentWorks, _, err := iwork.QueryParentWorks(work_id, o)
+	_, parentWorks, _, err := iwork.QueryParentWorks(work_id, o)
 	if err != nil {
 		return nil
 	}

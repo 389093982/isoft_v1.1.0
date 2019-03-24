@@ -2,6 +2,7 @@ package iworknode
 
 import (
 	"fmt"
+	"github.com/astaxie/beego/orm"
 	"isoft/isoft/common/stringutil"
 	"isoft/isoft_iaas_web/core/iworkconst"
 	"isoft/isoft_iaas_web/core/iworkdata/datastore"
@@ -18,6 +19,14 @@ import (
 // 所有 node 的基类
 type BaseNode struct {
 	DataStore *datastore.DataStore
+	o         orm.Ormer
+}
+
+func (this *BaseNode) GetOrmer() orm.Ormer {
+	if this.o == nil {
+		this.o = orm.NewOrm()
+	}
+	return this.o
 }
 
 // paramValue 来源于 iwork 模块

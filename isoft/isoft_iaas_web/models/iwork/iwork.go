@@ -40,19 +40,24 @@ func InsertOrUpdateWork(work *Work, o orm.Ormer) (id int64, err error) {
 	return
 }
 
-func QueryParentWorks(work_id int64, o orm.Ormer) (works []Work, counts int64, err error) {
-	works = make([]Work, 0)
+func QueryParentWorks(work_id int64, o orm.Ormer) (workSteps []WorkStep, works []Work, counts int64, err error) {
+	qs := o.QueryTable("work_step").Filter("work_sub_id", work_id)
+	if _, err = qs.All(&workSteps); err != nil {
+		return
+	}
 	params := make([]orm.Params, 0)
-	_, err = o.QueryTable("work_step").Filter("work_sub_id", work_id).Distinct().Values(&params, "work_id")
-	if err == nil {
-		for _, param := range params {
-			parent_work_id := param["WorkId"].(int64)
-			pWork, err := QueryWorkById(parent_work_id, o)
-			if err != nil {
-				return nil, 0, err
-			}
-			works = append(works, pWork)
+	if _, err = qs.Distinct().Values(&params, "work_id"); err != nil {
+		return
+	}
+	works = make([]Work, 0)
+	for _, param := range params {
+		p_work_id := param["WorkId"].(int64)
+		pWork, _err := QueryWorkById(p_work_id, o)
+		if _err != nil {
+			err = _err
+			return
 		}
+		works = append(works, pWork)
 	}
 	return
 }

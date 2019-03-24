@@ -432,6 +432,16 @@ func EditWorkStepParamInfoService(serviceArgs map[string]interface{}) error {
 	}
 	// 保存完静态参数后自动构建获动态参数并保存
 	BuildDynamic(work_id, work_step_id, o)
+
+	// 编辑开始或结束节点时需要通知调度流程重新 BuildDynamic
+	if step.WorkStepType == "work_start" || step.WorkStepType == "work_end" {
+		if workSteps, _, _, err := iwork.QueryParentWorks(work_id, o); err == nil {
+			for _, workStep := range workSteps {
+				BuildDynamic(workStep.WorkId, workStep.WorkStepId, o)
+			}
+		}
+	}
+
 	return nil
 }
 
@@ -453,13 +463,13 @@ func BuildDynamicInput(work_id int64, work_step_id int64, o orm.Ormer) {
 		panic(err)
 	}
 	// 获取默认数据
-	defaultParamInputSchema := schema.GetDefaultParamInputSchema(&iworknode.WorkStepFactory{WorkStep: &step})
+	defaultParamInputSchema := schema.GetDefaultParamInputSchema(&iworknode.WorkStepFactory{WorkStep: &step, O: o})
 	// 获取动态数据
-	runtimeParamInputSchema := schema.GetRuntimeParamInputSchema(&iworknode.WorkStepFactory{WorkStep: &step})
+	runtimeParamInputSchema := schema.GetRuntimeParamInputSchema(&iworknode.WorkStepFactory{WorkStep: &step, O: o})
 	// 合并默认数据和动态数据作为新数据
 	newInputSchemaItems := append(defaultParamInputSchema.ParamInputSchemaItems, runtimeParamInputSchema.ParamInputSchemaItems...)
 	// 获取历史数据
-	historyParamInputSchema := schema.GetCacheParamInputSchema(&step, &iworknode.WorkStepFactory{WorkStep: &step})
+	historyParamInputSchema := schema.GetCacheParamInputSchema(&step, &iworknode.WorkStepFactory{WorkStep: &step, O: o})
 	for index, newInputSchemaItem := range newInputSchemaItems {
 		// 存在则不添加且沿用旧值
 		if exist, paramValue := CheckAndGetParamValueByInputSchemaParamName(historyParamInputSchema.ParamInputSchemaItems, newInputSchemaItem.ParamName); exist {

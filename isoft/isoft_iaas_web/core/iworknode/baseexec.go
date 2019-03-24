@@ -3,6 +3,7 @@ package iworknode
 import (
 	"errors"
 	"fmt"
+	"github.com/astaxie/beego/orm"
 	"isoft/isoft_iaas_web/core/iworkdata/block"
 	"isoft/isoft_iaas_web/core/iworkdata/datastore"
 	"isoft/isoft_iaas_web/core/iworkdata/entry"
@@ -65,6 +66,7 @@ type WorkStepFactory struct {
 	Dispatcher *entry.Dispatcher
 	Receiver   *entry.Receiver // 代理了 Receiver,值从 work_end 节点获取
 	DataStore  *datastore.DataStore
+	O          orm.Ormer
 }
 
 type IStandardWorkStep interface {
@@ -102,7 +104,7 @@ func GetIStandardWorkStep(workStepType string) IStandardWorkStep {
 func (this *WorkStepFactory) getProxy() IStandardWorkStep {
 	fieldMap := map[string]interface{}{
 		"WorkStep":         this.WorkStep,
-		"BaseNode":         BaseNode{DataStore: this.DataStore},
+		"BaseNode":         BaseNode{DataStore: this.DataStore, o: this.O},
 		"Dispatcher":       this.Dispatcher,
 		"Receiver":         this.Receiver,
 		"WorkSubRunFunc":   this.WorkSubRunFunc,
