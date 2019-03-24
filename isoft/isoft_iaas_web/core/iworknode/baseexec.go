@@ -92,11 +92,11 @@ func (this *WorkStepFactory) Execute(trackingId string) {
 
 func GetIStandardWorkStep(workStepType string) IStandardWorkStep {
 	// 调整 workStepType
-	workStepType = strings.ToUpper(strings.Replace(workStepType, "_", "", -1) + "NODE")
-	if t, ok := typeMap[workStepType]; ok {
+	_workStepType := strings.ToUpper(strings.Replace(workStepType, "_", "", -1) + "NODE")
+	if t, ok := typeMap[_workStepType]; ok {
 		return reflect.New(t).Interface().(IStandardWorkStep)
 	}
-	return nil
+	panic(fmt.Sprintf("invalid workStepType for %s", workStepType))
 }
 
 func (this *WorkStepFactory) getProxy() IStandardWorkStep {
