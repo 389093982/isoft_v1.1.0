@@ -172,7 +172,9 @@ func AddWorkStepService(serviceArgs map[string]interface{}) error {
 		WorkId:          work_id,
 		WorkStepName:    "random_" + stringutil.RandomUUID(),
 		WorkStepType:    work_step_type,
-		WorkStepIndent:  0, // 默认缩进级别为 0
+		WorkStepDesc:    "",
+		IsDefer:         "false", // 默认不延迟执行
+		WorkStepIndent:  0,       // 默认缩进级别为 0
 		WorkStepId:      work_step_id + 1,
 		CreatedBy:       "SYSTEM",
 		CreatedTime:     time.Now(),
@@ -238,6 +240,7 @@ func EditWorkStepBaseInfoService(serviceArgs map[string]interface{}) error {
 	step.WorkStepName = serviceArgs["work_step_name"].(string)
 	step.WorkStepType = serviceArgs["work_step_type"].(string)
 	step.WorkStepDesc = serviceArgs["work_step_desc"].(string)
+	step.IsDefer = serviceArgs["is_defer"].(string)
 	// 变更类型需要置空 input 和 output 参数
 	if step.WorkStepType != old_work_step_type {
 		step.WorkStepInput = ""

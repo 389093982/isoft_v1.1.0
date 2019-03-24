@@ -35,6 +35,12 @@
             </Col>
           </Row>
         </FormItem>
+        <FormItem label="is_defer" prop="is_defer">
+          <Select v-model="formValidate.is_defer">
+            <Option value="true">true</Option>
+            <Option value="false">false</Option>
+          </Select>
+        </FormItem>
         <FormItem label="work_step_desc" prop="work_step_desc">
           <Input v-model.trim="formValidate.work_step_desc" type="textarea" :rows="4" placeholder="请输入 work_step_desc"></Input>
         </FormItem>
@@ -71,8 +77,9 @@
           work_id: -1,
           work_step_id: -1,
           work_step_name: '',
-          work_step_desc: '',
           work_step_type: '',
+          work_step_desc: '',
+          is_defer: 'false',
         },
         ruleValidate: {
           work_step_name: [
@@ -95,6 +102,7 @@
           this.formValidate.work_step_name = result.step.work_step_name;
           this.formValidate.work_step_type = result.step.work_step_type;
           this.formValidate.work_step_desc = result.step.work_step_desc;
+          this.formValidate.is_defer = result.step.is_defer;
         }
       },
       showWorkStepBaseInfo:function (work_id, work_step_id) {
@@ -109,7 +117,7 @@
         this.$refs[name].validate(async (valid) => {
           if (valid) {
             const result = await EditWorkStepBaseInfo(this.formValidate.work_id, this.formValidate.work_step_id,
-                this.formValidate.work_step_name,this.formValidate.work_step_desc, this.formValidate.work_step_type);
+                this.formValidate.work_step_name,this.formValidate.work_step_desc, this.formValidate.work_step_type, this.formValidate.is_defer);
             if(result.status == "SUCCESS"){
               this.$Message.success('提交成功!');
               this.showFormModal = false;

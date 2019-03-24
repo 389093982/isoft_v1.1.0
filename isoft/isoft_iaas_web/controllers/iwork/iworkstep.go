@@ -27,6 +27,7 @@ func (this *WorkController) EditWorkStepBaseInfo() {
 		"work_step_name": this.GetString("work_step_name"),
 		"work_step_type": this.GetString("work_step_type"),
 		"work_step_desc": this.GetString("work_step_desc"),
+		"is_defer":       this.GetString("is_defer"),
 	}
 	if err := service.ExecuteServiceWithTx(serviceArgs, iworkservice.EditWorkStepBaseInfoService); err == nil {
 		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}

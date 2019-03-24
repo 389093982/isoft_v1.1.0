@@ -163,7 +163,7 @@ export const SaveHistory = (work_id) => ajax(BASE_URL+"/iwork/saveHistory", {wor
 export const FilterPageWorkHistory = (offset,current_page) => ajax(BASE_URL+"/iwork/filterPageWorkHistory", {offset,current_page},'POST');
 
 // 编辑 workstep 基本信息
-export const EditWorkStepBaseInfo = (work_id,work_step_id,work_step_name,work_step_desc,work_step_type) => ajax(BASE_URL+"/iwork/editWorkStepBaseInfo", {work_id,work_step_id,work_step_name,work_step_desc,work_step_type},'POST');
+export const EditWorkStepBaseInfo = (work_id,work_step_id,work_step_name,work_step_desc,work_step_type, is_defer) => ajax(BASE_URL+"/iwork/editWorkStepBaseInfo", {work_id,work_step_id,work_step_name,work_step_desc,work_step_type, is_defer},'POST');
 
 // 编辑 workstep 记录
 export const EditWorkStepParamInfo = (work_id,work_step_id,paramInputSchemaStr, paramMappingsStr) => ajax(BASE_URL+"/iwork/editWorkStepParamInfo", {work_id,work_step_id,paramInputSchemaStr,paramMappingsStr},'POST');

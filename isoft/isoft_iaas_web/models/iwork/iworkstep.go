@@ -17,6 +17,7 @@ type WorkStep struct {
 	WorkStepIndent       int       `json:"work_step_indent"` // 调整缩进级别
 	WorkStepInput        string    `json:"work_step_input" orm:"type(text)"`
 	WorkStepOutput       string    `json:"work_step_output" orm:"type(text)"`
+	IsDefer              string    `json:"is_defer"`
 	WorkStepParamMapping string    `json:"work_step_param_mapping" orm:"type(text)"`
 	CreatedBy            string    `json:"created_by"`
 	CreatedTime          time.Time `json:"created_time" orm:"auto_now_add;type(datetime)"`
