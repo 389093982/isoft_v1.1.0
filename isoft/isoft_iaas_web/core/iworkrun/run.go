@@ -32,11 +32,10 @@ func Run(work iwork.Work, steps []iwork.WorkStep, dispatcher *entry.Dispatcher) 
 	iwork.InsertRunLogDetail(trackingId, fmt.Sprintf("~~~~~~~~~~start execute work:%s~~~~~~~~~~", work.WorkName))
 	// 获取数据中心
 	store := datastore.InitDataStore(trackingId)
-	// 将 steps 转换成 BlockSteps
-	// 逐个 block 依次执行
-	for _, blockStep := range block.ParseToBlockStep(steps) {
+
+	BlockStepRunFunc := func(blockStep *block.BlockStep) {
 		if blockStep.Step.WorkStepType == "empty" {
-			continue
+			return
 		}
 		if redirectNodeName, ok := store.GetData("__goto_condition__", "__redirect__").(string); ok && strings.TrimSpace(redirectNodeName) != "" {
 			if blockStep.Step.WorkStepName == redirectNodeName {
@@ -45,15 +44,38 @@ func Run(work iwork.Work, steps []iwork.WorkStep, dispatcher *entry.Dispatcher) 
 			} else {
 				iwork.InsertRunLogDetail(trackingId, fmt.Sprintf("The step for %s was skipped!", blockStep.Step.WorkStepName))
 				// 不相等代表还没有调到 redirect 节点,此时直接跳过, redirect 节点值为 __out__ 时,所用节点都匹配不上,刚好表示为跳出流程
-				continue
+				return
 			}
 		}
-
 		_receiver := RunOneStep(trackingId, blockStep, store, dispatcher)
 		if _receiver != nil {
 			receiver = _receiver
 		}
 	}
+
+	// 需要延迟执行的 BlockSteps
+	deferBlockSteps := make([]*block.BlockStep, 0)
+	// 将 steps 转换成 BlockSteps
+	// 逐个 block 依次执行
+	for _, blockStep := range block.ParseToBlockStep(steps) {
+		// is_defer 和 work_end 都是需要延迟执行
+		if blockStep.Step.IsDefer == "true" {
+			// 加入切片中
+			deferBlockSteps = append(deferBlockSteps, blockStep)
+		} else if blockStep.Step.WorkStepType == "work_end" {
+			// 并且保证 work_end 最后执行
+			deferBlockSteps = append([]*block.BlockStep{blockStep}, deferBlockSteps...)
+		} else {
+			// 直接执行
+			BlockStepRunFunc(blockStep)
+		}
+	}
+
+	// 倒叙执行
+	for i := len(deferBlockSteps) - 1; i >= 0; i-- {
+		BlockStepRunFunc(deferBlockSteps[i])
+	}
+
 	// 注销 MemoryCache,无需注册,不存在时会自动注册
 	memory.UnRegistMemoryCache(trackingId)
 	iwork.InsertRunLogDetail(trackingId, fmt.Sprintf("~~~~~~~~~~end execute work:%s~~~~~~~~~~", work.WorkName))

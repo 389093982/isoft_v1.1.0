@@ -55,6 +55,7 @@ func LoadEntityInfo() *schema.ParamOutputSchema {
 	return pos
 }
 
+// 加载前置节点输出参数
 func LoadPreNodeOutputService(serviceArgs map[string]interface{}) (result map[string]interface{}, err error) {
 	result = make(map[string]interface{}, 0)
 	work_id := serviceArgs["work_id"].(int64)
@@ -80,8 +81,8 @@ func LoadPreNodeOutputService(serviceArgs map[string]interface{}) (result map[st
 		parser := &block.BlockParser{Steps: allSteps}
 		currentBlockStep, allBlockSteps := parser.ParseAndGetCurrentBlockStep(&currentWorkStep)
 		for _, step := range steps {
-			// 判断前置 step 在块范围内是否是可访问的
-			if block.CheckBlockAccessble(allBlockSteps, currentBlockStep, step.WorkStepId) {
+			// 判断前置 step 在块范围内是否是可访问的,且是否非 defer 步骤
+			if block.CheckBlockAccessble(allBlockSteps, currentBlockStep, step.WorkStepId) && step.IsDefer == "false" {
 				pos := schema.GetCacheParamOutputSchema(&step)
 				preParamOutputSchemaTreeNodeArr = append(preParamOutputSchemaTreeNodeArr, pos.RenderToTreeNodes("$"+step.WorkStepName))
 			}

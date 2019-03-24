@@ -205,6 +205,7 @@ func InsertStartEndWorkStepNode(work_id int64, o orm.Ormer) error {
 			WorkStepName:    nodeName,
 			WorkStepDesc:    fmt.Sprintf("%s节点", nodeName),
 			WorkStepType:    fmt.Sprintf("work_%s", nodeName),
+			IsDefer:         "false",
 			CreatedBy:       "SYSTEM",
 			CreatedTime:     time.Now(),
 			LastUpdatedBy:   "SYSTEM",
