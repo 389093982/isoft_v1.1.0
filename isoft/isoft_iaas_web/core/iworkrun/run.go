@@ -82,22 +82,39 @@ func Run(work iwork.Work, steps []iwork.WorkStep, dispatcher *entry.Dispatcher) 
 	return
 }
 
-func optimizeTrackingId(pTrackingId, trackingId string) string {
-	if strings.Count(pTrackingId, ".") > 1 {
-		// a.~.b.c
-		trackingId = strings.Join(
-			[]string{
-				pTrackingId[:strings.Index(pTrackingId, ".")], // 顶级 trackingId
-				"~", // 过渡级 trackingId
-				pTrackingId[strings.LastIndex(pTrackingId, ".")+1:], // 父级 trackingId
-				trackingId, // 当前级 trackingId
-			}, ".")
-	} else {
-		trackingId = fmt.Sprintf("%s.%s", pTrackingId, trackingId)
+// 执行单个 BlockStep
+func RunOneStep(trackingId string, blockStep *block.BlockStep,
+	datastore *datastore.DataStore, dispatcher *entry.Dispatcher) (receiver *entry.Receiver) {
+	// 统计耗费时间
+	defer recordCostTimeLog(blockStep.Step.WorkStepName, trackingId, time.Now())
+	// 记录开始执行日志
+	iwork.InsertRunLogDetail(trackingId, fmt.Sprintf("start execute blockStep: >>>>>>>>>> [[%s]]", blockStep.Step.WorkStepName))
+	// 由工厂代为执行步骤
+	factory := &iworknode.WorkStepFactory{
+		WorkStep:         blockStep.Step,
+		WorkSubRunFunc:   Run,
+		Dispatcher:       dispatcher,
+		BlockStep:        blockStep,
+		BlockStepRunFunc: RunOneStep,
+		DataStore:        datastore,
 	}
-	return trackingId
+	factory.Execute(trackingId)
+	// factory 节点如果代理的是 work_end 节点,则传递 Receiver 出去
+	if factory.Receiver != nil {
+		receiver = factory.Receiver
+	}
+	// 记录结束执行日志
+	iwork.InsertRunLogDetail(trackingId, fmt.Sprintf("end execute blockStep: >>>>>>>>>> [[%s]]", blockStep.Step.WorkStepName))
+	return
 }
 
+// 统计操作所花费的时间方法
+func recordCostTimeLog(operateName, trackingId string, start time.Time) {
+	iwork.InsertRunLogDetail(trackingId, fmt.Sprintf(
+		"%s total cost time :%v ms", operateName, time.Now().Sub(start).Nanoseconds()/1e6))
+}
+
+// 获取当前 work 需要的 trakingId
 func createNewTrackingIdForWork(dispatcher *entry.Dispatcher, work iwork.Work) string {
 	// 生成当前流程的 trackingId
 	trackingId := stringutil.RandomUUID()
@@ -119,30 +136,19 @@ func createNewTrackingIdForWork(dispatcher *entry.Dispatcher, work iwork.Work) s
 	return trackingId
 }
 
-// 执行单个 BlockStep
-func RunOneStep(trackingId string, blockStep *block.BlockStep, datastore *datastore.DataStore, dispatcher *entry.Dispatcher) (receiver *entry.Receiver) {
-	defer recordCostTimeLog(blockStep.Step.WorkStepName, trackingId, time.Now())
-	iwork.InsertRunLogDetail(trackingId, fmt.Sprintf("start execute blockStep: >>>>>>>>>> [[%s]]", blockStep.Step.WorkStepName))
-	// 由工厂代为执行步骤
-	factory := &iworknode.WorkStepFactory{
-		WorkStep:         blockStep.Step,
-		WorkSubRunFunc:   Run,
-		Dispatcher:       dispatcher,
-		BlockStep:        blockStep,
-		BlockStepRunFunc: RunOneStep,
-		DataStore:        datastore,
+// 对 trakingId 进行优化,避免过长的 trackingId
+func optimizeTrackingId(pTrackingId, trackingId string) string {
+	if strings.Count(pTrackingId, ".") > 1 {
+		// a.~.b.c
+		trackingId = strings.Join(
+			[]string{
+				pTrackingId[:strings.Index(pTrackingId, ".")], // 顶级 trackingId
+				"~", // 过渡级 trackingId
+				pTrackingId[strings.LastIndex(pTrackingId, ".")+1:], // 父级 trackingId
+				trackingId, // 当前级 trackingId
+			}, ".")
+	} else {
+		trackingId = fmt.Sprintf("%s.%s", pTrackingId, trackingId)
 	}
-	factory.Execute(trackingId)
-	// factory 节点如果代理的是 work_end 节点,则传递 Receiver 出去
-	if factory.Receiver != nil {
-		receiver = factory.Receiver
-	}
-	iwork.InsertRunLogDetail(trackingId, fmt.Sprintf("end execute blockStep: >>>>>>>>>> [[%s]]", blockStep.Step.WorkStepName))
-	return
-}
-
-// 统计操作所花费的时间方法
-func recordCostTimeLog(operateName, trackingId string, start time.Time) {
-	iwork.InsertRunLogDetail(trackingId, fmt.Sprintf(
-		"%s total cost time :%v ms", operateName, time.Now().Sub(start).Nanoseconds()/1e6))
+	return trackingId
 }
