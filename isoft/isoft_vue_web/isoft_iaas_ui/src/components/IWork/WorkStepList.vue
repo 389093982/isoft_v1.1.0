@@ -30,7 +30,7 @@
     <Table border :columns="columns1" ref="selection" :data="worksteps" size="small"></Table>
 
     <!-- 相关流程清单 -->
-    <RelativeWork ref="relativeWork"/>
+    <RelativeWork id="relativeWork" ref="relativeWork"/>
   </div>
 </template>
 
@@ -57,6 +57,7 @@
     components:{WorkStepParamInfo,ISimpleLeftRightRow,WorkStepBaseInfo,RelativeWork,WorkValidate,ISimpleConfirmModal},
     data(){
       return {
+        showRelativeWorkFlag:false,
         refactor_worksub_name:'',
         default_work_step_types: this.GLOBAL.default_work_step_types,
         worksteps: [],
@@ -207,7 +208,7 @@
                   },
                   style: {
                     marginRight: '5px',
-                    display: oneOf(this.worksteps[params.index]['work_step_type'], ["work_sub"])  ? undefined : 'none'
+                    display: oneOf(this.worksteps[params.index]['work_step_type'], ["work_sub"]) ? undefined : 'none'
                   },
                   on: {
                     click: () => {
@@ -215,6 +216,21 @@
                     }
                   }
                 }, '详情'),
+                h('Button', {
+                  props: {
+                    type: 'warning',
+                    size: 'small'
+                  },
+                  style: {
+                    marginRight: '5px',
+                    display: oneOf(this.worksteps[params.index]['work_step_type'], ["work_start"]) ? undefined : 'none'
+                  },
+                  on: {
+                    click: () => {
+                      this.goAnchor('#relativeWork');
+                    }
+                  }
+                }, '关联流程'),
               ]);
             }
           }
@@ -304,7 +320,12 @@
           this.$router.push({ path: '/iwork/workstepList',
             query: { work_id: work_subs[0].id, work_name: work_subs[0].work_name }});
         }
-      }
+      },
+      // 前往锚点方法
+      goAnchor: function(selector) {
+        var anchor = this.$el.querySelector(selector);
+        document.documentElement.scrollTop = anchor.offsetTop;
+      },
     },
     mounted: function () {
       this.refreshWorkStepList();
