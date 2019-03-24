@@ -1,7 +1,7 @@
 <template>
   <span>
     <p v-for="runLogDetail in runLogDetails">
-      {{runLogDetail.detail}}
+      <span v-html="runLogDetail.detail"></span>
     </p>
   </span>
 </template>

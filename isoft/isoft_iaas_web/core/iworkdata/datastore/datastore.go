@@ -17,7 +17,10 @@ type DataStore struct {
 // 向数据中心缓存数据
 func (this *DataStore) CacheData(nodeName, paramName string, paramValue interface{}) {
 	this.CacheByteData(nodeName, paramName, paramValue)
-	iwork.InsertRunLogDetail(this.TrackingId, fmt.Sprintf("[%s]cache data for $%s.%s:%v", this.TrackingId, nodeName, paramName, paramValue))
+	iwork.InsertRunLogDetail(this.TrackingId,
+		fmt.Sprintf("<span style='color:#FF99FF;'> [%s] </span>"+
+			"<span style='color:#6633FF;'> cache data for $%s.%s: </span>"+
+			"<span style='color:#CC0000;'> %v </span>", this.TrackingId, nodeName, paramName, paramValue))
 }
 
 // 存储字节数据,不用记录日志
