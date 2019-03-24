@@ -50,6 +50,7 @@
   import WorkValidate from "./WorkValidate"
   import ISimpleConfirmModal from "../Common/modal/ISimpleConfirmModal"
   import {getRepeatStr} from "../../tools"
+  import {GetRelativeWork} from "../../api"
 
   export default {
     name: "WorkStepList",
@@ -149,7 +150,7 @@
           {
             title: '操作',
             key: 'operate',
-            width: 180,
+            width: 220,
             fixed: 'right',
             render: (h, params) => {
               return h('div', [
@@ -199,6 +200,21 @@
                     }
                   }
                 }, '删除'),
+                h('Button', {
+                  props: {
+                    type: 'warning',
+                    size: 'small'
+                  },
+                  style: {
+                    marginRight: '5px',
+                    display: oneOf(this.worksteps[params.index]['work_step_type'], ["work_sub"])  ? undefined : 'none'
+                  },
+                  on: {
+                    click: () => {
+                      this.showWorkSubDetail(this.worksteps[params.index]);
+                    }
+                  }
+                }, '详情'),
               ]);
             }
           }
@@ -279,6 +295,14 @@
           this.refreshWorkStepList();
         }else{
           this.$Message.error(result.errorMsg);
+        }
+      },
+      showWorkSubDetail:async function (currentworkStep) {
+        const result = await GetRelativeWork(currentworkStep['work_id']);
+        const work_subs = result.subworks.filter(subWork => subWork.id === currentworkStep['work_sub_id']);
+        if(work_subs.length > 0){
+          this.$router.push({ path: '/iwork/workstepList',
+            query: { work_id: work_subs[0].id, work_name: work_subs[0].work_name }});
         }
       }
     },

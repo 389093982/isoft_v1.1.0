@@ -45,7 +45,6 @@
                     click: () => {
                       this.$router.push({ path: '/iwork/workstepList',
                         query: { work_id: this.workList[params.index]['id'], work_name: this.workList[params.index]['work_name'] }});
-
                     }
                   }
                 }, '查看'),
