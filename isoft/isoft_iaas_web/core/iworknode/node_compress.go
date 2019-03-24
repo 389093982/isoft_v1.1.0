@@ -17,7 +17,9 @@ func (this *TarGzUnCompressNode) Execute(trackingId string) {
 	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, this.DataStore)
 	targz_file_path := tmpDataMap[iworkconst.STRING_PREFIX+"targz_file_path"].(string)
 	dest_path := tmpDataMap[iworkconst.STRING_PREFIX+"dest_path"].(string)
-	if err := compressutil.DeCompress(targz_file_path, dest_path); err != nil {
+	if err := compressutil.DeCompress(targz_file_path, dest_path); err == nil {
+		this.DataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.STRING_PREFIX+"dest_path", dest_path)
+	} else {
 		panic(err)
 	}
 }
@@ -35,7 +37,7 @@ func (this *TarGzUnCompressNode) GetRuntimeParamInputSchema() *schema.ParamInput
 }
 
 func (this *TarGzUnCompressNode) GetDefaultParamOutputSchema() *schema.ParamOutputSchema {
-	return &schema.ParamOutputSchema{}
+	return schema.BuildParamOutputSchemaWithSlice([]string{iworkconst.STRING_PREFIX + "dest_path"})
 }
 
 func (this *TarGzUnCompressNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
@@ -56,7 +58,9 @@ func (this *TarGzCompressNode) Execute(trackingId string) {
 	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, this.DataStore)
 	dir_file_path := tmpDataMap[iworkconst.STRING_PREFIX+"dir_file_path"].(string)
 	dest_file_path := tmpDataMap[iworkconst.STRING_PREFIX+"dest_file_path"].(string)
-	if err := compressutil.CompressDir(dir_file_path, dest_file_path); err != nil {
+	if err := compressutil.CompressDir(dir_file_path, dest_file_path); err == nil {
+		this.DataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.STRING_PREFIX+"dest_file_path", dest_file_path)
+	} else {
 		panic(err)
 	}
 }
@@ -74,7 +78,7 @@ func (this *TarGzCompressNode) GetRuntimeParamInputSchema() *schema.ParamInputSc
 }
 
 func (this *TarGzCompressNode) GetDefaultParamOutputSchema() *schema.ParamOutputSchema {
-	return &schema.ParamOutputSchema{}
+	return schema.BuildParamOutputSchemaWithSlice([]string{iworkconst.STRING_PREFIX + "dest_file_path"})
 }
 
 func (this *TarGzCompressNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
