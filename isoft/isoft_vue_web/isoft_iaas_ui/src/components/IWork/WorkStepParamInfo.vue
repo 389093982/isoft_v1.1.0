@@ -20,7 +20,7 @@
               <Button type="warning" size="small" @click="showNext(1)">加载后置步骤</Button>
             </Col>
           </Row>
-          <Row>
+          <Row style="margin-right: 10px;">
             <Col span="14">
               <FormItem label="work_step_input" prop="work_step_input">
                 <Tabs type="card" :animated="false">
