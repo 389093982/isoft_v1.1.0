@@ -14,7 +14,7 @@
               <Button type="warning" size="small" @click="showNext(-1)">加载前置步骤</Button>
             </Col>
             <Col span="16">
-                <h2>步骤名称:{{formValidate.work_step_name}},步骤类型:{{formValidate.work_step_type}}</h2>
+                <h2 style='font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;'>步骤名称:{{formValidate.work_step_name}},步骤类型:{{formValidate.work_step_type}}</h2>
             </Col>
             <Col span="4">
               <Button type="warning" size="small" @click="showNext(1)">加载后置步骤</Button>
