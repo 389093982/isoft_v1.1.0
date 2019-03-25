@@ -5,7 +5,9 @@
       <div v-for="paramMapping in paramMappings">
         <Row>
           <Col span="12">{{paramMapping}}</Col>
-          <Col span="12" style="text-align: right;"><Button type="success" size="small" @click="handleDelete(paramMapping)" style="margin-left: 6px">删除</Button></Col>
+          <Col span="12" style="text-align: right;">
+            <Button type="success" size="small" @click="handleDelete(paramMapping)" style="margin-left: 6px">删除</Button>
+          </Col>
         </Row>
         <hr/>
       </div>

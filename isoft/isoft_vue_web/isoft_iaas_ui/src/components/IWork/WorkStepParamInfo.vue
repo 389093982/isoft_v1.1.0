@@ -37,7 +37,7 @@
           </Row>
           <FormItem>
             <Row>
-                <Button type="success" @click="handleSubmit('formValidate')">提交</Button>
+                <Button type="success" size="small" @click="handleSubmit('formValidate')">提交</Button>
             </Row>
           </FormItem>
         </Form>
