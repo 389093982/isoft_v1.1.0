@@ -9,9 +9,17 @@
       <Scroll height="450">
         <!-- 表单信息 -->
         <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="140">
-          <h3 style="text-align: center;color: green;margin-bottom: 20px;">
-            步骤名称:{{formValidate.work_step_name}},步骤类型:{{formValidate.work_step_type}}
-          </h3>
+          <Row style="margin-bottom: 20px;text-align: center;color: green;">
+            <Col span="4">
+              <Button type="warning" size="small" @click="showNext(-1)">加载前置步骤</Button>
+            </Col>
+            <Col span="16">
+                <h2>步骤名称:{{formValidate.work_step_name}},步骤类型:{{formValidate.work_step_type}}</h2>
+            </Col>
+            <Col span="4">
+              <Button type="warning" size="small" @click="showNext(1)">加载后置步骤</Button>
+            </Col>
+          </Row>
           <Row>
             <Col span="14">
               <FormItem label="work_step_input" prop="work_step_input">
@@ -150,6 +158,9 @@
           this.$Message.error('加载失败!');
           this.handleReset('formValidate');
         }
+      },
+      showNext: function(num){
+        this.showWorkStepParamInfo(this.formValidate.work_id,this.formValidate.work_step_id + num);
       },
       showWorkStepParamInfo:function (work_id, work_step_id) {
         this.formValidate.work_id = work_id;
