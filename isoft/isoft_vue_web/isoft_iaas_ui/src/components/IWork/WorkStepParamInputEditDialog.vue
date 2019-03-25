@@ -1,6 +1,12 @@
 <template>
-  <ISimpleBtnTriggerModal ref="triggerModal" btn-text="查看/编辑" btn-size="small" btn-folat="right"
-      modal-title="查看/编辑 workstep 参数" :modal-width="950" @btnClick="refreshPreNodeOutput" modal-top="50px">
+  <Modal
+    v-model="showFormModal"
+    width="950"
+    title="查看/编辑 workstep 参数"
+    :footer-hide="true"
+    :transfer="false"
+    :mask-closable="false"
+    :styles="{top: 20}">
     <Row>
       <Col span="8">
         <h3>前置节点输出参数</h3>
@@ -25,8 +31,10 @@
     <Row style="text-align: center;margin-top: 10px;">
       <Button type="success" size="small" @click="handleSubmit(false)">提交</Button>
       <Button type="warning" size="small" @click="handleSubmit(true)">提交并关闭</Button>
+      <Button type="success" size="small" @click="showNext(-1)">编辑上一个参数</Button>
+      <Button type="warning" size="small" @click="showNext(1)">编辑下一个参数</Button>
     </Row>
-  </ISimpleBtnTriggerModal>
+  </Modal>
 </template>
 
 <script>
@@ -37,26 +45,33 @@
   export default {
     name: "WorkStepParamInputEditDialog",
     components:{ISimpleBtnTriggerModal,QuickFuncList},
-    props: {
-      inputLabel: {
-        type: String,
-        default: "标题",
-      },
-      inputText: {
-        type: String,
-        default: "内容",
-      },
-    },
     data(){
       return {
-        inputTextData:"",
+        showFormModal:false,
+        inputLabel:'',
+        inputTextData:'',
+        paramIndex:1,
         preParamOutputSchemaTreeNodeArr:[],
       }
     },
     methods:{
+      handleReload: function(paramIndex){
+        this.$emit("handleReload", paramIndex);
+      },
+      refreshParamInput: function(index, item){
+        this.showFormModal = true;
+        this.paramIndex = index;
+        this.inputLabel = item.ParamName;
+        // 文本输入框设置历史值
+        this.inputTextData = item.ParamValue;
+        this.refreshPreNodeOutput();
+      },
+      showNext: function(num){
+        this.handleReload(this.paramIndex + num);
+      },
       chooseFunc: function(funcDemo){
         // 将数据复制到右侧
-        this.inputTextData = this.inputTextData + funcDemo + "\n";
+        this.item.inputTextData = this.item.inputTextData + funcDemo + "\n";
       },
       showQuickFunc: function(){
         this.$refs.quickFuncList.showModal();
@@ -68,8 +83,6 @@
         }
       },
       refreshPreNodeOutput:async function () {
-        // 文本输入框设置历史值
-        this.inputTextData = this.inputText;
         const result = await LoadPreNodeOutput(this.$store.state.current_work_id, this.$store.state.current_work_step_id);
         if(result.status == "SUCCESS"){
           this.preParamOutputSchemaTreeNodeArr = result.preParamOutputSchemaTreeNodeArr;

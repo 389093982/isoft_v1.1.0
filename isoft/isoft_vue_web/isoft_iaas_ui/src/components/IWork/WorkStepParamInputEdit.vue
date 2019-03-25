@@ -1,20 +1,22 @@
 <template>
   <span>
-    <Row v-for="item in paramInputSchemaItems" style="margin-bottom: 10px;">
+    <Row v-for="(item,index) in paramInputSchemaItems" style="margin-bottom: 10px;">
       <Row>
         <Col span="16">
           {{item.ParamName}}
           <Icon type="ios-book-outline" size="18" style="margin-left: 10px;" @click="showParamDesc(item.ParamDesc)"/>
         </Col>
         <Col span="8">
-          <WorkStepParamInputEditDialog :input-label="item.ParamName" :input-text="item.ParamValue"
-           @handleSubmit="refreshParamInputSchemaItems"/>
+          <Button type="success" size="small" @click="handleReload(index)">查看/编辑</Button>
         </Col>
       </Row>
       <Row>
         <Input size="small" v-model.trim="item.ParamValue" readonly type="text" placeholder="small size"/>
       </Row>
     </Row>
+
+    <WorkStepParamInputEditDialog ref="paramInputEditDialog"
+      @handleSubmit="refreshParamInputSchemaItems" @handleReload="handleReload"/>
   </span>
 </template>
 
@@ -31,6 +33,11 @@
       },
     },
     methods:{
+      // 根据 paramIndex 重新加载
+      handleReload: function(paramIndex){
+        let item = this.paramInputSchemaItems[paramIndex];
+        this.$refs["paramInputEditDialog"].refreshParamInput(paramIndex, item);
+      },
       // 强制刷新组件
       refreshParamInputSchemaItems:function (label, text) {
         for(var i=0; i<this.paramInputSchemaItems.length; i++){
