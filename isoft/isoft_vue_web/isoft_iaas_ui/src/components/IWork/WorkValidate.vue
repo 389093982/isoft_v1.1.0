@@ -1,7 +1,7 @@
 <template>
-  <ISimpleBtnTriggerModal ref="triggerModal" btn-text="项目校验" modal-title="查看校验结果" :modal-width="800">
-    <Button type="success" @click="validateAllWork">校验全部</Button>
-    <Button type="success" @click="refreshValidateResult">刷新校验结果</Button>
+  <ISimpleBtnTriggerModal ref="triggerModal" btn-text="项目校验" btn-size="small" modal-title="查看校验结果" :modal-width="800">
+    <Button type="success" size="small" @click="validateAllWork">校验全部</Button>
+    <Button type="success" size="small" @click="refreshValidateResult">刷新校验结果</Button>
 
     <div style="margin: 20px;min-height: 300px;">
       <p style="color: green;">last tracking_id: {{tracking_id}}</p>

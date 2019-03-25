@@ -2,27 +2,20 @@
   <div style="margin: 10px;">
     <h4 v-if="$route.query.work_name" style="text-align: center;margin-bottom: 10px;">当前流程为：{{$route.query.work_name}}</h4>
 
-    <ISimpleLeftRightRow style="margin-bottom: 10px;margin-right: 10px;">
-      <!-- left 插槽部分 -->
-      <div slot="left">
-        <Row type="flex" justify="start" class="code-row-bg">
-          <Col span="6"><Button type="error" @click="addWorkStep('empty')" style="margin-right: 5px;">新建空节点</Button></Col>
-          <Col span="6"><Button type="warning" @click="showRefactorModal">Refactor</Button></Col>
-          <Col span="6"><Button type="info" @click="batchChangeIndent('left')">向左缩进</Button></Col>
-          <Col span="6"><Button type="success" @click="batchChangeIndent('right')">向右缩进</Button></Col>
+      <Row type="flex" justify="start" class="code-row-bg" style="margin-bottom: 20px;">
+        <Col span="2"><Button type="error" size="small" @click="addWorkStep('empty')" style="margin-right: 5px;">新建节点</Button></Col>
+        <Col span="2"><Button type="warning" size="small" @click="showRefactorModal">重构流程</Button></Col>
+        <Col span="2"><Button type="info" size="small" @click="batchChangeIndent('left')">向左缩进</Button></Col>
+        <Col span="2"><Button type="error" size="small" @click="batchChangeIndent('right')">向右缩进</Button></Col>
+        <Col span="2"><Button type="warning" size="small" @click="runWork">运行流程</Button></Col>
+        <Col span="2"><Button type="info" size="small" @click="showRunLogList">运行日志</Button></Col>
+        <Col span="2"><WorkValidate /></Col>
+        <Col span="2"><Button type="error" size="small" @click="renderSourceXml">View Source XML</Button></Col>
 
-          <ISimpleConfirmModal ref="refactor_modal" modal-title="重构为子流程" :modal-width="500" @handleSubmit="refactor">
-            <Input v-model.trim="refactor_worksub_name" placeholder="请输入重构的子流程名称"></Input>
-          </ISimpleConfirmModal>
-        </Row>
-      </div>
-      <div slot="right">
-        <Row type="flex" justify="end" class="code-row-bg">
-          <Col span="6"><WorkValidate /></Col>
-          <Col span="6"><Button type="success" @click="renderSourceXml">View Source XML</Button></Col>
-        </Row>
-      </div>
-    </ISimpleLeftRightRow>
+        <ISimpleConfirmModal ref="refactor_modal" modal-title="重构为子流程" :modal-width="500" @handleSubmit="refactor">
+          <Input v-model.trim="refactor_worksub_name" placeholder="请输入重构的子流程名称"></Input>
+        </ISimpleConfirmModal>
+      </Row>
 
     <WorkStepBaseInfo ref="workStepBaseInfo" @handleSuccess="refreshWorkStepList"/>
     <WorkStepParamInfo ref="workStepParamInfo" @handleSuccess="refreshWorkStepList"/>
@@ -41,6 +34,7 @@
   import {RefactorWorkStepInfo} from "../../api"
   import {BatchChangeIndent} from "../../api"
   import {AddWorkStep} from "../../api"
+  import {RunWork} from "../../api"
   import WorkStepParamInfo from "./WorkStepParamInfo"
   import ISimpleLeftRightRow from "../Common/layout/ISimpleLeftRightRow"
   import WorkStepBaseInfo from "./WorkStepBaseInfo"
@@ -328,6 +322,15 @@
         if(work_subs.length > 0){
           this.$router.push({ path: '/iwork/workstepList',
             query: { work_id: work_subs[0].id, work_name: work_subs[0].work_name }});
+        }
+      },
+      showRunLogList: function(){
+        this.$router.push({ path: '/iwork/runLogList', query: { work_id: this.$route.query.work_id }});
+      },
+      runWork: async function(){
+        const result = await RunWork(this.$route.query.work_id);
+        if(result.status == "SUCCESS"){
+          this.$Message.success("运行任务已触发!");
         }
       },
       // 前往锚点方法
