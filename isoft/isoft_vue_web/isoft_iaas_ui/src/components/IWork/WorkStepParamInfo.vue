@@ -37,7 +37,8 @@
           </Row>
           <FormItem>
             <Row>
-                <Button type="success" size="small" @click="handleSubmit('formValidate')">提交</Button>
+                <Button type="success" size="small" @click="handleSubmit('formValidate', false)">提交</Button>
+              <Button type="warning" size="small" @click="handleSubmit('formValidate', true)">提交并关闭</Button>
             </Row>
           </FormItem>
         </Form>
@@ -96,7 +97,7 @@
       }
     },
     methods:{
-      handleSubmit (name) {
+      handleSubmit (name, closable) {
         this.$refs[name].validate(async (valid) => {
           if (valid) {
             const paramInputSchemaStr = JSON.stringify(this.paramInputSchema);
@@ -104,9 +105,15 @@
             const result = await EditWorkStepParamInfo(this.formValidate.work_id, this.formValidate.work_step_id, paramInputSchemaStr, paramMappingsStr);
             if(result.status == "SUCCESS"){
               this.$Message.success('提交成功!');
-              this.showFormModal =false;
               // 通知父组件添加成功
               this.$emit('handleSuccess');
+              if(closable == true){
+                // 直接关闭
+                this.showFormModal =false;
+              }else{
+                // 直接刷新不关闭
+                this.showWorkStepParamInfo(this.formValidate.work_id, this.formValidate.work_step_id);
+              }
             }else{
               this.$Message.error('提交失败!');
             }
