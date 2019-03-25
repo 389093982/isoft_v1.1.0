@@ -38,8 +38,6 @@
         if(paramIndex >=0 && paramIndex <= this.paramInputSchemaItems.length -1){
           let item = this.paramInputSchemaItems[paramIndex];
           this.$refs["paramInputEditDialog"].refreshParamInput(paramIndex, item);
-        }else{
-          this.$Message.error('无更多参数!');
         }
       },
       // 强制刷新组件

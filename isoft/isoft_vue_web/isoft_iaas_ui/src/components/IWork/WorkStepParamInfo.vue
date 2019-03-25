@@ -160,6 +160,9 @@
         }
       },
       showNext: function(num){
+        if((this.formValidate.work_step_type == "work_end" && num > 0) || (this.formValidate.work_step_type == "work_start" && num < 0)){
+          return;
+        }
         this.showWorkStepParamInfo(this.formValidate.work_id,this.formValidate.work_step_id + num);
       },
       showWorkStepParamInfo:function (work_id, work_step_id) {
