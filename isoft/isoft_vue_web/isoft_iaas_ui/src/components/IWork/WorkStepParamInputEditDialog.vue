@@ -15,7 +15,7 @@
       </Col>
       <Col span="14">
         <h3>
-          {{inputLabel}}
+          参数名称:{{inputLabel}}
         </h3>
         <QuickFuncList ref="quickFuncList" @chooseFunc="chooseFunc"/>
         <Icon type="md-copy" size="18" style="float: right;" @click="showQuickFunc()"/>
@@ -23,7 +23,8 @@
       </Col>
     </Row>
     <Row style="text-align: center;margin-top: 10px;">
-      <Button type="success" @click="handleSubmit">Submit</Button>
+      <Button type="success" size="small" @click="handleSubmit(false)">提交</Button>
+      <Button type="warning" size="small" @click="handleSubmit(true)">提交并关闭</Button>
     </Row>
   </ISimpleBtnTriggerModal>
 </template>
@@ -60,9 +61,11 @@
       showQuickFunc: function(){
         this.$refs.quickFuncList.showModal();
       },
-      handleSubmit:function () {
+      handleSubmit:function (closable) {
         this.$emit("handleSubmit", this.inputLabel, this.inputTextData);
-        this.$refs.triggerModal.hideModal();
+        if(closable){
+          this.$refs.triggerModal.hideModal();
+        }
       },
       refreshPreNodeOutput:async function () {
         // 文本输入框设置历史值

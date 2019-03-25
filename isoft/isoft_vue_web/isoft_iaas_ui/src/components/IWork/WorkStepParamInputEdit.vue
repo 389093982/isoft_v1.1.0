@@ -38,6 +38,7 @@
           if(paramInputSchemaItem.ParamName == label){
             paramInputSchemaItem.ParamValue = text;
             this.$set(this.paramInputSchemaItems, i, paramInputSchemaItem);
+            this.$Message.success('临时参数保存成功!');
           }
         }
       },
