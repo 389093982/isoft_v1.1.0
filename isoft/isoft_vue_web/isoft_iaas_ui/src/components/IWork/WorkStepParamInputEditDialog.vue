@@ -6,7 +6,7 @@
     :footer-hide="true"
     :transfer="false"
     :mask-closable="false"
-    :styles="{top: 20}">
+    :styles="{top: '20px'}">
     <Row>
       <Col span="8">
         <h3>前置节点输出参数</h3>
@@ -20,15 +20,15 @@
         </Button>
       </Col>
       <Col span="14">
-        <h3>
-          参数名称:{{inputLabel}}
+        <h3 style="color: #1600ff;">
+          参数名称({{paramIndex}}):{{inputLabel}}
         </h3>
         <QuickFuncList ref="quickFuncList" @chooseFunc="chooseFunc"/>
         <Icon type="md-copy" size="18" style="float: right;" @click="showQuickFunc()"/>
         <Input v-model="inputTextData" type="textarea" :rows="15" placeholder="Enter something..." />
       </Col>
     </Row>
-    <Row style="text-align: center;margin-top: 10px;">
+    <Row style="text-align: right;margin-top: 10px;">
       <Button type="success" size="small" @click="handleSubmit(false)">提交</Button>
       <Button type="warning" size="small" @click="handleSubmit(true)">提交并关闭</Button>
       <Button type="success" size="small" @click="showNext(-1)">编辑上一个参数</Button>
