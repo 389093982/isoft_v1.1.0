@@ -106,6 +106,8 @@ const default_work_step_types=[
   {"name":"targz_compress","icon":"ios-aperture-outline"},
   {"name":"ini_read","icon":"ios-fastforward"},
   {"name":"ini_write","icon":"ios-aperture-outline"},
+  {"name":"base64_encode","icon":"ios-magnet"},
+  {"name":"base64_decode","icon":"ios-magnet-outline"},
 ];
 
 export default {

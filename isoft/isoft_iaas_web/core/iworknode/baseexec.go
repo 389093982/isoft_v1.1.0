@@ -49,6 +49,8 @@ func init() {
 		IniWriteNode{},
 		IFNode{},
 		EmptyNode{},
+		Base64EncodeNode{},
+		Base64DecodeNode{},
 	}
 	for _, v := range vs {
 		t := reflect.ValueOf(v).Type()
