@@ -36,41 +36,84 @@
         quartzs: [],
         columns1: [
           {
-            title: 'task_name',
+            title: '任务名称',
             key: 'task_name',
           },
           {
-            title: 'task_type',
+            title: '任务类型',
             key: 'task_type',
           },
           {
-            title: 'cron_str',
+            title: 'cron表达式',
             key: 'cron_str',
           },
           {
-            title: 'created_by',
-            key: 'created_by',
+            title: '启用状态',
+            key: 'enable',
           },
           {
-            title: 'created_time',
-            key: 'created_time',
-            render: (h,params)=>{
-              return h('div',
-                formatDate(new Date(params.row.created_time),'yyyy-MM-dd hh:mm')
-              )
-            }
-          },
-          {
-            title: 'last_updated_by',
+            title: '最后修改人',
             key: 'last_updated_by',
           },
           {
-            title: 'last_updated_time',
+            title: '最后修改时间',
             key: 'last_updated_time',
+            width: 180,
             render: (h,params)=>{
               return h('div',
                 formatDate(new Date(params.row.last_updated_time),'yyyy-MM-dd hh:mm')
               )
+            }
+          },
+          {
+            title: '操作',
+            key: 'operate',
+            width: 180,
+            render: (h, params) => {
+              return h('div', [
+                h('Button', {
+                  props: {
+                    type: 'success',
+                    size: 'small'
+                  },
+                  style: {
+                    marginRight: '5px',
+                  },
+                  on: {
+                    click: () => {
+                      alert(1111);
+                    }
+                  }
+                }, '启用'),
+                h('Button', {
+                  props: {
+                    type: 'error',
+                    size: 'small'
+                  },
+                  style: {
+                    marginRight: '5px',
+                  },
+                  on: {
+                    click: () => {
+                      alert(1111);
+                    }
+                  }
+                }, '停用'),
+                h('Button', {
+                  props: {
+                    type: 'warning',
+                    size: 'small'
+                  },
+                  style: {
+                    marginRight: '5px',
+                  },
+                  on: {
+                    click: () => {
+                      alert(1111);
+                    }
+                  }
+                }, '删除'),
+              ]);
             }
           }
         ],

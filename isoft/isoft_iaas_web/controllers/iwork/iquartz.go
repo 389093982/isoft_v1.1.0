@@ -13,6 +13,7 @@ func (this *WorkController) AddQuartz() {
 	meta.TaskName = this.Input().Get("task_name")
 	meta.TaskType = this.Input().Get("task_type")
 	meta.CronStr = this.Input().Get("cron_str")
+	meta.Enable = false
 	meta.CreatedBy = "SYSTEM"
 	meta.CreatedTime = time.Now()
 	meta.LastUpdatedBy = "SYSTEM"

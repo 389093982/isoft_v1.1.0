@@ -148,6 +148,7 @@ func InsertOrUpdateAutoCronMeta(task_name string, meta_id int64, o orm.Ormer) (i
 		TaskName:        task_name,
 		TaskType:        "iwork_quartz",
 		CronStr:         "0 * * * * ?",
+		Enable:          false,
 		CreatedBy:       "SYSTEM",
 		CreatedTime:     time.Now(),
 		LastUpdatedBy:   "SYSTEM",
