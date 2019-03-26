@@ -122,6 +122,9 @@ export const LoginRecordList = (offset,current_page,search) => ajax(BASE_URL+"/s
 // 定时任务分页查询
 export const QuartzList = (offset,current_page,search) => ajax(BASE_URL+"/iwork/filterPageQuartz", {offset,current_page,search},'POST');
 
+// 编辑 quartz
+export const EditQuartz = (task_name, operate) => ajax(BASE_URL+"/iwork/editQuartz", {task_name, operate},'POST');
+
 // 添加 quartz 记录
 export const AddQuartz = (task_name,task_type,cron_str) => ajax(BASE_URL+"/iwork/addQuartz", {task_name,task_type,cron_str},'POST');
 

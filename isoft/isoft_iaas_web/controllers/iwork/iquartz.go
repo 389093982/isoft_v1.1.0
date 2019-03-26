@@ -8,6 +8,29 @@ import (
 	"time"
 )
 
+func (this *WorkController) EditQuartz() {
+	task_name := this.GetString("task_name")
+	operate := this.GetString("operate")
+	var err error
+	if operate == "delete" {
+		err = iwork.DeleteCronMetaByTaskName(task_name, orm.NewOrm())
+	} else {
+		meta, _ := iwork.QueryCronMetaByName(task_name)
+		if operate == "start" {
+			meta.Enable = true
+		} else if operate == "stop" {
+			meta.Enable = false
+		}
+		_, err = iwork.InsertOrUpdateCronMeta(&meta, orm.NewOrm())
+	}
+	if err == nil {
+		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
+	} else {
+		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": err.Error()}
+	}
+	this.ServeJSON()
+}
+
 func (this *WorkController) AddQuartz() {
 	var meta iwork.CronMeta
 	meta.TaskName = this.Input().Get("task_name")

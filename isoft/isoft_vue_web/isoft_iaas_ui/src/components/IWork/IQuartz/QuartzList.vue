@@ -15,10 +15,11 @@
 
 <script>
   import {formatDate} from "../../../tools/index"
-  import {QuartzList} from "../../../api/index"
+  import {QuartzList} from "../../../api"
   import ISimpleLeftRightRow from "../../Common/layout/ISimpleLeftRightRow"
   import ISimpleSearch from "../../Common/search/ISimpleSearch"
   import QuartzAdd from "./QuartzAdd"
+  import {EditQuartz} from "../../../api"
 
   export default {
     name: "QuartzList",
@@ -81,7 +82,7 @@
                   },
                   on: {
                     click: () => {
-                      alert(1111);
+                      this.editQuartz(this.quartzs[params.index]['task_name'], "start");
                     }
                   }
                 }, '启用'),
@@ -95,7 +96,7 @@
                   },
                   on: {
                     click: () => {
-                      alert(1111);
+                      this.editQuartz(this.quartzs[params.index]['task_name'], "stop");
                     }
                   }
                 }, '停用'),
@@ -109,7 +110,7 @@
                   },
                   on: {
                     click: () => {
-                      alert(1111);
+                      this.editQuartz(this.quartzs[params.index]['task_name'], "delete");
                     }
                   }
                 }, '删除'),
@@ -140,6 +141,14 @@
         this.current_page = 1;
         this.search = data;
         this.refreshQuartzList();
+      },
+      editQuartz:async function (task_name, operate){
+        const result = await EditQuartz(task_name, operate);
+        if(result.status == "SUCCESS"){
+          this.refreshQuartzList();
+        }else{
+          this.$Message.error(result.errorMsg);
+        }
       }
     },
     mounted: function () {
