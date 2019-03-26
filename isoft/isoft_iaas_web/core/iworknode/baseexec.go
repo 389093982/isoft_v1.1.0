@@ -31,6 +31,7 @@ func init() {
 		FileReadNode{},
 		FileWriteNode{},
 		FileSyncNode{},
+		FileDeleteNode{},
 		HrefParserNode{},
 		EntityParserNode{},
 		DBParserNode{},

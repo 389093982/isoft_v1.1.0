@@ -79,7 +79,7 @@
       handleSubmit:function (closable) {
         this.$emit("handleSubmit", this.inputLabel, this.inputTextData);
         if(closable){
-          this.$refs.triggerModal.hideModal();
+          this.showFormModal = false;
         }
       },
       refreshPreNodeOutput:async function () {

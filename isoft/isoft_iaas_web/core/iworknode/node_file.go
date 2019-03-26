@@ -161,3 +161,41 @@ func (this *FileSyncNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchem
 func (this *FileSyncNode) ValidateCustom() (checkResult []string) {
 	return
 }
+
+type FileDeleteNode struct {
+	BaseNode
+	WorkStep *iwork.WorkStep
+}
+
+func (this *FileDeleteNode) Execute(trackingId string) {
+	// 节点中间数据
+	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, this.DataStore)
+	delete_file_path := tmpDataMap[iworkconst.STRING_PREFIX+"delete_file_path"].(string)
+	err := os.RemoveAll(delete_file_path)
+	if err != nil {
+		panic(err)
+	}
+}
+
+func (this *FileDeleteNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
+	paramMap := map[int][]string{
+		1: {iworkconst.STRING_PREFIX + "delete_file_path", "待删除的文件或文件夹路径"},
+	}
+	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
+}
+
+func (this *FileDeleteNode) GetRuntimeParamInputSchema() *schema.ParamInputSchema {
+	return &schema.ParamInputSchema{}
+}
+
+func (this *FileDeleteNode) GetDefaultParamOutputSchema() *schema.ParamOutputSchema {
+	return &schema.ParamOutputSchema{}
+}
+
+func (this *FileDeleteNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
+	return &schema.ParamOutputSchema{}
+}
+
+func (this *FileDeleteNode) ValidateCustom() (checkResult []string) {
+	return
+}
