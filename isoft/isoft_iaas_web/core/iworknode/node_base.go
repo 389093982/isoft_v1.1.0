@@ -55,6 +55,7 @@ func (this *Base64DecodeNode) Execute(trackingId string) {
 	bytes, err := base64.StdEncoding.DecodeString(input)
 	if err == nil {
 		this.DataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.STRING_PREFIX+"decode_data", string(bytes))
+		this.DataStore.CacheByteData(this.WorkStep.WorkStepName, iworkconst.BYTE_ARRAY_PREFIX+"decode_data", bytes)
 	} else {
 		panic(err)
 	}
@@ -73,6 +74,7 @@ func (this *Base64DecodeNode) GetRuntimeParamInputSchema() *schema.ParamInputSch
 
 func (this *Base64DecodeNode) GetDefaultParamOutputSchema() *schema.ParamOutputSchema {
 	return schema.BuildParamOutputSchemaWithSlice([]string{iworkconst.STRING_PREFIX + "decode_data"})
+	return schema.BuildParamOutputSchemaWithSlice([]string{iworkconst.BYTE_ARRAY_PREFIX + "decode_data"})
 }
 
 func (this *Base64DecodeNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
