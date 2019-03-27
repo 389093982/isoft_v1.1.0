@@ -24,7 +24,7 @@
               <Input v-model.trim="formValidate.work_step_type" placeholder="请输入 work_step_type"></Input>
             </Col>
             <Col span="6">
-              <Poptip v-model="visible" placement="left-start" width="420">
+              <Poptip v-model="visible" placement="left" width="420">
                 <Button style="margin-left: 5px;">选择步骤类型</Button>
                 <div slot="content">
                   <span v-for="default_work_step_type in default_work_step_types" style="margin: 5px;float: left;">
