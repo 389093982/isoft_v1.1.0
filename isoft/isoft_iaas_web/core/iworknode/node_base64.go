@@ -73,8 +73,7 @@ func (this *Base64DecodeNode) GetRuntimeParamInputSchema() *schema.ParamInputSch
 }
 
 func (this *Base64DecodeNode) GetDefaultParamOutputSchema() *schema.ParamOutputSchema {
-	return schema.BuildParamOutputSchemaWithSlice([]string{iworkconst.STRING_PREFIX + "decode_data"})
-	return schema.BuildParamOutputSchemaWithSlice([]string{iworkconst.BYTE_ARRAY_PREFIX + "decode_data"})
+	return schema.BuildParamOutputSchemaWithSlice([]string{iworkconst.STRING_PREFIX + "decode_data", iworkconst.BYTE_ARRAY_PREFIX + "decode_data"})
 }
 
 func (this *Base64DecodeNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
