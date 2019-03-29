@@ -59,17 +59,22 @@ func init() {
 }
 
 type WorkStepFactory struct {
-	Work           iwork.Work
-	WorkStep       *iwork.WorkStep  // 普通步骤执行时使用的参数
-	BlockStep      *block.BlockStep // 块步骤执行时使用的参数
+	Work iwork.Work
+	// 普通步骤执行时使用的参数
+	WorkStep *iwork.WorkStep
+	// 块步骤执行时使用的参数
+	BlockStep *block.BlockStep
+	// 执行步骤时遇到子流程时的回调函数
 	WorkSubRunFunc func(work iwork.Work, steps []iwork.WorkStep,
-		dispatcher *entry.Dispatcher) (receiver *entry.Receiver) // 执行步骤时遇到子流程时的回调函数
+		dispatcher *entry.Dispatcher) (receiver *entry.Receiver)
+	// 执行步骤时使用 BlockStep 时的回调函数
 	BlockStepRunFunc func(trackingId string, blockStep *block.BlockStep,
-		datastore *datastore.DataStore, dispatcher *entry.Dispatcher) (receiver *entry.Receiver) // 执行步骤时使用 BlockStep 时的回调函数
+		datastore *datastore.DataStore, dispatcher *entry.Dispatcher) (receiver *entry.Receiver)
 	Dispatcher *entry.Dispatcher
-	Receiver   *entry.Receiver // 代理了 Receiver,值从 work_end 节点获取
-	DataStore  *datastore.DataStore
-	O          orm.Ormer
+	// 代理了 Receiver,值从 work_end 节点获取
+	Receiver  *entry.Receiver
+	DataStore *datastore.DataStore
+	O         orm.Ormer
 }
 
 type IWorkStep interface {
@@ -85,6 +90,8 @@ type IWorkStep interface {
 	GetRuntimeParamOutputSchema() *schema.ParamOutputSchema
 	// 节点定制化校验函数,校验不通过会触发 panic
 	ValidateCustom() (checkResult []string)
+	// 实现 ITheme 接口
+	schema.ITheme
 }
 
 func (this *WorkStepFactory) Execute(trackingId string) {
@@ -173,4 +180,8 @@ func (this *WorkStepFactory) GetRuntimeParamOutputSchema() *schema.ParamOutputSc
 
 func (this *WorkStepFactory) ValidateCustom() (checkResult []string) {
 	return this.getProxy().ValidateCustom()
+}
+
+func (this *WorkStepFactory) GetThemes() []string {
+	return this.getProxy().GetThemes()
 }

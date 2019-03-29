@@ -22,6 +22,10 @@ type BaseNode struct {
 	o         orm.Ormer
 }
 
+func (this *BaseNode) GetThemes() []string {
+	return []string{"default"}
+}
+
 func (this *BaseNode) GetOrmer() orm.Ormer {
 	if this.o == nil {
 		this.o = orm.NewOrm()

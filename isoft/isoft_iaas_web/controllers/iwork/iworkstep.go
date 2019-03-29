@@ -72,6 +72,7 @@ func (this *WorkController) LoadWorkStepInfo() {
 			"paramOutputSchema":         result["paramOutputSchema"],
 			"paramOutputSchemaTreeNode": result["paramOutputSchemaTreeNode"],
 			"paramMappings":             result["paramMappings"],
+			"themes":                    result["themes"],
 		}
 	} else {
 		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": err.Error()}

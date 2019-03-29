@@ -25,6 +25,11 @@
               <FormItem label="work_step_input" prop="work_step_input">
                 <Tabs type="card" :animated="false">
                   <TabPane label="edit">
+                    <!-- 变更主题操作 -->
+                    <Select>
+                      <Option :value="theme" v-for="theme in themes">{{theme}}</Option>
+                    </Select>
+
                     <WorkStepParamInputEdit :paramInputSchemaItems="paramInputSchema.ParamInputSchemaItems"/>
                   </TabPane>
                   <TabPane label="ParamMapping" v-if="showParamMapping">
@@ -74,6 +79,8 @@
     },
     data(){
       return {
+        // 支持的主题
+        themes:[],
         showFormModal:false,
         // 输入参数
         paramInputSchema:"",
@@ -135,7 +142,7 @@
           this.formValidate.work_step_id = result.step.work_step_id;
           this.formValidate.work_step_name = result.step.work_step_name;
           this.formValidate.work_step_type = result.step.work_step_type;
-
+          this.themes = result.themes;
           if(oneOf(result.step.work_step_type, ["work_start","work_end","mapper","entity_parser","goto_condition"])){
             this.showParamMapping = true;
           }else{

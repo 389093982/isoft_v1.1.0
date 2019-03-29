@@ -115,10 +115,12 @@ func LoadWorkStepInfoService(serviceArgs map[string]interface{}) (result map[str
 	if err != nil {
 		return nil, err
 	}
+	factory := &iworknode.WorkStepFactory{WorkStep: &step}
 	var paramMappingsArr []string
 	json.Unmarshal([]byte(step.WorkStepParamMapping), &paramMappingsArr)
 	result["step"] = step
-	result["paramInputSchema"] = schema.GetCacheParamInputSchema(&step, &iworknode.WorkStepFactory{WorkStep: &step})
+	result["paramInputSchema"] = schema.GetCacheParamInputSchema(&step, factory)
+	result["themes"] = schema.GetThemes(factory)
 	result["paramOutputSchema"] = schema.GetCacheParamOutputSchema(&step)
 	result["paramOutputSchemaTreeNode"] = schema.GetCacheParamOutputSchema(&step).RenderToTreeNodes("output")
 	result["paramMappings"] = paramMappingsArr
