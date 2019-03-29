@@ -75,6 +75,8 @@ type WorkStepFactory struct {
 	Receiver  *entry.Receiver
 	DataStore *datastore.DataStore
 	O         orm.Ormer
+	// 当前支持的主题
+	Theme string
 }
 
 type IWorkStep interface {
@@ -114,7 +116,7 @@ func GetIWorkStep(workStepType string) IWorkStep {
 func (this *WorkStepFactory) getProxy() IWorkStep {
 	fieldMap := map[string]interface{}{
 		"WorkStep":         this.WorkStep,
-		"BaseNode":         BaseNode{DataStore: this.DataStore, o: this.O},
+		"BaseNode":         BaseNode{DataStore: this.DataStore, o: this.O, Theme: this.Theme},
 		"Dispatcher":       this.Dispatcher,
 		"Receiver":         this.Receiver,
 		"WorkSubRunFunc":   this.WorkSubRunFunc,

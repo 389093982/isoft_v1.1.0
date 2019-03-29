@@ -172,7 +172,7 @@ export const EditWorkStepBaseInfo = (work_id,work_step_id,work_step_name,work_st
 export const EditWorkStepParamInfo = (work_id,work_step_id,paramInputSchemaStr, paramMappingsStr) => ajax(BASE_URL+"/iwork/editWorkStepParamInfo", {work_id,work_step_id,paramInputSchemaStr,paramMappingsStr},'POST');
 
 // 加载 workstep 记录
-export const LoadWorkStepInfo = (work_id,work_step_id) => ajax(BASE_URL+"/iwork/loadWorkStepInfo", {work_id,work_step_id},'POST');
+export const LoadWorkStepInfo = (work_id,work_step_id,currentTheme) => ajax(BASE_URL+"/iwork/loadWorkStepInfo", {work_id,work_step_id,currentTheme},'POST');
 
 // 加载前置节点输出参数,包括全局参数
 export const LoadPreNodeOutput = (work_id,work_step_id) => ajax(BASE_URL+"/iwork/loadPreNodeOutput", {work_id,work_step_id},'POST');

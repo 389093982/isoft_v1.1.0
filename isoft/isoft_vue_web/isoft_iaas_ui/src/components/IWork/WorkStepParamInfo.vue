@@ -25,6 +25,7 @@
               <FormItem label="work_step_input" prop="work_step_input">
                 <Tabs type="card" :animated="false">
                   <TabPane label="edit">
+                    当前主题:{{currentTheme}}
                     <!-- 变更主题操作 -->
                     <Select>
                       <Option :value="theme" v-for="theme in themes">{{theme}}</Option>
@@ -79,6 +80,8 @@
     },
     data(){
       return {
+        // 当前主题
+        currentTheme:'default',
         // 支持的主题
         themes:[],
         showFormModal:false,
@@ -136,7 +139,7 @@
         })
       },
       loadWorkStepInfo:async function(){
-        const result = await LoadWorkStepInfo(this.formValidate.work_id,this.formValidate.work_step_id);
+        const result = await LoadWorkStepInfo(this.formValidate.work_id,this.formValidate.work_step_id, this.currentTheme);
         if(result.status == "SUCCESS"){
           this.formValidate.work_id = result.step.work_id;
           this.formValidate.work_step_id = result.step.work_step_id;

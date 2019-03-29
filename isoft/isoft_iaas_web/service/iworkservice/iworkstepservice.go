@@ -109,13 +109,14 @@ func LoadWorkStepInfoService(serviceArgs map[string]interface{}) (result map[str
 	result = make(map[string]interface{}, 0)
 	work_id := serviceArgs["work_id"].(int64)
 	work_step_id := serviceArgs["work_step_id"].(int64)
+	currentTheme := serviceArgs["currentTheme"].(string)
 	o := serviceArgs["o"].(orm.Ormer)
 	// 读取 work_step 信息
 	step, err := iwork.QueryWorkStepInfo(work_id, work_step_id, o)
 	if err != nil {
 		return nil, err
 	}
-	factory := &iworknode.WorkStepFactory{WorkStep: &step}
+	factory := &iworknode.WorkStepFactory{WorkStep: &step, Theme: currentTheme}
 	var paramMappingsArr []string
 	json.Unmarshal([]byte(step.WorkStepParamMapping), &paramMappingsArr)
 	result["step"] = step
