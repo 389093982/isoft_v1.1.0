@@ -72,7 +72,7 @@ type WorkStepFactory struct {
 	O          orm.Ormer
 }
 
-type IStandardWorkStep interface {
+type IWorkStep interface {
 	// 节点执行的方法
 	Execute(trackingId string)
 	// 获取默认输入参数
@@ -95,16 +95,16 @@ func (this *WorkStepFactory) Execute(trackingId string) {
 	}
 }
 
-func GetIStandardWorkStep(workStepType string) IStandardWorkStep {
+func GetIWorkStep(workStepType string) IWorkStep {
 	// 调整 workStepType
 	_workStepType := strings.ToUpper(strings.Replace(workStepType, "_", "", -1) + "NODE")
 	if t, ok := typeMap[_workStepType]; ok {
-		return reflect.New(t).Interface().(IStandardWorkStep)
+		return reflect.New(t).Interface().(IWorkStep)
 	}
 	panic(fmt.Sprintf("invalid workStepType for %s", workStepType))
 }
 
-func (this *WorkStepFactory) getProxy() IStandardWorkStep {
+func (this *WorkStepFactory) getProxy() IWorkStep {
 	fieldMap := map[string]interface{}{
 		"WorkStep":         this.WorkStep,
 		"BaseNode":         BaseNode{DataStore: this.DataStore, o: this.O},
@@ -114,7 +114,7 @@ func (this *WorkStepFactory) getProxy() IStandardWorkStep {
 		"BlockStep":        this.BlockStep,
 		"BlockStepRunFunc": this.BlockStepRunFunc,
 	}
-	stepNode := GetIStandardWorkStep(this.WorkStep.WorkStepType)
+	stepNode := GetIWorkStep(this.WorkStep.WorkStepType)
 	if stepNode == nil {
 		panic(errors.New(fmt.Sprintf("[%v-%v]unsupport workStepType:%s",
 			this.WorkStep.WorkId, this.WorkStep.WorkStepName, this.WorkStep.WorkStepType)))
