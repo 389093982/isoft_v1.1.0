@@ -5,7 +5,7 @@ import (
 	"github.com/astaxie/beego/orm"
 	"isoft/isoft/common/stringutil"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
-	"isoft/isoft_iaas_web/core/iworknode"
+	"isoft/isoft_iaas_web/core/iworkplugin/iworknode"
 	"isoft/isoft_iaas_web/core/iworkutil"
 	"isoft/isoft_iaas_web/core/iworkutil/errorutil"
 	"isoft/isoft_iaas_web/core/iworkvalid"

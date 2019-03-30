@@ -8,7 +8,7 @@ import (
 	"isoft/isoft/common/pageutil"
 	"isoft/isoft_iaas_web/core/iworkconst"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
-	"isoft/isoft_iaas_web/core/iworknode"
+	"isoft/isoft_iaas_web/core/iworkplugin/iworknode"
 	"isoft/isoft_iaas_web/core/iworkrun"
 	"isoft/isoft_iaas_web/models/iwork"
 	"strings"
