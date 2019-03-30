@@ -8,6 +8,7 @@ import (
 	"isoft/isoft_iaas_web/core/iworkdata/datastore"
 	"isoft/isoft_iaas_web/core/iworkdata/entry"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
+	"isoft/isoft_iaas_web/core/iworkplugin/iworkprotocol"
 	"isoft/isoft_iaas_web/models/iwork"
 	"reflect"
 	"strings"
@@ -72,21 +73,6 @@ type WorkStepFactory struct {
 	O          orm.Ormer
 }
 
-type IWorkStep interface {
-	// 节点执行的方法
-	Execute(trackingId string)
-	// 获取默认输入参数
-	GetDefaultParamInputSchema() *schema.ParamInputSchema
-	// 获取动态输入参数
-	GetRuntimeParamInputSchema() *schema.ParamInputSchema
-	// 获取默认输出参数
-	GetDefaultParamOutputSchema() *schema.ParamOutputSchema
-	// 获取动态输出参数
-	GetRuntimeParamOutputSchema() *schema.ParamOutputSchema
-	// 节点定制化校验函数,校验不通过会触发 panic
-	ValidateCustom() (checkResult []string)
-}
-
 func (this *WorkStepFactory) Execute(trackingId string) {
 	proxy := this.getProxy()
 	proxy.Execute(trackingId)
@@ -95,16 +81,16 @@ func (this *WorkStepFactory) Execute(trackingId string) {
 	}
 }
 
-func GetIWorkStep(workStepType string) IWorkStep {
+func GetIWorkStep(workStepType string) iworkprotocol.IWorkStep {
 	// 调整 workStepType
 	_workStepType := strings.ToUpper(strings.Replace(workStepType, "_", "", -1) + "NODE")
 	if t, ok := typeMap[_workStepType]; ok {
-		return reflect.New(t).Interface().(IWorkStep)
+		return reflect.New(t).Interface().(iworkprotocol.IWorkStep)
 	}
 	panic(fmt.Sprintf("invalid workStepType for %s", workStepType))
 }
 
-func (this *WorkStepFactory) getProxy() IWorkStep {
+func (this *WorkStepFactory) getProxy() iworkprotocol.IWorkStep {
 	fieldMap := map[string]interface{}{
 		"WorkStep":         this.WorkStep,
 		"BaseNode":         BaseNode{DataStore: this.DataStore, o: this.O},
