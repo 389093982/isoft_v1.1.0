@@ -9,6 +9,7 @@ import (
 	"isoft/isoft_iaas_web/core/iworkdata/entry"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
 	"isoft/isoft_iaas_web/core/iworkplugin/iworkprotocol"
+	"isoft/isoft_iaas_web/core/iworkutil/reflectutil"
 	"isoft/isoft_iaas_web/models/iwork"
 	"reflect"
 	"strings"
@@ -106,24 +107,8 @@ func (this *WorkStepFactory) getProxy() iworkprotocol.IWorkStep {
 			this.WorkStep.WorkId, this.WorkStep.WorkStepName, this.WorkStep.WorkStepType)))
 	}
 	// 从 map 中找出属性值赋值给对象
-	fillFieldValueToStruct(stepNode, fieldMap)
+	reflectutil.FillFieldValueToStruct(stepNode, fieldMap)
 	return stepNode
-}
-
-// 将结构体里的成员按照字段名字来赋值
-func fillFieldValueToStruct(ptr interface{}, fields map[string]interface{}) {
-	v := reflect.ValueOf(ptr).Elem() // the struct variable
-	for i := 0; i < v.NumField(); i++ {
-		fieldInfo := v.Type().Field(i) // a reflect.StructField
-		if value, ok := fields[fieldInfo.Name]; ok {
-			//给结构体赋值
-			//保证赋值时数据类型一致
-			if reflect.ValueOf(value).Type() == v.FieldByName(fieldInfo.Name).Type() {
-				v.FieldByName(fieldInfo.Name).Set(reflect.ValueOf(value))
-			}
-		}
-	}
-	return
 }
 
 func (this *WorkStepFactory) GetDefaultParamInputSchema() *schema.ParamInputSchema {
