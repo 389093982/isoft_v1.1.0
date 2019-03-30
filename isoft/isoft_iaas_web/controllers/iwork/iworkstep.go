@@ -63,7 +63,8 @@ func (this *WorkController) DeleteWorkStepByWorkStepId() {
 func (this *WorkController) LoadWorkStepInfo() {
 	work_id, _ := this.GetInt64("work_id")
 	work_step_id, _ := this.GetInt64("work_step_id")
-	serviceArgs := map[string]interface{}{"work_id": work_id, "work_step_id": work_step_id}
+	currentTheme := this.GetString("currentTheme")
+	serviceArgs := map[string]interface{}{"work_id": work_id, "work_step_id": work_step_id, "currentTheme": currentTheme}
 	if result, err := service.ExecuteResultServiceWithTx(serviceArgs, iworkservice.LoadWorkStepInfoService); err == nil {
 		this.Data["json"] = &map[string]interface{}{
 			"status":                    "SUCCESS",
@@ -72,6 +73,7 @@ func (this *WorkController) LoadWorkStepInfo() {
 			"paramOutputSchema":         result["paramOutputSchema"],
 			"paramOutputSchemaTreeNode": result["paramOutputSchemaTreeNode"],
 			"paramMappings":             result["paramMappings"],
+			"themes":                    result["themes"],
 		}
 	} else {
 		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": err.Error()}

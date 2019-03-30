@@ -20,6 +20,11 @@ import (
 type BaseNode struct {
 	DataStore *datastore.DataStore
 	o         orm.Ormer
+	Theme     string
+}
+
+func (this *BaseNode) GetThemes() []string {
+	return []string{"default"}
 }
 
 func (this *BaseNode) GetOrmer() orm.Ormer {
