@@ -12,10 +12,6 @@ type Base64EncodeNode struct {
 	WorkStep *iwork.WorkStep
 }
 
-func (this *Base64EncodeNode) GetThemes() []string {
-	return []string{"default", "demo1", "demo2"}
-}
-
 func (this *Base64EncodeNode) Execute(trackingId string) {
 	// 节点中间数据
 	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, this.DataStore)

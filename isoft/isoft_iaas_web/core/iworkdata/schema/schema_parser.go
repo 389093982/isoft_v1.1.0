@@ -28,15 +28,6 @@ type IParamSchemaParser interface {
 	GetRuntimeParamOutputSchema() *ParamOutputSchema
 }
 
-type ITheme interface {
-	// 获取所有的主题,默认主题为 default
-	GetThemes() []string
-}
-
-func GetThemes(theme ITheme) []string {
-	return theme.GetThemes()
-}
-
 // 获取出参 schema
 func GetRuntimeParamOutputSchema(paramSchemaParser IParamSchemaParser) *ParamOutputSchema {
 	return paramSchemaParser.GetRuntimeParamOutputSchema()
