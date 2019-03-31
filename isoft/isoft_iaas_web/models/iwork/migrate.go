@@ -42,9 +42,10 @@ func QueryMigrateInfo(id int64) (migrate TableMigrate, err error) {
 	return
 }
 
-func QueryMigrateData(tableName, migrateType string) (migrate TableMigrate, err error) {
+// 最近一次迁移记录
+func QueryLastMigrate(tableName string) (migrate TableMigrate, err error) {
 	o := orm.NewOrm()
 	err = o.QueryTable("table_migrate").Filter("table_name", tableName).
-		Filter("migrate_type", migrateType).OrderBy("-last_updated_time").One(&migrate)
+		OrderBy("-last_updated_time").One(&migrate)
 	return
 }

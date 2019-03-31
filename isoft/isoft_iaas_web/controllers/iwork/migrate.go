@@ -21,7 +21,8 @@ func (this *WorkController) SubmitMigrate() {
 		}
 
 		var migrateSql, migrateType string
-		if preMigrate, err := iwork.QueryMigrateData(tableName, "CREATE"); err == nil {
+		// 有最近一次创建或者修改记录
+		if preMigrate, err := iwork.QueryLastMigrate(tableName); err == nil {
 			migrateType = "ALTER"
 			var preTableInfo iworkquicksql.TableInfo
 			json.Unmarshal([]byte(preMigrate.TableInfo), &preTableInfo)
@@ -31,17 +32,19 @@ func (this *WorkController) SubmitMigrate() {
 			migrateSql = iworkquicksql.CreateTable(tableInfo)
 		}
 		if tableInfoStr, err1 := json.Marshal(tableInfo); err1 == nil {
-			tm := &iwork.TableMigrate{
-				TableName:       tableName,
-				TableInfo:       string(tableInfoStr),
-				TableMigrateSql: migrateSql,
-				MigrateType:     migrateType,
-				CreatedBy:       "SYSTEM",
-				CreatedTime:     time.Now(),
-				LastUpdatedBy:   "SYSTEM",
-				LastUpdatedTime: time.Now(),
+			if migrateSql != "" {
+				tm := &iwork.TableMigrate{
+					TableName:       tableName,
+					TableInfo:       string(tableInfoStr),
+					TableMigrateSql: migrateSql,
+					MigrateType:     migrateType,
+					CreatedBy:       "SYSTEM",
+					CreatedTime:     time.Now(),
+					LastUpdatedBy:   "SYSTEM",
+					LastUpdatedTime: time.Now(),
+				}
+				_, err = iwork.InsertOrUpdateTableMigrate(tm)
 			}
-			_, err = iwork.InsertOrUpdateTableMigrate(tm)
 		} else {
 			err = err1
 		}
