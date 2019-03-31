@@ -38,11 +38,12 @@ func (this *MigrateExecutor) initial() {
 	this.ExecSQL(versionTable)
 }
 
-func (this *MigrateExecutor) ExecSQL(sql string, args ...interface{}) {
+func (this *MigrateExecutor) ExecSQL(sql string, args ...interface{}) (rs sql.Result, err error) {
 	stmt, err := this.db.Prepare(sql)
 	checkError(err)
-	_, err = stmt.Exec(args...)
+	rs, err = stmt.Exec(args...)
 	checkError(err)
+	return
 }
 
 func (this *MigrateExecutor) record(flag, hash, sql string) {
@@ -54,11 +55,33 @@ func (this *MigrateExecutor) migrate() {
 	migrates, err := iwork.QueryAllMigrate()
 	checkError(err)
 	for _, migrate := range migrates {
+		this.migrateOne(migrate)
+	}
+}
+
+func (this *MigrateExecutor) checkExecuted(hash string) bool {
+	sql := `SELECT COUNT(*) FROM migrate_version WHERE hash = ?`
+	rs, _ := this.ExecSQL(sql, hash)
+	if count, err := rs.RowsAffected(); err == nil && count > 0 {
+		return true
+	}
+	return false
+}
+
+func (this *MigrateExecutor) migrateOne(migrate iwork.TableMigrate) {
+	hash := hashutil.CalculateHashWithString(migrate.TableMigrateSql)
+	if !this.checkExecuted(hash) {
+		// 每次迁移都有可能有多个执行 sql
 		executeSqls := strings.Split(migrate.TableMigrateSql, ";")
 		for _, executeSql := range executeSqls {
-			this.ExecSQL(executeSql)
-			this.record("true", hashutil.CalculateHashWithString(executeSql), executeSql)
+			detailHash := hashutil.CalculateHashWithString(executeSql)
+			if !this.checkExecuted(detailHash) {
+				this.ExecSQL(executeSql)
+				this.record("true", detailHash, executeSql)
+			}
 		}
+		// 计算hash 值
+		this.record("true", hash, migrate.TableMigrateSql)
 	}
 }
 
