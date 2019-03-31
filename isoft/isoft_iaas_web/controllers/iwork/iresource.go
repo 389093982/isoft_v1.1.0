@@ -12,12 +12,12 @@ import (
 
 func (this *WorkController) AddResource() {
 	var resource iwork.Resource
-	resource.ResourceName = this.Input().Get("resource_name")
-	resource.ResourceType = this.Input().Get("resource_type")
-	resource.ResourceUrl = this.Input().Get("resource_url")
-	resource.ResourceDsn = this.Input().Get("resource_dsn")
-	resource.ResourceUsername = this.Input().Get("resource_username")
-	resource.ResourcePassword = this.Input().Get("resource_password")
+	resource.ResourceName = this.GetString("resource_name")
+	resource.ResourceType = this.GetString("resource_type")
+	resource.ResourceUrl = this.GetString("resource_url")
+	resource.ResourceDsn = this.GetString("resource_dsn")
+	resource.ResourceUsername = this.GetString("resource_username")
+	resource.ResourcePassword = this.GetString("resource_password")
 	resource.CreatedBy = "SYSTEM"
 	resource.CreatedTime = time.Now()
 	resource.LastUpdatedBy = "SYSTEM"

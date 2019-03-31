@@ -1,6 +1,18 @@
 <template>
   <div>
-    <Button type="success" size="small" @click="editMigrate(null)" style="margin-bottom: 6px">新建表</Button>
+    <Row style="margin-bottom: 10px;">
+      <Col span="12">
+        <Button type="success" size="small" @click="editMigrate(null)" style="margin-bottom: 6px">新建表</Button>
+      </Col>
+      <Col span="12">
+        <Select v-model="currentResource" style="width:400px">
+          <Option v-for="resource in resources" :value="resource.resource_name">
+            {{ resource.resource_name }} - {{ resource.resource_dsn }}
+          </Option>
+        </Select>
+        <Button type="success" size="small" @click="executeMigrate" style="margin-bottom: 6px">执行迁移</Button>
+      </Col>
+    </Row>
 
     <Table border :columns="columns1" :data="migrates" size="small"></Table>
     <Page :total="total" :page-size="offset" show-total show-sizer :styles="{'text-align': 'center','margin-top': '10px'}"
@@ -10,11 +22,14 @@
 
 <script>
   import {FilterPageMigrate} from "../../../api"
+  import {ExecuteMigrate} from "../../../api"
 
   export default {
     name: "MigrateList",
     data(){
       return {
+        currentResourceName:'',
+        resources:[],
         migrates:[],
         // 当前页
         current_page:1,
@@ -72,6 +87,7 @@
       refreshMigrateList: async function(){
         const result = await FilterPageMigrate(this.offset, this.current_page);
         this.migrates = result.migrates;
+        this.resources = result.resources;
         this.total = result.paginator.totalcount;
       },
       handleChange(page){
@@ -88,6 +104,10 @@
         }else{
           this.$router.push({ path: '/iwork/editMigrate'});
         }
+      },
+      executeMigrate: async function () {
+        const result = ExecuteMigrate(this.currentResourceName);
+        alert(result);
       }
     },
     mounted(){

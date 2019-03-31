@@ -46,9 +46,13 @@ func QueryResource(condArr map[string]string, page int, offset int) (resources [
 	return
 }
 
-func QueryAllResource() (resources []Resource) {
+func QueryAllResource(resource_type ...string) (resources []Resource) {
 	o := orm.NewOrm()
-	o.QueryTable("resource").All(&resources)
+	qs := o.QueryTable("resource")
+	if len(resource_type) > 0 {
+		qs = qs.Filter("resource_type", resource_type[0])
+	}
+	qs.All(&resources)
 	return
 }
 

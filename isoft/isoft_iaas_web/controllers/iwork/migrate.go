@@ -9,6 +9,11 @@ import (
 	"time"
 )
 
+func (this *WorkController) ExecuteMigrate() {
+	resource_name := this.GetString("resource_name")
+	resource, _ := iwork.QueryResourceByName(resource_name)
+}
+
 func (this *WorkController) SubmitMigrate() {
 	var err error
 	tableName := this.GetString("tableName")
@@ -62,9 +67,14 @@ func (this *WorkController) FilterPageMigrate() {
 	current_page, _ := this.GetInt("current_page", 1) // 当前页
 	migrates, count, err := iwork.QueryMigrate(current_page, offset)
 	if err == nil {
+		resources := iwork.QueryAllResource("db")
 		paginator := pagination.SetPaginator(this.Ctx, offset, count)
-		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "migrates": migrates,
-			"paginator": pageutil.Paginator(paginator.Page(), paginator.PerPageNums, paginator.Nums())}
+		this.Data["json"] = &map[string]interface{}{
+			"status":    "SUCCESS",
+			"migrates":  migrates,
+			"paginator": pageutil.Paginator(paginator.Page(), paginator.PerPageNums, paginator.Nums()),
+			"resources": resources,
+		}
 	} else {
 		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": err.Error()}
 	}
