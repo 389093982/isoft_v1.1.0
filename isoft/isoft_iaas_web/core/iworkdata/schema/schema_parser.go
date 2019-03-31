@@ -2,6 +2,7 @@ package schema
 
 import (
 	"encoding/json"
+	"isoft/isoft_iaas_web/core/iworkutil/datatypeutil"
 	"isoft/isoft_iaas_web/models/iwork"
 	"sort"
 	"strings"
@@ -47,14 +48,12 @@ func GetCacheParamInputSchema(step *iwork.WorkStep, paramSchemaParser IParamSche
 		}
 	}
 	// 获取当前 work_step 对应的 paramInputSchema
-	paramInputSchema := paramSchemaParser.GetDefaultParamInputSchema()
-	return paramInputSchema
+	return paramSchemaParser.GetDefaultParamInputSchema()
 }
 
 // 获取默认入参 schema
 func GetDefaultParamInputSchema(paramSchemaParser IParamSchemaParser) *ParamInputSchema {
-	paramInputSchema := paramSchemaParser.GetDefaultParamInputSchema()
-	return paramInputSchema
+	return paramSchemaParser.GetDefaultParamInputSchema()
 }
 
 // 获取入参 schema
@@ -64,10 +63,7 @@ func GetRuntimeParamInputSchema(paramSchemaParser IParamSchemaParser) *ParamInpu
 
 // 根据传入的 paramMap 构建 ParamInputSchema 对象
 func BuildParamInputSchemaWithDefaultMap(paramMap map[int][]string) *ParamInputSchema {
-	var keys []int
-	for key, _ := range paramMap {
-		keys = append(keys, key)
-	}
+	keys := datatypeutil.GetMapKeySlice(paramMap, []int{}).([]int)
 	sort.Ints(keys)
 	items := make([]ParamInputSchemaItem, 0)
 	for _, key := range keys {
