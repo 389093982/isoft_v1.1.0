@@ -27,6 +27,7 @@
 <script>
   import ISimpleConfirmModal from "../../Common/modal/ISimpleConfirmModal"
   import {SubmitMigrate} from "../../../api"
+  import {GetMigrateInfo} from "../../../api"
 
   export default {
     name: "MigrateList",
@@ -176,6 +177,18 @@
       alterTableMigrate(){
         alert(1);
       },
+      refreshMigrateInfo: async function(id){
+        const result = await GetMigrateInfo(id);
+        if(result.status=="SUCCESS"){
+          this.tableName = result.migrate.table_name;
+          this.tableColumns = JSON.parse(result.migrate.table_columns).table_columns;
+        }
+      }
+    },
+    mounted(){
+      if(this.$route.query.id != undefined && this.$route.query.id != null){
+        this.refreshMigrateInfo(this.$route.query.id);
+      }
     }
   }
 </script>

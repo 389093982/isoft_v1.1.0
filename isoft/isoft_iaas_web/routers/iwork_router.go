@@ -51,4 +51,5 @@ func loadloadIWorkerRouterDetail() {
 
 	beego.Router("/api/iwork/submitMigrate", &iwork.WorkController{}, "post:SubmitMigrate")
 	beego.Router("/api/iwork/filterPageMigrate", &iwork.WorkController{}, "post:FilterPageMigrate")
+	beego.Router("/api/iwork/getMigrateInfo", &iwork.WorkController{}, "post:GetMigrateInfo")
 }

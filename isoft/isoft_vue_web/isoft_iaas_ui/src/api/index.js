@@ -215,5 +215,7 @@ export const SubmitMigrate = (tableName, tableColunms) => ajax(BASE_URL+"/iwork/
 
 export const FilterPageMigrate = (offset,current_page) => ajax(BASE_URL+"/iwork/filterPageMigrate", {offset,current_page},'POST');
 
+export const GetMigrateInfo = (id) => ajax(BASE_URL+"/iwork/getMigrateInfo", {id},'POST');
+
 // 跨模块使用,模块化部署时需要使用 nginx 代理
 export const LoginAddr = "/sso/login/";

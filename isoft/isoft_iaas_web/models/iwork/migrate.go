@@ -33,3 +33,9 @@ func QueryMigrate(current_page, offset int) (migrates []TableMigrate, counts int
 	_, err = qs.All(&migrates)
 	return
 }
+
+func QueryMigrateInfo(id int64) (migrate TableMigrate, err error) {
+	o := orm.NewOrm()
+	err = o.QueryTable("table_migrate").Filter("id", id).One(&migrate)
+	return
+}

@@ -54,3 +54,14 @@ func (this *WorkController) FilterPageMigrate() {
 	}
 	this.ServeJSON()
 }
+
+func (this *WorkController) GetMigrateInfo() {
+	id, _ := this.GetInt64("id")
+	migrate, err := iwork.QueryMigrateInfo(id)
+	if err == nil {
+		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "migrate": migrate}
+	} else {
+		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": err.Error()}
+	}
+	this.ServeJSON()
+}
