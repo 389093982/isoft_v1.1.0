@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"isoft/isoft_iaas_web/core/iworkconst"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
+	"isoft/isoft_iaas_web/core/iworkmodels"
 	"isoft/isoft_iaas_web/models/iwork"
 	"strings"
 )
@@ -50,7 +51,7 @@ func (this *GotoConditionNode) Execute(trackingId string) {
 	}
 }
 
-func (this *GotoConditionNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
+func (this *GotoConditionNode) GetDefaultParamInputSchema() *iworkmodels.ParamInputSchema {
 	paramMap := map[int][]string{
 		1: []string{iworkconst.BOOL_PREFIX + "goto_end_condition?", "表达式为真时直接跳往 end 节点!"},
 		2: []string{iworkconst.BOOL_PREFIX + "goto_out_condition?", "表达式为真时直接结束当前流程,返回上级流程继续执行!"},
@@ -58,29 +59,29 @@ func (this *GotoConditionNode) GetDefaultParamInputSchema() *schema.ParamInputSc
 	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
 }
 
-func (this *GotoConditionNode) GetRuntimeParamInputSchema() *schema.ParamInputSchema {
+func (this *GotoConditionNode) GetRuntimeParamInputSchema() *iworkmodels.ParamInputSchema {
 	var paramMappingsArr []string
 	json.Unmarshal([]byte(this.WorkStep.WorkStepParamMapping), &paramMappingsArr)
-	items := make([]schema.ParamInputSchemaItem, 0)
+	items := make([]iworkmodels.ParamInputSchemaItem, 0)
 	for _, paramMapping := range paramMappingsArr {
-		items = append(items, schema.ParamInputSchemaItem{
+		items = append(items, iworkmodels.ParamInputSchemaItem{
 			ParamName: iworkconst.BOOL_PREFIX + paramMapping + "_condition",
 			ParamDesc: fmt.Sprintf("条件满足时跳往对应节点继续执行！"),
 		})
-		items = append(items, schema.ParamInputSchemaItem{
+		items = append(items, iworkmodels.ParamInputSchemaItem{
 			ParamName: iworkconst.STRING_PREFIX + paramMapping + "_redirect",
 			ParamDesc: fmt.Sprintf("满足条件时跳往的节点！"),
 		})
 	}
-	return &schema.ParamInputSchema{ParamInputSchemaItems: items}
+	return &iworkmodels.ParamInputSchema{ParamInputSchemaItems: items}
 }
 
-func (this *GotoConditionNode) GetDefaultParamOutputSchema() *schema.ParamOutputSchema {
-	return &schema.ParamOutputSchema{}
+func (this *GotoConditionNode) GetDefaultParamOutputSchema() *iworkmodels.ParamOutputSchema {
+	return &iworkmodels.ParamOutputSchema{}
 }
 
-func (this *GotoConditionNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
-	return &schema.ParamOutputSchema{}
+func (this *GotoConditionNode) GetRuntimeParamOutputSchema() *iworkmodels.ParamOutputSchema {
+	return &iworkmodels.ParamOutputSchema{}
 }
 
 func (this *GotoConditionNode) ValidateCustom() (checkResult []string) {

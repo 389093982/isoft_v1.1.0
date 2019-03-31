@@ -2,7 +2,7 @@ package param
 
 import (
 	"encoding/json"
-	"isoft/isoft_iaas_web/core/iworkdata/schema"
+	"isoft/isoft_iaas_web/core/iworkmodels"
 	"isoft/isoft_iaas_web/models/iwork"
 	"strings"
 )
@@ -66,7 +66,7 @@ type ParamNameParser struct {
 
 // 根据 ParamName 获取相对值,真值可能需要 ParamVauleParser 处理一下
 func (this *ParamNameParser) ParseAndGetRelativeParamValue() string {
-	var paramInputSchema schema.ParamInputSchema
+	var paramInputSchema iworkmodels.ParamInputSchema
 	if err := json.Unmarshal([]byte(this.Step.WorkStepInput), &paramInputSchema); err != nil {
 		return ""
 	}

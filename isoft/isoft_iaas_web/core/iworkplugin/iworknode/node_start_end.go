@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"isoft/isoft_iaas_web/core/iworkdata/entry"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
+	"isoft/isoft_iaas_web/core/iworkmodels"
 	"isoft/isoft_iaas_web/models/iwork"
 )
 
@@ -33,31 +34,31 @@ func (this *WorkStartNode) Execute(trackingId string) {
 	this.SubmitParamOutputSchemaDataToDataStore(this.WorkStep, this.DataStore, tmpDataMap)
 }
 
-func (this *WorkStartNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
-	return &schema.ParamInputSchema{}
+func (this *WorkStartNode) GetDefaultParamInputSchema() *iworkmodels.ParamInputSchema {
+	return &iworkmodels.ParamInputSchema{}
 }
 
-func (this *WorkStartNode) GetRuntimeParamInputSchema() *schema.ParamInputSchema {
+func (this *WorkStartNode) GetRuntimeParamInputSchema() *iworkmodels.ParamInputSchema {
 	var paramMappingsArr []string
 	json.Unmarshal([]byte(this.WorkStep.WorkStepParamMapping), &paramMappingsArr)
-	items := make([]schema.ParamInputSchemaItem, 0)
+	items := make([]iworkmodels.ParamInputSchemaItem, 0)
 	for _, paramMapping := range paramMappingsArr {
-		items = append(items, schema.ParamInputSchemaItem{ParamName: paramMapping})
+		items = append(items, iworkmodels.ParamInputSchemaItem{ParamName: paramMapping})
 	}
-	return &schema.ParamInputSchema{ParamInputSchemaItems: items}
+	return &iworkmodels.ParamInputSchema{ParamInputSchemaItems: items}
 }
 
-func (this *WorkStartNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
-	items := make([]schema.ParamOutputSchemaItem, 0)
+func (this *WorkStartNode) GetRuntimeParamOutputSchema() *iworkmodels.ParamOutputSchema {
+	items := make([]iworkmodels.ParamOutputSchemaItem, 0)
 	inputSchema := schema.GetCacheParamInputSchema(this.WorkStep, &WorkStepFactory{WorkStep: this.WorkStep})
 	for _, item := range inputSchema.ParamInputSchemaItems {
-		items = append(items, schema.ParamOutputSchemaItem{ParamName: item.ParamName})
+		items = append(items, iworkmodels.ParamOutputSchemaItem{ParamName: item.ParamName})
 	}
-	return &schema.ParamOutputSchema{ParamOutputSchemaItems: items}
+	return &iworkmodels.ParamOutputSchema{ParamOutputSchemaItems: items}
 }
 
-func (this *WorkStartNode) GetDefaultParamOutputSchema() *schema.ParamOutputSchema {
-	return &schema.ParamOutputSchema{}
+func (this *WorkStartNode) GetDefaultParamOutputSchema() *iworkmodels.ParamOutputSchema {
+	return &iworkmodels.ParamOutputSchema{}
 }
 
 func (this *WorkStartNode) ValidateCustom() (checkResult []string) {
@@ -79,31 +80,31 @@ func (this *WorkEndNode) Execute(trackingId string) {
 	this.Receiver = &entry.Receiver{TmpDataMap: tmpDataMap}
 }
 
-func (this *WorkEndNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
-	return &schema.ParamInputSchema{}
+func (this *WorkEndNode) GetDefaultParamInputSchema() *iworkmodels.ParamInputSchema {
+	return &iworkmodels.ParamInputSchema{}
 }
 
-func (this *WorkEndNode) GetRuntimeParamInputSchema() *schema.ParamInputSchema {
+func (this *WorkEndNode) GetRuntimeParamInputSchema() *iworkmodels.ParamInputSchema {
 	var paramMappingsArr []string
 	json.Unmarshal([]byte(this.WorkStep.WorkStepParamMapping), &paramMappingsArr)
-	items := make([]schema.ParamInputSchemaItem, 0)
+	items := make([]iworkmodels.ParamInputSchemaItem, 0)
 	for _, paramMapping := range paramMappingsArr {
-		items = append(items, schema.ParamInputSchemaItem{ParamName: paramMapping})
+		items = append(items, iworkmodels.ParamInputSchemaItem{ParamName: paramMapping})
 	}
-	return &schema.ParamInputSchema{ParamInputSchemaItems: items}
+	return &iworkmodels.ParamInputSchema{ParamInputSchemaItems: items}
 }
 
-func (this *WorkEndNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
-	items := make([]schema.ParamOutputSchemaItem, 0)
+func (this *WorkEndNode) GetRuntimeParamOutputSchema() *iworkmodels.ParamOutputSchema {
+	items := make([]iworkmodels.ParamOutputSchemaItem, 0)
 	inputSchema := schema.GetCacheParamInputSchema(this.WorkStep, &WorkStepFactory{WorkStep: this.WorkStep})
 	for _, item := range inputSchema.ParamInputSchemaItems {
-		items = append(items, schema.ParamOutputSchemaItem{ParamName: item.ParamName})
+		items = append(items, iworkmodels.ParamOutputSchemaItem{ParamName: item.ParamName})
 	}
-	return &schema.ParamOutputSchema{ParamOutputSchemaItems: items}
+	return &iworkmodels.ParamOutputSchema{ParamOutputSchemaItems: items}
 }
 
-func (this *WorkEndNode) GetDefaultParamOutputSchema() *schema.ParamOutputSchema {
-	return &schema.ParamOutputSchema{}
+func (this *WorkEndNode) GetDefaultParamOutputSchema() *iworkmodels.ParamOutputSchema {
+	return &iworkmodels.ParamOutputSchema{}
 }
 
 func (this *WorkEndNode) ValidateCustom() (checkResult []string) {

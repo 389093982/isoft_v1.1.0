@@ -9,6 +9,7 @@ import (
 	"isoft/isoft_iaas_web/core/iworkconst"
 	"isoft/isoft_iaas_web/core/iworkdata/block"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
+	"isoft/isoft_iaas_web/core/iworkmodels"
 	"isoft/isoft_iaas_web/core/iworkplugin/iworknode"
 	"isoft/isoft_iaas_web/core/iworkutil"
 	"isoft/isoft_iaas_web/core/iworkutil/datatypeutil"
@@ -17,39 +18,39 @@ import (
 	"time"
 )
 
-func LoadResourceInfo() *schema.ParamOutputSchema {
-	pos := &schema.ParamOutputSchema{
-		ParamOutputSchemaItems: []schema.ParamOutputSchemaItem{},
+func LoadResourceInfo() *iworkmodels.ParamOutputSchema {
+	pos := &iworkmodels.ParamOutputSchema{
+		ParamOutputSchemaItems: []iworkmodels.ParamOutputSchemaItem{},
 	}
 	resources := iwork.QueryAllResource()
 	for _, resource := range resources {
-		pos.ParamOutputSchemaItems = append(pos.ParamOutputSchemaItems, schema.ParamOutputSchemaItem{
+		pos.ParamOutputSchemaItems = append(pos.ParamOutputSchemaItems, iworkmodels.ParamOutputSchemaItem{
 			ParamName: resource.ResourceName,
 		})
 	}
 	return pos
 }
 
-func LoadWorkInfo() *schema.ParamOutputSchema {
-	pos := &schema.ParamOutputSchema{
-		ParamOutputSchemaItems: []schema.ParamOutputSchemaItem{},
+func LoadWorkInfo() *iworkmodels.ParamOutputSchema {
+	pos := &iworkmodels.ParamOutputSchema{
+		ParamOutputSchemaItems: []iworkmodels.ParamOutputSchemaItem{},
 	}
 	works := iwork.QueryAllWorkInfo(orm.NewOrm())
 	for _, work := range works {
-		pos.ParamOutputSchemaItems = append(pos.ParamOutputSchemaItems, schema.ParamOutputSchemaItem{
+		pos.ParamOutputSchemaItems = append(pos.ParamOutputSchemaItems, iworkmodels.ParamOutputSchemaItem{
 			ParamName: work.WorkName,
 		})
 	}
 	return pos
 }
 
-func LoadEntityInfo() *schema.ParamOutputSchema {
-	pos := &schema.ParamOutputSchema{
-		ParamOutputSchemaItems: []schema.ParamOutputSchemaItem{},
+func LoadEntityInfo() *iworkmodels.ParamOutputSchema {
+	pos := &iworkmodels.ParamOutputSchema{
+		ParamOutputSchemaItems: []iworkmodels.ParamOutputSchemaItem{},
 	}
 	entities := iwork.QueryAllEntityInfo()
 	for _, entity := range entities {
-		pos.ParamOutputSchemaItems = append(pos.ParamOutputSchemaItems, schema.ParamOutputSchemaItem{
+		pos.ParamOutputSchemaItems = append(pos.ParamOutputSchemaItems, iworkmodels.ParamOutputSchemaItem{
 			ParamName: entity.EntityName,
 		})
 	}
@@ -62,7 +63,7 @@ func LoadPreNodeOutputService(serviceArgs map[string]interface{}) (result map[st
 	work_id := serviceArgs["work_id"].(int64)
 	work_step_id := serviceArgs["work_step_id"].(int64)
 	o := serviceArgs["o"].(orm.Ormer)
-	preParamOutputSchemaTreeNodeArr := make([]*schema.TreeNode, 0)
+	preParamOutputSchemaTreeNodeArr := make([]*iworkmodels.TreeNode, 0)
 	// 加载 resource 参数
 	pos := LoadResourceInfo()
 	preParamOutputSchemaTreeNodeArr = append(preParamOutputSchemaTreeNodeArr, pos.RenderToTreeNodes("$RESOURCE"))
@@ -419,7 +420,7 @@ func EditWorkStepParamInfoService(serviceArgs map[string]interface{}) error {
 	paramInputSchemaStr := serviceArgs["paramInputSchemaStr"].(string)
 	paramMappingsStr := serviceArgs["paramMappingsStr"].(string)
 	o := serviceArgs["o"].(orm.Ormer)
-	var paramInputSchema schema.ParamInputSchema
+	var paramInputSchema iworkmodels.ParamInputSchema
 	json.Unmarshal([]byte(paramInputSchemaStr), &paramInputSchema)
 	step, err := iwork.QueryOneWorkStep(work_id, work_step_id, o)
 	if err != nil {
@@ -481,7 +482,7 @@ func BuildDynamicInput(work_id int64, work_step_id int64, o orm.Ormer) {
 			newInputSchemaItems[index].ParamValue = paramValue
 		}
 	}
-	paramInputSchema := &schema.ParamInputSchema{ParamInputSchemaItems: newInputSchemaItems}
+	paramInputSchema := &iworkmodels.ParamInputSchema{ParamInputSchemaItems: newInputSchemaItems}
 	step.WorkStepInput = paramInputSchema.RenderToJson()
 	if _, err = iwork.InsertOrUpdateWorkStep(&step, o); err != nil {
 		panic(err)
@@ -538,7 +539,7 @@ func BuildAutoCreateSubWork(work_id int64, work_step_id int64, o orm.Ormer) {
 			paramValue := strings.TrimSpace(item.ParamValue)
 			if !strings.HasPrefix(paramValue, "$WORK.") {
 				// 修改值并同步到数据库
-				paramInputSchema.ParamInputSchemaItems[index] = schema.ParamInputSchemaItem{
+				paramInputSchema.ParamInputSchemaItems[index] = iworkmodels.ParamInputSchemaItem{
 					ParamName:  item.ParamName,
 					ParamValue: strings.Join([]string{"$WORK.", paramValue}, ""),
 				}
@@ -556,7 +557,7 @@ func BuildAutoCreateSubWork(work_id int64, work_step_id int64, o orm.Ormer) {
 	iwork.InsertOrUpdateWorkStep(&step, o)
 }
 
-func CheckAndGetParamValueByInputSchemaParamName(items []schema.ParamInputSchemaItem, paramName string) (exist bool, paramValue string) {
+func CheckAndGetParamValueByInputSchemaParamName(items []iworkmodels.ParamInputSchemaItem, paramName string) (exist bool, paramValue string) {
 	for _, item := range items {
 		if item.ParamName == paramName {
 			return true, item.ParamValue

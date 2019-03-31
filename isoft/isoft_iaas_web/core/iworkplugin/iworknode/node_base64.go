@@ -4,6 +4,7 @@ import (
 	"encoding/base64"
 	"isoft/isoft_iaas_web/core/iworkconst"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
+	"isoft/isoft_iaas_web/core/iworkmodels"
 	"isoft/isoft_iaas_web/models/iwork"
 )
 
@@ -20,23 +21,23 @@ func (this *Base64EncodeNode) Execute(trackingId string) {
 	this.DataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.STRING_PREFIX+"encode_data", encodeString)
 }
 
-func (this *Base64EncodeNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
+func (this *Base64EncodeNode) GetDefaultParamInputSchema() *iworkmodels.ParamInputSchema {
 	paramMap := map[int][]string{
 		1: {iworkconst.STRING_PREFIX + "input", "待编码的输入字符串"},
 	}
 	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
 }
 
-func (this *Base64EncodeNode) GetRuntimeParamInputSchema() *schema.ParamInputSchema {
-	return &schema.ParamInputSchema{}
+func (this *Base64EncodeNode) GetRuntimeParamInputSchema() *iworkmodels.ParamInputSchema {
+	return &iworkmodels.ParamInputSchema{}
 }
 
-func (this *Base64EncodeNode) GetDefaultParamOutputSchema() *schema.ParamOutputSchema {
+func (this *Base64EncodeNode) GetDefaultParamOutputSchema() *iworkmodels.ParamOutputSchema {
 	return schema.BuildParamOutputSchemaWithSlice([]string{iworkconst.STRING_PREFIX + "encode_data"})
 }
 
-func (this *Base64EncodeNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
-	return &schema.ParamOutputSchema{}
+func (this *Base64EncodeNode) GetRuntimeParamOutputSchema() *iworkmodels.ParamOutputSchema {
+	return &iworkmodels.ParamOutputSchema{}
 }
 
 func (this *Base64EncodeNode) ValidateCustom() (checkResult []string) {
@@ -61,23 +62,23 @@ func (this *Base64DecodeNode) Execute(trackingId string) {
 	}
 }
 
-func (this *Base64DecodeNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
+func (this *Base64DecodeNode) GetDefaultParamInputSchema() *iworkmodels.ParamInputSchema {
 	paramMap := map[int][]string{
 		1: {iworkconst.STRING_PREFIX + "input", "待解码的输入字符串"},
 	}
 	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
 }
 
-func (this *Base64DecodeNode) GetRuntimeParamInputSchema() *schema.ParamInputSchema {
-	return &schema.ParamInputSchema{}
+func (this *Base64DecodeNode) GetRuntimeParamInputSchema() *iworkmodels.ParamInputSchema {
+	return &iworkmodels.ParamInputSchema{}
 }
 
-func (this *Base64DecodeNode) GetDefaultParamOutputSchema() *schema.ParamOutputSchema {
+func (this *Base64DecodeNode) GetDefaultParamOutputSchema() *iworkmodels.ParamOutputSchema {
 	return schema.BuildParamOutputSchemaWithSlice([]string{iworkconst.STRING_PREFIX + "decode_data", iworkconst.BYTE_ARRAY_PREFIX + "decode_data"})
 }
 
-func (this *Base64DecodeNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
-	return &schema.ParamOutputSchema{}
+func (this *Base64DecodeNode) GetRuntimeParamOutputSchema() *iworkmodels.ParamOutputSchema {
+	return &iworkmodels.ParamOutputSchema{}
 }
 
 func (this *Base64DecodeNode) ValidateCustom() (checkResult []string) {

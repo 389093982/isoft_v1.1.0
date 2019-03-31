@@ -6,7 +6,7 @@ import (
 	"isoft/isoft/common/stringutil"
 	"isoft/isoft_iaas_web/core/iworkconst"
 	"isoft/isoft_iaas_web/core/iworkdata/block"
-	"isoft/isoft_iaas_web/core/iworkdata/schema"
+	"isoft/isoft_iaas_web/core/iworkmodels"
 	"isoft/isoft_iaas_web/models/iwork"
 	"strings"
 )
@@ -34,7 +34,7 @@ func GetWorkSubNameFromParamValue(paramValue string) string {
 	return value
 }
 
-func GetWorkSubNameForWorkSubNode(paramInputSchema *schema.ParamInputSchema) string {
+func GetWorkSubNameForWorkSubNode(paramInputSchema *iworkmodels.ParamInputSchema) string {
 	for _, item := range paramInputSchema.ParamInputSchemaItems {
 		if item.ParamName == iworkconst.STRING_PREFIX+"work_sub" && strings.HasPrefix(strings.TrimSpace(item.ParamValue), "$WORK.") {
 			// 找到 work_sub 字段值

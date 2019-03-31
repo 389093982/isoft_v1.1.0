@@ -1,7 +1,7 @@
 package iworknode
 
 import (
-	"isoft/isoft_iaas_web/core/iworkdata/schema"
+	"isoft/isoft_iaas_web/core/iworkmodels"
 	"isoft/isoft_iaas_web/models/iwork"
 )
 
@@ -14,20 +14,20 @@ func (this *EmptyNode) Execute(trackingId string) {
 
 }
 
-func (this *EmptyNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
-	return &schema.ParamInputSchema{}
+func (this *EmptyNode) GetDefaultParamInputSchema() *iworkmodels.ParamInputSchema {
+	return &iworkmodels.ParamInputSchema{}
 }
 
-func (this *EmptyNode) GetRuntimeParamInputSchema() *schema.ParamInputSchema {
-	return &schema.ParamInputSchema{}
+func (this *EmptyNode) GetRuntimeParamInputSchema() *iworkmodels.ParamInputSchema {
+	return &iworkmodels.ParamInputSchema{}
 }
 
-func (this *EmptyNode) GetDefaultParamOutputSchema() *schema.ParamOutputSchema {
-	return &schema.ParamOutputSchema{}
+func (this *EmptyNode) GetDefaultParamOutputSchema() *iworkmodels.ParamOutputSchema {
+	return &iworkmodels.ParamOutputSchema{}
 }
 
-func (this *EmptyNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
-	return &schema.ParamOutputSchema{}
+func (this *EmptyNode) GetRuntimeParamOutputSchema() *iworkmodels.ParamOutputSchema {
+	return &iworkmodels.ParamOutputSchema{}
 }
 
 func (this *EmptyNode) ValidateCustom() (checkResult []string) {

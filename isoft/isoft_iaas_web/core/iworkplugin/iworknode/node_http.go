@@ -5,6 +5,7 @@ import (
 	"github.com/pkg/errors"
 	"isoft/isoft_iaas_web/core/iworkconst"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
+	"isoft/isoft_iaas_web/core/iworkmodels"
 	"isoft/isoft_iaas_web/core/iworkutil"
 	"isoft/isoft_iaas_web/core/iworkutil/httputil"
 	"isoft/isoft_iaas_web/models/iwork"
@@ -40,7 +41,7 @@ func (this *HttpRequestNode) Execute(trackingId string) {
 	this.DataStore.CacheByteData(this.WorkStep.WorkStepName, iworkconst.BASE64STRING_PREFIX+"response_data", iworkutil.EncodeToBase64String(responsebytes))
 }
 
-func (this *HttpRequestNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
+func (this *HttpRequestNode) GetDefaultParamInputSchema() *iworkmodels.ParamInputSchema {
 	paramMap := map[int][]string{
 		1: {iworkconst.STRING_PREFIX + "request_url", "请求资源的url地址"},
 		2: {iworkconst.STRING_PREFIX + "request_method?", "可选参数,请求方式,默认是GET请求,支持GET、POST"},
@@ -50,11 +51,11 @@ func (this *HttpRequestNode) GetDefaultParamInputSchema() *schema.ParamInputSche
 	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
 }
 
-func (this *HttpRequestNode) GetRuntimeParamInputSchema() *schema.ParamInputSchema {
-	return &schema.ParamInputSchema{}
+func (this *HttpRequestNode) GetRuntimeParamInputSchema() *iworkmodels.ParamInputSchema {
+	return &iworkmodels.ParamInputSchema{}
 }
 
-func (this *HttpRequestNode) GetDefaultParamOutputSchema() *schema.ParamOutputSchema {
+func (this *HttpRequestNode) GetDefaultParamOutputSchema() *iworkmodels.ParamOutputSchema {
 	return schema.BuildParamOutputSchemaWithSlice([]string{
 		iworkconst.STRING_PREFIX + "response_data",
 		iworkconst.BYTE_ARRAY_PREFIX + "response_data",
@@ -63,8 +64,8 @@ func (this *HttpRequestNode) GetDefaultParamOutputSchema() *schema.ParamOutputSc
 		iworkconst.STRING_PREFIX + "ContentType"})
 }
 
-func (this *HttpRequestNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
-	return &schema.ParamOutputSchema{}
+func (this *HttpRequestNode) GetRuntimeParamOutputSchema() *iworkmodels.ParamOutputSchema {
+	return &iworkmodels.ParamOutputSchema{}
 }
 
 func (this *HttpRequestNode) ValidateCustom() (checkResult []string) {

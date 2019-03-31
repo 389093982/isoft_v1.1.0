@@ -4,6 +4,7 @@ import (
 	"io/ioutil"
 	"isoft/isoft_iaas_web/core/iworkconst"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
+	"isoft/isoft_iaas_web/core/iworkmodels"
 	"isoft/isoft_iaas_web/core/iworkutil/fileutil"
 	"isoft/isoft_iaas_web/core/iworkutil/stringutil"
 	"isoft/isoft_iaas_web/models/iwork"
@@ -28,23 +29,23 @@ func (this *FileReadNode) Execute(trackingId string) {
 	}
 }
 
-func (this *FileReadNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
+func (this *FileReadNode) GetDefaultParamInputSchema() *iworkmodels.ParamInputSchema {
 	paramMap := map[int][]string{
 		1: {iworkconst.STRING_PREFIX + "file_path", "读取文件的绝对路径"},
 	}
 	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
 }
 
-func (this *FileReadNode) GetRuntimeParamInputSchema() *schema.ParamInputSchema {
-	return &schema.ParamInputSchema{}
+func (this *FileReadNode) GetRuntimeParamInputSchema() *iworkmodels.ParamInputSchema {
+	return &iworkmodels.ParamInputSchema{}
 }
 
-func (this *FileReadNode) GetDefaultParamOutputSchema() *schema.ParamOutputSchema {
+func (this *FileReadNode) GetDefaultParamOutputSchema() *iworkmodels.ParamOutputSchema {
 	return schema.BuildParamOutputSchemaWithSlice([]string{iworkconst.STRING_PREFIX + "file_path", "data"})
 }
 
-func (this *FileReadNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
-	return &schema.ParamOutputSchema{}
+func (this *FileReadNode) GetRuntimeParamOutputSchema() *iworkmodels.ParamOutputSchema {
+	return &iworkmodels.ParamOutputSchema{}
 }
 
 func (this *FileReadNode) ValidateCustom() (checkResult []string) {
@@ -86,7 +87,7 @@ func (this *FileWriteNode) Execute(trackingId string) {
 	this.DataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.STRING_PREFIX+"file_path", file_path)
 }
 
-func (this *FileWriteNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
+func (this *FileWriteNode) GetDefaultParamInputSchema() *iworkmodels.ParamInputSchema {
 	paramMap := map[int][]string{
 		1: {iworkconst.STRING_PREFIX + "file_path", "写入文件的绝对路径,文件不存在时会自动创建"},
 		2: {iworkconst.STRING_PREFIX + "data?", "可选参数,写入文件的字符数据"},
@@ -97,16 +98,16 @@ func (this *FileWriteNode) GetDefaultParamInputSchema() *schema.ParamInputSchema
 	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
 }
 
-func (this *FileWriteNode) GetRuntimeParamInputSchema() *schema.ParamInputSchema {
-	return &schema.ParamInputSchema{}
+func (this *FileWriteNode) GetRuntimeParamInputSchema() *iworkmodels.ParamInputSchema {
+	return &iworkmodels.ParamInputSchema{}
 }
 
-func (this *FileWriteNode) GetDefaultParamOutputSchema() *schema.ParamOutputSchema {
+func (this *FileWriteNode) GetDefaultParamOutputSchema() *iworkmodels.ParamOutputSchema {
 	return schema.BuildParamOutputSchemaWithSlice([]string{iworkconst.STRING_PREFIX + "file_path"})
 }
 
-func (this *FileWriteNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
-	return &schema.ParamOutputSchema{}
+func (this *FileWriteNode) GetRuntimeParamOutputSchema() *iworkmodels.ParamOutputSchema {
+	return &iworkmodels.ParamOutputSchema{}
 }
 
 func (this *FileWriteNode) ValidateCustom() (checkResult []string) {
@@ -137,7 +138,7 @@ func (this *FileSyncNode) Execute(trackingId string) {
 	}
 }
 
-func (this *FileSyncNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
+func (this *FileSyncNode) GetDefaultParamInputSchema() *iworkmodels.ParamInputSchema {
 	paramMap := map[int][]string{
 		1: {iworkconst.STRING_PREFIX + "sync_mod?", "文件同步的策略,支持拷贝重命名和移动重命名(copy、rename),默认是 copy"},
 		2: {iworkconst.STRING_PREFIX + "file_path", "需要进行同步操作的文件路径"},
@@ -146,16 +147,16 @@ func (this *FileSyncNode) GetDefaultParamInputSchema() *schema.ParamInputSchema 
 	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
 }
 
-func (this *FileSyncNode) GetRuntimeParamInputSchema() *schema.ParamInputSchema {
-	return &schema.ParamInputSchema{}
+func (this *FileSyncNode) GetRuntimeParamInputSchema() *iworkmodels.ParamInputSchema {
+	return &iworkmodels.ParamInputSchema{}
 }
 
-func (this *FileSyncNode) GetDefaultParamOutputSchema() *schema.ParamOutputSchema {
-	return &schema.ParamOutputSchema{}
+func (this *FileSyncNode) GetDefaultParamOutputSchema() *iworkmodels.ParamOutputSchema {
+	return &iworkmodels.ParamOutputSchema{}
 }
 
-func (this *FileSyncNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
-	return &schema.ParamOutputSchema{}
+func (this *FileSyncNode) GetRuntimeParamOutputSchema() *iworkmodels.ParamOutputSchema {
+	return &iworkmodels.ParamOutputSchema{}
 }
 
 func (this *FileSyncNode) ValidateCustom() (checkResult []string) {
@@ -177,23 +178,23 @@ func (this *FileDeleteNode) Execute(trackingId string) {
 	}
 }
 
-func (this *FileDeleteNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
+func (this *FileDeleteNode) GetDefaultParamInputSchema() *iworkmodels.ParamInputSchema {
 	paramMap := map[int][]string{
 		1: {iworkconst.STRING_PREFIX + "delete_file_path", "待删除的文件或文件夹路径"},
 	}
 	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
 }
 
-func (this *FileDeleteNode) GetRuntimeParamInputSchema() *schema.ParamInputSchema {
-	return &schema.ParamInputSchema{}
+func (this *FileDeleteNode) GetRuntimeParamInputSchema() *iworkmodels.ParamInputSchema {
+	return &iworkmodels.ParamInputSchema{}
 }
 
-func (this *FileDeleteNode) GetDefaultParamOutputSchema() *schema.ParamOutputSchema {
-	return &schema.ParamOutputSchema{}
+func (this *FileDeleteNode) GetDefaultParamOutputSchema() *iworkmodels.ParamOutputSchema {
+	return &iworkmodels.ParamOutputSchema{}
 }
 
-func (this *FileDeleteNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
-	return &schema.ParamOutputSchema{}
+func (this *FileDeleteNode) GetRuntimeParamOutputSchema() *iworkmodels.ParamOutputSchema {
+	return &iworkmodels.ParamOutputSchema{}
 }
 
 func (this *FileDeleteNode) ValidateCustom() (checkResult []string) {

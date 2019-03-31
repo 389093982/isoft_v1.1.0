@@ -5,6 +5,7 @@ import (
 	"isoft/isoft_iaas_web/core/iworkconst"
 	"isoft/isoft_iaas_web/core/iworkdata/param"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
+	"isoft/isoft_iaas_web/core/iworkmodels"
 	"isoft/isoft_iaas_web/core/iworkutil/sftputil"
 	"isoft/isoft_iaas_web/models/iwork"
 	"path/filepath"
@@ -30,7 +31,7 @@ func (this *SftpUploadNode) Execute(trackingId string) {
 	}
 }
 
-func (this *SftpUploadNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
+func (this *SftpUploadNode) GetDefaultParamInputSchema() *iworkmodels.ParamInputSchema {
 	paramMap := map[int][]string{
 		1: {iworkconst.STRING_PREFIX + "sftp_conn", "sftp连接信息,需要使用 $RESOURCE 全局参数"},
 		2: {iworkconst.STRING_PREFIX + "local_file_path", "本地文件路径"},
@@ -39,16 +40,16 @@ func (this *SftpUploadNode) GetDefaultParamInputSchema() *schema.ParamInputSchem
 	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
 }
 
-func (this *SftpUploadNode) GetRuntimeParamInputSchema() *schema.ParamInputSchema {
-	return &schema.ParamInputSchema{}
+func (this *SftpUploadNode) GetRuntimeParamInputSchema() *iworkmodels.ParamInputSchema {
+	return &iworkmodels.ParamInputSchema{}
 }
 
-func (this *SftpUploadNode) GetDefaultParamOutputSchema() *schema.ParamOutputSchema {
+func (this *SftpUploadNode) GetDefaultParamOutputSchema() *iworkmodels.ParamOutputSchema {
 	return schema.BuildParamOutputSchemaWithSlice([]string{iworkconst.STRING_PREFIX + "remote_file_path"})
 }
 
-func (this *SftpUploadNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
-	return &schema.ParamOutputSchema{}
+func (this *SftpUploadNode) GetRuntimeParamOutputSchema() *iworkmodels.ParamOutputSchema {
+	return &iworkmodels.ParamOutputSchema{}
 }
 
 func (this *SftpUploadNode) ValidateCustom() (checkResult []string) {

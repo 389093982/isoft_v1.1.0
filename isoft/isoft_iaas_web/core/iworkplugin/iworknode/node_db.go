@@ -5,6 +5,7 @@ import (
 	"isoft/isoft_iaas_web/core/iworkconst"
 	"isoft/isoft_iaas_web/core/iworkdata/param"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
+	"isoft/isoft_iaas_web/core/iworkmodels"
 	"isoft/isoft_iaas_web/core/iworkutil/sqlutil"
 	"isoft/isoft_iaas_web/models/iwork"
 	"strings"
@@ -60,7 +61,7 @@ func saveEntity(tmpDataMap map[string]interface{}, tablecolsmap map[string]strin
 	}
 }
 
-func (this *DBParserNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
+func (this *DBParserNode) GetDefaultParamInputSchema() *iworkmodels.ParamInputSchema {
 	paramMap := map[int][]string{
 		1: {iworkconst.STRING_PREFIX + "db_conn", "数据库连接信息,需要使用 $RESOURCE 全局参数"},
 		2: {iworkconst.BOOL_PREFIX + "save_entity?", "是否将分析的结果映射成实体类?"},
@@ -68,16 +69,16 @@ func (this *DBParserNode) GetDefaultParamInputSchema() *schema.ParamInputSchema 
 	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
 }
 
-func (this *DBParserNode) GetRuntimeParamInputSchema() *schema.ParamInputSchema {
-	return &schema.ParamInputSchema{}
+func (this *DBParserNode) GetRuntimeParamInputSchema() *iworkmodels.ParamInputSchema {
+	return &iworkmodels.ParamInputSchema{}
 }
 
-func (this *DBParserNode) GetDefaultParamOutputSchema() *schema.ParamOutputSchema {
+func (this *DBParserNode) GetDefaultParamOutputSchema() *iworkmodels.ParamOutputSchema {
 	return schema.BuildParamOutputSchemaWithSlice([]string{iworkconst.STRING_PREFIX + "tables", iworkconst.MULTI_PREFIX + "tablecolsmap"})
 }
 
-func (this *DBParserNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
-	return &schema.ParamOutputSchema{}
+func (this *DBParserNode) GetRuntimeParamOutputSchema() *iworkmodels.ParamOutputSchema {
+	return &iworkmodels.ParamOutputSchema{}
 }
 
 func (this *DBParserNode) ValidateCustom() (checkResult []string) {

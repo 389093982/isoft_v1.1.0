@@ -7,7 +7,7 @@ import (
 	"isoft/isoft_iaas_web/core/iworkdata/block"
 	"isoft/isoft_iaas_web/core/iworkdata/datastore"
 	"isoft/isoft_iaas_web/core/iworkdata/entry"
-	"isoft/isoft_iaas_web/core/iworkdata/schema"
+	"isoft/isoft_iaas_web/core/iworkmodels"
 	"isoft/isoft_iaas_web/core/iworkplugin/iworkprotocol"
 	"isoft/isoft_iaas_web/core/iworkutil/reflectutil"
 	"isoft/isoft_iaas_web/models/iwork"
@@ -111,35 +111,35 @@ func (this *WorkStepFactory) getProxy() iworkprotocol.IWorkStep {
 	return stepNode
 }
 
-func (this *WorkStepFactory) GetDefaultParamInputSchema() *schema.ParamInputSchema {
-	var inputSchema *schema.ParamInputSchema
+func (this *WorkStepFactory) GetDefaultParamInputSchema() *iworkmodels.ParamInputSchema {
+	var inputSchema *iworkmodels.ParamInputSchema
 	if _schema := this.getProxy().GetDefaultParamInputSchema(); _schema != nil {
 		inputSchema = _schema
 	} else {
-		inputSchema = &schema.ParamInputSchema{}
+		inputSchema = &iworkmodels.ParamInputSchema{}
 	}
 	return inputSchema
 }
 
-func (this *WorkStepFactory) GetRuntimeParamInputSchema() *schema.ParamInputSchema {
+func (this *WorkStepFactory) GetRuntimeParamInputSchema() *iworkmodels.ParamInputSchema {
 	if schema := this.getProxy().GetRuntimeParamInputSchema(); schema != nil {
 		return schema
 	}
-	return &schema.ParamInputSchema{}
+	return &iworkmodels.ParamInputSchema{}
 }
 
-func (this *WorkStepFactory) GetDefaultParamOutputSchema() *schema.ParamOutputSchema {
+func (this *WorkStepFactory) GetDefaultParamOutputSchema() *iworkmodels.ParamOutputSchema {
 	if schema := this.getProxy().GetDefaultParamOutputSchema(); schema != nil {
 		return schema
 	}
-	return &schema.ParamOutputSchema{}
+	return &iworkmodels.ParamOutputSchema{}
 }
 
-func (this *WorkStepFactory) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
+func (this *WorkStepFactory) GetRuntimeParamOutputSchema() *iworkmodels.ParamOutputSchema {
 	if schema := this.getProxy().GetRuntimeParamOutputSchema(); schema != nil {
 		return schema
 	}
-	return &schema.ParamOutputSchema{}
+	return &iworkmodels.ParamOutputSchema{}
 }
 
 func (this *WorkStepFactory) ValidateCustom() (checkResult []string) {

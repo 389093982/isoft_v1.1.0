@@ -4,6 +4,7 @@ import (
 	"isoft/isoft_iaas_web/core/iworkconst"
 	"isoft/isoft_iaas_web/core/iworkdata/memory"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
+	"isoft/isoft_iaas_web/core/iworkmodels"
 	"isoft/isoft_iaas_web/models/iwork"
 	"strings"
 )
@@ -47,7 +48,7 @@ func (this *MemoryMapCacheNode) Execute(trackingId string) {
 	}
 }
 
-func (this *MemoryMapCacheNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
+func (this *MemoryMapCacheNode) GetDefaultParamInputSchema() *iworkmodels.ParamInputSchema {
 	paramMap := map[int][]string{
 		1: []string{iworkconst.STRING_PREFIX + "lifecycle?", "内存map存储的生命周期,默认是当前流程,有值的话则表示本次运行时机(即可以跨流程),map不存在会自动创建,运行完后会自动销毁!"},
 		2: []string{iworkconst.STRING_PREFIX + "cachemap_name", "存储的map名称"},
@@ -58,16 +59,16 @@ func (this *MemoryMapCacheNode) GetDefaultParamInputSchema() *schema.ParamInputS
 	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
 }
 
-func (this *MemoryMapCacheNode) GetRuntimeParamInputSchema() *schema.ParamInputSchema {
-	return &schema.ParamInputSchema{}
+func (this *MemoryMapCacheNode) GetRuntimeParamInputSchema() *iworkmodels.ParamInputSchema {
+	return &iworkmodels.ParamInputSchema{}
 }
 
-func (this *MemoryMapCacheNode) GetDefaultParamOutputSchema() *schema.ParamOutputSchema {
+func (this *MemoryMapCacheNode) GetDefaultParamOutputSchema() *iworkmodels.ParamOutputSchema {
 	return schema.BuildParamOutputSchemaWithSlice([]string{iworkconst.STRING_PREFIX + "cachemap_val_get"})
 }
 
-func (this *MemoryMapCacheNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
-	return &schema.ParamOutputSchema{}
+func (this *MemoryMapCacheNode) GetRuntimeParamOutputSchema() *iworkmodels.ParamOutputSchema {
+	return &iworkmodels.ParamOutputSchema{}
 }
 
 func (this *MemoryMapCacheNode) ValidateCustom() (checkResult []string) {

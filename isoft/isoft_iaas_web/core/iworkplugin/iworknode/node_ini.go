@@ -3,6 +3,7 @@ package iworknode
 import (
 	"isoft/isoft_iaas_web/core/iworkconst"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
+	"isoft/isoft_iaas_web/core/iworkmodels"
 	"isoft/isoft_iaas_web/core/iworkutil/fileutil"
 	"isoft/isoft_iaas_web/models/iwork"
 )
@@ -29,7 +30,7 @@ func (this *IniReadNode) Execute(trackingId string) {
 	}
 }
 
-func (this *IniReadNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
+func (this *IniReadNode) GetDefaultParamInputSchema() *iworkmodels.ParamInputSchema {
 	paramMap := map[int][]string{
 		1: {iworkconst.STRING_PREFIX + "file_path", "需要读取的文件路径"},
 		2: {iworkconst.STRING_PREFIX + "section_name?", "section 名称,可为空"},
@@ -38,16 +39,16 @@ func (this *IniReadNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
 	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
 }
 
-func (this *IniReadNode) GetRuntimeParamInputSchema() *schema.ParamInputSchema {
-	return &schema.ParamInputSchema{}
+func (this *IniReadNode) GetRuntimeParamInputSchema() *iworkmodels.ParamInputSchema {
+	return &iworkmodels.ParamInputSchema{}
 }
 
-func (this *IniReadNode) GetDefaultParamOutputSchema() *schema.ParamOutputSchema {
+func (this *IniReadNode) GetDefaultParamOutputSchema() *iworkmodels.ParamOutputSchema {
 	return schema.BuildParamOutputSchemaWithSlice([]string{iworkconst.STRING_PREFIX + "value"})
 }
 
-func (this *IniReadNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
-	return &schema.ParamOutputSchema{}
+func (this *IniReadNode) GetRuntimeParamOutputSchema() *iworkmodels.ParamOutputSchema {
+	return &iworkmodels.ParamOutputSchema{}
 }
 
 func (this *IniReadNode) ValidateCustom() (checkResult []string) {
@@ -75,7 +76,7 @@ func (this *IniWriteNode) Execute(trackingId string) {
 	}
 }
 
-func (this *IniWriteNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
+func (this *IniWriteNode) GetDefaultParamInputSchema() *iworkmodels.ParamInputSchema {
 	paramMap := map[int][]string{
 		1: {iworkconst.STRING_PREFIX + "file_path", "需要读取的文件路径"},
 		2: {iworkconst.STRING_PREFIX + "section_name?", "section 名称,可为空"},
@@ -85,16 +86,16 @@ func (this *IniWriteNode) GetDefaultParamInputSchema() *schema.ParamInputSchema 
 	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
 }
 
-func (this *IniWriteNode) GetRuntimeParamInputSchema() *schema.ParamInputSchema {
-	return &schema.ParamInputSchema{}
+func (this *IniWriteNode) GetRuntimeParamInputSchema() *iworkmodels.ParamInputSchema {
+	return &iworkmodels.ParamInputSchema{}
 }
 
-func (this *IniWriteNode) GetDefaultParamOutputSchema() *schema.ParamOutputSchema {
-	return &schema.ParamOutputSchema{}
+func (this *IniWriteNode) GetDefaultParamOutputSchema() *iworkmodels.ParamOutputSchema {
+	return &iworkmodels.ParamOutputSchema{}
 }
 
-func (this *IniWriteNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
-	return &schema.ParamOutputSchema{}
+func (this *IniWriteNode) GetRuntimeParamOutputSchema() *iworkmodels.ParamOutputSchema {
+	return &iworkmodels.ParamOutputSchema{}
 }
 
 func (this *IniWriteNode) ValidateCustom() (checkResult []string) {

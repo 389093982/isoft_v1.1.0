@@ -3,6 +3,7 @@ package iworkvalid
 import (
 	"fmt"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
+	"isoft/isoft_iaas_web/core/iworkmodels"
 	"isoft/isoft_iaas_web/models/iwork"
 	"strings"
 )
@@ -25,7 +26,7 @@ func CheckEmpty(step *iwork.WorkStep, paramSchemaParser schema.IParamSchemaParse
 }
 
 // 对输入参数做非空校验
-func CheckEmptyForItem(item schema.ParamInputSchemaItem) (ok bool, checkResult []string) {
+func CheckEmptyForItem(item iworkmodels.ParamInputSchemaItem) (ok bool, checkResult []string) {
 	if !strings.HasSuffix(item.ParamName, "?") && strings.TrimSpace(item.ParamValue) == "" {
 		checkResult = append(checkResult, fmt.Sprintf("Empty paramValue for %s was found!", item.ParamName))
 	}

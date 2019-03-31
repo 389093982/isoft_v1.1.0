@@ -7,6 +7,7 @@ import (
 	"isoft/isoft_iaas_web/core/iworkdata/param"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
 	"isoft/isoft_iaas_web/core/iworkfunc"
+	"isoft/isoft_iaas_web/core/iworkmodels"
 	"isoft/isoft_iaas_web/core/iworkutil/sqlutil"
 	"isoft/isoft_iaas_web/models/iwork"
 	"strconv"
@@ -39,7 +40,7 @@ func (this *SQLQueryNode) Execute(trackingId string) {
 	this.DataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.MULTI_PREFIX+"rows", rowDatas)
 }
 
-func (this *SQLQueryNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
+func (this *SQLQueryNode) GetDefaultParamInputSchema() *iworkmodels.ParamInputSchema {
 	paramMap := map[int][]string{
 		1: {iworkconst.STRING_PREFIX + "metadata_sql", "元数据sql语句,针对复杂查询sql,需要提供类似于select * from blog where 1=0的辅助sql用来构建节点输出"},
 		2: {iworkconst.STRING_PREFIX + "sql", "查询sql语句"},
@@ -49,15 +50,15 @@ func (this *SQLQueryNode) GetDefaultParamInputSchema() *schema.ParamInputSchema 
 	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
 }
 
-func (this *SQLQueryNode) GetRuntimeParamInputSchema() *schema.ParamInputSchema {
-	return &schema.ParamInputSchema{}
+func (this *SQLQueryNode) GetRuntimeParamInputSchema() *iworkmodels.ParamInputSchema {
+	return &iworkmodels.ParamInputSchema{}
 }
 
-func (this *SQLQueryNode) GetDefaultParamOutputSchema() *schema.ParamOutputSchema {
+func (this *SQLQueryNode) GetDefaultParamOutputSchema() *iworkmodels.ParamOutputSchema {
 	return schema.BuildParamOutputSchemaWithSlice([]string{iworkconst.NUMBER_PREFIX + "datacounts"})
 }
 
-func (this *SQLQueryNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
+func (this *SQLQueryNode) GetRuntimeParamOutputSchema() *iworkmodels.ParamOutputSchema {
 	return getMetaDataQuietlyForQuery(this.WorkStep)
 }
 func (this *SQLQueryNode) ValidateCustom() (checkResult []string) {
@@ -121,7 +122,7 @@ func (this *SQLExecuteNode) modifySqlInsertWithBatchNumber(tmpDataMap map[string
 	return sql
 }
 
-func (this *SQLExecuteNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
+func (this *SQLExecuteNode) GetDefaultParamInputSchema() *iworkmodels.ParamInputSchema {
 	paramMap := map[int][]string{
 		1: {iworkconst.NUMBER_PREFIX + "batch_number?", "仅供批量插入数据时使用"},
 		2: {iworkconst.STRING_PREFIX + "sql", "执行sql语句"},
@@ -131,16 +132,16 @@ func (this *SQLExecuteNode) GetDefaultParamInputSchema() *schema.ParamInputSchem
 	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
 }
 
-func (this *SQLExecuteNode) GetRuntimeParamInputSchema() *schema.ParamInputSchema {
-	return &schema.ParamInputSchema{}
+func (this *SQLExecuteNode) GetRuntimeParamInputSchema() *iworkmodels.ParamInputSchema {
+	return &iworkmodels.ParamInputSchema{}
 }
 
-func (this *SQLExecuteNode) GetDefaultParamOutputSchema() *schema.ParamOutputSchema {
+func (this *SQLExecuteNode) GetDefaultParamOutputSchema() *iworkmodels.ParamOutputSchema {
 	return schema.BuildParamOutputSchemaWithSlice([]string{iworkconst.NUMBER_PREFIX + "affected"})
 }
 
-func (this *SQLExecuteNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
-	return &schema.ParamOutputSchema{}
+func (this *SQLExecuteNode) GetRuntimeParamOutputSchema() *iworkmodels.ParamOutputSchema {
+	return &iworkmodels.ParamOutputSchema{}
 }
 
 func (this *SQLExecuteNode) ValidateCustom() (checkResult []string) {
@@ -201,7 +202,7 @@ func getPageIndexAndPageSize(tmpDataMap map[string]interface{}) (currentPage int
 	return
 }
 
-func (this *SQLQueryPageNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
+func (this *SQLQueryPageNode) GetDefaultParamInputSchema() *iworkmodels.ParamInputSchema {
 	paramMap := map[int][]string{
 		1: {iworkconst.STRING_PREFIX + "metadata_sql", "元数据sql语句,针对复杂查询sql,需要提供类似于select * from blog where 1=0的辅助sql用来构建节点输出"},
 		2: {iworkconst.STRING_PREFIX + "total_sql", "统计总数sql,返回N页总数据量,格式参考select count(*) as count from blog where xxx"},
@@ -214,22 +215,22 @@ func (this *SQLQueryPageNode) GetDefaultParamInputSchema() *schema.ParamInputSch
 	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
 }
 
-func (this *SQLQueryPageNode) GetRuntimeParamInputSchema() *schema.ParamInputSchema {
-	return &schema.ParamInputSchema{}
+func (this *SQLQueryPageNode) GetRuntimeParamInputSchema() *iworkmodels.ParamInputSchema {
+	return &iworkmodels.ParamInputSchema{}
 }
 
-func (this *SQLQueryPageNode) GetDefaultParamOutputSchema() *schema.ParamOutputSchema {
-	items := make([]schema.ParamOutputSchemaItem, 0)
+func (this *SQLQueryPageNode) GetDefaultParamOutputSchema() *iworkmodels.ParamOutputSchema {
+	items := make([]iworkmodels.ParamOutputSchemaItem, 0)
 	for _, paginatorField := range pageutil.GetPaginatorFields() {
-		items = append(items, schema.ParamOutputSchemaItem{
+		items = append(items, iworkmodels.ParamOutputSchemaItem{
 			ParentPath: iworkconst.COMPLEX_PREFIX + "paginator",
 			ParamName:  paginatorField,
 		})
 	}
-	return &schema.ParamOutputSchema{ParamOutputSchemaItems: items}
+	return &iworkmodels.ParamOutputSchema{ParamOutputSchemaItems: items}
 }
 
-func (this *SQLQueryPageNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
+func (this *SQLQueryPageNode) GetRuntimeParamOutputSchema() *iworkmodels.ParamOutputSchema {
 	return getMetaDataQuietlyForQuery(this.WorkStep)
 }
 
@@ -282,21 +283,21 @@ func validateAndGetDataStoreName(step *iwork.WorkStep) string {
 	return dataSourceName
 }
 
-func getMetaDataForQuery(step *iwork.WorkStep) *schema.ParamOutputSchema {
+func getMetaDataForQuery(step *iwork.WorkStep) *iworkmodels.ParamOutputSchema {
 	metadataSql := validateAndGetMetaDataSql(step)
 	dataSourceName := validateAndGetDataStoreName(step)
 	paramNames := sqlutil.GetMetaDatas(metadataSql, dataSourceName)
-	items := make([]schema.ParamOutputSchemaItem, 0)
+	items := make([]iworkmodels.ParamOutputSchemaItem, 0)
 	for _, paramName := range paramNames {
-		items = append(items, schema.ParamOutputSchemaItem{
+		items = append(items, iworkmodels.ParamOutputSchemaItem{
 			ParentPath: iworkconst.MULTI_PREFIX + "rows",
 			ParamName:  paramName,
 		})
 	}
-	return &schema.ParamOutputSchema{ParamOutputSchemaItems: items}
+	return &iworkmodels.ParamOutputSchema{ParamOutputSchemaItems: items}
 }
 
-func getMetaDataQuietlyForQuery(step *iwork.WorkStep) *schema.ParamOutputSchema {
+func getMetaDataQuietlyForQuery(step *iwork.WorkStep) *iworkmodels.ParamOutputSchema {
 	defer func() {
 		if err := recover(); err != nil {
 			return

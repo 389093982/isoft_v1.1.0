@@ -8,6 +8,7 @@ import (
 	"isoft/isoft_iaas_web/core/iworkdata/datastore"
 	"isoft/isoft_iaas_web/core/iworkdata/entry"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
+	"isoft/isoft_iaas_web/core/iworkmodels"
 	"isoft/isoft_iaas_web/core/iworkutil"
 	"isoft/isoft_iaas_web/models/iwork"
 	"strings"
@@ -86,7 +87,7 @@ func (this *WorkSubNode) RunOnceSubWork(work iwork.Work, steps []iwork.WorkStep,
 	}
 }
 
-func (this *WorkSubNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
+func (this *WorkSubNode) GetDefaultParamInputSchema() *iworkmodels.ParamInputSchema {
 	paramMap := map[int][]string{
 		1: {iworkconst.STRING_PREFIX + "work_sub", "子流程信息,此节点其它参数支持 __item__ 和 __default__ 参数"},
 		2: {iworkconst.FOREACH_PREFIX + "data?", "可选参数,当有值时表示迭代流程,该节点会执行多次,并将当前迭代元素放入 __item__ 变量中,其它参数需要引用 __item__ 即可"},
@@ -95,8 +96,8 @@ func (this *WorkSubNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
 }
 
 // 获取动态输入值
-func (this *WorkSubNode) GetRuntimeParamInputSchema() *schema.ParamInputSchema {
-	items := make([]schema.ParamInputSchemaItem, 0)
+func (this *WorkSubNode) GetRuntimeParamInputSchema() *iworkmodels.ParamInputSchema {
+	items := make([]iworkmodels.ParamInputSchemaItem, 0)
 	// 获取子流程信息
 	workSubName := this.getWorkSubName()
 	if strings.TrimSpace(workSubName) != "" {
@@ -111,12 +112,12 @@ func (this *WorkSubNode) GetRuntimeParamInputSchema() *schema.ParamInputSchema {
 				// 子流程起始节点输入参数
 				subItems := schema.GetCacheParamInputSchema(&subStep, &WorkStepFactory{WorkStep: &subStep})
 				for _, subItem := range subItems.ParamInputSchemaItems {
-					items = append(items, schema.ParamInputSchemaItem{ParamName: subItem.ParamName})
+					items = append(items, iworkmodels.ParamInputSchemaItem{ParamName: subItem.ParamName})
 				}
 			}
 		}
 	}
-	return &schema.ParamInputSchema{ParamInputSchemaItems: items}
+	return &iworkmodels.ParamInputSchema{ParamInputSchemaItems: items}
 }
 
 func (this *WorkSubNode) getWorkSubName() string {
@@ -127,12 +128,12 @@ func (this *WorkSubNode) getWorkSubName() string {
 	return workSubName
 }
 
-func (this *WorkSubNode) GetDefaultParamOutputSchema() *schema.ParamOutputSchema {
-	return &schema.ParamOutputSchema{}
+func (this *WorkSubNode) GetDefaultParamOutputSchema() *iworkmodels.ParamOutputSchema {
+	return &iworkmodels.ParamOutputSchema{}
 }
 
-func (this *WorkSubNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
-	items := make([]schema.ParamOutputSchemaItem, 0)
+func (this *WorkSubNode) GetRuntimeParamOutputSchema() *iworkmodels.ParamOutputSchema {
+	items := make([]iworkmodels.ParamOutputSchemaItem, 0)
 	// 读取静态输入值
 	paramInputSchema := schema.GetCacheParamInputSchema(this.WorkStep, &WorkStepFactory{WorkStep: this.WorkStep})
 	// 从静态输入值中获取子流程名称
@@ -149,12 +150,12 @@ func (this *WorkSubNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema
 				// 子流程结束节点输出参数
 				subItems := schema.GetCacheParamOutputSchema(&subStep)
 				for _, subItem := range subItems.ParamOutputSchemaItems {
-					items = append(items, schema.ParamOutputSchemaItem{ParamName: subItem.ParamName})
+					items = append(items, iworkmodels.ParamOutputSchemaItem{ParamName: subItem.ParamName})
 				}
 			}
 		}
 	}
-	return &schema.ParamOutputSchema{ParamOutputSchemaItems: items}
+	return &iworkmodels.ParamOutputSchema{ParamOutputSchemaItems: items}
 }
 
 func (this *WorkSubNode) ValidateCustom() (checkResult []string) {

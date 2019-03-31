@@ -6,6 +6,7 @@ import (
 	"isoft/isoft_iaas_web/core/iworkconst"
 	"isoft/isoft_iaas_web/core/iworkdata/param"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
+	"isoft/isoft_iaas_web/core/iworkmodels"
 	"isoft/isoft_iaas_web/models/iwork"
 	"strings"
 )
@@ -25,23 +26,23 @@ func (this *JsonRenderNode) Execute(trackingId string) {
 	}
 }
 
-func (this *JsonRenderNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
+func (this *JsonRenderNode) GetDefaultParamInputSchema() *iworkmodels.ParamInputSchema {
 	paramMap := map[int][]string{
 		1: {iworkconst.COMPLEX_PREFIX + "json_data", "需要传入json对象"},
 	}
 	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
 }
 
-func (this *JsonRenderNode) GetRuntimeParamInputSchema() *schema.ParamInputSchema {
-	return &schema.ParamInputSchema{}
+func (this *JsonRenderNode) GetRuntimeParamInputSchema() *iworkmodels.ParamInputSchema {
+	return &iworkmodels.ParamInputSchema{}
 }
 
-func (this *JsonRenderNode) GetDefaultParamOutputSchema() *schema.ParamOutputSchema {
+func (this *JsonRenderNode) GetDefaultParamOutputSchema() *iworkmodels.ParamOutputSchema {
 	return schema.BuildParamOutputSchemaWithSlice([]string{iworkconst.STRING_PREFIX + "json_data"})
 }
 
-func (this *JsonRenderNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
-	return &schema.ParamOutputSchema{}
+func (this *JsonRenderNode) GetRuntimeParamOutputSchema() *iworkmodels.ParamOutputSchema {
+	return &iworkmodels.ParamOutputSchema{}
 }
 
 func (this *JsonRenderNode) ValidateCustom() (checkResult []string) {
@@ -72,7 +73,7 @@ func (this *JsonParserNode) Execute(trackingId string) {
 	}
 }
 
-func (this *JsonParserNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
+func (this *JsonParserNode) GetDefaultParamInputSchema() *iworkmodels.ParamInputSchema {
 	paramMap := map[int][]string{
 		1: {iworkconst.STRING_PREFIX + "json_data", "需要转换成json对象的字符串"},
 		2: {"json_fields", "json对象的字段列表"},
@@ -80,28 +81,28 @@ func (this *JsonParserNode) GetDefaultParamInputSchema() *schema.ParamInputSchem
 	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
 }
 
-func (this *JsonParserNode) GetRuntimeParamInputSchema() *schema.ParamInputSchema {
-	return &schema.ParamInputSchema{}
+func (this *JsonParserNode) GetRuntimeParamInputSchema() *iworkmodels.ParamInputSchema {
+	return &iworkmodels.ParamInputSchema{}
 }
 
-func (this *JsonParserNode) GetDefaultParamOutputSchema() *schema.ParamOutputSchema {
-	return &schema.ParamOutputSchema{}
+func (this *JsonParserNode) GetDefaultParamOutputSchema() *iworkmodels.ParamOutputSchema {
+	return &iworkmodels.ParamOutputSchema{}
 }
 
-func (this *JsonParserNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
-	items := []schema.ParamOutputSchemaItem{}
+func (this *JsonParserNode) GetRuntimeParamOutputSchema() *iworkmodels.ParamOutputSchema {
+	items := []iworkmodels.ParamOutputSchemaItem{}
 	if json_fields := param.GetStaticParamValue("json_fields", this.WorkStep).(string); strings.TrimSpace(json_fields) != "" {
 		jsonArr := strings.Split(json_fields, ",")
 		for _, paramName := range jsonArr {
 			if _paramName := strings.TrimSpace(paramName); _paramName != "" {
-				items = append(items, schema.ParamOutputSchemaItem{
+				items = append(items, iworkmodels.ParamOutputSchemaItem{
 					ParentPath: "rows",
 					ParamName:  _paramName,
 				})
 			}
 		}
 	}
-	return &schema.ParamOutputSchema{ParamOutputSchemaItems: items}
+	return &iworkmodels.ParamOutputSchema{ParamOutputSchemaItems: items}
 }
 
 func (this *JsonParserNode) ValidateCustom() (checkResult []string) {

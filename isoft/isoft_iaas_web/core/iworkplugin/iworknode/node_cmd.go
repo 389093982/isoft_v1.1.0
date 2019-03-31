@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"isoft/isoft_iaas_web/core/iworkconst"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
+	"isoft/isoft_iaas_web/core/iworkmodels"
 	"isoft/isoft_iaas_web/core/iworkutil/cmdutil"
 	"isoft/isoft_iaas_web/models/iwork"
 	"os"
@@ -61,7 +62,7 @@ func (this *RunCmdNode) Execute(trackingId string) {
 	}
 }
 
-func (this *RunCmdNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
+func (this *RunCmdNode) GetDefaultParamInputSchema() *iworkmodels.ParamInputSchema {
 	paramMap := map[int][]string{
 		1: {iworkconst.STRING_PREFIX + "cd?", "切换目录"},
 		2: {iworkconst.STRING_PREFIX + "command_name", "执行命令"},
@@ -70,16 +71,16 @@ func (this *RunCmdNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
 	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
 }
 
-func (this *RunCmdNode) GetRuntimeParamInputSchema() *schema.ParamInputSchema {
-	return &schema.ParamInputSchema{}
+func (this *RunCmdNode) GetRuntimeParamInputSchema() *iworkmodels.ParamInputSchema {
+	return &iworkmodels.ParamInputSchema{}
 }
 
-func (this *RunCmdNode) GetDefaultParamOutputSchema() *schema.ParamOutputSchema {
+func (this *RunCmdNode) GetDefaultParamOutputSchema() *iworkmodels.ParamOutputSchema {
 	return schema.BuildParamOutputSchemaWithSlice([]string{iworkconst.STRING_PREFIX + "command_result"})
 }
 
-func (this *RunCmdNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
-	return &schema.ParamOutputSchema{}
+func (this *RunCmdNode) GetRuntimeParamOutputSchema() *iworkmodels.ParamOutputSchema {
+	return &iworkmodels.ParamOutputSchema{}
 }
 
 func (this *RunCmdNode) ValidateCustom() (checkResult []string) {

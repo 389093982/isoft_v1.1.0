@@ -5,6 +5,7 @@ import (
 	"github.com/astaxie/beego/orm"
 	"isoft/isoft/common/stringutil"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
+	"isoft/isoft_iaas_web/core/iworkmodels"
 	"isoft/isoft_iaas_web/core/iworkplugin/iworknode"
 	"isoft/isoft_iaas_web/core/iworkutil"
 	"isoft/isoft_iaas_web/core/iworkutil/errorutil"
@@ -181,7 +182,7 @@ func checkVariableRelationShip(step *iwork.WorkStep) (checkResult []string) {
 	return
 }
 
-func checkVariableRelationShipDetail(item schema.ParamInputSchemaItem, work_id, work_step_id int64) (checkResult []string) {
+func checkVariableRelationShipDetail(item iworkmodels.ParamInputSchemaItem, work_id, work_step_id int64) (checkResult []string) {
 	// 根据正则找到关联的节点名和字段名
 	refers := iworkutil.GetRelativeValueWithReg(item.ParamValue)
 	if len(refers) == 0 {

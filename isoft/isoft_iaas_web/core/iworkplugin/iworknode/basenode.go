@@ -9,6 +9,7 @@ import (
 	"isoft/isoft_iaas_web/core/iworkdata/param"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
 	"isoft/isoft_iaas_web/core/iworkfunc"
+	"isoft/isoft_iaas_web/core/iworkmodels"
 	"isoft/isoft_iaas_web/core/iworkutil"
 	"isoft/isoft_iaas_web/core/iworkvalid"
 	"isoft/isoft_iaas_web/models/iwork"
@@ -162,7 +163,7 @@ func (this *BaseNode) FillParamInputSchemaDataToTmp(workStep *iwork.WorkStep, da
 	return tmpDataMap
 }
 
-func (this *BaseNode) modifySqlBindingParamValueWithBatchNumber(item *schema.ParamInputSchemaItem, tmpDataMap map[string]interface{}) {
+func (this *BaseNode) modifySqlBindingParamValueWithBatchNumber(item *iworkmodels.ParamInputSchemaItem, tmpDataMap map[string]interface{}) {
 	// 当前填充的字段为 sql_binding? 时,检测到批量操作数据大于 1
 	if item.ParamName == iworkconst.MULTI_PREFIX+"sql_binding?" && GetBatchNumber(tmpDataMap) > 1 {
 		var newParamValue string

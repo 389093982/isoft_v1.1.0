@@ -4,6 +4,7 @@ import (
 	"isoft/isoft/common/stringutil"
 	"isoft/isoft_iaas_web/core/iworkconst"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
+	"isoft/isoft_iaas_web/core/iworkmodels"
 	"isoft/isoft_iaas_web/core/iworkutil/htmlutil"
 	"isoft/isoft_iaas_web/models/iwork"
 )
@@ -28,23 +29,23 @@ func (this *HrefParserNode) Execute(trackingId string) {
 	this.DataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.NUMBER_PREFIX+"href_amounts", len(hrefs))
 }
 
-func (this *HrefParserNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
+func (this *HrefParserNode) GetDefaultParamInputSchema() *iworkmodels.ParamInputSchema {
 	paramMap := map[int][]string{
 		1: []string{iworkconst.STRING_PREFIX + "url", "需要分析资源的url地址"},
 	}
 	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
 }
 
-func (this *HrefParserNode) GetRuntimeParamInputSchema() *schema.ParamInputSchema {
-	return &schema.ParamInputSchema{}
+func (this *HrefParserNode) GetRuntimeParamInputSchema() *iworkmodels.ParamInputSchema {
+	return &iworkmodels.ParamInputSchema{}
 }
 
-func (this *HrefParserNode) GetDefaultParamOutputSchema() *schema.ParamOutputSchema {
+func (this *HrefParserNode) GetDefaultParamOutputSchema() *iworkmodels.ParamOutputSchema {
 	return schema.BuildParamOutputSchemaWithSlice([]string{iworkconst.MULTI_PREFIX + "hrefs", iworkconst.NUMBER_PREFIX + "href_amounts"})
 }
 
-func (this *HrefParserNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
-	return &schema.ParamOutputSchema{}
+func (this *HrefParserNode) GetRuntimeParamOutputSchema() *iworkmodels.ParamOutputSchema {
+	return &iworkmodels.ParamOutputSchema{}
 }
 
 func (this *HrefParserNode) ValidateCustom() (checkResult []string) {

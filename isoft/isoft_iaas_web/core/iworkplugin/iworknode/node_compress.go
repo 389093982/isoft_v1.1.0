@@ -3,6 +3,7 @@ package iworknode
 import (
 	"isoft/isoft_iaas_web/core/iworkconst"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
+	"isoft/isoft_iaas_web/core/iworkmodels"
 	"isoft/isoft_iaas_web/core/iworkutil/compressutil"
 	"isoft/isoft_iaas_web/models/iwork"
 )
@@ -24,7 +25,7 @@ func (this *TarGzUnCompressNode) Execute(trackingId string) {
 	}
 }
 
-func (this *TarGzUnCompressNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
+func (this *TarGzUnCompressNode) GetDefaultParamInputSchema() *iworkmodels.ParamInputSchema {
 	paramMap := map[int][]string{
 		1: {iworkconst.STRING_PREFIX + "targz_file_path", "targz 文件路径"},
 		2: {iworkconst.STRING_PREFIX + "dest_dir_path", "解压后的文件夹路径"},
@@ -32,16 +33,16 @@ func (this *TarGzUnCompressNode) GetDefaultParamInputSchema() *schema.ParamInput
 	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
 }
 
-func (this *TarGzUnCompressNode) GetRuntimeParamInputSchema() *schema.ParamInputSchema {
-	return &schema.ParamInputSchema{}
+func (this *TarGzUnCompressNode) GetRuntimeParamInputSchema() *iworkmodels.ParamInputSchema {
+	return &iworkmodels.ParamInputSchema{}
 }
 
-func (this *TarGzUnCompressNode) GetDefaultParamOutputSchema() *schema.ParamOutputSchema {
+func (this *TarGzUnCompressNode) GetDefaultParamOutputSchema() *iworkmodels.ParamOutputSchema {
 	return schema.BuildParamOutputSchemaWithSlice([]string{iworkconst.STRING_PREFIX + "dest_dir_path"})
 }
 
-func (this *TarGzUnCompressNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
-	return &schema.ParamOutputSchema{}
+func (this *TarGzUnCompressNode) GetRuntimeParamOutputSchema() *iworkmodels.ParamOutputSchema {
+	return &iworkmodels.ParamOutputSchema{}
 }
 
 func (this *TarGzUnCompressNode) ValidateCustom() (checkResult []string) {
@@ -65,7 +66,7 @@ func (this *TarGzCompressNode) Execute(trackingId string) {
 	}
 }
 
-func (this *TarGzCompressNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
+func (this *TarGzCompressNode) GetDefaultParamInputSchema() *iworkmodels.ParamInputSchema {
 	paramMap := map[int][]string{
 		1: {iworkconst.STRING_PREFIX + "src_dir_path", "待压缩的文件夹路径"},
 		2: {iworkconst.STRING_PREFIX + "dest_file_path", "压缩后的targz文件路径"},
@@ -73,16 +74,16 @@ func (this *TarGzCompressNode) GetDefaultParamInputSchema() *schema.ParamInputSc
 	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
 }
 
-func (this *TarGzCompressNode) GetRuntimeParamInputSchema() *schema.ParamInputSchema {
-	return &schema.ParamInputSchema{}
+func (this *TarGzCompressNode) GetRuntimeParamInputSchema() *iworkmodels.ParamInputSchema {
+	return &iworkmodels.ParamInputSchema{}
 }
 
-func (this *TarGzCompressNode) GetDefaultParamOutputSchema() *schema.ParamOutputSchema {
+func (this *TarGzCompressNode) GetDefaultParamOutputSchema() *iworkmodels.ParamOutputSchema {
 	return schema.BuildParamOutputSchemaWithSlice([]string{iworkconst.STRING_PREFIX + "dest_file_path"})
 }
 
-func (this *TarGzCompressNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
-	return &schema.ParamOutputSchema{}
+func (this *TarGzCompressNode) GetRuntimeParamOutputSchema() *iworkmodels.ParamOutputSchema {
+	return &iworkmodels.ParamOutputSchema{}
 }
 
 func (this *TarGzCompressNode) ValidateCustom() (checkResult []string) {

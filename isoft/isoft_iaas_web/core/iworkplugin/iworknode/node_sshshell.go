@@ -5,6 +5,7 @@ import (
 	"isoft/isoft_iaas_web/core/iworkconst"
 	"isoft/isoft_iaas_web/core/iworkdata/param"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
+	"isoft/isoft_iaas_web/core/iworkmodels"
 	"isoft/isoft_iaas_web/core/iworkutil/sshutil"
 	"isoft/isoft_iaas_web/models/iwork"
 	"strconv"
@@ -61,7 +62,7 @@ func (this *SSHShellNode) Execute(trackingId string) {
 	}
 }
 
-func (this *SSHShellNode) GetDefaultParamInputSchema() *schema.ParamInputSchema {
+func (this *SSHShellNode) GetDefaultParamInputSchema() *iworkmodels.ParamInputSchema {
 	paramMap := map[int][]string{
 		1: {iworkconst.STRING_PREFIX + "ssh_conn", "ssh连接信息,需要使用 $RESOURCE 全局参数"},
 		2: {iworkconst.STRING_PREFIX + "ssh_command", "远程执行的命令,耗时的命令建议使用 nohup xxx > command.log & 格式"},
@@ -70,16 +71,16 @@ func (this *SSHShellNode) GetDefaultParamInputSchema() *schema.ParamInputSchema 
 	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
 }
 
-func (this *SSHShellNode) GetRuntimeParamInputSchema() *schema.ParamInputSchema {
-	return &schema.ParamInputSchema{}
+func (this *SSHShellNode) GetRuntimeParamInputSchema() *iworkmodels.ParamInputSchema {
+	return &iworkmodels.ParamInputSchema{}
 }
 
-func (this *SSHShellNode) GetDefaultParamOutputSchema() *schema.ParamOutputSchema {
-	return &schema.ParamOutputSchema{}
+func (this *SSHShellNode) GetDefaultParamOutputSchema() *iworkmodels.ParamOutputSchema {
+	return &iworkmodels.ParamOutputSchema{}
 }
 
-func (this *SSHShellNode) GetRuntimeParamOutputSchema() *schema.ParamOutputSchema {
-	return &schema.ParamOutputSchema{}
+func (this *SSHShellNode) GetRuntimeParamOutputSchema() *iworkmodels.ParamOutputSchema {
+	return &iworkmodels.ParamOutputSchema{}
 }
 
 func (this *SSHShellNode) ValidateCustom() (checkResult []string) {
