@@ -27,6 +27,12 @@ func InsertOrUpdateTableMigrate(tm *TableMigrate) (id int64, err error) {
 	return
 }
 
+func QueryAllMigrate() (migrates []TableMigrate, err error) {
+	o := orm.NewOrm()
+	_, err = o.QueryTable("table_migrate").OrderBy("id").All(&migrates)
+	return
+}
+
 func QueryMigrate(current_page, offset int) (migrates []TableMigrate, counts int64, err error) {
 	o := orm.NewOrm()
 	qs := o.QueryTable("table_migrate")

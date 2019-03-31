@@ -5,7 +5,7 @@
         <Button type="success" size="small" @click="editMigrate(null)" style="margin-bottom: 6px">新建表</Button>
       </Col>
       <Col span="12">
-        <Select v-model="currentResource" style="width:400px">
+        <Select v-model="currentResourceName" style="width:400px">
           <Option v-for="resource in resources" :value="resource.resource_name">
             {{ resource.resource_name }} - {{ resource.resource_dsn }}
           </Option>
@@ -106,8 +106,12 @@
         }
       },
       executeMigrate: async function () {
-        const result = ExecuteMigrate(this.currentResourceName);
-        alert(result);
+        const result = await ExecuteMigrate(this.currentResourceName);
+        if(result.status == "SUCCESS"){
+          this.$Message.success("SUCCESS");
+        }else{
+          this.$Message.error(result.errorMsg);
+        }
       }
     },
     mounted(){

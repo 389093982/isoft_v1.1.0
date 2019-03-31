@@ -173,7 +173,7 @@
         if(result.status == "SUCCESS"){
           this.$router.push({ path: '/iwork/migrateList'});
         }else{
-          this.$Message.success(result.errorMsg);
+          this.$Message.error(result.errorMsg);
         }
       },
       refreshMigrateInfo: async function(id){

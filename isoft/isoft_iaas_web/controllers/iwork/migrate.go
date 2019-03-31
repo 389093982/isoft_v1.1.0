@@ -5,6 +5,7 @@ import (
 	"github.com/astaxie/beego/utils/pagination"
 	"isoft/isoft/common/pageutil"
 	"isoft/isoft_iaas_web/core/iworkquicksql"
+	"isoft/isoft_iaas_web/core/iworkutil/migrateutil"
 	"isoft/isoft_iaas_web/models/iwork"
 	"time"
 )
@@ -12,6 +13,12 @@ import (
 func (this *WorkController) ExecuteMigrate() {
 	resource_name := this.GetString("resource_name")
 	resource, _ := iwork.QueryResourceByName(resource_name)
+	if err := migrateutil.MigrateToDB(resource.ResourceDsn); err == nil {
+		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
+	} else {
+		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": err.Error()}
+	}
+	this.ServeJSON()
 }
 
 func (this *WorkController) SubmitMigrate() {
