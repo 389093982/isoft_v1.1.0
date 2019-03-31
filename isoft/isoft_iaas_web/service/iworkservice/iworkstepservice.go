@@ -11,6 +11,7 @@ import (
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
 	"isoft/isoft_iaas_web/core/iworkplugin/iworknode"
 	"isoft/isoft_iaas_web/core/iworkutil"
+	"isoft/isoft_iaas_web/core/iworkutil/datatypeutil"
 	"isoft/isoft_iaas_web/models/iwork"
 	"strings"
 	"time"
@@ -389,7 +390,7 @@ func RefactorWorkStepInfoService(serviceArgs map[string]interface{}) error {
 		return err
 	}
 	// 循环移动子步骤,移动一个删除一个,反转slice,从 id 大的开始执行
-	for index, work_step_id := range iworkutil.ReverseIntSlice(refactor_work_step_id_arr) {
+	for index, work_step_id := range datatypeutil.ReverseSlice(refactor_work_step_id_arr).([]int) {
 		refactorStep, err := getRefactorWorkStep(work_id, int64(work_step_id), o)
 		if err != nil {
 			return err
