@@ -1,181 +1,55 @@
 <template>
   <div>
-    迁移类型：
-    <a href="javascript:;" @click="createTableMigrate">创建表迁移</a>
-    <ISimpleConfirmModal ref="createTable" modal-title="创建表迁移" :modal-width="800" :footer-hide="true">
-      <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="140">
-        <FormItem label="tableName" prop="tableName">
-          <Input v-model.trim="formValidate.tableName" placeholder="请输入 tableName"></Input>
-        </FormItem>
-        <FormItem label="tableColumns" prop="tableColumns">
-          <Input v-model.trim="formValidate.tableColumns" placeholder="请输入 tableColumns"></Input>
-        </FormItem>
-        <FormItem>
-          <Button type="success" @click="handleFormSubmit('formValidate')" style="margin-right: 6px">Submit</Button>
-        </FormItem>
-      </Form>
-    </ISimpleConfirmModal>
-
-    <Table border :columns="columns1" :data="tableColumns" size="small"></Table>
-    <Button type="success" size="small" @click="handleMigrateSubmit">Submit</Button>
-
-    <a href="javascript:;" @click="alterTableMigrate">变更表迁移</a>
-    <a href="javascript:;">迁移执行过程查看</a>
+    <Table border :columns="columns1" :data="migrates" size="small"></Table>
+    <Page :total="total" :page-size="offset" show-total show-sizer :styles="{'text-align': 'center','margin-top': '10px'}"
+          @on-change="handleChange" @on-page-size-change="handlePageSizeChange"/>
   </div>
 </template>
 
 <script>
-  import ISimpleConfirmModal from "../../Common/modal/ISimpleConfirmModal"
-  import {SubmitMigrate} from "../../../api"
+  import {FilterPageMigrate} from "../../../api"
 
   export default {
     name: "MigrateList",
-    components:{ISimpleConfirmModal},
     data(){
       return {
-        tableName:'',
-        tableColumns:[],
+        migrates:[],
+        // 当前页
+        current_page:1,
+        // 总页数
+        total:1,
+        // 每页记录数
+        offset:10,
         columns1: [
           {
-            title: 'column_name',
-            key: 'column_name',
+            title: 'table_name',
+            key: 'table_name',
+            width: 250,
           },
           {
-            title: 'column_type',
-            key: 'column_type',
+            title: 'table_columns',
+            key: 'table_columns',
+            width: 250,
           },
-          {
-            title: 'primary_key',
-            key: 'primary_key',
-            render: (h, params) => {
-              return h('div', [
-                h('span', params.row.primary_key),
-                h('Icon', {
-                  props: {
-                    type: 'md-create',
-                    size: 15,
-                  },
-                  style: {
-                    marginLeft: '30px',
-                  },
-                  on: {
-                    click: () => {
-                      let primary_key = this.tableColumns[params.index]["primary_key"];
-                      this.tableColumns[params.index]["primary_key"] = primary_key == "Y" ? "N" : "Y";
-                    }
-                  }
-                }),
-              ]);
-            }
-          },
-          {
-            title: 'auto_increment',
-            key: 'auto_increment',
-            render: (h, params) => {
-              return h('div', [
-                h('span', params.row.auto_increment),
-                h('Icon', {
-                  props: {
-                    type: 'md-create',
-                    size: 15,
-                  },
-                  style: {
-                    marginLeft: '30px',
-                  },
-                  on: {
-                    click: () => {
-                      let auto_increment = this.tableColumns[params.index]["auto_increment"];
-                      this.tableColumns[params.index]["auto_increment"] = auto_increment == "Y" ? "N" : "Y";
-                    }
-                  }
-                }),
-              ]);
-            }
-          },
-          {
-            title: 'comment',
-            key: 'comment',
-          },
-          {
-            title: '操作',
-            key: 'operate',
-            render: (h, params) => {
-              return h('div', [
-                h('Button', {
-                  props: {
-                    type: 'error',
-                    size: 'small'
-                  },
-                  style: {
-                    marginRight: '5px',
-                  },
-                  on: {
-                    click: () => {
-                    }
-                  }
-                }, '编辑'),
-                h('Button', {
-                  props: {
-                    type: 'success',
-                    size: 'small'
-                  },
-                  style: {
-                    marginRight: '5px',
-                  },
-                  on: {
-                    click: () => {
-                    }
-                  }
-                }, '删除'),
-              ]);
-            }
-          }
         ],
-        formValidate: {
-          tableName: '',
-          tableColumns: '',
-        },
-        ruleValidate: {
-          tableName: [
-            { required: true, message: 'tableName 不能为空!', trigger: 'blur' }
-          ],
-          tableColumns: [
-            { required: true, message: 'tableColumns 不能为空!', trigger: 'blur' }
-          ],
-        },
       }
     },
     methods:{
-      createTableMigrate(){
-        this.$refs.createTable.showModal();
+      refreshMigrateList: async function(){
+        const result = await FilterPageMigrate(this.offset, this.current_work_step_id);
+        this.migrates = result.migrates;
       },
-      handleFormSubmit(name){
-        this.$refs[name].validate((valid) => {
-          if (valid) {
-           this.tableName = this.formValidate.tableName;
-           this.formValidate.tableColumns.split(",").forEach(columnStr => {
-             let has = false;
-             this.tableColumns.forEach(column => {
-               // 已经包含
-               if(column.column_name == columnStr){
-                 has = true;
-               }
-             });
-             if(!has){
-               this.tableColumns.push({"column_name": columnStr, "column_type": "string", "primary_key":"N", "auto_increment":"N"});
-             }
-           });
-           this.$refs.createTable.hideModal();
-          }
-        });
+      handleChange(page){
+        this.current_page = page;
+        this.refreshMigrateList();
       },
-       handleMigrateSubmit: async function () {
-        const result = await SubmitMigrate(this.tableName, JSON.stringify(this.tableColumns));
-        alert(result);
+      handlePageSizeChange(pageSize){
+        this.offset = pageSize;
+        this.refreshMigrateList();
       },
-      alterTableMigrate(){
-        alert(1);
-      },
+    },
+    mounted(){
+      this.refreshMigrateList();
     }
   }
 </script>

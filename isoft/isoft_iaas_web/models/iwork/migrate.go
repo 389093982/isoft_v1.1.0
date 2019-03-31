@@ -24,3 +24,12 @@ func InsertOrUpdateTableMigrate(tm *TableMigrate) (id int64, err error) {
 	}
 	return
 }
+
+func QueryMigrate(current_page, offset int) (migrates []TableMigrate, counts int64, err error) {
+	o := orm.NewOrm()
+	qs := o.QueryTable("table_migrate")
+	counts, _ = qs.Count()
+	qs = qs.OrderBy("-last_updated_time").Limit(offset, (current_page-1)*offset)
+	_, err = qs.All(&migrates)
+	return
+}

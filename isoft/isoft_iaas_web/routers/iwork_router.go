@@ -50,4 +50,5 @@ func loadloadIWorkerRouterDetail() {
 	beego.Router("/api/iwork/batchChangeIndent", &iwork.WorkController{}, "post:BatchChangeIndent")
 
 	beego.Router("/api/iwork/submitMigrate", &iwork.WorkController{}, "post:SubmitMigrate")
+	beego.Router("/api/iwork/filterPageMigrate", &iwork.WorkController{}, "post:FilterPageMigrate")
 }
