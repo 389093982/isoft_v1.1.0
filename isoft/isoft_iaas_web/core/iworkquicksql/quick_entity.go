@@ -19,15 +19,16 @@ type TableColumn struct {
 	Comment       string `json:"comment"`
 }
 
+func getColumnNames(info TableInfo) []string {
+	rs := make([]string, 0)
+	for _, column := range info.TableColumns {
+		rs = append(rs, column.ColumnName)
+	}
+	return rs
+}
+
 func AlterTable(preTableInfo, tableInfo TableInfo) string {
 	migrates := make([]string, 0)
-	getColumnNames := func(info TableInfo) []string {
-		rs := make([]string, 0)
-		for _, column := range info.TableColumns {
-			rs = append(rs, column.ColumnName)
-		}
-		return rs
-	}
 	preColumnNames := getColumnNames(preTableInfo)
 	columnNames := getColumnNames(tableInfo)
 	for _, preColumnName := range preColumnNames {
@@ -36,10 +37,13 @@ func AlterTable(preTableInfo, tableInfo TableInfo) string {
 		}
 	}
 	for index, columnName := range columnNames {
-		if !stringutil.CheckContains(columnName, preColumnNames) {
+		if flag, preindex := stringutil.CheckIndexContains(columnName, preColumnNames); !flag {
 			migrates = append(migrates, addField(tableInfo.TableName, columnName, tableInfo.TableColumns[index]))
 		} else {
-			migrates = append(migrates, alterField(tableInfo.TableName, columnName, tableInfo.TableColumns[index]))
+			if modify := modifyField(tableInfo.TableName,
+				preTableInfo.TableColumns[preindex], tableInfo.TableColumns[index]); modify != "" {
+				migrates = append(migrates, modify)
+			}
 		}
 	}
 	return strings.Join(migrates, "\n")
@@ -54,9 +58,13 @@ func addField(tableName, columnName string, column *TableColumn) string {
 		tableName, columnName, strings.Join(getCommonInfo(column), " "))) + ";"
 }
 
-func alterField(tableName, columnName string, column *TableColumn) string {
-	return strings.TrimSpace(fmt.Sprintf(`ALTER TABLE %s MODIFY %s %s`,
-		tableName, columnName, strings.Join(getCommonInfo(column), " "))) + ";"
+func modifyField(tableName string, precolumn, column *TableColumn) string {
+	if precolumn.ColumnType != column.ColumnType || precolumn.PrimaryKey != column.PrimaryKey ||
+		precolumn.AutoIncrement != column.AutoIncrement || precolumn.Comment != column.Comment {
+		return strings.TrimSpace(fmt.Sprintf(`ALTER TABLE %s MODIFY %s %s`,
+			tableName, column.ColumnName, strings.Join(getCommonInfo(column), " "))) + ";"
+	}
+	return ""
 }
 
 func CreateTable(tableInfo TableInfo) string {

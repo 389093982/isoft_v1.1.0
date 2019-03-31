@@ -14,16 +14,21 @@ func GetTypeOfInterface(v interface{}) string {
 	return reflect.TypeOf(v).String()
 }
 
-func CheckContains(s string, slice []string) bool {
+func CheckIndexContains(s string, slice []string) (bool, int) {
 	if len(slice) == 0 {
-		return false
+		return false, -1
 	}
-	for _, _s := range slice {
-		if _s == s {
-			return true
+	for index, ss := range slice {
+		if ss == s {
+			return true, index
 		}
 	}
-	return false
+	return false, -1
+}
+
+func CheckContains(s string, slice []string) bool {
+	b, _ := CheckIndexContains(s, slice)
+	return b
 }
 
 func ChangeStringsToInterfaces(ss []string) []interface{} {
