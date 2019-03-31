@@ -163,7 +163,7 @@
                }
              });
              if(!has){
-               this.tableColumns.push({"column_name": columnStr, "column_type": "string", "primary_key":"N", "auto_increment":"N"});
+               this.tableColumns.push({"column_name": columnStr, "column_type": "string", "primary_key":"N", "auto_increment":"N", "comment":""});
              }
            });
            this.$refs.createTable.hideModal();
@@ -181,6 +181,7 @@
         const result = await GetMigrateInfo(id);
         if(result.status=="SUCCESS"){
           this.tableName = result.migrate.table_name;
+          this.formValidate.tableName = this.tableName;
           this.tableColumns = JSON.parse(result.migrate.table_columns).table_columns;
         }
       }

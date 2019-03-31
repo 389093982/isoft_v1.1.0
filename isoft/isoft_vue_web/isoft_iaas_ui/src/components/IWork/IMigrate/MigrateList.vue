@@ -1,5 +1,7 @@
 <template>
   <div>
+    <Button type="success" size="small" @click="editMigrate(null)" style="margin-bottom: 6px">新建表</Button>
+
     <Table border :columns="columns1" :data="migrates" size="small"></Table>
     <Page :total="total" :page-size="offset" show-total show-sizer :styles="{'text-align': 'center','margin-top': '10px'}"
           @on-change="handleChange" @on-page-size-change="handlePageSizeChange"/>
@@ -46,7 +48,7 @@
                   },
                   on: {
                     click: () => {
-                      this.$router.push({ path: '/iwork/editMigrate', query: { id: this.migrates[params.index]['id'] }});
+                      this.editMigrate(this.migrates[params.index]['id']);
                     }
                   }
                 }, '编辑'),
@@ -69,6 +71,13 @@
         this.offset = pageSize;
         this.refreshMigrateList();
       },
+      editMigrate:function (id) {
+        if(id != undefined && id != null){
+          this.$router.push({ path: '/iwork/editMigrate', query: { id: id }});
+        }else{
+          this.$router.push({ path: '/iwork/editMigrate'});
+        }
+      }
     },
     mounted(){
       this.refreshMigrateList();
