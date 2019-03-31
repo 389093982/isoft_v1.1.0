@@ -1,8 +1,8 @@
 <template>
   <div>
     迁移类型：
-    <a href="javascript:;" @click="createTableMigrate">创建表迁移</a>
-    <ISimpleConfirmModal ref="createTable" modal-title="创建表迁移" :modal-width="800" :footer-hide="true">
+    <a href="javascript:;" @click="createTableMigrate">创建/变更表迁移</a>
+    <ISimpleConfirmModal ref="createTable" modal-title="创建/变更表迁移" :modal-width="800" :footer-hide="true">
       <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="140">
         <FormItem label="tableName" prop="tableName">
           <Input v-model.trim="formValidate.tableName" placeholder="请输入 tableName"
@@ -173,7 +173,11 @@
       },
        handleMigrateSubmit: async function () {
         const result = await SubmitMigrate(this.tableName, JSON.stringify(this.tableColumns));
-        alert(result);
+        if(result.status == "SUCCESS"){
+          this.$router.push({ path: '/iwork/migrateList'});
+        }else{
+          this.$Message.success(result.errorMsg);
+        }
       },
       alterTableMigrate(){
         alert(1);
