@@ -33,10 +33,11 @@
                 流程管理
               </template>
               <MenuItem name="1-1"><router-link to="/iwork/workList">流程列表</router-link></MenuItem>
-              <MenuItem name="1-2">实体类管理</MenuItem>
-              <MenuItem name="1-3">全局变量管理</MenuItem>
-              <MenuItem name="1-4">WorkDL管理</MenuItem>
-              <MenuItem name="1-4">项目校验</MenuItem>
+              <MenuItem name="1-2"><router-link to="/iwork/migrateList">表迁移管理</router-link></MenuItem>
+              <MenuItem name="1-3">实体类管理</MenuItem>
+              <MenuItem name="1-4">全局变量管理</MenuItem>
+              <MenuItem name="1-5">WorkDL管理</MenuItem>
+              <MenuItem name="1-6">项目校验</MenuItem>
             </Submenu>
             <Submenu name="2">
               <template slot="title">
