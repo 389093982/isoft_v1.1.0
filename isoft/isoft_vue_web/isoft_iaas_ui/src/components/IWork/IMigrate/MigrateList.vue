@@ -41,7 +41,7 @@
           {
             title: 'table_name',
             key: 'table_name',
-            width: 250,
+            width: 150,
           },
           {
             title: 'table_info',

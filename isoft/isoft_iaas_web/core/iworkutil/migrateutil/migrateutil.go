@@ -57,7 +57,7 @@ func (this *MigrateExecutor) migrate() {
 
 func MigrateToDB(dsn string) (err error) {
 	defer func() {
-		if err1 := recover(); err != nil {
+		if err1 := recover(); err1 != nil {
 			err = err1.(error)
 		}
 	}()
