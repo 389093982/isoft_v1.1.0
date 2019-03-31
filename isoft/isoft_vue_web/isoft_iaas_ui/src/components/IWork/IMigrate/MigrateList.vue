@@ -70,8 +70,9 @@
     },
     methods:{
       refreshMigrateList: async function(){
-        const result = await FilterPageMigrate(this.offset, this.current_work_step_id);
+        const result = await FilterPageMigrate(this.offset, this.current_page);
         this.migrates = result.migrates;
+        this.total = result.paginator.totalcount;
       },
       handleChange(page){
         this.current_page = page;
