@@ -1,57 +1,57 @@
 <template>
-    <Modal
-      v-model="showFormModal"
-      width="1000"
-      title="查看/编辑 workstep"
-      :footer-hide="true"
-      :mask-closable="false"
-      :styles="{top: '10px'}">
-      <Scroll height="450">
-        <!-- 表单信息 -->
-        <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="140">
-          <Row style="margin-bottom: 20px;text-align: center;color: green;">
-            <Col span="4">
-              <Button type="warning" size="small" @click="showNext(-1)">加载前置步骤</Button>
-            </Col>
-            <Col span="16">
-                <h2 style='font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;'>步骤名称:{{formValidate.work_step_name}},步骤类型:{{formValidate.work_step_type}}</h2>
-            </Col>
-            <Col span="4">
-              <Button type="warning" size="small" @click="showNext(1)">加载后置步骤</Button>
-            </Col>
+  <Modal
+    v-model="showFormModal"
+    width="1000"
+    title="查看/编辑 workstep"
+    :footer-hide="true"
+    :mask-closable="false"
+    :styles="{top: '10px'}">
+    <Scroll height="450">
+      <!-- 表单信息 -->
+      <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="140">
+        <Row style="margin-bottom: 20px;text-align: center;color: green;">
+          <Col span="4">
+            <Button type="warning" size="small" @click="showNext(-1)">加载前置步骤</Button>
+          </Col>
+          <Col span="16">
+            <h2 style='font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;'>步骤名称:{{formValidate.work_step_name}},步骤类型:{{formValidate.work_step_type}}</h2>
+          </Col>
+          <Col span="4">
+            <Button type="warning" size="small" @click="showNext(1)">加载后置步骤</Button>
+          </Col>
+        </Row>
+        <Row style="margin-right: 10px;">
+          <Col span="14">
+            <FormItem label="work_step_input" prop="work_step_input">
+              <Tabs type="card" :animated="false">
+                <TabPane label="edit">
+                  <WorkStepParamInputEdit :paramInputSchemaItems="paramInputSchema.ParamInputSchemaItems"/>
+                </TabPane>
+                <TabPane label="ParamMapping" v-if="showParamMapping">
+                  <ParamMapping :paramMappings="paramMappings"/>
+                </TabPane>
+              </Tabs>
+            </FormItem>
+          </Col>
+          <Col span="10">
+            <FormItem label="work_step_output" prop="work_step_output">
+              <Tabs type="card" :animated="false">
+                <TabPane label="Tree">
+                  <WorkStepPreParamOutputTree v-if="paramOutputSchemaTreeNode" :paramOutputSchemaTreeNode="paramOutputSchemaTreeNode"/>
+                </TabPane>
+              </Tabs>
+            </FormItem>
+          </Col>
+        </Row>
+        <FormItem>
+          <Row>
+            <Button type="success" size="small" @click="handleSubmit('formValidate', false)">提交</Button>
+            <Button type="warning" size="small" @click="handleSubmit('formValidate', true)">提交并关闭</Button>
           </Row>
-          <Row style="margin-right: 10px;">
-            <Col span="14">
-              <FormItem label="work_step_input" prop="work_step_input">
-                <Tabs type="card" :animated="false">
-                  <TabPane label="edit">
-                    <WorkStepParamInputEdit :paramInputSchemaItems="paramInputiworkmodels.ParamInputSchemaItems"/>
-                  </TabPane>
-                  <TabPane label="ParamMapping" v-if="showParamMapping">
-                    <ParamMapping :paramMappings="paramMappings"/>
-                  </TabPane>
-                </Tabs>
-              </FormItem>
-            </Col>
-            <Col span="10">
-              <FormItem label="work_step_output" prop="work_step_output">
-                <Tabs type="card" :animated="false">
-                  <TabPane label="Tree">
-                    <WorkStepPreParamOutputTree v-if="paramOutputSchemaTreeNode" :paramOutputSchemaTreeNode="paramOutputSchemaTreeNode"/>
-                  </TabPane>
-                </Tabs>
-              </FormItem>
-            </Col>
-          </Row>
-          <FormItem>
-            <Row>
-                <Button type="success" size="small" @click="handleSubmit('formValidate', false)">提交</Button>
-              <Button type="warning" size="small" @click="handleSubmit('formValidate', true)">提交并关闭</Button>
-            </Row>
-          </FormItem>
-        </Form>
-      </Scroll>
-    </Modal>
+        </FormItem>
+      </Form>
+    </Scroll>
+  </Modal>
 </template>
 
 <script>
