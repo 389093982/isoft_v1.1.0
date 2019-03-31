@@ -2,6 +2,7 @@ package iworkquicksql
 
 import (
 	"fmt"
+	"isoft/isoft/common/stringutil"
 	"strings"
 )
 
@@ -18,19 +19,59 @@ type TableColumn struct {
 	Comment       string `json:"comment"`
 }
 
-func CreateTable(info TableInfo) string {
-	create_table := `CREATE TABLE IF NOT EXISTS %s(
-%s)ENGINE=InnoDB DEFAULT CHARSET=utf8;`
-	return fmt.Sprintf(create_table, info.TableName, CreateColumuns(info))
+func AlterTable(preTableInfo, tableInfo TableInfo) string {
+	migrates := make([]string, 0)
+	getColumnNames := func(info TableInfo) []string {
+		rs := make([]string, 0)
+		for _, column := range info.TableColumns {
+			rs = append(rs, column.ColumnName)
+		}
+		return rs
+	}
+	preColumnNames := getColumnNames(preTableInfo)
+	columnNames := getColumnNames(tableInfo)
+	for _, preColumnName := range preColumnNames {
+		if !stringutil.CheckContains(preColumnName, columnNames) {
+			migrates = append(migrates, deleteField(tableInfo.TableName, preColumnName)+",")
+		}
+	}
+	for index, columnName := range columnNames {
+		if !stringutil.CheckContains(columnName, preColumnNames) {
+			migrates = append(migrates, addField(tableInfo.TableName, columnName, tableInfo.TableColumns[index]))
+		} else {
+			migrates = append(migrates, alterField(tableInfo.TableName, columnName, tableInfo.TableColumns[index]))
+		}
+	}
+	return strings.Join(migrates, "\n")
 }
 
-func CreateColumuns(info TableInfo) string {
+func deleteField(tableName, columnName string) string {
+	return strings.TrimSpace(fmt.Sprintf(`ALTER TABLE %s DROP COLUMN %s`, tableName, columnName)) + ";"
+}
+
+func addField(tableName, columnName string, column *TableColumn) string {
+	return strings.TrimSpace(fmt.Sprintf(`ALTER TABLE %s ADD %s %s`,
+		tableName, columnName, strings.Join(getCommonInfo(column), " "))) + ";"
+}
+
+func alterField(tableName, columnName string, column *TableColumn) string {
+	return strings.TrimSpace(fmt.Sprintf(`ALTER TABLE %s MODIFY %s %s`,
+		tableName, columnName, strings.Join(getCommonInfo(column), " "))) + ";"
+}
+
+func CreateTable(tableInfo TableInfo) string {
+	create_table := `CREATE TABLE IF NOT EXISTS %s(
+%s)ENGINE=InnoDB DEFAULT CHARSET=utf8;`
+	return fmt.Sprintf(create_table, tableInfo.TableName, createColumuns(tableInfo))
+}
+
+func createColumuns(tableInfo TableInfo) string {
 	columns := make([]string, 0)
-	for index, column := range info.TableColumns {
-		if index == len(info.TableColumns)-1 {
-			columns = append(columns, CreateIndentColumn(column))
+	for index, column := range tableInfo.TableColumns {
+		if index == len(tableInfo.TableColumns)-1 {
+			columns = append(columns, createIndentColumn(column))
 		} else {
-			columns = append(columns, CreateIndentColumn(column, true))
+			columns = append(columns, createIndentColumn(column, true))
 		}
 
 	}
@@ -38,16 +79,26 @@ func CreateColumuns(info TableInfo) string {
 	return strings.Join(columns, "")
 }
 
-func CreateIndentColumn(column *TableColumn, comma ...bool) string {
+func createIndentColumn(column *TableColumn, comma ...bool) string {
 	indent := `	%s
 `
-	return fmt.Sprintf(indent, CreateColumn(column, comma...))
+	return fmt.Sprintf(indent, createColumn(column, comma...))
 }
 
-func CreateColumn(column *TableColumn, comma ...bool) string {
+func createColumn(column *TableColumn, comma ...bool) string {
 	appends := make([]string, 0)
 	appends = append(appends, column.ColumnName)
 	appends = append(appends, column.ColumnType)
+	appends = append(appends, getCommonInfo(column)...)
+	var commaStr string
+	if len(comma) > 0 && comma[0] == true {
+		commaStr = ","
+	}
+	return fmt.Sprintf(`%s%s`, strings.Join(appends, " "), commaStr)
+}
+
+func getCommonInfo(column *TableColumn) []string {
+	appends := make([]string, 0)
 	if column.PrimaryKey == "Y" {
 		appends = append(appends, "PRIMARY KEY")
 	}
@@ -57,9 +108,5 @@ func CreateColumn(column *TableColumn, comma ...bool) string {
 	if strings.TrimSpace(column.Comment) != "" {
 		appends = append(appends, fmt.Sprintf(`COMMENT '%s'`, strings.TrimSpace(column.Comment)))
 	}
-	var commaStr string
-	if len(comma) > 0 && comma[0] == true {
-		commaStr = ","
-	}
-	return fmt.Sprintf(`%s%s`, strings.Join(appends, " "), commaStr)
+	return appends
 }

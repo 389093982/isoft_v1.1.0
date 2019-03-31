@@ -8,7 +8,8 @@ import (
 type TableMigrate struct {
 	Id              int64     `json:"id"`
 	TableName       string    `json:"table_name"`
-	TableColumns    string    `json:"table_columns"`
+	MigrateType     string    `json:"migrate_type"`
+	TableInfo       string    `json:"table_info"`
 	TableMigrateSql string    `json:"table_migrate_sql"`
 	CreatedBy       string    `json:"created_by"`
 	CreatedTime     time.Time `json:"created_time" orm:"auto_now_add;type(datetime)"`
@@ -38,5 +39,12 @@ func QueryMigrate(current_page, offset int) (migrates []TableMigrate, counts int
 func QueryMigrateInfo(id int64) (migrate TableMigrate, err error) {
 	o := orm.NewOrm()
 	err = o.QueryTable("table_migrate").Filter("id", id).One(&migrate)
+	return
+}
+
+func QueryMigrateData(tableName, migrateType string) (migrate TableMigrate, err error) {
+	o := orm.NewOrm()
+	err = o.QueryTable("table_migrate").Filter("table_name", tableName).
+		Filter("migrate_type", migrateType).OrderBy("-last_updated_time").One(&migrate)
 	return
 }

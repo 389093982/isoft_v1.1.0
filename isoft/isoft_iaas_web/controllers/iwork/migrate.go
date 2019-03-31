@@ -19,12 +19,23 @@ func (this *WorkController) SubmitMigrate() {
 			TableName:    tableName,
 			TableColumns: tableColunms,
 		}
-		create_sql := iworkquicksql.CreateTable(tableInfo)
+
+		var migrateSql, migrateType string
+		if preMigrate, err := iwork.QueryMigrateData(tableName, "CREATE"); err == nil {
+			migrateType = "ALTER"
+			var preTableInfo iworkquicksql.TableInfo
+			json.Unmarshal([]byte(preMigrate.TableInfo), &preTableInfo)
+			migrateSql = iworkquicksql.AlterTable(preTableInfo, tableInfo)
+		} else {
+			migrateType = "CREATE"
+			migrateSql = iworkquicksql.CreateTable(tableInfo)
+		}
 		if tableInfoStr, err1 := json.Marshal(tableInfo); err1 == nil {
 			tm := &iwork.TableMigrate{
 				TableName:       tableName,
-				TableColumns:    string(tableInfoStr),
-				TableMigrateSql: create_sql,
+				TableInfo:       string(tableInfoStr),
+				TableMigrateSql: migrateSql,
+				MigrateType:     migrateType,
 				CreatedBy:       "SYSTEM",
 				CreatedTime:     time.Now(),
 				LastUpdatedBy:   "SYSTEM",

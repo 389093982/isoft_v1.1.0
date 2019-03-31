@@ -29,9 +29,14 @@
             width: 250,
           },
           {
-            title: 'table_columns',
-            key: 'table_columns',
+            title: 'table_info',
+            key: 'table_info',
             width: 250,
+          },
+          {
+            title: 'migrate_type',
+            key: 'migrate_type',
+            width: 120,
           },
           {
             title: 'table_migrate_sql',

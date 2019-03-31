@@ -181,7 +181,7 @@
         if(result.status=="SUCCESS"){
           this.tableName = result.migrate.table_name;
           this.formValidate.tableName = this.tableName;
-          this.tableColumns = JSON.parse(result.migrate.table_columns).table_columns;
+          this.tableColumns = JSON.parse(result.migrate.table_info).table_columns;
         }
       }
     },
