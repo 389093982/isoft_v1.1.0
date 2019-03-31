@@ -5,6 +5,7 @@
       :width="modalWidth"
       :title="modalTitle"
       :transfer="false"
+      :footer-hide="footerHide"
       @on-ok="handleSubmit"
       :mask-closable="false">
       <div>
@@ -26,6 +27,10 @@
         type: Number,
         default: 800
       },
+      footerHide: {
+        type: Boolean,
+        default: false,
+      }
     },
     data(){
       return {
@@ -35,6 +40,9 @@
     methods:{
       showModal:function () {
         this.showFormModal = true;
+      },
+      hideModal:function () {
+        this.showFormModal = false;
       },
       handleSubmit:function () {
         this.$emit("handleSubmit");

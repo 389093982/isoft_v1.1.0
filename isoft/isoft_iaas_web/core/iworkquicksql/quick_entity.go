@@ -13,8 +13,8 @@ type TableInfo struct {
 type TableColumn struct {
 	ColumnName    string `json:"column_name"`
 	ColumnType    string `json:"column_type"`
-	PrimaryKey    bool   `json:"primary_key"`
-	AutoIncrement bool   `json:"auto_increment"`
+	PrimaryKey    string `json:"primary_key"`
+	AutoIncrement string `json:"auto_increment"`
 	Comment       string `json:"comment"`
 }
 
@@ -48,10 +48,10 @@ func CreateColumn(column *TableColumn, comma ...bool) string {
 	appends := make([]string, 0)
 	appends = append(appends, column.ColumnName)
 	appends = append(appends, column.ColumnType)
-	if column.PrimaryKey {
+	if column.PrimaryKey == "Y" {
 		appends = append(appends, "PRIMARY KEY")
 	}
-	if column.AutoIncrement {
+	if column.AutoIncrement == "Y" {
 		appends = append(appends, "AUTO_INCREMENT")
 	}
 	if strings.TrimSpace(column.Comment) != "" {

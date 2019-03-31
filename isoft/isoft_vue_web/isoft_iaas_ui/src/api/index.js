@@ -211,5 +211,7 @@ export const RefactorWorkStepInfo = (work_id, refactor_worksub_name,selections) 
 
 export const BatchChangeIndent = (work_id, mod,selections) => ajax(BASE_URL+"/iwork/batchChangeIndent", {work_id, mod,selections},'POST');
 
+export const SubmitMigrate = (tableName, tableColunms) => ajax(BASE_URL+"/iwork/submitMigrate", {tableName, tableColunms},'POST');
+
 // 跨模块使用,模块化部署时需要使用 nginx 代理
 export const LoginAddr = "/sso/login/";
