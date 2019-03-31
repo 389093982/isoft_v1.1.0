@@ -19,9 +19,6 @@
 
     <Table border :columns="columns1" :data="tableColumns" size="small"></Table>
     <Button type="success" size="small" @click="handleMigrateSubmit">Submit</Button>
-
-    <a href="javascript:;" @click="alterTableMigrate">变更表迁移</a>
-    <a href="javascript:;">迁移执行过程查看</a>
   </div>
 </template>
 
@@ -178,9 +175,6 @@
         }else{
           this.$Message.success(result.errorMsg);
         }
-      },
-      alterTableMigrate(){
-        alert(1);
       },
       refreshMigrateInfo: async function(id){
         const result = await GetMigrateInfo(id);

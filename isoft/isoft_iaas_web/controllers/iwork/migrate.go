@@ -19,10 +19,12 @@ func (this *WorkController) SubmitMigrate() {
 			TableName:    tableName,
 			TableColumns: tableColunms,
 		}
+		create_sql := iworkquicksql.CreateTable(tableInfo)
 		if tableInfoStr, err1 := json.Marshal(tableInfo); err1 == nil {
 			tm := &iwork.TableMigrate{
 				TableName:       tableName,
 				TableColumns:    string(tableInfoStr),
+				TableMigrateSql: create_sql,
 				CreatedBy:       "SYSTEM",
 				CreatedTime:     time.Now(),
 				LastUpdatedBy:   "SYSTEM",

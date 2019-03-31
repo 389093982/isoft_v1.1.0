@@ -34,6 +34,11 @@
             width: 250,
           },
           {
+            title: 'table_migrate_sql',
+            key: 'table_migrate_sql',
+            width: 250,
+          },
+          {
             title: '操作',
             key: 'operate',
             render: (h, params) => {
