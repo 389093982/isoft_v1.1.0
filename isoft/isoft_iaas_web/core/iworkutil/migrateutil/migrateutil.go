@@ -34,7 +34,7 @@ func (this *MigrateExecutor) ping() {
 // 建立迁移文件版本管理表
 func (this *MigrateExecutor) initial() {
 	versionTable := `CREATE TABLE IF NOT EXISTS migrate_version 
-		(id INT(20) PRIMARY KEY AUTO_INCREMENT, tracking_id CHAR(200), flag CHAR(200), hash CHAR(200),sql_detail TEXT,created_time datetime);`
+		(id INT(20) PRIMARY KEY AUTO_INCREMENT, tracking_id CHAR(200), flag CHAR(200), hash CHAR(200),sql_detail TEXT, tracking_detail TEXT, created_time datetime);`
 	this.ExecSQL(versionTable)
 }
 
@@ -46,9 +46,9 @@ func (this *MigrateExecutor) ExecSQL(sql string, args ...interface{}) (rs sql.Re
 	return
 }
 
-func (this *MigrateExecutor) record(flag, hash, sql string) {
-	recordLog := `INSERT INTO migrate_version(tracking_id,flag,hash,sql_detail,created_time) VALUES (?,?,?,?,NOW());`
-	this.ExecSQL(recordLog, this.TrackingId, flag, hash, sql)
+func (this *MigrateExecutor) record(flag, hash, sql, tracking_detail string) {
+	recordLog := `INSERT INTO migrate_version(tracking_id,flag,hash,sql_detail,tracking_detail, created_time) VALUES (?,?,?,?,?,NOW());`
+	this.ExecSQL(recordLog, this.TrackingId, flag, hash, sql, tracking_detail)
 }
 
 func (this *MigrateExecutor) migrate() {
@@ -77,11 +77,11 @@ func (this *MigrateExecutor) migrateOne(migrate iwork.TableMigrate) {
 			detailHash := hashutil.CalculateHashWithString(executeSql)
 			if !this.checkExecuted(detailHash) {
 				this.ExecSQL(executeSql)
-				this.record("true", detailHash, executeSql)
+				this.record("true", detailHash, executeSql, "")
 			}
 		}
 		// 计算hash 值
-		this.record("true", hash, migrate.TableMigrateSql)
+		this.record("true", hash, migrate.TableMigrateSql, "")
 	}
 }
 
@@ -93,7 +93,7 @@ func MigrateToDB(dsn string) (err error) {
 	defer func() {
 		if err1 := recover(); err1 != nil {
 			err = err1.(error)
-			executor.record("false", "", "")
+			executor.record("false", "", "", err.Error())
 		}
 	}()
 
