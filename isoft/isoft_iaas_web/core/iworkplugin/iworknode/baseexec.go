@@ -15,10 +15,9 @@ import (
 	"strings"
 )
 
-var typeMap map[string]reflect.Type
+var typeMap = make(map[string]reflect.Type, 0)
 
 func init() {
-	typeMap = make(map[string]reflect.Type, 0)
 	vs := []interface{}{
 		WorkStartNode{},
 		WorkEndNode{},
