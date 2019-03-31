@@ -1,6 +1,6 @@
 <template>
   <span>
-    <ISimpleBtnTriggerModal ref="triggerModal" btn-text="实体类管理" modal-title="新增/编辑实体类" :modal-width="800" modal-top="50px">
+    <ISimpleBtnTriggerModal ref="triggerModal" btn-size="small" btn-text="实体类管理" modal-title="新增/编辑实体类" :modal-width="800" modal-top="50px">
       <Tabs :animated="false">
         <TabPane label="编辑">
           <!-- 表单信息 -->

@@ -1,5 +1,5 @@
 <template>
-  <ISimpleBtnTriggerModal ref="triggerModal" btn-text="管理IWorkDL" modal-title="IWork服务定义文件管理" :modal-width="800">
+  <ISimpleBtnTriggerModal ref="triggerModal" btn-size="small" btn-text="管理IWorkDL" modal-title="IWork服务定义文件管理" :modal-width="800">
     <Button type="success" @click="buildIWorkDL">生成IWorkDL文件</Button>
     <Button type="success">导入IWorkDL文件</Button>
     <p>11111111111111111111111111111111</p>
