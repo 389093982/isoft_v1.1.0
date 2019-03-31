@@ -108,12 +108,6 @@ func RunOneStep(trackingId string, blockStep *block.BlockStep,
 	return
 }
 
-// 统计操作所花费的时间方法
-func recordCostTimeLog(operateName, trackingId string, start time.Time) {
-	iwork.InsertRunLogDetail(trackingId, fmt.Sprintf(
-		"%s total cost time :%v ms", operateName, time.Now().Sub(start).Nanoseconds()/1e6))
-}
-
 // 获取当前 work 需要的 trakingId
 func createNewTrackingIdForWork(dispatcher *entry.Dispatcher, work iwork.Work) string {
 	// 生成当前流程的 trackingId
@@ -138,17 +132,16 @@ func createNewTrackingIdForWork(dispatcher *entry.Dispatcher, work iwork.Work) s
 
 // 对 trakingId 进行优化,避免过长的 trackingId
 func optimizeTrackingId(pTrackingId, trackingId string) string {
-	if strings.Count(pTrackingId, ".") > 1 {
-		// a.~.b.c
-		trackingId = strings.Join(
-			[]string{
-				pTrackingId[:strings.Index(pTrackingId, ".")], // 顶级 trackingId
-				"~", // 过渡级 trackingId
-				pTrackingId[strings.LastIndex(pTrackingId, ".")+1:], // 父级 trackingId
-				trackingId, // 当前级 trackingId
-			}, ".")
-	} else {
-		trackingId = fmt.Sprintf("%s.%s", pTrackingId, trackingId)
+	if strings.Count(pTrackingId, ".") <= 1 {
+		return fmt.Sprintf("%s.%s", pTrackingId, trackingId)
 	}
+	// a.~.b.c
+	trackingId = strings.Join(
+		[]string{
+			pTrackingId[:strings.Index(pTrackingId, ".")], // 顶级 trackingId
+			"~", // 过渡级 trackingId
+			pTrackingId[strings.LastIndex(pTrackingId, ".")+1:], // 父级 trackingId
+			trackingId, // 当前级 trackingId
+		}, ".")
 	return trackingId
 }
