@@ -5,7 +5,8 @@
     <ISimpleConfirmModal ref="createTable" modal-title="创建表迁移" :modal-width="800" :footer-hide="true">
       <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="140">
         <FormItem label="tableName" prop="tableName">
-          <Input v-model.trim="formValidate.tableName" placeholder="请输入 tableName"></Input>
+          <Input v-model.trim="formValidate.tableName" placeholder="请输入 tableName"
+                 :readonly="this.tableName != '' && this.tableName != null && this.tableName != undefined"></Input>
         </FormItem>
         <FormItem label="tableColumns" prop="tableColumns">
           <Input v-model.trim="formValidate.tableColumns" placeholder="请输入 tableColumns"></Input>

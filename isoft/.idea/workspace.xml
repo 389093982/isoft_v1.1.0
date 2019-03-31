@@ -3,14 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="61c01151-84f0-4bfd-a227-5c1f0b5a424d" name="Default" comment="代码优化">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_iaas_web/controllers/iwork/migrate.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_iaas_web/controllers/iwork/migrate.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/isoft_iaas_web/iwork.db" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_iaas_web/iwork.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_iaas_web/models/iwork/migrate.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_iaas_web/models/iwork/migrate.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_iaas_web/routers/iwork_router.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_iaas_web/routers/iwork_router.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/api/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/api/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/IWork/IMigrate/EditMigrate.vue" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/IWork/IMigrate/EditMigrate.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/IWork/IMigrate/MigrateList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/IWork/IMigrate/MigrateList.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/router/iwork.js" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/router/iwork.js" afterDir="false" />
     </list>
     <ignored path="isoft_deploy_web/static/uploadfile/" />
     <ignored path="../.idea/inspectionProfiles/profiles_settings.xml" />
@@ -113,7 +107,7 @@
           <entry key="svg" value="1" />
           <entry key="ts" value="20" />
           <entry key="txt" value="92" />
-          <entry key="vue" value="1654" />
+          <entry key="vue" value="1655" />
           <entry key="vue_bak" value="1" />
           <entry key="xml" value="10" />
           <entry key="yml" value="1" />
@@ -133,7 +127,7 @@
           <entry key="SQL" value="6" />
           <entry key="SVG" value="1" />
           <entry key="TypeScript" value="20" />
-          <entry key="Vue.js" value="1641" />
+          <entry key="Vue.js" value="1642" />
           <entry key="XML" value="10" />
           <entry key="YAML" value="1" />
           <entry key="x86 Plan9 Assembly" value="19" />
@@ -151,7 +145,7 @@
           <entry key="sql" value="113" />
           <entry key="sum" value="3" />
           <entry key="txt" value="1251" />
-          <entry key="vue" value="70509" />
+          <entry key="vue" value="70752" />
           <entry key="xml" value="48" />
         </counts>
       </usages-collector>
@@ -163,7 +157,7 @@
           <entry key="JavaScript" value="8318" />
           <entry key="PLAIN_TEXT" value="3621" />
           <entry key="SQL" value="141" />
-          <entry key="Vue.js" value="70402" />
+          <entry key="Vue.js" value="70645" />
           <entry key="XML" value="48" />
         </counts>
       </usages-collector>
@@ -185,56 +179,14 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/isoft_iaas_web/routers/iwork_router.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="401">
-              <caret line="53" column="43" selection-start-line="53" selection-start-column="29" selection-end-line="53" selection-end-column="43" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/isoft_iaas_web/controllers/iwork/migrate.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="57" column="42" selection-start-line="57" selection-start-column="28" selection-end-line="57" selection-end-column="42" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/api/index.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="326">
-              <caret line="217" column="27" selection-start-line="217" selection-start-column="13" selection-end-line="217" selection-end-column="27" />
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/IWork/IMigrate/EditMigrate.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="362">
-              <caret line="192" column="3" lean-forward="true" selection-start-line="192" selection-start-column="3" selection-end-line="192" selection-end-column="3" />
+            <state relative-caret-position="289">
+              <caret line="17" column="26" lean-forward="true" selection-start-line="17" selection-start-column="26" selection-end-line="17" selection-end-column="26" />
               <folding>
                 <element signature="n#style#0;n#Button#0;n#FormItem#2;n#Form#0;n#ISimpleConfirmModal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
                 <element signature="e#1138#1210#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/isoft_iaas_web/models/iwork/migrate.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="356">
-              <caret line="36" column="21" selection-start-line="36" selection-start-column="5" selection-end-line="36" selection-end-column="21" />
-              <folding>
-                <element signature="e#15#65#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -257,7 +209,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>refactor_modal</find>
       <find>refactor</find>
       <find>relativeWork</find>
       <find>GetRelativeWork</find>
@@ -287,6 +238,7 @@
       <find>columns1</find>
       <find>handleChange</find>
       <find>query</find>
+      <find>route</find>
     </findStrings>
     <replaceStrings>
       <replace>iworkdatastore</replace>
@@ -401,11 +353,11 @@
         <option value="$PROJECT_DIR$/isoft_iaas_web/core/iworkquicksql/quick_entity.go" />
         <option value="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/ILayout/IWorkLayout.vue" />
         <option value="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/router/iwork.js" />
-        <option value="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/IWork/IMigrate/MigrateList.vue" />
         <option value="$PROJECT_DIR$/isoft_iaas_web/routers/iwork_router.go" />
         <option value="$PROJECT_DIR$/isoft_iaas_web/models/iwork/migrate.go" />
         <option value="$PROJECT_DIR$/isoft_iaas_web/controllers/iwork/migrate.go" />
         <option value="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/api/index.js" />
+        <option value="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/IWork/IMigrate/MigrateList.vue" />
         <option value="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/IWork/IMigrate/EditMigrate.vue" />
       </list>
     </option>
@@ -1277,13 +1229,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/IWork/IMigrate/MigrateList.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="140">
-          <caret line="48" column="96" selection-start-line="48" selection-start-column="96" selection-end-line="48" selection-end-column="96" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/IWork/WorkList.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="224">
@@ -1336,10 +1281,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/IWork/IMigrate/MigrateList.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="89">
+          <caret line="63" column="40" lean-forward="true" selection-start-line="63" selection-start-column="40" selection-end-line="63" selection-end-column="40" />
+          <folding>
+            <element signature="n#style#0;n#Button#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/IWork/IMigrate/EditMigrate.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="362">
-          <caret line="192" column="3" lean-forward="true" selection-start-line="192" selection-start-column="3" selection-end-line="192" selection-end-column="3" />
+        <state relative-caret-position="289">
+          <caret line="17" column="26" lean-forward="true" selection-start-line="17" selection-start-column="26" selection-end-line="17" selection-end-column="26" />
           <folding>
             <element signature="n#style#0;n#Button#0;n#FormItem#2;n#Form#0;n#ISimpleConfirmModal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
             <element signature="e#1138#1210#0" expanded="true" />
