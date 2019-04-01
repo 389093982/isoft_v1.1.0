@@ -161,7 +161,8 @@
                }
              });
              if(!has){
-               this.tableColumns.push({"column_name": columnStr, "column_type": "string", "primary_key":"N", "auto_increment":"N", "comment":""});
+               this.tableColumns.push({"column_name": columnStr, "column_type": "varchar(200)",
+                 "primary_key":"N", "auto_increment":"N", "comment":""});
              }
            });
            this.$refs.createTable.hideModal();
