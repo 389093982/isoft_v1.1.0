@@ -41,6 +41,11 @@
         offset:10,
         columns1: [
           {
+            title: 'id',
+            key: 'id',
+            width: 50,
+          },
+          {
             title: 'table_name',
             key: 'table_name',
             width: 150,

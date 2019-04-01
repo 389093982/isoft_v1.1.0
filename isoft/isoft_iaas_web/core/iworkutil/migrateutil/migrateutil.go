@@ -2,10 +2,13 @@ package migrateutil
 
 import (
 	"database/sql"
+	"fmt"
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/pkg/errors"
 	"isoft/isoft/common/hashutil"
 	"isoft/isoft/common/stringutil"
 	"isoft/isoft_iaas_web/models/iwork"
+	"strconv"
 	"strings"
 )
 
@@ -15,9 +18,13 @@ type MigrateExecutor struct {
 	TrackingId string
 }
 
-func checkError(err error) {
+func checkError(err error, detail ...string) {
 	if err != nil {
-		panic(err)
+		if len(detail) > 0 && detail[0] != "" {
+			panic(errors.New(fmt.Sprintf("%s : %s", detail[0], err.Error())))
+		} else {
+			panic(err)
+		}
 	}
 }
 
@@ -38,12 +45,19 @@ func (this *MigrateExecutor) initial() {
 	this.ExecSQL(versionTable)
 }
 
-func (this *MigrateExecutor) ExecSQL(sql string, args ...interface{}) (rs sql.Result, err error) {
+func (this *MigrateExecutor) ExecSQLWithLogger(detail, sql string, args ...interface{}) (rs sql.Result, err error) {
+	if detail != "" {
+		detail = fmt.Sprintf("[id = %s][sql = %s]", detail, sql)
+	}
 	stmt, err := this.db.Prepare(sql)
-	checkError(err)
+	checkError(err, detail)
 	rs, err = stmt.Exec(args...)
-	checkError(err)
+	checkError(err, detail)
 	return
+}
+
+func (this *MigrateExecutor) ExecSQL(sql string, args ...interface{}) (rs sql.Result, err error) {
+	return this.ExecSQLWithLogger("", sql, args...)
 }
 
 func (this *MigrateExecutor) record(flag, hash, sql, tracking_detail string) {
@@ -74,10 +88,12 @@ func (this *MigrateExecutor) migrateOne(migrate iwork.TableMigrate) {
 		// 每次迁移都有可能有多个执行 sql
 		executeSqls := strings.Split(migrate.TableMigrateSql, ";")
 		for _, executeSql := range executeSqls {
-			detailHash := hashutil.CalculateHashWithString(executeSql)
-			if !this.checkExecuted(detailHash) {
-				this.ExecSQL(executeSql)
-				this.record("true", detailHash, executeSql, "")
+			if strings.TrimSpace(executeSql) != "" {
+				detailHash := hashutil.CalculateHashWithString(executeSql)
+				if !this.checkExecuted(detailHash) {
+					this.ExecSQLWithLogger(strconv.FormatInt(migrate.Id, 10), executeSql)
+					this.record("true", detailHash, executeSql, "")
+				}
 			}
 		}
 		// 计算hash 值
