@@ -13,6 +13,7 @@
         <Button type="success" size="small" @click="executeMigrate" style="margin-bottom: 6px">执行迁移</Button>
       </Col>
     </Row>
+    <p style="color: red;margin-bottom: 10px;margin-top: 10px;">{{errorMsg}}</p>
 
     <Table border :columns="columns1" :data="migrates" size="small"></Table>
     <Page :total="total" :page-size="offset" show-total show-sizer :styles="{'text-align': 'center','margin-top': '10px'}"
@@ -28,6 +29,7 @@
     name: "MigrateList",
     data(){
       return {
+        errorMsg:'',
         currentResourceName:'',
         resources:[],
         migrates:[],
@@ -106,11 +108,12 @@
         }
       },
       executeMigrate: async function () {
+        this.errorMsg = null;
         const result = await ExecuteMigrate(this.currentResourceName);
         if(result.status == "SUCCESS"){
           this.$Message.success("SUCCESS");
         }else{
-          this.$Message.error(result.errorMsg);
+          this.errorMsg = result.errorMsg;
         }
       }
     },
