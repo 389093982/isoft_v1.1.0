@@ -38,7 +38,7 @@ func AlterTable(preTableInfo, tableInfo TableInfo) string {
 	}
 	for index, columnName := range columnNames {
 		if flag, preindex := stringutil.CheckIndexContains(columnName, preColumnNames); !flag {
-			migrates = append(migrates, addField(tableInfo.TableName, columnName, tableInfo.TableColumns[index]))
+			migrates = append(migrates, addField(tableInfo.TableName, columnName, tableInfo.TableColumns[index].ColumnType, tableInfo.TableColumns[index]))
 		} else {
 			if modify := modifyField(tableInfo.TableName,
 				preTableInfo.TableColumns[preindex], tableInfo.TableColumns[index]); modify != "" {
@@ -53,9 +53,9 @@ func deleteField(tableName, columnName string) string {
 	return strings.TrimSpace(fmt.Sprintf(`ALTER TABLE %s DROP COLUMN %s`, tableName, columnName)) + ";"
 }
 
-func addField(tableName, columnName string, column *TableColumn) string {
-	return strings.TrimSpace(fmt.Sprintf(`ALTER TABLE %s ADD %s %s`,
-		tableName, columnName, strings.Join(getCommonInfo(column), " "))) + ";"
+func addField(tableName, columnName, columnType string, column *TableColumn) string {
+	return strings.TrimSpace(fmt.Sprintf(`ALTER TABLE %s ADD %s %s %s`,
+		tableName, columnName, columnType, strings.Join(getCommonInfo(column), " "))) + ";"
 }
 
 func modifyField(tableName string, precolumn, column *TableColumn) string {
