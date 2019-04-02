@@ -7,6 +7,7 @@ import (
 	"github.com/pkg/errors"
 	"isoft/isoft/common/hashutil"
 	"isoft/isoft/common/stringutil"
+	"isoft/isoft_iaas_web/core/iworkutil/datatypeutil"
 	"isoft/isoft_iaas_web/models/iwork"
 	"strconv"
 	"strings"
@@ -60,17 +61,16 @@ func (this *MigrateExecutor) record(flag, hash, sql, tracking_detail string) err
 	return nil
 }
 
-func (this *MigrateExecutor) migrate() error {
+func (this *MigrateExecutor) migrate() (err error) {
 	migrates, err := iwork.QueryAllMigrate()
-	if err != nil {
-		return err
-	}
-	for _, migrate := range migrates {
-		if err := this.migrateOne(migrate); err != nil {
-			return err
+	if err == nil {
+		for _, migrate := range migrates {
+			if err = this.migrateOne(migrate); err != nil {
+				return err
+			}
 		}
 	}
-	return nil
+	return
 }
 
 func (this *MigrateExecutor) checkExecuted(hash string) bool {
@@ -86,31 +86,33 @@ func (this *MigrateExecutor) checkExecuted(hash string) bool {
 
 func (this *MigrateExecutor) migrateOne(migrate iwork.TableMigrate) error {
 	hash := hashutil.CalculateHashWithString(migrate.TableMigrateSql)
-	if !this.checkExecuted(hash) {
-		// 每次迁移都有可能有多个执行 sql
-		executeSqls := strings.Split(migrate.TableMigrateSql, ";")
-		tx, err := this.db.Begin()
-		if err != nil {
-			return err
-		}
-		for _, executeSql := range executeSqls {
-			if strings.TrimSpace(executeSql) != "" {
-				detailHash := hashutil.CalculateHashWithString(executeSql)
-				if !this.checkExecuted(detailHash) {
-					if _, err := this.ExecSQL(executeSql); err == nil {
-						this.record("true", detailHash, executeSql, "")
-					} else {
-						tx.Rollback()
-						errorMsg := fmt.Sprintf("[%s] - [%s] : %s", strconv.FormatInt(migrate.Id, 10), executeSql, err.Error())
-						return errors.New(errorMsg)
-					}
-				}
-			}
-		}
-		tx.Commit()
-		// 计算hash 值
-		this.record("true", hash, migrate.TableMigrateSql, "")
+	// 已经执行过则忽略
+	if this.checkExecuted(hash) {
+		return nil
 	}
+	// 每次迁移都有可能有多个执行 sql
+	executeSqls := strings.Split(migrate.TableMigrateSql, ";")
+	executeSqls = datatypeutil.FilterSlice(executeSqls, datatypeutil.CheckNotEmpty)
+	tx, err := this.db.Begin()
+	if err != nil {
+		return err
+	}
+	for _, executeSql := range executeSqls {
+		detailHash := hashutil.CalculateHashWithString(executeSql)
+		if this.checkExecuted(detailHash) {
+			break
+		}
+		if _, err := this.ExecSQL(executeSql); err == nil {
+			this.record("true", detailHash, executeSql, "")
+		} else {
+			tx.Rollback()
+			errorMsg := fmt.Sprintf("[%s] - [%s] : %s", strconv.FormatInt(migrate.Id, 10), executeSql, err.Error())
+			return errors.New(errorMsg)
+		}
+	}
+	tx.Commit()
+	// 计算hash 值
+	this.record("true", hash, migrate.TableMigrateSql, "")
 	return nil
 }
 

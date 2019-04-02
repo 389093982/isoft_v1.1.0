@@ -2,6 +2,7 @@ package datatypeutil
 
 import (
 	"reflect"
+	"strings"
 )
 
 func ReverseSlice(s interface{}) interface{} {
@@ -14,4 +15,22 @@ func ReverseSlice(s interface{}) interface{} {
 		v = reflect.Append(v, reflect.ValueOf(s).Index(i))
 	}
 	return v.Interface()
+}
+
+func FilterSlice(ss []string, filterFunc func(s string) bool) []string {
+	result := make([]string, 0)
+	for _, str := range ss {
+		if filterFunc(str) {
+			result = append(result, str)
+		}
+	}
+	return result
+}
+
+func CheckEmpty(s string) bool {
+	return strings.TrimSpace(s) == ""
+}
+
+func CheckNotEmpty(s string) bool {
+	return !CheckEmpty(s)
 }
