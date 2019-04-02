@@ -30,7 +30,7 @@ func checkError(err error, detail ...string) {
 
 func (this *MigrateExecutor) ping() {
 	if this.Dsn == "" {
-		panic("empty dsn error...")
+		panic(errors.New("empty dsn error..."))
 	}
 	// 建立连接
 	db, err := sql.Open("mysql", this.Dsn)
@@ -61,8 +61,10 @@ func (this *MigrateExecutor) ExecSQL(sql string, args ...interface{}) (rs sql.Re
 }
 
 func (this *MigrateExecutor) record(flag, hash, sql, tracking_detail string) {
-	recordLog := `INSERT INTO migrate_version(tracking_id,flag,hash,sql_detail,tracking_detail, created_time) VALUES (?,?,?,?,?,NOW());`
-	this.ExecSQL(recordLog, this.TrackingId, flag, hash, sql, tracking_detail)
+	if this.db != nil {
+		recordLog := `INSERT INTO migrate_version(tracking_id,flag,hash,sql_detail,tracking_detail, created_time) VALUES (?,?,?,?,?,NOW());`
+		this.ExecSQL(recordLog, this.TrackingId, flag, hash, sql, tracking_detail)
+	}
 }
 
 func (this *MigrateExecutor) migrate() {
