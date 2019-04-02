@@ -26,6 +26,7 @@
   import ISimpleConfirmModal from "../../Common/modal/ISimpleConfirmModal"
   import {SubmitMigrate} from "../../../api"
   import {GetMigrateInfo} from "../../../api"
+  import {validatePatternForString} from "../../../tools"
 
   export default {
     name: "MigrateList",
@@ -152,6 +153,10 @@
         this.$refs[name].validate((valid) => {
           if (valid) {
            this.tableName = this.formValidate.tableName;
+           if(!validatePatternForString(/(^_([a-zA-Z0-9,]_?)*$)|(^[a-zA-Z,](_?[a-zA-Z0-9,])*_?$)/,this.formValidate.tableColumns)){
+              alert("格式不正确!");
+              return;
+           }
            this.formValidate.tableColumns.split(",").forEach(columnStr => {
              let has = false;
              this.tableColumns.forEach(column => {
@@ -160,7 +165,7 @@
                  has = true;
                }
              });
-             if(!has){
+             if(!has && columnStr != ""){
                this.tableColumns.push({"column_name": columnStr, "column_type": "varchar(200)",
                  "primary_key":"N", "auto_increment":"N", "comment":""});
              }

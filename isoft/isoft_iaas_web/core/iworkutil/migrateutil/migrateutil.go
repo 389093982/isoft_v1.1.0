@@ -60,6 +60,13 @@ func (this *MigrateExecutor) ExecSQL(sql string, args ...interface{}) (rs sql.Re
 	return this.ExecSQLWithLogger("", sql, args...)
 }
 
+func (this *MigrateExecutor) QueryRowSQL(sql string, args ...interface{}) (row *sql.Row) {
+	stmt, err := this.db.Prepare(sql)
+	checkError(err)
+	row = stmt.QueryRow(args...)
+	return
+}
+
 func (this *MigrateExecutor) record(flag, hash, sql, tracking_detail string) {
 	if this.db != nil {
 		recordLog := `INSERT INTO migrate_version(tracking_id,flag,hash,sql_detail,tracking_detail, created_time) VALUES (?,?,?,?,?,NOW());`
@@ -77,8 +84,9 @@ func (this *MigrateExecutor) migrate() {
 
 func (this *MigrateExecutor) checkExecuted(hash string) bool {
 	sql := `SELECT COUNT(*) FROM migrate_version WHERE hash = ?`
-	rs, _ := this.ExecSQL(sql, hash)
-	if count, err := rs.RowsAffected(); err == nil && count > 0 {
+	row := this.QueryRowSQL(sql, hash)
+	var datacount int64
+	if err := row.Scan(&datacount); err == nil && datacount > 0 {
 		return true
 	}
 	return false

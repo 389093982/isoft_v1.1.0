@@ -60,6 +60,11 @@ export function checkContainsInString(str, subStr) {
   return str.indexOf(subStr) != -1
 }
 
+// 根据正则验证字符串
+export function validatePatternForString(pattern, str) {
+  return pattern.test(str);
+}
+
 // 校验只能含有字母数字和下划线
 export function validateCommonPatternForString(str) {
   var uPattern = /^[a-zA-Z0-9_]{1,}$/;
