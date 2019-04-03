@@ -93,6 +93,30 @@
             }
           },
           {
+            title: 'unique',
+            key: 'unique',
+            render: (h, params) => {
+              return h('div', [
+                h('span', params.row.unique),
+                h('Icon', {
+                  props: {
+                    type: 'md-create',
+                    size: 15,
+                  },
+                  style: {
+                    marginLeft: '30px',
+                  },
+                  on: {
+                    click: () => {
+                      let unique = this.tableColumns[params.index]["unique"];
+                      this.tableColumns[params.index]["unique"] = unique == "Y" ? "N" : "Y";
+                    }
+                  }
+                }),
+              ]);
+            }
+          },
+          {
             title: 'comment',
             key: 'comment',
           },
@@ -167,7 +191,7 @@
              });
              if(!has && columnStr != ""){
                this.tableColumns.push({"column_name": columnStr, "column_type": "varchar(200)",
-                 "primary_key":"N", "auto_increment":"N", "comment":""});
+                 "primary_key":"N", "auto_increment":"N", "unique":"N", "comment":""});
              }
            });
            this.$refs.createTable.hideModal();

@@ -16,6 +16,7 @@ type TableColumn struct {
 	ColumnType    string `json:"column_type"`
 	PrimaryKey    string `json:"primary_key"`
 	AutoIncrement string `json:"auto_increment"`
+	Unique        string `json:"unique"`
 	Comment       string `json:"comment"`
 }
 
