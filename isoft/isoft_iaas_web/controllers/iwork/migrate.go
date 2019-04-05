@@ -39,10 +39,10 @@ func (this *WorkController) SubmitMigrate() {
 			migrateType = "ALTER"
 			var preTableInfo iworkquicksql.TableInfo
 			json.Unmarshal([]byte(preMigrate.TableInfo), &preTableInfo)
-			migrateSql = iworkquicksql.AlterTable(preTableInfo, tableInfo)
+			migrateSql = iworkquicksql.AlterTable(&preTableInfo, &tableInfo)
 		} else {
 			migrateType = "CREATE"
-			migrateSql = iworkquicksql.CreateTable(tableInfo)
+			migrateSql = iworkquicksql.CreateTable(&tableInfo)
 		}
 		if tableInfoStr, err1 := json.Marshal(tableInfo); err1 == nil {
 			if migrateSql != "" {

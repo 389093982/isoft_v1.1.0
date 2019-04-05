@@ -27,6 +27,18 @@ func FilterSlice(ss []string, filterFunc func(s string) bool) []string {
 	return result
 }
 
+func DeleteSliceItem(ss []string, s string) []string {
+	result := make([]string, 0)
+	for index, _s := range ss {
+		if _s == s {
+			result = append(result, ss[:index]...)
+			result = append(result, ss[index+1:]...)
+			return result
+		}
+	}
+	return ss
+}
+
 func CheckEmpty(s string) bool {
 	return strings.TrimSpace(s) == ""
 }
