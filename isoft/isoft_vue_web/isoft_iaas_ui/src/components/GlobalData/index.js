@@ -110,8 +110,13 @@ const default_work_step_types=[
   {"name":"base64_decode","icon":"ios-magnet-outline"},
 ];
 
+const mysql_datatypes = ["bigint","binary","bit","blob","bool","boolean","char","date","datetime","decimal","double","enum",
+  "float","int","longblob","longtext","mediumblob","mediumint","mediumtext","numeric","real","set","smallint",
+  "text","time","timestamp","tinyblob","tinyint","tinytext","varbinary","varchar","year"];
+
 export default {
   hot_course_types,
   hot_share_type,
   default_work_step_types,
+  mysql_datatypes,
 }

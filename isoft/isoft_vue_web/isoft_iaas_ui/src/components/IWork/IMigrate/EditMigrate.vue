@@ -46,7 +46,6 @@
             key: 'column_type',
             width: 200,
             render: (h, params) => {
-              var types = ["VARCHAR(200)","VARCHAR(100)"];
               return h('div', [
                 h('Select',{
                   props: {
@@ -57,7 +56,7 @@
                       this.tableColumns[params.index]["column_type"] = event;
                     }
                   }
-                }, types.map((item) => {
+                }, this.GLOBAL.mysql_datatypes.map((item) => {
                   return h('Option',{
                     props:{
                       value: item,
