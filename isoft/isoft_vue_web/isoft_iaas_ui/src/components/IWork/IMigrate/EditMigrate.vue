@@ -48,10 +48,38 @@
           {
             title: 'length',
             key: 'length',
+            render: (h, params) => {
+              return h('div', [
+                h('Input',{
+                  props: {
+                    value: params.row.length,
+                  },
+                  on:{
+                    'on-blur': (event) => {
+                      this.tableColumns[params.index]["length"] = event.target.value;
+                    }
+                  }
+                }),
+              ]);
+            }
           },
           {
             title: 'default',
             key: 'default',
+            render: (h, params) => {
+              return h('div', [
+                h('Input',{
+                  props: {
+                    value: params.row.default,
+                  },
+                  on:{
+                    'on-blur': (event) => {
+                      this.tableColumns[params.index]["default"] = event.target.value;
+                    }
+                  }
+                }),
+              ]);
+            }
           },
           {
             title: 'primary_key',
@@ -134,18 +162,13 @@
             key: 'comment',
             render: (h, params) => {
               return h('div', [
-                h('span', params.row.comment),
-                h('Icon', {
+                h('Input',{
                   props: {
-                    type: 'md-create',
-                    size: 15,
+                    value: params.row.comment,
                   },
-                  style: {
-                    marginLeft: '30px',
-                  },
-                  on: {
-                    click: () => {
-                      alert(123);
+                  on:{
+                    'on-blur': (event) => {
+                      this.tableColumns[params.index]["comment"] = event.target.value;
                     }
                   }
                 }),
