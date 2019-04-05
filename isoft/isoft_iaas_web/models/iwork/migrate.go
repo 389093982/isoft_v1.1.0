@@ -37,7 +37,7 @@ func QueryMigrate(current_page, offset int) (migrates []TableMigrate, counts int
 	o := orm.NewOrm()
 	qs := o.QueryTable("table_migrate")
 	counts, _ = qs.Count()
-	qs = qs.OrderBy("-last_updated_time").Limit(offset, (current_page-1)*offset)
+	qs = qs.OrderBy("-id").Limit(offset, (current_page-1)*offset)
 	_, err = qs.All(&migrates)
 	return
 }
@@ -54,10 +54,4 @@ func QueryLastMigrate(tableName string) (migrate TableMigrate, err error) {
 	err = o.QueryTable("table_migrate").Filter("table_name", tableName).
 		OrderBy("-last_updated_time").One(&migrate)
 	return
-}
-
-func DeleteMigrateById(id int64) error {
-	o := orm.NewOrm()
-	_, err := o.QueryTable("table_migrate").Filter("id", id).Delete()
-	return err
 }
