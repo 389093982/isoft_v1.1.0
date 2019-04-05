@@ -44,6 +44,28 @@
           {
             title: 'column_type',
             key: 'column_type',
+            render: (h, params) => {
+              var types = ["VARCHAR(200)","VARCHAR(100)"];
+              return h('div', [
+                h('Select',{
+                  props: {
+                    value: this.tableColumns[params.index]["column_type"],
+                  },
+                  on: {
+                    'on-change': (event) => {
+                      this.tableColumns[params.index]["column_type"] = event;
+                    }
+                  }
+                }, types.map((item) => {
+                  return h('Option',{
+                    props:{
+                      value: item,
+                      label: item,
+                    }
+                  })
+                })),
+              ]);
+            }
           },
           {
             title: 'length',
