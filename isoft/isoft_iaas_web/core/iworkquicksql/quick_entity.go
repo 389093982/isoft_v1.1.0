@@ -39,7 +39,8 @@ func AlterTable(preTableInfo, tableInfo TableInfo) string {
 	}
 	for index, columnName := range columnNames {
 		if flag, preindex := stringutil.CheckIndexContains(columnName, preColumnNames); !flag {
-			migrates = append(migrates, addField(tableInfo.TableName, columnName, tableInfo.TableColumns[index].ColumnType, tableInfo.TableColumns[index]))
+			add := addField(tableInfo.TableName, columnName, tableInfo.TableColumns[index].ColumnType, tableInfo.TableColumns[index])
+			migrates = append(migrates, add)
 		} else {
 			if modify := modifyField(tableInfo.TableName,
 				preTableInfo.TableColumns[preindex], tableInfo.TableColumns[index]); modify != "" {
@@ -60,12 +61,17 @@ func addField(tableName, columnName, columnType string, column *TableColumn) str
 }
 
 func modifyField(tableName string, precolumn, column *TableColumn) string {
+	modifys := make([]string, 0)
+	if precolumn.Unique != column.Unique {
+		modifys = append(modifys, getDropUniqueSql(tableName, column))
+		modifys = append(modifys, getAddUniqueSql(tableName, column))
+	}
 	if precolumn.ColumnType != column.ColumnType || precolumn.PrimaryKey != column.PrimaryKey ||
 		precolumn.AutoIncrement != column.AutoIncrement || precolumn.Comment != column.Comment {
 		return strings.TrimSpace(fmt.Sprintf(`ALTER TABLE %s MODIFY %s %s`,
 			tableName, column.ColumnName, strings.Join(getCommonInfo(column), " "))) + ";"
 	}
-	return ""
+	return strings.Join(modifys, "")
 }
 
 func CreateTable(tableInfo TableInfo) string {
@@ -114,8 +120,25 @@ func getCommonInfo(column *TableColumn) []string {
 	if column.AutoIncrement == "Y" {
 		appends = append(appends, "AUTO_INCREMENT")
 	}
+	if column.Unique == "Y" {
+		appends = append(appends, "UNIQUE")
+	}
 	if strings.TrimSpace(column.Comment) != "" {
 		appends = append(appends, fmt.Sprintf(`COMMENT '%s'`, strings.TrimSpace(column.Comment)))
 	}
 	return appends
+}
+
+func getDropUniqueSql(tableName string, column *TableColumn) string {
+	if column.Unique == "N" {
+		return fmt.Sprintf("ALTER TABLE %s DROP INDEX %s;", tableName, column.ColumnName)
+	}
+	return ""
+}
+
+func getAddUniqueSql(tableName string, column *TableColumn) string {
+	if column.Unique == "Y" {
+		return fmt.Sprintf("ALTER TABLE %s ADD UNIQUE(%s);", tableName, column.ColumnName)
+	}
+	return ""
 }

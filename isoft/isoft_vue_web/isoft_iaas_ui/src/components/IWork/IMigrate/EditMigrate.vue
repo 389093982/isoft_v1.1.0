@@ -17,7 +17,7 @@
       </Form>
     </ISimpleConfirmModal>
 
-    <Table border :columns="columns1" :data="tableColumns" size="small"></Table>
+    <Table border :columns="columns1" :data="tableColumns" size="small" style="margin-top: 10px;margin-bottom: 10px;"></Table>
     <Button type="success" size="small" @click="handleMigrateSubmit">Submit</Button>
   </div>
 </template>
@@ -27,6 +27,7 @@
   import {SubmitMigrate} from "../../../api"
   import {GetMigrateInfo} from "../../../api"
   import {validatePatternForString} from "../../../tools"
+  import {oneOf} from "../../../tools"
 
   export default {
     name: "MigrateList",
@@ -84,8 +85,12 @@
                   },
                   on: {
                     click: () => {
-                      let auto_increment = this.tableColumns[params.index]["auto_increment"];
-                      this.tableColumns[params.index]["auto_increment"] = auto_increment == "Y" ? "N" : "Y";
+                      if(oneOf(this.tableColumns[params.index]["column_type"], ["int"])){
+                        let auto_increment = this.tableColumns[params.index]["auto_increment"];
+                        this.tableColumns[params.index]["auto_increment"] = auto_increment == "Y" ? "N" : "Y";
+                      }else{
+                        this.$Message.error(this.tableColumns[params.index]["column_type"] + "类型不支持自增操作!");
+                      }
                     }
                   }
                 }),
@@ -178,8 +183,8 @@
           if (valid) {
            this.tableName = this.formValidate.tableName;
            if(!validatePatternForString(/(^_([a-zA-Z0-9,]_?)*$)|(^[a-zA-Z,](_?[a-zA-Z0-9,])*_?$)/,this.formValidate.tableColumns)){
-              alert("格式不正确!");
-              return;
+             this.$Message.error("格式不正确!");
+             return;
            }
            this.formValidate.tableColumns.split(",").forEach(columnStr => {
              let has = false;
