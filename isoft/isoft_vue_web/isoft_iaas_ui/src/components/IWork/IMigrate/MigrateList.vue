@@ -72,6 +72,20 @@
               return h('div', [
                 h('Button', {
                   props: {
+                    type: 'success',
+                    size: 'small'
+                  },
+                  style: {
+                    marginRight: '5px',
+                  },
+                  on: {
+                    click: () => {
+                      this.editMigrate(this.migrates[params.index]['id'], "upgrade");
+                    }
+                  }
+                }, '升级'),
+                h('Button', {
+                  props: {
                     type: 'error',
                     size: 'small'
                   },
@@ -80,10 +94,10 @@
                   },
                   on: {
                     click: () => {
-                      this.editMigrate(this.migrates[params.index]['id']);
+                      this.editMigrate(this.migrates[params.index]['id'], "update");
                     }
                   }
-                }, '编辑'),
+                }, '纠正'),
               ]);
             }
           }
@@ -105,9 +119,9 @@
         this.offset = pageSize;
         this.refreshMigrateList();
       },
-      editMigrate:function (id) {
+      editMigrate:function (id, operateType) {
         if(id != undefined && id != null){
-          this.$router.push({ path: '/iwork/editMigrate', query: { id: id }});
+          this.$router.push({ path: '/iwork/editMigrate', query: {id: id, "operateType":operateType}});
         }else{
           this.$router.push({ path: '/iwork/editMigrate'});
         }

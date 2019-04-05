@@ -25,13 +25,18 @@ func (this *WorkController) SubmitMigrate() {
 	var err error
 	tableName := this.GetString("tableName")
 	tableColunmStr := this.GetString("tableColunms")
+	operateType := this.GetString("operateType")
+	id, _ := this.GetInt64("id")
 	tableColunms := make([]*iworkquicksql.TableColumn, 0)
 	if err = json.Unmarshal([]byte(tableColunmStr), &tableColunms); err == nil {
 		tableInfo := iworkquicksql.TableInfo{
 			TableName:    tableName,
 			TableColumns: tableColunms,
 		}
-
+		// 纠正更新时操作
+		if operateType == "update" {
+			iwork.DeleteMigrateById(id)
+		}
 		var migrateSql, migrateType string
 		// 有最近一次创建或者修改记录
 		if preMigrate, err := iwork.QueryLastMigrate(tableName); err == nil {

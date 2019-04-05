@@ -70,7 +70,7 @@ func modifyField(tableName string, precolumn, column *TableColumn) string {
 	}
 	if getColumnTypeWithLength(precolumn) != getColumnTypeWithLength(column) {
 		modifyColumnType := strings.TrimSpace(fmt.Sprintf(`ALTER TABLE %s MODIFY %s %s`,
-			tableName, column.ColumnName, strings.Join(getCommonInfo(column), " "))) + ";"
+			tableName, column.ColumnName, getColumnTypeWithLength(column))) + ";"
 		modifys = append(modifys, modifyColumnType)
 	}
 	if precolumn.PrimaryKey != column.PrimaryKey ||
@@ -152,7 +152,7 @@ func getAddUniqueSql(tableName string, column *TableColumn) string {
 
 func getColumnTypeWithLength(column *TableColumn) string {
 	if strings.TrimSpace(column.Length) != "" {
-		return fmt.Sprintf(`%s(%d)`, column.ColumnType, column.Length)
+		return fmt.Sprintf(`%s(%s)`, column.ColumnType, column.Length)
 	}
 	return column.ColumnType
 }

@@ -211,7 +211,7 @@ export const RefactorWorkStepInfo = (work_id, refactor_worksub_name,selections) 
 
 export const BatchChangeIndent = (work_id, mod,selections) => ajax(BASE_URL+"/iwork/batchChangeIndent", {work_id, mod,selections},'POST');
 
-export const SubmitMigrate = (tableName, tableColunms) => ajax(BASE_URL+"/iwork/submitMigrate", {tableName, tableColunms},'POST');
+export const SubmitMigrate = (tableName, tableColunms, id, operateType) => ajax(BASE_URL+"/iwork/submitMigrate", {tableName, tableColunms, id, operateType},'POST');
 
 export const FilterPageMigrate = (offset,current_page) => ajax(BASE_URL+"/iwork/filterPageMigrate", {offset,current_page},'POST');
 

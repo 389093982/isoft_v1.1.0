@@ -55,3 +55,9 @@ func QueryLastMigrate(tableName string) (migrate TableMigrate, err error) {
 		OrderBy("-last_updated_time").One(&migrate)
 	return
 }
+
+func DeleteMigrateById(id int64) error {
+	o := orm.NewOrm()
+	_, err := o.QueryTable("table_migrate").Filter("id", id).Delete()
+	return err
+}

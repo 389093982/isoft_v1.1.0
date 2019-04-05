@@ -242,7 +242,7 @@
         });
       },
        handleMigrateSubmit: async function () {
-        const result = await SubmitMigrate(this.tableName, JSON.stringify(this.tableColumns));
+        const result = await SubmitMigrate(this.tableName, JSON.stringify(this.tableColumns), this.$route.query.id, this.$route.query.operateType);
         if(result.status == "SUCCESS"){
           this.$router.push({ path: '/iwork/migrateList'});
         }else{
