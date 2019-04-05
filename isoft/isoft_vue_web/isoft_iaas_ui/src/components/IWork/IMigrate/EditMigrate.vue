@@ -35,7 +35,17 @@
     data(){
       return {
         tableName:'',
-        tableColumns:[],
+        tableColumns:[
+          {"column_name": "id",
+            "column_type": "int",
+            "length": "",
+            "default":"",
+          "primary_key":"Y",
+            "auto_increment":"Y",
+            "unique":"Y",
+            "comment":"主键id"
+          }
+        ],
         columns1: [
           {
             title: 'column_name',

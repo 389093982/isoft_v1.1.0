@@ -75,11 +75,7 @@ func (this *MigrationAlter) modifyField(tableName string, precolumn, column *Tab
 			modifys = append(modifys, setDefault)
 		}
 	}
-	if precolumn.PrimaryKey != column.PrimaryKey ||
-		precolumn.AutoIncrement != column.AutoIncrement {
-		//return strings.TrimSpace(fmt.Sprintf(`ALTER TABLE %s MODIFY %s %s`,
-		//	tableName, column.ColumnName, strings.Join(getCommonInfo(column), " "))) + ";"
-	}
+	// 主键和自增只限制 id 使用,且不可变更
 	return strings.Join(modifys, "")
 }
 
