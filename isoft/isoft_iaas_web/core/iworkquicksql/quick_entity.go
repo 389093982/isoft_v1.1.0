@@ -41,7 +41,7 @@ func AlterTable(preTableInfo, tableInfo TableInfo) string {
 	}
 	for index, columnName := range columnNames {
 		if flag, preindex := stringutil.CheckIndexContains(columnName, preColumnNames); !flag {
-			add := addField(tableInfo.TableName, columnName, tableInfo.TableColumns[index].ColumnType, tableInfo.TableColumns[index])
+			add := addField(tableInfo.TableName, columnName, tableInfo.TableColumns[index])
 			migrates = append(migrates, add)
 		} else {
 			if modify := modifyField(tableInfo.TableName,
@@ -57,9 +57,9 @@ func deleteField(tableName, columnName string) string {
 	return strings.TrimSpace(fmt.Sprintf(`ALTER TABLE %s DROP COLUMN %s`, tableName, columnName)) + ";"
 }
 
-func addField(tableName, columnName, columnType string, column *TableColumn) string {
+func addField(tableName, columnName string, column *TableColumn) string {
 	return strings.TrimSpace(fmt.Sprintf(`ALTER TABLE %s ADD %s %s %s`,
-		tableName, columnName, columnType, strings.Join(getCommonInfo(column), " "))) + ";"
+		tableName, columnName, getColumnTypeWithLength(column), strings.Join(getCommonInfo(column), " "))) + ";"
 }
 
 func modifyField(tableName string, precolumn, column *TableColumn) string {
@@ -68,10 +68,15 @@ func modifyField(tableName string, precolumn, column *TableColumn) string {
 		modifys = append(modifys, getDropUniqueSql(tableName, column))
 		modifys = append(modifys, getAddUniqueSql(tableName, column))
 	}
-	if precolumn.ColumnType != column.ColumnType || precolumn.PrimaryKey != column.PrimaryKey ||
-		precolumn.AutoIncrement != column.AutoIncrement || precolumn.Comment != column.Comment {
-		return strings.TrimSpace(fmt.Sprintf(`ALTER TABLE %s MODIFY %s %s`,
+	if getColumnTypeWithLength(precolumn) != getColumnTypeWithLength(column) {
+		modifyColumnType := strings.TrimSpace(fmt.Sprintf(`ALTER TABLE %s MODIFY %s %s`,
 			tableName, column.ColumnName, strings.Join(getCommonInfo(column), " "))) + ";"
+		modifys = append(modifys, modifyColumnType)
+	}
+	if precolumn.PrimaryKey != column.PrimaryKey ||
+		precolumn.AutoIncrement != column.AutoIncrement || precolumn.Comment != column.Comment {
+		//return strings.TrimSpace(fmt.Sprintf(`ALTER TABLE %s MODIFY %s %s`,
+		//	tableName, column.ColumnName, strings.Join(getCommonInfo(column), " "))) + ";"
 	}
 	return strings.Join(modifys, "")
 }
@@ -105,7 +110,7 @@ func createIndentColumn(column *TableColumn, comma ...bool) string {
 func createColumn(column *TableColumn, comma ...bool) string {
 	appends := make([]string, 0)
 	appends = append(appends, column.ColumnName)
-	appends = append(appends, column.ColumnType)
+	appends = append(appends, getColumnTypeWithLength(column))
 	appends = append(appends, getCommonInfo(column)...)
 	var commaStr string
 	if len(comma) > 0 && comma[0] == true {
@@ -143,4 +148,11 @@ func getAddUniqueSql(tableName string, column *TableColumn) string {
 		return fmt.Sprintf("ALTER TABLE %s ADD UNIQUE(%s);", tableName, column.ColumnName)
 	}
 	return ""
+}
+
+func getColumnTypeWithLength(column *TableColumn) string {
+	if strings.TrimSpace(column.Length) != "" {
+		return fmt.Sprintf(`%s(%d)`, column.ColumnType, column.Length)
+	}
+	return column.ColumnType
 }
