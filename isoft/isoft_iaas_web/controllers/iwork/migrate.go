@@ -7,6 +7,7 @@ import (
 	"isoft/isoft_iaas_web/core/iworkquicksql"
 	"isoft/isoft_iaas_web/core/iworkutil/migrateutil"
 	"isoft/isoft_iaas_web/models/iwork"
+	"strings"
 	"time"
 )
 
@@ -26,6 +27,7 @@ func (this *WorkController) SubmitMigrate() {
 	tableName := this.GetString("tableName")
 	tableColunmStr := this.GetString("tableColunms")
 	operateType := this.GetString("operateType")
+	table_migrate_sql := this.GetString("table_migrate_sql")
 	id, _ := this.GetInt64("id", -1)
 	tableColunms := make([]*iworkquicksql.TableColumn, 0)
 	if err = json.Unmarshal([]byte(tableColunmStr), &tableColunms); err == nil {
@@ -33,24 +35,25 @@ func (this *WorkController) SubmitMigrate() {
 			TableName:    tableName,
 			TableColumns: tableColunms,
 		}
-		var migrateSql, migrateType string
+		var autoMigrateSql, autoMigrateType string
 		// 有最近一次创建或者修改记录
 		if preMigrate, err := iwork.QueryLastMigrate(tableName); err == nil {
-			migrateType = "ALTER"
+			autoMigrateType = "ALTER"
 			var preTableInfo iworkquicksql.TableInfo
 			json.Unmarshal([]byte(preMigrate.TableInfo), &preTableInfo)
-			migrateSql = iworkquicksql.AlterTable(&preTableInfo, &tableInfo)
+			autoMigrateSql = iworkquicksql.AlterTable(&preTableInfo, &tableInfo)
 		} else {
-			migrateType = "CREATE"
-			migrateSql = iworkquicksql.CreateTable(&tableInfo)
+			autoMigrateType = "CREATE"
+			autoMigrateSql = iworkquicksql.CreateTable(&tableInfo)
 		}
 		if tableInfoStr, err1 := json.Marshal(tableInfo); err1 == nil {
-			if migrateSql != "" {
+			if autoMigrateSql != "" || strings.TrimSpace(table_migrate_sql) != "" {
 				tm := &iwork.TableMigrate{
 					TableName:       tableName,
 					TableInfo:       string(tableInfoStr),
-					TableAutoSql:    migrateSql,
-					MigrateType:     migrateType,
+					TableMigrateSql: table_migrate_sql,
+					TableAutoSql:    autoMigrateSql,
+					MigrateType:     autoMigrateType,
 					CreatedBy:       "SYSTEM",
 					CreatedTime:     time.Now(),
 					LastUpdatedBy:   "SYSTEM",

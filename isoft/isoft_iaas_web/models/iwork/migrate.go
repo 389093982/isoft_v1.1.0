@@ -10,6 +10,7 @@ type TableMigrate struct {
 	TableName       string    `json:"table_name"`
 	MigrateType     string    `json:"migrate_type"`
 	TableInfo       string    `json:"table_info"`
+	TableMigrateSql string    `json:"table_migrate_sql"`
 	TableAutoSql    string    `json:"table_auto_sql"`
 	CreatedBy       string    `json:"created_by"`
 	CreatedTime     time.Time `json:"created_time" orm:"auto_now_add;type(datetime)"`

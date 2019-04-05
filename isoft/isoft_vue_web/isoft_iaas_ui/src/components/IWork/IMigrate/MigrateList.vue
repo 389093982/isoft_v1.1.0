@@ -48,22 +48,27 @@
           {
             title: 'table_name',
             key: 'table_name',
-            width: 150,
+            width: 100,
           },
           {
             title: 'table_info',
             key: 'table_info',
-            width: 250,
+            width: 200,
           },
           {
             title: 'migrate_type',
             key: 'migrate_type',
-            width: 120,
+            width: 80,
+          },
+          {
+            title: 'table_migrate_sql',
+            key: 'table_migrate_sql',
+            width: 200,
           },
           {
             title: 'table_auto_sql',
             key: 'table_auto_sql',
-            width: 250,
+            width: 200,
           },
           {
             title: '操作',
