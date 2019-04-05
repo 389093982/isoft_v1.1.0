@@ -49,7 +49,7 @@ func (this *WorkController) SubmitMigrate() {
 				tm := &iwork.TableMigrate{
 					TableName:       tableName,
 					TableInfo:       string(tableInfoStr),
-					TableMigrateSql: migrateSql,
+					TableAutoSql:    migrateSql,
 					MigrateType:     migrateType,
 					CreatedBy:       "SYSTEM",
 					CreatedTime:     time.Now(),

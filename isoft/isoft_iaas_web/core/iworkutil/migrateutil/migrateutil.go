@@ -85,13 +85,13 @@ func (this *MigrateExecutor) checkExecuted(hash string) bool {
 }
 
 func (this *MigrateExecutor) migrateOne(migrate iwork.TableMigrate) error {
-	hash := hashutil.CalculateHashWithString(migrate.TableMigrateSql)
+	hash := hashutil.CalculateHashWithString(migrate.TableAutoSql)
 	// 已经执行过则忽略
 	if this.checkExecuted(hash) {
 		return nil
 	}
 	// 每次迁移都有可能有多个执行 sql
-	executeSqls := strings.Split(migrate.TableMigrateSql, ";")
+	executeSqls := strings.Split(migrate.TableAutoSql, ";")
 	executeSqls = datatypeutil.FilterSlice(executeSqls, datatypeutil.CheckNotEmpty)
 	tx, err := this.db.Begin()
 	if err != nil {
@@ -112,7 +112,7 @@ func (this *MigrateExecutor) migrateOne(migrate iwork.TableMigrate) error {
 	}
 	tx.Commit()
 	// 计算hash 值
-	this.record("true", hash, migrate.TableMigrateSql, "")
+	this.record("true", hash, migrate.TableAutoSql, "")
 	return nil
 }
 

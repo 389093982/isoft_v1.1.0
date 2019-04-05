@@ -61,8 +61,8 @@
             width: 120,
           },
           {
-            title: 'table_migrate_sql',
-            key: 'table_migrate_sql',
+            title: 'table_auto_sql',
+            key: 'table_auto_sql',
             width: 250,
           },
           {
