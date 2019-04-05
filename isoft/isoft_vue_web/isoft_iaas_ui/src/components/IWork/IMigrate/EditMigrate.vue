@@ -233,7 +233,7 @@
                }
              });
              if(!has && columnStr != ""){
-               this.tableColumns.push({"column_name": columnStr, "column_type": "varchar(200)",
+               this.tableColumns.push({"column_name": columnStr, "column_type": "varchar", "length": "200", "default":"",
                  "primary_key":"N", "auto_increment":"N", "unique":"N", "comment":""});
              }
            });
@@ -242,7 +242,8 @@
         });
       },
        handleMigrateSubmit: async function () {
-        const result = await SubmitMigrate(this.tableName, JSON.stringify(this.tableColumns), this.$route.query.id, this.$route.query.operateType);
+        const result = await SubmitMigrate(this.tableName, JSON.stringify(this.tableColumns),
+          this.$route.query.id, this.$route.query.operateType);
         if(result.status == "SUCCESS"){
           this.$router.push({ path: '/iwork/migrateList'});
         }else{
