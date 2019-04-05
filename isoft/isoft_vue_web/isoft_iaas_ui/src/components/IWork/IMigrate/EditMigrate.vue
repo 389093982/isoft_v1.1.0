@@ -44,6 +44,7 @@
           {
             title: 'column_type',
             key: 'column_type',
+            width: 200,
             render: (h, params) => {
               var types = ["VARCHAR(200)","VARCHAR(100)"];
               return h('div', [
