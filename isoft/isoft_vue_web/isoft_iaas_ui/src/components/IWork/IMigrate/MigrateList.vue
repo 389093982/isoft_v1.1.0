@@ -48,31 +48,38 @@
           {
             title: 'table_name',
             key: 'table_name',
-            width: 100,
+            width: 120,
           },
           {
             title: 'table_info',
             key: 'table_info',
-            width: 200,
+            width: 250,
           },
           {
             title: 'migrate_type',
             key: 'migrate_type',
-            width: 80,
-          },
-          {
-            title: 'table_migrate_sql',
-            key: 'table_migrate_sql',
-            width: 200,
+            width: 120,
           },
           {
             title: 'table_auto_sql',
             key: 'table_auto_sql',
+            width: 250,
+          },
+          {
+            title: 'table_migrate_sql',
+            key: 'table_migrate_sql',
+            width: 250,
+          },
+          {
+            title: 'table_info_hash',
+            key: 'table_info_hash',
             width: 200,
           },
           {
             title: '操作',
             key: 'operate',
+            width: 150,
+            fixed: 'right',
             render: (h, params) => {
               return h('div', [
                 h('Button', {

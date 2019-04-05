@@ -85,6 +85,10 @@ func (this *MigrateExecutor) checkExecuted(hash string) bool {
 }
 
 func (this *MigrateExecutor) migrateOne(migrate iwork.TableMigrate) error {
+	if strings.TrimSpace(migrate.TableMigrateSql) != "" {
+		// 优先使用用户自定义 sql
+		migrate.TableAutoSql = strings.TrimSpace(migrate.TableMigrateSql)
+	}
 	hash := hashutil.CalculateHashWithString(migrate.TableAutoSql)
 	// 已经执行过则忽略
 	if this.checkExecuted(hash) {

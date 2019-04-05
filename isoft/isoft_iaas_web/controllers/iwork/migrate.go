@@ -3,6 +3,7 @@ package iwork
 import (
 	"encoding/json"
 	"github.com/astaxie/beego/utils/pagination"
+	"isoft/isoft/common/hashutil"
 	"isoft/isoft/common/pageutil"
 	"isoft/isoft_iaas_web/core/iworkquicksql"
 	"isoft/isoft_iaas_web/core/iworkutil/migrateutil"
@@ -51,6 +52,7 @@ func (this *WorkController) SubmitMigrate() {
 				tm := &iwork.TableMigrate{
 					TableName:       tableName,
 					TableInfo:       string(tableInfoStr),
+					TableInfoHash:   hashutil.CalculateHashWithString(string(tableInfoStr)),
 					TableMigrateSql: table_migrate_sql,
 					TableAutoSql:    autoMigrateSql,
 					MigrateType:     autoMigrateType,
