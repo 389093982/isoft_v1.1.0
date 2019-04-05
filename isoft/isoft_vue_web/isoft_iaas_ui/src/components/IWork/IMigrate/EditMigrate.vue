@@ -124,6 +124,25 @@
           {
             title: 'comment',
             key: 'comment',
+            render: (h, params) => {
+              return h('div', [
+                h('span', params.row.comment),
+                h('Icon', {
+                  props: {
+                    type: 'md-create',
+                    size: 15,
+                  },
+                  style: {
+                    marginLeft: '30px',
+                  },
+                  on: {
+                    click: () => {
+                      alert(123);
+                    }
+                  }
+                }),
+              ]);
+            }
           },
           {
             title: '操作',
