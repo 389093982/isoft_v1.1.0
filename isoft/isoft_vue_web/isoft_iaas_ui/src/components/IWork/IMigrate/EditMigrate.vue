@@ -105,7 +105,7 @@
             }
           },
           {
-            title: 'primary_key',
+            title: 'pk',
             key: 'primary_key',
             render: (h, params) => {
               return h('div', [
@@ -129,7 +129,7 @@
             }
           },
           {
-            title: 'auto_increment',
+            title: 'increment',
             key: 'auto_increment',
             render: (h, params) => {
               return h('div', [
@@ -198,40 +198,6 @@
               ]);
             }
           },
-          {
-            title: '操作',
-            key: 'operate',
-            render: (h, params) => {
-              return h('div', [
-                h('Button', {
-                  props: {
-                    type: 'error',
-                    size: 'small'
-                  },
-                  style: {
-                    marginRight: '5px',
-                  },
-                  on: {
-                    click: () => {
-                    }
-                  }
-                }, '编辑'),
-                h('Button', {
-                  props: {
-                    type: 'success',
-                    size: 'small'
-                  },
-                  style: {
-                    marginRight: '5px',
-                  },
-                  on: {
-                    click: () => {
-                    }
-                  }
-                }, '删除'),
-              ]);
-            }
-          }
         ],
         formValidate: {
           tableName: '',
