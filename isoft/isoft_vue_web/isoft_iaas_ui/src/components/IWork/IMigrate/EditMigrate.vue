@@ -46,6 +46,14 @@
             key: 'column_type',
           },
           {
+            title: 'length',
+            key: 'length',
+          },
+          {
+            title: 'default',
+            key: 'default',
+          },
+          {
             title: 'primary_key',
             key: 'primary_key',
             render: (h, params) => {

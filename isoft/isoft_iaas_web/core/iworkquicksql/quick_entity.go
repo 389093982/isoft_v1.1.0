@@ -14,6 +14,8 @@ type TableInfo struct {
 type TableColumn struct {
 	ColumnName    string `json:"column_name"`
 	ColumnType    string `json:"column_type"`
+	Length        string `json:"length"`
+	Default       string `json:"default"`
 	PrimaryKey    string `json:"primary_key"`
 	AutoIncrement string `json:"auto_increment"`
 	Unique        string `json:"unique"`
