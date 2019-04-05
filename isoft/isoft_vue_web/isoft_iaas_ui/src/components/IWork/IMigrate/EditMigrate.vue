@@ -18,7 +18,7 @@
     </ISimpleConfirmModal>
 
     <Table border :columns="columns1" :data="tableColumns" size="small" style="margin-top: 10px;"></Table>
-    <Input v-model.trim="table_migrate_sql" placeholder="请输入 table_migrate_sql"
+    <Input v-model.trim="table_migrate_sql" placeholder="当自动生成的 sql 不准确时请使用自定义 sql,请输入 table_migrate_sql"
            type="textarea" :rows="10" style="margin-bottom: 10px;margin-top: 10px;"></Input>
     <Button type="success" size="small" @click="handleMigrateSubmit">Submit</Button>
   </div>
@@ -269,7 +269,10 @@
           this.tableName = result.migrate.table_name;
           this.formValidate.tableName = this.tableName;
           this.tableColumns = JSON.parse(result.migrate.table_info).table_columns;
-          this.table_migrate_sql = result.migrate.table_migrate_sql;
+          if(this.$route.query.operateType != undefined && this.$route.query.operateType != null && this.$route.query.operateType == "update"){
+            this.table_migrate_sql = result.migrate.table_migrate_sql;
+          }
+
         }
       }
     },
