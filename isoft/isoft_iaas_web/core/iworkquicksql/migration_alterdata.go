@@ -8,7 +8,7 @@ import (
 func AlterData(tableName, operateType string, tableColunms []*TableColumn) string {
 	var sql string
 	if operateType == "add" {
-		sql = fmt.Sprintf(`INSERT INTO %s(%s) VALUES(%S);`,
+		sql = fmt.Sprintf(`INSERT INTO %s(%s) VALUES(%s);`,
 			tableName, strings.Join(getColumnNames(tableColunms), ","),
 			strings.Join(getColumnValues(tableColunms), ","))
 	} else if operateType == "delete" {

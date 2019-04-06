@@ -142,7 +142,7 @@ func (this *MigrateExecutor) migrateOne(migrate iwork.TableMigrate) error {
 		// 优先使用用户自定义 sql
 		migrate.TableAutoSql = strings.TrimSpace(migrate.TableMigrateSql)
 	}
-	hash := hashutil.CalculateHashWithString(migrate.TableAutoSql)
+	hash := fmt.Sprintf(`%d-%s`, migrate.Id, hashutil.CalculateHashWithString(migrate.TableAutoSql))
 	// 已经执行过则忽略
 	if this.checkExecuted(hash) {
 		return nil
@@ -154,8 +154,9 @@ func (this *MigrateExecutor) migrateOne(migrate iwork.TableMigrate) error {
 	if err != nil {
 		return err
 	}
-	for _, executeSql := range executeSqls {
-		detailHash := hashutil.CalculateHashWithString(executeSql)
+	for index, executeSql := range executeSqls {
+		// 防止 executeSql 相同导致的 hash 值相同问题
+		detailHash := fmt.Sprintf(`%d-%d-%s`, migrate.Id, index, hashutil.CalculateHashWithString(executeSql))
 		if this.checkExecuted(detailHash) {
 			break
 		}
