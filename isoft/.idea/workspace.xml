@@ -4,9 +4,7 @@
     <list default="true" id="61c01151-84f0-4bfd-a227-5c1f0b5a424d" name="Default" comment="代码优化">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/isoft_iaas_web/core/iworkquicksql/migration_alterdata.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_iaas_web/core/iworkquicksql/migration_alterdata.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_iaas_web/core/iworkutil/migrateutil/migrateutil.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_iaas_web/core/iworkutil/migrateutil/migrateutil.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/isoft_iaas_web/iwork.db" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_iaas_web/iwork.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/IWork/IMigrate/EditMigrate.vue" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/IWork/IMigrate/EditMigrate.vue" afterDir="false" />
     </list>
     <ignored path="isoft_deploy_web/static/uploadfile/" />
     <ignored path="../.idea/inspectionProfiles/profiles_settings.xml" />
@@ -195,7 +193,7 @@
         <entry file="file://$PROJECT_DIR$/isoft_iaas_web/core/iworkutil/migrateutil/migrateutil.go">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="170">
-              <caret line="144" column="43" selection-start-line="144" selection-start-column="43" selection-end-line="144" selection-end-column="43" />
+              <caret line="144" column="44" selection-start-line="144" selection-start-column="44" selection-end-line="144" selection-end-column="44" />
             </state>
           </provider>
         </entry>
@@ -755,7 +753,7 @@
       <window_info anchor="bottom" id="Version Control" order="4" weight="0.57015985" />
       <window_info anchor="bottom" id="Message" order="5" />
       <window_info anchor="bottom" id="Find" order="6" weight="0.79040855" />
-      <window_info anchor="bottom" id="Run" order="7" sideWeight="0.48585287" weight="0.22912966" />
+      <window_info active="true" anchor="bottom" id="Run" order="7" sideWeight="0.48585287" visible="true" weight="0.22912966" />
       <window_info anchor="bottom" id="Debug" order="8" sideWeight="0.49393696" weight="0.4724689" />
       <window_info anchor="bottom" id="Cvs" order="9" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="10" weight="0.4" />
@@ -1303,7 +1301,7 @@
     <entry file="file://$PROJECT_DIR$/isoft_iaas_web/core/iworkutil/migrateutil/migrateutil.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
-          <caret line="144" column="43" selection-start-line="144" selection-start-column="43" selection-end-line="144" selection-end-column="43" />
+          <caret line="144" column="44" selection-start-line="144" selection-start-column="44" selection-end-line="144" selection-end-column="44" />
         </state>
       </provider>
     </entry>
