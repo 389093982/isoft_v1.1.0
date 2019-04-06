@@ -114,6 +114,14 @@ func (this *WorkController) FilterPageMigrate() {
 	current_page, _ := this.GetInt("current_page", 1) // 当前页
 	migrates, count, err := iwork.QueryMigrate(current_page, offset)
 	if err == nil {
+		// 判断是否是最大的 migrateId
+		for index, migrate := range migrates {
+			if maxId, err := iwork.QueryMaxMigrationIdForTable(migrate.TableName); err == nil {
+				if maxId == migrate.Id {
+					migrates[index].IsMaxMigrateId = true
+				}
+			}
+		}
 		resources := iwork.QueryAllResource("db")
 		paginator := pagination.SetPaginator(this.Ctx, offset, count)
 		this.Data["json"] = &map[string]interface{}{

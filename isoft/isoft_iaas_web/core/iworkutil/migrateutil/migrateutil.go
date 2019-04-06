@@ -93,7 +93,7 @@ func (this *MigrateExecutor) loadAllMigrate() (err error) {
 func (this *MigrateExecutor) migrate() (err error) {
 	for _, migrate := range this.migrates {
 		if err = this.migrateOne(migrate); err != nil {
-			migrate.ValidateResult = "ERROR"
+			migrate.ValidateResult = "FAILED"
 			iwork.InsertOrUpdateTableMigrate(&migrate)
 			return err
 		} else {

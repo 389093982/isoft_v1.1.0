@@ -95,6 +95,7 @@
                   },
                   style: {
                     marginRight: '5px',
+                    display: this.migrates[params.index]['is_max_migrate_id'] == true  ? undefined : 'none',
                   },
                   on: {
                     click: () => {
@@ -109,6 +110,7 @@
                   },
                   style: {
                     marginRight: '5px',
+                    display: this.migrates[params.index]['is_max_migrate_id'] == true ? undefined : 'none',
                   },
                   on: {
                     click: () => {
@@ -123,6 +125,7 @@
                   },
                   style: {
                     marginRight: '5px',
+                    display: this.migrates[params.index]['validate_result'] == "FAILED" ? undefined : 'none',
                   },
                   on: {
                     click: () => {
@@ -174,7 +177,8 @@
         }else{
           this.errorMsg = result.errorMsg;
         }
-      }
+        this.refreshMigrateList();
+      },
     },
     mounted(){
       this.refreshMigrateList();

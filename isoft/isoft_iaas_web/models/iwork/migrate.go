@@ -16,6 +16,7 @@ type TableMigrate struct {
 	PreMigrateId    int64     `json:"pre_migrate_id"`
 	PreMigrateHash  string    `json:"pre_migrate_hash"`
 	ValidateResult  string    `json:"validate_result"`
+	IsMaxMigrateId  bool      `json:"is_max_migrate_id" orm:"-"`
 	CreatedBy       string    `json:"created_by"`
 	CreatedTime     time.Time `json:"created_time" orm:"auto_now_add;type(datetime)"`
 	LastUpdatedBy   string    `json:"last_updated_by"`
@@ -68,4 +69,14 @@ func QueryLastMigrate(tableName string, id int64, operateType string) (migrate T
 	}
 	err = qs.OrderBy("-last_updated_time").One(&migrate)
 	return
+}
+
+func QueryMaxMigrationIdForTable(tableName string) (int64, error) {
+	var migrate TableMigrate
+	o := orm.NewOrm()
+	err := o.QueryTable("table_migrate").Filter("table_name", tableName).OrderBy("-id").One(&migrate)
+	if err != nil {
+		return -1, err
+	}
+	return migrate.Id, nil
 }
