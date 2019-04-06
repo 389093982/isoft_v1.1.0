@@ -17,6 +17,8 @@ type MigrateExecutor struct {
 	Dsn        string // dsn 连接串
 	db         *sql.DB
 	TrackingId string
+	ForceClean bool
+	migrates   []iwork.TableMigrate
 }
 
 func (this *MigrateExecutor) ping() (err error) {
@@ -28,10 +30,32 @@ func (this *MigrateExecutor) ping() (err error) {
 	return nil
 }
 
+func (this *MigrateExecutor) executeForceClean() error {
+	if this.ForceClean == false {
+		return nil
+	}
+	dropTables := make([]string, 0)
+	for _, migration := range this.migrates {
+		if !stringutil.CheckContains(migration.TableName, dropTables) {
+			dropTables = append(dropTables, migration.TableName)
+		}
+	}
+	dropTables = append(dropTables, "migrate_version")
+	for _, dropTableName := range dropTables {
+		if _, err := this.ExecSQL(fmt.Sprintf(`DROP TABLE IF EXISTS %s;`, dropTableName)); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
 // 建立迁移文件版本管理表
 func (this *MigrateExecutor) initial() (err error) {
-	versionTable := `CREATE TABLE IF NOT EXISTS migrate_version 
-		(id INT(20) PRIMARY KEY AUTO_INCREMENT, tracking_id CHAR(200), flag CHAR(200), hash CHAR(200),sql_detail TEXT, tracking_detail TEXT, created_time datetime);`
+	if err = this.executeForceClean(); err != nil {
+		return err
+	}
+	versionTable := `CREATE TABLE IF NOT EXISTS migrate_version (id INT(20) PRIMARY KEY AUTO_INCREMENT, 
+	tracking_id CHAR(200), flag CHAR(200), hash CHAR(200),sql_detail TEXT, tracking_detail TEXT, created_time datetime);`
 	_, err = this.ExecSQL(versionTable)
 	return
 }
@@ -61,18 +85,20 @@ func (this *MigrateExecutor) record(flag, hash, sql, tracking_detail string) err
 	return nil
 }
 
+func (this *MigrateExecutor) loadAllMigrate() (err error) {
+	this.migrates, err = iwork.QueryAllMigrate()
+	return
+}
+
 func (this *MigrateExecutor) migrate() (err error) {
-	migrates, err := iwork.QueryAllMigrate()
-	if err == nil {
-		for _, migrate := range migrates {
-			if err = this.migrateOne(migrate); err != nil {
-				migrate.ValidateResult = "ERROR"
-				iwork.InsertOrUpdateTableMigrate(&migrate)
-				return err
-			} else {
-				migrate.ValidateResult = "SUCCESS"
-				iwork.InsertOrUpdateTableMigrate(&migrate)
-			}
+	for _, migrate := range this.migrates {
+		if err = this.migrateOne(migrate); err != nil {
+			migrate.ValidateResult = "ERROR"
+			iwork.InsertOrUpdateTableMigrate(&migrate)
+			return err
+		} else {
+			migrate.ValidateResult = "SUCCESS"
+			iwork.InsertOrUpdateTableMigrate(&migrate)
 		}
 	}
 	return
@@ -125,15 +151,20 @@ func (this *MigrateExecutor) migrateOne(migrate iwork.TableMigrate) error {
 	return nil
 }
 
-func MigrateToDB(dsn string) (err error) {
+func MigrateToDB(dsn string, forceClean bool) (err error) {
 	executor := &MigrateExecutor{
 		Dsn:        dsn,
 		TrackingId: stringutil.RandomUUID(),
+		ForceClean: forceClean,
 	}
 	if err = executor.ping(); err == nil {
-		if err = executor.initial(); err == nil {
-			err = executor.migrate()
+		if err = executor.loadAllMigrate(); err != nil {
+			return err
 		}
+		if err = executor.initial(); err != nil {
+			return err
+		}
+		err = executor.migrate()
 	}
 	if err != nil {
 		executor.record("false", "", "", err.Error())

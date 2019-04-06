@@ -217,7 +217,7 @@ export const FilterPageMigrate = (offset,current_page) => ajax(BASE_URL+"/iwork/
 
 export const GetMigrateInfo = (id) => ajax(BASE_URL+"/iwork/getMigrateInfo", {id},'POST');
 
-export const ExecuteMigrate = (resource_name) => ajax(BASE_URL+"/iwork/executeMigrate", {resource_name},'POST');
+export const ExecuteMigrate = (resource_name, forceClean) => ajax(BASE_URL+"/iwork/executeMigrate", {resource_name, forceClean},'POST');
 
 // 跨模块使用,模块化部署时需要使用 nginx 代理
 export const LoginAddr = "/sso/login/";

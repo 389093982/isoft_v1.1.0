@@ -14,8 +14,9 @@ import (
 
 func (this *WorkController) ExecuteMigrate() {
 	resource_name := this.GetString("resource_name")
+	forceClean, _ := this.GetBool("forceClean", false)
 	resource, _ := iwork.QueryResourceByName(resource_name)
-	if err := migrateutil.MigrateToDB(resource.ResourceDsn); err == nil {
+	if err := migrateutil.MigrateToDB(resource.ResourceDsn, forceClean); err == nil {
 		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
 	} else {
 		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": err.Error()}

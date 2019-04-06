@@ -1,16 +1,17 @@
 <template>
   <div>
     <Row style="margin-bottom: 10px;">
-      <Col span="12">
+      <Col span="8">
         <Button type="success" size="small" @click="editMigrate(null)" style="margin-bottom: 6px">新建表</Button>
       </Col>
-      <Col span="12">
+      <Col span="16">
         <Select v-model="currentResourceName" style="width:400px">
           <Option v-for="resource in resources" :value="resource.resource_name">
             {{ resource.resource_name }} - {{ resource.resource_dsn }}
           </Option>
         </Select>
-        <Button type="success" size="small" @click="executeMigrate" style="margin-bottom: 6px">执行迁移</Button>
+        <Button type="success" size="small" @click="executeMigrate(false)" style="margin-bottom: 6px">执行迁移</Button>
+        <Button type="success" size="small" @click="executeMigrate(true)" style="margin-bottom: 6px">清理DB并执行迁移</Button>
       </Col>
     </Row>
     <p style="color: red;margin-bottom: 10px;margin-top: 10px;">{{errorMsg}}</p>
@@ -150,9 +151,9 @@
           this.$router.push({ path: '/iwork/editMigrate'});
         }
       },
-      executeMigrate: async function () {
+      executeMigrate: async function (forceClean) {
         this.errorMsg = null;
-        const result = await ExecuteMigrate(this.currentResourceName);
+        const result = await ExecuteMigrate(this.currentResourceName, forceClean);
         if(result.status == "SUCCESS"){
           this.$Message.success("SUCCESS");
           this.refreshMigrateList();
