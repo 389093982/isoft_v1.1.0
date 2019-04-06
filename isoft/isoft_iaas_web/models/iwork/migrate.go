@@ -39,9 +39,9 @@ func QueryAllMigrate() (migrates []TableMigrate, err error) {
 	return
 }
 
-func QueryMigrate(current_page, offset int) (migrates []TableMigrate, counts int64, err error) {
+func QueryMigrate(filterTableName string, current_page, offset int) (migrates []TableMigrate, counts int64, err error) {
 	o := orm.NewOrm()
-	qs := o.QueryTable("table_migrate")
+	qs := o.QueryTable("table_migrate").Filter("table_name__contains", filterTableName)
 	counts, _ = qs.Count()
 	qs = qs.OrderBy("-id").Limit(offset, (current_page-1)*offset)
 	_, err = qs.All(&migrates)

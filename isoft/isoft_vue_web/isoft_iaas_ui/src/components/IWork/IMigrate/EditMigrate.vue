@@ -38,6 +38,7 @@
   import {BuildInstanceSql} from "../../../api"
   import {validatePatternForString} from "../../../tools"
   import {oneOf} from "../../../tools"
+  import {checkEmpty} from "../../../tools"
 
   export default {
     name: "MigrateList",
@@ -313,12 +314,16 @@
         });
       },
        handleMigrateSubmit: async function () {
-        const result = await SubmitMigrate(this.tableName, this.table_migrate_sql, JSON.stringify(this.tableColumns),
-          this.$route.query.id, this.$route.query.operateType);
-        if(result.status == "SUCCESS"){
-          this.$router.push({ path: '/iwork/migrateList'});
+        if(!checkEmpty(this.tableName)){
+          const result = await SubmitMigrate(this.tableName, this.table_migrate_sql, JSON.stringify(this.tableColumns),
+            this.$route.query.id, this.$route.query.operateType);
+          if(result.status == "SUCCESS"){
+            this.$router.push({ path: '/iwork/migrateList'});
+          }else{
+            this.$Message.error(result.errorMsg);
+          }
         }else{
-          this.$Message.error(result.errorMsg);
+          this.$Message.error("empty tableName error!");
         }
       },
       refreshMigrateInfo: async function(id){

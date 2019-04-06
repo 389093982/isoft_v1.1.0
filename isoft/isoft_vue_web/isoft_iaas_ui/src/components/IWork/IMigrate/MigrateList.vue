@@ -1,11 +1,12 @@
 <template>
   <div>
     <Row style="margin-bottom: 10px;">
-      <Col span="8">
+      <Col span="10">
         <Button type="success" size="small" @click="editMigrate(null)" style="margin-bottom: 6px">新建表</Button>
+        <Input v-model.trim="filterTableName" placeholder="搜索 tableName" style="width: 200px;" @on-blur="refreshMigrateList"></Input>
       </Col>
-      <Col span="16">
-        <Select v-model="currentResourceName" style="width:400px">
+      <Col span="14">
+        <Select v-model="currentResourceName" style="width:300px">
           <Option v-for="resource in resources" :value="resource.resource_name">
             {{ resource.resource_name }} - {{ resource.resource_dsn }}
           </Option>
@@ -30,6 +31,7 @@
     name: "MigrateList",
     data(){
       return {
+        filterTableName: '',
         errorMsg:'',
         currentResourceName:'',
         resources:[],
@@ -148,7 +150,7 @@
     },
     methods:{
       refreshMigrateList: async function(){
-        const result = await FilterPageMigrate(this.offset, this.current_page);
+        const result = await FilterPageMigrate(this.filterTableName, this.offset, this.current_page);
         this.migrates = result.migrates;
         this.resources = result.resources;
         this.total = result.paginator.totalcount;

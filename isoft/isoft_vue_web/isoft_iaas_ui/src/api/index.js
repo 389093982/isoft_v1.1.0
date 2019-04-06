@@ -213,7 +213,7 @@ export const BatchChangeIndent = (work_id, mod,selections) => ajax(BASE_URL+"/iw
 
 export const SubmitMigrate = (tableName, table_migrate_sql, tableColunms, id, operateType) => ajax(BASE_URL+"/iwork/submitMigrate", {tableName, table_migrate_sql, tableColunms, id, operateType},'POST');
 
-export const FilterPageMigrate = (offset,current_page) => ajax(BASE_URL+"/iwork/filterPageMigrate", {offset,current_page},'POST');
+export const FilterPageMigrate = (filterTableName, offset,current_page) => ajax(BASE_URL+"/iwork/filterPageMigrate", {filterTableName, offset,current_page},'POST');
 
 export const GetMigrateInfo = (id) => ajax(BASE_URL+"/iwork/getMigrateInfo", {id},'POST');
 

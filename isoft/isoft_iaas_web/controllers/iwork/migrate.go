@@ -112,7 +112,8 @@ func (this *WorkController) SubmitMigrate() {
 func (this *WorkController) FilterPageMigrate() {
 	offset, _ := this.GetInt("offset", 10)            // 每页记录数
 	current_page, _ := this.GetInt("current_page", 1) // 当前页
-	migrates, count, err := iwork.QueryMigrate(current_page, offset)
+	filterTableName := this.GetString("filterTableName")
+	migrates, count, err := iwork.QueryMigrate(filterTableName, current_page, offset)
 	if err == nil {
 		// 判断是否是最大的 migrateId
 		for index, migrate := range migrates {
