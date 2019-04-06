@@ -24,6 +24,26 @@ func (this *WorkController) ExecuteMigrate() {
 	this.ServeJSON()
 }
 
+func (this *WorkController) BuildInstanceSql() {
+	var err error
+	var sql string
+	//id, _ := this.GetInt64("id", -1)
+	tableName := this.GetString("tableName")
+	tableColunmStr := this.GetString("tableColunms")
+	operateType := this.GetString("operateType")
+	tableColunms := make([]*iworkquicksql.TableColumn, 0)
+	if err = json.Unmarshal([]byte(tableColunmStr), &tableColunms); err == nil {
+		sql = iworkquicksql.AlterData(tableName, operateType, tableColunms)
+
+	}
+	if err == nil {
+		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "sql": sql}
+	} else {
+		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": err.Error()}
+	}
+	this.ServeJSON()
+}
+
 func (this *WorkController) SubmitMigrate() {
 	var err error
 	tableName := this.GetString("tableName")
@@ -44,10 +64,14 @@ func (this *WorkController) SubmitMigrate() {
 		if preMigrate, err := iwork.QueryLastMigrate(tableName, id, operateType); err == nil {
 			preMigrateId = preMigrate.Id
 			preMigrateHash = hashutil.CalculateHashWithString(preMigrate.TableInfo)
-			autoMigrateType = "ALTER"
-			var preTableInfo iworkquicksql.TableInfo
-			json.Unmarshal([]byte(preMigrate.TableInfo), &preTableInfo)
-			autoMigrateSql = iworkquicksql.AlterTable(&preTableInfo, &tableInfo)
+			if operateType == "dataupgrade" {
+				autoMigrateType = "DATA ALTER"
+			} else {
+				autoMigrateType = "ALTER"
+				var preTableInfo iworkquicksql.TableInfo
+				json.Unmarshal([]byte(preMigrate.TableInfo), &preTableInfo)
+				autoMigrateSql = iworkquicksql.AlterTable(&preTableInfo, &tableInfo)
+			}
 		} else {
 			autoMigrateType = "CREATE"
 			autoMigrateSql = iworkquicksql.CreateTable(&tableInfo)

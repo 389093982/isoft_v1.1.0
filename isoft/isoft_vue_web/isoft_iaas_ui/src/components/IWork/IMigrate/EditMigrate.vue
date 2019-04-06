@@ -1,6 +1,8 @@
 <template>
   <div>
     <Button type="success" size="small" @click="createTableMigrate">创建/变更表迁移</Button>
+    <Button type="info" size="small" @click="buildInstanceSql('add')">使用 instance 值插入一条数据</Button>
+    <Button type="error" size="small" @click="buildInstanceSql('delete')">使用 instance 值删除数据</Button>
 
     <ISimpleConfirmModal ref="createTable" modal-title="创建/变更表迁移" :modal-width="800" :footer-hide="true">
       <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="140">
@@ -28,6 +30,7 @@
   import ISimpleConfirmModal from "../../Common/modal/ISimpleConfirmModal"
   import {SubmitMigrate} from "../../../api"
   import {GetMigrateInfo} from "../../../api"
+  import {BuildInstanceSql} from "../../../api"
   import {validatePatternForString} from "../../../tools"
   import {oneOf} from "../../../tools"
 
@@ -323,6 +326,12 @@
             this.table_migrate_sql = result.migrate.table_migrate_sql;
           }
 
+        }
+      },
+      buildInstanceSql: async function(operateType){
+        const result = await BuildInstanceSql(this.tableName, JSON.stringify(this.tableColumns), this.$route.query.id, operateType);
+        if(result.status == "SUCCESS"){
+          this.table_migrate_sql += result.sql + "\n";
         }
       }
     },

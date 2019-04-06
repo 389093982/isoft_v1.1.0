@@ -79,12 +79,12 @@
           {
             title: 'validate_result',
             key: 'validate_result',
-            width: 100,
+            width: 130,
           },
           {
             title: '操作',
             key: 'operate',
-            width: 150,
+            width: 220,
             fixed: 'right',
             render: (h, params) => {
               return h('div', [
@@ -101,7 +101,21 @@
                       this.editMigrate(this.migrates[params.index]['id'], "upgrade");
                     }
                   }
-                }, '升级'),
+                }, '结构升级'),
+                h('Button', {
+                  props: {
+                    type: 'info',
+                    size: 'small'
+                  },
+                  style: {
+                    marginRight: '5px',
+                  },
+                  on: {
+                    click: () => {
+                      this.editMigrate(this.migrates[params.index]['id'], "dataupgrade");
+                    }
+                  }
+                }, '数据升级'),
                 h('Button', {
                   props: {
                     type: 'error',
