@@ -19,6 +19,7 @@ type TableColumn struct {
 	AutoIncrement string `json:"auto_increment"`
 	Unique        string `json:"unique"`
 	Comment       string `json:"comment"`
+	Instance      string `json:"instance"`
 }
 
 type BaseCreator struct {

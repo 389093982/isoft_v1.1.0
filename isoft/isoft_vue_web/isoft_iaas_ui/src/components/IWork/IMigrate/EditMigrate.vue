@@ -218,6 +218,25 @@
             }
           },
           {
+            title: 'instance',
+            key: 'instance',
+            width: 100,
+            render: (h, params) => {
+              return h('div', [
+                h('Input',{
+                  props: {
+                    value: params.row.instance,
+                  },
+                  on:{
+                    'on-blur': (event) => {
+                      this.tableColumns[params.index]["instance"] = event.target.value;
+                    }
+                  }
+                }),
+              ]);
+            }
+          },
+          {
             title: '操作',
             key: 'operate',
             width: 150,
