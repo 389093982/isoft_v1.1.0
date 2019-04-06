@@ -34,6 +34,10 @@ func (this *MigrateExecutor) executeForceClean() error {
 	if this.ForceClean == false {
 		return nil
 	}
+	if !strings.HasSuffix(this.Dsn, "_test") {
+		// 强制清理功能只适用于 _test 库
+		return errors.New("ForceClean only can used by *_test database!")
+	}
 	dropTables := make([]string, 0)
 	for _, migration := range this.migrates {
 		if !stringutil.CheckContains(migration.TableName, dropTables) {
