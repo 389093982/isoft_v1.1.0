@@ -53,6 +53,7 @@
           {
             title: 'column_name',
             key: 'column_name',
+            width: 120,
           },
           {
             title: 'column_type',
@@ -83,6 +84,7 @@
           {
             title: 'length',
             key: 'length',
+            width: 100,
             render: (h, params) => {
               return h('div', [
                 h('Input',{
@@ -101,6 +103,7 @@
           {
             title: 'default',
             key: 'default',
+            width: 100,
             render: (h, params) => {
               return h('div', [
                 h('Input',{
@@ -119,6 +122,7 @@
           {
             title: 'pk',
             key: 'primary_key',
+            width: 100,
             render: (h, params) => {
               return h('div', [
                 h('span', params.row.primary_key),
@@ -143,6 +147,7 @@
           {
             title: 'increment',
             key: 'auto_increment',
+            width: 100,
             render: (h, params) => {
               return h('div', [
                 h('span', params.row.auto_increment),
@@ -171,6 +176,7 @@
           {
             title: 'unique',
             key: 'unique',
+            width: 100,
             render: (h, params) => {
               return h('div', [
                 h('span', params.row.unique),
@@ -195,6 +201,7 @@
           {
             title: 'comment',
             key: 'comment',
+            width: 300,
             render: (h, params) => {
               return h('div', [
                 h('Input',{
@@ -210,6 +217,30 @@
               ]);
             }
           },
+          {
+            title: '操作',
+            key: 'operate',
+            width: 150,
+            fixed: 'right',
+            render: (h, params) => {
+              return h('div', [
+                h('Button', {
+                  props: {
+                    type: 'success',
+                    size: 'small'
+                  },
+                  style: {
+                    marginRight: '5px',
+                  },
+                  on: {
+                    click: () => {
+                      this.tableColumns.splice(params.index, 1);
+                    }
+                  }
+                }, '删除'),
+              ]);
+            }
+          }
         ],
         formValidate: {
           tableName: '',

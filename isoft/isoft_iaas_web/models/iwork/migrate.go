@@ -51,9 +51,18 @@ func QueryMigrateInfo(id int64) (migrate TableMigrate, err error) {
 }
 
 // 最近一次迁移记录
-func QueryLastMigrate(tableName string, excludeId int64) (migrate TableMigrate, err error) {
+func QueryLastMigrate(tableName string, id int64, operateType string) (migrate TableMigrate, err error) {
 	o := orm.NewOrm()
-	err = o.QueryTable("table_migrate").Filter("table_name", tableName).Exclude("id", excludeId).
-		OrderBy("-last_updated_time").One(&migrate)
+	qs := o.QueryTable("table_migrate").Filter("table_name", tableName)
+	if id > 0 { // 非 CREATE 操作
+		if operateType == "upgrade" {
+			// upgrade 操作前置迁移小于等于当前 id
+			qs = qs.Filter("id__lte", id)
+		} else if operateType == "update" {
+			// update 操作前置迁移小于当前 id
+			qs = qs.Filter("id__lt", id)
+		}
+	}
+	err = qs.OrderBy("-last_updated_time").One(&migrate)
 	return
 }

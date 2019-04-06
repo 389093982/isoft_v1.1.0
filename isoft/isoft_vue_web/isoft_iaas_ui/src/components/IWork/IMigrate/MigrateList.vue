@@ -106,6 +106,9 @@
                   },
                   on: {
                     click: () => {
+                      if(this.migrates[params.index]['migrate_type'] == "CREATE"){
+                        alert("当表存在时 CREATE 语句纠正可能不会重新执行奥!请先执行删除表操作!");
+                      }
                       this.editMigrate(this.migrates[params.index]['id'], "update");
                     }
                   }

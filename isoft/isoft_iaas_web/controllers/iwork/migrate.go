@@ -37,7 +37,7 @@ func (this *WorkController) SubmitMigrate() {
 		}
 		var autoMigrateSql, autoMigrateType string
 		// 有最近一次创建或者修改记录
-		if preMigrate, err := iwork.QueryLastMigrate(tableName, id); err == nil {
+		if preMigrate, err := iwork.QueryLastMigrate(tableName, id, operateType); err == nil {
 			autoMigrateType = "ALTER"
 			var preTableInfo iworkquicksql.TableInfo
 			json.Unmarshal([]byte(preMigrate.TableInfo), &preTableInfo)
