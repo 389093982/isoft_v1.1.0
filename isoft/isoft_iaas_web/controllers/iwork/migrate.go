@@ -8,7 +8,6 @@ import (
 	"isoft/isoft_iaas_web/core/iworkquicksql"
 	"isoft/isoft_iaas_web/core/iworkutil/migrateutil"
 	"isoft/isoft_iaas_web/models/iwork"
-	"strings"
 	"time"
 )
 
@@ -38,7 +37,7 @@ func (this *WorkController) SubmitMigrate() {
 		}
 		var autoMigrateSql, autoMigrateType string
 		// 有最近一次创建或者修改记录
-		if preMigrate, err := iwork.QueryLastMigrate(tableName); err == nil {
+		if preMigrate, err := iwork.QueryLastMigrate(tableName, id); err == nil {
 			autoMigrateType = "ALTER"
 			var preTableInfo iworkquicksql.TableInfo
 			json.Unmarshal([]byte(preMigrate.TableInfo), &preTableInfo)
@@ -48,24 +47,22 @@ func (this *WorkController) SubmitMigrate() {
 			autoMigrateSql = iworkquicksql.CreateTable(&tableInfo)
 		}
 		if tableInfoStr, err1 := json.Marshal(tableInfo); err1 == nil {
-			if autoMigrateSql != "" || strings.TrimSpace(table_migrate_sql) != "" {
-				tm := &iwork.TableMigrate{
-					TableName:       tableName,
-					TableInfo:       string(tableInfoStr),
-					TableInfoHash:   hashutil.CalculateHashWithString(string(tableInfoStr)),
-					TableMigrateSql: table_migrate_sql,
-					TableAutoSql:    autoMigrateSql,
-					MigrateType:     autoMigrateType,
-					CreatedBy:       "SYSTEM",
-					CreatedTime:     time.Now(),
-					LastUpdatedBy:   "SYSTEM",
-					LastUpdatedTime: time.Now(),
-				}
-				if operateType == "update" && id > 0 { // update 操作
-					tm.Id = id
-				}
-				_, err = iwork.InsertOrUpdateTableMigrate(tm)
+			tm := &iwork.TableMigrate{
+				TableName:       tableName,
+				TableInfo:       string(tableInfoStr),
+				TableInfoHash:   hashutil.CalculateHashWithString(string(tableInfoStr)),
+				TableMigrateSql: table_migrate_sql,
+				TableAutoSql:    autoMigrateSql,
+				MigrateType:     autoMigrateType,
+				CreatedBy:       "SYSTEM",
+				CreatedTime:     time.Now(),
+				LastUpdatedBy:   "SYSTEM",
+				LastUpdatedTime: time.Now(),
 			}
+			if operateType == "update" && id > 0 { // update 操作
+				tm.Id = id
+			}
+			_, err = iwork.InsertOrUpdateTableMigrate(tm)
 		} else {
 			err = err1
 		}

@@ -51,9 +51,9 @@ func QueryMigrateInfo(id int64) (migrate TableMigrate, err error) {
 }
 
 // 最近一次迁移记录
-func QueryLastMigrate(tableName string) (migrate TableMigrate, err error) {
+func QueryLastMigrate(tableName string, excludeId int64) (migrate TableMigrate, err error) {
 	o := orm.NewOrm()
-	err = o.QueryTable("table_migrate").Filter("table_name", tableName).
+	err = o.QueryTable("table_migrate").Filter("table_name", tableName).Exclude("id", excludeId).
 		OrderBy("-last_updated_time").One(&migrate)
 	return
 }

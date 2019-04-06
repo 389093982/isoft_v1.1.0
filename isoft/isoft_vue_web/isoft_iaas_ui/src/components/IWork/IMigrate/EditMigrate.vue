@@ -1,7 +1,7 @@
 <template>
   <div>
-    迁移类型：
-    <a href="javascript:;" @click="createTableMigrate">创建/变更表迁移</a>
+    <Button type="success" size="small" @click="createTableMigrate">创建/变更表迁移</Button>
+
     <ISimpleConfirmModal ref="createTable" modal-title="创建/变更表迁移" :modal-width="800" :footer-hide="true">
       <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="140">
         <FormItem label="tableName" prop="tableName">
