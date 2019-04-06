@@ -38,8 +38,12 @@ func (this *WorkController) SubmitMigrate() {
 			TableColumns: tableColunms,
 		}
 		var autoMigrateSql, autoMigrateType string
+		var preMigrateId int64
+		var preMigrateHash string
 		// 有最近一次创建或者修改记录
 		if preMigrate, err := iwork.QueryLastMigrate(tableName, id, operateType); err == nil {
+			preMigrateId = preMigrate.Id
+			preMigrateHash = hashutil.CalculateHashWithString(preMigrate.TableInfo)
 			autoMigrateType = "ALTER"
 			var preTableInfo iworkquicksql.TableInfo
 			json.Unmarshal([]byte(preMigrate.TableInfo), &preTableInfo)
@@ -57,6 +61,8 @@ func (this *WorkController) SubmitMigrate() {
 					TableMigrateSql: table_migrate_sql,
 					TableAutoSql:    autoMigrateSql,
 					MigrateType:     autoMigrateType,
+					PreMigrateId:    preMigrateId,
+					PreMigrateHash:  preMigrateHash,
 					CreatedBy:       "SYSTEM",
 					CreatedTime:     time.Now(),
 					LastUpdatedBy:   "SYSTEM",

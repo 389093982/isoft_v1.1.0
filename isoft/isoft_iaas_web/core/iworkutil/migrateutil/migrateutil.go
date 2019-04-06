@@ -115,6 +115,28 @@ func (this *MigrateExecutor) checkExecuted(hash string) bool {
 	return false
 }
 
+func (this *MigrateExecutor) getMigrate(migrateId int64) *iwork.TableMigrate {
+	for _, migrate := range this.migrates {
+		if migrate.Id == migrateId {
+			return &migrate
+		}
+	}
+	return nil
+}
+
+func (this *MigrateExecutor) checkMigrate() error {
+	for _, migrate := range this.migrates {
+		if migrate.PreMigrateId > 0 {
+			if preMigrate := this.getMigrate(migrate.PreMigrateId); preMigrate != nil {
+				if migrate.PreMigrateHash != hashutil.CalculateHashWithString(preMigrate.TableInfo) {
+					return errors.New(fmt.Sprintf("migrate[id=%d] check pre migrate hash error, please rebuild it...", migrate.Id))
+				}
+			}
+		}
+	}
+	return nil
+}
+
 func (this *MigrateExecutor) migrateOne(migrate iwork.TableMigrate) error {
 	if strings.TrimSpace(migrate.TableMigrateSql) != "" {
 		// 优先使用用户自定义 sql
