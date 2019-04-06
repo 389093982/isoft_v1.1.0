@@ -1,9 +1,14 @@
 <template>
   <div>
-    <Button type="success" size="small" @click="createTableMigrate">创建/变更表迁移</Button>
-    <Button type="info" size="small" @click="buildInstanceSql('add')">使用 instance 值插入一条数据</Button>
-     <Button type="error" size="small" @click="buildInstanceSql('delete')">使用 instance 值删除数据</Button>
-
+    <Row>
+      <Col span="12">
+        <Button type="success" size="small" @click="createTableMigrate">创建/变更表迁移</Button>
+      </Col>
+      <Col span="12">
+        <Button type="info" size="small" @click="buildInstanceSql('add')">使用 instance 值插入一条数据</Button>
+        <Button type="error" size="small" @click="buildInstanceSql('delete')">使用 instance 值删除数据</Button>
+      </Col>
+    </Row>
     <ISimpleConfirmModal ref="createTable" modal-title="创建/变更表迁移" :modal-width="800" :footer-hide="true">
       <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="140">
         <FormItem label="tableName" prop="tableName">

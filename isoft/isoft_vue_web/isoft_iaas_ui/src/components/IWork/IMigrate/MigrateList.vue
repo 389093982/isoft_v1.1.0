@@ -44,7 +44,7 @@
           {
             title: 'id',
             key: 'id',
-            width: 50,
+            width: 100,
           },
           {
             title: 'table_name',
