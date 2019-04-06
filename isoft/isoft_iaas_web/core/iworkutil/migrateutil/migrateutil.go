@@ -66,7 +66,12 @@ func (this *MigrateExecutor) migrate() (err error) {
 	if err == nil {
 		for _, migrate := range migrates {
 			if err = this.migrateOne(migrate); err != nil {
+				migrate.ValidateResult = "ERROR"
+				iwork.InsertOrUpdateTableMigrate(&migrate)
 				return err
+			} else {
+				migrate.ValidateResult = "SUCCESS"
+				iwork.InsertOrUpdateTableMigrate(&migrate)
 			}
 		}
 	}

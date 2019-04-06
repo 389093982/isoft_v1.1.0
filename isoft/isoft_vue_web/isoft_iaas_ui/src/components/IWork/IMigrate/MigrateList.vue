@@ -76,6 +76,11 @@
             width: 200,
           },
           {
+            title: 'validate_result',
+            key: 'validate_result',
+            width: 100,
+          },
+          {
             title: '操作',
             key: 'operate',
             width: 150,
@@ -106,13 +111,17 @@
                   },
                   on: {
                     click: () => {
-                      if(this.migrates[params.index]['migrate_type'] == "CREATE"){
-                        alert("当表存在时 CREATE 语句纠正可能不会重新执行奥!请先执行删除表操作!");
+                      if (this.migrates[params.index]['validate_result'] == "SUCCESS"){
+                        this.$Message.error("已执行验证通过的语句不能被更正,请执行升级操作!");
+                      }else{
+                        if(this.migrates[params.index]['migrate_type'] == "CREATE"){
+                          alert("当表存在时 CREATE 语句纠正可能不会重新执行奥!请先执行删除表操作!");
+                        }
+                        this.editMigrate(this.migrates[params.index]['id'], "update");
                       }
-                      this.editMigrate(this.migrates[params.index]['id'], "update");
                     }
                   }
-                }, '纠正'),
+                }, '更正'),
               ]);
             }
           }
@@ -146,6 +155,7 @@
         const result = await ExecuteMigrate(this.currentResourceName);
         if(result.status == "SUCCESS"){
           this.$Message.success("SUCCESS");
+          this.refreshMigrateList();
         }else{
           this.errorMsg = result.errorMsg;
         }

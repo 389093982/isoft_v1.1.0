@@ -13,6 +13,7 @@ type TableMigrate struct {
 	TableInfoHash   string    `json:"table_info_hash"`
 	TableMigrateSql string    `json:"table_migrate_sql"`
 	TableAutoSql    string    `json:"table_auto_sql"`
+	ValidateResult  string    `json:"validate_result"`
 	CreatedBy       string    `json:"created_by"`
 	CreatedTime     time.Time `json:"created_time" orm:"auto_now_add;type(datetime)"`
 	LastUpdatedBy   string    `json:"last_updated_by"`

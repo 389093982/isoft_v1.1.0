@@ -8,6 +8,7 @@ import (
 	"isoft/isoft_iaas_web/core/iworkquicksql"
 	"isoft/isoft_iaas_web/core/iworkutil/migrateutil"
 	"isoft/isoft_iaas_web/models/iwork"
+	"strings"
 	"time"
 )
 
@@ -47,22 +48,24 @@ func (this *WorkController) SubmitMigrate() {
 			autoMigrateSql = iworkquicksql.CreateTable(&tableInfo)
 		}
 		if tableInfoStr, err1 := json.Marshal(tableInfo); err1 == nil {
-			tm := &iwork.TableMigrate{
-				TableName:       tableName,
-				TableInfo:       string(tableInfoStr),
-				TableInfoHash:   hashutil.CalculateHashWithString(string(tableInfoStr)),
-				TableMigrateSql: table_migrate_sql,
-				TableAutoSql:    autoMigrateSql,
-				MigrateType:     autoMigrateType,
-				CreatedBy:       "SYSTEM",
-				CreatedTime:     time.Now(),
-				LastUpdatedBy:   "SYSTEM",
-				LastUpdatedTime: time.Now(),
+			if strings.TrimSpace(autoMigrateSql) != "" || strings.TrimSpace(table_migrate_sql) != "" {
+				tm := &iwork.TableMigrate{
+					TableName:       tableName,
+					TableInfo:       string(tableInfoStr),
+					TableInfoHash:   hashutil.CalculateHashWithString(string(tableInfoStr)),
+					TableMigrateSql: table_migrate_sql,
+					TableAutoSql:    autoMigrateSql,
+					MigrateType:     autoMigrateType,
+					CreatedBy:       "SYSTEM",
+					CreatedTime:     time.Now(),
+					LastUpdatedBy:   "SYSTEM",
+					LastUpdatedTime: time.Now(),
+				}
+				if operateType == "update" && id > 0 { // update 操作
+					tm.Id = id
+				}
+				_, err = iwork.InsertOrUpdateTableMigrate(tm)
 			}
-			if operateType == "update" && id > 0 { // update 操作
-				tm.Id = id
-			}
-			_, err = iwork.InsertOrUpdateTableMigrate(tm)
 		} else {
 			err = err1
 		}
