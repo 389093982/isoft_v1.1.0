@@ -1,34 +1,36 @@
 <template>
-  <div>
-    <Row>
-      <Col span="12">
-        <Button type="success" size="small" @click="createTableMigrate">创建/变更表迁移</Button>
-      </Col>
-      <Col span="12">
-        <Button type="info" size="small" @click="buildInstanceSql('add')">使用 instance 值插入一条数据</Button>
-        <Button type="error" size="small" @click="buildInstanceSql('delete')">使用 instance 值删除数据</Button>
-      </Col>
-    </Row>
-    <ISimpleConfirmModal ref="createTable" modal-title="创建/变更表迁移" :modal-width="800" :footer-hide="true">
-      <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="140">
-        <FormItem label="tableName" prop="tableName">
-          <Input v-model.trim="formValidate.tableName" placeholder="请输入 tableName"
-                 :readonly="this.tableName != '' && this.tableName != null && this.tableName != undefined"></Input>
-        </FormItem>
-        <FormItem label="tableColumns" prop="tableColumns">
-          <Input v-model.trim="formValidate.tableColumns" placeholder="请输入 tableColumns"></Input>
-        </FormItem>
-        <FormItem>
-          <Button type="success" @click="handleFormSubmit('formValidate')" style="margin-right: 6px">Submit</Button>
-        </FormItem>
-      </Form>
-    </ISimpleConfirmModal>
+  <Scroll height="500">
+    <div style="margin: 10px;">
+      <Row>
+        <Col span="12">
+          <Button type="success" size="small" @click="createTableMigrate">创建/变更表迁移</Button>
+        </Col>
+        <Col span="12">
+          <Button type="info" size="small" @click="buildInstanceSql('add')">使用 instance 值插入一条数据</Button>
+          <Button type="error" size="small" @click="buildInstanceSql('delete')">使用 instance 值删除数据</Button>
+        </Col>
+      </Row>
+      <ISimpleConfirmModal ref="createTable" modal-title="创建/变更表迁移" :modal-width="800" :footer-hide="true">
+        <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="140">
+          <FormItem label="tableName" prop="tableName">
+            <Input v-model.trim="formValidate.tableName" placeholder="请输入 tableName"
+                   :readonly="this.tableName != '' && this.tableName != null && this.tableName != undefined"></Input>
+          </FormItem>
+          <FormItem label="tableColumns" prop="tableColumns">
+            <Input v-model.trim="formValidate.tableColumns" placeholder="请输入 tableColumns"></Input>
+          </FormItem>
+          <FormItem>
+            <Button type="success" @click="handleFormSubmit('formValidate')" style="margin-right: 6px">Submit</Button>
+          </FormItem>
+        </Form>
+      </ISimpleConfirmModal>
 
-    <Table border :columns="columns1" :data="tableColumns" size="small" style="margin-top: 10px;"></Table>
-    <Input v-model.trim="table_migrate_sql" placeholder="当自动生成的 sql 不准确时请使用自定义 sql,请输入 table_migrate_sql"
-           type="textarea" :rows="10" style="margin-bottom: 10px;margin-top: 10px;"></Input>
-    <Button type="success" size="small" @click="handleMigrateSubmit">Submit</Button>
-  </div>
+      <Table border :columns="columns1" :data="tableColumns" size="small" style="margin-top: 10px;"></Table>
+      <Input v-model.trim="table_migrate_sql" placeholder="当自动生成的 sql 不准确时请使用自定义 sql,请输入 table_migrate_sql"
+             type="textarea" :rows="10" style="margin-bottom: 10px;margin-top: 10px;"></Input>
+      <Button type="success" size="small" @click="handleMigrateSubmit">Submit</Button>
+    </div>
+  </Scroll>
 </template>
 
 <script>
