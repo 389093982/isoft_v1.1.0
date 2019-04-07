@@ -32,6 +32,7 @@
       <Button type="success" size="small" @click="handleSubmit">Submit</Button>
       <Button type="error" size="small" @click="showNext(-1)">Edit Last</Button>
       <Button type="warning" size="small" @click="showNext(1)">Edit Next</Button>
+      <Button type="info" size="small" @click="closeModal">Close</Button>
     </Row>
   </Modal>
 </template>
@@ -80,7 +81,9 @@
         }else{
           this.handleReload(this.paramIndex + num);
         }
-
+      },
+      closeModal: function(){
+        this.showFormModal = false;
       },
       chooseFunc: function(funcDemo){
         // 将数据复制到右侧
