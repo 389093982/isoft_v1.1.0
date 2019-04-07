@@ -48,6 +48,7 @@
       return {
         showFormModal:false,
         inputLabel:'',
+        oldInputTextData:'',
         inputTextData:'',
         paramIndex:1,
         preParamOutputSchemaTreeNodeArr:[],
@@ -63,10 +64,23 @@
         this.inputLabel = item.ParamName;
         // 文本输入框设置历史值
         this.inputTextData = item.ParamValue;
+        this.clearDirty();
         this.refreshPreNodeOutput();
       },
       showNext: function(num){
-        this.handleReload(this.paramIndex + num);
+        var _this = this;
+        if(!this.checkDrity()){
+          this.$Modal.confirm({
+            title:"确认",
+            content:"是否需要保存上一步操作?",
+            onOk: function () {
+              _this.handleSubmit();
+            },
+          });
+        }else{
+          this.handleReload(this.paramIndex + num);
+        }
+
       },
       chooseFunc: function(funcDemo){
         // 将数据复制到右侧
@@ -75,8 +89,15 @@
       showQuickFunc: function(){
         this.$refs.quickFuncList.showModal();
       },
+      clearDirty: function (){
+        this.oldInputTextData = this.inputTextData;
+      },
+      checkDrity: function(){
+        return this.oldInputTextData == this.inputTextData;
+      },
       handleSubmit:function () {
         this.$emit("handleSubmit", this.inputLabel, this.inputTextData);
+        this.clearDirty();
       },
       refreshPreNodeOutput:async function () {
         const result = await LoadPreNodeOutput(this.$store.state.current_work_id, this.$store.state.current_work_step_id);
