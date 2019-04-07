@@ -10,14 +10,8 @@
       <!-- 表单信息 -->
       <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="140">
         <Row style="margin-bottom: 20px;text-align: center;color: green;">
-          <Col span="4">
-            <Button type="warning" size="small" @click="showNext(-1)">加载前置步骤</Button>
-          </Col>
           <Col span="16">
             <h2 style='font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;'>步骤名称:{{formValidate.work_step_name}},步骤类型:{{formValidate.work_step_type}}</h2>
-          </Col>
-          <Col span="4">
-            <Button type="warning" size="small" @click="showNext(1)">加载后置步骤</Button>
           </Col>
         </Row>
         <Row style="margin-right: 10px;">
@@ -45,7 +39,9 @@
         </Row>
         <FormItem>
           <Row>
-            <Button type="success" size="small" @click="handleSubmit('formValidate')">提交</Button>
+            <Button type="success" size="small" @click="handleSubmit('formValidate')">Submit</Button>
+            <Button type="warning" size="small" @click="showNext(-1)">Load Last</Button>
+            <Button type="warning" size="small" @click="showNext(1)">Load Next</Button>
           </Row>
         </FormItem>
       </Form>
