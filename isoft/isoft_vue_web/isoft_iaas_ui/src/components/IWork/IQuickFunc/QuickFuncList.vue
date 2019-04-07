@@ -6,7 +6,8 @@
     title="快捷函数"
     :footer-hide="true"
     :transfer="false"
-    :mask-closable="false">
+    :mask-closable="false"
+    :styles="{top: '20px'}">
     <Scroll height="380">
       <Table :columns="columns1" :data="funcs" size="small"></Table>
     </Scroll>
