@@ -316,7 +316,7 @@
         });
       },
       handleMigrateSubmit: async function () {
-        if(this.formValidate.tableColumns.length == 0){
+        if(this.tableColumns.length == 0){
           this.$Message.error("You can't delete all columns with ALTER TABLE; use DROP TABLE instead!");
           return;
         }
