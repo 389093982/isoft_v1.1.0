@@ -19,7 +19,7 @@ func (this *MigrationAlter) BuildAlterTableSql() string {
 	columnNames := this.getColumnNames(this.tableInfo)
 	for _, preColumnName := range preColumnNames {
 		if !stringutil.CheckContains(preColumnName, columnNames) {
-			migrates = append(migrates, this.deleteField(this.tableInfo.TableName, preColumnName)+",")
+			migrates = append(migrates, this.deleteField(this.tableInfo.TableName, preColumnName))
 		}
 	}
 	for index, columnName := range columnNames {

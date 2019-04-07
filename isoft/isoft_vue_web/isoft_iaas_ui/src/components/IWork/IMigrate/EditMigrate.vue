@@ -315,7 +315,11 @@
           }
         });
       },
-       handleMigrateSubmit: async function () {
+      handleMigrateSubmit: async function () {
+        if(this.formValidate.tableColumns.length == 0){
+          this.$Message.error("You can't delete all columns with ALTER TABLE; use DROP TABLE instead!");
+          return;
+        }
         if(!checkEmpty(this.tableName)){
           const result = await SubmitMigrate(this.tableName, this.table_migrate_sql, JSON.stringify(this.tableColumns),
             this.$route.query.id, this.$route.query.operateType);

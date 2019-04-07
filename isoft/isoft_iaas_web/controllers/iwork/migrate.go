@@ -109,20 +109,25 @@ func (this *WorkController) SubmitMigrate() {
 	this.ServeJSON()
 }
 
+// 设置 maxMigrateId 属性,判断是否是最大的 migrateId
+func setMaxMigrateId(migrates []iwork.TableMigrate) []iwork.TableMigrate {
+	for index, migrate := range migrates {
+		if maxId, err := iwork.QueryMaxMigrationIdForTable(migrate.TableName); err == nil {
+			if maxId == migrate.Id {
+				migrates[index].IsMaxMigrateId = true
+			}
+		}
+	}
+	return migrates
+}
+
 func (this *WorkController) FilterPageMigrate() {
 	offset, _ := this.GetInt("offset", 10)            // 每页记录数
 	current_page, _ := this.GetInt("current_page", 1) // 当前页
 	filterTableName := this.GetString("filterTableName")
 	migrates, count, err := iwork.QueryMigrate(filterTableName, current_page, offset)
 	if err == nil {
-		// 判断是否是最大的 migrateId
-		for index, migrate := range migrates {
-			if maxId, err := iwork.QueryMaxMigrationIdForTable(migrate.TableName); err == nil {
-				if maxId == migrate.Id {
-					migrates[index].IsMaxMigrateId = true
-				}
-			}
-		}
+		migrates = setMaxMigrateId(migrates)
 		resources := iwork.QueryAllResource("db")
 		paginator := pagination.SetPaginator(this.Ctx, offset, count)
 		this.Data["json"] = &map[string]interface{}{
