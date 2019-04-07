@@ -17,8 +17,8 @@
         </ISimpleConfirmModal>
       </Row>
 
-    <WorkStepBaseInfo ref="workStepBaseInfo" @handleSuccess="refreshWorkStepList"/>
-    <WorkStepParamInfo ref="workStepParamInfo" @handleSuccess="refreshWorkStepList"/>
+    <BaseInfo ref="workStepBaseInfo" @handleSuccess="refreshWorkStepList"/>
+    <ParamInfo ref="workStepParamInfo" @handleSuccess="refreshWorkStepList"/>
 
     <Table border :columns="columns1" ref="selection" :data="worksteps" size="small"></Table>
 
@@ -28,27 +28,27 @@
 </template>
 
 <script>
-  import {WorkStepList} from "../../api"
-  import {DeleteWorkStepByWorkStepId} from "../../api"
-  import {ChangeWorkStepOrder} from "../../api"
-  import {RefactorWorkStepInfo} from "../../api"
-  import {BatchChangeIndent} from "../../api"
-  import {AddWorkStep} from "../../api"
-  import {RunWork} from "../../api"
-  import WorkStepParamInfo from "./WorkStepParamInfo"
-  import ISimpleLeftRightRow from "../Common/layout/ISimpleLeftRightRow"
-  import WorkStepBaseInfo from "./WorkStepBaseInfo"
-  import RelativeWork from "./RelativeWork"
-  import {oneOf} from "../../tools"
-  import {checkContainsInString} from "../../tools"
-  import WorkValidate from "./IValidate/WorkValidate"
-  import ISimpleConfirmModal from "../Common/modal/ISimpleConfirmModal"
-  import {getRepeatStr} from "../../tools"
-  import {GetRelativeWork} from "../../api"
+  import {WorkStepList} from "../../../api/index"
+  import {DeleteWorkStepByWorkStepId} from "../../../api/index"
+  import {ChangeWorkStepOrder} from "../../../api/index"
+  import {RefactorWorkStepInfo} from "../../../api/index"
+  import {BatchChangeIndent} from "../../../api/index"
+  import {AddWorkStep} from "../../../api/index"
+  import {RunWork} from "../../../api/index"
+  import ParamInfo from "./ParamInfo/ParamInfo"
+  import ISimpleLeftRightRow from "../../Common/layout/ISimpleLeftRightRow"
+  import BaseInfo from "./BaseInfo/BaseInfo"
+  import RelativeWork from "./RelativeWork/RelativeWork"
+  import {oneOf} from "../../../tools/index"
+  import {checkContainsInString} from "../../../tools/index"
+  import WorkValidate from "../IValidate/WorkValidate"
+  import ISimpleConfirmModal from "../../Common/modal/ISimpleConfirmModal"
+  import {getRepeatStr} from "../../../tools/index"
+  import {GetRelativeWork} from "../../../api/index"
 
   export default {
     name: "WorkStepList",
-    components:{WorkStepParamInfo,ISimpleLeftRightRow,WorkStepBaseInfo,RelativeWork,WorkValidate,ISimpleConfirmModal},
+    components:{ParamInfo,ISimpleLeftRightRow,BaseInfo,RelativeWork,WorkValidate,ISimpleConfirmModal},
     data(){
       return {
         showRelativeWorkFlag:false,

@@ -12,7 +12,7 @@
 </template>
 
 <script>
-  import {GetRelativeWork} from "../../api"
+  import {GetRelativeWork} from "../../../../api/index"
   import RelativeWorkList from "./RelativeWorkList"
 
   export default {

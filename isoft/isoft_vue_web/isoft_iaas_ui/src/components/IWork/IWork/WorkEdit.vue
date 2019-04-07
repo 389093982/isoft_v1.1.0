@@ -19,9 +19,9 @@
 </template>
 
 <script>
-  import ISimpleBtnTriggerModal from "../Common/modal/ISimpleBtnTriggerModal"
-  import {EditWork} from "../../api"
-  import {validateCommonPatternForString} from "../../tools"
+  import ISimpleBtnTriggerModal from "../../Common/modal/ISimpleBtnTriggerModal"
+  import {EditWork} from "../../../api/index"
+  import {validateCommonPatternForString} from "../../../tools/index"
 
   export default {
     name: "WorkEdit",

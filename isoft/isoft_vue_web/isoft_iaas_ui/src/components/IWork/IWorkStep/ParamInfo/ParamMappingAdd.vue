@@ -8,7 +8,7 @@
 </template>
 
 <script>
-  import ISimpleBtnTriggerModal from "../Common/modal/ISimpleBtnTriggerModal"
+  import ISimpleBtnTriggerModal from "../../../Common/modal/ISimpleBtnTriggerModal"
 
   export default {
     name: "ParamMappingAdd",

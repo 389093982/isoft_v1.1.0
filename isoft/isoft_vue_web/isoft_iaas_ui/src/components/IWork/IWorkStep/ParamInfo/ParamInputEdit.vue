@@ -15,17 +15,17 @@
       </Row>
     </Row>
 
-    <WorkStepParamInputEditDialog ref="paramInputEditDialog"
+    <ParamInputEditDialog ref="paramInputEditDialog"
       @handleSubmit="refreshParamInputSchemaItems" @handleReload="handleReload"/>
   </span>
 </template>
 
 <script>
-  import WorkStepParamInputEditDialog from "./WorkStepParamInputEditDialog"
+  import ParamInputEditDialog from "./ParamInputEditDialog"
 
   export default {
-    name: "WorkStepParamInputEdit",
-    components:{WorkStepParamInputEditDialog},
+    name: "ParamInputEdit",
+    components:{ParamInputEditDialog},
     props:{
       paramInputSchemaItems:{
         type: Array,

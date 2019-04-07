@@ -17,8 +17,8 @@
 
 <script>
   import ParamMappingAdd from "./ParamMappingAdd"
-  import {oneOf} from "../../tools"
-  import {strSplit} from "../../tools"
+  import {oneOf} from "../../../../tools/index"
+  import {strSplit} from "../../../../tools/index"
 
   export default {
     name: "ParamMapping",

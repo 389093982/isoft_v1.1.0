@@ -25,7 +25,7 @@
             <FormItem label="work_step_input" prop="work_step_input">
               <Tabs type="card" :animated="false">
                 <TabPane label="edit">
-                  <WorkStepParamInputEdit :paramInputSchemaItems="paramInputSchema.ParamInputSchemaItems"/>
+                  <ParamInputEdit :paramInputSchemaItems="paramInputSchema.ParamInputSchemaItems"/>
                 </TabPane>
                 <TabPane label="ParamMapping" v-if="showParamMapping">
                   <ParamMapping :paramMappings="paramMappings"/>
@@ -37,7 +37,7 @@
             <FormItem label="work_step_output" prop="work_step_output">
               <Tabs type="card" :animated="false">
                 <TabPane label="Tree">
-                  <WorkStepPreParamOutputTree v-if="paramOutputSchemaTreeNode" :paramOutputSchemaTreeNode="paramOutputSchemaTreeNode"/>
+                  <PreParamOutputTree v-if="paramOutputSchemaTreeNode" :paramOutputSchemaTreeNode="paramOutputSchemaTreeNode"/>
                 </TabPane>
               </Tabs>
             </FormItem>
@@ -54,17 +54,17 @@
 </template>
 
 <script>
-  import WorkStepParamInputEdit from "./WorkStepParamInputEdit"
-  import WorkStepPreParamOutputTree from "./WorkStepPreParamOutputTree"
-  import ISimpleConfirmModal from "../Common/modal/ISimpleConfirmModal"
+  import ParamInputEdit from "./ParamInputEdit"
+  import PreParamOutputTree from "./PreParamOutputTree"
+  import ISimpleConfirmModal from "../../../Common/modal/ISimpleConfirmModal"
   import ParamMapping from "./ParamMapping"
-  import {EditWorkStepParamInfo} from "../../api"
-  import {LoadWorkStepInfo} from "../../api"
-  import {oneOf} from "../../tools"
+  import {EditWorkStepParamInfo} from "../../../../api/index"
+  import {LoadWorkStepInfo} from "../../../../api/index"
+  import {oneOf} from "../../../../tools/index"
 
   export default {
-    name: "WorkStepParamInfo",
-    components:{WorkStepParamInputEdit,WorkStepPreParamOutputTree,ParamMapping,ISimpleConfirmModal},
+    name: "ParamInfo",
+    components:{ParamInputEdit,PreParamOutputTree,ParamMapping,ISimpleConfirmModal},
     props: {
       workId: {
         type: Number,

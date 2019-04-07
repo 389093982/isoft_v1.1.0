@@ -21,17 +21,17 @@
 </template>
 
 <script>
-  import {WorkList} from "../../api"
-  import {DeleteWorkById} from "../../api"
-  import {RunWork} from "../../api"
-  import {SaveHistory} from "../../api"
-  import ISimpleLeftRightRow from "../Common/layout/ISimpleLeftRightRow"
-  import ISimpleSearch from "../Common/search/ISimpleSearch"
+  import {WorkList} from "../../../api/index"
+  import {DeleteWorkById} from "../../../api/index"
+  import {RunWork} from "../../../api/index"
+  import {SaveHistory} from "../../../api/index"
+  import ISimpleLeftRightRow from "../../Common/layout/ISimpleLeftRightRow"
+  import ISimpleSearch from "../../Common/search/ISimpleSearch"
   import WorkEdit from "./WorkEdit"
-  import EntityList from "./EntityList"
-  import GlobalVarList from "./GlobalVarList"
-  import IWorkDL from "./IWorkDL"
-  import WorkValidate from "./IValidate/WorkValidate"
+  import EntityList from "../EntityList"
+  import GlobalVarList from "../GlobalVarList"
+  import IWorkDL from "../IWorkDL"
+  import WorkValidate from "../IValidate/WorkValidate"
 
   export default {
     name: "WorkList",

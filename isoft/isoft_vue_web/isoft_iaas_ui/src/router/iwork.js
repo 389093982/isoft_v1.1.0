@@ -1,5 +1,5 @@
-import WorkList from "../components/IWork/WorkList"
-import WorkStepList from "../components/IWork/WorkStepList"
+import WorkList from "../components/IWork/IWork/WorkList"
+import WorkStepList from "../components/IWork/IWorkStep/WorkStepList"
 import RunLogList from "../components/IWork/IRunLog/RunLogList"
 import WorkHistoryList from "../components/IWork/IHistory/WorkHistoryList"
 import RunLogDetail from "../components/IWork/IRunLog/RunLogDetail"

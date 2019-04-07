@@ -53,12 +53,12 @@
 </template>
 
 <script>
-  import {EditWorkStepBaseInfo} from "../../api"
-  import {LoadWorkStepInfo} from "../../api"
-  import {validateCommonPatternForString} from "../../tools"
+  import {EditWorkStepBaseInfo} from "../../../../api/index"
+  import {LoadWorkStepInfo} from "../../../../api/index"
+  import {validateCommonPatternForString} from "../../../../tools/index"
 
   export default {
-    name: "WorkStepBaseInfo",
+    name: "BaseInfo",
     data(){
       const _validateWorkStepName = (rule, value, callback) => {
         if (value === '') {

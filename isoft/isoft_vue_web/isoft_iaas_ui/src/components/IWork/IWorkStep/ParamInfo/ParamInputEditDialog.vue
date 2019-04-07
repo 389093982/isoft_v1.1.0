@@ -37,12 +37,12 @@
 </template>
 
 <script>
-  import {LoadPreNodeOutput} from "../../api"
-  import ISimpleBtnTriggerModal from "../Common/modal/ISimpleBtnTriggerModal"
-  import QuickFuncList from "./IQuickFunc/QuickFuncList"
+  import {LoadPreNodeOutput} from "../../../../api/index"
+  import ISimpleBtnTriggerModal from "../../../Common/modal/ISimpleBtnTriggerModal"
+  import QuickFuncList from "../../IQuickFunc/QuickFuncList"
 
   export default {
-    name: "WorkStepParamInputEditDialog",
+    name: "ParamInputEditDialog",
     components:{ISimpleBtnTriggerModal,QuickFuncList},
     data(){
       return {
