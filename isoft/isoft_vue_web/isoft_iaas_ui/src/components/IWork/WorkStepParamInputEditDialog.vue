@@ -29,9 +29,8 @@
       </Col>
     </Row>
     <Row style="text-align: right;margin-top: 10px;">
-      <Button type="success" size="small" @click="handleSubmit(false)">提交</Button>
-      <Button type="warning" size="small" @click="handleSubmit(true)">提交并关闭</Button>
-      <Button type="success" size="small" @click="showNext(-1)">编辑上一个参数</Button>
+      <Button type="success" size="small" @click="handleSubmit">提交</Button>
+      <Button type="error" size="small" @click="showNext(-1)">编辑上一个参数</Button>
       <Button type="warning" size="small" @click="showNext(1)">编辑下一个参数</Button>
     </Row>
   </Modal>
@@ -76,11 +75,8 @@
       showQuickFunc: function(){
         this.$refs.quickFuncList.showModal();
       },
-      handleSubmit:function (closable) {
+      handleSubmit:function () {
         this.$emit("handleSubmit", this.inputLabel, this.inputTextData);
-        if(closable){
-          this.showFormModal = false;
-        }
       },
       refreshPreNodeOutput:async function () {
         const result = await LoadPreNodeOutput(this.$store.state.current_work_id, this.$store.state.current_work_step_id);
