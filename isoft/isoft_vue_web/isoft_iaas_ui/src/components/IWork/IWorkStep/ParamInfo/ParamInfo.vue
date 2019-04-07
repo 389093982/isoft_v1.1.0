@@ -24,11 +24,11 @@
           <Col span="14">
             <FormItem label="work_step_input" prop="work_step_input">
               <Tabs type="card" :animated="false">
-                <TabPane label="edit">
-                  <ParamInputEdit :paramInputSchemaItems="paramInputSchema.ParamInputSchemaItems"/>
-                </TabPane>
                 <TabPane label="ParamMapping" v-if="showParamMapping">
                   <ParamMapping :paramMappings="paramMappings"/>
+                </TabPane>
+                <TabPane label="edit">
+                  <ParamInputEdit :paramInputSchemaItems="paramInputSchema.ParamInputSchemaItems"/>
                 </TabPane>
               </Tabs>
             </FormItem>
