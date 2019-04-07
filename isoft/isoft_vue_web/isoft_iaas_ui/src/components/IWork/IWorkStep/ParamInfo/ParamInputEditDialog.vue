@@ -29,9 +29,9 @@
       </Col>
     </Row>
     <Row style="text-align: right;margin-top: 10px;">
-      <Button type="success" size="small" @click="handleSubmit">提交</Button>
-      <Button type="error" size="small" @click="showNext(-1)">编辑上一个参数</Button>
-      <Button type="warning" size="small" @click="showNext(1)">编辑下一个参数</Button>
+      <Button type="success" size="small" @click="handleSubmit">Submit</Button>
+      <Button type="error" size="small" @click="showNext(-1)">Edit Last</Button>
+      <Button type="warning" size="small" @click="showNext(1)">Edit Next</Button>
     </Row>
   </Modal>
 </template>
