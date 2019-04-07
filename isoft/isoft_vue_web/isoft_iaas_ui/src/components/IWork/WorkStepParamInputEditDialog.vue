@@ -40,7 +40,7 @@
 <script>
   import {LoadPreNodeOutput} from "../../api"
   import ISimpleBtnTriggerModal from "../Common/modal/ISimpleBtnTriggerModal"
-  import QuickFuncList from "./QuickFuncList"
+  import QuickFuncList from "./IQuickFunc/QuickFuncList"
 
   export default {
     name: "WorkStepParamInputEditDialog",

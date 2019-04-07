@@ -11,10 +11,10 @@
 </template>
 
 <script>
-  import ISimpleBtnTriggerModal from "../Common/modal/ISimpleBtnTriggerModal"
-  import {ValidateAllWork} from "../../api"
-  import {LoadValidateResult} from "../../api"
-  import {checkEmpty} from "../../tools"
+  import ISimpleBtnTriggerModal from "../../Common/modal/ISimpleBtnTriggerModal"
+  import {ValidateAllWork} from "../../../api/index"
+  import {LoadValidateResult} from "../../../api/index"
+  import {checkEmpty} from "../../../tools/index"
 
   export default {
     name: "WorkValidate",

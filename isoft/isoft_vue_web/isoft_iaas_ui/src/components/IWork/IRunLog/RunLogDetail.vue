@@ -7,7 +7,7 @@
 </template>
 
 <script>
-  import {GetLastRunLogDetail} from "../../api"
+  import {GetLastRunLogDetail} from "../../../api"
 
   export default {
     name: "RunLogDetail",

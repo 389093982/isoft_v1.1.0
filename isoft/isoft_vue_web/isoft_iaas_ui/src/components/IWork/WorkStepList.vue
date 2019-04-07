@@ -41,7 +41,7 @@
   import RelativeWork from "./RelativeWork"
   import {oneOf} from "../../tools"
   import {checkContainsInString} from "../../tools"
-  import WorkValidate from "./WorkValidate"
+  import WorkValidate from "./IValidate/WorkValidate"
   import ISimpleConfirmModal from "../Common/modal/ISimpleConfirmModal"
   import {getRepeatStr} from "../../tools"
   import {GetRelativeWork} from "../../api"

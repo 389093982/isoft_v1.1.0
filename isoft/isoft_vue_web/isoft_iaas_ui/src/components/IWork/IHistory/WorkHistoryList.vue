@@ -18,8 +18,8 @@
 </template>
 
 <script>
-  import {FilterPageWorkHistory} from "../../api"
-  import {formatDate} from "../../tools"
+  import {FilterPageWorkHistory} from "../../../api/index"
+  import {formatDate} from "../../../tools/index"
 
   export default {
     name: "WorkHistoryList",

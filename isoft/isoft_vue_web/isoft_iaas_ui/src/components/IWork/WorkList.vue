@@ -31,7 +31,7 @@
   import EntityList from "./EntityList"
   import GlobalVarList from "./GlobalVarList"
   import IWorkDL from "./IWorkDL"
-  import WorkValidate from "./WorkValidate"
+  import WorkValidate from "./IValidate/WorkValidate"
 
   export default {
     name: "WorkList",

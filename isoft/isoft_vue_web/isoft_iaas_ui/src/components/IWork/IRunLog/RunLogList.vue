@@ -7,8 +7,8 @@
 </template>
 
 <script>
-  import {FilterPageLogRecord} from "../../api"
-  import {formatDate} from "../../tools"
+  import {FilterPageLogRecord} from "../../../api/index"
+  import {formatDate} from "../../../tools/index"
 
   export default {
     name: "RunLogList",
