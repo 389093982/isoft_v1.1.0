@@ -42,6 +42,7 @@
             <Button type="success" size="small" @click="handleSubmit('formValidate')">Submit</Button>
             <Button type="warning" size="small" @click="showNext(-1)">Load Last</Button>
             <Button type="warning" size="small" @click="showNext(1)">Load Next</Button>
+            <Button type="info" size="small" @click="closeModal">Close</Button>
           </Row>
         </FormItem>
       </Form>
@@ -154,6 +155,9 @@
           return;
         }
         this.showWorkStepParamInfo(this.formValidate.work_id,this.formValidate.work_step_id + num);
+      },
+      closeModal: function(){
+        this.showFormModal = false;
       },
       showWorkStepParamInfo:function (work_id, work_step_id) {
         this.formValidate.work_id = work_id;
