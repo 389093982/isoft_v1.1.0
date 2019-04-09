@@ -11,7 +11,6 @@ import (
 	"isoft/isoft_iaas_web/core/iworkutil/datatypeutil"
 	"isoft/isoft_iaas_web/core/iworkutil/errorutil"
 	"isoft/isoft_iaas_web/models/iwork"
-	"strings"
 	"time"
 )
 
@@ -34,30 +33,15 @@ func Run(work iwork.Work, steps []iwork.WorkStep, dispatcher *entry.Dispatcher) 
 	// 获取数据中心
 	store := datastore.InitDataStore(trackingId)
 
-	BlockStepRunFunc := func(blockStep *block.BlockStep) {
-		if blockStep.Step.WorkStepType == "empty" {
-			return
-		}
-		if redirectNodeName, ok := store.GetData("__goto_condition__", "__redirect__").(string); ok && strings.TrimSpace(redirectNodeName) != "" {
-			if blockStep.Step.WorkStepName == redirectNodeName {
-				// 相等代表刚好调到 redirect 节点,此时要将 store 里面的跳转信息置空
-				store.CacheData("__goto_condition__", "__redirect__", "")
-			} else {
-				iwork.InsertRunLogDetail(trackingId, fmt.Sprintf("The step for %s was skipped!", blockStep.Step.WorkStepName))
-				// 不相等代表还没有调到 redirect 节点,此时直接跳过, redirect 节点值为 __out__ 时,所用节点都匹配不上,刚好表示为跳出流程
-				return
-			}
-		}
-		_receiver := RunOneStep(trackingId, blockStep, store, dispatcher)
-		if _receiver != nil {
-			receiver = _receiver
-		}
-	}
-
 	// 将 steps 转换成 BlockSteps
 	// 逐个 block 依次执行
 	for _, blockStep := range getExecuteOrder(steps) {
-		BlockStepRunFunc(blockStep)
+		if blockStep.Step.WorkStepType != "empty" {
+			_receiver := RunOneStep(trackingId, blockStep, store, dispatcher)
+			if _receiver != nil {
+				receiver = _receiver
+			}
+		}
 	}
 
 	// 注销 MemoryCache,无需注册,不存在时会自动注册
@@ -102,13 +86,10 @@ func RunOneStep(trackingId string, blockStep *block.BlockStep,
 		DataStore:        datastore,
 	}
 	factory.Execute(trackingId)
-	// factory 节点如果代理的是 work_end 节点,则传递 Receiver 出去
-	if factory.Receiver != nil {
-		receiver = factory.Receiver
-	}
 	// 记录结束执行日志
 	iwork.InsertRunLogDetail(trackingId, fmt.Sprintf("end execute blockStep: >>>>>>>>>> [[%s]]", blockStep.Step.WorkStepName))
-	return
+	// factory 节点如果代理的是 work_end 节点,则传递 Receiver 出去
+	return factory.Receiver
 }
 
 // 获取当前 work 需要的 trakingId

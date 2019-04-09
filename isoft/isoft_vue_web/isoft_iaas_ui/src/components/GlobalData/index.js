@@ -94,7 +94,6 @@ const default_work_step_types=[
   {"name":"entity_parser","icon":"ios-refresh-circle-outline"},
   {"name":"db_parser","icon":"ios-map-outline"},
   {"name":"memorymap_cache","icon":"ios-color-filter-outline"},
-  {"name":"goto_condition","icon":"md-undo"},
   {"name":"if","icon":"md-code-working"},
   {"name":"set_env","icon":"ios-nuclear-outline"},
   {"name":"get_env","icon":"ios-nuclear"},
