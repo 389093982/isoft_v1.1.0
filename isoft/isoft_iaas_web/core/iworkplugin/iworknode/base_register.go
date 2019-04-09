@@ -27,7 +27,6 @@ func init() {
 		EntityParserNode{},
 		DBParserNode{},
 		MemoryMapCacheNode{},
-		GotoConditionNode{},
 		CalHashNode{},
 		SetEnvNode{},
 		GetEnvNode{},
