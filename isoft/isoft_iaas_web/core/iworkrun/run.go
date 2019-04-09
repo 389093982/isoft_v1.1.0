@@ -8,6 +8,7 @@ import (
 	"isoft/isoft_iaas_web/core/iworkdata/entry"
 	"isoft/isoft_iaas_web/core/iworkdata/memory"
 	"isoft/isoft_iaas_web/core/iworkplugin/iworknode"
+	"isoft/isoft_iaas_web/core/iworkutil/datatypeutil"
 	"isoft/isoft_iaas_web/core/iworkutil/errorutil"
 	"isoft/isoft_iaas_web/models/iwork"
 	"strings"
@@ -53,33 +54,35 @@ func Run(work iwork.Work, steps []iwork.WorkStep, dispatcher *entry.Dispatcher) 
 		}
 	}
 
-	// 需要延迟执行的 BlockSteps
-	deferBlockSteps := make([]*block.BlockStep, 0)
 	// 将 steps 转换成 BlockSteps
 	// 逐个 block 依次执行
-	for _, blockStep := range block.ParseToBlockStep(steps) {
-		// is_defer 和 work_end 都是需要延迟执行
-		if blockStep.Step.IsDefer == "true" {
-			// 加入切片中
-			deferBlockSteps = append(deferBlockSteps, blockStep)
-		} else if blockStep.Step.WorkStepType == "work_end" {
-			// 并且保证 work_end 最后执行
-			deferBlockSteps = append([]*block.BlockStep{blockStep}, deferBlockSteps...)
-		} else {
-			// 直接执行
-			BlockStepRunFunc(blockStep)
-		}
-	}
-
-	// 倒叙执行
-	for i := len(deferBlockSteps) - 1; i >= 0; i-- {
-		BlockStepRunFunc(deferBlockSteps[i])
+	for _, blockStep := range getExecuteOrder(steps) {
+		BlockStepRunFunc(blockStep)
 	}
 
 	// 注销 MemoryCache,无需注册,不存在时会自动注册
 	memory.UnRegistMemoryCache(trackingId)
 	iwork.InsertRunLogDetail(trackingId, fmt.Sprintf("~~~~~~~~~~end execute work:%s~~~~~~~~~~", work.WorkName))
 	return
+}
+
+func getExecuteOrder(steps []iwork.WorkStep) []*block.BlockStep {
+	order := make([]*block.BlockStep, 0)
+	deferOrder := make([]*block.BlockStep, 0)
+	var end *block.BlockStep
+	for _, blockStep := range block.ParseToBlockStep(steps) {
+		if blockStep.Step.IsDefer == "true" {
+			deferOrder = append(deferOrder, blockStep)
+		} else if blockStep.Step.WorkStepType == "work_end" {
+			end = blockStep
+		} else {
+			order = append(order, blockStep)
+		}
+	}
+	// is_defer 和 work_end 都是需要延迟执行
+	order = append(order, datatypeutil.ReverseSlice(deferOrder).([]*block.BlockStep)...)
+	order = append(order, end)
+	return order
 }
 
 // 执行单个 BlockStep
@@ -127,21 +130,5 @@ func createNewTrackingIdForWork(dispatcher *entry.Dispatcher, work iwork.Work) s
 		LastUpdatedBy:   "SYSTEM",
 		LastUpdatedTime: time.Now(),
 	})
-	return trackingId
-}
-
-// 对 trakingId 进行优化,避免过长的 trackingId
-func optimizeTrackingId(pTrackingId, trackingId string) string {
-	if strings.Count(pTrackingId, ".") <= 1 {
-		return fmt.Sprintf("%s.%s", pTrackingId, trackingId)
-	}
-	// a.~.b.c
-	trackingId = strings.Join(
-		[]string{
-			pTrackingId[:strings.Index(pTrackingId, ".")], // 顶级 trackingId
-			"~", // 过渡级 trackingId
-			pTrackingId[strings.LastIndex(pTrackingId, ".")+1:], // 父级 trackingId
-			trackingId, // 当前级 trackingId
-		}, ".")
 	return trackingId
 }
