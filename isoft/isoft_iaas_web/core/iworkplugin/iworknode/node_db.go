@@ -69,19 +69,6 @@ func (this *DBParserNode) GetDefaultParamInputSchema() *iworkmodels.ParamInputSc
 	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
 }
 
-func (this *DBParserNode) GetRuntimeParamInputSchema() *iworkmodels.ParamInputSchema {
-	return &iworkmodels.ParamInputSchema{}
-}
-
 func (this *DBParserNode) GetDefaultParamOutputSchema() *iworkmodels.ParamOutputSchema {
 	return schema.BuildParamOutputSchemaWithSlice([]string{iworkconst.STRING_PREFIX + "tables", iworkconst.MULTI_PREFIX + "tablecolsmap"})
-}
-
-func (this *DBParserNode) GetRuntimeParamOutputSchema() *iworkmodels.ParamOutputSchema {
-	return &iworkmodels.ParamOutputSchema{}
-}
-
-func (this *DBParserNode) ValidateCustom() (checkResult []string) {
-	validateAndGetDataStoreName(this.WorkStep)
-	return []string{}
 }

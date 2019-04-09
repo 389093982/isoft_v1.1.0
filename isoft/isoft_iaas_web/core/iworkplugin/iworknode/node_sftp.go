@@ -40,18 +40,6 @@ func (this *SftpUploadNode) GetDefaultParamInputSchema() *iworkmodels.ParamInput
 	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
 }
 
-func (this *SftpUploadNode) GetRuntimeParamInputSchema() *iworkmodels.ParamInputSchema {
-	return &iworkmodels.ParamInputSchema{}
-}
-
 func (this *SftpUploadNode) GetDefaultParamOutputSchema() *iworkmodels.ParamOutputSchema {
 	return schema.BuildParamOutputSchemaWithSlice([]string{iworkconst.STRING_PREFIX + "remote_file_path"})
-}
-
-func (this *SftpUploadNode) GetRuntimeParamOutputSchema() *iworkmodels.ParamOutputSchema {
-	return &iworkmodels.ParamOutputSchema{}
-}
-
-func (this *SftpUploadNode) ValidateCustom() (checkResult []string) {
-	return
 }

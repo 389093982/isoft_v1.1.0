@@ -27,20 +27,8 @@ func (this *GetEnvNode) GetDefaultParamInputSchema() *iworkmodels.ParamInputSche
 	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
 }
 
-func (this *GetEnvNode) GetRuntimeParamInputSchema() *iworkmodels.ParamInputSchema {
-	return &iworkmodels.ParamInputSchema{}
-}
-
 func (this *GetEnvNode) GetDefaultParamOutputSchema() *iworkmodels.ParamOutputSchema {
 	return schema.BuildParamOutputSchemaWithSlice([]string{iworkconst.STRING_PREFIX + "env_var_value"})
-}
-
-func (this *GetEnvNode) GetRuntimeParamOutputSchema() *iworkmodels.ParamOutputSchema {
-	return &iworkmodels.ParamOutputSchema{}
-}
-
-func (this *GetEnvNode) ValidateCustom() (checkResult []string) {
-	return
 }
 
 type SetEnvNode struct {
@@ -64,20 +52,4 @@ func (this *SetEnvNode) GetDefaultParamInputSchema() *iworkmodels.ParamInputSche
 		2: {iworkconst.STRING_PREFIX + "env_var_value", "环境变量值"},
 	}
 	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
-}
-
-func (this *SetEnvNode) GetRuntimeParamInputSchema() *iworkmodels.ParamInputSchema {
-	return &iworkmodels.ParamInputSchema{}
-}
-
-func (this *SetEnvNode) GetDefaultParamOutputSchema() *iworkmodels.ParamOutputSchema {
-	return &iworkmodels.ParamOutputSchema{}
-}
-
-func (this *SetEnvNode) GetRuntimeParamOutputSchema() *iworkmodels.ParamOutputSchema {
-	return &iworkmodels.ParamOutputSchema{}
-}
-
-func (this *SetEnvNode) ValidateCustom() (checkResult []string) {
-	return
 }

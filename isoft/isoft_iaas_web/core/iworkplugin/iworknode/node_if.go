@@ -52,18 +52,6 @@ func (this *IFNode) GetDefaultParamInputSchema() *iworkmodels.ParamInputSchema {
 	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
 }
 
-func (this *IFNode) GetRuntimeParamInputSchema() *iworkmodels.ParamInputSchema {
-	return &iworkmodels.ParamInputSchema{}
-}
-
 func (this *IFNode) GetDefaultParamOutputSchema() *iworkmodels.ParamOutputSchema {
 	return schema.BuildParamOutputSchemaWithSlice([]string{iworkconst.BOOL_PREFIX + "expression"})
-}
-
-func (this *IFNode) GetRuntimeParamOutputSchema() *iworkmodels.ParamOutputSchema {
-	return &iworkmodels.ParamOutputSchema{}
-}
-
-func (this *IFNode) ValidateCustom() (checkResult []string) {
-	return []string{}
 }

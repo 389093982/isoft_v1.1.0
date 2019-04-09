@@ -50,10 +50,6 @@ func (this *SQLQueryNode) GetDefaultParamInputSchema() *iworkmodels.ParamInputSc
 	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
 }
 
-func (this *SQLQueryNode) GetRuntimeParamInputSchema() *iworkmodels.ParamInputSchema {
-	return &iworkmodels.ParamInputSchema{}
-}
-
 func (this *SQLQueryNode) GetDefaultParamOutputSchema() *iworkmodels.ParamOutputSchema {
 	return schema.BuildParamOutputSchemaWithSlice([]string{iworkconst.NUMBER_PREFIX + "datacounts"})
 }
@@ -132,16 +128,8 @@ func (this *SQLExecuteNode) GetDefaultParamInputSchema() *iworkmodels.ParamInput
 	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
 }
 
-func (this *SQLExecuteNode) GetRuntimeParamInputSchema() *iworkmodels.ParamInputSchema {
-	return &iworkmodels.ParamInputSchema{}
-}
-
 func (this *SQLExecuteNode) GetDefaultParamOutputSchema() *iworkmodels.ParamOutputSchema {
 	return schema.BuildParamOutputSchemaWithSlice([]string{iworkconst.NUMBER_PREFIX + "affected"})
-}
-
-func (this *SQLExecuteNode) GetRuntimeParamOutputSchema() *iworkmodels.ParamOutputSchema {
-	return &iworkmodels.ParamOutputSchema{}
 }
 
 func (this *SQLExecuteNode) ValidateCustom() (checkResult []string) {

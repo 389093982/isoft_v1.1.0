@@ -59,18 +59,6 @@ func (this *MemoryMapCacheNode) GetDefaultParamInputSchema() *iworkmodels.ParamI
 	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
 }
 
-func (this *MemoryMapCacheNode) GetRuntimeParamInputSchema() *iworkmodels.ParamInputSchema {
-	return &iworkmodels.ParamInputSchema{}
-}
-
 func (this *MemoryMapCacheNode) GetDefaultParamOutputSchema() *iworkmodels.ParamOutputSchema {
 	return schema.BuildParamOutputSchemaWithSlice([]string{iworkconst.STRING_PREFIX + "cachemap_val_get"})
-}
-
-func (this *MemoryMapCacheNode) GetRuntimeParamOutputSchema() *iworkmodels.ParamOutputSchema {
-	return &iworkmodels.ParamOutputSchema{}
-}
-
-func (this *MemoryMapCacheNode) ValidateCustom() (checkResult []string) {
-	return []string{}
 }

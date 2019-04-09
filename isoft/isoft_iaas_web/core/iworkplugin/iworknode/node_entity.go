@@ -41,10 +41,6 @@ func (this *EntityParserNode) Execute(trackingId string) {
 	}
 }
 
-func (this *EntityParserNode) GetDefaultParamInputSchema() *iworkmodels.ParamInputSchema {
-	return &iworkmodels.ParamInputSchema{}
-}
-
 func (this *EntityParserNode) GetRuntimeParamInputSchema() *iworkmodels.ParamInputSchema {
 	var paramMappingsArr []string
 	json.Unmarshal([]byte(this.WorkStep.WorkStepParamMapping), &paramMappingsArr)
@@ -56,10 +52,6 @@ func (this *EntityParserNode) GetRuntimeParamInputSchema() *iworkmodels.ParamInp
 		items = append(items, iworkmodels.ParamInputSchemaItem{ParamName: fmt.Sprintf(iworkconst.COMPLEX_PREFIX+"%s_data", paramMapping)})
 	}
 	return &iworkmodels.ParamInputSchema{ParamInputSchemaItems: items}
-}
-
-func (this *EntityParserNode) GetDefaultParamOutputSchema() *iworkmodels.ParamOutputSchema {
-	return &iworkmodels.ParamOutputSchema{}
 }
 
 func (this *EntityParserNode) GetRuntimeParamOutputSchema() *iworkmodels.ParamOutputSchema {
@@ -86,8 +78,4 @@ func getEntityNameWithRemovePrefixAndSuffix(paramName string) string {
 	paramName = strings.Replace(paramName, iworkconst.STRING_PREFIX, "", -1)
 	paramName = strings.Replace(paramName, "_entity", "", -1)
 	return paramName
-}
-
-func (this *EntityParserNode) ValidateCustom() (checkResult []string) {
-	return []string{}
 }

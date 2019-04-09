@@ -33,20 +33,8 @@ func (this *JsonRenderNode) GetDefaultParamInputSchema() *iworkmodels.ParamInput
 	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
 }
 
-func (this *JsonRenderNode) GetRuntimeParamInputSchema() *iworkmodels.ParamInputSchema {
-	return &iworkmodels.ParamInputSchema{}
-}
-
 func (this *JsonRenderNode) GetDefaultParamOutputSchema() *iworkmodels.ParamOutputSchema {
 	return schema.BuildParamOutputSchemaWithSlice([]string{iworkconst.STRING_PREFIX + "json_data"})
-}
-
-func (this *JsonRenderNode) GetRuntimeParamOutputSchema() *iworkmodels.ParamOutputSchema {
-	return &iworkmodels.ParamOutputSchema{}
-}
-
-func (this *JsonRenderNode) ValidateCustom() (checkResult []string) {
-	return []string{}
 }
 
 type JsonParserNode struct {
@@ -81,14 +69,6 @@ func (this *JsonParserNode) GetDefaultParamInputSchema() *iworkmodels.ParamInput
 	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
 }
 
-func (this *JsonParserNode) GetRuntimeParamInputSchema() *iworkmodels.ParamInputSchema {
-	return &iworkmodels.ParamInputSchema{}
-}
-
-func (this *JsonParserNode) GetDefaultParamOutputSchema() *iworkmodels.ParamOutputSchema {
-	return &iworkmodels.ParamOutputSchema{}
-}
-
 func (this *JsonParserNode) GetRuntimeParamOutputSchema() *iworkmodels.ParamOutputSchema {
 	items := []iworkmodels.ParamOutputSchemaItem{}
 	if json_fields := param.GetStaticParamValue("json_fields", this.WorkStep).(string); strings.TrimSpace(json_fields) != "" {
@@ -103,8 +83,4 @@ func (this *JsonParserNode) GetRuntimeParamOutputSchema() *iworkmodels.ParamOutp
 		}
 	}
 	return &iworkmodels.ParamOutputSchema{ParamOutputSchemaItems: items}
-}
-
-func (this *JsonParserNode) ValidateCustom() (checkResult []string) {
-	return
 }

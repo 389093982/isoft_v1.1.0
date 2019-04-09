@@ -28,20 +28,8 @@ func (this *Base64EncodeNode) GetDefaultParamInputSchema() *iworkmodels.ParamInp
 	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
 }
 
-func (this *Base64EncodeNode) GetRuntimeParamInputSchema() *iworkmodels.ParamInputSchema {
-	return &iworkmodels.ParamInputSchema{}
-}
-
 func (this *Base64EncodeNode) GetDefaultParamOutputSchema() *iworkmodels.ParamOutputSchema {
 	return schema.BuildParamOutputSchemaWithSlice([]string{iworkconst.STRING_PREFIX + "encode_data"})
-}
-
-func (this *Base64EncodeNode) GetRuntimeParamOutputSchema() *iworkmodels.ParamOutputSchema {
-	return &iworkmodels.ParamOutputSchema{}
-}
-
-func (this *Base64EncodeNode) ValidateCustom() (checkResult []string) {
-	return
 }
 
 type Base64DecodeNode struct {
@@ -69,18 +57,6 @@ func (this *Base64DecodeNode) GetDefaultParamInputSchema() *iworkmodels.ParamInp
 	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
 }
 
-func (this *Base64DecodeNode) GetRuntimeParamInputSchema() *iworkmodels.ParamInputSchema {
-	return &iworkmodels.ParamInputSchema{}
-}
-
 func (this *Base64DecodeNode) GetDefaultParamOutputSchema() *iworkmodels.ParamOutputSchema {
 	return schema.BuildParamOutputSchemaWithSlice([]string{iworkconst.STRING_PREFIX + "decode_data", iworkconst.BYTE_ARRAY_PREFIX + "decode_data"})
-}
-
-func (this *Base64DecodeNode) GetRuntimeParamOutputSchema() *iworkmodels.ParamOutputSchema {
-	return &iworkmodels.ParamOutputSchema{}
-}
-
-func (this *Base64DecodeNode) ValidateCustom() (checkResult []string) {
-	return
 }

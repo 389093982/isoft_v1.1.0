@@ -26,22 +26,27 @@ type BaseNode struct {
 }
 
 func (this *BaseNode) GetDefaultParamInputSchema() *iworkmodels.ParamInputSchema {
+	fmt.Println("execute default GetDefaultParamInputSchema method...")
 	return &iworkmodels.ParamInputSchema{}
 }
 
 func (this *BaseNode) GetRuntimeParamInputSchema() *iworkmodels.ParamInputSchema {
+	fmt.Println("execute default GetRuntimeParamInputSchema method...")
 	return &iworkmodels.ParamInputSchema{}
 }
 
 func (this *BaseNode) GetDefaultParamOutputSchema() *iworkmodels.ParamOutputSchema {
+	fmt.Println("execute default GetDefaultParamOutputSchema method...")
 	return &iworkmodels.ParamOutputSchema{}
 }
 
 func (this *BaseNode) GetRuntimeParamOutputSchema() *iworkmodels.ParamOutputSchema {
+	fmt.Println("execute default GetRuntimeParamOutputSchema method...")
 	return &iworkmodels.ParamOutputSchema{}
 }
 
 func (this *BaseNode) ValidateCustom() (checkResult []string) {
+	fmt.Println("execute default ValidateCustom method...")
 	return
 }
 

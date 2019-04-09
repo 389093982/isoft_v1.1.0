@@ -33,20 +33,8 @@ func (this *TarGzUnCompressNode) GetDefaultParamInputSchema() *iworkmodels.Param
 	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
 }
 
-func (this *TarGzUnCompressNode) GetRuntimeParamInputSchema() *iworkmodels.ParamInputSchema {
-	return &iworkmodels.ParamInputSchema{}
-}
-
 func (this *TarGzUnCompressNode) GetDefaultParamOutputSchema() *iworkmodels.ParamOutputSchema {
 	return schema.BuildParamOutputSchemaWithSlice([]string{iworkconst.STRING_PREFIX + "dest_dir_path"})
-}
-
-func (this *TarGzUnCompressNode) GetRuntimeParamOutputSchema() *iworkmodels.ParamOutputSchema {
-	return &iworkmodels.ParamOutputSchema{}
-}
-
-func (this *TarGzUnCompressNode) ValidateCustom() (checkResult []string) {
-	return
 }
 
 type TarGzCompressNode struct {
@@ -74,18 +62,6 @@ func (this *TarGzCompressNode) GetDefaultParamInputSchema() *iworkmodels.ParamIn
 	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
 }
 
-func (this *TarGzCompressNode) GetRuntimeParamInputSchema() *iworkmodels.ParamInputSchema {
-	return &iworkmodels.ParamInputSchema{}
-}
-
 func (this *TarGzCompressNode) GetDefaultParamOutputSchema() *iworkmodels.ParamOutputSchema {
 	return schema.BuildParamOutputSchemaWithSlice([]string{iworkconst.STRING_PREFIX + "dest_file_path"})
-}
-
-func (this *TarGzCompressNode) GetRuntimeParamOutputSchema() *iworkmodels.ParamOutputSchema {
-	return &iworkmodels.ParamOutputSchema{}
-}
-
-func (this *TarGzCompressNode) ValidateCustom() (checkResult []string) {
-	return
 }

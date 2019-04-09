@@ -34,10 +34,6 @@ func (this *WorkStartNode) Execute(trackingId string) {
 	this.SubmitParamOutputSchemaDataToDataStore(this.WorkStep, this.DataStore, tmpDataMap)
 }
 
-func (this *WorkStartNode) GetDefaultParamInputSchema() *iworkmodels.ParamInputSchema {
-	return &iworkmodels.ParamInputSchema{}
-}
-
 func (this *WorkStartNode) GetRuntimeParamInputSchema() *iworkmodels.ParamInputSchema {
 	var paramMappingsArr []string
 	json.Unmarshal([]byte(this.WorkStep.WorkStepParamMapping), &paramMappingsArr)
@@ -57,14 +53,6 @@ func (this *WorkStartNode) GetRuntimeParamOutputSchema() *iworkmodels.ParamOutpu
 	return &iworkmodels.ParamOutputSchema{ParamOutputSchemaItems: items}
 }
 
-func (this *WorkStartNode) GetDefaultParamOutputSchema() *iworkmodels.ParamOutputSchema {
-	return &iworkmodels.ParamOutputSchema{}
-}
-
-func (this *WorkStartNode) ValidateCustom() (checkResult []string) {
-	return []string{}
-}
-
 type WorkEndNode struct {
 	BaseNode
 	WorkStep *iwork.WorkStep
@@ -78,10 +66,6 @@ func (this *WorkEndNode) Execute(trackingId string) {
 	this.SubmitParamOutputSchemaDataToDataStore(this.WorkStep, this.DataStore, tmpDataMap)
 	// 同时需要将数据提交到 Receiver
 	this.Receiver = &entry.Receiver{TmpDataMap: tmpDataMap}
-}
-
-func (this *WorkEndNode) GetDefaultParamInputSchema() *iworkmodels.ParamInputSchema {
-	return &iworkmodels.ParamInputSchema{}
 }
 
 func (this *WorkEndNode) GetRuntimeParamInputSchema() *iworkmodels.ParamInputSchema {
@@ -101,12 +85,4 @@ func (this *WorkEndNode) GetRuntimeParamOutputSchema() *iworkmodels.ParamOutputS
 		items = append(items, iworkmodels.ParamOutputSchemaItem{ParamName: item.ParamName})
 	}
 	return &iworkmodels.ParamOutputSchema{ParamOutputSchemaItems: items}
-}
-
-func (this *WorkEndNode) GetDefaultParamOutputSchema() *iworkmodels.ParamOutputSchema {
-	return &iworkmodels.ParamOutputSchema{}
-}
-
-func (this *WorkEndNode) ValidateCustom() (checkResult []string) {
-	return []string{}
 }

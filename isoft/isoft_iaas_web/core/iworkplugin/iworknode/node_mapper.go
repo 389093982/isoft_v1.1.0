@@ -19,10 +19,6 @@ func (this *MapperNode) Execute(trackingId string) {
 	this.SubmitParamOutputSchemaDataToDataStore(this.WorkStep, this.DataStore, tmpDataMap)
 }
 
-func (this *MapperNode) GetDefaultParamInputSchema() *iworkmodels.ParamInputSchema {
-	return &iworkmodels.ParamInputSchema{}
-}
-
 func (this *MapperNode) GetRuntimeParamInputSchema() *iworkmodels.ParamInputSchema {
 	var paramMappingsArr []string
 	json.Unmarshal([]byte(this.WorkStep.WorkStepParamMapping), &paramMappingsArr)
@@ -33,10 +29,6 @@ func (this *MapperNode) GetRuntimeParamInputSchema() *iworkmodels.ParamInputSche
 	return &iworkmodels.ParamInputSchema{ParamInputSchemaItems: items}
 }
 
-func (this *MapperNode) GetDefaultParamOutputSchema() *iworkmodels.ParamOutputSchema {
-	return &iworkmodels.ParamOutputSchema{}
-}
-
 func (this *MapperNode) GetRuntimeParamOutputSchema() *iworkmodels.ParamOutputSchema {
 	items := make([]iworkmodels.ParamOutputSchemaItem, 0)
 	inputSchema := schema.GetCacheParamInputSchema(this.WorkStep, &WorkStepFactory{WorkStep: this.WorkStep})
@@ -44,8 +36,4 @@ func (this *MapperNode) GetRuntimeParamOutputSchema() *iworkmodels.ParamOutputSc
 		items = append(items, iworkmodels.ParamOutputSchemaItem{ParamName: item.ParamName})
 	}
 	return &iworkmodels.ParamOutputSchema{ParamOutputSchemaItems: items}
-}
-
-func (this *MapperNode) ValidateCustom() (checkResult []string) {
-	return []string{}
 }

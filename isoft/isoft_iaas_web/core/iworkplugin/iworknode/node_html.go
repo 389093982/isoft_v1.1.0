@@ -36,18 +36,6 @@ func (this *HrefParserNode) GetDefaultParamInputSchema() *iworkmodels.ParamInput
 	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
 }
 
-func (this *HrefParserNode) GetRuntimeParamInputSchema() *iworkmodels.ParamInputSchema {
-	return &iworkmodels.ParamInputSchema{}
-}
-
 func (this *HrefParserNode) GetDefaultParamOutputSchema() *iworkmodels.ParamOutputSchema {
 	return schema.BuildParamOutputSchemaWithSlice([]string{iworkconst.MULTI_PREFIX + "hrefs", iworkconst.NUMBER_PREFIX + "href_amounts"})
-}
-
-func (this *HrefParserNode) GetRuntimeParamOutputSchema() *iworkmodels.ParamOutputSchema {
-	return &iworkmodels.ParamOutputSchema{}
-}
-
-func (this *HrefParserNode) ValidateCustom() (checkResult []string) {
-	return []string{}
 }

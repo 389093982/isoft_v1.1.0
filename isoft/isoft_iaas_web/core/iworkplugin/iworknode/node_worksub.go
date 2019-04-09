@@ -128,10 +128,6 @@ func (this *WorkSubNode) getWorkSubName() string {
 	return workSubName
 }
 
-func (this *WorkSubNode) GetDefaultParamOutputSchema() *iworkmodels.ParamOutputSchema {
-	return &iworkmodels.ParamOutputSchema{}
-}
-
 func (this *WorkSubNode) GetRuntimeParamOutputSchema() *iworkmodels.ParamOutputSchema {
 	items := make([]iworkmodels.ParamOutputSchemaItem, 0)
 	// 读取静态输入值

@@ -51,10 +51,6 @@ func (this *HttpRequestNode) GetDefaultParamInputSchema() *iworkmodels.ParamInpu
 	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
 }
 
-func (this *HttpRequestNode) GetRuntimeParamInputSchema() *iworkmodels.ParamInputSchema {
-	return &iworkmodels.ParamInputSchema{}
-}
-
 func (this *HttpRequestNode) GetDefaultParamOutputSchema() *iworkmodels.ParamOutputSchema {
 	return schema.BuildParamOutputSchemaWithSlice([]string{
 		iworkconst.STRING_PREFIX + "response_data",
@@ -62,14 +58,6 @@ func (this *HttpRequestNode) GetDefaultParamOutputSchema() *iworkmodels.ParamOut
 		iworkconst.BASE64STRING_PREFIX + "response_data",
 		iworkconst.NUMBER_PREFIX + "StatusCode",
 		iworkconst.STRING_PREFIX + "ContentType"})
-}
-
-func (this *HttpRequestNode) GetRuntimeParamOutputSchema() *iworkmodels.ParamOutputSchema {
-	return &iworkmodels.ParamOutputSchema{}
-}
-
-func (this *HttpRequestNode) ValidateCustom() (checkResult []string) {
-	return []string{}
 }
 
 func fillParamMapData(tmpDataMap map[string]interface{}, paramName string) map[string]interface{} {

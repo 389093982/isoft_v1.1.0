@@ -36,20 +36,8 @@ func (this *FileReadNode) GetDefaultParamInputSchema() *iworkmodels.ParamInputSc
 	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
 }
 
-func (this *FileReadNode) GetRuntimeParamInputSchema() *iworkmodels.ParamInputSchema {
-	return &iworkmodels.ParamInputSchema{}
-}
-
 func (this *FileReadNode) GetDefaultParamOutputSchema() *iworkmodels.ParamOutputSchema {
 	return schema.BuildParamOutputSchemaWithSlice([]string{iworkconst.STRING_PREFIX + "file_path", "data"})
-}
-
-func (this *FileReadNode) GetRuntimeParamOutputSchema() *iworkmodels.ParamOutputSchema {
-	return &iworkmodels.ParamOutputSchema{}
-}
-
-func (this *FileReadNode) ValidateCustom() (checkResult []string) {
-	return
 }
 
 type FileWriteNode struct {
@@ -98,20 +86,8 @@ func (this *FileWriteNode) GetDefaultParamInputSchema() *iworkmodels.ParamInputS
 	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
 }
 
-func (this *FileWriteNode) GetRuntimeParamInputSchema() *iworkmodels.ParamInputSchema {
-	return &iworkmodels.ParamInputSchema{}
-}
-
 func (this *FileWriteNode) GetDefaultParamOutputSchema() *iworkmodels.ParamOutputSchema {
 	return schema.BuildParamOutputSchemaWithSlice([]string{iworkconst.STRING_PREFIX + "file_path"})
-}
-
-func (this *FileWriteNode) GetRuntimeParamOutputSchema() *iworkmodels.ParamOutputSchema {
-	return &iworkmodels.ParamOutputSchema{}
-}
-
-func (this *FileWriteNode) ValidateCustom() (checkResult []string) {
-	return
 }
 
 type FileSyncNode struct {
@@ -147,22 +123,6 @@ func (this *FileSyncNode) GetDefaultParamInputSchema() *iworkmodels.ParamInputSc
 	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
 }
 
-func (this *FileSyncNode) GetRuntimeParamInputSchema() *iworkmodels.ParamInputSchema {
-	return &iworkmodels.ParamInputSchema{}
-}
-
-func (this *FileSyncNode) GetDefaultParamOutputSchema() *iworkmodels.ParamOutputSchema {
-	return &iworkmodels.ParamOutputSchema{}
-}
-
-func (this *FileSyncNode) GetRuntimeParamOutputSchema() *iworkmodels.ParamOutputSchema {
-	return &iworkmodels.ParamOutputSchema{}
-}
-
-func (this *FileSyncNode) ValidateCustom() (checkResult []string) {
-	return
-}
-
 type FileDeleteNode struct {
 	BaseNode
 	WorkStep *iwork.WorkStep
@@ -183,20 +143,4 @@ func (this *FileDeleteNode) GetDefaultParamInputSchema() *iworkmodels.ParamInput
 		1: {iworkconst.STRING_PREFIX + "delete_file_path", "待删除的文件或文件夹路径"},
 	}
 	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
-}
-
-func (this *FileDeleteNode) GetRuntimeParamInputSchema() *iworkmodels.ParamInputSchema {
-	return &iworkmodels.ParamInputSchema{}
-}
-
-func (this *FileDeleteNode) GetDefaultParamOutputSchema() *iworkmodels.ParamOutputSchema {
-	return &iworkmodels.ParamOutputSchema{}
-}
-
-func (this *FileDeleteNode) GetRuntimeParamOutputSchema() *iworkmodels.ParamOutputSchema {
-	return &iworkmodels.ParamOutputSchema{}
-}
-
-func (this *FileDeleteNode) ValidateCustom() (checkResult []string) {
-	return
 }

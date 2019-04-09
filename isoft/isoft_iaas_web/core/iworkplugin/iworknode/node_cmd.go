@@ -71,18 +71,6 @@ func (this *RunCmdNode) GetDefaultParamInputSchema() *iworkmodels.ParamInputSche
 	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
 }
 
-func (this *RunCmdNode) GetRuntimeParamInputSchema() *iworkmodels.ParamInputSchema {
-	return &iworkmodels.ParamInputSchema{}
-}
-
 func (this *RunCmdNode) GetDefaultParamOutputSchema() *iworkmodels.ParamOutputSchema {
 	return schema.BuildParamOutputSchemaWithSlice([]string{iworkconst.STRING_PREFIX + "command_result"})
-}
-
-func (this *RunCmdNode) GetRuntimeParamOutputSchema() *iworkmodels.ParamOutputSchema {
-	return &iworkmodels.ParamOutputSchema{}
-}
-
-func (this *RunCmdNode) ValidateCustom() (checkResult []string) {
-	return
 }

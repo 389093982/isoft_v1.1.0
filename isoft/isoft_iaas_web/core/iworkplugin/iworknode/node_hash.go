@@ -28,18 +28,6 @@ func (this *CalHashNode) GetDefaultParamInputSchema() *iworkmodels.ParamInputSch
 	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
 }
 
-func (this *CalHashNode) GetRuntimeParamInputSchema() *iworkmodels.ParamInputSchema {
-	return &iworkmodels.ParamInputSchema{}
-}
-
 func (this *CalHashNode) GetDefaultParamOutputSchema() *iworkmodels.ParamOutputSchema {
 	return schema.BuildParamOutputSchemaWithSlice([]string{iworkconst.STRING_PREFIX + "hash"})
-}
-
-func (this *CalHashNode) GetRuntimeParamOutputSchema() *iworkmodels.ParamOutputSchema {
-	return &iworkmodels.ParamOutputSchema{}
-}
-
-func (this *CalHashNode) ValidateCustom() (checkResult []string) {
-	return
 }

@@ -39,20 +39,8 @@ func (this *IniReadNode) GetDefaultParamInputSchema() *iworkmodels.ParamInputSch
 	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
 }
 
-func (this *IniReadNode) GetRuntimeParamInputSchema() *iworkmodels.ParamInputSchema {
-	return &iworkmodels.ParamInputSchema{}
-}
-
 func (this *IniReadNode) GetDefaultParamOutputSchema() *iworkmodels.ParamOutputSchema {
 	return schema.BuildParamOutputSchemaWithSlice([]string{iworkconst.STRING_PREFIX + "value"})
-}
-
-func (this *IniReadNode) GetRuntimeParamOutputSchema() *iworkmodels.ParamOutputSchema {
-	return &iworkmodels.ParamOutputSchema{}
-}
-
-func (this *IniReadNode) ValidateCustom() (checkResult []string) {
-	return
 }
 
 type IniWriteNode struct {
@@ -84,20 +72,4 @@ func (this *IniWriteNode) GetDefaultParamInputSchema() *iworkmodels.ParamInputSc
 		4: {iworkconst.STRING_PREFIX + "value", "value 值"},
 	}
 	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
-}
-
-func (this *IniWriteNode) GetRuntimeParamInputSchema() *iworkmodels.ParamInputSchema {
-	return &iworkmodels.ParamInputSchema{}
-}
-
-func (this *IniWriteNode) GetDefaultParamOutputSchema() *iworkmodels.ParamOutputSchema {
-	return &iworkmodels.ParamOutputSchema{}
-}
-
-func (this *IniWriteNode) GetRuntimeParamOutputSchema() *iworkmodels.ParamOutputSchema {
-	return &iworkmodels.ParamOutputSchema{}
-}
-
-func (this *IniWriteNode) ValidateCustom() (checkResult []string) {
-	return
 }

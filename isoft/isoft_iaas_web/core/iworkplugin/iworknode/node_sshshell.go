@@ -70,19 +70,3 @@ func (this *SSHShellNode) GetDefaultParamInputSchema() *iworkmodels.ParamInputSc
 	}
 	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
 }
-
-func (this *SSHShellNode) GetRuntimeParamInputSchema() *iworkmodels.ParamInputSchema {
-	return &iworkmodels.ParamInputSchema{}
-}
-
-func (this *SSHShellNode) GetDefaultParamOutputSchema() *iworkmodels.ParamOutputSchema {
-	return &iworkmodels.ParamOutputSchema{}
-}
-
-func (this *SSHShellNode) GetRuntimeParamOutputSchema() *iworkmodels.ParamOutputSchema {
-	return &iworkmodels.ParamOutputSchema{}
-}
-
-func (this *SSHShellNode) ValidateCustom() (checkResult []string) {
-	return
-}
