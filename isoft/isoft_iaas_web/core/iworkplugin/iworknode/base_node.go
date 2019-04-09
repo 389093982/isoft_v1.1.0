@@ -10,6 +10,7 @@ import (
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
 	"isoft/isoft_iaas_web/core/iworkfunc"
 	"isoft/isoft_iaas_web/core/iworkmodels"
+	"isoft/isoft_iaas_web/core/iworkplugin/iworkprotocol"
 	"isoft/isoft_iaas_web/core/iworkutil"
 	"isoft/isoft_iaas_web/core/iworkvalid"
 	"isoft/isoft_iaas_web/models/iwork"
@@ -19,8 +20,29 @@ import (
 
 // 所有 node 的基类
 type BaseNode struct {
+	iworkprotocol.IWorkStep
 	DataStore *datastore.DataStore
 	o         orm.Ormer
+}
+
+func (this *BaseNode) GetDefaultParamInputSchema() *iworkmodels.ParamInputSchema {
+	return &iworkmodels.ParamInputSchema{}
+}
+
+func (this *BaseNode) GetRuntimeParamInputSchema() *iworkmodels.ParamInputSchema {
+	return &iworkmodels.ParamInputSchema{}
+}
+
+func (this *BaseNode) GetDefaultParamOutputSchema() *iworkmodels.ParamOutputSchema {
+	return &iworkmodels.ParamOutputSchema{}
+}
+
+func (this *BaseNode) GetRuntimeParamOutputSchema() *iworkmodels.ParamOutputSchema {
+	return &iworkmodels.ParamOutputSchema{}
+}
+
+func (this *BaseNode) ValidateCustom() (checkResult []string) {
+	return
 }
 
 func (this *BaseNode) GetOrmer() orm.Ormer {
