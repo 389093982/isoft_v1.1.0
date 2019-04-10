@@ -87,7 +87,7 @@
       },
       chooseFunc: function(funcDemo){
         // 将数据复制到右侧
-        this.item.inputTextData = this.item.inputTextData + funcDemo + "\n";
+        this.inputTextData = this.inputTextData + funcDemo + "\n";
       },
       showQuickFunc: function(){
         this.$refs.quickFuncList.showModal();
