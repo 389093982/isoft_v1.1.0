@@ -8,6 +8,7 @@ import (
 	"isoft/isoft_iaas_web/core/iworkdata/entry"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
 	"isoft/isoft_iaas_web/core/iworkmodels"
+	"isoft/isoft_iaas_web/core/iworkutil/datatypeutil"
 	"isoft/isoft_iaas_web/models/iwork"
 )
 
@@ -25,20 +26,18 @@ func (this *IFNode) Execute(trackingId string) {
 	this.DataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.BOOL_PREFIX+"expression", expression)
 
 	if expression && this.BlockStep.HasChildren {
-		// 需要延迟执行的 BlockSteps
-		deferBlockSteps := make([]*block.BlockStep, 0)
+		order := make([]*block.BlockStep, 0)
+		deferOrder := make([]*block.BlockStep, 0)
 		for _, blockStep := range this.BlockStep.ChildBlockSteps {
 			if blockStep.Step.IsDefer == "true" {
-				// 加入切片中
-				deferBlockSteps = append(deferBlockSteps, blockStep)
+				deferOrder = append(deferOrder, blockStep)
 			} else {
-				// 直接执行
-				this.BlockStepRunFunc(trackingId, blockStep, this.DataStore, nil)
+				order = append(order, blockStep)
 			}
 		}
-		// 倒叙执行
-		for i := len(deferBlockSteps) - 1; i >= 0; i-- {
-			this.BlockStepRunFunc(trackingId, deferBlockSteps[i], this.DataStore, nil)
+		order = append(order, datatypeutil.ReverseSlice(deferOrder).([]*block.BlockStep)...)
+		for _, blockStep := range order {
+			this.BlockStepRunFunc(trackingId, blockStep, this.DataStore, nil)
 		}
 	} else {
 		iwork.InsertRunLogDetail(trackingId, fmt.Sprintf("The blockStep for %s was skipped!", this.WorkStep.WorkStepName))
