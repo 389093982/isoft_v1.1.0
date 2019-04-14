@@ -44,6 +44,24 @@ func LoadWorkInfo() *iworkmodels.ParamOutputSchema {
 	return pos
 }
 
+func LoadWorkVarInfo(work_id int64) *iworkmodels.ParamOutputSchema {
+	pos := &iworkmodels.ParamOutputSchema{
+		ParamOutputSchemaItems: []iworkmodels.ParamOutputSchemaItem{},
+	}
+	workVarList := make([]map[string]string, 0)
+	if work, err := iwork.QueryWorkById(work_id, orm.NewOrm()); err == nil {
+		if work.WorkVars != "" {
+			err = json.Unmarshal([]byte(work.WorkVars), &workVarList)
+		}
+	}
+	for _, workVar := range workVarList {
+		pos.ParamOutputSchemaItems = append(pos.ParamOutputSchemaItems, iworkmodels.ParamOutputSchemaItem{
+			ParamName: workVar["workVarName"],
+		})
+	}
+	return pos
+}
+
 func LoadEntityInfo() *iworkmodels.ParamOutputSchema {
 	pos := &iworkmodels.ParamOutputSchema{
 		ParamOutputSchemaItems: []iworkmodels.ParamOutputSchemaItem{},
@@ -73,6 +91,9 @@ func LoadPreNodeOutputService(serviceArgs map[string]interface{}) (result map[st
 	// 加载 entity 参数
 	pos = LoadEntityInfo()
 	preParamOutputSchemaTreeNodeArr = append(preParamOutputSchemaTreeNodeArr, pos.RenderToTreeNodes("$Entity"))
+	// 加载 workVar 参数
+	pos = LoadWorkVarInfo(work_id)
+	preParamOutputSchemaTreeNodeArr = append(preParamOutputSchemaTreeNodeArr, pos.RenderToTreeNodes("$WorkVars"))
 
 	// 加载前置步骤输出
 	if steps, err := iwork.QueryAllPreStepInfo(work_id, work_step_id, o); err == nil {
