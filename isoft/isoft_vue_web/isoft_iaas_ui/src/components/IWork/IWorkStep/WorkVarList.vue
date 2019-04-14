@@ -25,7 +25,7 @@
 
 <script>
   import ISimpleBtnTriggerModal from "../../Common/modal/ISimpleBtnTriggerModal"
-  import {AddWorkVar} from "../../../api"
+  import {EditWorkVar} from "../../../api"
   import {LoadAllWorkVar} from "../../../api"
 
   export default {
@@ -66,7 +66,7 @@
                   },
                   on: {
                     click: () => {
-                      alert(1111111111111);
+                      this.deleteWorkVar(this.workVarList[params.index]['workVarName']);
                     }
                   }
                 }, '删除'),
@@ -92,7 +92,7 @@
       handleSubmit(name) {
         this.$refs[name].validate(async (valid) =>  {
           if (valid) {
-            const result = await AddWorkVar(this.workName, this.formInline.workVarName, this.formInline.workVarType);
+            const result = await EditWorkVar(this.workName, this.formInline.workVarName, this.formInline.workVarType, "edit");
             if(result.status=="SUCCESS"){
               this.refreshWorkVarList();
             }else{
@@ -102,6 +102,10 @@
             this.$Message.error('error');
           }
         })
+      },
+      deleteWorkVar: async function(workVarName){
+        const result = await EditWorkVar(this.workName, workVarName, null, "delete");
+        this.refreshWorkVarList();
       },
       refreshWorkVarList:async function () {
         const result = await LoadAllWorkVar(this.workName);

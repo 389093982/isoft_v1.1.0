@@ -221,7 +221,7 @@ export const ExecuteMigrate = (resource_name, forceClean) => ajax(BASE_URL+"/iwo
 
 export const BuildInstanceSql = (tableName, tableColunms, id, operateType) => ajax(BASE_URL+"/iwork/buildInstanceSql", {tableName, tableColunms, id, operateType},'POST');
 
-export const AddWorkVar = (workName, workVarName, workVarType) => ajax(BASE_URL+"/iwork/addWorkVar", {workName, workVarName, workVarType},'POST');
+export const EditWorkVar = (workName, workVarName, workVarType, operateType) => ajax(BASE_URL+"/iwork/editWorkVar", {workName, workVarName, workVarType, operateType},'POST');
 
 export const LoadAllWorkVar = (workName) => ajax(BASE_URL+"/iwork/loadAllWorkVar", {workName},'POST');
 

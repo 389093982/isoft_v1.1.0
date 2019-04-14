@@ -140,7 +140,7 @@ func (this *WorkController) DeleteWorkById() {
 	this.ServeJSON()
 }
 
-func (this *WorkController) AddWorkVar() {
+func (this *WorkController) EditWorkVar() {
 	var bytes []byte
 	var work iwork.Work
 	var err error
@@ -149,6 +149,7 @@ func (this *WorkController) AddWorkVar() {
 	workName := this.GetString("workName")
 	workVarName := this.GetString("workVarName")
 	workVarType := this.GetString("workVarType")
+	operateType := this.GetString("operateType")
 	if work, err = iwork.QueryWorkByName(workName, orm.NewOrm()); err == nil {
 		if work.WorkVars != "" {
 			json.Unmarshal([]byte(work.WorkVars), &workVarList)
@@ -158,12 +159,16 @@ func (this *WorkController) AddWorkVar() {
 		var exist bool
 		for index, m := range workVarList {
 			if m["workVarName"] == workVarName {
-				exist, workVarList[index] = true, newWorkVarMap
-
+				if operateType == "edit" {
+					exist, workVarList[index] = true, newWorkVarMap
+				}
+				if operateType == "delete" {
+					workVarList = append(workVarList[:index], workVarList[index+1:]...)
+				}
 				break
 			}
 		}
-		if !exist {
+		if operateType == "edit" && !exist {
 			workVarList = append(workVarList, newWorkVarMap)
 		}
 
