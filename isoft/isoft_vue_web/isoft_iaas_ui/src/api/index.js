@@ -223,5 +223,7 @@ export const BuildInstanceSql = (tableName, tableColunms, id, operateType) => aj
 
 export const AddWorkVar = (workName, workVarName, workVarType) => ajax(BASE_URL+"/iwork/addWorkVar", {workName, workVarName, workVarType},'POST');
 
+export const LoadAllWorkVar = (workName) => ajax(BASE_URL+"/iwork/loadAllWorkVar", {workName},'POST');
+
 // 跨模块使用,模块化部署时需要使用 nginx 代理
 export const LoginAddr = "/sso/login/";

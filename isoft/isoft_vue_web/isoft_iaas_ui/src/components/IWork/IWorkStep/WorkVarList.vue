@@ -1,6 +1,5 @@
 <template>
   <ISimpleBtnTriggerModal ref="triggerModal" btn-text="流程变量" btn-size="small" modal-title="流程变量" :modal-width="800">
-
     <Form ref="formInline" :model="formInline" :rules="ruleInline" inline>
       <FormItem prop="workVarName" style="width: 250px;">
         <Input type="text" v-model="formInline.workVarName" placeholder="workVarName">
@@ -17,12 +16,15 @@
         <Button type="primary" @click="handleSubmit('formInline')">新增</Button>
       </FormItem>
     </Form>
+
+    <Table border :columns="columns1" :data="workVarList" size="small"></Table>
   </ISimpleBtnTriggerModal>
 </template>
 
 <script>
   import ISimpleBtnTriggerModal from "../../Common/modal/ISimpleBtnTriggerModal"
   import {AddWorkVar} from "../../../api"
+  import {LoadAllWorkVar} from "../../../api"
 
   export default {
     name: "WorkVarList",
@@ -35,6 +37,41 @@
     },
     data(){
       return {
+        workVarList:[],
+        columns1: [
+          {
+            title: 'workVarName',
+            key: 'workVarName',
+            width: 250,
+          },
+          {
+            title: 'workVarType',
+            key: 'workVarType',
+            width: 250,
+          },
+          {
+            title: '操作',
+            key: 'operate',
+            render: (h, params) => {
+              return h('div', [
+                h('Button', {
+                  props: {
+                    type: 'success',
+                    size: 'small'
+                  },
+                  style: {
+                    marginRight: '5px',
+                  },
+                  on: {
+                    click: () => {
+                      alert(1111111111111);
+                    }
+                  }
+                }, '删除'),
+              ]);
+            }
+          }
+        ],
         formInline: {
           workVarName:'',
           workVarType:'',
@@ -64,8 +101,11 @@
           }
         })
       },
-      refreshWorkVarList:function () {
-        alert(11111);
+      refreshWorkVarList:async function () {
+        const result = await LoadAllWorkVar(this.workName);
+        if(result.status=="SUCCESS"){
+          this.workVarList = result.workVarList;
+        }
       }
     }
   }

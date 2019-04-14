@@ -56,4 +56,5 @@ func loadloadIWorkerRouterDetail() {
 	beego.Router("/api/iwork/buildInstanceSql", &iwork.WorkController{}, "post:BuildInstanceSql")
 
 	beego.Router("/api/iwork/addWorkVar", &iwork.WorkController{}, "post:AddWorkVar")
+	beego.Router("/api/iwork/loadAllWorkVar", &iwork.WorkController{}, "post:LoadAllWorkVar")
 }

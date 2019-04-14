@@ -144,17 +144,30 @@ func (this *WorkController) AddWorkVar() {
 	var bytes []byte
 	var work iwork.Work
 	var err error
-	workVarMap := make(map[string]string, 0)
+	workVarList := make([]map[string]string, 0)
 
 	workName := this.GetString("workName")
 	workVarName := this.GetString("workVarName")
 	workVarType := this.GetString("workVarType")
 	if work, err = iwork.QueryWorkByName(workName, orm.NewOrm()); err == nil {
 		if work.WorkVars != "" {
-			json.Unmarshal([]byte(work.WorkVars), &workVarMap)
+			json.Unmarshal([]byte(work.WorkVars), &workVarList)
 		}
-		workVarMap[workVarName] = workVarType
-		if bytes, err = json.Marshal(&workVarMap); err == nil {
+
+		newWorkVarMap := map[string]string{"workVarName": workVarName, "workVarType": workVarType}
+		var exist bool
+		for index, m := range workVarList {
+			if m["workVarName"] == workVarName {
+				exist, workVarList[index] = true, newWorkVarMap
+
+				break
+			}
+		}
+		if !exist {
+			workVarList = append(workVarList, newWorkVarMap)
+		}
+
+		if bytes, err = json.Marshal(&workVarList); err == nil {
 			work.WorkVars = string(bytes)
 			_, err = iwork.InsertOrUpdateWork(&work, orm.NewOrm())
 		}
@@ -165,5 +178,22 @@ func (this *WorkController) AddWorkVar() {
 		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": err.Error()}
 	}
 	this.ServeJSON()
+}
 
+func (this *WorkController) LoadAllWorkVar() {
+	workName := this.GetString("workName")
+	var err error
+	var work iwork.Work
+	workVarList := make([]map[string]string, 0)
+	if work, err = iwork.QueryWorkByName(workName, orm.NewOrm()); err == nil {
+		if work.WorkVars != "" {
+			err = json.Unmarshal([]byte(work.WorkVars), &workVarList)
+		}
+	}
+	if err == nil {
+		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "workVarList": workVarList}
+	} else {
+		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": err.Error()}
+	}
+	this.ServeJSON()
 }
