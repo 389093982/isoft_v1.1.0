@@ -109,6 +109,9 @@
           this.workVarList = result.workVarList;
         }
       }
+    },
+    mounted(){
+      this.refreshWorkVarList();
     }
   }
 </script>
