@@ -10,6 +10,7 @@ type Work struct {
 	Id              int64     `json:"id"`
 	WorkName        string    `json:"work_name" orm:"unique"`
 	WorkDesc        string    `json:"work_desc" orm:"type(text)"`
+	WorkVars        string    `json:"work_vars"`
 	CreatedBy       string    `json:"created_by"`
 	CreatedTime     time.Time `json:"created_time" orm:"auto_now_add;type(datetime)"`
 	LastUpdatedBy   string    `json:"last_updated_by"`

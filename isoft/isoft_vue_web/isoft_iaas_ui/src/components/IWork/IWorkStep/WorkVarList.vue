@@ -22,10 +22,17 @@
 
 <script>
   import ISimpleBtnTriggerModal from "../../Common/modal/ISimpleBtnTriggerModal"
+  import {AddWorkVar} from "../../../api"
 
   export default {
-    name: "WorkWarList",
+    name: "WorkVarList",
     components:{ISimpleBtnTriggerModal},
+    props: {
+      workName: {
+        type: String,
+        default: ''
+      },
+    },
     data(){
       return {
         formInline: {
@@ -44,13 +51,21 @@
     },
     methods:{
       handleSubmit(name) {
-        this.$refs[name].validate((valid) => {
+        this.$refs[name].validate(async (valid) =>  {
           if (valid) {
-            this.$Message.success('Success!');
+            const result = await AddWorkVar(this.workName, this.formInline.workVarName, this.formInline.workVarType);
+            if(result.status=="SUCCESS"){
+              this.refreshWorkVarList();
+            }else{
+              this.$Message.error('error' + result.errorMsg);
+            }
           } else {
-            this.$Message.error('Fail!');
+            this.$Message.error('error');
           }
         })
+      },
+      refreshWorkVarList:function () {
+        alert(11111);
       }
     }
   }

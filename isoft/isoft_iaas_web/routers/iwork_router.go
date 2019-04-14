@@ -54,4 +54,6 @@ func loadloadIWorkerRouterDetail() {
 	beego.Router("/api/iwork/getMigrateInfo", &iwork.WorkController{}, "post:GetMigrateInfo")
 	beego.Router("/api/iwork/executeMigrate", &iwork.WorkController{}, "post:ExecuteMigrate")
 	beego.Router("/api/iwork/buildInstanceSql", &iwork.WorkController{}, "post:BuildInstanceSql")
+
+	beego.Router("/api/iwork/addWorkVar", &iwork.WorkController{}, "post:AddWorkVar")
 }

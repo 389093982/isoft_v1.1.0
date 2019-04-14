@@ -1,7 +1,9 @@
 package iwork
 
 import (
+	"encoding/json"
 	"github.com/astaxie/beego"
+	"github.com/astaxie/beego/orm"
 	"isoft/isoft_iaas_web/models/iwork"
 	"isoft/isoft_iaas_web/service"
 	"isoft/isoft_iaas_web/service/iworkservice"
@@ -136,4 +138,32 @@ func (this *WorkController) DeleteWorkById() {
 		this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
 	}
 	this.ServeJSON()
+}
+
+func (this *WorkController) AddWorkVar() {
+	var bytes []byte
+	var work iwork.Work
+	var err error
+	workVarMap := make(map[string]string, 0)
+
+	workName := this.GetString("workName")
+	workVarName := this.GetString("workVarName")
+	workVarType := this.GetString("workVarType")
+	if work, err = iwork.QueryWorkByName(workName, orm.NewOrm()); err == nil {
+		if work.WorkVars != "" {
+			json.Unmarshal([]byte(work.WorkVars), &workVarMap)
+		}
+		workVarMap[workVarName] = workVarType
+		if bytes, err = json.Marshal(&workVarMap); err == nil {
+			work.WorkVars = string(bytes)
+			_, err = iwork.InsertOrUpdateWork(&work, orm.NewOrm())
+		}
+	}
+	if err == nil {
+		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
+	} else {
+		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": err.Error()}
+	}
+	this.ServeJSON()
+
 }
