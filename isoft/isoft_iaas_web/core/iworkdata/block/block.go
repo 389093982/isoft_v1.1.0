@@ -5,6 +5,7 @@ import (
 )
 
 type BlockStep struct {
+	ReferWork       *iwork.Work     // 关联的 work
 	Step            *iwork.WorkStep // 步骤
 	HasChildren     bool            // 是否有子步骤
 	ChildBlockSteps []*BlockStep    // 子步骤列表

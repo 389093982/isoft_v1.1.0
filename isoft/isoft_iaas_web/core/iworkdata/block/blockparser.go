@@ -6,7 +6,8 @@ import (
 )
 
 type BlockParser struct {
-	Steps []iwork.WorkStep
+	ReferWork *iwork.Work
+	Steps     []iwork.WorkStep
 }
 
 // 将 steps 转换为 BlockStep,最终执行的是 BlockStep
@@ -21,7 +22,8 @@ func (this *BlockParser) ParseAndGetCurrentBlockStep(currentStep *iwork.WorkStep
 	minIndentIndexs := this.getMinIndentIndex(this.Steps)
 	for index, indentIndex := range minIndentIndexs {
 		bStep := &BlockStep{
-			Step: &this.Steps[indentIndex],
+			ReferWork: this.ReferWork,
+			Step:      &this.Steps[indentIndex],
 		}
 		if currentStep != nil && this.Steps[indentIndex].WorkStepId == currentStep.WorkStepId {
 			currentBlockStep = bStep
