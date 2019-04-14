@@ -11,7 +11,7 @@
         <Col span="2"><Button type="info" size="small" @click="showRunLogList">运行日志</Button></Col>
         <Col span="2"><WorkValidate /></Col>
         <Col span="2"><Button type="error" size="small" @click="renderSourceXml">View XML</Button></Col>
-        <Col span="2"><Button type="warning" size="small" @click="editWorkWar">流程变量</Button></Col>
+        <Col span="2"><WorkWarList /></Col>
 
         <ISimpleConfirmModal ref="refactor_modal" modal-title="重构为子流程" :modal-width="500" @handleSubmit="refactor">
           <Input v-model.trim="refactor_worksub_name" placeholder="请输入重构的子流程名称"></Input>
@@ -46,10 +46,11 @@
   import ISimpleConfirmModal from "../../Common/modal/ISimpleConfirmModal"
   import {getRepeatStr} from "../../../tools/index"
   import {GetRelativeWork} from "../../../api/index"
+  import WorkWarList from "./WorkWarList"
 
   export default {
     name: "WorkStepList",
-    components:{ParamInfo,ISimpleLeftRightRow,BaseInfo,RelativeWork,WorkValidate,ISimpleConfirmModal},
+    components:{ParamInfo,ISimpleLeftRightRow,BaseInfo,RelativeWork,WorkValidate,ISimpleConfirmModal,WorkWarList},
     data(){
       return {
         showRelativeWorkFlag:false,
@@ -339,9 +340,6 @@
         var anchor = this.$el.querySelector(selector);
         document.documentElement.scrollTop = anchor.offsetTop;
       },
-      editWorkWar:function () {
-        alert(11111);
-      }
     },
     mounted: function () {
       this.refreshWorkStepList();
