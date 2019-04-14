@@ -1,5 +1,5 @@
 <template>
-  <ISimpleBtnTriggerModal ref="triggerModal" btn-text="流程变量" btn-size="small" modal-title="流程变量" :modal-width="800">
+  <ISimpleBtnTriggerModal ref="triggerModal" btn-text="流程变量" btn-size="small" modal-title="流程变量" :modal-width="800" modal-top="50px">
     <Form ref="formInline" :model="formInline" :rules="ruleInline" inline>
       <FormItem prop="workVarName" style="width: 250px;">
         <Input type="text" v-model="formInline.workVarName" placeholder="workVarName">
@@ -17,7 +17,9 @@
       </FormItem>
     </Form>
 
-    <Table border :columns="columns1" :data="workVarList" size="small"></Table>
+    <Scroll height="350">
+      <Table border :columns="columns1" :data="workVarList" size="small"></Table>
+    </Scroll>
   </ISimpleBtnTriggerModal>
 </template>
 
