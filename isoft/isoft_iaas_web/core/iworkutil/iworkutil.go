@@ -6,6 +6,7 @@ import (
 	"isoft/isoft/common/stringutil"
 	"isoft/isoft_iaas_web/core/iworkconst"
 	"isoft/isoft_iaas_web/core/iworkdata/block"
+	"isoft/isoft_iaas_web/core/iworkdata/datastore"
 	"isoft/isoft_iaas_web/core/iworkmodels"
 	"isoft/isoft_iaas_web/models/iwork"
 	"strings"
@@ -53,6 +54,12 @@ func DecodeBase64String(encodeString string) (bytes []byte) {
 		return bytes
 	}
 	return
+}
+
+func GetParamValueForWorkVars(paramValue string, store *datastore.DataStore) string {
+	paramValue = strings.Replace(paramValue, "$WorkVars.", "", -1)
+	paramValue = strings.Replace(paramValue, ";", "", -1)
+	return store.GetData("__workVars__", paramValue).(string)
 }
 
 func GetParamValueForEntity(paramValue string) string {

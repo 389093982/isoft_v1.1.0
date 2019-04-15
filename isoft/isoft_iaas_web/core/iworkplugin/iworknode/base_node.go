@@ -127,6 +127,8 @@ func (this *BaseNode) _parseAndGetSingleParamVaule(paramVaule string, dataStore 
 		return iworkutil.GetWorkSubNameFromParamValue(paramVaule)
 	} else if strings.HasPrefix(strings.ToUpper(paramVaule), "$ENTITY.") {
 		return iworkutil.GetParamValueForEntity(paramVaule)
+	} else if strings.HasPrefix(strings.ToUpper(paramVaule), "$WORKVARS.") {
+		return iworkutil.GetParamValueForWorkVars(paramVaule, this.DataStore)
 	}
 	return this.parseAndFillParamVauleWithNode(paramVaule, dataStore)
 }

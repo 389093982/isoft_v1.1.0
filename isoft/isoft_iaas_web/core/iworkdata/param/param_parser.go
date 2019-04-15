@@ -55,6 +55,8 @@ func (this *ParamVauleParser) GetStaticParamValue() interface{} {
 			}
 		}
 		return ""
+	} else if strings.HasPrefix(this.ParamValue, "$WorkVars.") {
+		return strings.Replace(strings.Replace(this.ParamValue, "$WorkVars.", "", -1), ";", "", -1)
 	}
 	return this.ParamValue
 }
