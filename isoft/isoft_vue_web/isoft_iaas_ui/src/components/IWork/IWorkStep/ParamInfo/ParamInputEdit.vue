@@ -1,22 +1,22 @@
 <template>
   <span>
-    <Row v-for="(item,index) in paramInputSchemaItems" style="margin-bottom: 10px;" :gutter="5">
-      <Col span="10">
-        <Icon type="ios-book-outline" size="18" style="margin-left: 5px;" @click="showParamDesc(item.ParamDesc)"/>
-        <Tooltip :content="item.ParamName" theme="light" placement="right">
-          {{item.ParamName | filterLimitFunc}}
-        </Tooltip>
-      </Col>
-      <Col span="10">
+    <Row v-for="(item,index) in paramInputSchemaItems" style="margin-bottom: 10px;">
+      <Row>
+        <Col span="16">
+          {{item.ParamName}}
+          <Icon type="ios-book-outline" size="18" style="margin-left: 10px;" @click="showParamDesc(item.ParamDesc)"/>
+        </Col>
+        <Col span="8" style="text-align: right;">
+          <Button type="success" size="small" @click="handleReload(index)">查看/编辑</Button>
+        </Col>
+      </Row>
+      <Row>
         <Input size="small" v-model.trim="item.ParamValue" readonly type="text" placeholder="small size"/>
-      </Col>
-      <Col span="4">
-        <Button type="success" size="small" @click="handleReload(index)">查看/编辑</Button>
-      </Col>
+      </Row>
     </Row>
 
     <ParamInputEditDialog ref="paramInputEditDialog"
-      @handleSubmit="refreshParamInputSchemaItems" @handleReload="handleReload"/>
+                          @handleSubmit="refreshParamInputSchemaItems" @handleReload="handleReload"/>
   </span>
 </template>
 
@@ -58,15 +58,6 @@
         });
       }
     },
-    filters:{
-      // 内容超长则显示部分
-      filterLimitFunc:function (value) {
-        if(value && value.length > 18) {
-          value= value.substring(0,18) + '...';
-        }
-        return value;
-      },
-    }
   }
 </script>
 
