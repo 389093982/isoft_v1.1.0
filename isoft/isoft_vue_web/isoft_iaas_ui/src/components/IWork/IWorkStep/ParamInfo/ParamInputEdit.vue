@@ -4,7 +4,7 @@
       <Row>
         <Col span="16">
           {{item.ParamName}}
-          <Icon type="ios-book-outline" size="18" style="margin-left: 10px;" @click="showParamDesc(item.ParamDesc)"/>
+          <Icon type="ios-book-outline" size="18" style="margin-left: 3px;" @click="showParamDesc(item.ParamDesc)"/>
         </Col>
         <Col span="8" style="text-align: right;">
           <Button type="success" size="small" @click="handleReload(index)">查看/编辑</Button>
