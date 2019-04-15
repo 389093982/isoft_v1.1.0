@@ -14,7 +14,7 @@
             <h2 style='font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;'>步骤名称:{{formValidate.work_step_name}},步骤类型:{{formValidate.work_step_type}}</h2>
           </Col>
         </Row>
-        <Row style="margin-right: 10px;">
+        <Row style="margin-right: 5px;">
           <Col span="14">
             <FormItem label="work_step_input" prop="work_step_input">
               <Tabs type="card" :animated="false">

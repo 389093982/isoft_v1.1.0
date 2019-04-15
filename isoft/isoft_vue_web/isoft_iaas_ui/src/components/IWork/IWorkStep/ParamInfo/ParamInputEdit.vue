@@ -1,11 +1,13 @@
 <template>
   <span>
     <Row v-for="(item,index) in paramInputSchemaItems" style="margin-bottom: 10px;" :gutter="5">
-      <Col span="6" style="text-align: right;">
-        {{item.ParamName}}
-        <Icon type="ios-book-outline" size="18" style="margin-left: 10px;" @click="showParamDesc(item.ParamDesc)"/>
+      <Col span="10">
+        <Icon type="ios-book-outline" size="18" style="margin-left: 5px;" @click="showParamDesc(item.ParamDesc)"/>
+        <Tooltip :content="item.ParamName" theme="light" placement="right">
+          {{item.ParamName | filterLimitFunc}}
+        </Tooltip>
       </Col>
-      <Col span="14">
+      <Col span="10">
         <Input size="small" v-model.trim="item.ParamValue" readonly type="text" placeholder="small size"/>
       </Col>
       <Col span="4">
@@ -56,6 +58,15 @@
         });
       }
     },
+    filters:{
+      // 内容超长则显示部分
+      filterLimitFunc:function (value) {
+        if(value && value.length > 18) {
+          value= value.substring(0,18) + '...';
+        }
+        return value;
+      },
+    }
   }
 </script>
 
