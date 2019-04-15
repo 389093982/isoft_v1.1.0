@@ -1,18 +1,16 @@
 <template>
   <span>
-    <Row v-for="(item,index) in paramInputSchemaItems" style="margin-bottom: 10px;">
-      <Row>
-        <Col span="16">
-          {{item.ParamName}}
-          <Icon type="ios-book-outline" size="18" style="margin-left: 10px;" @click="showParamDesc(item.ParamDesc)"/>
-        </Col>
-        <Col span="8" style="text-align: right;">
-          <Button type="success" size="small" @click="handleReload(index)">查看/编辑</Button>
-        </Col>
-      </Row>
-      <Row>
+    <Row v-for="(item,index) in paramInputSchemaItems" style="margin-bottom: 10px;" :gutter="5">
+      <Col span="6" style="text-align: right;">
+        {{item.ParamName}}
+        <Icon type="ios-book-outline" size="18" style="margin-left: 10px;" @click="showParamDesc(item.ParamDesc)"/>
+      </Col>
+      <Col span="14">
         <Input size="small" v-model.trim="item.ParamValue" readonly type="text" placeholder="small size"/>
-      </Row>
+      </Col>
+      <Col span="4">
+        <Button type="success" size="small" @click="handleReload(index)">查看/编辑</Button>
+      </Col>
     </Row>
 
     <ParamInputEditDialog ref="paramInputEditDialog"
