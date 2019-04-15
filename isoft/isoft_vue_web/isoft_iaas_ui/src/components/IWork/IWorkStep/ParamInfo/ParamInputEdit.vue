@@ -15,8 +15,7 @@
       </Row>
     </Row>
 
-    <ParamInputEditDialog ref="paramInputEditDialog"
-                          @handleSubmit="refreshParamInputSchemaItems" @handleReload="handleReload"/>
+    <ParamInputEditDialog ref="paramInputEditDialog" @handleSubmit="refreshParamInputSchemaItems" @handleReload="handleReload"/>
   </span>
 </template>
 
