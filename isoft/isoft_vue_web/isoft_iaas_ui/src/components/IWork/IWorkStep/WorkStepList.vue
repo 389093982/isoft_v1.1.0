@@ -2,22 +2,21 @@
   <div style="margin: 10px;">
     <h4 v-if="$route.query.work_name" style="text-align: center;margin-bottom: 10px;">当前流程为：{{$route.query.work_name}}</h4>
 
-      <Row type="flex" justify="start" class="code-row-bg" style="margin-bottom: 20px;">
-        <Col span="2"><Button type="error" size="small" @click="addWorkStep('empty')" style="margin-right: 5px;">新建节点</Button></Col>
-        <Col span="2"><Button type="warning" size="small" @click="showRefactorModal">重构流程</Button></Col>
-        <Col span="2"><Button type="info" size="small" @click="batchChangeIndent('left')">向左缩进</Button></Col>
-        <Col span="2"><Button type="error" size="small" @click="batchChangeIndent('right')">向右缩进</Button></Col>
-        <Col span="2"><Button type="warning" size="small" @click="runWork">运行流程</Button></Col>
-        <Col span="2"><Button type="info" size="small" @click="showRunLogList">运行日志</Button></Col>
-        <Col span="2"><WorkValidate /></Col>
-        <Col span="2"><Button type="error" size="small" @click="renderSourceXml">View XML</Button></Col>
-        <Col span="2"><WorkVarList :work-name="$route.query.work_name"/></Col>
+    <Row type="flex" justify="start" class="code-row-bg" style="margin-bottom: 20px;">
+      <Col span="2"><Button type="error" size="small" @click="addWorkStep('empty')" style="margin-right: 5px;">新建节点</Button></Col>
+      <Col span="2"><Button type="warning" size="small" @click="showRefactorModal">重构流程</Button></Col>
+      <Col span="2"><Button type="info" size="small" @click="batchChangeIndent('left')">向左缩进</Button></Col>
+      <Col span="2"><Button type="error" size="small" @click="batchChangeIndent('right')">向右缩进</Button></Col>
+      <Col span="2"><Button type="warning" size="small" @click="runWork">运行流程</Button></Col>
+      <Col span="2"><Button type="info" size="small" @click="showRunLogList">运行日志</Button></Col>
+      <Col span="2"><WorkValidate /></Col>
+      <Col span="2"><Button type="error" size="small" @click="renderSourceXml">View XML</Button></Col>
+      <Col span="2"><WorkVarList :work-name="$route.query.work_name"/></Col>
 
-        <ISimpleConfirmModal ref="refactor_modal" modal-title="重构为子流程" :modal-width="500" @handleSubmit="refactor">
-          <Input v-model.trim="refactor_worksub_name" placeholder="请输入重构的子流程名称"></Input>
-        </ISimpleConfirmModal>
-      </Row>
-
+      <ISimpleConfirmModal ref="refactor_modal" modal-title="重构为子流程" :modal-width="500" @handleSubmit="refactor">
+        <Input v-model.trim="refactor_worksub_name" placeholder="请输入重构的子流程名称"></Input>
+      </ISimpleConfirmModal>
+    </Row>
     <BaseInfo ref="workStepBaseInfo" @handleSuccess="refreshWorkStepList"/>
     <ParamInfo ref="workStepParamInfo" @handleSuccess="refreshWorkStepList"/>
 
