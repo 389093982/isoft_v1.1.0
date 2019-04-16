@@ -61,6 +61,13 @@
               <MenuItem name="4-1"><router-link to="/iwork/runLogList">日志列表</router-link></MenuItem>
               <MenuItem name="4-1"><router-link to="/iwork/workHistoryList">编辑历史</router-link></MenuItem>
             </Submenu>
+            <Submenu name="5">
+              <template slot="title">
+                <Icon type="ios-barcode"></Icon>
+                帮助助手
+              </template>
+              <MenuItem name="5-1"><router-link to="/iwork/quickSql">快捷sql</router-link></MenuItem>
+            </Submenu>
           </Menu>
         </Sider>
         <Layout :style="{padding: '24px'}">

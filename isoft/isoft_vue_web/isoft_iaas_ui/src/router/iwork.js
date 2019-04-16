@@ -8,6 +8,7 @@ import QuartzList from "../components/IWork/IQuartz/QuartzList"
 import ResourceList from "../components/IWork/IResource/ResourceList"
 import MigrateList from "../components/IWork/IMigrate/MigrateList"
 import EditMigrate from "../components/IWork/IMigrate/EditMigrate"
+import QuickSql from "../components/IWork/IAssistant/QuickSql"
 import {modulesCheck} from "../imodules";
 
 const IWorkRouter = {
@@ -23,6 +24,7 @@ const IWorkRouter = {
     {path: 'runLogDetail',component: RunLogDetail},
     {path: 'migrateList',component: MigrateList},
     {path: 'editMigrate',component: EditMigrate},
+    {path: 'quickSql',component: QuickSql},
   ]
 };
 
