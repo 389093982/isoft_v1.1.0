@@ -1,7 +1,6 @@
 package iworknode
 
 import (
-	"fmt"
 	"isoft/isoft_iaas_web/core/iworkconst"
 	"isoft/isoft_iaas_web/core/iworkdata/param"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
@@ -21,16 +20,10 @@ func (this *DBParserNode) Execute(trackingId string) {
 	// 节点中间数据
 	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, this.DataStore)
 	dataSourceName := param.GetStaticParamValue(iworkconst.STRING_PREFIX+"db_conn", this.WorkStep).(string)
-	_, _, rowDatas := sqlutil.Query("show tables;", []interface{}{}, dataSourceName)
-	tableNames := make([]string, 0)
-	for _, rowData := range rowDatas {
-		for _, tableName := range rowData {
-			tableNames = append(tableNames, tableName.(string))
-		}
-	}
+	tableNames := sqlutil.GetAllTableNames(dataSourceName)
 	tablecolsmap := make(map[string]string, 0)
 	for _, tableName := range tableNames {
-		cols := sqlutil.GetMetaDatas(fmt.Sprintf("select * from %s where 1=0", tableName), dataSourceName)
+		cols := sqlutil.GetAllColumnNames(tableName, dataSourceName)
 		tablecolsmap[tableName] = strings.Join(cols, ",")
 	}
 	// 将其自动存为实体类

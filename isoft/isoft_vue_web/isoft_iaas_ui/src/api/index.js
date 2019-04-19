@@ -225,5 +225,7 @@ export const EditWorkVar = (workName, workVarName, workVarType, operateType) => 
 
 export const LoadAllWorkVar = (workName) => ajax(BASE_URL+"/iwork/loadAllWorkVar", {workName},'POST');
 
+export const LoadQuickSqlMeta = () => ajax(BASE_URL+"/iwork/loadQuickSqlMeta", {},'POST');
+
 // 跨模块使用,模块化部署时需要使用 nginx 代理
 export const LoginAddr = "/sso/login/";
