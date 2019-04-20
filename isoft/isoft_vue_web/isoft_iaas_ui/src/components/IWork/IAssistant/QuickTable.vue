@@ -9,15 +9,15 @@
       </p>
       <Col span="4">
         <p style="color: red;">表名：{{tableName}}</p>
-        <CheckboxGroup>
+        <CheckboxGroup v-model="checkTableColumns">
           <ul>
             <li v-for="tableColumn in tableColumns" style="list-style: none;">
               <Checkbox :label="tableColumn"></Checkbox>
             </li>
           </ul>
         </CheckboxGroup>
-        <Button size="small" type="primary">全选</Button>
-        <Button size="small" type="primary">反选</Button>
+        <Button size="small" type="primary" @click="chooseAll">全选</Button>
+        <Button size="small" type="primary" @click="toggleAll">反选</Button>
       </Col>
       <Col span="20">
         <p style="color: red;">sql信息</p>
@@ -35,6 +35,8 @@
 </template>
 
 <script>
+  import {oneOf} from "../../../tools"
+
   export default {
     name: "QuickTable",
     props:{
@@ -53,8 +55,22 @@
     },
     data(){
       return {
+        // 选中的列
+        checkTableColumns:[],
         customSqls:[],
         appendSqlElements:["select","*","from dual"],
+      }
+    },
+    methods:{
+      chooseAll:function () {
+        if(this.checkTableColumns.length > 0){
+          this.checkTableColumns = [];
+        }else{
+          this.checkTableColumns = this.tableColumns;
+        }
+      },
+      toggleAll:function () {
+        this.checkTableColumns = this.tableColumns.filter(column => !oneOf(column, this.checkTableColumns));
       }
     }
   }
