@@ -1,53 +1,36 @@
 <template>
-  <div>
-    <p v-for="resource in resources">
-      {{resource.resource_dsn}}
-      <span v-for="(tableNames,_resource_dsn) in tableNamesMap">
-        <span v-if="_resource_dsn == resource.resource_dsn">
-          <span v-for="tableName in tableNames">
-            {{tableName}}
-            <span v-for="(tableColumns, _resource_dsn_tableName) in tableColumnsMap">
-              <span v-if="_resource_dsn_tableName == _resource_dsn + tableName">
-                <CheckboxGroup>
-                  <ul>
-                    <li v-for="tableColumn in tableColumns" style="list-style: none;">
-                      <Checkbox :label="tableColumn"></Checkbox>
-                    </li>
-                  </ul>
-                </CheckboxGroup>
-              </span>
-            </span>
-          </span>
-        </span>
-      </span>
-    </p>
-  </div>
+  <Collapse simple>
+    <Panel :name="resource.resource_name"  v-for="resource in resources">
+      <span style="color: green;">{{resource.resource_name}} ~ {{resource.resource_dsn}}</span>
+      <p slot="content">
+        <QuickResource :resource="resource"/>
+      </p>
+    </Panel>
+  </Collapse>
 </template>
 
 <script>
-  import {LoadQuickSqlMeta} from "../../../api"
+  import {GetAllResource} from "../../../api"
+  import QuickResource from "./QuickResource"
 
   export default {
     name: "QuickSql",
+    components:{QuickResource},
     data(){
       return {
         resources:[],
-        tableNamesMap:{},
-        tableColumnsMap:{},
       }
     },
     methods:{
-      loadQuickSqlMeta:async function () {
-        const result = await LoadQuickSqlMeta();
+      refreshAllResource:async function () {
+        const result = await GetAllResource("db");
         if(result.status == "SUCCESS"){
           this.resources = result.resources;
-          this.tableNamesMap = result.tableNamesMap;
-          this.tableColumnsMap = result.tableColumnsMap;
         }
       }
     },
     mounted:function () {
-      this.loadQuickSqlMeta();
+      this.refreshAllResource();
     }
   }
 </script>

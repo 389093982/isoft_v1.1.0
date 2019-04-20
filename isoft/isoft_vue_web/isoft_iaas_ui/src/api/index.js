@@ -140,6 +140,7 @@ export const DeleteResource = (id) => ajax(BASE_URL+"/iwork/deleteResource", {id
 // 验证 resource
 export const ValidateResource = (id) => ajax(BASE_URL+"/iwork/validateResource", {id},'POST');
 
+export const GetAllResource = (resource_type) => ajax(BASE_URL+"/iwork/getAllResource", {resource_type},'POST');
 
 // work 分页查询
 export const WorkList = (offset,current_page,search) => ajax(BASE_URL+"/iwork/filterPageWork", {offset,current_page,search},'POST');
@@ -225,7 +226,7 @@ export const EditWorkVar = (workName, workVarName, workVarType, operateType) => 
 
 export const LoadAllWorkVar = (workName) => ajax(BASE_URL+"/iwork/loadAllWorkVar", {workName},'POST');
 
-export const LoadQuickSqlMeta = () => ajax(BASE_URL+"/iwork/loadQuickSqlMeta", {},'POST');
+export const LoadQuickSqlMeta = (resource_id) => ajax(BASE_URL+"/iwork/loadQuickSqlMeta", {resource_id},'POST');
 
 // 跨模块使用,模块化部署时需要使用 nginx 代理
 export const LoginAddr = "/sso/login/";

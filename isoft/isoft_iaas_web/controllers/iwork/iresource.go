@@ -30,6 +30,13 @@ func (this *WorkController) AddResource() {
 	this.ServeJSON()
 }
 
+func (this *WorkController) GetAllResource() {
+	resource_type := this.GetString("resource_type")
+	resources := iwork.QueryAllResource(resource_type)
+	this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "resources": resources}
+	this.ServeJSON()
+}
+
 func (this *WorkController) FilterPageResource() {
 	condArr := make(map[string]string)
 	offset, _ := this.GetInt("offset", 10)            // 每页记录数
