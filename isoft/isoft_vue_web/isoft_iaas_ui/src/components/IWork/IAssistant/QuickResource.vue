@@ -1,20 +1,18 @@
 <template>
-  <div>
-    {{resource.resource_dsn}}
-
+  <div style="margin: 10px;">
     <span v-for="tableName in tableNames">
-        {{tableName}}
-        <span v-for="(tableColumns, _tableName) in tableColumnsMap">
-          <span v-if="_tableName == tableName">
-            <CheckboxGroup>
-              <ul>
-                <li v-for="tableColumn in tableColumns" style="list-style: none;">
-                  <Checkbox :label="tableColumn"></Checkbox>
-                </li>
-              </ul>
-            </CheckboxGroup>
-          </span>
+      <p style="color: red;">表名：{{tableName}}</p>
+      <span v-for="(tableColumns, _tableName) in tableColumnsMap">
+        <span v-if="_tableName == tableName">
+          <CheckboxGroup>
+            <ul>
+              <li v-for="tableColumn in tableColumns" style="list-style: none;">
+                <Checkbox :label="tableColumn"></Checkbox>
+              </li>
+            </ul>
+          </CheckboxGroup>
         </span>
+      </span>
     </span>
   </div>
 </template>
