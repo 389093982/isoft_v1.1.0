@@ -1,12 +1,13 @@
 <template>
-  <div style="margin: 20px;">
+  <div style="margin: 10px;">
     <Row>
-      <p>
+      <div>
         <span v-for="element in appendSqlElements">
            <Tag>{{element}}</Tag>
         </span>
         <Button icon="ios-add" type="dashed" size="small" @click="alert(111)">添加标签</Button>
-      </p>
+        <Button type="dashed" size="small" @click="renderSql">Render Sql</Button>
+      </div>
       <Col span="4">
         <p style="color: red;">表名：{{tableName}}</p>
         <CheckboxGroup v-model="checkTableColumns">
@@ -17,9 +18,9 @@
           </ul>
         </CheckboxGroup>
         <p style="margin-top: 10px;">
-          &nbsp;<a href="javascript:;" @click="chooseAll">全选</a>
-          &nbsp;<a href="javascript:;" @click="toggleAll">反选</a>
-          &nbsp;<a href="javascript:;" @click="appendColumn">拼接</a>
+          <Button type="dashed" size="small" @click="chooseAll">全选</Button>
+          <Button type="dashed" size="small" @click="toggleAll">反选</Button>
+          <Button type="dashed" size="small" @click="appendColumn">拼接</Button>
         </p>
       </Col>
       <Col span="20">
@@ -27,12 +28,12 @@
         <span>
           <p v-for="tableSql in tableSqls">
             {{tableSql}}
-            &nbsp;<a href="javascript:;">应用</a>
+            <Button type="dashed" size="small">应用</Button>
           </p>
           <p v-for="(customSql,index) in customSqls">
             自定义sql：{{customSql}}
-            &nbsp;<a href="javascript:;" @click="deleteCustom(index)">删除</a>
-            &nbsp;<a href="javascript:;">应用</a>
+            <Button type="dashed" size="small" @click="deleteCustom(index)">删除</Button>
+            <Button type="dashed" size="small">应用</Button>
           </p>
         </span>
       </Col>
@@ -85,6 +86,9 @@
       },
       deleteCustom:function (index) {
         this.customSqls.splice(index,1);
+      },
+      renderSql:function () {
+        alert(this.appendSqlElements.join(" "));
       }
     }
   }
