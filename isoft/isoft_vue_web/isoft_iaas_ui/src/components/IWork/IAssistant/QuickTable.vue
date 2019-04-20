@@ -16,8 +16,10 @@
             </li>
           </ul>
         </CheckboxGroup>
-        <Button size="small" type="primary" @click="chooseAll">全选</Button>
-        <Button size="small" type="primary" @click="toggleAll">反选</Button>
+        <p style="margin-top: 10px;">
+          <Button size="small" type="success" @click="chooseAll">全选</Button>
+          <Button size="small" type="info" @click="toggleAll">反选</Button>
+        </p>
       </Col>
       <Col span="20">
         <p style="color: red;">sql信息</p>
