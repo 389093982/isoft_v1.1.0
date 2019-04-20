@@ -17,19 +17,22 @@
           </ul>
         </CheckboxGroup>
         <p style="margin-top: 10px;">
-          <Button size="small" type="success" @click="chooseAll">全选</Button>
-          <Button size="small" type="info" @click="toggleAll">反选</Button>
-          <Button size="small" type="warning" @click="appendColumn">拼接</Button>
+          &nbsp;<a href="javascript:;" @click="chooseAll">全选</a>
+          &nbsp;<a href="javascript:;" @click="toggleAll">反选</a>
+          &nbsp;<a href="javascript:;" @click="appendColumn">拼接</a>
         </p>
       </Col>
       <Col span="20">
         <p style="color: red;">sql信息</p>
         <span>
           <p v-for="tableSql in tableSqls">
-            {{tableSql}} &nbsp;<a href="javascript:;">拷贝</a>
+            {{tableSql}}
+            &nbsp;<a href="javascript:;">应用</a>
           </p>
-          <p v-for="customSql in customSqls">
-            自定义sql：{{customSql}} &nbsp;<a href="javascript:;">拷贝</a>
+          <p v-for="(customSql,index) in customSqls">
+            自定义sql：{{customSql}}
+            &nbsp;<a href="javascript:;" @click="deleteCustom(index)">删除</a>
+            &nbsp;<a href="javascript:;">应用</a>
           </p>
         </span>
       </Col>
@@ -79,6 +82,9 @@
         if(this.checkTableColumns.length > 0){
           this.customSqls.push(this.checkTableColumns.join(","));
         }
+      },
+      deleteCustom:function (index) {
+        this.customSqls.splice(index,1);
       }
     }
   }
