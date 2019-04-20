@@ -2,17 +2,18 @@
   <div style="margin: 10px;">
     <Row>
       <div>
+        <div>
+          操作：
+          <Button type="primary" size="small" icon="md-close" @click="deleteElement">删除</Button>
+          <Button type="primary" size="small" icon="md-arrow-back" @click="moveElement(-1)">左移</Button>
+          <Button type="primary" size="small" icon="md-arrow-forward" @click="moveElement(1)">右移</Button>
+          <Button type="dashed" size="small" @click="renderSql">Render Sql</Button>
+        </div>
+
         <span v-for="(element,index) in appendSqlElements">
           <Tag :color="choosedElementIndex == index ? 'primary' : 'default'">
             <span @click="choosedElementIndex=index">{{element}}</span>
           </Tag>
-        </span>
-        <Button type="dashed" size="small" @click="renderSql">Render Sql</Button>
-        <span>
-          操作：
-          <Icon type="md-close" size="16" @click="deleteElement"/>
-          <Icon type="md-arrow-back" size="16" @click="moveElement(-1)"/>
-          <Icon type="md-arrow-forward" size="16" @click="moveElement(1)"/>
         </span>
       </div>
       <Col span="4">
@@ -27,7 +28,7 @@
         <p style="margin-top: 10px;">
           <Button type="dashed" size="small" @click="chooseAll">全选</Button>
           <Button type="dashed" size="small" @click="toggleAll">反选</Button>
-          <Button type="dashed" size="small" @click="appendColumn">拼接</Button>
+          <Button type="dashed" size="small" @click="appendColumn">Apply</Button>
         </p>
       </Col>
       <Col span="20">
@@ -35,12 +36,12 @@
         <span>
           <p v-for="tableSql in tableSqls">
             {{tableSql}}
-            <Button type="dashed" size="small">应用</Button>
+            <Button type="dashed" size="small" @click="insertAfter(tableSql)">Insert After</Button>
           </p>
           <p v-for="(customSql,index) in customSqls">
             自定义sql：{{customSql}}
             <Button type="dashed" size="small" @click="deleteCustom(index)">删除</Button>
-            <Button type="dashed" size="small">应用</Button>
+            <Button type="dashed" size="small" @click="insertAfter(customSql)">Insert After</Button>
           </p>
         </span>
       </Col>
@@ -106,6 +107,14 @@
       moveElement:function (direction) {
         if(this.choosedElementIndex > 0 && this.choosedElementIndex < this.appendSqlElements.length - 1){
           swapArray(this.appendSqlElements, this.choosedElementIndex, this.choosedElementIndex + direction);
+        }
+      },
+      insertAfter:function (customSql) {
+        if(this.choosedElementIndex > 0){
+          // 添加元素到指定位置
+          this.appendSqlElements.splice(this.choosedElementIndex+1, 0, customSql);
+        }else{
+          this.appendSqlElements.push(customSql);
         }
       }
     }
