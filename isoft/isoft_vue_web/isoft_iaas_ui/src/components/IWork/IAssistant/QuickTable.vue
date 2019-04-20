@@ -19,12 +19,13 @@
         <p style="margin-top: 10px;">
           <Button size="small" type="success" @click="chooseAll">全选</Button>
           <Button size="small" type="info" @click="toggleAll">反选</Button>
+          <Button size="small" type="warning" @click="appendColumn">拼接</Button>
         </p>
       </Col>
       <Col span="20">
         <p style="color: red;">sql信息</p>
-        <span v-for="tableSql in tableSqls">
-          <p>
+        <span>
+          <p v-for="tableSql in tableSqls">
             {{tableSql}} &nbsp;<a href="javascript:;">拷贝</a>
           </p>
           <p v-for="customSql in customSqls">
@@ -73,6 +74,11 @@
       },
       toggleAll:function () {
         this.checkTableColumns = this.tableColumns.filter(column => !oneOf(column, this.checkTableColumns));
+      },
+      appendColumn:function () {
+        if(this.checkTableColumns.length > 0){
+          this.customSqls.push(this.checkTableColumns.join(","));
+        }
       }
     }
   }
