@@ -2,11 +2,18 @@
   <div style="margin: 10px;">
     <Row>
       <div>
-        <span v-for="element in appendSqlElements">
-           <Tag>{{element}}</Tag>
+        <span v-for="(element,index) in appendSqlElements">
+          <Tag :color="choosedElementIndex == index ? 'primary' : 'default'">
+            <span @click="choosedElementIndex=index">{{element}}</span>
+          </Tag>
         </span>
-        <Button icon="ios-add" type="dashed" size="small" @click="alert(111)">添加标签</Button>
         <Button type="dashed" size="small" @click="renderSql">Render Sql</Button>
+        <span>
+          操作：
+          <Icon type="md-close" size="16" @click="deleteElement"/>
+          <Icon type="md-arrow-back" size="16" @click="moveElement(-1)"/>
+          <Icon type="md-arrow-forward" size="16" @click="moveElement(1)"/>
+        </span>
       </div>
       <Col span="4">
         <p style="color: red;">表名：{{tableName}}</p>
@@ -43,6 +50,7 @@
 
 <script>
   import {oneOf} from "../../../tools"
+  import {swapArray} from "../../../tools"
 
   export default {
     name: "QuickTable",
@@ -62,9 +70,11 @@
     },
     data(){
       return {
+        choosedElementIndex:-1,
         // 选中的列
         checkTableColumns:[],
         customSqls:[],
+        // default line 默认线路
         appendSqlElements:["select","*","from dual"],
       }
     },
@@ -89,6 +99,14 @@
       },
       renderSql:function () {
         alert(this.appendSqlElements.join(" "));
+      },
+      deleteElement:function () {
+        this.appendSqlElements.splice(this.choosedElementIndex, 1);
+      },
+      moveElement:function (direction) {
+        if(this.choosedElementIndex > 0 && this.choosedElementIndex < this.appendSqlElements.length - 1){
+          swapArray(this.appendSqlElements, this.choosedElementIndex, this.choosedElementIndex + direction);
+        }
       }
     }
   }
