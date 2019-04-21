@@ -14,14 +14,15 @@
           <Col span="8">
             <span v-for="(element,index) in hotSqlElements">
               <Tag>
-                <span>{{element}}</span>
+                <span draggable="true" @dragstart="dragstart($event, element)">{{element}}</span>
               </Tag>
             </span>
           </Col>
           <Col span="16">
             <span v-for="(element,index) in appendSqlElements">
               <Tag :color="choosedElementIndex == index ? 'primary' : 'default'">
-                <span @click="choosedElementIndex=index">{{element}}</span>
+                <span @click="choosedElementIndex=index"
+                      @drop="drop($event, index)" @dragover="allowDrop($event)">{{element}}</span>
               </Tag>
             </span>
           </Col>
@@ -128,6 +129,17 @@
         }else{
           this.appendSqlElements.push(customSql);
         }
+      },
+      dragstart:function(event, transferData){
+        event.dataTransfer.setData("Text",transferData);
+      },
+      allowDrop:function(event){
+        event.preventDefault();
+      },
+      drop:function(event, index){
+        event.preventDefault();
+        var transferData=event.dataTransfer.getData("Text");
+        this.appendSqlElements.splice(index + 1, 0, transferData);
       }
     }
   }
