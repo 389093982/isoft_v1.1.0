@@ -10,11 +10,22 @@
           <Button type="dashed" size="small" @click="renderSql">Render Sql</Button>
         </div>
 
-        <span v-for="(element,index) in appendSqlElements">
-          <Tag :color="choosedElementIndex == index ? 'primary' : 'default'">
-            <span @click="choosedElementIndex=index">{{element}}</span>
-          </Tag>
-        </span>
+        <Row style="margin-top: 10px;margin-bottom: 10px;padding:20px;background-color: #f8f8f9;">
+          <Col span="8">
+            <span v-for="(element,index) in hotSqlElements">
+              <Tag>
+                <span>{{element}}</span>
+              </Tag>
+            </span>
+          </Col>
+          <Col span="16">
+            <span v-for="(element,index) in appendSqlElements">
+              <Tag :color="choosedElementIndex == index ? 'primary' : 'default'">
+                <span @click="choosedElementIndex=index">{{element}}</span>
+              </Tag>
+            </span>
+          </Col>
+        </Row>
       </div>
       <Col span="4">
         <p style="color: red;">表名：{{tableName}}</p>
@@ -77,6 +88,7 @@
         customSqls:[],
         // default line 默认线路
         appendSqlElements:["select","*","from dual"],
+        hotSqlElements:["select", "(", ")", "count(*) as count","where","from"],
       }
     },
     methods:{
