@@ -12,18 +12,16 @@
 
         <Row style="margin-top: 10px;margin-bottom: 10px;padding:20px;background-color: #f8f8f9;">
           <Col span="8">
-            <span v-for="(element,index) in hotSqlElements">
-              <Tag>
-                <span draggable="true" @dragstart="dragstart($event, element)">{{element}}</span>
-              </Tag>
+            <span v-for="(element,index) in hotSqlElements" draggable="true" @dragstart="dragstart($event, element)">
+              <Button style="margin: 2px;" size="small">{{element}}</Button>
             </span>
           </Col>
           <Col span="16">
-            <span v-for="(element,index) in appendSqlElements">
-              <Tag :color="choosedElementIndex == index ? 'primary' : 'default'">
-                <span @click="choosedElementIndex=index"
-                      @drop="drop($event, index)" @dragover="allowDrop($event)">{{element}}</span>
-              </Tag>
+            <span v-for="(element,index) in appendSqlElements" @drop="drop($event, index)" @dragover="allowDrop($event)">
+              <Button :type="choosedElementIndex == index ? 'primary' : 'default'"
+                      style="margin: 2px;" size="small" @click="choosedElementIndex=index">
+                {{element}}
+              </Button>
             </span>
           </Col>
         </Row>
