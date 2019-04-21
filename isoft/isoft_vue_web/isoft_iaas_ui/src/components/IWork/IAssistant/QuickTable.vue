@@ -12,12 +12,14 @@
 
         <Row style="margin-top: 10px;margin-bottom: 10px;padding:20px;background-color: #f8f8f9;">
           <Col span="8">
-            <span v-for="(element,index) in hotSqlElements" draggable="true" @dragstart="dragstart($event, element)">
+            <span v-for="(element,index) in hotSqlElements" draggable="true" @dragstart="dragstart($event, element, -1)">
               <Button style="margin: 2px;" size="small">{{element}}</Button>
             </span>
           </Col>
           <Col span="16">
-            <span v-for="(element,index) in appendSqlElements" @drop="drop($event, index)" @dragover="allowDrop($event)">
+            <span v-for="(element,index) in appendSqlElements"
+                  draggable="true" @dragstart="dragstart($event, element, index)"
+                  @drop="drop($event, index)" @dragover="allowDrop($event)">
               <Button :type="choosedElementIndex == index ? 'primary' : 'default'"
                       style="margin: 2px;" size="small" @click="choosedElementIndex=index">
                 {{element}}
@@ -128,16 +130,25 @@
           this.appendSqlElements.push(customSql);
         }
       },
-      dragstart:function(event, transferData){
-        event.dataTransfer.setData("Text",transferData);
+      dragstart:function(event, transferData, index){
+        event.dataTransfer.setData("Text", JSON.stringify({'transferData':transferData, 'index':index}));
       },
       allowDrop:function(event){
         event.preventDefault();
       },
       drop:function(event, index){
         event.preventDefault();
-        var transferData=event.dataTransfer.getData("Text");
-        this.appendSqlElements.splice(index + 1, 0, transferData);
+        var dataStr = event.dataTransfer.getData("Text");
+        var data = JSON.parse(dataStr);
+        var sourceIndex = data.index;
+        var transferData = data.transferData;
+        if(sourceIndex >= 0){
+          // 交换位置
+          swapArray(this.appendSqlElements, sourceIndex, index);
+        }else{
+          // index 后面添加
+          this.appendSqlElements.splice(index + 1, 0, data.transferData);
+        }
       }
     }
   }
