@@ -5,8 +5,6 @@
         <div>
           操作：
           <Button type="primary" size="small" icon="md-close" @click="deleteElement">删除</Button>
-          <Button type="primary" size="small" icon="md-arrow-back" @click="moveElement(-1)">左移</Button>
-          <Button type="primary" size="small" icon="md-arrow-forward" @click="moveElement(1)">右移</Button>
           <Button type="dashed" size="small" @click="renderSql">Render Sql</Button>
         </div>
 
@@ -45,17 +43,15 @@
       </Col>
       <Col span="20">
         <p style="color: red;">sql信息</p>
-        <span>
-          <p v-for="tableSql in tableSqls">
-            {{tableSql}}
-            <Button type="dashed" size="small" @click="insertAfter(tableSql)">Insert After</Button>
-          </p>
-          <p v-for="(customSql,index) in customSqls">
-            自定义sql：{{customSql}}
+        <ul>
+          <li style="list-style: none;" v-for="tableSql in tableSqls" draggable="true" @dragstart="dragstart($event, tableSql, -1)">
+            <Button style="margin: 2px;" size="small">{{tableSql}}</Button>
+          </li>
+          <li style="list-style: none;" v-for="(customSql,index) in customSqls" draggable="true" @dragstart="dragstart($event, customSql, -1)">
+            <Button style="margin: 2px;" size="small">自定义sql：{{customSql}}</Button>
             <Button type="dashed" size="small" @click="deleteCustom(index)">删除</Button>
-            <Button type="dashed" size="small" @click="insertAfter(customSql)">Insert After</Button>
-          </p>
-        </span>
+          </li>
+        </ul>
       </Col>
     </Row>
   </div>
@@ -116,19 +112,6 @@
       },
       deleteElement:function () {
         this.appendSqlElements.splice(this.choosedElementIndex, 1);
-      },
-      moveElement:function (direction) {
-        if(this.choosedElementIndex > 0 && this.choosedElementIndex < this.appendSqlElements.length - 1){
-          swapArray(this.appendSqlElements, this.choosedElementIndex, this.choosedElementIndex + direction);
-        }
-      },
-      insertAfter:function (customSql) {
-        if(this.choosedElementIndex > 0){
-          // 添加元素到指定位置
-          this.appendSqlElements.splice(this.choosedElementIndex+1, 0, customSql);
-        }else{
-          this.appendSqlElements.push(customSql);
-        }
       },
       dragstart:function(event, transferData, index){
         event.dataTransfer.setData("Text", JSON.stringify({'transferData':transferData, 'index':index}));
