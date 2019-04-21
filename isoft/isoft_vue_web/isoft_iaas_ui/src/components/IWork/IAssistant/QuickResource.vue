@@ -3,6 +3,7 @@
     <span v-for="tableName in tableNames">
       <QuickTable :table-name="tableName" :table-columns="getTableColumns(tableName)"
         :table-sqls="getTableSqls(tableName)"/>
+       <Divider />
     </span>
   </div>
 </template>
