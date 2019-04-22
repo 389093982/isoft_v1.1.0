@@ -146,7 +146,7 @@
           <entry key="sql" value="113" />
           <entry key="sum" value="3" />
           <entry key="txt" value="1251" />
-          <entry key="vue" value="81136" />
+          <entry key="vue" value="81209" />
           <entry key="xml" value="48" />
         </counts>
       </usages-collector>
@@ -158,7 +158,7 @@
           <entry key="JavaScript" value="8685" />
           <entry key="PLAIN_TEXT" value="3621" />
           <entry key="SQL" value="141" />
-          <entry key="Vue.js" value="81029" />
+          <entry key="Vue.js" value="81102" />
           <entry key="XML" value="48" />
         </counts>
       </usages-collector>
@@ -184,10 +184,11 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/IWork/IAssistant/QuickTable.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="169">
-              <caret line="11" selection-start-line="11" selection-end-line="11" />
+            <state relative-caret-position="172">
+              <caret line="22" column="24" selection-start-line="22" selection-start-column="24" selection-end-line="22" selection-end-column="24" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#0;n#Row#0;n#div#0;n#template#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#Col#0;n#Row#0;n#div#0;n#Row#0;n#div#0;n#template#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#Button#0;n#span#0;n#Scroll#0;n#Col#0;n#Row#0;n#div#0;n#Row#0;n#div#0;n#template#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#0;n#Col#1;n#Row#0;n#div#0;n#Row#0;n#div#0;n#template#0;n#!!top" expanded="true" />
@@ -262,9 +263,9 @@
       <find>cronValidate</find>
       <find>moveElement</find>
       <find>insertAfter</find>
-      <find>choosedElementIndex</find>
       <find>Scroll</find>
       <find>gutter</find>
+      <find>choosedElementIndex</find>
     </findStrings>
     <replaceStrings>
       <replace>_dataStore</replace>
@@ -1179,10 +1180,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/IWork/IAssistant/QuickTable.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="169">
-          <caret line="11" selection-start-line="11" selection-end-line="11" />
+        <state relative-caret-position="172">
+          <caret line="22" column="24" selection-start-line="22" selection-start-column="24" selection-end-line="22" selection-end-column="24" />
           <folding>
             <element signature="n#style#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#Row#0;n#div#0;n#template#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#Col#0;n#Row#0;n#div#0;n#Row#0;n#div#0;n#template#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#Button#0;n#span#0;n#Scroll#0;n#Col#0;n#Row#0;n#div#0;n#Row#0;n#div#0;n#template#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#0;n#Col#1;n#Row#0;n#div#0;n#Row#0;n#div#0;n#template#0;n#!!top" expanded="true" />

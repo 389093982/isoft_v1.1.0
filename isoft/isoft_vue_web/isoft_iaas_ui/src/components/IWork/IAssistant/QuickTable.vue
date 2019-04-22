@@ -2,9 +2,10 @@
   <div style="margin: 10px;">
     <Row>
       <div>
-        <div>
-          操作：
-          <Button type="primary" size="small" icon="md-close" @click="deleteElement">删除</Button>
+        <div style="text-align: right;margin-bottom: 5px;">
+          <span @drop="deleteElement($event)" @dragover="allowDrop($event)">
+           <Button type="primary" size="small" icon="md-close">拖拽至此处进行删除</Button>
+          </span>
           <Button type="dashed" size="small" @click="renderSql">Render Sql</Button>
         </div>
 
@@ -19,8 +20,7 @@
               <span v-for="(element,index) in appendSqlElements"
                     draggable="true" @dragstart="dragstart($event, element, index, 'right')"
                     @drop="drop($event, index)" @dragover="allowDrop($event)">
-                <Button :type="choosedElementIndex == index ? 'primary' : 'default'"
-                        style="margin: 2px;" size="small" @click="choosedElementIndex=index">
+                <Button style="margin: 2px;" size="small">
                   {{element}}
                 </Button>
               </span>
@@ -82,7 +82,6 @@
     data(){
       return {
         split1: 0.4,
-        choosedElementIndex:-1,
         // 选中的列
         checkTableColumns:[],
         customSqls:[],
@@ -114,7 +113,15 @@
         alert(this.appendSqlElements.join(" "));
       },
       deleteElement:function (event) {
-        this.appendSqlElements.splice(this.choosedElementIndex, 1);
+        event.preventDefault();
+        var dataStr = event.dataTransfer.getData("Text");
+        var data = JSON.parse(dataStr);
+        var sourceIndex = data.index;
+        var transferData = data.transferData;
+        var location = data.location;
+        if(location == 'right'){
+          this.appendSqlElements.splice(sourceIndex, 1);
+        }
       },
       dragstart:function(event, transferData, index, location){
         event.dataTransfer.setData("Text", JSON.stringify({'transferData':transferData, 'index':index, 'location':location}));
