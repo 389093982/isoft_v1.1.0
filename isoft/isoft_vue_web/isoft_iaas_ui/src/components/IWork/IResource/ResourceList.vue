@@ -80,7 +80,7 @@
           {
             title: '操作',
             key: 'operate',
-            width: 220,
+            width: 180,
             fixed: 'right',
             render: (h, params) => {
               return h('div', [
@@ -98,20 +98,6 @@
                     }
                   }
                 }, '连接测试'),
-                h('Button', {
-                  props: {
-                    type: 'success',
-                    size: 'small'
-                  },
-                  style: {
-                    marginRight: '5px',
-                  },
-                  on: {
-                    click: () => {
-                      this.deleteResource(this.resources[params.index]['id']);
-                    }
-                  }
-                }, '快捷sql'),
                 h('Button', {
                   props: {
                     type: 'success',
