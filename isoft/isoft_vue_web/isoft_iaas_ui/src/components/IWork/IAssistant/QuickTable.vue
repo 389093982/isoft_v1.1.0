@@ -10,14 +10,14 @@
 
         <Row :gutter="10">
           <Col span="8" style="border: 1px solid #dcdee2;padding: 20px;">
-            <span v-for="(element,index) in hotSqlElements" draggable="true" @dragstart="dragstart($event, element, -1)">
+            <span v-for="(element,index) in hotSqlElements" draggable="true" @dragstart="dragstart($event, element, -1, 'left')">
               <Button style="margin: 2px;" size="small">{{element}}</Button>
             </span>
           </Col>
           <Col span="16">
             <div style="min-height: 100px;border: 1px solid #dcdee2;padding:20px;" @drop="drop($event, -1)" @dragover="allowDrop($event)">
               <span v-for="(element,index) in appendSqlElements"
-                    draggable="true" @dragstart="dragstart($event, element, index)"
+                    draggable="true" @dragstart="dragstart($event, element, index, 'right')"
                     @drop="drop($event, index)" @dragover="allowDrop($event)">
                 <Button :type="choosedElementIndex == index ? 'primary' : 'default'"
                         style="margin: 2px;" size="small" @click="choosedElementIndex=index">
@@ -46,10 +46,10 @@
       <Col span="20">
         <p style="color: red;">sql信息</p>
         <ul>
-          <li style="list-style: none;" v-for="tableSql in tableSqls" draggable="true" @dragstart="dragstart($event, tableSql, -1)">
+          <li style="list-style: none;" v-for="tableSql in tableSqls" draggable="true" @dragstart="dragstart($event, tableSql, -1, 'bottom')">
             <Button style="margin: 2px;" size="small">{{tableSql}}</Button>
           </li>
-          <li style="list-style: none;" v-for="(customSql,index) in customSqls" draggable="true" @dragstart="dragstart($event, customSql, -1)">
+          <li style="list-style: none;" v-for="(customSql,index) in customSqls" draggable="true" @dragstart="dragstart($event, customSql, -1, 'bottom')">
             <Button style="margin: 2px;" size="small">自定义sql：{{customSql}}</Button>
             <Button type="dashed" size="small" @click="deleteCustom(index)">删除</Button>
           </li>
@@ -116,8 +116,8 @@
       deleteElement:function (event) {
         this.appendSqlElements.splice(this.choosedElementIndex, 1);
       },
-      dragstart:function(event, transferData, index){
-        event.dataTransfer.setData("Text", JSON.stringify({'transferData':transferData, 'index':index}));
+      dragstart:function(event, transferData, index, location){
+        event.dataTransfer.setData("Text", JSON.stringify({'transferData':transferData, 'index':index, 'location':location}));
       },
       allowDrop:function(event){
         event.preventDefault();
@@ -130,7 +130,8 @@
         var data = JSON.parse(dataStr);
         var sourceIndex = data.index;
         var transferData = data.transferData;
-        if(index > 0){  // 之后添加或者交换位置
+        var location = data.location;
+        if(index > 0){  // 目标位置有元素
           if(sourceIndex >= 0){
             // 交换位置
             swapArray(this.appendSqlElements, sourceIndex, index);
@@ -138,10 +139,11 @@
             // index 后面添加
             this.appendSqlElements.splice(index + 1, 0, data.transferData);
           }
-        }else{         // 直接追加
-          this.appendSqlElements.push(transferData);
+        }else{         // 目标元素为空div,直接追加
+          if(location != 'right'){
+            this.appendSqlElements.push(transferData);
+          }
         }
-
       }
     }
   }
