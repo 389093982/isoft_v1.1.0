@@ -125,13 +125,14 @@
         event.preventDefault();
       },
       drop:function(event, index){
+        // 取消冒泡
         event.stopPropagation();
         event.preventDefault();
         var dataStr = event.dataTransfer.getData("Text");
         var data = JSON.parse(dataStr);
         var sourceIndex = data.index;
         var transferData = data.transferData;
-        if(index > 0){
+        if(index > 0){  // 之后添加或者交换位置
           if(sourceIndex >= 0){
             // 交换位置
             swapArray(this.appendSqlElements, sourceIndex, index);
@@ -139,7 +140,7 @@
             // index 后面添加
             this.appendSqlElements.splice(index + 1, 0, data.transferData);
           }
-        }else{
+        }else{         // 直接追加
           this.appendSqlElements.push(transferData);
         }
 
