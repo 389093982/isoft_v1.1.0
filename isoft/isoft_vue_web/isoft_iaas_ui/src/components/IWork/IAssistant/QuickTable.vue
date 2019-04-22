@@ -8,23 +8,25 @@
           <Button type="dashed" size="small" @click="renderSql">Render Sql</Button>
         </div>
 
-        <Row style="margin-top: 10px;margin-bottom: 10px;padding:20px;background-color: #f8f8f9;">
-          <Col span="8">
-            <span v-for="(element,index) in hotSqlElements" draggable="true" @dragstart="dragstart($event, element, -1)">
-              <Button style="margin: 2px;" size="small">{{element}}</Button>
-            </span>
-          </Col>
-          <Col span="16">
-            <span v-for="(element,index) in appendSqlElements"
-                  draggable="true" @dragstart="dragstart($event, element, index)"
-                  @drop="drop($event, index)" @dragover="allowDrop($event)">
-              <Button :type="choosedElementIndex == index ? 'primary' : 'default'"
-                      style="margin: 2px;" size="small" @click="choosedElementIndex=index">
-                {{element}}
-              </Button>
-            </span>
-          </Col>
-        </Row>
+        <div class="demo-split">
+          <Split v-model="split1">
+            <div slot="left" class="demo-split-pane">
+              <span v-for="(element,index) in hotSqlElements" draggable="true" @dragstart="dragstart($event, element, -1)">
+                <Button style="margin: 2px;" size="small">{{element}}</Button>
+              </span>
+            </div>
+            <div slot="right" class="demo-split-pane">
+              <span v-for="(element,index) in appendSqlElements"
+                    draggable="true" @dragstart="dragstart($event, element, index)"
+                    @drop="drop($event, index)" @dragover="allowDrop($event)">
+                <Button :type="choosedElementIndex == index ? 'primary' : 'default'"
+                        style="margin: 2px;" size="small" @click="choosedElementIndex=index">
+                  {{element}}
+                </Button>
+              </span>
+            </div>
+          </Split>
+        </div>
       </div>
       <Col span="4">
         <p style="color: red;">表名：{{tableName}}</p>
@@ -79,6 +81,7 @@
     },
     data(){
       return {
+        split1: 0.4,
         choosedElementIndex:-1,
         // 选中的列
         checkTableColumns:[],
@@ -138,5 +141,11 @@
 </script>
 
 <style scoped>
-
+  .demo-split{
+    height: 200px;
+    border: 1px solid #dcdee2;
+  }
+  .demo-split-pane{
+    padding: 10px;
+  }
 </style>
