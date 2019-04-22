@@ -8,27 +8,25 @@
           <Button type="dashed" size="small" @click="renderSql">Render Sql</Button>
         </div>
 
-        <div class="demo-split">
-          <Split v-model="split1">
-            <div slot="left" class="demo-split-pane">
-              <span v-for="(element,index) in hotSqlElements" draggable="true" @dragstart="dragstart($event, element, -1)">
-                <Button style="margin: 2px;" size="small">{{element}}</Button>
+        <Row :gutter="10">
+          <Col span="8" style="border: 1px solid #dcdee2;padding: 20px;">
+            <span v-for="(element,index) in hotSqlElements" draggable="true" @dragstart="dragstart($event, element, -1)">
+              <Button style="margin: 2px;" size="small">{{element}}</Button>
+            </span>
+          </Col>
+          <Col span="16">
+            <div style="min-height: 100px;border: 1px solid #dcdee2;padding:20px;" @drop="drop($event, -1)" @dragover="allowDrop($event)">
+              <span v-for="(element,index) in appendSqlElements"
+                    draggable="true" @dragstart="dragstart($event, element, index)"
+                    @drop="drop($event, index)" @dragover="allowDrop($event)">
+                <Button :type="choosedElementIndex == index ? 'primary' : 'default'"
+                        style="margin: 2px;" size="small" @click="choosedElementIndex=index">
+                  {{element}}
+                </Button>
               </span>
             </div>
-            <div slot="right" class="demo-split-pane">
-              <div style="min-height: 100px;" @drop="drop($event, -1)" @dragover="allowDrop($event)">
-                <span v-for="(element,index) in appendSqlElements"
-                      draggable="true" @dragstart="dragstart($event, element, index)"
-                      @drop="drop($event, index)" @dragover="allowDrop($event)">
-                  <Button :type="choosedElementIndex == index ? 'primary' : 'default'"
-                          style="margin: 2px;" size="small" @click="choosedElementIndex=index">
-                    {{element}}
-                  </Button>
-                </span>
-              </div>
-            </div>
-          </Split>
-        </div>
+          </Col>
+        </Row>
       </div>
       <Col span="4">
         <p style="color: red;">表名：{{tableName}}</p>
@@ -150,11 +148,5 @@
 </script>
 
 <style scoped>
-  .demo-split{
-    height: 200px;
-    border: 1px solid #dcdee2;
-  }
-  .demo-split-pane{
-    padding: 10px;
-  }
+
 </style>

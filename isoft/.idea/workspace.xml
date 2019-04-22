@@ -108,7 +108,7 @@
           <entry key="svg" value="1" />
           <entry key="ts" value="22" />
           <entry key="txt" value="92" />
-          <entry key="vue" value="1832" />
+          <entry key="vue" value="1833" />
           <entry key="vue_bak" value="1" />
           <entry key="xml" value="11" />
           <entry key="yml" value="1" />
@@ -128,7 +128,7 @@
           <entry key="SQL" value="7" />
           <entry key="SVG" value="1" />
           <entry key="TypeScript" value="22" />
-          <entry key="Vue.js" value="1819" />
+          <entry key="Vue.js" value="1820" />
           <entry key="XML" value="11" />
           <entry key="YAML" value="1" />
           <entry key="x86 Plan9 Assembly" value="20" />
@@ -146,7 +146,7 @@
           <entry key="sql" value="113" />
           <entry key="sum" value="3" />
           <entry key="txt" value="1251" />
-          <entry key="vue" value="80230" />
+          <entry key="vue" value="80999" />
           <entry key="xml" value="48" />
         </counts>
       </usages-collector>
@@ -158,7 +158,7 @@
           <entry key="JavaScript" value="8685" />
           <entry key="PLAIN_TEXT" value="3621" />
           <entry key="SQL" value="141" />
-          <entry key="Vue.js" value="80123" />
+          <entry key="Vue.js" value="80892" />
           <entry key="XML" value="48" />
         </counts>
       </usages-collector>
@@ -184,11 +184,35 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/IWork/IAssistant/QuickTable.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="146">
-              <caret line="140" column="9" lean-forward="true" selection-start-line="140" selection-start-column="9" selection-end-line="140" selection-end-column="9" />
+            <state relative-caret-position="49">
+              <caret line="8" column="14" lean-forward="true" selection-start-line="8" selection-start-column="14" selection-end-line="8" selection-end-column="14" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#Button#0;n#span#0;n#div#0;n#Split#0;n#div#1;n#div#0;n#Row#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#Col#0;n#Row#0;n#div#0;n#Row#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#Button#0;n#span#0;n#Scroll#0;n#Col#0;n#Row#0;n#div#0;n#Row#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#Col#1;n#Row#0;n#div#0;n#Row#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#Button#0;n#span#0;n#div#0;n#Scroll#0;n#Col#1;n#Row#0;n#div#0;n#Row#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#p#0;n#Col#0;n#Row#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#li#0;n#ul#0;n#CheckboxGroup#0;n#Col#0;n#Row#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#p#1;n#Col#0;n#Row#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#p#0;n#Col#1;n#Row#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#li#0;n#ul#0;n#Col#1;n#Row#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#Button#0;n#li#0;n#ul#0;n#Col#1;n#Row#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#li#1;n#ul#0;n#Col#1;n#Row#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#Button#0;n#li#1;n#ul#0;n#Col#1;n#Row#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="e#2597#2633#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/IWork/IMigrate/EditMigrate.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="17">
+              <caret line="1" column="1" selection-start-line="1" selection-start-column="1" selection-end-line="1" selection-end-column="23" />
+              <folding>
+                <element signature="n#style#0;n#div#0;n#Scroll#0;n#template#0;n#!!top" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -211,9 +235,7 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>handleBlur</find>
       <find>scroll</find>
-      <find>Scroll</find>
       <find>GetMigrateInfo</find>
       <find>closable</find>
       <find>WorkStepParam</find>
@@ -241,6 +263,8 @@
       <find>moveElement</find>
       <find>insertAfter</find>
       <find>choosedElementIndex</find>
+      <find>Scroll</find>
+      <find>gutter</find>
     </findStrings>
     <replaceStrings>
       <replace>_dataStore</replace>
@@ -673,7 +697,7 @@
       <window_info anchor="bottom" id="Version Control" order="4" weight="0.57015985" />
       <window_info anchor="bottom" id="Message" order="5" />
       <window_info anchor="bottom" id="Find" order="6" weight="0.79040855" />
-      <window_info active="true" anchor="bottom" id="Run" order="7" sideWeight="0.48504445" visible="true" weight="0.13321492" />
+      <window_info anchor="bottom" id="Run" order="7" sideWeight="0.48504445" weight="0.13321492" />
       <window_info anchor="bottom" id="Debug" order="8" sideWeight="0.49393696" weight="0.28419182" />
       <window_info anchor="bottom" id="Cvs" order="9" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="10" weight="0.4" />
@@ -855,13 +879,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/IWork/IWorkStep/ParamInfo/ParamInputEditDialog.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1370">
-          <caret line="84" column="29" selection-start-line="84" selection-start-column="29" selection-end-line="84" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/IWork/IWorkStep/ParamInfo/PreParamOutputTree.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
@@ -1150,13 +1167,35 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/IWork/IMigrate/EditMigrate.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" column="1" selection-start-line="1" selection-start-column="1" selection-end-line="1" selection-end-column="23" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#Scroll#0;n#template#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/IWork/IAssistant/QuickTable.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="146">
-          <caret line="140" column="9" lean-forward="true" selection-start-line="140" selection-start-column="9" selection-end-line="140" selection-end-column="9" />
+        <state relative-caret-position="49">
+          <caret line="8" column="14" lean-forward="true" selection-start-line="8" selection-start-column="14" selection-end-line="8" selection-end-column="14" />
           <folding>
             <element signature="n#style#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#Button#0;n#span#0;n#div#0;n#Split#0;n#div#1;n#div#0;n#Row#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#Col#0;n#Row#0;n#div#0;n#Row#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#Button#0;n#span#0;n#Scroll#0;n#Col#0;n#Row#0;n#div#0;n#Row#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#Col#1;n#Row#0;n#div#0;n#Row#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#Button#0;n#span#0;n#div#0;n#Scroll#0;n#Col#1;n#Row#0;n#div#0;n#Row#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#p#0;n#Col#0;n#Row#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#li#0;n#ul#0;n#CheckboxGroup#0;n#Col#0;n#Row#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#p#1;n#Col#0;n#Row#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#p#0;n#Col#1;n#Row#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#li#0;n#ul#0;n#Col#1;n#Row#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#Button#0;n#li#0;n#ul#0;n#Col#1;n#Row#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#li#1;n#ul#0;n#Col#1;n#Row#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#Button#0;n#li#1;n#ul#0;n#Col#1;n#Row#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="e#2597#2633#0" expanded="true" />
           </folding>
         </state>
       </provider>
