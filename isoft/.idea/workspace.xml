@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="61c01151-84f0-4bfd-a227-5c1f0b5a424d" name="Default" comment="代码优化">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/isoft_iaas_web/iwork.db" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_iaas_web/iwork.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/IWork/IAssistant/QuickTable.vue" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/IWork/IAssistant/QuickTable.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/IWork/IResource/ResourceList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/IWork/IResource/ResourceList.vue" afterDir="false" />
     </list>
     <ignored path="isoft_deploy_web/static/uploadfile/" />
     <ignored path="../.idea/inspectionProfiles/profiles_settings.xml" />
@@ -108,7 +107,7 @@
           <entry key="svg" value="1" />
           <entry key="ts" value="22" />
           <entry key="txt" value="92" />
-          <entry key="vue" value="1833" />
+          <entry key="vue" value="1834" />
           <entry key="vue_bak" value="1" />
           <entry key="xml" value="11" />
           <entry key="yml" value="1" />
@@ -128,7 +127,7 @@
           <entry key="SQL" value="7" />
           <entry key="SVG" value="1" />
           <entry key="TypeScript" value="22" />
-          <entry key="Vue.js" value="1820" />
+          <entry key="Vue.js" value="1821" />
           <entry key="XML" value="11" />
           <entry key="YAML" value="1" />
           <entry key="x86 Plan9 Assembly" value="20" />
@@ -146,7 +145,7 @@
           <entry key="sql" value="113" />
           <entry key="sum" value="3" />
           <entry key="txt" value="1251" />
-          <entry key="vue" value="81209" />
+          <entry key="vue" value="81217" />
           <entry key="xml" value="48" />
         </counts>
       </usages-collector>
@@ -158,7 +157,7 @@
           <entry key="JavaScript" value="8685" />
           <entry key="PLAIN_TEXT" value="3621" />
           <entry key="SQL" value="141" />
-          <entry key="Vue.js" value="81102" />
+          <entry key="Vue.js" value="81110" />
           <entry key="XML" value="48" />
         </counts>
       </usages-collector>
@@ -181,11 +180,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/IWork/IAssistant/QuickTable.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="172">
-              <caret line="22" column="24" selection-start-line="22" selection-start-column="24" selection-end-line="22" selection-end-column="24" />
+            <state relative-caret-position="182">
+              <caret line="21" column="78" selection-start-line="21" selection-start-column="78" selection-end-line="21" selection-end-column="78" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#template#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#0;n#div#0;n#Row#0;n#div#0;n#template#0;n#!!top" expanded="true" />
@@ -207,13 +206,14 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/IWork/IMigrate/EditMigrate.vue">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/IWork/IResource/ResourceList.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="1" column="1" selection-start-line="1" selection-start-column="1" selection-end-line="1" selection-end-column="23" />
+            <state relative-caret-position="111">
+              <caret line="82" column="21" selection-start-line="82" selection-start-column="21" selection-end-line="82" selection-end-column="21" />
               <folding>
-                <element signature="n#style#0;n#div#0;n#Scroll#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#ISimpleLeftRightRow#0;n#div#0;n#template#0;n#!!top" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -335,7 +335,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/isoft_iaas_web/core/iworkplugin/iworknode/node_entity.go" />
         <option value="$PROJECT_DIR$/isoft_iaas_web/core/iworkplugin/iworknode/node_env.go" />
         <option value="$PROJECT_DIR$/isoft_iaas_web/core/iworkplugin/iworknode/node_file.go" />
         <option value="$PROJECT_DIR$/isoft_iaas_web/core/iworkplugin/iworknode/node_hash.go" />
@@ -386,6 +385,7 @@
         <option value="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/tools/index.js" />
         <option value="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/IWork/IAssistant/QuickResource.vue" />
         <option value="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/IWork/IAssistant/QuickTable.vue" />
+        <option value="$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/IWork/IResource/ResourceList.vue" />
       </list>
     </option>
   </component>
@@ -476,6 +476,16 @@
               <item name="components" type="462c0819:PsiDirectoryNode" />
               <item name="IWork" type="462c0819:PsiDirectoryNode" />
               <item name="IAssistant" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="isoft" type="b2602c69:ProjectViewProjectNode" />
+              <item name="isoft" type="462c0819:PsiDirectoryNode" />
+              <item name="isoft_vue_web" type="462c0819:PsiDirectoryNode" />
+              <item name="isoft_iaas_ui" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+              <item name="IWork" type="462c0819:PsiDirectoryNode" />
+              <item name="IResource" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -1130,13 +1140,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/IWork/IResource/ResourceList.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-116">
-          <caret line="1" column="14" selection-start-line="1" selection-start-column="14" selection-end-line="1" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$APPLICATION_HOME_DIR$/lib/goland.jar!/resources/html5-schema/html5/core-scripting.rnc">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="178">
@@ -1180,8 +1183,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/IWork/IAssistant/QuickTable.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="172">
-          <caret line="22" column="24" selection-start-line="22" selection-start-column="24" selection-end-line="22" selection-end-column="24" />
+        <state relative-caret-position="182">
+          <caret line="21" column="78" selection-start-line="21" selection-start-column="78" selection-end-line="21" selection-end-column="78" />
           <folding>
             <element signature="n#style#0;n#div#0;n#template#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#0;n#div#0;n#Row#0;n#div#0;n#template#0;n#!!top" expanded="true" />
@@ -1198,6 +1201,17 @@
             <element signature="n#style#0;n#li#1;n#ul#0;n#Col#1;n#Row#0;n#div#0;n#template#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#Button#0;n#li#1;n#ul#0;n#Col#1;n#Row#0;n#div#0;n#template#0;n#!!top" expanded="true" />
             <element signature="e#2597#2633#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isoft_vue_web/isoft_iaas_ui/src/components/IWork/IResource/ResourceList.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="111">
+          <caret line="82" column="21" selection-start-line="82" selection-start-column="21" selection-end-line="82" selection-end-column="21" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#ISimpleLeftRightRow#0;n#div#0;n#template#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
