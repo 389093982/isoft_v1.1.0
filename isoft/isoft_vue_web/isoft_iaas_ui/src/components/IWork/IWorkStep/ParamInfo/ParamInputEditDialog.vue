@@ -23,6 +23,9 @@
         <h3 style="color: #1600ff;">
           参数名称({{paramIndex}}):{{inputLabel}}
         </h3>
+        <router-link :to="{ path: '/iwork/quickSql' }" tag="a" target="_blank">
+          <Icon type="ios-cube-outline" size="18" style="float: right;"/>
+        </router-link>
         <QuickFuncList ref="quickFuncList" @chooseFunc="chooseFunc"/>
         <Icon type="md-copy" size="18" style="float: right;" @click="showQuickFunc()"/>
         <Input v-model="inputTextData" type="textarea" :rows="15" placeholder="Enter something..." />
