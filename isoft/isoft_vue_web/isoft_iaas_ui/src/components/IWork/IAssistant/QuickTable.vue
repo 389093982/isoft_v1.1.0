@@ -16,14 +16,16 @@
               </span>
             </div>
             <div slot="right" class="demo-split-pane">
-              <span v-for="(element,index) in appendSqlElements"
-                    draggable="true" @dragstart="dragstart($event, element, index)"
-                    @drop="drop($event, index)" @dragover="allowDrop($event)">
-                <Button :type="choosedElementIndex == index ? 'primary' : 'default'"
-                        style="margin: 2px;" size="small" @click="choosedElementIndex=index">
-                  {{element}}
-                </Button>
-              </span>
+              <div style="min-height: 100px;" @drop="drop($event, -1)" @dragover="allowDrop($event)">
+                <span v-for="(element,index) in appendSqlElements"
+                      draggable="true" @dragstart="dragstart($event, element, index)"
+                      @drop="drop($event, index)" @dragover="allowDrop($event)">
+                  <Button :type="choosedElementIndex == index ? 'primary' : 'default'"
+                          style="margin: 2px;" size="small" @click="choosedElementIndex=index">
+                    {{element}}
+                  </Button>
+                </span>
+              </div>
             </div>
           </Split>
         </div>
@@ -113,7 +115,7 @@
       renderSql:function () {
         alert(this.appendSqlElements.join(" "));
       },
-      deleteElement:function () {
+      deleteElement:function (event) {
         this.appendSqlElements.splice(this.choosedElementIndex, 1);
       },
       dragstart:function(event, transferData, index){
@@ -123,18 +125,24 @@
         event.preventDefault();
       },
       drop:function(event, index){
+        event.stopPropagation();
         event.preventDefault();
         var dataStr = event.dataTransfer.getData("Text");
         var data = JSON.parse(dataStr);
         var sourceIndex = data.index;
         var transferData = data.transferData;
-        if(sourceIndex >= 0){
-          // 交换位置
-          swapArray(this.appendSqlElements, sourceIndex, index);
+        if(index > 0){
+          if(sourceIndex >= 0){
+            // 交换位置
+            swapArray(this.appendSqlElements, sourceIndex, index);
+          }else{
+            // index 后面添加
+            this.appendSqlElements.splice(index + 1, 0, data.transferData);
+          }
         }else{
-          // index 后面添加
-          this.appendSqlElements.splice(index + 1, 0, data.transferData);
+          this.appendSqlElements.push(transferData);
         }
+
       }
     }
   }
