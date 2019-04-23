@@ -90,7 +90,7 @@
         checkTableColumns:[],
         customSqls:[],
         // default line 默认线路
-        appendSqlElements:["select","*","from dual"],
+        appendSqlElements:["select"],
         hotSqlElements:["select", "(", ")", "count(*) as count","where","from"],
       }
     },
