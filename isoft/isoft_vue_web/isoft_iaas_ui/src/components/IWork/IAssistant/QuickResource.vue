@@ -1,6 +1,13 @@
 <template>
-  <div style="margin: 10px;">
-    <span v-for="tableName in tableNames">
+  <div style="margin-top: 10px;">
+    选择数据表：
+    <Select v-model="choose_table_name" style="width:400px">
+      <Option v-for="tableName in tableNames" :value="tableName" :key="tableName">
+        {{tableName}}
+      </Option>
+    </Select>
+
+    <span v-if="choose_table_name == tableName" v-for="tableName in tableNames">
       <QuickTable :table-name="tableName" :table-columns="getTableColumns(tableName)"
         :table-sqls="getTableSqls(tableName)"/>
        <Divider />
@@ -23,6 +30,7 @@
     },
     data(){
       return {
+        choose_table_name:'',
         tableNames:[],
         tableColumnsMap:{},
         tableSqlMap:{},
