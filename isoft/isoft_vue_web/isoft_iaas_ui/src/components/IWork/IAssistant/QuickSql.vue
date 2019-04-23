@@ -1,12 +1,13 @@
 <template>
-  <Collapse simple>
-    <Panel :name="resource.resource_name"  v-for="resource in resources">
-      <span style="color: green;">{{resource.resource_name}} ~ {{resource.resource_dsn}}</span>
-      <p slot="content">
-        <QuickResource :resource="resource"/>
-      </p>
-    </Panel>
-  </Collapse>
+  <div>
+    切换数据源：
+    <Select v-model="choose_resource_dsn" style="width:400px" @on-change="chooseResource">
+      <Option v-for="resource in resources" :value="resource.resource_dsn" :key="resource.resource_dsn">
+        {{resource.resource_name}} ~ {{resource.resource_dsn}}
+      </Option>
+    </Select>
+    <QuickResource v-if="currentResource" :resource="currentResource"/>
+  </div>
 </template>
 
 <script>
@@ -19,6 +20,8 @@
     data(){
       return {
         resources:[],
+        currentResource:null,
+        choose_resource_dsn:'',
       }
     },
     methods:{
@@ -27,6 +30,9 @@
         if(result.status == "SUCCESS"){
           this.resources = result.resources;
         }
+      },
+      chooseResource:function () {
+        this.currentResource = this.resources.filter(resource => resource.resource_dsn == this.choose_resource_dsn)[0];
       }
     },
     mounted:function () {
