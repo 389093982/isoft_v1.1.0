@@ -90,7 +90,7 @@
         customSqls:[],
         // default line 默认线路
         appendSqlElements:["select"],
-        hotSqlElements:["select", "(", ")", "count(*) as count","where","from"],
+        hotSqlElements:["select", "(", ")","count(*) as count","where","from","where 1=0"],
       }
     },
     methods:{
@@ -107,6 +107,7 @@
       appendColumn:function () {
         if(this.checkTableColumns.length > 0){
           this.customSqls.push(this.checkTableColumns.join(","));
+          this.customSqls.push(this.checkTableColumns.map(column => column + "=?").join(" and "));
         }
       },
       deleteCustom:function (index) {

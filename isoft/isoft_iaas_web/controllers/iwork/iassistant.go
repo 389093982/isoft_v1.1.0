@@ -19,6 +19,7 @@ func (this *WorkController) LoadQuickSqlMeta() {
 		tableColumns := sqlutil.GetAllColumnNames(tableName, resource.ResourceDsn)
 		tableColumnsMap[tableName] = tableColumns
 		tableSqlMap[tableName] = []string{
+			tableName,
 			fmt.Sprintf(`select count(*) as count from %s`, tableName),
 			fmt.Sprintf(`select count(*) as count from %s where 1 = 0`, tableName),
 			strings.Join(tableColumns, ","),
