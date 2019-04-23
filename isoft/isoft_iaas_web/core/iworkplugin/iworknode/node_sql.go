@@ -173,20 +173,18 @@ func (this *SQLQueryPageNode) Execute(trackingId string) {
 }
 
 func getPageIndexAndPageSize(tmpDataMap map[string]interface{}) (currentPage int, pageSize int) {
-	if current_page, ok := tmpDataMap[iworkconst.NUMBER_PREFIX+"current_page"].(string); ok {
-		currentPage, _ = strconv.Atoi(current_page)
-	} else if current_page, ok := tmpDataMap[iworkconst.NUMBER_PREFIX+"current_page"].(int); ok {
-		currentPage = current_page
-	} else if current_page, ok := tmpDataMap[iworkconst.NUMBER_PREFIX+"current_page"].(int64); ok {
-		currentPage = int(current_page)
+	var convert = func(data interface{}) (result int) {
+		if _data, ok := data.(string); ok {
+			result, _ = strconv.Atoi(_data)
+		} else if _data, ok := data.(int); ok {
+			result = _data
+		} else if _data, ok := data.(int64); ok {
+			result = int(_data)
+		}
+		return
 	}
-	if page_size, ok := tmpDataMap[iworkconst.NUMBER_PREFIX+"page_size"].(string); ok {
-		pageSize, _ = strconv.Atoi(page_size)
-	} else if page_size, ok := tmpDataMap[iworkconst.NUMBER_PREFIX+"page_size"].(int); ok {
-		pageSize = page_size
-	} else if page_size, ok := tmpDataMap[iworkconst.NUMBER_PREFIX+"page_size"].(int64); ok {
-		pageSize = int(page_size)
-	}
+	currentPage = convert(tmpDataMap[iworkconst.NUMBER_PREFIX+"current_page"])
+	pageSize = convert(tmpDataMap[iworkconst.NUMBER_PREFIX+"page_size"])
 	return
 }
 
