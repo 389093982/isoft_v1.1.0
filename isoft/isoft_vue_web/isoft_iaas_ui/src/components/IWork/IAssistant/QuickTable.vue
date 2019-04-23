@@ -1,33 +1,32 @@
 <template>
   <div style="margin: 10px;">
-    <Row>
-      <div>
-        <div style="text-align: right;margin-bottom: 5px;">
-          <span @drop="deleteElement($event)" @dragover="allowDrop($event)">
-           <Button type="primary" size="small" icon="md-close">拖拽至此处进行删除</Button>
+    <div>
+      <div style="border: 1px solid #dcdee2;padding: 20px;">
+          <span v-for="(element,index) in hotSqlElements" draggable="true" @dragstart="dragstart($event, element, -1, 'left')">
+            <Button style="margin: 2px;" size="small">{{element}}</Button>
           </span>
+      </div>
+
+      <div>
+        <div style="text-align: right;margin-top:5px;margin-bottom: 5px;">
+            <span @drop="deleteElement($event)" @dragover="allowDrop($event)">
+              <Button type="primary" size="small" icon="md-close">拖拽至此处进行删除</Button>
+            </span>
           <Button type="dashed" size="small" @click="renderSql">Render Sql</Button>
         </div>
-
-        <Row :gutter="10">
-          <Col span="8" style="border: 1px solid #dcdee2;padding: 20px;">
-            <span v-for="(element,index) in hotSqlElements" draggable="true" @dragstart="dragstart($event, element, -1, 'left')">
-              <Button style="margin: 2px;" size="small">{{element}}</Button>
-            </span>
-          </Col>
-          <Col span="16">
-            <div style="min-height: 100px;border: 1px solid #dcdee2;padding:20px;" @drop="drop($event, -1)" @dragover="allowDrop($event)">
-              <span v-for="(element,index) in appendSqlElements"
-                    draggable="true" @dragstart="dragstart($event, element, index, 'right')"
-                    @drop="drop($event, index)" @dragover="allowDrop($event)">
-                <Tooltip :content="element" placement="bottom" max-width="800">
-                  <Button style="margin: 2px;" size="small">{{element | filterLimitFunc}}</Button>
-                </Tooltip>
-              </span>
-            </div>
-          </Col>
-        </Row>
+        <div style="min-height: 100px;border: 1px solid #dcdee2;padding:20px;" @drop="drop($event, -1)" @dragover="allowDrop($event)">
+          <span v-for="(element,index) in appendSqlElements"
+                draggable="true" @dragstart="dragstart($event, element, index, 'right')"
+                @drop="drop($event, index)" @dragover="allowDrop($event)">
+            <Tooltip :content="element" placement="bottom" max-width="800">
+              <Button style="margin: 2px;" size="small">{{element | filterLimitFunc}}</Button>
+            </Tooltip>
+          </span>
+        </div>
       </div>
+    </div>
+
+    <Row style="margin-top: 10px;">
       <Col span="4">
         <p style="color: red;">表名：{{tableName}}</p>
         <CheckboxGroup v-model="checkTableColumns">
