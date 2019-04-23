@@ -20,9 +20,9 @@
               <span v-for="(element,index) in appendSqlElements"
                     draggable="true" @dragstart="dragstart($event, element, index, 'right')"
                     @drop="drop($event, index)" @dragover="allowDrop($event)">
-                <Button style="margin: 2px;" size="small">
-                  {{element}}
-                </Button>
+                <Tooltip :content="element" placement="bottom" max-width="800">
+                  <Button style="margin: 2px;" size="small">{{element | filterLimitFunc}}</Button>
+                </Tooltip>
               </span>
             </div>
           </Col>
@@ -47,10 +47,14 @@
         <p style="color: red;">sql信息</p>
         <ul>
           <li style="list-style: none;" v-for="tableSql in tableSqls" draggable="true" @dragstart="dragstart($event, tableSql, -1, 'bottom')">
-            <Button style="margin: 2px;" size="small">{{tableSql}}</Button>
+            <Tooltip :content="tableSql" placement="bottom" max-width="800">
+              <Button style="margin: 2px;" size="small">{{tableSql | filterLimitFunc}}</Button>
+            </Tooltip>
           </li>
           <li style="list-style: none;" v-for="(customSql,index) in customSqls" draggable="true" @dragstart="dragstart($event, customSql, -1, 'bottom')">
-            <Button style="margin: 2px;" size="small">自定义sql：{{customSql}}</Button>
+            <Tooltip :content="customSql" placement="bottom" max-width="800">
+              <Button style="margin: 2px;" size="small">自定义sql：{{customSql | filterLimitFunc}}</Button>
+            </Tooltip>
             <Button type="dashed" size="small" @click="deleteCustom(index)">删除</Button>
           </li>
         </ul>
@@ -152,6 +156,15 @@
           }
         }
       }
+    },
+    filters:{
+      // 内容超长则显示部分
+      filterLimitFunc:function (value) {
+        if(value && value.length > 80) {
+          value= value.substring(0,80) + '...';
+        }
+        return value;
+      },
     }
   }
 </script>
