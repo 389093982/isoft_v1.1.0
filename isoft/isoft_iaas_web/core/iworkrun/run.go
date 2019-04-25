@@ -36,7 +36,7 @@ func Run(work iwork.Work, steps []iwork.WorkStep, dispatcher *entry.Dispatcher) 
 	// 逐个 block 依次执行
 	for _, blockStep := range getExecuteOrder(steps) {
 		if blockStep.Step.WorkStepType != "empty" {
-			RunOneStep(trackingId, blockStep, store, dispatcher, receiver)
+			receiver = RunOneStep(trackingId, blockStep, store, dispatcher)
 		}
 	}
 
@@ -67,7 +67,7 @@ func getExecuteOrder(steps []iwork.WorkStep) []*block.BlockStep {
 
 // 执行单个 BlockStep
 func RunOneStep(trackingId string, blockStep *block.BlockStep,
-	datastore *datastore.DataStore, dispatcher *entry.Dispatcher, receiver *entry.Receiver) {
+	datastore *datastore.DataStore, dispatcher *entry.Dispatcher) (receiver *entry.Receiver) {
 	// 统计耗费时间
 	defer recordCostTimeLog(blockStep.Step.WorkStepName, trackingId, time.Now())
 	// 记录开始执行日志
@@ -86,4 +86,5 @@ func RunOneStep(trackingId string, blockStep *block.BlockStep,
 	// 记录结束执行日志
 	iwork.InsertRunLogDetail(trackingId, fmt.Sprintf("end execute blockStep: >>>>>>>>>> [[%s]]", blockStep.Step.WorkStepName))
 	// factory 节点如果代理的是 work_end 节点,则传递 Receiver 出去
+	return factory.Receiver
 }
