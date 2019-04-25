@@ -29,7 +29,11 @@ func (this *WorkController) PublishAsSerivce() {
 	}
 	mapData := this.ParseParam(steps)
 	receiver := iworkrun.Run(work, steps, &entry.Dispatcher{TmpDataMap: mapData})
-	this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "result": receiver.TmpDataMap}
+	if receiver != nil {
+		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "result": receiver.TmpDataMap}
+	} else {
+		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
+	}
 	this.ServeJSON()
 }
 
