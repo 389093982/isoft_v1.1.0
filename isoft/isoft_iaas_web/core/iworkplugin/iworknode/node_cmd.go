@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"isoft/isoft_iaas_web/core/iworkconst"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
+	"isoft/isoft_iaas_web/core/iworklog"
 	"isoft/isoft_iaas_web/core/iworkmodels"
 	"isoft/isoft_iaas_web/core/iworkutil/cmdutil"
 	"isoft/isoft_iaas_web/models/iwork"
@@ -14,6 +15,7 @@ import (
 type RunCmdLogWriter struct {
 	LogType    string
 	TrackingId string
+	logwriter  *iworklog.CacheLoggerWriter
 }
 
 func (this *RunCmdLogWriter) Write(p []byte) (n int, err error) {
@@ -21,7 +23,7 @@ func (this *RunCmdLogWriter) Write(p []byte) (n int, err error) {
 	messages := strings.Split(message, "\n")
 	for _, messageInfo := range messages {
 		if strings.TrimSpace(messageInfo) != "" {
-			iwork.InsertRunLogDetail(this.TrackingId, fmt.Sprintf("%s -- %s", this.LogType, strings.TrimSpace(messageInfo)))
+			this.logwriter.Write(this.TrackingId, fmt.Sprintf("%s -- %s", this.LogType, strings.TrimSpace(messageInfo)))
 		}
 	}
 	return len(p), nil
@@ -44,10 +46,12 @@ func (this *RunCmdNode) Execute(trackingId string) {
 
 	stdout := &RunCmdLogWriter{
 		LogType:    "INFO",
+		logwriter:  this.LogWriter,
 		TrackingId: trackingId,
 	}
 	stderr := &RunCmdLogWriter{
 		LogType:    "ERROR",
+		logwriter:  this.LogWriter,
 		TrackingId: trackingId,
 	}
 
@@ -55,7 +59,7 @@ func (this *RunCmdNode) Execute(trackingId string) {
 	command_args := tmpDataMap[iworkconst.STRING_PREFIX+"command_args"].(string)
 	args := strings.Split(command_args, " ")
 	// 记录当前正在执行的命令
-	iwork.InsertRunLogDetail(trackingId, fmt.Sprintf("current cmd command is ==> %s %s", command_name, strings.Join(args, " ")))
+	this.LogWriter.Write(trackingId, fmt.Sprintf("current cmd command is ==> %s %s", command_name, strings.Join(args, " ")))
 	err := cmdutil.RunCommand(stdout, stderr, command_name, args...)
 	if err != nil {
 		panic(err)

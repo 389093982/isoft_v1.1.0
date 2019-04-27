@@ -40,7 +40,7 @@ func (this *IFNode) Execute(trackingId string) {
 			this.BlockStepRunFunc(trackingId, blockStep, this.DataStore, nil)
 		}
 	} else {
-		iwork.InsertRunLogDetail(trackingId, fmt.Sprintf("The blockStep for %s was skipped!", this.WorkStep.WorkStepName))
+		this.LogWriter.Write(trackingId, fmt.Sprintf("The blockStep for %s was skipped!", this.WorkStep.WorkStepName))
 	}
 }
 

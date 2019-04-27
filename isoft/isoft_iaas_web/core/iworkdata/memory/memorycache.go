@@ -19,7 +19,7 @@ type MemoryCache struct {
 // 向数据中心缓存数据
 func (this *MemoryCache) CacheData(paramName string, paramValue interface{}) {
 	this.MemoryCacheData[paramName] = paramValue
-	iwork.InsertRunLogDetail(this.TrackingId, fmt.Sprintf("[%s]cache memory data: %s:%v", this.TrackingId, paramName, paramValue))
+	iwork.InsertRunLogDetail2(this.TrackingId, fmt.Sprintf("[%s]cache memory data: %s:%v", this.TrackingId, paramName, paramValue))
 }
 
 // 从 MemoryCache 获取数据

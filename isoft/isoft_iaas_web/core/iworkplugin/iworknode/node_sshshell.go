@@ -5,6 +5,7 @@ import (
 	"isoft/isoft_iaas_web/core/iworkconst"
 	"isoft/isoft_iaas_web/core/iworkdata/param"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
+	"isoft/isoft_iaas_web/core/iworklog"
 	"isoft/isoft_iaas_web/core/iworkmodels"
 	"isoft/isoft_iaas_web/core/iworkutil/sshutil"
 	"isoft/isoft_iaas_web/models/iwork"
@@ -14,6 +15,7 @@ import (
 
 type SSHShellLogWriter struct {
 	LogType    string
+	logwriter  *iworklog.CacheLoggerWriter
 	TrackingId string
 }
 
@@ -22,7 +24,7 @@ func (this *SSHShellLogWriter) Write(p []byte) (n int, err error) {
 	messages := strings.Split(message, "\n")
 	for _, messageInfo := range messages {
 		if strings.TrimSpace(messageInfo) != "" {
-			iwork.InsertRunLogDetail(this.TrackingId, fmt.Sprintf("%s -- %s", this.LogType, strings.TrimSpace(messageInfo)))
+			this.logwriter.Write(this.TrackingId, fmt.Sprintf("%s -- %s", this.LogType, strings.TrimSpace(messageInfo)))
 		}
 	}
 	return len(p), nil
@@ -48,10 +50,12 @@ func (this *SSHShellNode) Execute(trackingId string) {
 
 	stdout := &SSHShellLogWriter{
 		LogType:    "INFO",
+		logwriter:  this.LogWriter,
 		TrackingId: trackingId,
 	}
 	stderr := &SSHShellLogWriter{
 		LogType:    "ERROR",
+		logwriter:  this.LogWriter,
 		TrackingId: trackingId,
 	}
 

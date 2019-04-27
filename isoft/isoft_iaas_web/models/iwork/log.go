@@ -37,7 +37,13 @@ func insertRunLogDetailData(detail *RunLogDetail) (id int64, err error) {
 	return
 }
 
-func InsertRunLogDetail(trackingId, detail string) {
+func InsertMultiRunLogDetail(details []*RunLogDetail) (num int64, err error) {
+	o := orm.NewOrm()
+	num, err = o.InsertMulti(len(details), &details)
+	return
+}
+
+func InsertRunLogDetail2(trackingId, detail string) {
 	insertRunLogDetailData(&RunLogDetail{
 		TrackingId:      trackingId,
 		Detail:          detail,

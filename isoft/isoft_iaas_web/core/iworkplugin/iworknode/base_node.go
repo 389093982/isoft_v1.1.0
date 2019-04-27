@@ -9,6 +9,7 @@ import (
 	"isoft/isoft_iaas_web/core/iworkdata/param"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
 	"isoft/isoft_iaas_web/core/iworkfunc"
+	"isoft/isoft_iaas_web/core/iworklog"
 	"isoft/isoft_iaas_web/core/iworkmodels"
 	"isoft/isoft_iaas_web/core/iworkplugin/iworkprotocol"
 	"isoft/isoft_iaas_web/core/iworkutil"
@@ -23,6 +24,7 @@ type BaseNode struct {
 	iworkprotocol.IWorkStep
 	DataStore *datastore.DataStore
 	o         orm.Ormer
+	LogWriter *iworklog.CacheLoggerWriter
 }
 
 func (this *BaseNode) GetDefaultParamInputSchema() *iworkmodels.ParamInputSchema {

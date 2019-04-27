@@ -2,7 +2,7 @@ package datastore
 
 import (
 	"fmt"
-	"isoft/isoft_iaas_web/models/iwork"
+	"isoft/isoft_iaas_web/core/iworklog"
 )
 
 type DataNodeStore struct {
@@ -11,13 +11,14 @@ type DataNodeStore struct {
 
 type DataStore struct {
 	TrackingId       string
+	logwriter        *iworklog.CacheLoggerWriter
 	DataNodeStoreMap map[string]*DataNodeStore
 }
 
 // 向数据中心缓存数据
 func (this *DataStore) CacheData(nodeName, paramName string, paramValue interface{}) {
 	this.CacheByteData(nodeName, paramName, paramValue)
-	iwork.InsertRunLogDetail(this.TrackingId,
+	this.logwriter.Write(this.TrackingId,
 		fmt.Sprintf("<span style='color:#FF99FF;'> [%s] </span>"+
 			"<span style='color:#6633FF;'> cache data for $%s.%s: </span>"+
 			"<span style='color:#CC0000;'> %v </span>", this.TrackingId, nodeName, paramName, paramValue))
@@ -46,9 +47,10 @@ func (this *DataStore) GetData(nodeName, paramName string) interface{} {
 }
 
 // 获取数据中心
-func InitDataStore(trackingId string) *DataStore {
+func InitDataStore(trackingId string, logwriter *iworklog.CacheLoggerWriter) *DataStore {
 	return &DataStore{
 		TrackingId:       trackingId,
+		logwriter:        logwriter,
 		DataNodeStoreMap: make(map[string]*DataNodeStore, 0),
 	}
 }
