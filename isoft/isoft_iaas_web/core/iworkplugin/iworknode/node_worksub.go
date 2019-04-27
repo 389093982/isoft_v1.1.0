@@ -83,7 +83,7 @@ func (this *WorkSubNode) RunOnceSubWork(work iwork.Work, steps []iwork.WorkStep,
 	receiver := this.WorkSubRunFunc(work, steps, &entry.Dispatcher{TrackingId: trackingId, TmpDataMap: tmpDataMap})
 	// 接收子流程数据存入 dataStore
 	for paramName, paramValue := range receiver.TmpDataMap {
-		dataStore.CacheData(this.WorkStep.WorkStepName, paramName, paramValue)
+		dataStore.CacheDatas(this.WorkStep.WorkStepName, map[string]interface{}{paramName: paramValue})
 	}
 }
 

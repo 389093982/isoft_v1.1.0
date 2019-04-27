@@ -21,6 +21,7 @@ type SQLQueryNode struct {
 }
 
 func (this *SQLQueryNode) Execute(trackingId string) {
+	paramMap := make(map[string]interface{}, 0)
 	// 跳过解析和填充的数据
 	skips := []string{iworkconst.STRING_PREFIX + "sql", iworkconst.STRING_PREFIX + "db_conn"}
 	// 节点中间数据
@@ -32,13 +33,14 @@ func (this *SQLQueryNode) Execute(trackingId string) {
 	datacounts, rowDetailDatas, rowDatas := sqlutil.Query(sql, sql_binding, dataSourceName)
 	// 将数据数据存储到数据中心
 	// 存储 datacounts
-	this.DataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.NUMBER_PREFIX+"datacounts", datacounts)
+	paramMap[iworkconst.NUMBER_PREFIX+"datacounts"] = datacounts
 	for paramName, paramValue := range rowDetailDatas {
 		// 存储具体字段值
-		this.DataStore.CacheData(this.WorkStep.WorkStepName, paramName, paramValue)
+		paramMap[paramName] = paramValue
 	}
 	// 数组对象整体存储在 rows 里面
-	this.DataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.MULTI_PREFIX+"rows", rowDatas)
+	paramMap[iworkconst.MULTI_PREFIX+"rows"] = rowDatas
+	this.DataStore.CacheDatas(this.WorkStep.WorkStepName, paramMap)
 }
 
 func (this *SQLQueryNode) GetDefaultParamInputSchema() *iworkmodels.ParamInputSchema {
@@ -95,7 +97,7 @@ func (this *SQLExecuteNode) Execute(trackingId string) {
 	affected := sqlutil.Execute(sql, _sql_binding, dataSourceName)
 	// 将数据数据存储到数据中心
 	// 存储 affected
-	this.DataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.NUMBER_PREFIX+"affected", affected)
+	this.DataStore.CacheDatas(this.WorkStep.WorkStepName, map[string]interface{}{iworkconst.NUMBER_PREFIX + "affected": affected})
 }
 
 func (this *SQLExecuteNode) modifySqlInsertWithBatchNumber(tmpDataMap map[string]interface{}, sql string) string {

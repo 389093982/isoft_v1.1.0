@@ -18,7 +18,7 @@ func (this *CalHashNode) Execute(trackingId string) {
 	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, this.DataStore)
 	str_data := tmpDataMap[iworkconst.STRING_PREFIX+"str_data"].(string)
 	hash := hashutil.CalculateHashWithString(str_data)
-	this.DataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.STRING_PREFIX+"hash", hash)
+	this.DataStore.CacheDatas(this.WorkStep.WorkStepName, map[string]interface{}{iworkconst.STRING_PREFIX + "hash": hash})
 }
 
 func (this *CalHashNode) GetDefaultParamInputSchema() *iworkmodels.ParamInputSchema {

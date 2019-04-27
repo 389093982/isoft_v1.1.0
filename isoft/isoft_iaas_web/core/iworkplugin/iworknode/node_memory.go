@@ -39,7 +39,7 @@ func (this *MemoryMapCacheNode) Execute(trackingId string) {
 		// 往 MemoryCache 中取值
 		key := iworkconst.STRING_PREFIX + "cachemap_val_get"
 		value := memoryCache.GetData(tmpDataMap[iworkconst.STRING_PREFIX+"cachemap_name"].(string) + "_" + cachemap_key_get)
-		this.DataStore.CacheData(this.WorkStep.WorkStepName, key, value)
+		this.DataStore.CacheDatas(this.WorkStep.WorkStepName, map[string]interface{}{key: value})
 	} else if cachemap_key_put, ok := tmpDataMap[iworkconst.STRING_PREFIX+"cachemap_key_put?"].(string); ok {
 		// 往 MemoryCache 中放值
 		key := tmpDataMap[iworkconst.STRING_PREFIX+"cachemap_name"].(string) + "_" + cachemap_key_put

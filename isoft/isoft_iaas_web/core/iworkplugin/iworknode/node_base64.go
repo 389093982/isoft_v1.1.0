@@ -18,7 +18,7 @@ func (this *Base64EncodeNode) Execute(trackingId string) {
 	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, this.DataStore)
 	input := tmpDataMap[iworkconst.STRING_PREFIX+"input"].(string)
 	encodeString := base64.StdEncoding.EncodeToString([]byte(input))
-	this.DataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.STRING_PREFIX+"encode_data", encodeString)
+	this.DataStore.CacheDatas(this.WorkStep.WorkStepName, map[string]interface{}{iworkconst.STRING_PREFIX + "encode_data": encodeString})
 }
 
 func (this *Base64EncodeNode) GetDefaultParamInputSchema() *iworkmodels.ParamInputSchema {
@@ -43,8 +43,10 @@ func (this *Base64DecodeNode) Execute(trackingId string) {
 	input := tmpDataMap[iworkconst.STRING_PREFIX+"input"].(string)
 	bytes, err := base64.StdEncoding.DecodeString(input)
 	if err == nil {
-		this.DataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.STRING_PREFIX+"decode_data", string(bytes))
-		this.DataStore.CacheByteData(this.WorkStep.WorkStepName, iworkconst.BYTE_ARRAY_PREFIX+"decode_data", bytes)
+		this.DataStore.CacheDatas(this.WorkStep.WorkStepName, map[string]interface{}{
+			iworkconst.STRING_PREFIX + "decode_data":     string(bytes),
+			iworkconst.BYTE_ARRAY_PREFIX + "decode_data": bytes,
+		}, iworkconst.BYTE_ARRAY_PREFIX+"decode_data")
 	} else {
 		panic(err)
 	}

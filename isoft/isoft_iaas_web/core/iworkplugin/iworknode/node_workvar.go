@@ -20,7 +20,7 @@ func (this *WorkVarAssignNode) Execute(trackingId string) {
 	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, this.DataStore, skips...)
 	workVarName := param.GetStaticParamValue(iworkconst.STRING_PREFIX+"workVarName", this.WorkStep).(string)
 	workVarValue := tmpDataMap[iworkconst.STRING_PREFIX+"workVarValue"].(string)
-	this.DataStore.CacheData("__workVars__", workVarName, workVarValue)
+	this.DataStore.CacheDatas("__workVars__", map[string]interface{}{workVarName: workVarValue})
 }
 
 func (this *WorkVarAssignNode) GetDefaultParamInputSchema() *iworkmodels.ParamInputSchema {

@@ -18,15 +18,17 @@ type FileReadNode struct {
 }
 
 func (this *FileReadNode) Execute(trackingId string) {
+	paramMap := make(map[string]interface{}, 0)
 	// 节点中间数据
 	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, this.DataStore)
 	file_path := tmpDataMap[iworkconst.STRING_PREFIX+"file_path"].(string)
-	this.DataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.STRING_PREFIX+"file_path", file_path)
+	paramMap[iworkconst.STRING_PREFIX+"file_path"] = file_path
 	if bytes, err := ioutil.ReadFile(file_path); err == nil {
-		this.DataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.STRING_PREFIX+"data", string(bytes))
+		paramMap[iworkconst.STRING_PREFIX+"data"] = string(bytes)
 	} else {
 		panic(err)
 	}
+	this.DataStore.CacheDatas(this.WorkStep.WorkStepName, paramMap)
 }
 
 func (this *FileReadNode) GetDefaultParamInputSchema() *iworkmodels.ParamInputSchema {
@@ -72,7 +74,7 @@ func (this *FileWriteNode) Execute(trackingId string) {
 	if err := fileutil.WriteFile(file_path, []byte(strdata), checkAppend(tmpDataMap)); err != nil {
 		panic(err)
 	}
-	this.DataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.STRING_PREFIX+"file_path", file_path)
+	this.DataStore.CacheDatas(this.WorkStep.WorkStepName, map[string]interface{}{iworkconst.STRING_PREFIX + "file_path": file_path})
 }
 
 func (this *FileWriteNode) GetDefaultParamInputSchema() *iworkmodels.ParamInputSchema {
@@ -108,7 +110,7 @@ func (this *FileSyncNode) Execute(trackingId string) {
 		err = os.Rename(file_path, new_file_path)
 	}
 	if err == nil {
-		this.DataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.STRING_PREFIX+"file_path", new_file_path)
+		this.DataStore.CacheDatas(this.WorkStep.WorkStepName, map[string]interface{}{iworkconst.STRING_PREFIX + "file_path": new_file_path})
 	} else {
 		panic(err)
 	}

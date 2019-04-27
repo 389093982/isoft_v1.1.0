@@ -19,7 +19,7 @@ func (this *TarGzUnCompressNode) Execute(trackingId string) {
 	targz_file_path := tmpDataMap[iworkconst.STRING_PREFIX+"targz_file_path"].(string)
 	dest_path := tmpDataMap[iworkconst.STRING_PREFIX+"dest_dir_path"].(string)
 	if err := compressutil.DeCompress(targz_file_path, dest_path); err == nil {
-		this.DataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.STRING_PREFIX+"dest_dir_path", dest_path)
+		this.DataStore.CacheDatas(this.WorkStep.WorkStepName, map[string]interface{}{iworkconst.STRING_PREFIX + "dest_dir_path": dest_path})
 	} else {
 		panic(err)
 	}
@@ -48,7 +48,7 @@ func (this *TarGzCompressNode) Execute(trackingId string) {
 	dir_file_path := tmpDataMap[iworkconst.STRING_PREFIX+"src_dir_path"].(string)
 	dest_file_path := tmpDataMap[iworkconst.STRING_PREFIX+"dest_file_path"].(string)
 	if err := compressutil.CompressDir(dir_file_path, dest_file_path); err == nil {
-		this.DataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.STRING_PREFIX+"dest_file_path", dest_file_path)
+		this.DataStore.CacheDatas(this.WorkStep.WorkStepName, map[string]interface{}{iworkconst.STRING_PREFIX + "dest_file_path": dest_file_path})
 	} else {
 		panic(err)
 	}

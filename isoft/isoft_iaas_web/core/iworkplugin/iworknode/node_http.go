@@ -32,13 +32,16 @@ func (this *HttpRequestNode) Execute(trackingId string) {
 	paramMap := fillParamMapData(tmpDataMap, iworkconst.MULTI_PREFIX+"request_params?")
 	headerMap := fillParamMapData(tmpDataMap, iworkconst.MULTI_PREFIX+"request_headers?")
 
+	dataMap := make(map[string]interface{}, 0)
 	responsebytes := httputil.DoHttpRequestWithParserFunc(request_url, request_method, paramMap, headerMap, func(resp *http.Response) {
-		this.DataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.NUMBER_PREFIX+"StatusCode", resp.StatusCode)
-		this.DataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.STRING_PREFIX+"ContentType", resp.Header.Get("content-type"))
+		dataMap[iworkconst.NUMBER_PREFIX+"StatusCode"] = resp.StatusCode
+		dataMap[iworkconst.STRING_PREFIX+"ContentType"] = resp.Header.Get("content-type")
 	})
-	this.DataStore.CacheByteData(this.WorkStep.WorkStepName, iworkconst.STRING_PREFIX+"response_data", string(responsebytes))
-	this.DataStore.CacheByteData(this.WorkStep.WorkStepName, iworkconst.BYTE_ARRAY_PREFIX+"response_data", responsebytes)
-	this.DataStore.CacheByteData(this.WorkStep.WorkStepName, iworkconst.BASE64STRING_PREFIX+"response_data", iworkutil.EncodeToBase64String(responsebytes))
+	dataMap[iworkconst.STRING_PREFIX+"response_data"] = string(responsebytes)
+	dataMap[iworkconst.BYTE_ARRAY_PREFIX+"response_data"] = responsebytes
+	dataMap[iworkconst.BASE64STRING_PREFIX+"response_data"] = iworkutil.EncodeToBase64String(responsebytes)
+	this.DataStore.CacheDatas(this.WorkStep.WorkStepName, dataMap,
+		iworkconst.STRING_PREFIX+"response_data", iworkconst.BYTE_ARRAY_PREFIX+"response_data", iworkconst.BASE64STRING_PREFIX+"response_data")
 }
 
 func (this *HttpRequestNode) GetDefaultParamInputSchema() *iworkmodels.ParamInputSchema {

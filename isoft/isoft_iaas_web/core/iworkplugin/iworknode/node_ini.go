@@ -24,7 +24,7 @@ func (this *IniReadNode) Execute(trackingId string) {
 	key := tmpDataMap[iworkconst.STRING_PREFIX+"key"].(string)
 	value, err := fileutil.ReadBeegoIniFile(file_path, section_name, key)
 	if err == nil {
-		this.DataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.STRING_PREFIX+"value", value)
+		this.DataStore.CacheDatas(this.WorkStep.WorkStepName, map[string]interface{}{iworkconst.STRING_PREFIX + "value": value})
 	} else {
 		panic(err)
 	}

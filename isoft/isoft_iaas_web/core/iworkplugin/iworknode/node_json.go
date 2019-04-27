@@ -22,7 +22,7 @@ func (this *JsonRenderNode) Execute(trackingId string) {
 	json_object := tmpDataMap[iworkconst.COMPLEX_PREFIX+"json_data"].([]map[string]interface{})
 	bytes, err := json.Marshal(json_object)
 	if err == nil {
-		this.DataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.STRING_PREFIX+"json_data", string(bytes))
+		this.DataStore.CacheDatas(this.WorkStep.WorkStepName, map[string]interface{}{iworkconst.STRING_PREFIX + "json_data": string(bytes)})
 	}
 }
 
@@ -43,22 +43,24 @@ type JsonParserNode struct {
 }
 
 func (this *JsonParserNode) Execute(trackingId string) {
+	paramMap := make(map[string]interface{}, 0)
 	// 节点中间数据
 	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, this.DataStore)
 	json_str := tmpDataMap[iworkconst.STRING_PREFIX+"json_data"].(string)
 	json_objects := make([]map[string]interface{}, 0)
 	err := json.Unmarshal([]byte(json_str), &json_objects)
 	if err == nil {
-		this.DataStore.CacheData(this.WorkStep.WorkStepName, "rows", json_objects)
+		paramMap["rows"] = json_objects
 		for index, json_object := range json_objects {
 			for paramName, paramValue := range json_object {
-				this.DataStore.CacheData(this.WorkStep.WorkStepName, fmt.Sprintf("rows[%d].%s", index, paramName), paramValue)
+				paramMap[fmt.Sprintf("rows[%d].%s", index, paramName)] = paramValue
 				if index == 0 {
-					this.DataStore.CacheData(this.WorkStep.WorkStepName, fmt.Sprintf("rows.%s", paramName), paramValue)
+					paramMap[fmt.Sprintf("rows.%s", paramName)] = paramValue
 				}
 			}
 		}
 	}
+	this.DataStore.CacheDatas(this.WorkStep.WorkStepName, paramMap)
 }
 
 func (this *JsonParserNode) GetDefaultParamInputSchema() *iworkmodels.ParamInputSchema {

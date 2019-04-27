@@ -17,7 +17,7 @@ func (this *GetEnvNode) Execute(trackingId string) {
 	// 节点中间数据
 	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, this.DataStore)
 	env_var_value := os.Getenv(tmpDataMap[iworkconst.STRING_PREFIX+"env_var_name"].(string))
-	this.DataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.STRING_PREFIX+"env_var_value", env_var_value)
+	this.DataStore.CacheDatas(this.WorkStep.WorkStepName, map[string]interface{}{iworkconst.STRING_PREFIX + "env_var_value": env_var_value})
 }
 
 func (this *GetEnvNode) GetDefaultParamInputSchema() *iworkmodels.ParamInputSchema {

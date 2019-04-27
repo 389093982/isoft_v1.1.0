@@ -13,7 +13,7 @@ type ParamVauleParser struct {
 
 func (this *ParamVauleParser) CheckParamValueFormat() bool {
 	if strings.HasPrefix(this.ParamValue, "$") && !strings.Contains(this.ParamValue, ".") {
-		this.ParamValue = this.ParamValue + ".__output__"
+		this.ParamValue = this.ParamValue + ".__output__" // 直接饮用某个节点的输出
 	}
 	this.removeUnsupportChars()
 	if strings.HasPrefix(this.ParamValue, "$") && strings.Contains(this.ParamValue, ".") {

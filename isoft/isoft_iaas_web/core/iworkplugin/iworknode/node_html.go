@@ -25,8 +25,10 @@ func (this *HrefParserNode) Execute(trackingId string) {
 		}
 	}
 	// 放在外面保证条件不满足时也是零值,不报空指针异常
-	this.DataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.MULTI_PREFIX+"hrefs", hrefs)
-	this.DataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.NUMBER_PREFIX+"href_amounts", len(hrefs))
+	this.DataStore.CacheDatas(this.WorkStep.WorkStepName, map[string]interface{}{
+		iworkconst.MULTI_PREFIX + "hrefs":         hrefs,
+		iworkconst.NUMBER_PREFIX + "href_amounts": len(hrefs),
+	})
 }
 
 func (this *HrefParserNode) GetDefaultParamInputSchema() *iworkmodels.ParamInputSchema {

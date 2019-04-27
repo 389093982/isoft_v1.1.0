@@ -28,10 +28,11 @@ func (this *DBParserNode) Execute(trackingId string) {
 	}
 	// 将其自动存为实体类
 	saveEntity(tmpDataMap, tablecolsmap)
-	// 存进 dataStore
-	this.DataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.MULTI_PREFIX+"tablecolsmap", tablecolsmap)
 	// 数组对象整体存储在 rows 里面
-	this.DataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.STRING_PREFIX+"tables", strings.Join(tableNames, ","))
+	this.DataStore.CacheDatas(this.WorkStep.WorkStepName, map[string]interface{}{
+		iworkconst.MULTI_PREFIX + "tablecolsmap": tablecolsmap,
+		iworkconst.STRING_PREFIX + "tables":      strings.Join(tableNames, ","),
+	})
 }
 
 func saveEntity(tmpDataMap map[string]interface{}, tablecolsmap map[string]string) {
