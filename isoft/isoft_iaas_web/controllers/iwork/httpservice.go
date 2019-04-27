@@ -8,13 +8,16 @@ import (
 	"isoft/isoft_iaas_web/core/iworkrun"
 	"isoft/isoft_iaas_web/models/iwork"
 	"strings"
+	"time"
 )
 
 // 示例地址: http://localhost:8086/api/iwork/httpservice/test_iblog_table_migrate?author0=admin1234567
 func (this *WorkController) PublishAsSerivce() {
+	start := time.Now()
 	defer func() {
 		if err := recover(); err != nil {
-			this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": err.(error).Error()}
+			costTime := time.Now().Sub(start).Nanoseconds() / 1e6
+			this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": err.(error).Error(), "cost(ms)": costTime}
 			this.ServeJSON()
 		}
 	}()
@@ -29,10 +32,11 @@ func (this *WorkController) PublishAsSerivce() {
 	}
 	mapData := this.ParseParam(steps)
 	receiver := iworkrun.Run(work, steps, &entry.Dispatcher{TmpDataMap: mapData})
+	costTime := time.Now().Sub(start).Nanoseconds() / 1e6
 	if receiver != nil {
-		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "result": receiver.TmpDataMap}
+		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "result": receiver.TmpDataMap, "cost(ms)": costTime}
 	} else {
-		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
+		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "cost(ms)": costTime}
 	}
 	this.ServeJSON()
 }

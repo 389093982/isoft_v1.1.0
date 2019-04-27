@@ -21,7 +21,7 @@ func Run(work iwork.Work, steps []iwork.WorkStep, dispatcher *entry.Dispatcher) 
 
 	// 为当前流程创建新的 trackingId
 	trackingId := createNewTrackingIdForWork(dispatcher, work)
-	defer recordCostTimeLog(logwriter, "execute work", trackingId, time.Now())
+	defer logwriter.RecordCostTimeLog("execute work", trackingId, time.Now())
 	defer func() {
 		if err := recover(); err != nil {
 			// 记录 4 kb大小的堆栈信息
@@ -73,7 +73,7 @@ func getExecuteOrder(steps []iwork.WorkStep) []*block.BlockStep {
 func RunOneStep(trackingId string, logwriter *iworklog.CacheLoggerWriter, blockStep *block.BlockStep,
 	datastore *datastore.DataStore, dispatcher *entry.Dispatcher) (receiver *entry.Receiver) {
 	// 统计耗费时间
-	defer recordCostTimeLog(logwriter, blockStep.Step.WorkStepName, trackingId, time.Now())
+	defer logwriter.RecordCostTimeLog(blockStep.Step.WorkStepName, trackingId, time.Now())
 	// 记录开始执行日志
 	logwriter.Write(trackingId, fmt.Sprintf("start execute blockStep: >>>>>>>>>> [[%s]]", blockStep.Step.WorkStepName))
 	// 由工厂代为执行步骤
