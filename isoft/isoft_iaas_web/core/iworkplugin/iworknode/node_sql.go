@@ -8,6 +8,7 @@ import (
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
 	"isoft/isoft_iaas_web/core/iworkfunc"
 	"isoft/isoft_iaas_web/core/iworkmodels"
+	"isoft/isoft_iaas_web/core/iworkutil/datatypeutil"
 	"isoft/isoft_iaas_web/core/iworkutil/sqlutil"
 	"isoft/isoft_iaas_web/models/iwork"
 	"strconv"
@@ -143,6 +144,8 @@ type SQLQueryPageNode struct {
 }
 
 func (this *SQLQueryPageNode) Execute(trackingId string) {
+	// 需要存储的中间数据
+	paramMap := make(map[string]interface{}, 0)
 	// 跳过解析和填充的数据
 	skips := []string{iworkconst.STRING_PREFIX + "total_sql", iworkconst.STRING_PREFIX + "sql", iworkconst.STRING_PREFIX + "db_conn"}
 	// 节点中间数据
@@ -156,20 +159,19 @@ func (this *SQLQueryPageNode) Execute(trackingId string) {
 	datacounts, rowDetailDatas, rowDatas := sqlutil.Query(sql, sql_binding, dataSourceName)
 	// 将数据数据存储到数据中心
 	// 存储 datacounts
-	this.DataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.NUMBER_PREFIX+"datacounts", datacounts)
-	for paramName, paramValue := range rowDetailDatas {
-		// 存储具体字段值
-		this.DataStore.CacheData(this.WorkStep.WorkStepName, paramName, paramValue)
-	}
+	paramMap[iworkconst.NUMBER_PREFIX+"datacounts"] = datacounts
+	paramMap = datatypeutil.CombineMap(paramMap, rowDetailDatas)
 	// 数组对象整体存储在 rows 里面
-	this.DataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.MULTI_PREFIX+"rows", rowDatas)
+	paramMap[iworkconst.MULTI_PREFIX+"rows"] = rowDatas
 	// 存储分页信息
 	pageIndex, pageSize := getPageIndexAndPageSize(tmpDataMap)
 	paginator := pageutil.Paginator(pageIndex, pageSize, totalcount)
-	this.DataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.COMPLEX_PREFIX+"paginator", paginator)
+	paramMap[iworkconst.COMPLEX_PREFIX+"paginator"] = paginator
+
 	for key, value := range paginator {
-		this.DataStore.CacheData(this.WorkStep.WorkStepName, iworkconst.FIELD_PREFIX+"paginator."+key, value)
+		paramMap[iworkconst.FIELD_PREFIX+"paginator."+key] = value
 	}
+	this.DataStore.CacheDatas(this.WorkStep.WorkStepName, paramMap)
 }
 
 func getPageIndexAndPageSize(tmpDataMap map[string]interface{}) (currentPage int, pageSize int) {

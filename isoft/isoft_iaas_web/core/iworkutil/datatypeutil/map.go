@@ -25,3 +25,10 @@ func GetMapValueSlice(m interface{}, s interface{}) interface{} {
 	}
 	return s
 }
+
+func CombineMap(m, m1 map[string]interface{}) map[string]interface{} {
+	for k, v := range m1 {
+		m[k] = v
+	}
+	return m
+}

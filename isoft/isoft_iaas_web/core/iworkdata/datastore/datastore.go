@@ -18,6 +18,7 @@ type DataStore struct {
 
 func (this *DataStore) CacheDatas(nodeName string, paramMap map[string]interface{}) {
 	logs := make([]string, 0)
+	this.CacheByteData(nodeName, "__output__", paramMap)
 	for paramName, paramValue := range paramMap {
 		this.CacheByteData(nodeName, paramName, paramValue)
 		log := fmt.Sprintf("<span style='color:#FF99FF;'> [%s] </span>"+
@@ -25,7 +26,7 @@ func (this *DataStore) CacheDatas(nodeName string, paramMap map[string]interface
 			"<span style='color:#CC0000;'> %v </span>", this.TrackingId, nodeName, paramName, paramValue)
 		logs = append(logs, log)
 	}
-	this.logwriter.Write(this.TrackingId, strings.Join(logs, "\n"))
+	this.logwriter.Write(this.TrackingId, strings.Join(logs, "<br/>"))
 }
 
 // 向数据中心缓存数据
