@@ -8,16 +8,15 @@
     :mask-closable="false"
     :styles="{top: '20px'}">
     <Row>
-      <Col span="8">
+      <Col span="7">
         <h3>前置节点输出参数</h3>
         <Scroll height="350">
           <Tree :data="data1" show-checkbox ref="tree1"></Tree>
         </Scroll>
       </Col>
-      <Col span="2" style="text-align: center;margin-top: 100px;">
-        <Button>
-          <Icon type="ios-arrow-forward" @click="appendData"></Icon>
-        </Button>
+      <Col span="3" style="text-align: center;margin-top: 100px;">
+        <Button @click="appendData('parent')" style="margin-top: 10px;"><Icon type="ios-arrow-forward"></Icon>选择父节点</Button>
+        <Button @click="appendData('children')" style="margin-top: 10px;"><Icon type="ios-arrow-forward"></Icon>选择子节点</Button>
       </Col>
       <Col span="14">
         <h3 style="color: #1600ff;">
@@ -111,29 +110,38 @@
           this.preParamOutputSchemaTreeNodeArr = result.preParamOutputSchemaTreeNodeArr;
         }
       },
-      appendDataWithPrefix:function(prefix, item){
+      appendDataWithPrefix:function(prefix, item, chooseType){
         // 没有子节点
         if(item.children == null){
           if(item.indeterminate == false){
-            // 将数据添加到右侧
-            this.inputTextData = this.inputTextData + prefix + ";\n";
+            if(item.checked){
+              // 将数据添加到右侧
+              this.inputTextData = this.inputTextData + prefix + ";\n";
+            }
           }
         }else{
           // 有子节点
           let items = item.children;
-          for(var i=0; i<items.length; i++){
-            let item = items[i];
-            this.appendDataWithPrefix(prefix + "." + item.title, item);
+          if(chooseType == 'parent' && item.indeterminate == false){
+            if(item.checked){
+              // 将数据添加到右侧
+              this.inputTextData = this.inputTextData + prefix + ";\n";
+            }
+          }else{
+            for(var i=0; i<items.length; i++){
+              let item = items[i];
+              this.appendDataWithPrefix(prefix + "." + item.title, item, chooseType);
+            }
           }
         }
       },
-      appendData:function () {
+      appendData:function (chooseType) {
         let items = this.$refs.tree1.getCheckedAndIndeterminateNodes();
         for(var i=0; i<items.length; i++){
           let item = items[i];
           // 只统计以 $ 开头的数据
           if(item.title.indexOf("$") != -1){
-            this.appendDataWithPrefix(item.title,item);
+            this.appendDataWithPrefix(item.title,item, chooseType);
           }
         }
       }
