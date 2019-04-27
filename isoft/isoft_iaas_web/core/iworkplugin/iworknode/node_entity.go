@@ -31,12 +31,13 @@ func (this *EntityParserNode) Execute(trackingId string) {
 				entityDataMap = dataMap
 			}
 			entityFieldStr := tmpDataMap[iworkconst.STRING_PREFIX+entityName+"_entity"].(string)
+			paramMap := make(map[string]interface{}, 0)
 			for _, entityField := range strings.Split(entityFieldStr, ",") {
 				// 将数据数据存储到数据中心
-				this.DataStore.CacheData(this.WorkStep.WorkStepName,
-					fmt.Sprintf("%s.%s", iworkconst.COMPLEX_PREFIX+entityName,
-						strings.TrimSpace(entityField)), entityDataMap[entityField])
+				paramMap[fmt.Sprintf("%s.%s", iworkconst.COMPLEX_PREFIX+entityName,
+					strings.TrimSpace(entityField))] = entityDataMap[entityField]
 			}
+			this.DataStore.CacheDatas(this.WorkStep.WorkStepName, paramMap)
 		}
 	}
 }

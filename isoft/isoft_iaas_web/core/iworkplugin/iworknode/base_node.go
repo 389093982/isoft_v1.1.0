@@ -224,10 +224,12 @@ func GetBatchNumber(tmpDataMap map[string]interface{}) int {
 // 提交输出数据至数据中心,此类数据能直接从 tmpDataMap 中获取,而不依赖于计算,只适用于 WORK_START、WORK_END 节点
 func (this *BaseNode) SubmitParamOutputSchemaDataToDataStore(workStep *iwork.WorkStep, dataStore *datastore.DataStore, tmpDataMap map[string]interface{}) {
 	paramOutputSchema := schema.GetCacheParamOutputSchema(workStep)
+	paramMap := make(map[string]interface{})
 	for _, item := range paramOutputSchema.ParamOutputSchemaItems {
-		// 将数据数据存储到数据中心
-		dataStore.CacheData(workStep.WorkStepName, item.ParamName, tmpDataMap[item.ParamName])
+		paramMap[item.ParamName] = tmpDataMap[item.ParamName]
 	}
+	// 将数据数据存储到数据中心
+	dataStore.CacheDatas(workStep.WorkStepName, paramMap)
 }
 
 // 去除不合理的字符

@@ -3,6 +3,7 @@ package datastore
 import (
 	"fmt"
 	"isoft/isoft_iaas_web/core/iworklog"
+	"strings"
 )
 
 type DataNodeStore struct {
@@ -15,13 +16,21 @@ type DataStore struct {
 	DataNodeStoreMap map[string]*DataNodeStore
 }
 
+func (this *DataStore) CacheDatas(nodeName string, paramMap map[string]interface{}) {
+	logs := make([]string, 0)
+	for paramName, paramValue := range paramMap {
+		this.CacheByteData(nodeName, paramName, paramValue)
+		log := fmt.Sprintf("<span style='color:#FF99FF;'> [%s] </span>"+
+			"<span style='color:#6633FF;'> cache data for $%s.%s: </span>"+
+			"<span style='color:#CC0000;'> %v </span>", this.TrackingId, nodeName, paramName, paramValue)
+		logs = append(logs, log)
+	}
+	this.logwriter.Write(this.TrackingId, strings.Join(logs, "\n"))
+}
+
 // 向数据中心缓存数据
 func (this *DataStore) CacheData(nodeName, paramName string, paramValue interface{}) {
-	this.CacheByteData(nodeName, paramName, paramValue)
-	this.logwriter.Write(this.TrackingId,
-		fmt.Sprintf("<span style='color:#FF99FF;'> [%s] </span>"+
-			"<span style='color:#6633FF;'> cache data for $%s.%s: </span>"+
-			"<span style='color:#CC0000;'> %v </span>", this.TrackingId, nodeName, paramName, paramValue))
+	this.CacheDatas(nodeName, map[string]interface{}{paramName: paramValue})
 }
 
 // 存储字节数据,不用记录日志
