@@ -143,7 +143,10 @@ func (this *BaseNode) parseAndGetSingleParamVaule(paramVaule string, dataStore *
 	}()
 	// 对单个 paramVaule 进行特殊字符编码
 	paramVaule = iworkfunc.EncodeSpecialForParamVaule(paramVaule)
-	executors := iworkfunc.GetAllFuncExecutor(paramVaule)
+	executors, err := iworkfunc.GetAllFuncExecutor(paramVaule)
+	if err != nil {
+		panic(err)
+	}
 	if executors == nil || len(executors) == 0 {
 		// 是直接参数,不需要函数进行特殊处理
 		return this._parseAndGetSingleParamVaule(paramVaule, dataStore)

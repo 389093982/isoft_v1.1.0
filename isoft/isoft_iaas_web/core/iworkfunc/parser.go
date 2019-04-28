@@ -26,10 +26,13 @@ func GetTrimFuncExecutor(executor *FuncExecutor) {
 	executor.FuncArgs = funcArgs
 }
 
-func GetAllFuncExecutor(expression string) []*FuncExecutor {
+func GetAllFuncExecutor(expression string) ([]*FuncExecutor, error) {
 	executors := make([]*FuncExecutor, 0)
 	for {
-		executor := GetFuncExecutorFromExpression(expression)
+		executor, err := GetFuncExecutorFromExpression(expression)
+		if err != nil {
+			return nil, err
+		}
 		if executor != nil {
 			executors = append(executors, executor)
 			// 在 expression 中将函数用占位符代替
@@ -38,10 +41,10 @@ func GetAllFuncExecutor(expression string) []*FuncExecutor {
 			break
 		}
 	}
-	return executors
+	return executors, nil
 }
 
-func GetFuncExecutorFromExpression(expression string) *FuncExecutor {
+func GetFuncExecutorFromExpression(expression string) (*FuncExecutor, error) {
 	// 获取表达式中所有左括号的索引
 	for _, leftBracketIndex := range GetAllLeftBracketIndex(expression) {
 		// 判断表达式 expression 中左括号索引 leftBracketIndex 后面是否有直接右括号
@@ -58,7 +61,7 @@ func GetFuncExecutorFromExpression(expression string) *FuncExecutor {
 				// 函数名称以 Iwork 开头
 				funcName = _expression[funcNameIndex:]
 			} else {
-				panic(errors.New(fmt.Sprintf("unsupport funcName in %s, must startwith %s", _expression, "Iwork")))
+				return nil, errors.New(fmt.Sprintf("unsupport funcName in %s, must startwith %s", _expression, "Iwork"))
 			}
 			return &FuncExecutor{
 				FuncUUID:       stringutil.RandomUUID(),
@@ -66,10 +69,10 @@ func GetFuncExecutorFromExpression(expression string) *FuncExecutor {
 				FuncArgs:       args,
 				FuncLeftIndex:  leftBracketIndex - len(funcName),
 				FuncRightIndex: rightBracketIndex,
-			}
+			}, nil
 		}
 	}
-	return nil
+	return nil, nil
 }
 
 // 获取表达式中所有左括号的索引

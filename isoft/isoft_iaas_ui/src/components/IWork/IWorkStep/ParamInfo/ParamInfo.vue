@@ -114,7 +114,7 @@
               // 直接刷新不关闭
               this.showWorkStepParamInfo(this.formValidate.work_id, this.formValidate.work_step_id);
             }else{
-              this.$Message.error('提交失败!');
+              this.$Message.error('提交失败!' + result.errorMsg);
             }
           }
         })

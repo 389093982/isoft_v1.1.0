@@ -13,6 +13,7 @@ import (
 	"isoft/isoft_iaas_web/core/iworkplugin/iworknode"
 	"isoft/isoft_iaas_web/core/iworkutil"
 	"isoft/isoft_iaas_web/core/iworkutil/datatypeutil"
+	"isoft/isoft_iaas_web/core/iworkvalid"
 	"isoft/isoft_iaas_web/models/iwork"
 	"strings"
 	"time"
@@ -441,11 +442,20 @@ func EditWorkStepParamInfoService(serviceArgs map[string]interface{}) error {
 	paramInputSchemaStr := serviceArgs["paramInputSchemaStr"].(string)
 	paramMappingsStr := serviceArgs["paramMappingsStr"].(string)
 	o := serviceArgs["o"].(orm.Ormer)
-	var paramInputSchema iworkmodels.ParamInputSchema
-	json.Unmarshal([]byte(paramInputSchemaStr), &paramInputSchema)
 	step, err := iwork.QueryOneWorkStep(work_id, work_step_id, o)
 	if err != nil {
 		return err
+	}
+	var paramInputSchema iworkmodels.ParamInputSchema
+	json.Unmarshal([]byte(paramInputSchemaStr), &paramInputSchema)
+
+	for _, item := range paramInputSchema.ParamInputSchemaItems {
+		formatChecker := iworkvalid.ParamValueFormatChecker{
+			ParamValue: item.ParamValue,
+		}
+		if ok, err := formatChecker.Check(); !ok && err != nil {
+			return err
+		}
 	}
 	step.WorkStepInput = paramInputSchema.RenderToJson()
 	step.WorkStepParamMapping = paramMappingsStr
