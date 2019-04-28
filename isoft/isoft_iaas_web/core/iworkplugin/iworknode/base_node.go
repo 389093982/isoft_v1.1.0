@@ -207,9 +207,6 @@ func (this *BaseNode) modifySqlBindingParamValueWithBatchNumber(item *iworkmodel
 
 // 从 tmpDataMap 获取 batch_number? 数据
 func GetBatchNumber(tmpDataMap map[string]interface{}) int {
-	if _, ok := tmpDataMap[iworkconst.NUMBER_PREFIX+"batch_number?"]; !ok {
-		return 0
-	}
 	if batch_number, ok := tmpDataMap[iworkconst.NUMBER_PREFIX+"batch_number?"].(int64); ok {
 		return int(batch_number)
 	}
