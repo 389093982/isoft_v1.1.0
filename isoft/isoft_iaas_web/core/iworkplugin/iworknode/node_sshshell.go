@@ -3,7 +3,6 @@ package iworknode
 import (
 	"fmt"
 	"isoft/isoft_iaas_web/core/iworkconst"
-	"isoft/isoft_iaas_web/core/iworkdata/param"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
 	"isoft/isoft_iaas_web/core/iworklog"
 	"isoft/isoft_iaas_web/core/iworkmodels"
@@ -38,7 +37,7 @@ type SSHShellNode struct {
 func (this *SSHShellNode) Execute(trackingId string) {
 	// 节点中间数据
 	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, this.DataStore)
-	sshResource := param.GetStaticParamValue(iworkconst.STRING_PREFIX+"ssh_conn", this.WorkStep).(iwork.Resource)
+	sshResource := tmpDataMap[iworkconst.STRING_PREFIX+"ssh_conn"].(iwork.Resource)
 	ssh_command := tmpDataMap[iworkconst.STRING_PREFIX+"ssh_command"].(string)
 
 	var timeout int64

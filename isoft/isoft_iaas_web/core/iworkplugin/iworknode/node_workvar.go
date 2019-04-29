@@ -2,7 +2,6 @@ package iworknode
 
 import (
 	"isoft/isoft_iaas_web/core/iworkconst"
-	"isoft/isoft_iaas_web/core/iworkdata/param"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
 	"isoft/isoft_iaas_web/core/iworkmodels"
 	"isoft/isoft_iaas_web/models/iwork"
@@ -14,11 +13,9 @@ type WorkVarAssignNode struct {
 }
 
 func (this *WorkVarAssignNode) Execute(trackingId string) {
-	// 跳过解析和填充的数据
-	skips := []string{iworkconst.STRING_PREFIX + "workVarName"}
 	// 节点中间数据
-	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, this.DataStore, skips...)
-	workVarName := param.GetStaticParamValue(iworkconst.STRING_PREFIX+"workVarName", this.WorkStep).(string)
+	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, this.DataStore)
+	workVarName := tmpDataMap[iworkconst.STRING_PREFIX+"workVarName"].(string)
 	workVarValue := tmpDataMap[iworkconst.STRING_PREFIX+"workVarValue"].(string)
 	this.DataStore.CacheDatas("__workVars__", map[string]interface{}{workVarName: workVarValue})
 }

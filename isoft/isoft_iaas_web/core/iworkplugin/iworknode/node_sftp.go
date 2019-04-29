@@ -3,7 +3,6 @@ package iworknode
 import (
 	"isoft/isoft/common/fileutil"
 	"isoft/isoft_iaas_web/core/iworkconst"
-	"isoft/isoft_iaas_web/core/iworkdata/param"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
 	"isoft/isoft_iaas_web/core/iworkmodels"
 	"isoft/isoft_iaas_web/core/iworkutil/sftputil"
@@ -19,7 +18,7 @@ type SftpUploadNode struct {
 func (this *SftpUploadNode) Execute(trackingId string) {
 	// 节点中间数据
 	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, this.DataStore)
-	sftpResource := param.GetStaticParamValue(iworkconst.STRING_PREFIX+"sftp_conn", this.WorkStep).(iwork.Resource)
+	sftpResource := tmpDataMap[iworkconst.STRING_PREFIX+"sftp_conn"].(iwork.Resource)
 	local_file_path := tmpDataMap[iworkconst.STRING_PREFIX+"local_file_path"].(string)
 	remote_dir_path := tmpDataMap[iworkconst.STRING_PREFIX+"remote_dir_path"].(string)
 	err := sftputil.SFTPFileCopy(sftpResource.ResourceUsername, sftpResource.ResourcePassword, sftpResource.ResourceDsn, 22, local_file_path, remote_dir_path)

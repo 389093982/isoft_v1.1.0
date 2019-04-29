@@ -22,12 +22,10 @@ type SQLQueryNode struct {
 
 func (this *SQLQueryNode) Execute(trackingId string) {
 	paramMap := make(map[string]interface{}, 0)
-	// 跳过解析和填充的数据
-	skips := []string{iworkconst.STRING_PREFIX + "sql", iworkconst.STRING_PREFIX + "db_conn"}
 	// 节点中间数据
-	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, this.DataStore, skips...)
-	sql := param.GetStaticParamValue(iworkconst.STRING_PREFIX+"sql", this.WorkStep).(string)
-	dataSourceName := param.GetStaticParamValue(iworkconst.STRING_PREFIX+"db_conn", this.WorkStep).(string)
+	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, this.DataStore)
+	sql := tmpDataMap[iworkconst.STRING_PREFIX+"sql"].(string)
+	dataSourceName := tmpDataMap[iworkconst.STRING_PREFIX+"db_conn"].(string)
 	// sql_binding 参数获取
 	sql_binding := getSqlBinding(tmpDataMap)
 	datacounts, rowDetailDatas, rowDatas := sqlutil.Query(sql, sql_binding, dataSourceName)
@@ -84,12 +82,10 @@ type SQLExecuteNode struct {
 }
 
 func (this *SQLExecuteNode) Execute(trackingId string) {
-	// 跳过解析和填充的数据
-	skips := []string{iworkconst.STRING_PREFIX + "sql", iworkconst.STRING_PREFIX + "db_conn"}
 	// 节点中间数据
-	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, this.DataStore, skips...)
-	sql := param.GetStaticParamValue(iworkconst.STRING_PREFIX+"sql", this.WorkStep).(string)
-	dataSourceName := param.GetStaticParamValue(iworkconst.STRING_PREFIX+"db_conn", this.WorkStep).(string)
+	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, this.DataStore)
+	sql := tmpDataMap[iworkconst.STRING_PREFIX+"sql"].(string)
+	dataSourceName := tmpDataMap[iworkconst.STRING_PREFIX+"db_conn"].(string)
 	// insert 语句且有批量操作时整改 sql 语句
 	sql = this.modifySqlInsertWithBatchNumber(tmpDataMap, sql)
 	// sql_binding 参数获取
@@ -148,13 +144,11 @@ type SQLQueryPageNode struct {
 func (this *SQLQueryPageNode) Execute(trackingId string) {
 	// 需要存储的中间数据
 	paramMap := make(map[string]interface{}, 0)
-	// 跳过解析和填充的数据
-	skips := []string{iworkconst.STRING_PREFIX + "total_sql", iworkconst.STRING_PREFIX + "sql", iworkconst.STRING_PREFIX + "db_conn"}
 	// 节点中间数据
-	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, this.DataStore, skips...)
-	total_sql := param.GetStaticParamValue(iworkconst.STRING_PREFIX+"total_sql", this.WorkStep).(string)
-	sql := param.GetStaticParamValue(iworkconst.STRING_PREFIX+"sql", this.WorkStep).(string)
-	dataSourceName := param.GetStaticParamValue(iworkconst.STRING_PREFIX+"db_conn", this.WorkStep).(string)
+	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, this.DataStore)
+	total_sql := tmpDataMap[iworkconst.STRING_PREFIX+"total_sql"].(string)
+	sql := tmpDataMap[iworkconst.STRING_PREFIX+"sql"].(string)
+	dataSourceName := tmpDataMap[iworkconst.STRING_PREFIX+"db_conn"].(string)
 	// sql_binding 参数获取
 	sql_binding := getSqlBinding(tmpDataMap)
 	totalcount := sqlutil.QuerySelectCount(total_sql, sql_binding[:len(sql_binding)-2], dataSourceName)

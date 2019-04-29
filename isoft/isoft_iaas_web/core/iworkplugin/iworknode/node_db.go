@@ -2,7 +2,6 @@ package iworknode
 
 import (
 	"isoft/isoft_iaas_web/core/iworkconst"
-	"isoft/isoft_iaas_web/core/iworkdata/param"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
 	"isoft/isoft_iaas_web/core/iworkmodels"
 	"isoft/isoft_iaas_web/core/iworkutil/sqlutil"
@@ -19,7 +18,7 @@ type DBParserNode struct {
 func (this *DBParserNode) Execute(trackingId string) {
 	// 节点中间数据
 	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, this.DataStore)
-	dataSourceName := param.GetStaticParamValue(iworkconst.STRING_PREFIX+"db_conn", this.WorkStep).(string)
+	dataSourceName := tmpDataMap[iworkconst.STRING_PREFIX+"db_conn"].(string)
 	tableNames := sqlutil.GetAllTableNames(dataSourceName)
 	tablecolsmap := make(map[string]string, 0)
 	for _, tableName := range tableNames {

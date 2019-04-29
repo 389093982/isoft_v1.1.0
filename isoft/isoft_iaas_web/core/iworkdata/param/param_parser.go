@@ -87,7 +87,7 @@ func (this *ParamNameParser) ParseAndGetRelativeParamValue() string {
 	return ""
 }
 
-// 根据步骤和参数名称获取静态参数值
+//根据步骤和参数名称获取静态参数值
 func GetStaticParamValue(paramName string, step *iwork.WorkStep) interface{} {
 	paramNameParser := &ParamNameParser{
 		ParamName: paramName,

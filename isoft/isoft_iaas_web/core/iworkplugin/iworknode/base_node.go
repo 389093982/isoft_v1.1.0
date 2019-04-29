@@ -3,7 +3,7 @@ package iworknode
 import (
 	"fmt"
 	"github.com/astaxie/beego/orm"
-	"isoft/isoft/common/stringutil"
+	"github.com/pkg/errors"
 	"isoft/isoft_iaas_web/core/iworkconst"
 	"isoft/isoft_iaas_web/core/iworkdata/datastore"
 	"isoft/isoft_iaas_web/core/iworkdata/param"
@@ -63,7 +63,11 @@ func (this *BaseNode) GetOrmer() orm.Ormer {
 func (this *BaseNode) parseAndFillParamVauleWithResource(paramVaule string) interface{} {
 	resource, err := iwork.QueryResourceByName(strings.Replace(paramVaule, "$RESOURCE.", "", -1))
 	if err == nil {
-		return resource.ResourceDsn
+		if resource.ResourceType == "db" {
+			return resource.ResourceDsn
+		} else if resource.ResourceType == "sftp" || resource.ResourceType == "ssh" {
+			return resource
+		}
 	}
 	return ""
 }
@@ -74,26 +78,12 @@ func (this *BaseNode) parseAndFillParamVauleWithNode(paramVaule string, dataStor
 		resolver := param.ParamVauleParser{ParamValue: paramVaule}
 		return dataStore.GetData(resolver.GetNodeNameFromParamValue(), resolver.GetParamNameFromParamValue())
 	} else {
-		return paramVaule
+		panic(errors.New(fmt.Sprintf("%s is not start with $", paramVaule)))
 	}
-}
-
-// 判断是否需要跳过解析
-func checkSkipParse(paramName string) bool {
-	names := []string{"sql", "count_sql", "metadata_sql?"}
-	for _, name := range names {
-		if name == paramName {
-			return true
-		}
-	}
-	return false
 }
 
 // 解析 paramVaule 并从 dataStore 中获取实际值
 func (this *BaseNode) ParseAndGetParamVaule(paramName, paramVaule string, dataStore *datastore.DataStore) interface{} {
-	if checkSkipParse(paramName) {
-		return paramVaule
-	}
 	values := this.parseParamValueToMulti(paramVaule)
 	// 单值
 	if len(values) == 1 {
@@ -138,7 +128,7 @@ func (this *BaseNode) _parseAndGetSingleParamVaule(paramVaule string, dataStore 
 func (this *BaseNode) parseAndGetSingleParamVaule(paramVaule string, dataStore *datastore.DataStore) interface{} {
 	defer func() {
 		if err := recover(); err != nil {
-			panic(fmt.Sprintf("execute func with expression is %s, error msg is :%s", paramVaule, err.(error).Error()))
+			panic(fmt.Sprintf("<span style='color:red;'>execute func with expression is %s, error msg is :%s</span>", paramVaule, err.(error).Error()))
 		}
 	}()
 	// 对单个 paramVaule 进行特殊字符编码
@@ -177,22 +167,22 @@ func (this *BaseNode) parseAndGetSingleParamVaule(paramVaule string, dataStore *
 
 // 将 ParamInputSchema 填充数据并返回临时的数据中心 tmpDataMap
 // skips 表示可以跳过填充的参数
-func (this *BaseNode) FillParamInputSchemaDataToTmp(workStep *iwork.WorkStep, dataStore *datastore.DataStore, skips ...string) map[string]interface{} {
+func (this *BaseNode) FillParamInputSchemaDataToTmp(workStep *iwork.WorkStep, dataStore *datastore.DataStore) map[string]interface{} {
 	// 存储节点中间数据
 	tmpDataMap := make(map[string]interface{})
 	paramInputSchema := schema.GetCacheParamInputSchema(workStep, &WorkStepFactory{WorkStep: workStep})
 	for _, item := range paramInputSchema.ParamInputSchemaItems {
-		// 跳过校验
-		if stringutil.CheckContains(item.ParamName, skips) {
-			continue
+		if item.PureText {
+			tmpDataMap[item.ParamName] = item.ParamValue
+		} else {
+			// 对参数进行非空校验
+			if ok, checkResults := iworkvalid.CheckEmptyForItem(item); !ok {
+				panic(strings.Join(checkResults, ";"))
+			}
+			// 个性化重写操作
+			this.modifySqlBindingParamValueWithBatchNumber(&item, tmpDataMap)
+			tmpDataMap[item.ParamName] = this.ParseAndGetParamVaule(item.ParamName, item.ParamValue, dataStore) // 输入数据存临时
 		}
-		// 对参数进行非空校验
-		if ok, checkResults := iworkvalid.CheckEmptyForItem(item); !ok {
-			panic(strings.Join(checkResults, ";"))
-		}
-		// 个性化重写操作
-		this.modifySqlBindingParamValueWithBatchNumber(&item, tmpDataMap)
-		tmpDataMap[item.ParamName] = this.ParseAndGetParamVaule(item.ParamName, item.ParamValue, dataStore) // 输入数据存临时
 	}
 	return tmpDataMap
 }
