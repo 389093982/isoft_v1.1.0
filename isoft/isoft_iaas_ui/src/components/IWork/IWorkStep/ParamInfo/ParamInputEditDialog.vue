@@ -19,14 +19,15 @@
         <Button @click="appendData('children')" style="margin-top: 10px;"><Icon type="ios-arrow-forward"></Icon>选择子节点</Button>
       </Col>
       <Col span="14">
-        <h3 style="color: #1600ff;">
-          参数名称({{paramIndex}}):{{inputLabel}}
-        </h3>
-        <router-link :to="{ path: '/iwork/quickSql' }" tag="a" target="_blank">
-          <Icon type="ios-cube-outline" size="18" style="float: right;"/>
-        </router-link>
-        <QuickFuncList ref="quickFuncList" @chooseFunc="chooseFunc"/>
-        <Icon type="md-copy" size="18" style="float: right;" @click="showQuickFunc()"/>
+        <h3 style="color: #1600ff;">参数名称({{paramIndex}}):{{inputLabel}}</h3>
+        <span>
+          <router-link :to="{ path: '/iwork/quickSql' }" tag="a" target="_blank">
+            <Icon type="ios-cube-outline" size="18" style=" float: right;"/>
+          </router-link>
+          <QuickFuncList ref="quickFuncList" @chooseFunc="chooseFunc"/>
+          <Icon type="md-copy" size="18" style="float: right;" @click="showQuickFunc()"/>
+          <Checkbox v-model="pureText" style="float: right;">纯文本值</Checkbox>
+        </span>
         <Input v-model="inputTextData" type="textarea" :rows="15" placeholder="Enter something..." />
       </Col>
     </Row>
@@ -51,6 +52,8 @@
       return {
         showFormModal:false,
         inputLabel:'',
+        oldPureText:false,
+        pureText:false,
         oldInputTextData:'',
         inputTextData:'',
         paramIndex:1,
@@ -65,6 +68,7 @@
         this.showFormModal = true;
         this.paramIndex = index;
         this.inputLabel = item.ParamName;
+        this.pureText = item.PureText;
         // 文本输入框设置历史值
         this.inputTextData = item.ParamValue;
         this.clearDirty();
@@ -72,7 +76,7 @@
       },
       showNext: function(num){
         var _this = this;
-        if(!this.checkDrity()){
+        if(this.checkDrity()){
           this.$Modal.confirm({
             title:"确认",
             content:"是否需要保存上一步操作?",
@@ -96,12 +100,13 @@
       },
       clearDirty: function (){
         this.oldInputTextData = this.inputTextData;
+        this.oldPureText = this.pureText;
       },
       checkDrity: function(){
-        return this.oldInputTextData == this.inputTextData;
+        return this.oldInputTextData != this.inputTextData || this.oldPureText != this.pureText;
       },
       handleSubmit:function () {
-        this.$emit("handleSubmit", this.inputLabel, this.inputTextData);
+        this.$emit("handleSubmit", this.inputLabel, this.inputTextData, this.pureText);
         this.clearDirty();
       },
       refreshPreNodeOutput:async function () {

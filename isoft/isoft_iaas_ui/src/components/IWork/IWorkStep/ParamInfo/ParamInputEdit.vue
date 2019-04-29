@@ -40,11 +40,12 @@
         }
       },
       // 强制刷新组件
-      refreshParamInputSchemaItems:function (label, text) {
+      refreshParamInputSchemaItems:function (label, text, pureText) {
         for(var i=0; i<this.paramInputSchemaItems.length; i++){
           var paramInputSchemaItem = this.paramInputSchemaItems[i];
           if(paramInputSchemaItem.ParamName == label){
             paramInputSchemaItem.ParamValue = text;
+            paramInputSchemaItem.PureText = pureText;
             this.$set(this.paramInputSchemaItems, i, paramInputSchemaItem);
             this.$Message.success('临时参数保存成功!');
           }

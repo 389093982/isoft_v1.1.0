@@ -9,6 +9,7 @@ type ParamInputSchemaItem struct {
 	XMLName    xml.Name `xml:"paramInputSchemaItem" json:"-"`
 	ParamName  string   `xml:"paramName"`
 	ParamDesc  string   `xml:"paramDesc"` // 使用说明信息
+	PureText   bool     `xml:"pureText"`
 	ParamValue string   `xml:"paramValue"`
 }
 
