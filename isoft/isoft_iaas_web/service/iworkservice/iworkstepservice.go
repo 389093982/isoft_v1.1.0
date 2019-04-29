@@ -451,6 +451,8 @@ func EditWorkStepParamInfoService(serviceArgs map[string]interface{}) error {
 
 	for _, item := range paramInputSchema.ParamInputSchemaItems {
 		formatChecker := iworkvalid.ParamValueFormatChecker{
+			ParamName:  item.ParamName,
+			PureText:   item.PureText,
 			ParamValue: item.ParamValue,
 		}
 		if ok, err := formatChecker.Check(); !ok && err != nil {
@@ -509,8 +511,9 @@ func BuildDynamicInput(work_id int64, work_step_id int64, o orm.Ormer) {
 	historyParamInputSchema := schema.GetCacheParamInputSchema(&step, &iworknode.WorkStepFactory{WorkStep: &step, O: o})
 	for index, newInputSchemaItem := range newInputSchemaItems {
 		// 存在则不添加且沿用旧值
-		if exist, paramValue := CheckAndGetParamValueByInputSchemaParamName(historyParamInputSchema.ParamInputSchemaItems, newInputSchemaItem.ParamName); exist {
-			newInputSchemaItems[index].ParamValue = paramValue
+		if exist, item := CheckAndGetItemByParamName(historyParamInputSchema.ParamInputSchemaItems, newInputSchemaItem.ParamName); exist {
+			newInputSchemaItems[index].ParamValue = item.ParamValue
+			newInputSchemaItems[index].PureText = item.PureText
 		}
 	}
 	paramInputSchema := &iworkmodels.ParamInputSchema{ParamInputSchemaItems: newInputSchemaItems}
@@ -588,11 +591,11 @@ func BuildAutoCreateSubWork(work_id int64, work_step_id int64, o orm.Ormer) {
 	iwork.InsertOrUpdateWorkStep(&step, o)
 }
 
-func CheckAndGetParamValueByInputSchemaParamName(items []iworkmodels.ParamInputSchemaItem, paramName string) (exist bool, paramValue string) {
-	for _, item := range items {
-		if item.ParamName == paramName {
-			return true, item.ParamValue
+func CheckAndGetItemByParamName(items []iworkmodels.ParamInputSchemaItem, paramName string) (bool, *iworkmodels.ParamInputSchemaItem) {
+	for _, _item := range items {
+		if _item.ParamName == paramName {
+			return true, &_item
 		}
 	}
-	return false, ""
+	return false, nil
 }
