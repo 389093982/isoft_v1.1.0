@@ -73,12 +73,12 @@ func (this *BaseNode) parseAndFillParamVauleWithResource(paramVaule string) inte
 }
 
 // paramValue 来源于前置节点
-func (this *BaseNode) parseAndFillParamVauleWithNode(paramVaule string, dataStore *datastore.DataStore) interface{} {
+func (this *BaseNode) parseAndFillParamVauleWithNode(paramName, paramVaule string, dataStore *datastore.DataStore) interface{} {
 	if strings.HasPrefix(paramVaule, "$") {
 		resolver := param.ParamVauleParser{ParamValue: paramVaule}
 		return dataStore.GetData(resolver.GetNodeNameFromParamValue(), resolver.GetParamNameFromParamValue())
 	} else {
-		panic(errors.New(fmt.Sprintf("%s is not start with $", paramVaule)))
+		panic(errors.New(fmt.Sprintf("%s ~ %s is not start with $", paramName, paramVaule)))
 	}
 }
 
@@ -87,12 +87,12 @@ func (this *BaseNode) ParseAndGetParamVaule(paramName, paramVaule string, dataSt
 	values := this.parseParamValueToMulti(paramVaule)
 	// 单值
 	if len(values) == 1 {
-		return this.parseAndGetSingleParamVaule(values[0], dataStore)
+		return this.parseAndGetSingleParamVaule(paramName, values[0], dataStore)
 	}
 	// 多值
 	results := make([]interface{}, 0)
 	for _, value := range values {
-		result := this.parseAndGetSingleParamVaule(value, dataStore)
+		result := this.parseAndGetSingleParamVaule(paramName, value, dataStore)
 		results = append(results, result)
 	}
 	return results
@@ -111,7 +111,7 @@ func (this *BaseNode) parseParamValueToMulti(paramVaule string) []string {
 	return results
 }
 
-func (this *BaseNode) _parseAndGetSingleParamVaule(paramVaule string, dataStore *datastore.DataStore) interface{} {
+func (this *BaseNode) _parseAndGetSingleParamVaule(paramName, paramVaule string, dataStore *datastore.DataStore) interface{} {
 	paramVaule = iworkfunc.DncodeSpecialForParamVaule(paramVaule)
 	if strings.HasPrefix(strings.ToUpper(paramVaule), "$RESOURCE.") {
 		return this.parseAndFillParamVauleWithResource(paramVaule)
@@ -122,10 +122,10 @@ func (this *BaseNode) _parseAndGetSingleParamVaule(paramVaule string, dataStore 
 	} else if strings.HasPrefix(strings.ToUpper(paramVaule), "$WORKVARS.") {
 		return iworkutil.GetParamValueForWorkVars(paramVaule, this.DataStore)
 	}
-	return this.parseAndFillParamVauleWithNode(paramVaule, dataStore)
+	return this.parseAndFillParamVauleWithNode(paramName, paramVaule, dataStore)
 }
 
-func (this *BaseNode) parseAndGetSingleParamVaule(paramVaule string, dataStore *datastore.DataStore) interface{} {
+func (this *BaseNode) parseAndGetSingleParamVaule(paramName, paramVaule string, dataStore *datastore.DataStore) interface{} {
 	defer func() {
 		if err := recover(); err != nil {
 			panic(fmt.Sprintf("<span style='color:red;'>execute func with expression is %s, error msg is :%s</span>", paramVaule, err.(error).Error()))
@@ -139,7 +139,7 @@ func (this *BaseNode) parseAndGetSingleParamVaule(paramVaule string, dataStore *
 	}
 	if executors == nil || len(executors) == 0 {
 		// 是直接参数,不需要函数进行特殊处理
-		return this._parseAndGetSingleParamVaule(paramVaule, dataStore)
+		return this._parseAndGetSingleParamVaule(paramName, paramVaule, dataStore)
 	}
 	historyFuncResultMap := make(map[string]interface{}, 0)
 	var lastFuncResult interface{}
@@ -154,7 +154,7 @@ func (this *BaseNode) parseAndGetSingleParamVaule(paramVaule string, dataStore *
 			if _arg, ok := historyFuncResultMap[arg]; ok {
 				args = append(args, _arg)
 			} else {
-				args = append(args, this._parseAndGetSingleParamVaule(arg, dataStore))
+				args = append(args, this._parseAndGetSingleParamVaule(paramName, arg, dataStore))
 			}
 		}
 		// 执行函数并记录结果,供下一个函数执行使用
