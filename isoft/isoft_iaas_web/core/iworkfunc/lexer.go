@@ -1,4 +1,4 @@
-package iworkanalyzer
+package iworkfunc
 
 import (
 	"errors"
@@ -15,8 +15,7 @@ var regexs = []string{"^[a-zA-Z0-9]+\\(", "^\\)", "^`.*?`", "^[0-9]+", "^\\$[a-z
 var regexLexers = []string{"func(", ")", "S", "N", "V", ","}
 
 // 返回 uuid 和 funcCaller
-func ParseToFuncCallers(expression string) ([]string, []*FuncCaller, error) {
-	callerids := make([]string, 0)
+func ParseToFuncCallers(expression string) ([]*FuncCaller, error) {
 	callers := make([]*FuncCaller, 0)
 	for {
 		if strings.TrimSpace(expression) == "" || strings.HasPrefix(expression, "$uuid.") {
@@ -25,12 +24,15 @@ func ParseToFuncCallers(expression string) ([]string, []*FuncCaller, error) {
 		// 对 expression 表达式进行词法分析
 		metas, lexers, err := analysisLexer(expression)
 		if err != nil {
-			return callerids, callers, err
+			return callers, err
 		}
 		// 提取 func
 		caller, err := GetPriorityFuncExecutorFromLexersExpression(strings.Join(lexers, ""))
-		if err != nil {
-			return callerids, callers, err
+		if err != nil { // 提取失败
+			return callers, err
+		}
+		if caller == nil { // 未提取到 func
+			return nil, nil
 		}
 		uuid := stringutil.RandomUUID()
 		// 函数左边部分
@@ -43,10 +45,9 @@ func ParseToFuncCallers(expression string) ([]string, []*FuncCaller, error) {
 		expression = strings.Join(funcLeft, "") + "$uuid." + uuid + strings.Join(funcRight, "")
 		caller.FuncName = strings.Replace(funcArea[0], "(", "", -1) // 去除函数名中的 (
 		caller.FuncArgs = funcArea[1 : len(funcArea)-1]
-		callerids = append(callerids, uuid)
 		callers = append(callers, caller)
 	}
-	return callerids, callers, nil
+	return callers, nil
 }
 
 // 判断当前索引在整个 lexers 切片中的位置

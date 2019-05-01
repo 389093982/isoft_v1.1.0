@@ -16,7 +16,7 @@ func (this *ParamValueFormatChecker) Check() (bool, error) {
 	if this.PureText {
 		return true, nil
 	}
-	_, err := iworkfunc.GetAllFuncExecutor(this.ParamValue)
+	_, err := iworkfunc.ParseToFuncCallers(this.ParamValue)
 	if err != nil {
 		return false, err
 	}

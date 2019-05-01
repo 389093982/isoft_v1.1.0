@@ -113,6 +113,7 @@ func (this *BaseNode) parseParamValueToMulti(paramVaule string) []string {
 
 func (this *BaseNode) _parseAndGetSingleParamVaule(paramName, paramVaule string, dataStore *datastore.DataStore) interface{} {
 	paramVaule = iworkfunc.DncodeSpecialForParamVaule(paramVaule)
+	// 变量
 	if strings.HasPrefix(strings.ToUpper(paramVaule), "$RESOURCE.") {
 		return this.parseAndFillParamVauleWithResource(paramVaule)
 	} else if strings.HasPrefix(strings.ToUpper(paramVaule), "$WORK.") {
@@ -121,8 +122,16 @@ func (this *BaseNode) _parseAndGetSingleParamVaule(paramName, paramVaule string,
 		return iworkutil.GetParamValueForEntity(paramVaule)
 	} else if strings.HasPrefix(strings.ToUpper(paramVaule), "$WORKVARS.") {
 		return iworkutil.GetParamValueForWorkVars(paramVaule, this.DataStore)
+	} else if strings.HasPrefix(strings.ToUpper(paramVaule), "$") {
+		return this.parseAndFillParamVauleWithNode(paramName, paramVaule, dataStore)
+	} else if strings.HasPrefix(paramVaule, "`") && strings.HasSuffix(paramVaule, "`") {
+		// 字符串
+		return paramVaule[1 : len(paramVaule)-1]
+	} else {
+		// 数字
+		return paramVaule
 	}
-	return this.parseAndFillParamVauleWithNode(paramName, paramVaule, dataStore)
+
 }
 
 func (this *BaseNode) parseAndGetSingleParamVaule(paramName, paramVaule string, dataStore *datastore.DataStore) interface{} {
@@ -133,23 +142,21 @@ func (this *BaseNode) parseAndGetSingleParamVaule(paramName, paramVaule string, 
 	}()
 	// 对单个 paramVaule 进行特殊字符编码
 	paramVaule = iworkfunc.EncodeSpecialForParamVaule(paramVaule)
-	executors, err := iworkfunc.GetAllFuncExecutor(paramVaule)
+	callers, err := iworkfunc.ParseToFuncCallers(paramVaule)
 	if err != nil {
 		panic(err)
 	}
-	if executors == nil || len(executors) == 0 {
+	if callers == nil || len(callers) == 0 {
 		// 是直接参数,不需要函数进行特殊处理
 		return this._parseAndGetSingleParamVaule(paramName, paramVaule, dataStore)
 	}
 	historyFuncResultMap := make(map[string]interface{}, 0)
 	var lastFuncResult interface{}
 	// 按照顺序依次执行函数
-	for _, executor := range executors {
-		// executor 所有参数进行 trim 操作
-		iworkfunc.GetTrimFuncExecutor(executor)
+	for _, caller := range callers {
 		args := make([]interface{}, 0)
 		// 函数参数替换成实际意义上的值
-		for _, arg := range executor.FuncArgs {
+		for _, arg := range caller.FuncArgs {
 			// 判断参数是否来源于 historyFuncResultMap
 			if _arg, ok := historyFuncResultMap[arg]; ok {
 				args = append(args, _arg)
@@ -158,8 +165,8 @@ func (this *BaseNode) parseAndGetSingleParamVaule(paramName, paramVaule string, 
 			}
 		}
 		// 执行函数并记录结果,供下一个函数执行使用
-		result := iworkfunc.CallFuncExecutor(executor, args)
-		historyFuncResultMap[executor.FuncUUID] = result
+		result := iworkfunc.CallFuncExecutor(caller, args)
+		historyFuncResultMap[caller.FuncUUID] = result
 		lastFuncResult = result
 	}
 	return lastFuncResult
