@@ -7,18 +7,17 @@ import (
 )
 
 // 函数执行类
-type FuncExecutor struct {
+type FuncCaller struct {
 	FuncUUID       string // 函数唯一性 id
-	FuncRealName   string
 	FuncName       string // 函数实际名称
-	FuncRealArgs   []string
+	FuncArgs       []string
 	FuncLeftIndex  int // 函数整体在表达式中的左索引位置
 	FuncRightIndex int // 函数整体在表达式中的右索引位置
 }
 
 // 获取优先级最高的函数执行体
 // 含有 func( 必然有优先函数执行体
-func GetPriorityFuncExecutorFromLexersExpression(lexersExpression string) (*FuncExecutor, error) {
+func GetPriorityFuncExecutorFromLexersExpression(lexersExpression string) (*FuncCaller, error) {
 	if !strings.Contains(lexersExpression, "func(") && !strings.Contains(lexersExpression, ")") {
 		// 非函数类型表达式值
 		return nil, nil
@@ -27,10 +26,7 @@ func GetPriorityFuncExecutorFromLexersExpression(lexersExpression string) (*Func
 	for _, leftBracketIndex := range GetAllLeftBracketIndex(lexersExpression) {
 		// 判断表达式 expression 中左括号索引 leftBracketIndex 后面是否有直接右括号
 		if bol, rightBracketIndex := CheckHasNearRightBracket(leftBracketIndex, lexersExpression); bol == true {
-			// 找到了优先级最高的执行函数
-			// 分割得到所有参数
-			// 获取函数名称
-			return &FuncExecutor{
+			return &FuncCaller{
 				FuncUUID:       stringutil.RandomUUID(),
 				FuncLeftIndex:  leftBracketIndex - len("func"),
 				FuncRightIndex: rightBracketIndex,
