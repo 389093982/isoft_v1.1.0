@@ -127,7 +127,7 @@
           this.formValidate.work_step_name = result.step.work_step_name;
           this.formValidate.work_step_type = result.step.work_step_type;
 
-          if(oneOf(result.step.work_step_type, ["work_start","work_end","mapper","entity_parser","goto_condition"])){
+          if(oneOf(result.step.work_step_type, ["work_start","work_end","mapper","entity_parser","goto_condition","define_var"])){
             this.showParamMapping = true;
           }else{
             this.showParamMapping = false;

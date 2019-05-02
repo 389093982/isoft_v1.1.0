@@ -109,6 +109,7 @@ const default_work_step_types=[
   {"name":"base64_encode","icon":"ios-magnet"},
   {"name":"base64_decode","icon":"ios-magnet-outline"},
   {"name":"workvar_assign","icon":"md-hammer"},
+  {"name":"define_var","icon":"md-hammer"},
 ];
 
 const mysql_datatypes = ["varchar","char","text","float","int","date","datetime","decimal","double",

@@ -7,11 +7,16 @@
           <Icon type="ios-book-outline" size="18" style="margin-left: 3px;" @click="showParamDesc(item.ParamDesc)"/>
         </Col>
         <Col span="8" style="text-align: right;">
-          <Button type="success" size="small" @click="handleReload(index)">查看/编辑</Button>
+          <Button v-if="!item.ParamChoices" type="success" size="small" @click="handleReload(index)">查看/编辑</Button>
         </Col>
       </Row>
       <Row>
-        <Input size="small" v-model.trim="item.ParamValue" readonly type="text" placeholder="small size"/>
+        <Select v-if="item.ParamChoices" v-model="item.ParamValue">
+          <Option v-for="choice in item.ParamChoices" :value="choice" :key="choice">
+            {{choice}}
+          </Option>
+        </Select>
+        <Input v-else size="small" v-model.trim="item.ParamValue" readonly type="text" placeholder="small size"/>
       </Row>
     </Row>
 

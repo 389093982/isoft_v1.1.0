@@ -6,11 +6,12 @@ import (
 )
 
 type ParamInputSchemaItem struct {
-	XMLName    xml.Name `xml:"paramInputSchemaItem" json:"-"`
-	ParamName  string   `xml:"paramName"`
-	ParamDesc  string   `xml:"paramDesc"` // 使用说明信息
-	PureText   bool     `xml:"pureText"`
-	ParamValue string   `xml:"paramValue"`
+	XMLName      xml.Name `xml:"paramInputSchemaItem" json:"-"`
+	ParamName    string   `xml:"paramName"`
+	ParamDesc    string   `xml:"paramDesc"` // 使用说明信息
+	ParamChoices []string `xml:"paramChoices"`
+	PureText     bool     `xml:"pureText"`
+	ParamValue   string   `xml:"paramValue"`
 }
 
 type ParamInputSchema struct {
