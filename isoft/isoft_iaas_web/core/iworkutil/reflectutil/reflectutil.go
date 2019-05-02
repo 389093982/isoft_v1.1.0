@@ -1,7 +1,6 @@
 package reflectutil
 
 import (
-	"fmt"
 	"reflect"
 )
 
@@ -16,7 +15,7 @@ func FillFieldValueToStruct(ptr interface{}, fields map[string]interface{}) {
 			if reflect.ValueOf(value).Type() == v.FieldByName(fieldInfo.Name).Type() {
 				v.FieldByName(fieldInfo.Name).Set(reflect.ValueOf(value))
 			} else {
-				fmt.Println("mismatch field for struct....")
+				panic("mismatch field for struct....")
 			}
 		}
 	}

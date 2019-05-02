@@ -56,7 +56,6 @@ func ParseToFuncCallers(expression string) ([]*FuncCaller, error) {
 			}
 			return nil, nil
 		}
-		uuid := stringutil.RandomUUID()
 		// 函数左边部分
 		funcLeft := metas[:lexerAt(lexers, caller.FuncLeftIndex)]
 		// 函数右边部分
@@ -64,7 +63,7 @@ func ParseToFuncCallers(expression string) ([]*FuncCaller, error) {
 		// 函数部分
 		funcArea := metas[lexerAt(lexers, caller.FuncLeftIndex) : lexerAt(lexers, caller.FuncRightIndex)+1]
 		// 将 caller 函数替换成 $func.uuid,以便下一轮提取 func 使用
-		expression = strings.Join(funcLeft, "") + "$func." + uuid + strings.Join(funcRight, "")
+		expression = strings.Join(funcLeft, "") + "$func." + caller.FuncUUID + strings.Join(funcRight, "")
 		caller.FuncName = strings.Replace(funcArea[0], "(", "", -1)                        // 去除函数名中的 (
 		caller.FuncArgs = stringutil.RemoveItemFromSlice(funcArea[1:len(funcArea)-1], ",") // 参数需要过滤掉 ,
 		for _, arg := range caller.FuncArgs {

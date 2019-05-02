@@ -169,7 +169,7 @@ func (this *BaseNode) parseAndGetSingleParamVaule(paramName, paramVaule string, 
 		}
 		// 执行函数并记录结果,供下一个函数执行使用
 		result := iworkfunc.ExecuteFuncCaller(caller, args)
-		historyFuncResultMap[caller.FuncUUID] = result
+		historyFuncResultMap["$func."+caller.FuncUUID] = result
 		lastFuncResult = result
 	}
 	return lastFuncResult

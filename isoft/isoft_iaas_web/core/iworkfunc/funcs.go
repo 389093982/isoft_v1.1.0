@@ -83,7 +83,7 @@ func (this *IWorkFuncProxy) StringsJoinWithSep(args []interface{}) interface{} {
 	return strings.Join(sargs[:len(args)-1], sargs[len(args)-1])
 }
 
-func (this *IWorkFuncProxy) BoolOr(args []interface{}) interface{} {
+func (this *IWorkFuncProxy) Or(args []interface{}) interface{} {
 	sargs := make([]bool, 0)
 	for _, arg := range args {
 		sargs = append(sargs, arg.(bool))
@@ -91,7 +91,7 @@ func (this *IWorkFuncProxy) BoolOr(args []interface{}) interface{} {
 	return sargs[0] || sargs[1]
 }
 
-func (this *IWorkFuncProxy) BoolAnd(args []interface{}) interface{} {
+func (this *IWorkFuncProxy) And(args []interface{}) interface{} {
 	sargs := make([]bool, 0)
 	for _, arg := range args {
 		sargs = append(sargs, arg.(bool))
@@ -99,7 +99,7 @@ func (this *IWorkFuncProxy) BoolAnd(args []interface{}) interface{} {
 	return sargs[0] && sargs[1]
 }
 
-func (this *IWorkFuncProxy) BoolNot(args []interface{}) interface{} {
+func (this *IWorkFuncProxy) Not(args []interface{}) interface{} {
 	sargs := make([]bool, 0)
 	for _, arg := range args {
 		sargs = append(sargs, arg.(bool))
@@ -107,15 +107,14 @@ func (this *IWorkFuncProxy) BoolNot(args []interface{}) interface{} {
 	return !sargs[0]
 }
 
-func (this *IWorkFuncProxy) StringsUUID(args []interface{}) interface{} {
+func (this *IWorkFuncProxy) Uuid(args []interface{}) interface{} {
 	return stringutil.RandomUUID()
 }
 
-func (this *IWorkFuncProxy) StringsCheckEmpty(args []interface{}) interface{} {
-	return args[0].(string) == ""
-}
-
-func (this *IWorkFuncProxy) CheckEmpty(args []interface{}) interface{} {
+func (this *IWorkFuncProxy) Isempty(args []interface{}) interface{} {
+	if val, ok := args[0].(string); ok {
+		return val == ""
+	}
 	return args[0] == nil
 }
 
