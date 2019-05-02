@@ -27,7 +27,7 @@ func Run(work iwork.Work, steps []iwork.WorkStep, dispatcher *entry.Dispatcher) 
 			// 记录 4 kb大小的堆栈信息
 			logwriter.Write(trackingId, "~~~~~~~~~~~~~~~~~~~~~~~~ internal error trace stack ~~~~~~~~~~~~~~~~~~~~~~~~~~")
 			logwriter.Write(trackingId, string(errorutil.PanicTrace(4)))
-			logwriter.Write(trackingId, fmt.Sprintf("internal error:%s", err))
+			logwriter.Write(trackingId, fmt.Sprintf("<span style='color:red;'>internal error:%s</span>", err))
 			logwriter.Write(trackingId, "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
 		}
 	}()
@@ -75,7 +75,7 @@ func RunOneStep(trackingId string, logwriter *iworklog.CacheLoggerWriter, blockS
 	// 统计耗费时间
 	defer logwriter.RecordCostTimeLog(blockStep.Step.WorkStepName, trackingId, time.Now())
 	// 记录开始执行日志
-	logwriter.Write(trackingId, fmt.Sprintf("start execute blockStep: >>>>>>>>>> [[%s]]", blockStep.Step.WorkStepName))
+	logwriter.Write(trackingId, fmt.Sprintf("start execute blockStep: >>>>>>>>>> [[<span style='color:blue;'>%s<span>]]", blockStep.Step.WorkStepName))
 	// 由工厂代为执行步骤
 	factory := &iworknode.WorkStepFactory{
 		WorkStep:         blockStep.Step,
