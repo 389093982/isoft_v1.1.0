@@ -7,6 +7,7 @@ import (
 	"isoft/isoft_iaas_web/core/iworkdata/datastore"
 	"isoft/isoft_iaas_web/core/iworkdata/entry"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
+	"isoft/isoft_iaas_web/core/iworklog"
 	"isoft/isoft_iaas_web/core/iworkmodels"
 	"isoft/isoft_iaas_web/core/iworkutil/datatypeutil"
 	"isoft/isoft_iaas_web/models/iwork"
@@ -16,7 +17,7 @@ type IFNode struct {
 	BaseNode
 	WorkStep         *iwork.WorkStep
 	BlockStep        *block.BlockStep
-	BlockStepRunFunc func(trackingId string, blockStep *block.BlockStep, datastore *datastore.DataStore, dispatcher *entry.Dispatcher) (receiver *entry.Receiver)
+	BlockStepRunFunc func(trackingId string, logwriter *iworklog.CacheLoggerWriter, blockStep *block.BlockStep, datastore *datastore.DataStore, dispatcher *entry.Dispatcher) (receiver *entry.Receiver)
 }
 
 func (this *IFNode) Execute(trackingId string) {
@@ -37,7 +38,7 @@ func (this *IFNode) Execute(trackingId string) {
 		}
 		order = append(order, datatypeutil.ReverseSlice(deferOrder).([]*block.BlockStep)...)
 		for _, blockStep := range order {
-			this.BlockStepRunFunc(trackingId, blockStep, this.DataStore, nil)
+			this.BlockStepRunFunc(trackingId, this.LogWriter, blockStep, this.DataStore, nil)
 		}
 	} else {
 		this.LogWriter.Write(trackingId, fmt.Sprintf("The blockStep for %s was skipped!", this.WorkStep.WorkStepName))

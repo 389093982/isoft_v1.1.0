@@ -1,6 +1,9 @@
 package reflectutil
 
-import "reflect"
+import (
+	"fmt"
+	"reflect"
+)
 
 // 将结构体里的成员按照字段名字来赋值
 func FillFieldValueToStruct(ptr interface{}, fields map[string]interface{}) {
@@ -12,6 +15,8 @@ func FillFieldValueToStruct(ptr interface{}, fields map[string]interface{}) {
 			//保证赋值时数据类型一致
 			if reflect.ValueOf(value).Type() == v.FieldByName(fieldInfo.Name).Type() {
 				v.FieldByName(fieldInfo.Name).Set(reflect.ValueOf(value))
+			} else {
+				fmt.Println("mismatch field for struct....")
 			}
 		}
 	}
