@@ -3,11 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="61c01151-84f0-4bfd-a227-5c1f0b5a424d" name="Default" comment="代码优化">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_iaas_ui/src/api/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_iaas_ui/src/api/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/isoft_iaas_ui/src/components/IWork/IWorkStep/ParamInfo/ParamInputEditDialog.vue" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_iaas_ui/src/components/IWork/IWorkStep/ParamInfo/ParamInputEditDialog.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_iaas_web/controllers/iwork/iworkstep.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_iaas_web/controllers/iwork/iworkstep.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/isoft_iaas_web/iwork.db" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_iaas_web/iwork.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/isoft_iaas_web/routers/iwork_router.go" beforeDir="false" afterPath="$PROJECT_DIR$/isoft_iaas_web/routers/iwork_router.go" afterDir="false" />
     </list>
     <ignored path="isoft_deploy_web/static/uploadfile/" />
     <ignored path="../.idea/inspectionProfiles/profiles_settings.xml" />
@@ -151,7 +148,7 @@
           <entry key="sql" value="113" />
           <entry key="sum" value="3" />
           <entry key="txt" value="1251" />
-          <entry key="vue" value="83350" />
+          <entry key="vue" value="83352" />
           <entry key="xml" value="48" />
         </counts>
       </usages-collector>
@@ -163,7 +160,7 @@
           <entry key="JavaScript" value="8703" />
           <entry key="PLAIN_TEXT" value="3621" />
           <entry key="SQL" value="141" />
-          <entry key="Vue.js" value="83243" />
+          <entry key="Vue.js" value="83245" />
           <entry key="XML" value="48" />
         </counts>
       </usages-collector>
@@ -189,8 +186,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/isoft_iaas_ui/src/components/IWork/IWorkStep/ParamInfo/ParamInputEditDialog.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="237">
-              <caret line="43" column="24" lean-forward="true" selection-start-line="43" selection-start-column="24" selection-end-line="43" selection-end-column="24" />
+            <state relative-caret-position="208">
+              <caret line="21" column="38" selection-start-line="21" selection-start-column="38" selection-end-line="21" selection-end-column="38" />
               <folding>
                 <element signature="n#style#0;n#Col#1;n#Row#0;n#Modal#0;n#template#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#Button#0;n#Col#1;n#Row#0;n#Modal#0;n#template#0;n#!!top" expanded="true" />
@@ -1163,8 +1160,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/isoft_iaas_ui/src/components/IWork/IWorkStep/ParamInfo/ParamInputEditDialog.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="237">
-          <caret line="43" column="24" lean-forward="true" selection-start-line="43" selection-start-column="24" selection-end-line="43" selection-end-column="24" />
+        <state relative-caret-position="208">
+          <caret line="21" column="38" selection-start-line="21" selection-start-column="38" selection-end-line="21" selection-end-column="38" />
           <folding>
             <element signature="n#style#0;n#Col#1;n#Row#0;n#Modal#0;n#template#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#Button#0;n#Col#1;n#Row#0;n#Modal#0;n#template#0;n#!!top" expanded="true" />

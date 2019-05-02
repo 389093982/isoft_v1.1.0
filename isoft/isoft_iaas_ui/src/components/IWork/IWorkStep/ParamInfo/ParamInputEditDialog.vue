@@ -19,7 +19,7 @@
         <Button @click="appendData('children')" style="margin-top: 10px;"><Icon type="ios-arrow-forward"></Icon>选择子节点</Button>
       </Col>
       <Col span="14">
-        <h3 style="color: #1600ff;">参数名称({{paramIndex}}):{{inputLabel}}</h3>
+        <h3 style="color: #1600ff;">参数({{paramIndex}}):{{inputLabel}}</h3>
         <span class="operate_link">
           <ul>
             <li>
