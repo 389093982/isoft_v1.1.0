@@ -10,27 +10,27 @@ import (
 
 type IWorkFuncProxy struct{}
 
-func (this *IWorkFuncProxy) IworkStringsContains(args []interface{}) interface{} {
+func (this *IWorkFuncProxy) stringsContains(args []interface{}) interface{} {
 	return strings.Contains(args[0].(string), args[1].(string))
 }
 
-func (this *IWorkFuncProxy) IworkStringsHasSuffix(args []interface{}) interface{} {
+func (this *IWorkFuncProxy) stringsHasSuffix(args []interface{}) interface{} {
 	return strings.HasSuffix(args[0].(string), args[1].(string))
 }
 
-func (this *IWorkFuncProxy) IworkStringsHasPrefix(args []interface{}) interface{} {
+func (this *IWorkFuncProxy) stringsHasPrefix(args []interface{}) interface{} {
 	return strings.HasPrefix(args[0].(string), args[1].(string))
 }
 
-func (this *IWorkFuncProxy) IworkStringsToLower(args []interface{}) interface{} {
+func (this *IWorkFuncProxy) stringsToLower(args []interface{}) interface{} {
 	return strings.ToLower(args[0].(string))
 }
 
-func (this *IWorkFuncProxy) IworkStringsToUpper(args []interface{}) interface{} {
+func (this *IWorkFuncProxy) stringsToUpper(args []interface{}) interface{} {
 	return strings.ToUpper(args[0].(string))
 }
 
-func (this *IWorkFuncProxy) IworkStringsJoin(args []interface{}) interface{} {
+func (this *IWorkFuncProxy) stringsJoin(args []interface{}) interface{} {
 	sargs := make([]string, 0)
 	for _, arg := range args {
 		sargs = append(sargs, arg.(string))
@@ -38,37 +38,37 @@ func (this *IWorkFuncProxy) IworkStringsJoin(args []interface{}) interface{} {
 	return strings.Join(sargs, "")
 }
 
-func (this *IWorkFuncProxy) IworkInt64Add(args []interface{}) interface{} {
+func (this *IWorkFuncProxy) int64Add(args []interface{}) interface{} {
 	sargs := parseArgsToInt64Arr(args)
 	checkArgsAmount(sargs, 2)
 	return sargs[0] + sargs[1]
 }
 
-func (this *IWorkFuncProxy) IworkInt64Sub(args []interface{}) interface{} {
+func (this *IWorkFuncProxy) int64Sub(args []interface{}) interface{} {
 	sargs := parseArgsToInt64Arr(args)
 	checkArgsAmount(sargs, 2)
 	return sargs[0] - sargs[1]
 }
 
-func (this *IWorkFuncProxy) IworkInt64Gt(args []interface{}) interface{} {
+func (this *IWorkFuncProxy) int64Gt(args []interface{}) interface{} {
 	sargs := parseArgsToInt64Arr(args)
 	checkArgsAmount(sargs, 2)
 	return sargs[0] > sargs[1]
 }
 
-func (this *IWorkFuncProxy) IworkInt64Lt(args []interface{}) interface{} {
+func (this *IWorkFuncProxy) int64Lt(args []interface{}) interface{} {
 	sargs := parseArgsToInt64Arr(args)
 	checkArgsAmount(sargs, 2)
 	return sargs[0] < sargs[1]
 }
 
-func (this *IWorkFuncProxy) IworkInt64Eq(args []interface{}) interface{} {
+func (this *IWorkFuncProxy) int64Eq(args []interface{}) interface{} {
 	sargs := parseArgsToInt64Arr(args)
 	checkArgsAmount(sargs, 2)
 	return sargs[0] == sargs[1]
 }
 
-func (this *IWorkFuncProxy) IworkInt64Multi(args []interface{}) interface{} {
+func (this *IWorkFuncProxy) int64Multi(args []interface{}) interface{} {
 	sargs := parseArgsToInt64Arr(args)
 	checkArgsAmount(sargs, 2)
 	return sargs[0] * sargs[1]
@@ -96,7 +96,7 @@ func parseArgsToInt64Arr(args []interface{}) []int64 {
 	return sargs
 }
 
-func (this *IWorkFuncProxy) IworkStringsJoinWithSep(args []interface{}) interface{} {
+func (this *IWorkFuncProxy) stringsJoinWithSep(args []interface{}) interface{} {
 	sargs := make([]string, 0)
 	for _, arg := range args {
 		sargs = append(sargs, arg.(string))
@@ -104,7 +104,7 @@ func (this *IWorkFuncProxy) IworkStringsJoinWithSep(args []interface{}) interfac
 	return strings.Join(sargs[:len(args)-1], sargs[len(args)-1])
 }
 
-func (this *IWorkFuncProxy) IworkBoolOr(args []interface{}) interface{} {
+func (this *IWorkFuncProxy) boolOr(args []interface{}) interface{} {
 	sargs := make([]bool, 0)
 	for _, arg := range args {
 		sargs = append(sargs, arg.(bool))
@@ -112,7 +112,7 @@ func (this *IWorkFuncProxy) IworkBoolOr(args []interface{}) interface{} {
 	return sargs[0] || sargs[1]
 }
 
-func (this *IWorkFuncProxy) IworkBoolAnd(args []interface{}) interface{} {
+func (this *IWorkFuncProxy) boolAnd(args []interface{}) interface{} {
 	sargs := make([]bool, 0)
 	for _, arg := range args {
 		sargs = append(sargs, arg.(bool))
@@ -120,7 +120,7 @@ func (this *IWorkFuncProxy) IworkBoolAnd(args []interface{}) interface{} {
 	return sargs[0] && sargs[1]
 }
 
-func (this *IWorkFuncProxy) IworkBoolNot(args []interface{}) interface{} {
+func (this *IWorkFuncProxy) boolNot(args []interface{}) interface{} {
 	sargs := make([]bool, 0)
 	for _, arg := range args {
 		sargs = append(sargs, arg.(bool))
@@ -128,18 +128,18 @@ func (this *IWorkFuncProxy) IworkBoolNot(args []interface{}) interface{} {
 	return !sargs[0]
 }
 
-func (this *IWorkFuncProxy) IworkStringsUUID(args []interface{}) interface{} {
+func (this *IWorkFuncProxy) stringsUUID(args []interface{}) interface{} {
 	return stringutil.RandomUUID()
 }
 
-func (this *IWorkFuncProxy) IworkStringsCheckEmpty(args []interface{}) interface{} {
+func (this *IWorkFuncProxy) stringsCheckEmpty(args []interface{}) interface{} {
 	return args[0].(string) == ""
 }
 
-func (this *IWorkFuncProxy) IworkCheckEmpty(args []interface{}) interface{} {
+func (this *IWorkFuncProxy) checkEmpty(args []interface{}) interface{} {
 	return args[0] == nil
 }
 
-func (this *IWorkFuncProxy) IworkGetDirPath(args []interface{}) string {
+func (this *IWorkFuncProxy) getDirPath(args []interface{}) string {
 	return filepath.Dir(args[0].(string))
 }
