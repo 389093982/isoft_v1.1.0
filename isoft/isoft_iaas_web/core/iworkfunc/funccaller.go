@@ -35,7 +35,7 @@ func GetPriorityFuncExecutorFromLexersExpression(metasExpression, lexersExpressi
 			}, nil
 		}
 	}
-	return nil, errors.New(fmt.Sprintf(`invalid func was found for %s`, metasExpression))
+	return nil, errors.New(fmt.Sprintf(`%s 语法解析失败,未找到有效的函数!`, metasExpression))
 }
 
 // 获取表达式中所有左括号的索引
@@ -71,20 +71,22 @@ func ExecuteFuncCaller(caller *FuncCaller, args []interface{}) interface{} {
 
 // 编码特殊字符, // 对转义字符 \, \; \( \) 等进行编码
 func EncodeSpecialForParamVaule(paramVaule string) string {
-	paramVaule = strings.Replace(paramVaule, "\\\\n", "__newline__", -1)
-	paramVaule = strings.Replace(paramVaule, "\\(", "__leftBracket__", -1)
-	paramVaule = strings.Replace(paramVaule, "\\)", "__rightBracket__", -1)
-	paramVaule = strings.Replace(paramVaule, "\\,", "__comma__", -1)
-	paramVaule = strings.Replace(paramVaule, "\\;", "__semicolon__", -1)
+	//paramVaule = strings.Replace(paramVaule, "\\\\n", "__newline__", -1)
+	//paramVaule = strings.Replace(paramVaule, "\\(", "__leftBracket__", -1)
+	//paramVaule = strings.Replace(paramVaule, "\\)", "__rightBracket__", -1)
+	//paramVaule = strings.Replace(paramVaule, "\\,", "__comma__", -1)
+	//paramVaule = strings.Replace(paramVaule, "\\;", "__semicolon__", -1)
+	paramVaule = strings.Replace(paramVaule, "\\`", "__ENCODE_1__", -1)
 	return paramVaule
 }
 
 // 解码特殊字符
 func DncodeSpecialForParamVaule(paramVaule string) string {
-	paramVaule = strings.Replace(paramVaule, "__newline__", "\n", -1)
-	paramVaule = strings.Replace(paramVaule, "__leftBracket__", "(", -1)
-	paramVaule = strings.Replace(paramVaule, "__rightBracket__", ")", -1)
-	paramVaule = strings.Replace(paramVaule, "__comma__", ",", -1)
-	paramVaule = strings.Replace(paramVaule, "__semicolon__", ";", -1)
+	//paramVaule = strings.Replace(paramVaule, "__newline__", "\n", -1)
+	//paramVaule = strings.Replace(paramVaule, "__leftBracket__", "(", -1)
+	//paramVaule = strings.Replace(paramVaule, "__rightBracket__", ")", -1)
+	//paramVaule = strings.Replace(paramVaule, "__comma__", ",", -1)
+	//paramVaule = strings.Replace(paramVaule, "__semicolon__", ";", -1)
+	paramVaule = strings.Replace(paramVaule, "__ENCODE_1__", "`", -1)
 	return paramVaule
 }

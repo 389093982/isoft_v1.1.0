@@ -16,9 +16,15 @@ func (this *ParamValueFormatChecker) Check() (bool, error) {
 	if this.PureText {
 		return true, nil
 	}
-	_, err := iworkfunc.ParseToFuncCallers(this.ParamValue)
+	multiExpression, err := iworkfunc.SplitWithLexerAnalysis(this.ParamValue)
 	if err != nil {
 		return false, err
+	}
+	for _, expression := range multiExpression {
+		_, err := iworkfunc.ParseToFuncCallers(expression)
+		if err != nil {
+			return false, err
+		}
 	}
 	return true, nil
 }

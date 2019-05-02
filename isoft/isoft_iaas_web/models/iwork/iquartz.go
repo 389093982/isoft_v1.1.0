@@ -11,7 +11,7 @@ type CronMeta struct {
 	TaskName        string    `json:"task_name"` // 任务名称
 	TaskType        string    `json:"task_type"` // 任务类型
 	CronStr         string    `json:"cron_str"`
-	Enable			bool	  `json:"enable"`	 // 是否启用
+	Enable          bool      `json:"enable"` // 是否启用
 	CreatedBy       string    `json:"created_by"`
 	CreatedTime     time.Time `json:"created_time" orm:"auto_now_add;type(datetime)"`
 	LastUpdatedBy   string    `json:"last_updated_by"`

@@ -99,12 +99,15 @@ func (this *BaseNode) ParseAndGetParamVaule(paramName, paramVaule string, dataSt
 }
 
 func (this *BaseNode) parseParamValueToMulti(paramVaule string) []string {
-	results := []string{}
+	results := make([]string, 0)
 	// 对转义字符 \, \; \( \) 等进行编码
 	paramVaule = iworkfunc.EncodeSpecialForParamVaule(paramVaule)
-	vaules := strings.Split(paramVaule, ";")
-	for _, value := range vaules {
-		if _value := this.removeUnsupportChars(value); strings.TrimSpace(_value) != "" {
+	multiVals, err := iworkfunc.SplitWithLexerAnalysis(paramVaule)
+	if err != nil {
+		panic(err)
+	}
+	for _, value := range multiVals {
+		if _value := this.trim(value); strings.TrimSpace(_value) != "" {
 			results = append(results, strings.TrimSpace(_value))
 		}
 	}
@@ -230,10 +233,10 @@ func (this *BaseNode) SubmitParamOutputSchemaDataToDataStore(workStep *iwork.Wor
 }
 
 // 去除不合理的字符
-func (this *BaseNode) removeUnsupportChars(paramValue string) string {
+func (this *BaseNode) trim(paramValue string) string {
 	// 先进行初次的 trim
 	paramValue = strings.TrimSpace(paramValue)
-	// 去除前后的 \n9
+	// 去除前后的 \n
 	paramValue = strings.TrimPrefix(paramValue, "\n")
 	paramValue = strings.TrimSuffix(paramValue, "\n")
 	// 再进行二次 trim

@@ -10,15 +10,16 @@ import (
 
 // 正则表达式 ~ 正则表达式对应的词语
 var regexMap = map[string]string{
-	"^[a-zA-Z0-9]+\\(":                    "func(",
-	"^\\)":                                ")",
-	"^`.*?`":                              "S",
-	"^[0-9]+":                             "N",
-	"^\\$[a-zA-Z_0-9]+\\.[a-zA-Z0-9\\-]+": "V",
-	"^,":                                  ",",
+	"^[a-zA-Z0-9]+\\(":                     "func(",
+	"^\\)":                                 ")",
+	"^`.*?`":                               "S",
+	"^[0-9]+":                              "N",
+	"^\\$[a-zA-Z_0-9]+\\.[a-zA-Z0-9\\-_]+": "V",
+	"^,":                                   ",",
+	"^;":                                   ";",
 }
 
-func isUUIDVar(s string) bool {
+func isUUIDFuncVar(s string) bool {
 	if !strings.HasPrefix(s, "$func.") {
 		return false
 	}
@@ -36,7 +37,7 @@ func isStringNumberOrVar(s string) bool {
 func ParseToFuncCallers(expression string) ([]*FuncCaller, error) {
 	callers := make([]*FuncCaller, 0)
 	for {
-		if strings.TrimSpace(expression) == "" || isUUIDVar(expression) {
+		if isUUIDFuncVar(expression) {
 			break // 已经被提取完了
 		}
 		// 对 expression 表达式进行词法分析
@@ -51,7 +52,7 @@ func ParseToFuncCallers(expression string) ([]*FuncCaller, error) {
 		}
 		if caller == nil { // 未提取到 func
 			if !isStringNumberOrVar(expression) {
-				return nil, errors.New(fmt.Sprintf(`invalid param for %s`, expression))
+				return nil, errors.New(fmt.Sprintf(`%s 词法解析失败,格式不正确!`, expression))
 			}
 			return nil, nil
 		}
@@ -68,7 +69,7 @@ func ParseToFuncCallers(expression string) ([]*FuncCaller, error) {
 		caller.FuncArgs = stringutil.RemoveItemFromSlice(funcArea[1:len(funcArea)-1], ",") // 参数需要过滤掉 ,
 		for _, arg := range caller.FuncArgs {
 			if !isStringNumberOrVar(arg) {
-				return nil, errors.New(fmt.Sprintf(`invalid param for %s`, arg))
+				return nil, errors.New(fmt.Sprintf(`%s 词法解析失败,格式不正确!`, arg))
 			}
 		}
 		callers = append(callers, caller)
@@ -91,9 +92,8 @@ func lexerAt(lexers []string, index int) int {
 }
 
 func analysisLexer(s string) (metas []string, lexers []string, err error) {
-	metas = make([]string, 0)
-	lexers = make([]string, 0)
-	// 不断地进行词法解析,解析完或者报错
+	metas, lexers = make([]string, 0), make([]string, 0)
+	// 不断地进行词法解析,直到解析完或者报错
 	for {
 		s = strings.TrimSpace(s)
 		if s == "" {
@@ -104,18 +104,55 @@ func analysisLexer(s string) (metas []string, lexers []string, err error) {
 		flag := false
 		for regex, lexer := range regexMap {
 			reg := regexp.MustCompile(regex)
-			find := reg.FindString(s)
-			if find != "" { // 找到一个词语
-				metas = append(metas, find)
-				lexers = append(lexers, lexer)
-				s = strings.Replace(s, find, "", 1)
+			if findStr := reg.FindString(s); findStr != "" { // 找到一个词语
+				metas, lexers = append(metas, findStr), append(lexers, lexer)
+				s = strings.Replace(s, findStr, "", 1)
 				flag = true
 				break
 			}
 		}
 		// 解析报错
 		if !flag {
-			return metas, lexers, errors.New(fmt.Sprintf("%s is an error lexer data", s))
+			return metas, lexers, errors.New(fmt.Sprintf("%s 词法解析失败,格式不正确!", s))
 		}
 	}
+}
+
+// 根据词法分析并根据 ; 进行多值分割
+func SplitWithLexerAnalysis(expression string) ([]string, error) {
+	multiExpressions := make([]string, 0)
+	metas, lexers, err := analysisLexer(expression)
+	if err != nil { // 词法分析失败
+		return nil, err
+	}
+	if !strings.Contains(expression, ";") { // 不包含 ; 表示单个值
+		if strings.TrimSpace(expression) != "" {
+			multiExpressions = append(multiExpressions, expression)
+		}
+		return multiExpressions, nil
+	}
+	for {
+		hasSeparator := false
+		for index, lexer := range lexers {
+			if lexer == ";" {
+				hasSeparator = true
+				_expression := strings.TrimSpace(strings.Join(metas[:index], ""))
+				if _expression != "" {
+					multiExpressions = append(multiExpressions, _expression)
+				}
+				metas = metas[index+1:]
+				lexers = lexers[index+1:]
+				break
+			}
+		}
+		if !hasSeparator {
+			_expression := strings.Join(metas, "")
+			if _expression != "" {
+				multiExpressions = append(multiExpressions, _expression)
+			} else {
+				break
+			}
+		}
+	}
+	return multiExpressions, nil
 }
