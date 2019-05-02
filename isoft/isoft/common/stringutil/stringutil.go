@@ -51,7 +51,7 @@ func GetNoRepeatSubStringWithRegexp(s, regex string) []string {
 
 // 通过map主键唯一的特性过滤重复元素
 func RemoveRepeatForSlice(slc []string) []string {
-	result := []string{}
+	result := make([]string, 0)
 	// 存放不重复主键
 	tempMap := map[string]byte{}
 	for _, e := range slc {
@@ -60,6 +60,16 @@ func RemoveRepeatForSlice(slc []string) []string {
 		if len(tempMap) != l {
 			// 加入map后,map长度变化,则元素不重复
 			result = append(result, e)
+		}
+	}
+	return result
+}
+
+func RemoveItemFromSlice(slc []string, item string) []string {
+	result := make([]string, 0)
+	for _, s := range slc {
+		if s != item {
+			result = append(result, s)
 		}
 	}
 	return result

@@ -15,11 +15,11 @@ var regexMap = map[string]string{
 	"^`.*?`":                              "S",
 	"^[0-9]+":                             "N",
 	"^\\$[a-zA-Z_0-9]+\\.[a-zA-Z0-9\\-]+": "V",
-	",":                                   ",",
+	"^,":                                  ",",
 }
 
 func isUUIDVar(s string) bool {
-	if !strings.HasPrefix(s, "$uuid.") {
+	if !strings.HasPrefix(s, "$func.") {
 		return false
 	}
 	return len(stringutil.GetNoRepeatSubStringWithRegexp(s, "^\\$[a-zA-Z_0-9]+\\.[a-zA-Z0-9\\-]+$")) == 1
@@ -62,10 +62,10 @@ func ParseToFuncCallers(expression string) ([]*FuncCaller, error) {
 		funcRight := metas[lexerAt(lexers, caller.FuncRightIndex)+1:]
 		// 函数部分
 		funcArea := metas[lexerAt(lexers, caller.FuncLeftIndex) : lexerAt(lexers, caller.FuncRightIndex)+1]
-		// 将 caller 函数替换成 uuid,以便下一轮提取 func 使用
-		expression = strings.Join(funcLeft, "") + "$uuid." + uuid + strings.Join(funcRight, "")
-		caller.FuncName = strings.Replace(funcArea[0], "(", "", -1) // 去除函数名中的 (
-		caller.FuncArgs = funcArea[1 : len(funcArea)-1]
+		// 将 caller 函数替换成 $func.uuid,以便下一轮提取 func 使用
+		expression = strings.Join(funcLeft, "") + "$func." + uuid + strings.Join(funcRight, "")
+		caller.FuncName = strings.Replace(funcArea[0], "(", "", -1)                        // 去除函数名中的 (
+		caller.FuncArgs = stringutil.RemoveItemFromSlice(funcArea[1:len(funcArea)-1], ",") // 参数需要过滤掉 ,
 		for _, arg := range caller.FuncArgs {
 			if !isStringNumberOrVar(arg) {
 				return nil, errors.New(fmt.Sprintf(`invalid param for %s`, arg))
