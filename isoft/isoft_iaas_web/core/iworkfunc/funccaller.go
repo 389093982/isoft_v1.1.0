@@ -61,7 +61,7 @@ func CheckHasNearRightBracket(leftBracketIndex int, lexersExpression string) (bo
 	return false, -1
 }
 
-func CallFuncExecutor(caller *FuncCaller, args []interface{}) interface{} {
+func ExecuteFuncCaller(caller *FuncCaller, args []interface{}) interface{} {
 	proxy := &IWorkFuncProxy{}
 	m := reflect.ValueOf(proxy).MethodByName(caller.FuncName)
 	rtn := m.Call([]reflect.Value{reflect.ValueOf(args)})

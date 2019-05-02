@@ -14,6 +14,13 @@ var regexs = []string{"^[a-zA-Z0-9]+\\(", "^\\)", "^`.*?`", "^[0-9]+", "^\\$[a-z
 // 正则表达式对应的词语
 var regexLexers = []string{"func(", ")", "S", "N", "V", ","}
 
+func isStringNumberOrVar(s string) bool {
+	if _, lexers, err := analysisLexer(s); err == nil && len(lexers) == 1 {
+		return true
+	}
+	return false
+}
+
 // 返回 uuid 和 funcCaller
 func ParseToFuncCallers(expression string) ([]*FuncCaller, error) {
 	callers := make([]*FuncCaller, 0)
@@ -32,6 +39,9 @@ func ParseToFuncCallers(expression string) ([]*FuncCaller, error) {
 			return callers, err
 		}
 		if caller == nil { // 未提取到 func
+			if !isStringNumberOrVar(expression) {
+				return nil, errors.New(fmt.Sprintf(`invalid param for %s`, expression))
+			}
 			return nil, nil
 		}
 		uuid := stringutil.RandomUUID()
@@ -45,6 +55,11 @@ func ParseToFuncCallers(expression string) ([]*FuncCaller, error) {
 		expression = strings.Join(funcLeft, "") + "$uuid." + uuid + strings.Join(funcRight, "")
 		caller.FuncName = strings.Replace(funcArea[0], "(", "", -1) // 去除函数名中的 (
 		caller.FuncArgs = funcArea[1 : len(funcArea)-1]
+		for _, arg := range caller.FuncArgs {
+			if !isStringNumberOrVar(arg) {
+				return nil, errors.New(fmt.Sprintf(`invalid param for %s`, arg))
+			}
+		}
 		callers = append(callers, caller)
 	}
 	return callers, nil
