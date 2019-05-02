@@ -16,55 +16,6 @@ import (
 	"strings"
 )
 
-type SQLSimpleQueryNode struct {
-	BaseNode
-	WorkStep *iwork.WorkStep
-}
-
-func (this *SQLSimpleQueryNode) Execute(trackingId string) {
-	paramMap := make(map[string]interface{}, 0)
-	// 节点中间数据
-	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, this.DataStore)
-	sql := tmpDataMap[iworkconst.STRING_PREFIX+"sql"].(string)
-	dataSourceName := tmpDataMap[iworkconst.STRING_PREFIX+"db_conn"].(string)
-	// sql_binding 参数获取
-	sql_binding := getSqlBinding(tmpDataMap)
-	datacounts, rowDetailDatas, rowDatas := sqlutil.Query(sql, sql_binding, dataSourceName)
-	// 将数据数据存储到数据中心
-	// 存储 datacounts
-	paramMap[iworkconst.NUMBER_PREFIX+"datacounts"] = datacounts
-	for paramName, paramValue := range rowDetailDatas {
-		// 存储具体字段值
-		paramMap[paramName] = paramValue
-	}
-	// 数组对象整体存储在 rows 里面
-	paramMap[iworkconst.MULTI_PREFIX+"rows"] = rowDatas
-	this.DataStore.CacheDatas(this.WorkStep.WorkStepName, paramMap)
-}
-
-func (this *SQLSimpleQueryNode) GetDefaultParamInputSchema() *iworkmodels.ParamInputSchema {
-	paramMap := map[int][]string{
-		1: {iworkconst.STRING_PREFIX + "sql", "查询sql语句,需要使用 {{}} 标识出 metadata 字段名和 tableName 表名"},
-		2: {iworkconst.MULTI_PREFIX + "sql_binding?", "sql绑定数据,个数必须和当前执行sql语句中的占位符参数个数相同"},
-		3: {iworkconst.STRING_PREFIX + "db_conn", "数据库连接信息,需要使用 $RESOURCE 全局参数"},
-	}
-	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
-}
-
-func (this *SQLSimpleQueryNode) GetDefaultParamOutputSchema() *iworkmodels.ParamOutputSchema {
-	return schema.BuildParamOutputSchemaWithSlice([]string{iworkconst.NUMBER_PREFIX + "datacounts"})
-}
-
-func (this *SQLSimpleQueryNode) GetRuntimeParamOutputSchema() *iworkmodels.ParamOutputSchema {
-	return getMetaDataQuietlyForQuery(this.WorkStep)
-}
-func (this *SQLSimpleQueryNode) ValidateCustom() (checkResult []string) {
-	validateAndGetDataStoreName(this.WorkStep)
-	validateAndGetMetaDataSql(this.WorkStep)
-	validateSqlBindingParamCount(this.WorkStep)
-	return []string{}
-}
-
 type SQLQueryNode struct {
 	BaseNode
 	WorkStep *iwork.WorkStep
@@ -78,6 +29,8 @@ func (this *SQLQueryNode) Execute(trackingId string) {
 	dataSourceName := tmpDataMap[iworkconst.STRING_PREFIX+"db_conn"].(string)
 	// sql_binding 参数获取
 	sql_binding := getSqlBinding(tmpDataMap)
+	sql = strings.ReplaceAll(sql, "{{", "")
+	sql = strings.ReplaceAll(sql, "}}", "")
 	datacounts, rowDetailDatas, rowDatas := sqlutil.Query(sql, sql_binding, dataSourceName)
 	// 将数据数据存储到数据中心
 	// 存储 datacounts
@@ -93,8 +46,8 @@ func (this *SQLQueryNode) Execute(trackingId string) {
 
 func (this *SQLQueryNode) GetDefaultParamInputSchema() *iworkmodels.ParamInputSchema {
 	paramMap := map[int][]string{
-		1: {iworkconst.STRING_PREFIX + "metadata_sql", "元数据sql语句,针对复杂查询sql,需要提供类似于select * from blog where 1=0的辅助sql用来构建节点输出"},
-		2: {iworkconst.STRING_PREFIX + "sql", "查询sql语句"},
+		1: {iworkconst.STRING_PREFIX + "sql", "查询sql语句,可以使用 {{}} 标识出 metadata 字段名和 tableName 表名,用于自动推断 metadatasql"},
+		2: {iworkconst.STRING_PREFIX + "metadata_sql?", "元数据sql语句,针对复杂查询sql,需要提供类似于select * from blog where 1=0的辅助sql用来构建节点输出"},
 		3: {iworkconst.MULTI_PREFIX + "sql_binding?", "sql绑定数据,个数必须和当前执行sql语句中的占位符参数个数相同"},
 		4: {iworkconst.STRING_PREFIX + "db_conn", "数据库连接信息,需要使用 $RESOURCE 全局参数"},
 	}
@@ -196,12 +149,25 @@ func (this *SQLQueryPageNode) Execute(trackingId string) {
 	paramMap := make(map[string]interface{}, 0)
 	// 节点中间数据
 	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, this.DataStore)
-	total_sql := tmpDataMap[iworkconst.STRING_PREFIX+"total_sql"].(string)
 	sql := tmpDataMap[iworkconst.STRING_PREFIX+"sql"].(string)
+	var total_sql string
+	if _total_sql, ok := tmpDataMap[iworkconst.STRING_PREFIX+"total_sql?"].(string); ok && strings.TrimSpace(_total_sql) != "" {
+		total_sql = _total_sql
+	} else {
+		total_sql = getTotalSqlFromQuery(sql)
+	}
 	dataSourceName := tmpDataMap[iworkconst.STRING_PREFIX+"db_conn"].(string)
 	// sql_binding 参数获取
 	sql_binding := getSqlBinding(tmpDataMap)
-	totalcount := sqlutil.QuerySelectCount(total_sql, sql_binding[:len(sql_binding)-2], dataSourceName)
+	totalcount := sqlutil.QuerySelectCount(total_sql, sql_binding, dataSourceName)
+	sql = fmt.Sprintf(`%s limit ?,?`, sql) // 追加 limit 语句
+	current_page := tmpDataMap[iworkconst.NUMBER_PREFIX+"current_page"].(string)
+	page_size := tmpDataMap[iworkconst.NUMBER_PREFIX+"page_size"].(string)
+	_current_page, _ := strconv.Atoi(current_page)
+	_page_size, _ := strconv.Atoi(page_size)
+	sql_binding = append(sql_binding, (_current_page-1)*_page_size, _page_size)
+	sql = strings.ReplaceAll(sql, "{{", "")
+	sql = strings.ReplaceAll(sql, "}}", "")
 	datacounts, rowDetailDatas, rowDatas := sqlutil.Query(sql, sql_binding, dataSourceName)
 	// 将数据数据存储到数据中心
 	// 存储 datacounts
@@ -238,12 +204,12 @@ func getPageIndexAndPageSize(tmpDataMap map[string]interface{}) (currentPage int
 
 func (this *SQLQueryPageNode) GetDefaultParamInputSchema() *iworkmodels.ParamInputSchema {
 	paramMap := map[int][]string{
-		1: {iworkconst.STRING_PREFIX + "metadata_sql", "元数据sql语句,针对复杂查询sql,需要提供类似于select * from blog where 1=0的辅助sql用来构建节点输出"},
-		2: {iworkconst.STRING_PREFIX + "total_sql", "统计总数sql,返回N页总数据量,格式参考select count(*) as count from blog where xxx"},
-		3: {iworkconst.STRING_PREFIX + "sql", "带分页条件的sql,等价于 ${total_sql} limit ?,?"},
-		4: {iworkconst.NUMBER_PREFIX + "current_page", "当前页数"},
-		5: {iworkconst.NUMBER_PREFIX + "page_size", "每页数据量"},
-		6: {iworkconst.MULTI_PREFIX + "sql_binding?", "sql绑定数据,个数和sql中的?数量相同,前N-2位参数和total_sql中的?数量相同"},
+		1: {iworkconst.STRING_PREFIX + "sql", "查询sql语句,可以使用 {{}} 标识出 metadata 字段名和 tableName 表名,用于自动推断 metadatasql, 带分页条件的sql,等价于 ${total_sql} limit ?,?"},
+		2: {iworkconst.STRING_PREFIX + "metadata_sql?", "元数据sql语句,针对复杂查询sql,需要提供类似于select * from blog where 1=0的辅助sql用来构建节点输出"},
+		3: {iworkconst.STRING_PREFIX + "total_sql?", "统计总数sql,返回N页总数据量,格式参考select count(*) as count from blog where xxx"},
+		4: {iworkconst.MULTI_PREFIX + "sql_binding?", "sql绑定数据,个数和sql中的?数量相同,前N-2位参数和total_sql中的?数量相同"},
+		5: {iworkconst.NUMBER_PREFIX + "current_page", "当前页数"},
+		6: {iworkconst.NUMBER_PREFIX + "page_size", "每页数据量"},
 		7: {iworkconst.STRING_PREFIX + "db_conn", "数据库连接信息,需要使用 $RESOURCE 全局参数"},
 	}
 	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
@@ -278,7 +244,7 @@ func (this *SQLQueryPageNode) ValidateCustom() (checkResult []string) {
 }
 
 func validateTotalSqlBindingParamCount(step *iwork.WorkStep) {
-	total_sql := param.GetStaticParamValueWithStep(iworkconst.STRING_PREFIX+"total_sql", step).(string)
+	total_sql := param.GetStaticParamValueWithStep(iworkconst.STRING_PREFIX+"total_sql?", step).(string)
 	sql_binding := param.GetStaticParamValueWithStep(iworkconst.MULTI_PREFIX+"sql_binding?", step).(string)
 	if strings.Count(total_sql, "?")+2 != strings.Count(iworkfunc.EncodeSpecialForParamVaule(sql_binding), ";") {
 		panic("Number of ? in total_sql and number of ; in sql_binding is mismatch!")
@@ -293,10 +259,21 @@ func validateSqlBindingParamCount(step *iwork.WorkStep) {
 	}
 }
 
+func getTotalSqlFromQuery(querySql string) string {
+	reg := regexp.MustCompile("^.+{{.+}}.+{{.+}}.*$")
+	if match := reg.Match([]byte(querySql)); match == false {
+		panic(fmt.Sprintf(`sql 格式不正确,必须使用 {{}} 标识出字段名和表名！`))
+	}
+	totalSql := querySql[:strings.Index(querySql, "{{")] + " count(*) as count " + querySql[strings.Index(querySql, "}}")+2:]
+	totalSql = strings.ReplaceAll(totalSql, "{{", "")
+	totalSql = strings.ReplaceAll(totalSql, "}}", "")
+	return totalSql
+}
+
 func getMetaDataSqlFromQuery(querySql string) string {
 	reg := regexp.MustCompile("^.+{{.+}}.+{{.+}}.*$")
 	if match := reg.Match([]byte(querySql)); match == false {
-		panic("invalid sql")
+		panic(fmt.Sprintf(`sql 格式不正确,必须使用 {{}} 标识出字段名和表名！`))
 	}
 	fieldNames := querySql[strings.Index(querySql, "{{")+2 : strings.Index(querySql, "}}")]
 	tableName := querySql[strings.LastIndex(querySql, "{{")+2 : strings.LastIndex(querySql, "}}")]

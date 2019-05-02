@@ -80,7 +80,6 @@ const default_work_step_types=[
   {"name":"empty","icon":"ios-mail-open-outline"},
   {"name":"work_sub","icon":"logo-buffer"},
   // 数据库相关
-  {"name":"sql_simple_query","icon":"ios-cube-outline"},
   {"name":"sql_query","icon":"ios-cube-outline"},
   {"name":"sql_query_page","icon":"md-cube"},
   {"name":"sql_execute","icon":"ios-crop-outline"},
