@@ -8,11 +8,22 @@ import (
 	"strings"
 )
 
-// 正则表达式
-var regexs = []string{"^[a-zA-Z0-9]+\\(", "^\\)", "^`.*?`", "^[0-9]+", "^\\$[a-zA-Z_0-9]+\\.[a-zA-Z0-9\\-]+", ","}
+// 正则表达式 ~ 正则表达式对应的词语
+var regexMap = map[string]string{
+	"^[a-zA-Z0-9]+\\(":                    "func(",
+	"^\\)":                                ")",
+	"^`.*?`":                              "S",
+	"^[0-9]+":                             "N",
+	"^\\$[a-zA-Z_0-9]+\\.[a-zA-Z0-9\\-]+": "V",
+	",":                                   ",",
+}
 
-// 正则表达式对应的词语
-var regexLexers = []string{"func(", ")", "S", "N", "V", ","}
+func isUUIDVar(s string) bool {
+	if !strings.HasPrefix(s, "$uuid.") {
+		return false
+	}
+	return len(stringutil.GetNoRepeatSubStringWithRegexp(s, "^\\$[a-zA-Z_0-9]+\\.[a-zA-Z0-9\\-]+$")) == 1
+}
 
 func isStringNumberOrVar(s string) bool {
 	if _, lexers, err := analysisLexer(s); err == nil && len(lexers) == 1 {
@@ -25,7 +36,7 @@ func isStringNumberOrVar(s string) bool {
 func ParseToFuncCallers(expression string) ([]*FuncCaller, error) {
 	callers := make([]*FuncCaller, 0)
 	for {
-		if strings.TrimSpace(expression) == "" || strings.HasPrefix(expression, "$uuid.") {
+		if strings.TrimSpace(expression) == "" || isUUIDVar(expression) {
 			break // 已经被提取完了
 		}
 		// 对 expression 表达式进行词法分析
@@ -34,7 +45,7 @@ func ParseToFuncCallers(expression string) ([]*FuncCaller, error) {
 			return callers, err
 		}
 		// 提取 func
-		caller, err := GetPriorityFuncExecutorFromLexersExpression(strings.Join(lexers, ""))
+		caller, err := GetPriorityFuncExecutorFromLexersExpression(strings.Join(metas, ""), strings.Join(lexers, ""))
 		if err != nil { // 提取失败
 			return callers, err
 		}
@@ -91,12 +102,12 @@ func analysisLexer(s string) (metas []string, lexers []string, err error) {
 		}
 		// 标识是否分析到一个词语
 		flag := false
-		for index, regex := range regexs {
+		for regex, lexer := range regexMap {
 			reg := regexp.MustCompile(regex)
 			find := reg.FindString(s)
 			if find != "" { // 找到一个词语
 				metas = append(metas, find)
-				lexers = append(lexers, regexLexers[index])
+				lexers = append(lexers, lexer)
 				s = strings.Replace(s, find, "", 1)
 				flag = true
 				break

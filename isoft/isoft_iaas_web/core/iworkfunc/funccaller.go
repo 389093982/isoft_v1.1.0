@@ -1,6 +1,7 @@
 package iworkfunc
 
 import (
+	"fmt"
 	"github.com/pkg/errors"
 	"isoft/isoft/common/stringutil"
 	"reflect"
@@ -18,7 +19,7 @@ type FuncCaller struct {
 
 // 获取优先级最高的函数执行体
 // 含有 func( 必然有优先函数执行体
-func GetPriorityFuncExecutorFromLexersExpression(lexersExpression string) (*FuncCaller, error) {
+func GetPriorityFuncExecutorFromLexersExpression(metasExpression, lexersExpression string) (*FuncCaller, error) {
 	if !strings.Contains(lexersExpression, "func(") && !strings.Contains(lexersExpression, ")") {
 		// 非函数类型表达式值
 		return nil, nil
@@ -34,7 +35,7 @@ func GetPriorityFuncExecutorFromLexersExpression(lexersExpression string) (*Func
 			}, nil
 		}
 	}
-	return nil, errors.New("invalid func was found...")
+	return nil, errors.New(fmt.Sprintf(`invalid func was found for %s`, metasExpression))
 }
 
 // 获取表达式中所有左括号的索引
