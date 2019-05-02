@@ -1,6 +1,7 @@
 package iwork
 
 import (
+	"isoft/isoft_iaas_web/core/iworkfunc"
 	"isoft/isoft_iaas_web/service"
 	"isoft/isoft_iaas_web/service/iworkservice"
 )
@@ -157,5 +158,22 @@ func (this *WorkController) EditWorkStepParamInfo() {
 	} else {
 		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": err.Error()}
 	}
+	this.ServeJSON()
+}
+
+func (this *WorkController) ParseToMultiValue() {
+	pureText, _ := this.GetBool("pureText", false)
+	value := this.GetString("value")
+	if !pureText {
+		multiVals, err := iworkfunc.SplitWithLexerAnalysis(value)
+		if err != nil {
+			this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": err.Error()}
+		} else {
+			this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "multiVals": multiVals}
+		}
+	} else {
+		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "multiVals": []string{value}}
+	}
+
 	this.ServeJSON()
 }

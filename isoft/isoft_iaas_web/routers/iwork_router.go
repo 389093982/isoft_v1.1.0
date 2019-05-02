@@ -49,6 +49,7 @@ func loadloadIWorkerRouterDetail() {
 	beego.Router("/api/iwork/loadValidateResult", &iwork.WorkController{}, "post:LoadValidateResult")
 	beego.Router("/api/iwork/refactorWorkStepInfo", &iwork.WorkController{}, "post:RefactorWorkStepInfo")
 	beego.Router("/api/iwork/batchChangeIndent", &iwork.WorkController{}, "post:BatchChangeIndent")
+	beego.Router("/api/iwork/parseToMultiValue", &iwork.WorkController{}, "post:ParseToMultiValue")
 
 	beego.Router("/api/iwork/submitMigrate", &iwork.WorkController{}, "post:SubmitMigrate")
 	beego.Router("/api/iwork/filterPageMigrate", &iwork.WorkController{}, "post:FilterPageMigrate")
@@ -60,5 +61,4 @@ func loadloadIWorkerRouterDetail() {
 	beego.Router("/api/iwork/loadAllWorkVar", &iwork.WorkController{}, "post:LoadAllWorkVar")
 
 	beego.Router("/api/iwork/loadQuickSqlMeta", &iwork.WorkController{}, "post:LoadQuickSqlMeta")
-
 }

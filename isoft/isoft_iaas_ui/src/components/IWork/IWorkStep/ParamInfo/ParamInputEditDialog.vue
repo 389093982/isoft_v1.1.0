@@ -20,15 +20,32 @@
       </Col>
       <Col span="14">
         <h3 style="color: #1600ff;">参数名称({{paramIndex}}):{{inputLabel}}</h3>
-        <span>
-          <router-link :to="{ path: '/iwork/quickSql' }" tag="a" target="_blank">
-            <Icon type="ios-cube-outline" size="18" style=" float: right;"/>
-          </router-link>
-          <QuickFuncList ref="quickFuncList" @chooseFunc="chooseFunc"/>
-          <Icon type="md-copy" size="18" style="float: right;" @click="showQuickFunc()"/>
-          <Checkbox v-model="pureText" style="float: right;">纯文本值</Checkbox>
+        <span class="operate_link">
+          <ul>
+            <li>
+              <router-link :to="{ path: '/iwork/quickSql' }" tag="a" target="_blank">
+                <Icon type="ios-cube-outline" size="18" style=" float: right;"/>
+              </router-link>
+            </li>
+            <li>
+              <QuickFuncList ref="quickFuncList" @chooseFunc="chooseFunc"/>
+              <Icon type="md-copy" size="18" style="float: right;" @click="showQuickFunc()"/>
+            </li>
+            <li>
+              <Checkbox v-model="pureText" style="float: right;">纯文本值</Checkbox>
+            </li>
+            <li>
+              <a @click="parseToMultiValue">多值预览</a>
+            </li>
+          </ul>
         </span>
-        <Input v-model="inputTextData" type="textarea" :rows="15" placeholder="Enter something..." />
+        <div v-show="showMultiVals" style="margin-top: 20px;">
+          <span v-for="(val,index) in multiVals">
+            参数 {{index}}
+            <Input type="textarea" :value="val" readonly="true"/>
+          </span>
+        </div>
+        <Input v-show="showMultiVals == false" v-model="inputTextData" type="textarea" :rows="15" placeholder="Enter something..." />
       </Col>
     </Row>
     <Row style="text-align: right;margin-top: 10px;">
@@ -41,9 +58,10 @@
 </template>
 
 <script>
-  import {LoadPreNodeOutput} from "../../../../api/index"
+  import {LoadPreNodeOutput} from "../../../../api"
   import ISimpleBtnTriggerModal from "../../../Common/modal/ISimpleBtnTriggerModal"
   import QuickFuncList from "../../IQuickFunc/QuickFuncList"
+  import {ParseToMultiValue} from "../../../../api"
 
   export default {
     name: "ParamInputEditDialog",
@@ -56,11 +74,22 @@
         pureText:false,
         oldInputTextData:'',
         inputTextData:'',
+        showMultiVals:false,  // 默认非多值视图
+        multiVals:[],         // 存储多值列表
         paramIndex:1,
         preParamOutputSchemaTreeNodeArr:[],
       }
     },
     methods:{
+      parseToMultiValue: async function(){
+        const result = await ParseToMultiValue(this.pureText, this.inputTextData);
+        if(result.status == "SUCCESS"){
+          this.showMultiVals = !this.showMultiVals;
+          this.multiVals = result.multiVals;
+        }else{
+          this.$Message.error('提交失败!' + result.errorMsg);
+        }
+      },
       handleReload: function(paramIndex){
         this.$emit("handleReload", paramIndex);
       },
@@ -71,6 +100,7 @@
         this.pureText = item.PureText;
         // 文本输入框设置历史值
         this.inputTextData = item.ParamValue;
+        this.showMultiVals = false;
         this.clearDirty();
         this.refreshPreNodeOutput();
       },
@@ -158,7 +188,7 @@
             const arr = [];
             for(var i=0; i<paramOutputSchemaTreeNode.NodeChildrens.length; i++) {
               var childParamOutputSchemaTreeNode = paramOutputSchemaTreeNode.NodeChildrens[i];
-              var childNode = {title: childParamOutputSchemaTreeNode.NodeName,expand: false,};
+              var childNode = {title: childParamOutputSchemaTreeNode.NodeName,expand: false};
               // 递归操作
               appendChildrens(childParamOutputSchemaTreeNode, childNode);
               arr.push(childNode);
@@ -184,5 +214,9 @@
 </script>
 
 <style scoped>
-
+  .operate_link ul li{
+   display: inline-block;
+   margin-left: 10px;
+   float: right;
+ }
 </style>
