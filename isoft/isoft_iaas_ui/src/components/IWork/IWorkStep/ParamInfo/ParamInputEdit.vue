@@ -1,5 +1,5 @@
 <template>
-  <span>
+  <div>
     <Row v-for="(item,index) in paramInputSchemaItems" style="margin-bottom: 10px;">
       <Row>
         <Col span="16">
@@ -11,7 +11,9 @@
         </Col>
       </Row>
       <Row>
-        <Select v-if="item.ParamChoices" v-model="item.ParamValue">
+        <!-- transfer="true" 表示是否将弹层放置于 body 内,
+          在 Tabs、带有 fixed 的 Table 列内使用时,建议添加此属性,它将不受父级样式影响,从而达到更好的效果-->
+        <Select v-if="item.ParamChoices" v-model="item.ParamValue" :transfer="true">
           <Option v-for="choice in item.ParamChoices" :value="choice" :key="choice">
             {{choice}}
           </Option>
@@ -21,7 +23,7 @@
     </Row>
 
     <ParamInputEditDialog ref="paramInputEditDialog" @handleSubmit="refreshParamInputSchemaItems" @handleReload="handleReload"/>
-  </span>
+  </div>
 </template>
 
 <script>

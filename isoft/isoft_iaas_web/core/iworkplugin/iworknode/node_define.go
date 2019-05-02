@@ -24,14 +24,13 @@ func (this *DefineVarNode) GetRuntimeParamInputSchema() *iworkmodels.ParamInputS
 	json.Unmarshal([]byte(this.WorkStep.WorkStepParamMapping), &paramMappingsArr)
 	items := make([]iworkmodels.ParamInputSchemaItem, 0)
 	for _, paramMapping := range paramMappingsArr {
-		items = append(items, iworkmodels.ParamInputSchemaItem{ParamName: paramMapping})
 		items = append(items, iworkmodels.ParamInputSchemaItem{
-			ParamName: paramMapping + "_type",
+			ParamName: paramMapping,
 			ParamChoices: []string{
-				"string",
-				"interface{}",
-				"[]interface{}",
-				"map[string]interface{}",
+				"`string`",
+				"`interface{}`",
+				"`[]interface{}`",
+				"`map[string]interface{}`",
 			},
 		})
 	}
