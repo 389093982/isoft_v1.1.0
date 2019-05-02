@@ -13,6 +13,7 @@ func init() {
 		WorkEndNode{},
 		WorkSubNode{},
 		SQLExecuteNode{},
+		SQLSimpleQueryNode{},
 		SQLQueryNode{},
 		SQLQueryPageNode{},
 		JsonRenderNode{},

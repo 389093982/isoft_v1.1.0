@@ -11,9 +11,59 @@ import (
 	"isoft/isoft_iaas_web/core/iworkutil/datatypeutil"
 	"isoft/isoft_iaas_web/core/iworkutil/sqlutil"
 	"isoft/isoft_iaas_web/models/iwork"
+	"regexp"
 	"strconv"
 	"strings"
 )
+
+type SQLSimpleQueryNode struct {
+	BaseNode
+	WorkStep *iwork.WorkStep
+}
+
+func (this *SQLSimpleQueryNode) Execute(trackingId string) {
+	paramMap := make(map[string]interface{}, 0)
+	// 节点中间数据
+	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, this.DataStore)
+	sql := tmpDataMap[iworkconst.STRING_PREFIX+"sql"].(string)
+	dataSourceName := tmpDataMap[iworkconst.STRING_PREFIX+"db_conn"].(string)
+	// sql_binding 参数获取
+	sql_binding := getSqlBinding(tmpDataMap)
+	datacounts, rowDetailDatas, rowDatas := sqlutil.Query(sql, sql_binding, dataSourceName)
+	// 将数据数据存储到数据中心
+	// 存储 datacounts
+	paramMap[iworkconst.NUMBER_PREFIX+"datacounts"] = datacounts
+	for paramName, paramValue := range rowDetailDatas {
+		// 存储具体字段值
+		paramMap[paramName] = paramValue
+	}
+	// 数组对象整体存储在 rows 里面
+	paramMap[iworkconst.MULTI_PREFIX+"rows"] = rowDatas
+	this.DataStore.CacheDatas(this.WorkStep.WorkStepName, paramMap)
+}
+
+func (this *SQLSimpleQueryNode) GetDefaultParamInputSchema() *iworkmodels.ParamInputSchema {
+	paramMap := map[int][]string{
+		1: {iworkconst.STRING_PREFIX + "sql", "查询sql语句,需要使用 {{}} 标识出 metadata 字段名和 tableName 表名"},
+		2: {iworkconst.MULTI_PREFIX + "sql_binding?", "sql绑定数据,个数必须和当前执行sql语句中的占位符参数个数相同"},
+		3: {iworkconst.STRING_PREFIX + "db_conn", "数据库连接信息,需要使用 $RESOURCE 全局参数"},
+	}
+	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
+}
+
+func (this *SQLSimpleQueryNode) GetDefaultParamOutputSchema() *iworkmodels.ParamOutputSchema {
+	return schema.BuildParamOutputSchemaWithSlice([]string{iworkconst.NUMBER_PREFIX + "datacounts"})
+}
+
+func (this *SQLSimpleQueryNode) GetRuntimeParamOutputSchema() *iworkmodels.ParamOutputSchema {
+	return getMetaDataQuietlyForQuery(this.WorkStep)
+}
+func (this *SQLSimpleQueryNode) ValidateCustom() (checkResult []string) {
+	validateAndGetDataStoreName(this.WorkStep)
+	validateAndGetMetaDataSql(this.WorkStep)
+	validateSqlBindingParamCount(this.WorkStep)
+	return []string{}
+}
 
 type SQLQueryNode struct {
 	BaseNode
@@ -228,23 +278,36 @@ func (this *SQLQueryPageNode) ValidateCustom() (checkResult []string) {
 }
 
 func validateTotalSqlBindingParamCount(step *iwork.WorkStep) {
-	total_sql := param.GetStaticParamValue(iworkconst.STRING_PREFIX+"total_sql", step).(string)
-	sql_binding := param.GetStaticParamValue(iworkconst.MULTI_PREFIX+"sql_binding?", step).(string)
+	total_sql := param.GetStaticParamValueWithStep(iworkconst.STRING_PREFIX+"total_sql", step).(string)
+	sql_binding := param.GetStaticParamValueWithStep(iworkconst.MULTI_PREFIX+"sql_binding?", step).(string)
 	if strings.Count(total_sql, "?")+2 != strings.Count(iworkfunc.EncodeSpecialForParamVaule(sql_binding), ";") {
 		panic("Number of ? in total_sql and number of ; in sql_binding is mismatch!")
 	}
 }
 
 func validateSqlBindingParamCount(step *iwork.WorkStep) {
-	sql := param.GetStaticParamValue(iworkconst.STRING_PREFIX+"sql", step).(string)
-	sql_binding := param.GetStaticParamValue(iworkconst.MULTI_PREFIX+"sql_binding?", step).(string)
+	sql := param.GetStaticParamValueWithStep(iworkconst.STRING_PREFIX+"sql", step).(string)
+	sql_binding := param.GetStaticParamValueWithStep(iworkconst.MULTI_PREFIX+"sql_binding?", step).(string)
 	if strings.Count(sql, "?") != strings.Count(iworkfunc.EncodeSpecialForParamVaule(sql_binding), ";") {
 		panic("Number of ? in SQL and number of ; in sql_binding is unequal!")
 	}
 }
 
+func getMetaDataSqlFromQuery(querySql string) string {
+	reg := regexp.MustCompile("^.+{{.+}}.+{{.+}}.*$")
+	if match := reg.Match([]byte(querySql)); match == false {
+		panic("invalid sql")
+	}
+	fieldNames := querySql[strings.Index(querySql, "{{")+2 : strings.Index(querySql, "}}")]
+	tableName := querySql[strings.LastIndex(querySql, "{{")+2 : strings.LastIndex(querySql, "}}")]
+	return fmt.Sprintf(`select %s from %s where 1=0`, fieldNames, tableName)
+}
+
 func validateAndGetMetaDataSql(step *iwork.WorkStep) string {
-	metadata_sql := param.GetStaticParamValue(iworkconst.STRING_PREFIX+"metadata_sql", step).(string)
+	metadata_sql := param.GetStaticParamValueWithStep(iworkconst.STRING_PREFIX+"metadata_sql", step).(string)
+	if strings.TrimSpace(metadata_sql) == "" {
+		metadata_sql = getMetaDataSqlFromQuery(param.GetStaticParamValueWithStep(iworkconst.STRING_PREFIX+"sql", step).(string))
+	}
 	if strings.TrimSpace(metadata_sql) == "" {
 		panic("Empty paramValue for metadata_sql was found!")
 	}
@@ -255,7 +318,7 @@ func validateAndGetMetaDataSql(step *iwork.WorkStep) string {
 }
 
 func validateAndGetDataStoreName(step *iwork.WorkStep) string {
-	dataSourceName := param.GetStaticParamValue(iworkconst.STRING_PREFIX+"db_conn", step).(string)
+	dataSourceName := param.GetStaticParamValueWithStep(iworkconst.STRING_PREFIX+"db_conn", step).(string)
 	if strings.TrimSpace(dataSourceName) == "" {
 		panic("Invalid param for db_conn! Can't resolve it!")
 	}
@@ -282,10 +345,5 @@ func getMetaDataForQuery(step *iwork.WorkStep) *iworkmodels.ParamOutputSchema {
 }
 
 func getMetaDataQuietlyForQuery(step *iwork.WorkStep) *iworkmodels.ParamOutputSchema {
-	defer func() {
-		if err := recover(); err != nil {
-			return
-		}
-	}()
 	return getMetaDataForQuery(step)
 }

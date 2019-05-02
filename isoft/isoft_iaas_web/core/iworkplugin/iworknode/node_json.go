@@ -73,7 +73,7 @@ func (this *JsonParserNode) GetDefaultParamInputSchema() *iworkmodels.ParamInput
 
 func (this *JsonParserNode) GetRuntimeParamOutputSchema() *iworkmodels.ParamOutputSchema {
 	items := make([]iworkmodels.ParamOutputSchemaItem, 0)
-	if json_fields := param.GetStaticParamValue("json_fields", this.WorkStep).(string); strings.TrimSpace(json_fields) != "" {
+	if json_fields := param.GetStaticParamValueWithStep("json_fields", this.WorkStep).(string); strings.TrimSpace(json_fields) != "" {
 		jsonArr := strings.Split(json_fields, ",")
 		for _, paramName := range jsonArr {
 			if _paramName := strings.TrimSpace(paramName); _paramName != "" {
