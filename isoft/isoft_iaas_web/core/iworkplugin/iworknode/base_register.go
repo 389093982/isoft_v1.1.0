@@ -41,7 +41,6 @@ func init() {
 		EmptyNode{},
 		Base64EncodeNode{},
 		Base64DecodeNode{},
-		WorkVarAssignNode{},
 		DefineVarNode{},
 		AssignVarNode{},
 	}

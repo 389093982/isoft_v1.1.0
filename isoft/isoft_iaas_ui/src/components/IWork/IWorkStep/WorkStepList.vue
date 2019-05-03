@@ -11,7 +11,6 @@
       <Col span="2"><Button type="info" size="small" @click="showRunLogList">运行日志</Button></Col>
       <Col span="2"><WorkValidate /></Col>
       <Col span="2"><Button type="error" size="small" @click="renderSourceXml">View XML</Button></Col>
-      <Col span="2"><WorkVarList :work-name="$route.query.work_name"/></Col>
 
       <ISimpleConfirmModal ref="refactor_modal" modal-title="重构为子流程" :modal-width="500" @handleSubmit="refactor">
         <Input v-model.trim="refactor_worksub_name" placeholder="请输入重构的子流程名称"></Input>
@@ -45,11 +44,10 @@
   import ISimpleConfirmModal from "../../Common/modal/ISimpleConfirmModal"
   import {getRepeatStr} from "../../../tools/index"
   import {GetRelativeWork} from "../../../api/index"
-  import WorkVarList from "./WorkVarList"
 
   export default {
     name: "WorkStepList",
-    components:{ParamInfo,ISimpleLeftRightRow,BaseInfo,RelativeWork,WorkValidate,ISimpleConfirmModal,WorkVarList},
+    components:{ParamInfo,ISimpleLeftRightRow,BaseInfo,RelativeWork,WorkValidate,ISimpleConfirmModal},
     data(){
       return {
         showRelativeWorkFlag:false,

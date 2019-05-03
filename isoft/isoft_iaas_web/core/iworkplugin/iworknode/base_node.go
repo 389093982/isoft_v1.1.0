@@ -123,8 +123,6 @@ func (this *BaseNode) _parseAndGetSingleParamVaule(paramName, paramVaule string,
 		return iworkutil.GetWorkSubNameFromParamValue(paramVaule)
 	} else if strings.HasPrefix(strings.ToUpper(paramVaule), "$ENTITY.") {
 		return iworkutil.GetParamValueForEntity(paramVaule)
-	} else if strings.HasPrefix(strings.ToUpper(paramVaule), "$WORKVARS.") {
-		return iworkutil.GetParamValueForWorkVars(paramVaule, this.DataStore)
 	} else if strings.HasPrefix(strings.ToUpper(paramVaule), "$") {
 		return this.parseAndFillParamVauleWithNode(paramName, paramVaule, dataStore)
 	} else if strings.HasPrefix(paramVaule, "`") && strings.HasSuffix(paramVaule, "`") {

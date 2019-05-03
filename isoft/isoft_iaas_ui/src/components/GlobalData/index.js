@@ -108,7 +108,6 @@ const default_work_step_types=[
   {"name":"ini_write","icon":"ios-aperture-outline"},
   {"name":"base64_encode","icon":"ios-magnet"},
   {"name":"base64_decode","icon":"ios-magnet-outline"},
-  {"name":"workvar_assign","icon":"md-hammer"},
   {"name":"define_var","icon":"md-hammer"},
   {"name":"assign_var","icon":"md-hammer"},
 ];

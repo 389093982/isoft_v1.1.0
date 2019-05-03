@@ -1,9 +1,7 @@
 package iwork
 
 import (
-	"encoding/json"
 	"github.com/astaxie/beego"
-	"github.com/astaxie/beego/orm"
 	"isoft/isoft_iaas_web/models/iwork"
 	"isoft/isoft_iaas_web/service"
 	"isoft/isoft_iaas_web/service/iworkservice"
@@ -136,69 +134,6 @@ func (this *WorkController) DeleteWorkById() {
 		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
 	} else {
 		this.Data["json"] = &map[string]interface{}{"status": "ERROR"}
-	}
-	this.ServeJSON()
-}
-
-func (this *WorkController) EditWorkVar() {
-	var bytes []byte
-	var work iwork.Work
-	var err error
-	workVarList := make([]map[string]string, 0)
-
-	workName := this.GetString("workName")
-	workVarName := this.GetString("workVarName")
-	workVarType := this.GetString("workVarType")
-	operateType := this.GetString("operateType")
-	if work, err = iwork.QueryWorkByName(workName, orm.NewOrm()); err == nil {
-		if work.WorkVars != "" {
-			json.Unmarshal([]byte(work.WorkVars), &workVarList)
-		}
-
-		newWorkVarMap := map[string]string{"workVarName": workVarName, "workVarType": workVarType}
-		var exist bool
-		for index, m := range workVarList {
-			if m["workVarName"] == workVarName {
-				if operateType == "edit" {
-					exist, workVarList[index] = true, newWorkVarMap
-				}
-				if operateType == "delete" {
-					workVarList = append(workVarList[:index], workVarList[index+1:]...)
-				}
-				break
-			}
-		}
-		if operateType == "edit" && !exist {
-			workVarList = append(workVarList, newWorkVarMap)
-		}
-
-		if bytes, err = json.Marshal(&workVarList); err == nil {
-			work.WorkVars = string(bytes)
-			_, err = iwork.InsertOrUpdateWork(&work, orm.NewOrm())
-		}
-	}
-	if err == nil {
-		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS"}
-	} else {
-		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": err.Error()}
-	}
-	this.ServeJSON()
-}
-
-func (this *WorkController) LoadAllWorkVar() {
-	workName := this.GetString("workName")
-	var err error
-	var work iwork.Work
-	workVarList := make([]map[string]string, 0)
-	if work, err = iwork.QueryWorkByName(workName, orm.NewOrm()); err == nil {
-		if work.WorkVars != "" {
-			err = json.Unmarshal([]byte(work.WorkVars), &workVarList)
-		}
-	}
-	if err == nil {
-		this.Data["json"] = &map[string]interface{}{"status": "SUCCESS", "workVarList": workVarList}
-	} else {
-		this.Data["json"] = &map[string]interface{}{"status": "ERROR", "errorMsg": err.Error()}
 	}
 	this.ServeJSON()
 }
