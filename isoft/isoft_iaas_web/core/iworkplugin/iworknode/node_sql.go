@@ -61,6 +61,7 @@ func (this *SQLQueryNode) GetDefaultParamOutputSchema() *iworkmodels.ParamOutput
 func (this *SQLQueryNode) GetRuntimeParamOutputSchema() *iworkmodels.ParamOutputSchema {
 	return getMetaDataQuietlyForQuery(this.WorkStep)
 }
+
 func (this *SQLQueryNode) ValidateCustom() (checkResult []string) {
 	validateAndGetDataStoreName(this.WorkStep)
 	validateAndGetMetaDataSql(this.WorkStep)

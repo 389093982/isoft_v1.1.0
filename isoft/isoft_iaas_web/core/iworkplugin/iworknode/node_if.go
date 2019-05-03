@@ -27,16 +27,7 @@ func (this *IFNode) Execute(trackingId string) {
 	this.DataStore.CacheDatas(this.WorkStep.WorkStepName, map[string]interface{}{iworkconst.BOOL_PREFIX + "expression": expression})
 
 	if expression && this.BlockStep.HasChildren {
-		order := make([]*block.BlockStep, 0)
-		deferOrder := make([]*block.BlockStep, 0)
-		for _, blockStep := range this.BlockStep.ChildBlockSteps {
-			if blockStep.Step.IsDefer == "true" {
-				deferOrder = append(deferOrder, blockStep)
-			} else {
-				order = append(order, blockStep)
-			}
-		}
-		order = append(order, datatypeutil.ReverseSlice(deferOrder).([]*block.BlockStep)...)
+		order := this.getChildBlockStepExecuteOrder()
 		for _, blockStep := range order {
 			this.BlockStepRunFunc(trackingId, this.LogWriter, blockStep, this.DataStore, nil)
 		}
@@ -45,9 +36,23 @@ func (this *IFNode) Execute(trackingId string) {
 	}
 }
 
+func (this *IFNode) getChildBlockStepExecuteOrder() []*block.BlockStep {
+	order := make([]*block.BlockStep, 0)
+	deferOrder := make([]*block.BlockStep, 0)
+	for _, blockStep := range this.BlockStep.ChildBlockSteps {
+		if blockStep.Step.IsDefer == "true" {
+			deferOrder = append(deferOrder, blockStep)
+		} else {
+			order = append(order, blockStep)
+		}
+	}
+	order = append(order, datatypeutil.ReverseSlice(deferOrder).([]*block.BlockStep)...)
+	return order
+}
+
 func (this *IFNode) GetDefaultParamInputSchema() *iworkmodels.ParamInputSchema {
 	paramMap := map[int][]string{
-		1: []string{iworkconst.BOOL_PREFIX + "expression", "if条件表达式,值为 bool 类型!"},
+		1: {iworkconst.BOOL_PREFIX + "expression", "if条件表达式,值为 bool 类型!"},
 	}
 	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
 }
