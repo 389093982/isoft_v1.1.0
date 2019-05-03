@@ -2,6 +2,8 @@ package iworknode
 
 import (
 	"encoding/json"
+	"fmt"
+	"github.com/pkg/errors"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
 	"isoft/isoft_iaas_web/core/iworkmodels"
 	"isoft/isoft_iaas_web/models/iwork"
@@ -15,8 +17,24 @@ type DefineVarNode struct {
 func (this *DefineVarNode) Execute(trackingId string) {
 	// 节点中间数据
 	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, this.DataStore)
-	// 提交输出数据至数据中心,此类数据能直接从 tmpDataMap 中获取,而不依赖于计算,只适用于 WORK_START、WORK_END、Mapper 等节点
-	this.SubmitParamOutputSchemaDataToDataStore(this.WorkStep, this.DataStore, tmpDataMap)
+	dataMap := make(map[string]interface{}, 0)
+	for paramName, paramType := range tmpDataMap {
+		var paramValue interface{}
+		switch paramType {
+		case `string`:
+			paramValue = ""
+		case `interface{}`:
+			paramValue = new(interface{})
+		case `[]interface{}`:
+			paramValue = make([]interface{}, 0)
+		case `map[string]interface{}`:
+			paramValue = make(map[string]interface{}, 0)
+		default:
+			panic(errors.New(fmt.Sprintf("unsupport paramType for %s", paramType)))
+		}
+		dataMap[paramName] = paramValue
+	}
+	this.DataStore.CacheDatas(this.WorkStep.WorkStepName, dataMap)
 }
 
 func (this *DefineVarNode) GetRuntimeParamInputSchema() *iworkmodels.ParamInputSchema {

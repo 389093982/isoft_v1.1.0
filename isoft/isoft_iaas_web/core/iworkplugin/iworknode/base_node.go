@@ -175,6 +175,18 @@ func (this *BaseNode) parseAndGetSingleParamVaule(paramName, paramVaule string, 
 	return lastFuncResult
 }
 
+// 存储 pureText 值
+func (this *BaseNode) FillPureTextParamInputSchemaDataToTmp(workStep *iwork.WorkStep, dataStore *datastore.DataStore) map[string]interface{} {
+	// 存储节点中间数据
+	tmpDataMap := make(map[string]interface{})
+	paramInputSchema := schema.GetCacheParamInputSchema(workStep, &WorkStepFactory{WorkStep: workStep})
+	for _, item := range paramInputSchema.ParamInputSchemaItems {
+		// tmpDataMap 存储引用值 pureText
+		tmpDataMap[item.ParamName] = item.ParamValue
+	}
+	return tmpDataMap
+}
+
 // 将 ParamInputSchema 填充数据并返回临时的数据中心 tmpDataMap
 // skips 表示可以跳过填充的参数
 func (this *BaseNode) FillParamInputSchemaDataToTmp(workStep *iwork.WorkStep, dataStore *datastore.DataStore) map[string]interface{} {
@@ -182,6 +194,7 @@ func (this *BaseNode) FillParamInputSchemaDataToTmp(workStep *iwork.WorkStep, da
 	tmpDataMap := make(map[string]interface{})
 	paramInputSchema := schema.GetCacheParamInputSchema(workStep, &WorkStepFactory{WorkStep: workStep})
 	for _, item := range paramInputSchema.ParamInputSchemaItems {
+		// tmpDataMap 存储解析值
 		if item.PureText {
 			tmpDataMap[item.ParamName] = item.ParamValue
 		} else {
