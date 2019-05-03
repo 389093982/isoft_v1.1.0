@@ -28,35 +28,7 @@ func (this *WorkSubNode) Execute(trackingId string) {
 	// 运行子流程
 	work, _ := iwork.QueryWorkByName(workSubName, orm.NewOrm())
 	steps, _ := iwork.QueryAllWorkStepByWorkName(workSubName, orm.NewOrm())
-	// 获取 foreach_data 数据
-	foreachDatas := getConvertedForEachData(tmpDataMap)
-	if len(foreachDatas) > 0 {
-		itemKey := this.getForeachItemKey(tmpDataMap)
-		// work_sub 节点支持 foreach 循环功能,此处循环 foreach 次数
-		for _, foreachData := range foreachDatas {
-			if itemKey != "" {
-				// 找到 tmpDataMap 中的迭代元素 __item__,将其替换成需要迭代的元素
-				tmpDataMap[itemKey] = foreachData
-			}
-			this.RunOnceSubWork(work, steps, trackingId, tmpDataMap, this.DataStore)
-		}
-	} else {
-		this.RunOnceSubWork(work, steps, trackingId, tmpDataMap, this.DataStore)
-	}
-}
-
-// 获取转换后的 foreach_data 数据
-// 任意类型切片对象,目前仅限制于 []interface{} 和 []map[string]interface{},需要由前置节点标准化成这种类型才可
-func getConvertedForEachData(tmpDataMap map[string]interface{}) []interface{} {
-	foreachDatas := make([]interface{}, 0)
-	if _foreachDatas, ok := tmpDataMap[iworkconst.FOREACH_PREFIX+"data?"].([]interface{}); ok {
-		foreachDatas = append(foreachDatas, _foreachDatas...)
-	} else if _foreachDatas, ok := tmpDataMap[iworkconst.FOREACH_PREFIX+"data?"].([]map[string]interface{}); ok {
-		for _, _foreachData := range _foreachDatas {
-			foreachDatas = append(foreachDatas, _foreachData)
-		}
-	}
-	return foreachDatas
+	this.RunOnceSubWork(work, steps, trackingId, tmpDataMap, this.DataStore)
 }
 
 func (this *WorkSubNode) checkAndGetWorkSubName() string {
@@ -66,16 +38,6 @@ func (this *WorkSubNode) checkAndGetWorkSubName() string {
 		panic(errors.New("invalid workSubName"))
 	}
 	return workSubName
-}
-
-func (this *WorkSubNode) getForeachItemKey(tmpDataMap map[string]interface{}) string {
-	var itemKey string
-	for key, value := range tmpDataMap {
-		if _value, ok := value.(string); ok && strings.TrimSpace(_value) == "__item__" {
-			itemKey = key
-		}
-	}
-	return itemKey
 }
 
 func (this *WorkSubNode) RunOnceSubWork(work iwork.Work, steps []iwork.WorkStep, trackingId string,
@@ -89,8 +51,7 @@ func (this *WorkSubNode) RunOnceSubWork(work iwork.Work, steps []iwork.WorkStep,
 
 func (this *WorkSubNode) GetDefaultParamInputSchema() *iworkmodels.ParamInputSchema {
 	paramMap := map[int][]string{
-		1: {iworkconst.STRING_PREFIX + "work_sub", "子流程信息,此节点其它参数支持 __item__ 和 __default__ 参数"},
-		2: {iworkconst.FOREACH_PREFIX + "data?", "可选参数,当有值时表示迭代流程,该节点会执行多次,并将当前迭代元素放入 __item__ 变量中,其它参数需要引用 __item__ 即可"},
+		1: {iworkconst.STRING_PREFIX + "work_sub", "子流程信息"},
 	}
 	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
 }
