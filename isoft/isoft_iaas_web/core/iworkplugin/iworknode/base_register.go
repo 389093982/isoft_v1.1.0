@@ -43,6 +43,7 @@ func init() {
 		Base64DecodeNode{},
 		WorkVarAssignNode{},
 		DefineVarNode{},
+		AssignVarNode{},
 	}
 	for _, v := range vs {
 		t := reflect.ValueOf(v).Type()
