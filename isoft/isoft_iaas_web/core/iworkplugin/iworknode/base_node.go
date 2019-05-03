@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"github.com/astaxie/beego/orm"
 	"github.com/pkg/errors"
-	"isoft/isoft_iaas_web/core/iworkconst"
 	"isoft/isoft_iaas_web/core/iworkdata/datastore"
 	"isoft/isoft_iaas_web/core/iworkdata/param"
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
@@ -15,7 +14,7 @@ import (
 	"isoft/isoft_iaas_web/core/iworkutil"
 	"isoft/isoft_iaas_web/core/iworkvalid"
 	"isoft/isoft_iaas_web/models/iwork"
-	"strconv"
+	"reflect"
 	"strings"
 )
 
@@ -83,16 +82,16 @@ func (this *BaseNode) parseAndFillParamVauleWithNode(paramName, paramVaule strin
 }
 
 // 解析 paramVaule 并从 dataStore 中获取实际值
-func (this *BaseNode) ParseAndGetParamVaule(paramName, paramVaule string, dataStore *datastore.DataStore) interface{} {
+func (this *BaseNode) ParseAndGetParamVaule(paramName, paramVaule string, dataStore *datastore.DataStore, replaceMap ...map[string]interface{}) interface{} {
 	values := this.parseParamValueToMulti(paramVaule)
 	// 单值
 	if len(values) == 1 {
-		return this.parseAndGetSingleParamVaule(paramName, values[0], dataStore)
+		return this.parseAndGetSingleParamVaule(paramName, values[0], dataStore, replaceMap...)
 	}
 	// 多值
 	results := make([]interface{}, 0)
 	for _, value := range values {
-		result := this.parseAndGetSingleParamVaule(paramName, value, dataStore)
+		result := this.parseAndGetSingleParamVaule(paramName, value, dataStore, replaceMap...)
 		results = append(results, result)
 	}
 	return results
@@ -114,7 +113,7 @@ func (this *BaseNode) parseParamValueToMulti(paramVaule string) []string {
 	return results
 }
 
-func (this *BaseNode) _parseAndGetSingleParamVaule(paramName, paramVaule string, dataStore *datastore.DataStore) interface{} {
+func (this *BaseNode) _parseAndGetSingleParamVaule(paramName, paramVaule string, dataStore *datastore.DataStore, replaceMap ...map[string]interface{}) interface{} {
 	paramVaule = iworkfunc.DncodeSpecialForParamVaule(paramVaule)
 	// 变量
 	if strings.HasPrefix(strings.ToUpper(paramVaule), "$RESOURCE.") {
@@ -124,6 +123,16 @@ func (this *BaseNode) _parseAndGetSingleParamVaule(paramName, paramVaule string,
 	} else if strings.HasPrefix(strings.ToUpper(paramVaule), "$ENTITY.") {
 		return iworkutil.GetParamValueForEntity(paramVaule)
 	} else if strings.HasPrefix(strings.ToUpper(paramVaule), "$") {
+		if len(replaceMap) > 0 {
+			for replaceProviderNodeName, replaceProviderData := range replaceMap[0] {
+				replaceProviderNodeName = strings.ReplaceAll(replaceProviderNodeName, ";", "")
+				if strings.HasPrefix(paramVaule, replaceProviderNodeName) {
+					attr := strings.Replace(paramVaule, replaceProviderNodeName, "", 1)
+					attr = strings.ReplaceAll(attr, ";", "")
+					return replaceProviderData.(map[string]interface{})[attr]
+				}
+			}
+		}
 		return this.parseAndFillParamVauleWithNode(paramName, paramVaule, dataStore)
 	} else if strings.HasPrefix(paramVaule, "`") && strings.HasSuffix(paramVaule, "`") {
 		// 字符串
@@ -135,7 +144,7 @@ func (this *BaseNode) _parseAndGetSingleParamVaule(paramName, paramVaule string,
 
 }
 
-func (this *BaseNode) parseAndGetSingleParamVaule(paramName, paramVaule string, dataStore *datastore.DataStore) interface{} {
+func (this *BaseNode) parseAndGetSingleParamVaule(paramName, paramVaule string, dataStore *datastore.DataStore, replaceMap ...map[string]interface{}) interface{} {
 	defer func() {
 		if err := recover(); err != nil {
 			panic(fmt.Sprintf("<span style='color:red;'>execute func with expression is %s, error msg is :%s</span>", paramVaule, err.(error).Error()))
@@ -149,7 +158,7 @@ func (this *BaseNode) parseAndGetSingleParamVaule(paramName, paramVaule string, 
 	}
 	if callers == nil || len(callers) == 0 {
 		// 是直接参数,不需要函数进行特殊处理
-		return this._parseAndGetSingleParamVaule(paramName, paramVaule, dataStore)
+		return this._parseAndGetSingleParamVaule(paramName, paramVaule, dataStore, replaceMap...)
 	}
 	historyFuncResultMap := make(map[string]interface{}, 0)
 	var lastFuncResult interface{}
@@ -162,7 +171,7 @@ func (this *BaseNode) parseAndGetSingleParamVaule(paramName, paramVaule string, 
 			if _arg, ok := historyFuncResultMap[arg]; ok {
 				args = append(args, _arg)
 			} else {
-				args = append(args, this._parseAndGetSingleParamVaule(paramName, arg, dataStore))
+				args = append(args, this._parseAndGetSingleParamVaule(paramName, arg, dataStore, replaceMap...))
 			}
 		}
 		// 执行函数并记录结果,供下一个函数执行使用
@@ -191,7 +200,9 @@ func (this *BaseNode) FillParamInputSchemaDataToTmp(workStep *iwork.WorkStep, da
 	// 存储节点中间数据
 	tmpDataMap := make(map[string]interface{})
 	paramInputSchema := schema.GetCacheParamInputSchema(workStep, &WorkStepFactory{WorkStep: workStep})
+	pureTextTmpDataMap := make(map[string]string)
 	for _, item := range paramInputSchema.ParamInputSchemaItems {
+		pureTextTmpDataMap[item.ParamName] = item.ParamValue
 		// tmpDataMap 存储解析值
 		if item.PureText {
 			tmpDataMap[item.ParamName] = item.ParamValue
@@ -200,37 +211,61 @@ func (this *BaseNode) FillParamInputSchemaDataToTmp(workStep *iwork.WorkStep, da
 			if ok, checkResults := iworkvalid.CheckEmptyForItem(item); !ok {
 				panic(strings.Join(checkResults, ";"))
 			}
-			// 个性化重写操作
-			this.modifySqlBindingParamValueWithBatchNumber(&item, tmpDataMap)
+			// 判断当前参数是否是 repeat 参数
+			if item.Repeatable {
+				repeatDatas := make([]interface{}, 0)
+				// 获取 item.RepeatRefer 对应的 repeat 切片数据,作为迭代参数,而不再从前置节点输出获取
+				t := reflect.TypeOf(tmpDataMap[item.RepeatRefer])
+				v := reflect.ValueOf(tmpDataMap[item.RepeatRefer])
+				if t.Kind() == reflect.Slice {
+					for i := 0; i < v.Len(); i++ {
+						repeatDatas = append(repeatDatas, v.Index(i))
+					}
+				}
+				if len(repeatDatas) > 0 {
+					paramValues := make([]interface{}, 0)
+					for _, repeatData := range repeatDatas {
+						// 替代的节点名称
+						replaceProviderNodeName := strings.ReplaceAll(pureTextTmpDataMap[item.RepeatRefer], ";", "")
+						// 替代的对象
+						replaceProviderData := repeatData
+						replaceMap := map[string]interface{}{replaceProviderNodeName: replaceProviderData}
+						paramValue := this.ParseAndGetParamVaule(item.ParamName, item.ParamValue, dataStore, replaceMap) // 输入数据存临时
+						paramValues = append(paramValues, paramValue)
+					}
+					tmpDataMap[item.ParamName] = paramValues // 所得值则是个切片
+					continue
+				}
+			}
 			tmpDataMap[item.ParamName] = this.ParseAndGetParamVaule(item.ParamName, item.ParamValue, dataStore) // 输入数据存临时
 		}
 	}
 	return tmpDataMap
 }
 
-func (this *BaseNode) modifySqlBindingParamValueWithBatchNumber(item *iworkmodels.ParamInputSchemaItem, tmpDataMap map[string]interface{}) {
-	// 当前填充的字段为 sql_binding? 时,检测到批量操作数据大于 1
-	if item.ParamName == iworkconst.MULTI_PREFIX+"sql_binding?" && GetBatchNumber(tmpDataMap) > 1 {
-		var newParamValue string
-		for i := 0; i < GetBatchNumber(tmpDataMap); i++ {
-			newParamValue += strings.Replace(item.ParamValue, iworkconst.MULTI_PREFIX+"rows.", fmt.Sprintf(iworkconst.MULTI_PREFIX+"rows[%v].", i), -1)
-		}
-		item.ParamValue = newParamValue
-	}
-}
+//func (this *BaseNode) modifySqlBindingParamValueWithBatchNumber(item *iworkmodels.ParamInputSchemaItem, tmpDataMap map[string]interface{}) {
+//	// 当前填充的字段为 sql_binding? 时,检测到批量操作数据大于 1
+//	if item.ParamName == iworkconst.MULTI_PREFIX+"sql_binding?" && GetBatchNumber(tmpDataMap) > 1 {
+//		var newParamValue string
+//		for i := 0; i < GetBatchNumber(tmpDataMap); i++ {
+//			newParamValue += strings.Replace(item.ParamValue, iworkconst.MULTI_PREFIX+"rows.", fmt.Sprintf(iworkconst.MULTI_PREFIX+"rows[%v].", i), -1)
+//		}
+//		item.ParamValue = newParamValue
+//	}
+//}
 
-// 从 tmpDataMap 获取 batch_number? 数据
-func GetBatchNumber(tmpDataMap map[string]interface{}) int {
-	if batch_number, ok := tmpDataMap[iworkconst.NUMBER_PREFIX+"batch_number?"].(int64); ok {
-		return int(batch_number)
-	}
-	if batch_number, ok := tmpDataMap[iworkconst.NUMBER_PREFIX+"batch_number?"].(string); ok {
-		if _batch_number, err := strconv.Atoi(batch_number); err == nil {
-			return _batch_number
-		}
-	}
-	return 0
-}
+//// 从 tmpDataMap 获取 batch_number? 数据
+//func GetBatchNumber(tmpDataMap map[string]interface{}) int {
+//	if batch_number, ok := tmpDataMap[iworkconst.NUMBER_PREFIX+"batch_number?"].(int64); ok {
+//		return int(batch_number)
+//	}
+//	if batch_number, ok := tmpDataMap[iworkconst.NUMBER_PREFIX+"batch_number?"].(string); ok {
+//		if _batch_number, err := strconv.Atoi(batch_number); err == nil {
+//			return _batch_number
+//		}
+//	}
+//	return 0
+//}
 
 // 提交输出数据至数据中心,此类数据能直接从 tmpDataMap 中获取,而不依赖于计算,只适用于 WORK_START、WORK_END 节点
 func (this *BaseNode) SubmitParamOutputSchemaDataToDataStore(workStep *iwork.WorkStep, dataStore *datastore.DataStore, tmpDataMap map[string]interface{}) {

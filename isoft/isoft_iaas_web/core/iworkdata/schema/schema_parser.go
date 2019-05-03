@@ -61,7 +61,18 @@ func BuildParamInputSchemaWithDefaultMap(paramMap map[int][]string) *iworkmodels
 	items := make([]iworkmodels.ParamInputSchemaItem, 0)
 	for _, key := range keys {
 		_paramMap := paramMap[key]
-		items = append(items, iworkmodels.ParamInputSchemaItem{ParamName: _paramMap[0], ParamDesc: _paramMap[1]})
+		// 前两位分别是名称和描述
+		paramName := _paramMap[0]
+		paramDesc := _paramMap[1]
+		item := iworkmodels.ParamInputSchemaItem{ParamName: paramName, ParamDesc: paramDesc}
+		// 后面字段为 extra 字段
+		for _, paramExtra := range _paramMap[1:] {
+			if strings.HasPrefix(paramExtra, "repeatable__") {
+				item.Repeatable = true
+				item.RepeatRefer = strings.Replace(paramExtra, "repeatable__", "", 1)
+			}
+		}
+		items = append(items, item)
 	}
 	return &iworkmodels.ParamInputSchema{ParamInputSchemaItems: items}
 }

@@ -11,6 +11,7 @@ import (
 	"isoft/isoft_iaas_web/core/iworkutil/datatypeutil"
 	"isoft/isoft_iaas_web/core/iworkutil/sqlutil"
 	"isoft/isoft_iaas_web/models/iwork"
+	"reflect"
 	"regexp"
 	"strconv"
 	"strings"
@@ -72,9 +73,38 @@ func (this *SQLQueryNode) ValidateCustom() (checkResult []string) {
 // 从 tmpDataMap 获取 sql_binding 数据
 func getSqlBinding(tmpDataMap map[string]interface{}) []interface{} {
 	result := make([]interface{}, 0)
-	if sql_binding, ok := tmpDataMap[iworkconst.MULTI_PREFIX+"sql_binding?"].([]interface{}); ok {
-		result = sql_binding
-	} else if sql_binding, ok := tmpDataMap[iworkconst.MULTI_PREFIX+"sql_binding?"].(interface{}); ok {
+	sql_binding := tmpDataMap[iworkconst.MULTI_PREFIX+"sql_binding?"]
+	t1 := reflect.TypeOf(sql_binding)
+	v1 := reflect.ValueOf(sql_binding)
+	// 支持单层切片和双层切片
+	if t1.Kind() == reflect.Slice {
+		for i := 0; i < v1.Len(); i++ {
+			v2 := v1.Index(i)
+			if v2.Kind() == reflect.Slice {
+				for j := 0; j < v2.Len(); j++ {
+					result = append(result, v2.Index(j))
+				}
+			} else if v2.Kind() == reflect.Interface {
+				if datas, ok := v2.Interface().([]interface{}); ok {
+					for _, data := range datas {
+						result = append(result, data)
+					}
+				} else {
+					result = append(result, v2.Interface())
+				}
+			} else {
+				result = append(result, v2)
+			}
+		}
+	} else if t1.Kind() == reflect.Interface {
+		if datas, ok := sql_binding.([]interface{}); ok {
+			for _, data := range datas {
+				result = append(result, data)
+			}
+		} else {
+			result = append(result, sql_binding)
+		}
+	} else {
 		result = append(result, sql_binding)
 	}
 	return result
@@ -91,41 +121,47 @@ func (this *SQLExecuteNode) Execute(trackingId string) {
 	sql := tmpDataMap[iworkconst.STRING_PREFIX+"sql"].(string)
 	dataSourceName := tmpDataMap[iworkconst.STRING_PREFIX+"db_conn"].(string)
 	// insert 语句且有批量操作时整改 sql 语句
-	sql = this.modifySqlInsertWithBatchNumber(tmpDataMap, sql)
+	sql = this.modifySqlInsertWithBatch(tmpDataMap, sql)
 	// sql_binding 参数获取
-	_sql_binding := getSqlBinding(tmpDataMap)
-	affected := sqlutil.Execute(sql, _sql_binding, dataSourceName)
+	sql_binding := getSqlBinding(tmpDataMap)
+	affected := sqlutil.Execute(sql, sql_binding, dataSourceName)
 	// 将数据数据存储到数据中心
 	// 存储 affected
 	this.DataStore.CacheDatas(this.WorkStep.WorkStepName, map[string]interface{}{iworkconst.NUMBER_PREFIX + "affected": affected})
 }
 
-func (this *SQLExecuteNode) modifySqlInsertWithBatchNumber(tmpDataMap map[string]interface{}, sql string) string {
-	batch_number := GetBatchNumber(tmpDataMap)
-	if batch_number > 1 && strings.HasPrefix(strings.ToUpper(strings.TrimSpace(sql)), "INSERT") {
-		// 最后一个左括号索引
-		index1 := strings.LastIndex(sql, "(")
-		// 最后一个右括号索引
-		index2 := strings.LastIndex(sql, ")")
-		// value 填充子句
-		valueSql := sql[index1:(index2 + 1)]
-		// newValueArr 等于 value 填充子句复制 _batch_number 份
-		newValueArr := make([]string, 0)
-		for i := 0; i < batch_number; i++ {
-			newValueArr = append(newValueArr, valueSql)
+func (this *SQLExecuteNode) modifySqlInsertWithBatch(tmpDataMap map[string]interface{}, sql string) string {
+	if batch_data := tmpDataMap[iworkconst.FOREACH_PREFIX+"batch_data?"]; batch_data != nil {
+		t := reflect.TypeOf(batch_data)
+		v := reflect.ValueOf(batch_data)
+		if t.Kind() == reflect.Slice {
+			if v.Len() > 1 && strings.HasPrefix(strings.ToUpper(strings.TrimSpace(sql)), "INSERT") {
+				// 最后一个左括号索引
+				index1 := strings.LastIndex(sql, "(")
+				// 最后一个右括号索引
+				index2 := strings.LastIndex(sql, ")")
+				// value 填充子句
+				valueSql := sql[index1:(index2 + 1)]
+				// newValueArr 等于 value 填充子句复制 _batch_number 份
+				newValueArr := make([]string, 0)
+				for i := 0; i < v.Len(); i++ {
+					newValueArr = append(newValueArr, valueSql)
+				}
+				newValueSql := strings.Join(newValueArr, ",")
+				// 进行替换,相当于 () 替换成 (),(),(),()...
+				sql = strings.Replace(sql, valueSql, newValueSql, -1)
+			}
 		}
-		newValueSql := strings.Join(newValueArr, ",")
-		// 进行替换,相当于 () 替换成 (),(),(),()...
-		sql = strings.Replace(sql, valueSql, newValueSql, -1)
+
 	}
 	return sql
 }
 
 func (this *SQLExecuteNode) GetDefaultParamInputSchema() *iworkmodels.ParamInputSchema {
 	paramMap := map[int][]string{
-		1: {iworkconst.NUMBER_PREFIX + "batch_number?", "仅供批量插入数据时使用"},
+		1: {iworkconst.FOREACH_PREFIX + "batch_data?", "仅供批量插入数据时使用"},
 		2: {iworkconst.STRING_PREFIX + "sql", "执行sql语句"},
-		3: {iworkconst.MULTI_PREFIX + "sql_binding?", "sql绑定数据,个数必须和当前执行sql语句中的占位符参数个数相同"},
+		3: {iworkconst.MULTI_PREFIX + "sql_binding?", "sql绑定数据,个数必须和当前执行sql语句中的占位符参数个数相同", "repeatable__" + iworkconst.FOREACH_PREFIX + "batch_data?"},
 		4: {iworkconst.STRING_PREFIX + "db_conn", "数据库连接信息,需要使用 $RESOURCE 全局参数"},
 	}
 	return schema.BuildParamInputSchemaWithDefaultMap(paramMap)
