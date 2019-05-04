@@ -21,14 +21,16 @@ func (this *BlockParser) ParseToBlockStep() []*BlockStep {
 func (this *BlockParser) ParseAndGetCurrentBlockStep(currentStep *iwork.WorkStep) (currentBlockStep *BlockStep, blockSteps []*BlockStep) {
 	blockSteps = make([]*BlockStep, 0)
 	minIndentIndexs := this.getMinIndentIndex(this.Steps)
-	for index, indentIndex := range minIndentIndexs {
+	for index, minIndentIndex := range minIndentIndexs {
+		// 循环遍历每一个最小缩进的 BlockStep
 		bStep := &BlockStep{
 			ReferWork: this.ReferWork,
-			Step:      &this.Steps[indentIndex],
+			Step:      &this.Steps[minIndentIndex],
 		}
-		if currentStep != nil && this.Steps[indentIndex].WorkStepId == currentStep.WorkStepId {
+		if currentStep != nil && this.Steps[minIndentIndex].WorkStepId == currentStep.WorkStepId {
 			currentBlockStep = bStep
 		}
+		// 获取子块 BlockStep
 		_currentBlockStep, childs := this.getChildBlockSteps(currentStep, index, minIndentIndexs, this.Steps)
 		if _currentBlockStep != nil {
 			currentBlockStep = _currentBlockStep
