@@ -8,7 +8,6 @@ import (
 	"isoft/isoft_iaas_web/core/iworkdata/schema"
 	"isoft/isoft_iaas_web/core/iworkfunc"
 	"isoft/isoft_iaas_web/core/iworkmodels"
-	"isoft/isoft_iaas_web/core/iworkutil/datatypeutil"
 	"isoft/isoft_iaas_web/core/iworkutil/sqlutil"
 	"isoft/isoft_iaas_web/models/iwork"
 	"reflect"
@@ -32,14 +31,9 @@ func (this *SQLQueryNode) Execute(trackingId string) {
 	sql_binding := getSqlBinding(tmpDataMap)
 	sql = strings.ReplaceAll(sql, "{{", "")
 	sql = strings.ReplaceAll(sql, "}}", "")
-	datacounts, rowDetailDatas, rowDatas := sqlutil.Query(sql, sql_binding, dataSourceName)
-	// 将数据数据存储到数据中心
+	datacounts, rowDatas := sqlutil.Query(sql, sql_binding, dataSourceName)
 	// 存储 datacounts
 	paramMap[iworkconst.NUMBER_PREFIX+"datacounts"] = datacounts
-	for paramName, paramValue := range rowDetailDatas {
-		// 存储具体字段值
-		paramMap[paramName] = paramValue
-	}
 	// 数组对象整体存储在 rows 里面
 	paramMap[iworkconst.MULTI_PREFIX+"rows"] = rowDatas
 	this.DataStore.CacheDatas(this.WorkStep.WorkStepName, paramMap)
@@ -205,11 +199,10 @@ func (this *SQLQueryPageNode) Execute(trackingId string) {
 	sql_binding = append(sql_binding, (_current_page-1)*_page_size, _page_size)
 	sql = strings.ReplaceAll(sql, "{{", "")
 	sql = strings.ReplaceAll(sql, "}}", "")
-	datacounts, rowDetailDatas, rowDatas := sqlutil.Query(sql, sql_binding, dataSourceName)
+	datacounts, rowDatas := sqlutil.Query(sql, sql_binding, dataSourceName)
 	// 将数据数据存储到数据中心
 	// 存储 datacounts
 	paramMap[iworkconst.NUMBER_PREFIX+"datacounts"] = datacounts
-	paramMap = datatypeutil.CombineMap(paramMap, rowDetailDatas)
 	// 数组对象整体存储在 rows 里面
 	paramMap[iworkconst.MULTI_PREFIX+"rows"] = rowDatas
 	// 存储分页信息

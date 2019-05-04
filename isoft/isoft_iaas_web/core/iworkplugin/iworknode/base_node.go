@@ -75,7 +75,19 @@ func (this *BaseNode) parseAndFillParamVauleWithResource(paramVaule string) inte
 func (this *BaseNode) parseAndFillParamVauleWithNode(paramName, paramVaule string, dataStore *datastore.DataStore) interface{} {
 	if strings.HasPrefix(paramVaule, "$") {
 		resolver := param.ParamVauleParser{ParamValue: paramVaule}
-		return dataStore.GetData(resolver.GetNodeNameFromParamValue(), resolver.GetParamNameFromParamValue())
+		nodeName := resolver.GetNodeNameFromParamValue()
+		paramName := resolver.GetParamNameFromParamValue()
+		paramValue := dataStore.GetData(nodeName, paramName)
+		if paramValue == nil {
+			_paramName := paramName[:strings.LastIndex(paramName, ".")]
+			attr := paramName[strings.LastIndex(paramName, ".")+1:]
+			datas := dataStore.GetData(nodeName, _paramName)
+			if reflect.TypeOf(datas).Kind() == reflect.Slice {
+				return reflect.ValueOf(datas).Index(0).Interface().(map[string]interface{})[attr]
+			}
+			return datas.(map[string]interface{})[attr]
+		}
+		return paramValue
 	} else {
 		panic(errors.New(fmt.Sprintf("%s ~ %s is not start with $", paramName, paramVaule)))
 	}
@@ -127,7 +139,7 @@ func (this *BaseNode) _parseAndGetSingleParamVaule(paramName, paramVaule string,
 			for replaceProviderNodeName, replaceProviderData := range replaceMap[0] {
 				replaceProviderNodeName = strings.ReplaceAll(replaceProviderNodeName, ";", "")
 				if strings.HasPrefix(paramVaule, replaceProviderNodeName) {
-					attr := strings.Replace(paramVaule, replaceProviderNodeName, "", 1)
+					attr := strings.Replace(paramVaule, replaceProviderNodeName+".", "", 1)
 					attr = strings.ReplaceAll(attr, ";", "")
 					return replaceProviderData.(map[string]interface{})[attr]
 				}
@@ -219,14 +231,14 @@ func (this *BaseNode) FillParamInputSchemaDataToTmp(workStep *iwork.WorkStep, da
 				v := reflect.ValueOf(tmpDataMap[item.RepeatRefer])
 				if t.Kind() == reflect.Slice {
 					for i := 0; i < v.Len(); i++ {
-						repeatDatas = append(repeatDatas, v.Index(i))
+						repeatDatas = append(repeatDatas, v.Index(i).Interface())
 					}
 				}
 				if len(repeatDatas) > 0 {
 					paramValues := make([]interface{}, 0)
 					for _, repeatData := range repeatDatas {
 						// 替代的节点名称
-						replaceProviderNodeName := strings.ReplaceAll(pureTextTmpDataMap[item.RepeatRefer], ";", "")
+						replaceProviderNodeName := strings.ReplaceAll(strings.TrimSpace(pureTextTmpDataMap[item.RepeatRefer]), ";", "")
 						// 替代的对象
 						replaceProviderData := repeatData
 						replaceMap := map[string]interface{}{replaceProviderNodeName: replaceProviderData}

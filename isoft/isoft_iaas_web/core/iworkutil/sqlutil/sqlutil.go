@@ -5,7 +5,7 @@ import (
 )
 
 func GetAllTableNames(dataSourceName string) []string {
-	_, _, rowDatas := Query("show tables;", []interface{}{}, dataSourceName)
+	_, rowDatas := Query("show tables;", []interface{}{}, dataSourceName)
 	tableNames := make([]string, 0)
 	for _, rowData := range rowDatas {
 		for _, tableName := range rowData {
