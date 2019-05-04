@@ -72,25 +72,25 @@ func (this *BaseNode) parseAndFillParamVauleWithResource(paramVaule string) inte
 }
 
 // paramValue 来源于前置节点
-func (this *BaseNode) parseAndFillParamVauleWithNode(paramName, paramVaule string, dataStore *datastore.DataStore) interface{} {
-	if strings.HasPrefix(paramVaule, "$") {
-		resolver := param.ParamVauleParser{ParamValue: paramVaule}
-		nodeName := resolver.GetNodeNameFromParamValue()
-		paramName := resolver.GetParamNameFromParamValue()
-		paramValue := dataStore.GetData(nodeName, paramName)
-		if paramValue == nil {
-			_paramName := paramName[:strings.LastIndex(paramName, ".")]
-			attr := paramName[strings.LastIndex(paramName, ".")+1:]
-			datas := dataStore.GetData(nodeName, _paramName)
-			if reflect.TypeOf(datas).Kind() == reflect.Slice {
-				return reflect.ValueOf(datas).Index(0).Interface().(map[string]interface{})[attr]
-			}
-			return datas.(map[string]interface{})[attr]
-		}
-		return paramValue
-	} else {
+func (this *BaseNode) parseAndFillParamVauleWithPrefixNode(paramName, paramVaule string, dataStore *datastore.DataStore) interface{} {
+	// 格式校验
+	if !strings.HasPrefix(paramVaule, "$") {
 		panic(errors.New(fmt.Sprintf("%s ~ %s is not start with $", paramName, paramVaule)))
 	}
+	resolver := param.ParamVauleParser{ParamValue: paramVaule}
+	nodeName := resolver.GetNodeNameFromParamValue()
+	paramName = resolver.GetParamNameFromParamValue()
+	paramValue := dataStore.GetData(nodeName, paramName) // 作为直接对象, dataStore 里面可以直接获取
+	if paramValue != nil {
+		return paramValue
+	}
+	_paramName := paramName[:strings.LastIndex(paramName, ".")]
+	datas := dataStore.GetData(nodeName, _paramName) // 作为对象属性
+	attr := paramName[strings.LastIndex(paramName, ".")+1:]
+	if reflect.TypeOf(datas).Kind() == reflect.Slice {
+		return reflect.ValueOf(datas).Index(0).Interface().(map[string]interface{})[attr]
+	}
+	return datas.(map[string]interface{})[attr]
 }
 
 // 解析 paramVaule 并从 dataStore 中获取实际值
@@ -125,7 +125,7 @@ func (this *BaseNode) parseParamValueToMulti(paramVaule string) []string {
 	return results
 }
 
-func (this *BaseNode) _parseAndGetSingleParamVaule(paramName, paramVaule string, dataStore *datastore.DataStore, replaceMap ...map[string]interface{}) interface{} {
+func (this *BaseNode) callParseAndGetSingleParamVaule(paramName, paramVaule string, dataStore *datastore.DataStore, replaceMap ...map[string]interface{}) interface{} {
 	paramVaule = iworkfunc.DncodeSpecialForParamVaule(paramVaule)
 	// 变量
 	if strings.HasPrefix(strings.ToUpper(paramVaule), "$RESOURCE.") {
@@ -136,16 +136,11 @@ func (this *BaseNode) _parseAndGetSingleParamVaule(paramName, paramVaule string,
 		return iworkutil.GetParamValueForEntity(paramVaule)
 	} else if strings.HasPrefix(strings.ToUpper(paramVaule), "$") {
 		if len(replaceMap) > 0 {
-			for replaceProviderNodeName, replaceProviderData := range replaceMap[0] {
-				replaceProviderNodeName = strings.ReplaceAll(replaceProviderNodeName, ";", "")
-				if strings.HasPrefix(paramVaule, replaceProviderNodeName) {
-					attr := strings.Replace(paramVaule, replaceProviderNodeName+".", "", 1)
-					attr = strings.ReplaceAll(attr, ";", "")
-					return replaceProviderData.(map[string]interface{})[attr]
-				}
+			if paramVaule := this.parseAndFillParamVauleWithReplaceProviderNode(paramVaule, replaceMap...); paramVaule != nil {
+				return paramVaule
 			}
 		}
-		return this.parseAndFillParamVauleWithNode(paramName, paramVaule, dataStore)
+		return this.parseAndFillParamVauleWithPrefixNode(paramName, paramVaule, dataStore)
 	} else if strings.HasPrefix(paramVaule, "`") && strings.HasSuffix(paramVaule, "`") {
 		// 字符串
 		return paramVaule[1 : len(paramVaule)-1]
@@ -153,7 +148,18 @@ func (this *BaseNode) _parseAndGetSingleParamVaule(paramName, paramVaule string,
 		// 数字
 		return paramVaule
 	}
+}
 
+func (this *BaseNode) parseAndFillParamVauleWithReplaceProviderNode(paramVaule string, replaceMap ...map[string]interface{}) interface{} {
+	for replaceProviderNodeName, replaceProviderData := range replaceMap[0] {
+		replaceProviderNodeName = strings.ReplaceAll(replaceProviderNodeName, ";", "")
+		if strings.HasPrefix(paramVaule, replaceProviderNodeName) {
+			attr := strings.Replace(paramVaule, replaceProviderNodeName+".", "", 1)
+			attr = strings.ReplaceAll(attr, ";", "")
+			return replaceProviderData.(map[string]interface{})[attr]
+		}
+	}
+	return nil
 }
 
 func (this *BaseNode) parseAndGetSingleParamVaule(paramName, paramVaule string, dataStore *datastore.DataStore, replaceMap ...map[string]interface{}) interface{} {
@@ -170,7 +176,7 @@ func (this *BaseNode) parseAndGetSingleParamVaule(paramName, paramVaule string, 
 	}
 	if callers == nil || len(callers) == 0 {
 		// 是直接参数,不需要函数进行特殊处理
-		return this._parseAndGetSingleParamVaule(paramName, paramVaule, dataStore, replaceMap...)
+		return this.callParseAndGetSingleParamVaule(paramName, paramVaule, dataStore, replaceMap...)
 	}
 	historyFuncResultMap := make(map[string]interface{}, 0)
 	var lastFuncResult interface{}
@@ -183,7 +189,7 @@ func (this *BaseNode) parseAndGetSingleParamVaule(paramName, paramVaule string, 
 			if _arg, ok := historyFuncResultMap[arg]; ok {
 				args = append(args, _arg)
 			} else {
-				args = append(args, this._parseAndGetSingleParamVaule(paramName, arg, dataStore, replaceMap...))
+				args = append(args, this.callParseAndGetSingleParamVaule(paramName, arg, dataStore, replaceMap...))
 			}
 		}
 		// 执行函数并记录结果,供下一个函数执行使用
