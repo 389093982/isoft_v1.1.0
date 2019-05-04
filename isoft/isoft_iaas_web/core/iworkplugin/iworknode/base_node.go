@@ -255,30 +255,6 @@ func (this *BaseNode) FillParamInputSchemaDataToTmp(workStep *iwork.WorkStep, da
 	return tmpDataMap
 }
 
-//func (this *BaseNode) modifySqlBindingParamValueWithBatchNumber(item *iworkmodels.ParamInputSchemaItem, tmpDataMap map[string]interface{}) {
-//	// 当前填充的字段为 sql_binding? 时,检测到批量操作数据大于 1
-//	if item.ParamName == iworkconst.MULTI_PREFIX+"sql_binding?" && GetBatchNumber(tmpDataMap) > 1 {
-//		var newParamValue string
-//		for i := 0; i < GetBatchNumber(tmpDataMap); i++ {
-//			newParamValue += strings.Replace(item.ParamValue, iworkconst.MULTI_PREFIX+"rows.", fmt.Sprintf(iworkconst.MULTI_PREFIX+"rows[%v].", i), -1)
-//		}
-//		item.ParamValue = newParamValue
-//	}
-//}
-
-//// 从 tmpDataMap 获取 batch_number? 数据
-//func GetBatchNumber(tmpDataMap map[string]interface{}) int {
-//	if batch_number, ok := tmpDataMap[iworkconst.NUMBER_PREFIX+"batch_number?"].(int64); ok {
-//		return int(batch_number)
-//	}
-//	if batch_number, ok := tmpDataMap[iworkconst.NUMBER_PREFIX+"batch_number?"].(string); ok {
-//		if _batch_number, err := strconv.Atoi(batch_number); err == nil {
-//			return _batch_number
-//		}
-//	}
-//	return 0
-//}
-
 // 提交输出数据至数据中心,此类数据能直接从 tmpDataMap 中获取,而不依赖于计算,只适用于 WORK_START、WORK_END 节点
 func (this *BaseNode) SubmitParamOutputSchemaDataToDataStore(workStep *iwork.WorkStep, dataStore *datastore.DataStore, tmpDataMap map[string]interface{}) {
 	paramOutputSchema := schema.GetCacheParamOutputSchema(workStep)
