@@ -1,6 +1,7 @@
 package block
 
 import (
+	"isoft/isoft_iaas_web/core/iworkutil/datatypeutil"
 	"isoft/isoft_iaas_web/models/iwork"
 	"sort"
 )
@@ -85,10 +86,7 @@ func (this *BlockParser) getMinIndentIndex(steps []iwork.WorkStep) []int {
 		}
 		indentMap[step.WorkStepIndent] = append(indentMap[step.WorkStepIndent], index)
 	}
-	var indents []int
-	for k, _ := range indentMap {
-		indents = append(indents, k)
-	}
+	indents := datatypeutil.GetMapKeySlice(indentMap, []int{}).([]int)
 	sort.Ints(indents)
 	return indentMap[indents[0]]
 }
