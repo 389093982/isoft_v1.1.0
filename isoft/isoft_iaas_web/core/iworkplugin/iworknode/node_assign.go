@@ -35,9 +35,9 @@ func parseAssignRefer(paramName, assignVar_pureText string) (string, string) {
 
 func (this *AssignVarNode) Execute(trackingId string) {
 	// 节点中间数据
-	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, this.DataStore)
+	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep)
 	// pureText 节点中间数据
-	pureTextTmpDataMap := this.FillPureTextParamInputSchemaDataToTmp(this.WorkStep, this.DataStore)
+	pureTextTmpDataMap := this.FillPureTextParamInputSchemaDataToTmp(this.WorkStep)
 	for paramName, paramValue := range tmpDataMap {
 		if strings.HasSuffix(paramName, "_operate") {
 			_paramName := paramName[:strings.LastIndex(paramName, "_operate")]

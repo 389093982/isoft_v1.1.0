@@ -24,7 +24,7 @@ func (this *WorkSubNode) Execute(trackingId string) {
 	// 获取子流程流程名称
 	workSubName := this.checkAndGetWorkSubName()
 	// 节点中间数据
-	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, this.DataStore)
+	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep)
 	// 运行子流程
 	work, _ := iwork.QueryWorkByName(workSubName, orm.NewOrm())
 	steps, _ := iwork.QueryAllWorkStepByWorkName(workSubName, orm.NewOrm())

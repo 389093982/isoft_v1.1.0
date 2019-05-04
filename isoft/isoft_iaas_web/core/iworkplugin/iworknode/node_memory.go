@@ -33,7 +33,7 @@ func getMemoryCache(trackingId string, tmpDataMap map[string]interface{}) *memor
 
 func (this *MemoryMapCacheNode) Execute(trackingId string) {
 	// 节点中间数据
-	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, this.DataStore)
+	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep)
 	memoryCache := getMemoryCache(trackingId, tmpDataMap)
 	if cachemap_key_get, ok := tmpDataMap[iworkconst.STRING_PREFIX+"cachemap_key_get?"].(string); ok {
 		// 往 MemoryCache 中取值

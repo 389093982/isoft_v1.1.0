@@ -18,7 +18,7 @@ type EntityParserNode struct {
 
 func (this *EntityParserNode) Execute(trackingId string) {
 	// 节点中间数据
-	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, this.DataStore)
+	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep)
 	inputSchema := schema.GetCacheParamInputSchema(this.WorkStep, &WorkStepFactory{WorkStep: this.WorkStep})
 	for _, item := range inputSchema.ParamInputSchemaItems {
 		if strings.HasSuffix(item.ParamName, "_entity") {

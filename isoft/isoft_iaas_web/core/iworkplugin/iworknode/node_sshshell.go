@@ -36,7 +36,7 @@ type SSHShellNode struct {
 
 func (this *SSHShellNode) Execute(trackingId string) {
 	// 节点中间数据
-	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, this.DataStore)
+	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep)
 	sshResource := tmpDataMap[iworkconst.STRING_PREFIX+"ssh_conn"].(iwork.Resource)
 	ssh_command := tmpDataMap[iworkconst.STRING_PREFIX+"ssh_command"].(string)
 

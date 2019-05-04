@@ -24,7 +24,7 @@ type SQLQueryNode struct {
 func (this *SQLQueryNode) Execute(trackingId string) {
 	paramMap := make(map[string]interface{}, 0)
 	// 节点中间数据
-	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, this.DataStore)
+	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep)
 	sql := tmpDataMap[iworkconst.STRING_PREFIX+"sql"].(string)
 	dataSourceName := tmpDataMap[iworkconst.STRING_PREFIX+"db_conn"].(string)
 	// sql_binding 参数获取
@@ -111,7 +111,7 @@ type SQLExecuteNode struct {
 
 func (this *SQLExecuteNode) Execute(trackingId string) {
 	// 节点中间数据
-	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, this.DataStore)
+	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep)
 	sql := tmpDataMap[iworkconst.STRING_PREFIX+"sql"].(string)
 	dataSourceName := tmpDataMap[iworkconst.STRING_PREFIX+"db_conn"].(string)
 	// insert 语句且有批量操作时整改 sql 语句
@@ -179,7 +179,7 @@ func (this *SQLQueryPageNode) Execute(trackingId string) {
 	// 需要存储的中间数据
 	paramMap := make(map[string]interface{}, 0)
 	// 节点中间数据
-	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, this.DataStore)
+	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep)
 	sql := tmpDataMap[iworkconst.STRING_PREFIX+"sql"].(string)
 	var total_sql string
 	if _total_sql, ok := tmpDataMap[iworkconst.STRING_PREFIX+"total_sql?"].(string); ok && strings.TrimSpace(_total_sql) != "" {

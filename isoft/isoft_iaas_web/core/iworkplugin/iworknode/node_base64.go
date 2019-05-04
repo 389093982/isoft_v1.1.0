@@ -15,7 +15,7 @@ type Base64EncodeNode struct {
 
 func (this *Base64EncodeNode) Execute(trackingId string) {
 	// 节点中间数据
-	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, this.DataStore)
+	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep)
 	input := tmpDataMap[iworkconst.STRING_PREFIX+"input"].(string)
 	encodeString := base64.StdEncoding.EncodeToString([]byte(input))
 	this.DataStore.CacheDatas(this.WorkStep.WorkStepName, map[string]interface{}{iworkconst.STRING_PREFIX + "encode_data": encodeString})
@@ -39,7 +39,7 @@ type Base64DecodeNode struct {
 
 func (this *Base64DecodeNode) Execute(trackingId string) {
 	// 节点中间数据
-	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, this.DataStore)
+	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep)
 	input := tmpDataMap[iworkconst.STRING_PREFIX+"input"].(string)
 	bytes, err := base64.StdEncoding.DecodeString(input)
 	if err == nil {

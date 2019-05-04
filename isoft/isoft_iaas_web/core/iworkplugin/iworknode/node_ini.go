@@ -15,7 +15,7 @@ type IniReadNode struct {
 
 func (this *IniReadNode) Execute(trackingId string) {
 	// 节点中间数据
-	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, this.DataStore)
+	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep)
 	file_path := tmpDataMap[iworkconst.STRING_PREFIX+"file_path"].(string)
 	var section_name string
 	if _section_name, ok := tmpDataMap[iworkconst.STRING_PREFIX+"section_name?"].(string); ok {
@@ -50,7 +50,7 @@ type IniWriteNode struct {
 
 func (this *IniWriteNode) Execute(trackingId string) {
 	// 节点中间数据
-	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, this.DataStore)
+	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep)
 	file_path := tmpDataMap[iworkconst.STRING_PREFIX+"file_path"].(string)
 	var section_name string
 	if _section_name, ok := tmpDataMap[iworkconst.STRING_PREFIX+"section_name?"].(string); ok {

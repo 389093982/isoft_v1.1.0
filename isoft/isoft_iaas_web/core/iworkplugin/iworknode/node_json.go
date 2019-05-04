@@ -18,7 +18,7 @@ type JsonRenderNode struct {
 
 func (this *JsonRenderNode) Execute(trackingId string) {
 	// 节点中间数据
-	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, this.DataStore)
+	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep)
 	json_object := tmpDataMap[iworkconst.COMPLEX_PREFIX+"json_data"].([]map[string]interface{})
 	bytes, err := json.Marshal(json_object)
 	if err == nil {
@@ -45,7 +45,7 @@ type JsonParserNode struct {
 func (this *JsonParserNode) Execute(trackingId string) {
 	paramMap := make(map[string]interface{}, 0)
 	// 节点中间数据
-	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, this.DataStore)
+	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep)
 	json_str := tmpDataMap[iworkconst.STRING_PREFIX+"json_data"].(string)
 	json_objects := make([]map[string]interface{}, 0)
 	err := json.Unmarshal([]byte(json_str), &json_objects)

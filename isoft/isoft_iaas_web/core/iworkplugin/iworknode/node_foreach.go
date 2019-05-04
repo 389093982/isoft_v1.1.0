@@ -23,7 +23,7 @@ type ForeachNode struct {
 
 func (this *ForeachNode) Execute(trackingId string) {
 	// 节点中间数据
-	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, this.DataStore)
+	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep)
 	if this.BlockStep.HasChildren {
 		order := this.getChildBlockStepExecuteOrder()
 		foreach_datas := tmpDataMap[iworkconst.FOREACH_PREFIX+"foreach_data"].([]map[string]interface{})

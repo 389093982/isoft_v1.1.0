@@ -17,7 +17,7 @@ type DBParserNode struct {
 
 func (this *DBParserNode) Execute(trackingId string) {
 	// 节点中间数据
-	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, this.DataStore)
+	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep)
 	dataSourceName := tmpDataMap[iworkconst.STRING_PREFIX+"db_conn"].(string)
 	tableNames := sqlutil.GetAllTableNames(dataSourceName)
 	tablecolsmap := make(map[string]string, 0)

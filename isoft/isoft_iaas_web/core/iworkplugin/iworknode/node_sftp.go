@@ -17,7 +17,7 @@ type SftpUploadNode struct {
 
 func (this *SftpUploadNode) Execute(trackingId string) {
 	// 节点中间数据
-	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, this.DataStore)
+	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep)
 	sftpResource := tmpDataMap[iworkconst.STRING_PREFIX+"sftp_conn"].(iwork.Resource)
 	local_file_path := tmpDataMap[iworkconst.STRING_PREFIX+"local_file_path"].(string)
 	remote_dir_path := tmpDataMap[iworkconst.STRING_PREFIX+"remote_dir_path"].(string)

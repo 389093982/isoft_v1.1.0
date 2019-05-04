@@ -22,7 +22,7 @@ type IFNode struct {
 
 func (this *IFNode) Execute(trackingId string) {
 	// 节点中间数据
-	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, this.DataStore)
+	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep)
 	expression := tmpDataMap[iworkconst.BOOL_PREFIX+"expression"].(bool)
 	this.DataStore.CacheDatas(this.WorkStep.WorkStepName, map[string]interface{}{iworkconst.BOOL_PREFIX + "expression": expression})
 

@@ -17,7 +17,7 @@ type WorkStartNode struct {
 
 func (this *WorkStartNode) Execute(trackingId string) {
 	// 节点中间数据
-	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, this.DataStore)
+	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep)
 	// dispatcher 非空时替换成父流程参数
 	if this.Dispatcher != nil && len(this.Dispatcher.TmpDataMap) > 0 {
 		// 从父流程中获取值,即从 Dispatcher 中获取值
@@ -61,7 +61,7 @@ type WorkEndNode struct {
 
 func (this *WorkEndNode) Execute(trackingId string) {
 	// 节点中间数据
-	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, this.DataStore)
+	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep)
 	// 提交输出数据至数据中心,此类数据能直接从 tmpDataMap 中获取,而不依赖于计算,只适用于 WORK_START、WORK_END 节点
 	this.SubmitParamOutputSchemaDataToDataStore(this.WorkStep, this.DataStore, tmpDataMap)
 	// 同时需要将数据提交到 Receiver

@@ -20,7 +20,7 @@ type HttpRequestNode struct {
 
 func (this *HttpRequestNode) Execute(trackingId string) {
 	// 节点中间数据
-	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, this.DataStore)
+	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep)
 	// 参数准备
 	var request_url, request_method string
 	if _request_url, ok := tmpDataMap[iworkconst.STRING_PREFIX+"request_url"].(string); ok {

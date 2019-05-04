@@ -15,7 +15,7 @@ type CalHashNode struct {
 
 func (this *CalHashNode) Execute(trackingId string) {
 	// 节点中间数据
-	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep, this.DataStore)
+	tmpDataMap := this.FillParamInputSchemaDataToTmp(this.WorkStep)
 	str_data := tmpDataMap[iworkconst.STRING_PREFIX+"str_data"].(string)
 	hash := hashutil.CalculateHashWithString(str_data)
 	this.DataStore.CacheDatas(this.WorkStep.WorkStepName, map[string]interface{}{iworkconst.STRING_PREFIX + "hash": hash})

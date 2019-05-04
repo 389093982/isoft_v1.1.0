@@ -72,7 +72,7 @@ func (this *BaseNode) parseAndFillParamVauleWithResource(paramVaule string) inte
 }
 
 // paramValue 来源于前置节点
-func (this *BaseNode) parseAndFillParamVauleWithPrefixNode(paramName, paramVaule string, dataStore *datastore.DataStore) interface{} {
+func (this *BaseNode) parseAndFillParamVauleWithPrefixNode(paramName, paramVaule string) interface{} {
 	// 格式校验
 	if !strings.HasPrefix(paramVaule, "$") {
 		panic(errors.New(fmt.Sprintf("%s ~ %s is not start with $", paramName, paramVaule)))
@@ -80,12 +80,12 @@ func (this *BaseNode) parseAndFillParamVauleWithPrefixNode(paramName, paramVaule
 	resolver := param.ParamVauleParser{ParamValue: paramVaule}
 	nodeName := resolver.GetNodeNameFromParamValue()
 	paramName = resolver.GetParamNameFromParamValue()
-	paramValue := dataStore.GetData(nodeName, paramName) // 作为直接对象, dataStore 里面可以直接获取
+	paramValue := this.DataStore.GetData(nodeName, paramName) // 作为直接对象, dataStore 里面可以直接获取
 	if paramValue != nil {
 		return paramValue
 	}
 	_paramName := paramName[:strings.LastIndex(paramName, ".")]
-	datas := dataStore.GetData(nodeName, _paramName) // 作为对象属性
+	datas := this.DataStore.GetData(nodeName, _paramName) // 作为对象属性
 	attr := paramName[strings.LastIndex(paramName, ".")+1:]
 	if reflect.TypeOf(datas).Kind() == reflect.Slice {
 		return reflect.ValueOf(datas).Index(0).Interface().(map[string]interface{})[attr]
@@ -94,16 +94,16 @@ func (this *BaseNode) parseAndFillParamVauleWithPrefixNode(paramName, paramVaule
 }
 
 // 解析 paramVaule 并从 dataStore 中获取实际值
-func (this *BaseNode) ParseAndGetParamVaule(paramName, paramVaule string, dataStore *datastore.DataStore, replaceMap ...map[string]interface{}) interface{} {
+func (this *BaseNode) ParseAndGetParamVaule(paramName, paramVaule string, replaceMap ...map[string]interface{}) interface{} {
 	values := this.parseParamValueToMulti(paramVaule)
 	// 单值
 	if len(values) == 1 {
-		return this.parseAndGetSingleParamVaule(paramName, values[0], dataStore, replaceMap...)
+		return this.parseAndGetSingleParamVaule(paramName, values[0], replaceMap...)
 	}
 	// 多值
 	results := make([]interface{}, 0)
 	for _, value := range values {
-		result := this.parseAndGetSingleParamVaule(paramName, value, dataStore, replaceMap...)
+		result := this.parseAndGetSingleParamVaule(paramName, value, replaceMap...)
 		results = append(results, result)
 	}
 	return results
@@ -125,7 +125,7 @@ func (this *BaseNode) parseParamValueToMulti(paramVaule string) []string {
 	return results
 }
 
-func (this *BaseNode) callParseAndGetSingleParamVaule(paramName, paramVaule string, dataStore *datastore.DataStore, replaceMap ...map[string]interface{}) interface{} {
+func (this *BaseNode) callParseAndGetSingleParamVaule(paramName, paramVaule string, replaceMap ...map[string]interface{}) interface{} {
 	paramVaule = iworkfunc.DncodeSpecialForParamVaule(paramVaule)
 	// 变量
 	if strings.HasPrefix(strings.ToUpper(paramVaule), "$RESOURCE.") {
@@ -140,7 +140,7 @@ func (this *BaseNode) callParseAndGetSingleParamVaule(paramName, paramVaule stri
 				return paramVaule
 			}
 		}
-		return this.parseAndFillParamVauleWithPrefixNode(paramName, paramVaule, dataStore)
+		return this.parseAndFillParamVauleWithPrefixNode(paramName, paramVaule)
 	} else if strings.HasPrefix(paramVaule, "`") && strings.HasSuffix(paramVaule, "`") {
 		// 字符串
 		return paramVaule[1 : len(paramVaule)-1]
@@ -162,7 +162,7 @@ func (this *BaseNode) parseAndFillParamVauleWithReplaceProviderNode(paramVaule s
 	return nil
 }
 
-func (this *BaseNode) parseAndGetSingleParamVaule(paramName, paramVaule string, dataStore *datastore.DataStore, replaceMap ...map[string]interface{}) interface{} {
+func (this *BaseNode) parseAndGetSingleParamVaule(paramName, paramVaule string, replaceMap ...map[string]interface{}) interface{} {
 	defer func() {
 		if err := recover(); err != nil {
 			panic(fmt.Sprintf("<span style='color:red;'>execute func with expression is %s, error msg is :%s</span>", paramVaule, err.(error).Error()))
@@ -176,7 +176,7 @@ func (this *BaseNode) parseAndGetSingleParamVaule(paramName, paramVaule string, 
 	}
 	if callers == nil || len(callers) == 0 {
 		// 是直接参数,不需要函数进行特殊处理
-		return this.callParseAndGetSingleParamVaule(paramName, paramVaule, dataStore, replaceMap...)
+		return this.callParseAndGetSingleParamVaule(paramName, paramVaule, replaceMap...)
 	}
 	historyFuncResultMap := make(map[string]interface{}, 0)
 	var lastFuncResult interface{}
@@ -189,7 +189,7 @@ func (this *BaseNode) parseAndGetSingleParamVaule(paramName, paramVaule string, 
 			if _arg, ok := historyFuncResultMap[arg]; ok {
 				args = append(args, _arg)
 			} else {
-				args = append(args, this.callParseAndGetSingleParamVaule(paramName, arg, dataStore, replaceMap...))
+				args = append(args, this.callParseAndGetSingleParamVaule(paramName, arg, replaceMap...))
 			}
 		}
 		// 执行函数并记录结果,供下一个函数执行使用
@@ -201,7 +201,7 @@ func (this *BaseNode) parseAndGetSingleParamVaule(paramName, paramVaule string, 
 }
 
 // 存储 pureText 值
-func (this *BaseNode) FillPureTextParamInputSchemaDataToTmp(workStep *iwork.WorkStep, dataStore *datastore.DataStore) map[string]interface{} {
+func (this *BaseNode) FillPureTextParamInputSchemaDataToTmp(workStep *iwork.WorkStep) map[string]interface{} {
 	// 存储节点中间数据
 	tmpDataMap := make(map[string]interface{})
 	paramInputSchema := schema.GetCacheParamInputSchema(workStep, &WorkStepFactory{WorkStep: workStep})
@@ -213,18 +213,18 @@ func (this *BaseNode) FillPureTextParamInputSchemaDataToTmp(workStep *iwork.Work
 }
 
 // 将 ParamInputSchema 填充数据并返回临时的数据中心 tmpDataMap
-func (this *BaseNode) FillParamInputSchemaDataToTmp(workStep *iwork.WorkStep, dataStore *datastore.DataStore) map[string]interface{} {
+func (this *BaseNode) FillParamInputSchemaDataToTmp(workStep *iwork.WorkStep) map[string]interface{} {
 	// 存储节点中间数据
 	tmpDataMap := make(map[string]interface{})
 	pureTextTmpDataMap := make(map[string]string)
 	paramInputSchema := schema.GetCacheParamInputSchema(workStep, &WorkStepFactory{WorkStep: workStep})
 	for _, item := range paramInputSchema.ParamInputSchemaItems {
-		this.FillParamInputSchemaItemDataToTmp(pureTextTmpDataMap, tmpDataMap, item, dataStore)
+		this.FillParamInputSchemaItemDataToTmp(pureTextTmpDataMap, tmpDataMap, item)
 	}
 	return tmpDataMap
 }
 
-func (this *BaseNode) FillParamInputSchemaItemDataToTmp(pureTextTmpDataMap map[string]string, tmpDataMap map[string]interface{}, item iworkmodels.ParamInputSchemaItem, dataStore *datastore.DataStore) {
+func (this *BaseNode) FillParamInputSchemaItemDataToTmp(pureTextTmpDataMap map[string]string, tmpDataMap map[string]interface{}, item iworkmodels.ParamInputSchemaItem) {
 	pureTextTmpDataMap[item.ParamName] = item.ParamValue
 	// tmpDataMap 存储解析值
 	if item.PureText {
@@ -237,7 +237,7 @@ func (this *BaseNode) FillParamInputSchemaItemDataToTmp(pureTextTmpDataMap map[s
 	}
 	// 判断当前参数是否是 repeat 参数
 	if !item.Repeatable {
-		tmpDataMap[item.ParamName] = this.ParseAndGetParamVaule(item.ParamName, item.ParamValue, dataStore) // 输入数据存临时
+		tmpDataMap[item.ParamName] = this.ParseAndGetParamVaule(item.ParamName, item.ParamValue) // 输入数据存临时
 		return
 	}
 	repeatDatas := this.getRepeatDatas(tmpDataMap, item)
@@ -249,12 +249,12 @@ func (this *BaseNode) FillParamInputSchemaItemDataToTmp(pureTextTmpDataMap map[s
 			// 替代的对象
 			replaceProviderData := repeatData
 			replaceMap := map[string]interface{}{replaceProviderNodeName: replaceProviderData}
-			paramValue := this.ParseAndGetParamVaule(item.ParamName, item.ParamValue, dataStore, replaceMap) // 输入数据存临时
+			paramValue := this.ParseAndGetParamVaule(item.ParamName, item.ParamValue, replaceMap) // 输入数据存临时
 			paramValues = append(paramValues, paramValue)
 		}
 		tmpDataMap[item.ParamName] = paramValues // 所得值则是个切片
 	} else {
-		tmpDataMap[item.ParamName] = this.ParseAndGetParamVaule(item.ParamName, item.ParamValue, dataStore) // 输入数据存临时
+		tmpDataMap[item.ParamName] = this.ParseAndGetParamVaule(item.ParamName, item.ParamValue) // 输入数据存临时
 	}
 }
 
