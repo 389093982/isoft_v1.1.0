@@ -213,52 +213,62 @@ func (this *BaseNode) FillPureTextParamInputSchemaDataToTmp(workStep *iwork.Work
 }
 
 // 将 ParamInputSchema 填充数据并返回临时的数据中心 tmpDataMap
-// skips 表示可以跳过填充的参数
 func (this *BaseNode) FillParamInputSchemaDataToTmp(workStep *iwork.WorkStep, dataStore *datastore.DataStore) map[string]interface{} {
 	// 存储节点中间数据
 	tmpDataMap := make(map[string]interface{})
-	paramInputSchema := schema.GetCacheParamInputSchema(workStep, &WorkStepFactory{WorkStep: workStep})
 	pureTextTmpDataMap := make(map[string]string)
+	paramInputSchema := schema.GetCacheParamInputSchema(workStep, &WorkStepFactory{WorkStep: workStep})
 	for _, item := range paramInputSchema.ParamInputSchemaItems {
-		pureTextTmpDataMap[item.ParamName] = item.ParamValue
-		// tmpDataMap 存储解析值
-		if item.PureText {
-			tmpDataMap[item.ParamName] = item.ParamValue
-		} else {
-			// 对参数进行非空校验
-			if ok, checkResults := iworkvalid.CheckEmptyForItem(item); !ok {
-				panic(strings.Join(checkResults, ";"))
-			}
-			// 判断当前参数是否是 repeat 参数
-			if item.Repeatable {
-				repeatDatas := make([]interface{}, 0)
-				// 获取 item.RepeatRefer 对应的 repeat 切片数据,作为迭代参数,而不再从前置节点输出获取
-				t := reflect.TypeOf(tmpDataMap[item.RepeatRefer])
-				v := reflect.ValueOf(tmpDataMap[item.RepeatRefer])
-				if t.Kind() == reflect.Slice {
-					for i := 0; i < v.Len(); i++ {
-						repeatDatas = append(repeatDatas, v.Index(i).Interface())
-					}
-				}
-				if len(repeatDatas) > 0 {
-					paramValues := make([]interface{}, 0)
-					for _, repeatData := range repeatDatas {
-						// 替代的节点名称
-						replaceProviderNodeName := strings.ReplaceAll(strings.TrimSpace(pureTextTmpDataMap[item.RepeatRefer]), ";", "")
-						// 替代的对象
-						replaceProviderData := repeatData
-						replaceMap := map[string]interface{}{replaceProviderNodeName: replaceProviderData}
-						paramValue := this.ParseAndGetParamVaule(item.ParamName, item.ParamValue, dataStore, replaceMap) // 输入数据存临时
-						paramValues = append(paramValues, paramValue)
-					}
-					tmpDataMap[item.ParamName] = paramValues // 所得值则是个切片
-					continue
-				}
-			}
-			tmpDataMap[item.ParamName] = this.ParseAndGetParamVaule(item.ParamName, item.ParamValue, dataStore) // 输入数据存临时
-		}
+		this.FillParamInputSchemaItemDataToTmp(pureTextTmpDataMap, tmpDataMap, item, dataStore)
 	}
 	return tmpDataMap
+}
+
+func (this *BaseNode) FillParamInputSchemaItemDataToTmp(pureTextTmpDataMap map[string]string, tmpDataMap map[string]interface{}, item iworkmodels.ParamInputSchemaItem, dataStore *datastore.DataStore) {
+	pureTextTmpDataMap[item.ParamName] = item.ParamValue
+	// tmpDataMap 存储解析值
+	if item.PureText {
+		tmpDataMap[item.ParamName] = item.ParamValue
+		return
+	}
+	// 对参数进行非空校验
+	if ok, checkResults := iworkvalid.CheckEmptyForItem(item); !ok {
+		panic(strings.Join(checkResults, ";"))
+	}
+	// 判断当前参数是否是 repeat 参数
+	if !item.Repeatable {
+		tmpDataMap[item.ParamName] = this.ParseAndGetParamVaule(item.ParamName, item.ParamValue, dataStore) // 输入数据存临时
+		return
+	}
+	repeatDatas := this.getRepeatDatas(tmpDataMap, item)
+	if len(repeatDatas) > 0 {
+		paramValues := make([]interface{}, 0)
+		for _, repeatData := range repeatDatas {
+			// 替代的节点名称
+			replaceProviderNodeName := strings.ReplaceAll(strings.TrimSpace(pureTextTmpDataMap[item.RepeatRefer]), ";", "")
+			// 替代的对象
+			replaceProviderData := repeatData
+			replaceMap := map[string]interface{}{replaceProviderNodeName: replaceProviderData}
+			paramValue := this.ParseAndGetParamVaule(item.ParamName, item.ParamValue, dataStore, replaceMap) // 输入数据存临时
+			paramValues = append(paramValues, paramValue)
+		}
+		tmpDataMap[item.ParamName] = paramValues // 所得值则是个切片
+	} else {
+		tmpDataMap[item.ParamName] = this.ParseAndGetParamVaule(item.ParamName, item.ParamValue, dataStore) // 输入数据存临时
+	}
+}
+
+func (this *BaseNode) getRepeatDatas(tmpDataMap map[string]interface{}, item iworkmodels.ParamInputSchemaItem) []interface{} {
+	repeatDatas := make([]interface{}, 0)
+	// 获取 item.RepeatRefer 对应的 repeat 切片数据,作为迭代参数,而不再从前置节点输出获取
+	t := reflect.TypeOf(tmpDataMap[item.RepeatRefer])
+	v := reflect.ValueOf(tmpDataMap[item.RepeatRefer])
+	if t.Kind() == reflect.Slice {
+		for i := 0; i < v.Len(); i++ {
+			repeatDatas = append(repeatDatas, v.Index(i).Interface())
+		}
+	}
+	return repeatDatas
 }
 
 // 提交输出数据至数据中心,此类数据能直接从 tmpDataMap 中获取,而不依赖于计算,只适用于 WORK_START、WORK_END 节点
