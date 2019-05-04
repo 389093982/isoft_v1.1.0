@@ -38,6 +38,8 @@ func init() {
 		IniReadNode{},
 		IniWriteNode{},
 		IFNode{},
+		ElIfNode{},
+		ElseNode{},
 		EmptyNode{},
 		Base64EncodeNode{},
 		Base64DecodeNode{},

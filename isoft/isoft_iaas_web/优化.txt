@@ -1,0 +1,2 @@
+replaceMap ...map[string]interface{} 和 dispatcher *entry.Dispatcher 统一
+支持 if elif else 结构
